@@ -1,0 +1,49 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:template/app_binding.dart';
+import 'package:template/routes/app_pages.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/theme/app_theme.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
+
+import 'di_container.dart' as di;
+import 'notification/my_notification.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // init dependence injection
+  await di.init();
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp();
+
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Locale> _locals = [];
+    for (int i = 0; i < app_constants.languages.length; i++) {
+      _locals.add(Locale(app_constants.languages[i].languageCode.toString(),
+          app_constants.languages[i].countryCode));
+    }
+
+    return GetMaterialApp(
+      initialRoute: AppRoutes.SPLASH,
+      initialBinding: AppBinding(),
+      getPages: AppPages.list,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      // darkTheme: AppTheme.dark,
+      // themeMode: ThemeMode.system,
+      // locale: ,
+      // supportedLocales: _locals,
+    );
+  }
+}

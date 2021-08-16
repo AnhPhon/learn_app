@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "391818608619",
+    "project_id": "izifluttertemplate",
+    "storage_bucket": "izifluttertemplate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391818608619:android:5c588a2e290d82a42e23ae",
+        "android_client_info": {
+          "package_name": "io.izisoft.template"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391818608619-d2lld9159kvh019oua8kp59f64dvicvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU3dk2MUyfA6r8rm55op0X0O_rzUYVphQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391818608619-d2lld9159kvh019oua8kp59f64dvicvb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "391818608619-ma0tnk306hgnm45jt67relornrq68a8b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.izisoft.template"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
