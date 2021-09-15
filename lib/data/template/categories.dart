@@ -1,66 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
   CategoryWidget({required this.label, required this.content, required this.hasMore});
 
-  String? label;
-  Widget? content;
-  bool? hasMore;
+  String label;
+  Widget content;
+  bool hasMore;
 
-  double labelFontSize = 16;
-  Color labelColor = Color(0XFF27272A);
+  double labelFontSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
+  Color labelColor = const Color(0XFF27272A);
 
-  double moreFontSize = 14;
-  Color moreColor = Color(0XFF1A94FF);
+  double moreFontSize = Dimensions.FONT_SIZE_LARGE;
+  Color moreColor = const Color(0XFF1A94FF);
 
-  double elementFontSize =14;
+  double elementFontSize = Dimensions.FONT_SIZE_SMALL;
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+      padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
       child: Column(
         children: [
-          Container(
-            child: Row(
-                children:[
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    width: width * .68,
-                    child: Text(
-                      this.label!,
-                      style: TextStyle(
-                          fontSize: labelFontSize,
-                          fontWeight: FontWeight.bold,
-                          color: labelColor
-                      ),
+          Row(
+              children:[
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  width: width * .60,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                        fontSize: labelFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: labelColor
                     ),
                   ),
-                  Container(
-                    // width: width * .5,
-                    child: (this.hasMore! == true)?ElevatedButton(
-                      style: ButtonStyle(
-                        shadowColor: MaterialStateProperty.all(Colors.transparent),
-                        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                      ),
-                      child: Text(
-                        'Xem thêm',
-                        style: TextStyle(
-                            fontSize: moreFontSize,
-                            color: moreColor
+                ),
+                Container(
+                  // width: width * .5,
+                  child: (hasMore == true)?ElevatedButton(
+                    style: ButtonStyle(
+                      shadowColor: MaterialStateProperty.all(Colors.transparent),
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Xem thêm',
+                          style: TextStyle(
+                              fontSize: moreFontSize,
+                              color: moreColor
+                          ),
                         ),
-                      ),
-                      onPressed: () {},
-                    ):Container(),
-                  )
-                ],
-            ),
+                        Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: moreColor,
+                            size:Dimensions.FONT_SIZE_EXTRA_LARGE
+                        )
+                      ],
+                    ),
+                    onPressed: () {},
+                  ):Container(),
+                )
+              ],
           ),
           Container(
-            child: this.content!
+            padding: const EdgeInsets.all(15),
+            child: content
           ),
         ],
       )

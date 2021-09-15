@@ -23,4 +23,15 @@ class Dimensions {
   static const double ICON_SIZE_DEFAULT = 24.0;
   static const double ICON_SIZE_LARGE = 32.0;
   static const double ICON_SIZE_EXTRA_LARGE = 40.0;
+
+  static const double SPACE_WIDTH_SMALL = 5.0;
+  static const double SPACE_WIDTH_DEFAULT = 10.0;
+  static const double SPACE_WIDTH_FAR = 50.0;
+
+  static const double CATEGORY_WIDTH_DEFAULT = 70.0;
+
+  static const double SPACE_HEIGHT_SMALL = 5.0;
+  static const double SPACE_HEIGHT_DEFAULT = 10.0;
+
+  static const double SQUARE_CATEGORY_SIZE = 170.0;
 }
