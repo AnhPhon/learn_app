@@ -29,6 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Locale> _locals = [];
+
+    // add all LanguageModel from app_constants
     for (int i = 0; i < app_constants.languages.length; i++) {
       _locals.add(Locale(app_constants.languages[i].languageCode.toString(),
           app_constants.languages[i].countryCode));

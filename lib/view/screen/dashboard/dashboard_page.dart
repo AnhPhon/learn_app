@@ -8,15 +8,21 @@ import 'package:template/view/screen/posts/posts_page.dart';
 import 'dashboard_controller.dart';
 
 class DashboardPage extends StatelessWidget {
+
+  ///
+  /// build method (override)
+  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
       builder: (controller) {
         return Scaffold(
-          body: SafeArea(
+          body: Container(
             child: IndexedStack(
               index: controller.tabIndex,
               children: [
+                HomePage(),
+                HomePage(),
                 HomePage(),
                 PostsPage(),
                 AccountPage(),
@@ -32,15 +38,23 @@ class DashboardPage extends StatelessWidget {
             items: [
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.home,
-                label: 'Home',
+                label: 'Trang chủ',
               ),
               _bottomNavigationBarItem(
-                icon: CupertinoIcons.book,
-                label: 'News',
+                icon: CupertinoIcons.cart,
+                label: 'Giỏ hàng',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.chart_bar,
+                label: 'Bảng xếp hạng',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.news,
+                label: 'Tin tức',
               ),
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.person,
-                label: 'Account',
+                label: 'Tài khoản',
               ),
             ],
           ),
@@ -49,6 +63,10 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
+
+  ///
+  /// _bottomNavigationBarItem
+  ///
   BottomNavigationBarItem _bottomNavigationBarItem(
       {IconData? icon, String? label}) {
     return BottomNavigationBarItem(
