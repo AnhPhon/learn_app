@@ -9,14 +9,14 @@ import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
 
-import 'leaderboard_controller.dart';
+import 'cart_controller.dart';
 
-class LeaderBoardPage extends GetView<LeaderBoardController> {
+class CartPage extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
 
-    const String title = "Bảng xếp hạng";
+    const String title = "Giỏ hàng";
 
     return Scaffold(
       appBar: AppBar(
