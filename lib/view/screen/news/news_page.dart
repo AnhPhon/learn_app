@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_point_tab_bar/pointTabBar.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/color_resources.dart';
 // template
 import 'package:template/utils/dimensions.dart';
 // images
@@ -19,17 +20,29 @@ class NewsPage extends GetView<NewsController> {
     Get.put(NewsController());
     const String title = "Tin Tức";
 
-    final tabList = <Tab>[
-      const Tab(child: Text('Tab 1')),
-      const Tab(child: Text('Tab 2')),
-      const Tab(child: Text('Tab 3')),
+    final itemList = [
+      'Việt Nam',
+      'Công nghệ',
+      'Thế giới',
     ];
 
-    final itemList = [
-      'Tab 1',
-      'Tab 2',
-      'Tab 3',
+    final data = [
+      [
+        ["Title 1", '45 phút', 'Việt Nam', Images.newsTemplate],
+        ["Title 2", '45 phút', 'Việt Nam', Images.newsTemplate],
+        ["Title 3", '45 phút', 'Việt Nam', Images.newsTemplate],
+      ],
+      [
+        ["Title 1", '45 phút', 'Công nghệ', Images.newsTemplate],
+        ["Title 2", '45 phút', 'Công nghệ', Images.newsTemplate],
+      ],
+      [
+        ["Title 1", '45 phút', 'Thế Giới', Images.newsTemplate],
+      ]
     ];
+
+    final searchWidget = _searchWidget(_searchController);
+    final tabbarWidget = _tabbarWidget(itemList, controller);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -47,61 +60,135 @@ class NewsPage extends GetView<NewsController> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                color: const Color(0x1FCDCDCD),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    labelText: 'Tìm kiếm',
-                  ),
-                  controller: _searchController,
-                )
-              ),
+              searchWidget,
 
-              //  tabs
-              Container(
-                  child: Column(
-                      children: [
-                        TabBar(
-                          controller: controller.tabController,
-                          indicator: const PointTabIndicator(
-                            position: PointTabIndicatorPosition.bottom,
-                            color: Colors.white,
-                            insets: EdgeInsets.only(bottom: 6),
-                          ),
-                          tabs: itemList.map((item) {
-                            return Tab(text: item);
-                          }).toList(),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: TabBarView(
-                            controller: controller.tabController,
-                            children: itemList.map((String item) {
-                              final String label = item.toLowerCase();
-                              return Center(
-                                child: Text(
-                                  'This is the $label tab',
-                                  style: const TextStyle(fontSize: 36),
+              // tabbar
+              tabbarWidget,
+
+              SizedBox(
+                // color: Colors.red,
+                height: MediaQuery.of(context).size.height - 285,
+                child: TabBarView(
+                  controller: controller.tabController,
+                  children: data.map((List<List<String>> item) {
+                    final List<Widget> _rows = [];
+                    for (final element in item) {
+                      _rows.add(
+                        Row(
+                            children: [
+                              //  texx
+                              Container(
+                                width: MediaQuery.of(context).size.width * .6,
+                                padding: const EdgeInsets.all(5),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      padding: const EdgeInsets.only(bottom: 7),
+                                      child: Text(
+                                          element[0],
+                                          style: const TextStyle(
+                                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                            fontWeight: FontWeight.bold,
+                                          )
+                                      )
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 100,
+                                          child: Text(
+                                              element[1],
+                                              style: const TextStyle(
+                                                  color: Color(0xFF898989)
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            width: 100,
+                                            child: Text(
+                                                element[2],
+                                                style: const TextStyle(
+                                                    color: Color(0xFF898989)
+                                                )
+                                            )
+                                        )
+                                      ],
+                                    )
+                                  ],
                                 ),
-                              );
-                            }).toList(),
-                        ),
-                      )
-                      ]
-                  )
-              ),
+                              ),
+                              const Spacer(),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * .25,
+                                child: Image.asset(
+                                  element[3],
+                                  width: MediaQuery.of(context).size.width * .25,
+                                  // height: 265,
+                                ),
+                              ),
+                            ]
+                        )
+                      );
 
+                      _rows.add(const SizedBox(height: 20));
+                    }
+                    return SingleChildScrollView(
+                      child: Column(
+                        // alignment: Alignment.topLeft,
+                        // padding: const EdgeInsets.all(10),
+                        children: _rows
+                      )
+                    );
+                  }).toList(),
+                ),
+              )
             ],
           ),
         )
       )
     );
   }
+}
+
+// Search Widget
+Container _searchWidget(TextEditingController controller) {
+  final GlobalKey stickyKey = GlobalKey();
+  return Container(
+      key: stickyKey,
+      color: const Color(0x1FCDCDCD),
+      child: TextField(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+          labelText: 'Tìm kiếm',
+        ),
+        controller: controller,
+      )
+  );
+}
+
+//tabbar widget
+Container _tabbarWidget(List<String> itemList, NewsController controller) {
+  final GlobalKey stickyKey = GlobalKey();
+  return Container(
+    key: stickyKey,
+    child: TabBar(
+      controller: controller.tabController,
+      indicator: const UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: ColorResources.DEFAULT,
+          width: 5.0,
+        ),
+      ),
+      tabs: itemList.map((item) {
+        return Tab(child: Text(item, style: const TextStyle(color: Colors.black)));
+      }).toList(),
+    ),
+  );
 }

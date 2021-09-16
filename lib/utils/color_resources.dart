@@ -135,6 +135,8 @@ class ColorResources {
   static const Color CHAT_ICON_COLOR = Color(0xffD4D4D4);
   static const Color LOW_GREEN = Color(0xffEFF6FE);
   static const Color GREEN = Color(0xff23CB60);
+  
+  static const Color DEFAULT = Color(0xFF61A63C);
 
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),
