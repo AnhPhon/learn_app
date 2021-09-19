@@ -3,6 +3,7 @@ import 'package:template/view/screen/auth/auth_page.dart';
 import 'package:template/view/screen/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/login/login_page.dart';
 
 import 'app_routes.dart';
 
@@ -16,6 +17,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.AUTH,
       page: () => AuthPage(),
+    ),
+    GetPage(
+      name: AppRoutes.LOGIN,
+      page: () => LoginPage(),
     ),
     GetPage(
       name: AppRoutes.DASHBOARD,

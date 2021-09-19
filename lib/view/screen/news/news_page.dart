@@ -28,16 +28,16 @@ class NewsPage extends GetView<NewsController> {
 
     final data = [
       [
-        ["Title 1", '45 phút', 'Việt Nam', Images.newsTemplate],
-        ["Title 2", '45 phút', 'Việt Nam', Images.newsTemplate],
-        ["Title 3", '45 phút', 'Việt Nam', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Việt Nam', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Việt Nam', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Việt Nam', Images.newsTemplate],
       ],
       [
-        ["Title 1", '45 phút', 'Công nghệ', Images.newsTemplate],
-        ["Title 2", '45 phút', 'Công nghệ', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Công nghệ', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Công nghệ', Images.newsTemplate],
       ],
       [
-        ["Title 1", '45 phút', 'Thế Giới', Images.newsTemplate],
+        ["YouTube's new features, let's take a look", '45 phút', 'Thế Giới', Images.newsTemplate],
       ]
     ];
 
@@ -60,18 +60,27 @@ class NewsPage extends GetView<NewsController> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+          // padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              // search widget
               searchWidget,
 
               // tabbar
               tabbarWidget,
+              
+              // underline
+              Container(
+                height: 1,
+                color: const Color(0xffBDBDBD)
+              ),
 
-              SizedBox(
-                // color: Colors.red,
-                height: MediaQuery.of(context).size.height - 285,
+              // content
+              Container(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                height: MediaQuery.of(context).size.height - 300,
                 child: TabBarView(
                   controller: controller.tabController,
                   children: data.map((List<List<String>> item) {
@@ -80,12 +89,13 @@ class NewsPage extends GetView<NewsController> {
                       _rows.add(
                         Row(
                             children: [
-                              //  texx
+                              //  text
                               Container(
                                 width: MediaQuery.of(context).size.width * .6,
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                                 child: Column(
                                   children: [
+
                                     Container(
                                       alignment: Alignment.centerLeft,
                                       padding: const EdgeInsets.only(bottom: 7),
@@ -97,10 +107,11 @@ class NewsPage extends GetView<NewsController> {
                                           )
                                       )
                                     ),
+
                                     Row(
                                       children: [
                                         SizedBox(
-                                          width: 100,
+                                          width: 130,
                                           child: Text(
                                               element[1],
                                               style: const TextStyle(
@@ -109,16 +120,16 @@ class NewsPage extends GetView<NewsController> {
                                           ),
                                         ),
                                         SizedBox(
-                                            width: 100,
                                             child: Text(
                                                 element[2],
                                                 style: const TextStyle(
-                                                    color: Color(0xFF898989)
-                                                )
+                                                  color: Color(0xFF898989),
+                                                ),
                                             )
                                         )
                                       ],
-                                    )
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -160,7 +171,13 @@ Container _searchWidget(TextEditingController controller) {
   final GlobalKey stickyKey = GlobalKey();
   return Container(
       key: stickyKey,
-      color: const Color(0x1FCDCDCD),
+      margin: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+      // color: const Color(0xFFCDCDCD),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Color(0x1FCDCDCD),
+
+      ),
       child: TextField(
         decoration: const InputDecoration(
           border: OutlineInputBorder(
