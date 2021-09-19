@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage>
 
     _animationController!
         .forward()
-        .whenComplete(() => Get.offNamed(AppRoutes.DASHBOARD));
+        .whenComplete(() => Get.offNamed(AppRoutes.INTRO));
   }
 
   @override

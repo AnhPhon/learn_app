@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:template/utils/device_utils.dart';
+
 class Dimensions {
   static const double FONT_SIZE_EXTRA_SMALL = 10.0;
   static const double FONT_SIZE_SMALL = 12.0;
@@ -34,4 +37,56 @@ class Dimensions {
   static const double SPACE_HEIGHT_DEFAULT = 10.0;
 
   static const double SQUARE_CATEGORY_SIZE = 170.0;
+
+  Widget paddingDivider(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: DeviceUtils.getScaledSize(context, 0.02),
+      ),
+      child: const Divider(
+        thickness: 1,
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  static TextStyle fontSizeStyle20() {
+    return const TextStyle(fontSize: 20);
+  }
+
+  static TextStyle fontSizeStyle18() {
+    return const TextStyle(fontSize: 18);
+  }
+
+  static TextStyle fontSizeStyle16() {
+    return const TextStyle(fontSize: 16);
+  }
+
+  static TextStyle fontSizeStyle14() {
+    return const TextStyle(fontSize: 14);
+  }
+
+  static TextStyle fontSizeStyle12() {
+    return const TextStyle(fontSize: 12);
+  }
+
+  static TextStyle fontSizeStyle20w600() {
+    return const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle fontSizeStyle18w600() {
+    return const TextStyle(fontSize: 18, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle fontSizeStyle16w600() {
+    return const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle fontSizeStyle14w600() {
+    return const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle fontSizeStyle12w600() {
+    return const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  }
 }

@@ -14,21 +14,19 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper(sharedPreferences));
+  sl.registerSingleton<SharedPreferenceHelper>(
+      SharedPreferenceHelper(sharedPreferences));
   sl.registerSingleton<LoggingInterceptor>(LoggingInterceptor());
   sl.registerLazySingleton(() => Connectivity());
 
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
   sl.registerSingleton<DioClient>(DioClient());
-  sl.registerSingleton<FirebaseService>(FirebaseService());
+  // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
   sl.registerLazySingleton(() => RegionRepo());
 
   // Provider
   sl.registerFactory(() => RegionProvider());
-
-
-
 }

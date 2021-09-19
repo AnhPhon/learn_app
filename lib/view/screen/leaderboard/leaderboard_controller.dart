@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/posts/posts_page.dart';
 
 class LeaderBoardController extends GetxController {
+  void onChartsClick() {
+    Get.toNamed(AppRoutes.CHARTS);
+  }
 
-  void onBtnHomeClick(){
-      Get.to(PostsPage());
+  void onBtnHomeClick() {
+    Get.to(PostsPage());
   }
 
   //  money normalize
@@ -14,17 +18,16 @@ class LeaderBoardController extends GetxController {
 
     String result = "";
     int mark = 0;
-    for(int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
       mark += 1;
       result = text[i] + result;
 
-      if(mark % 3 == 0) {
+      if (mark % 3 == 0) {
         result = splitSymbol + result;
       }
     }
 
-    if(result[0] == splitSymbol)
-      result = result.substring(1, result.length);
+    if (result[0] == splitSymbol) result = result.substring(1, result.length);
 
     return result;
   }

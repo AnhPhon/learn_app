@@ -1,20 +1,6 @@
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/posts/posts_page.dart';
 
-class HomeController extends GetxController {
-  void onBtnHomeClick() {
-    Get.to(PostsPage());
-  }
-
-  void onBtnCategoriesClick() {
-    Get.toNamed(AppRoutes.CATEGORIES);
-  }
-
-  void onProductClick() {
-    Get.toNamed(AppRoutes.PRODUCT_DETAIL);
-  }
-
+class ProductDetailController extends GetxController {
   //  money normalize
   String moneyNormalize(int money, String splitSymbol) {
     String text = money.toString().split('').reversed.join();
