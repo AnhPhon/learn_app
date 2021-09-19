@@ -28,6 +28,7 @@ class AppPages {
       page: () => AuthPage(),
     ),
     GetPage(
+<<<<<<< HEAD
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
     ),
@@ -35,8 +36,10 @@ class AppPages {
       name: AppRoutes.DASHBOARD,
       page: () => DashboardPage(),
       binding: DashboardBinding()
-    ),
-    
+=======
+        name: AppRoutes.DASHBOARD,
+        page: () => DashboardPage(),
+        binding: DashboardBinding()),
     GetPage(
       name: AppRoutes.CATEGORIES,
       page: () => CategoriesPage(),
@@ -72,7 +75,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.INTRO,
       page: () => IntroductionPage(),
+>>>>>>> origin/feature/ldtrong_ui
     ),
-
   ];
 }

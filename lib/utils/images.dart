@@ -11,4 +11,6 @@ class Images {
   static const String sp3 = 'assets/images/cam.png';
   static const String sp4 = 'assets/images/trang.png';
   static const String newsTemplate = 'assets/images/news_template.png';
+  static const String cart = 'assets/images/cart.png';
+  static const String charts = 'assets/images/charts.png';
 }

@@ -3,11 +3,17 @@ import 'package:get/get.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
-  CategoryWidget({required this.label, required this.content, required this.hasMore});
+  CategoryWidget({
+    required this.label,
+    required this.content,
+    required this.hasMore,
+    this.onPressed,
+  });
 
   String label;
   Widget content;
   bool hasMore;
+  VoidCallback? onPressed;
 
   double labelFontSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
   Color labelColor = const Color(0XFF27272A);
@@ -21,12 +27,13 @@ class CategoryWidget extends GetView {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-      child: Column(
-        children: [
-          Row(
-              children:[
+        color: Colors.white,
+        padding:
+            const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
                 Container(
                   margin: const EdgeInsets.only(left: 10),
                   width: width * .60,
@@ -35,44 +42,39 @@ class CategoryWidget extends GetView {
                     style: TextStyle(
                         fontSize: labelFontSize,
                         fontWeight: FontWeight.bold,
-                        color: labelColor
-                    ),
+                        color: labelColor),
                   ),
                 ),
                 Container(
                   // width: width * .5,
-                  child: (hasMore == true)?ElevatedButton(
-                    style: ButtonStyle(
-                      shadowColor: MaterialStateProperty.all(Colors.transparent),
-                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Xem thêm',
-                          style: TextStyle(
-                              fontSize: moreFontSize,
-                              color: moreColor
+                  child: (hasMore == true)
+                      ? ElevatedButton(
+                          style: ButtonStyle(
+                            shadowColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
                           ),
-                        ),
-                        Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: moreColor,
-                            size:Dimensions.FONT_SIZE_EXTRA_LARGE
+                          child: Row(
+                            children: [
+                              Text(
+                                'Xem thêm',
+                                style: TextStyle(
+                                    fontSize: moreFontSize, color: moreColor),
+                              ),
+                              Icon(Icons.arrow_forward_ios_outlined,
+                                  color: moreColor,
+                                  size: Dimensions.FONT_SIZE_EXTRA_LARGE)
+                            ],
+                          ),
+                          onPressed: onPressed,
                         )
-                      ],
-                    ),
-                    onPressed: () {},
-                  ):Container(),
+                      : Container(),
                 )
               ],
-          ),
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: content
-          ),
-        ],
-      )
-    );
+            ),
+            Container(padding: const EdgeInsets.all(15), child: content),
+          ],
+        ));
   }
 }

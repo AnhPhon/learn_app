@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/account/account_page.dart';
 import 'package:template/view/screen/cart/cart_page.dart';
 import 'package:template/view/screen/home/home_page.dart';
@@ -11,7 +12,6 @@ import 'package:template/view/screen/posts/posts_page.dart';
 import 'dashboard_controller.dart';
 
 class DashboardPage extends StatelessWidget {
-
   ///
   /// build method (override)
   ///
@@ -33,11 +33,13 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: ColorResources.PRIMARY,
+            backgroundColor: ColorResources.WHITE,
             onTap: controller.changeTabIndex,
             currentIndex: controller.tabIndex,
             type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
             items: [
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.home,
@@ -65,7 +67,6 @@ class DashboardPage extends StatelessWidget {
       },
     );
   }
-
 
   ///
   /// _bottomNavigationBarItem

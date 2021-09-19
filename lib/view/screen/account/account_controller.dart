@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/body/region.dart';
 import 'package:template/provider/region_provider.dart';
+import 'package:template/routes/app_routes.dart';
 
 class AccountController extends GetxController {
   var counter = 1.obs;
 
   List<Region> regionsList = [];
   bool isLoading = true;
+
+  void onRulesClick() {
+    Get.toNamed(AppRoutes.RULES);
+  }
+
+  void onOrderClick() {
+    Get.toNamed(AppRoutes.ORDER);
+  }
 
   void increaseCounter() {
     RegionProvider().getRegions(onSuccess: (regions) {

@@ -122,7 +122,7 @@ class ColorResources {
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   static const Color HARLEQUIN = Color(0xff3FCC01);
   static const Color CERISE = Color(0xffE2206B);
-  static const Color GREY = Color(0xffC4C4CF);
+  static const Color GREY = Color(0xffF1F1F1);
   static const Color RED = Color(0xFFD32F2F);
   static const Color YELLOW = Color(0xFFFFAA47);
   static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
@@ -135,9 +135,6 @@ class ColorResources {
   static const Color CHAT_ICON_COLOR = Color(0xffD4D4D4);
   static const Color LOW_GREEN = Color(0xffEFF6FE);
   static const Color GREEN = Color(0xff23CB60);
-  
-  static const Color DEFAULT = Color(0xFF61A63C);
-  static const Color PRIMARY = Color(0xff61A63C);
 
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),
