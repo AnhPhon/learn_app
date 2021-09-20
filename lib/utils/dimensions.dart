@@ -38,6 +38,22 @@ class Dimensions {
 
   static const double SQUARE_CATEGORY_SIZE = 170.0;
 
+  // BORDER RADIUS
+  static const double BORDER_RADIUS_EXTRA_SMALL = 5.0;
+  static const double BORDER_RADIUS_SMALL = 7.0;
+  static const double BORDER_RADIUS_DEFAULT = 10.0;
+  static const double BORDER_RADIUS_LARGE = 30.0;
+  static const double BORDER_RADIUS_EXTRA_LARGE = 50.0;
+
+  // AVATAR
+  static const double AVATAR_SQUARE_SIZE_EXTRA_SMALL = 25;
+  static const double AVATAR_SQUARE_SIZE_SMALL = 50;
+  static const double AVATAR_SQUARE_SIZE_DEFAULT = 100;
+  static const double AVATAR_SQUARE_SIZE_LARGE = 150;
+  static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
+
+
+
   Widget paddingDivider(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(

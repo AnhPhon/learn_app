@@ -7,17 +7,21 @@ import 'package:template/view/screen/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/leaderboard/charts/charts_page.dart';
+import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/order/history/history_page.dart';
 import 'package:template/view/screen/order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/order/order_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
+import 'package:template/view/screen/register/register_page.dart';
+import 'package:template/view/screen/register/register_page_2.dart';
+import 'package:template/view/screen/register/register_page_3.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppPages {
-  static var list = [
+  static List<GetPage> list = [
     GetPage(
       name: AppRoutes.SPLASH,
       page: () => SplashPage(),
@@ -27,9 +31,27 @@ class AppPages {
       page: () => AuthPage(),
     ),
     GetPage(
-        name: AppRoutes.DASHBOARD,
-        page: () => DashboardPage(),
-        binding: DashboardBinding()),
+      name: AppRoutes.LOGIN,
+      page: () => LoginPage(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER,
+      page: () => RegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER_PAGE_2,
+      page: () => RegisterPage2(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER_PAGE_3,
+      page: () => RegisterPage3(),
+    ),
+    GetPage(
+      name: AppRoutes.DASHBOARD,
+      page: () => DashboardPage(),
+      binding: DashboardBinding()
+    ),
+    
     GetPage(
       name: AppRoutes.CATEGORIES,
       page: () => CategoriesPage(),
@@ -66,5 +88,6 @@ class AppPages {
       name: AppRoutes.INTRO,
       page: () => IntroductionPage(),
     ),
+
   ];
 }
