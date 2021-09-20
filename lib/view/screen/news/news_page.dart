@@ -59,107 +59,106 @@ class NewsPage extends GetView<NewsController> {
         shadowColor: const Color(0x3F000000),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          // padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-              // search widget
-              searchWidget,
+            // search widget
+            searchWidget,
 
-              // tabbar
-              tabbarWidget,
-              
-              // underline
-              Container(
-                height: 1,
-                color: const Color(0xffBDBDBD)
-              ),
+            // tabbar
+            tabbarWidget,
+            
+            // underline
+            Container(
+              height: 1,
+              color: const Color(0xffBDBDBD)
+            ),
 
-              // content
-              Container(
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                height: MediaQuery.of(context).size.height - 300,
-                child: TabBarView(
-                  controller: controller.tabController,
-                  children: data.map((List<List<String>> item) {
-                    final List<Widget> _rows = [];
-                    for (final element in item) {
-                      _rows.add(
-                        Row(
-                            children: [
-                              //  text
-                              Container(
-                                width: MediaQuery.of(context).size.width * .6,
-                                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                                child: Column(
-                                  children: [
+            // content
+            Container(
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+              height: MediaQuery.of(context).size.height - 300,
+              child: TabBarView(
+                controller: controller.tabController,
+                children: data.map((List<List<String>> item) {
 
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      padding: const EdgeInsets.only(bottom: 7),
-                                      child: Text(
-                                          element[0],
-                                          style: const TextStyle(
-                                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                            fontWeight: FontWeight.bold,
+                  final List<Widget> _rows = [];
+                  for (final element in item) {
+                    _rows.add(
+                      Row(
+                          children: [
+                            //  text
+                            Container(
+                              width: MediaQuery.of(context).size.width * .6,
+                              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                              child: Column(
+                                children: [
+
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(bottom: 7),
+                                    child: Text(
+                                        element[0],
+                                        style: const TextStyle(
+                                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                          fontWeight: FontWeight.bold,
+                                        )
+                                    )
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 130,
+                                        child: Text(
+                                            element[1],
+                                            style: const TextStyle(
+                                                color: Color(0xFF898989)
+                                            )
+                                        ),
+                                      ),
+                                      SizedBox(
+                                          child: Text(
+                                              element[2],
+                                              style: const TextStyle(
+                                                color: Color(0xFF898989),
+                                              ),
                                           )
                                       )
-                                    ),
+                                    ],
+                                  ),
 
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 130,
-                                          child: Text(
-                                              element[1],
-                                              style: const TextStyle(
-                                                  color: Color(0xFF898989)
-                                              )
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            child: Text(
-                                                element[2],
-                                                style: const TextStyle(
-                                                  color: Color(0xFF898989),
-                                                ),
-                                            )
-                                        )
-                                      ],
-                                    ),
-
-                                  ],
-                                ),
+                                ],
                               ),
-                              const Spacer(),
-                              SizedBox(
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .25,
+                              child: Image.asset(
+                                element[3],
                                 width: MediaQuery.of(context).size.width * .25,
-                                child: Image.asset(
-                                  element[3],
-                                  width: MediaQuery.of(context).size.width * .25,
-                                  // height: 265,
-                                ),
+                                // height: 265,
                               ),
-                            ]
-                        )
-                      );
-
-                      _rows.add(const SizedBox(height: 20));
-                    }
-                    return SingleChildScrollView(
-                      child: Column(
-                        // alignment: Alignment.topLeft,
-                        // padding: const EdgeInsets.all(10),
-                        children: _rows
+                            ),
+                          ]
                       )
                     );
-                  }).toList(),
-                ),
-              )
-            ],
-          ),
+
+                    _rows.add(const SizedBox(height: 20));
+                  }
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      // alignment: Alignment.topLeft,
+                      // padding: const EdgeInsets.all(10),
+                      children: _rows
+                    )
+                  );
+                }).toList(),
+              ),
+            )
+          ],
         )
       )
     );

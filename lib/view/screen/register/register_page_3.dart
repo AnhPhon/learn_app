@@ -49,19 +49,19 @@ class RegisterPage3 extends GetView<RegisterController> {
           color: Colors.white,
           child: Column(
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 80),
-                      child: Image.asset(Images.register_bg),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //         margin: const EdgeInsets.only(top: 80),
+              //         child: Image.asset(Images.register_bg),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 10),
               Padding(
                 padding:
                     const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),

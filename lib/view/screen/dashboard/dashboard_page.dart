@@ -18,6 +18,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
+      init: DashboardController(),
       builder: (controller) {
         return Scaffold(
           body: Container(
