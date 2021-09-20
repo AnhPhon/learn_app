@@ -4,9 +4,9 @@ class AppRoutes {
   static const String DASHBOARD = '/dashboard';
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';
-  // static const String NEWS = '/news';
-  // static const String CART = '/cart';
-  // static const String LEADERBOARD = '/leaderboard';
+  static const String REGISTER = '/register';
+  static const String REGISTER_PAGE_2 = '/register2';
+  static const String REGISTER_PAGE_3 = '/register3';
   static const String POST = '/post';
   static const String CATEGORIES = '/categories';
   static const String CATEGORY_DETAIL = '/category_detail';

@@ -13,4 +13,6 @@ class Images {
   static const String newsTemplate = 'assets/images/news_template.png';
   static const String cart = 'assets/images/cart.png';
   static const String charts = 'assets/images/charts.png';
+  static const String bottom_login = 'assets/images/bottom.png';
+  static const String register_bg = 'assets/images/register_bg.png';
 }

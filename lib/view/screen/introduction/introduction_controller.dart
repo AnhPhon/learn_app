@@ -7,7 +7,7 @@ class IntroductionController extends GetxController {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void onIntroEnd(BuildContext context) {
-    Get.offNamed(AppRoutes.DASHBOARD);
+    Get.offNamed(AppRoutes.LOGIN);
     update();
   }
 }

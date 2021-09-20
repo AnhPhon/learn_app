@@ -17,8 +17,8 @@ class HomeController extends GetxController {
 
   //  money normalize
   String moneyNormalize(int money, String splitSymbol) {
-    String text = money.toString().split('').reversed.join();
-    int size = text.length;
+    final String text = money.toString().split('').reversed.join();
+    final int size = text.length;
 
     String result = "";
     int mark = 0;
