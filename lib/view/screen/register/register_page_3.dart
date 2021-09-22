@@ -107,7 +107,7 @@ class RegisterPage3 extends GetView<RegisterController> {
               alignment: Alignment.center,
               width: double.infinity,
               child: const Text(
-                "Hoàn thành",
+                "Tiếp tục",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),

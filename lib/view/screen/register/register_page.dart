@@ -11,6 +11,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/screen/register/register_page_2.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
 
@@ -103,7 +104,7 @@ class RegisterPage extends GetView<RegisterController> {
   ///
   /// select
   ///
-  Widget _genderSelectionWidget(BuildContext context, controller) {
+  Widget _genderSelectionWidget(BuildContext context, controllers) {
     final List<Map<String, dynamic>> genderOptions = [
       {
         "index": "1",
@@ -115,37 +116,14 @@ class RegisterPage extends GetView<RegisterController> {
       }
     ];
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.025)),
-      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
-      width: double.infinity,
-      height: DeviceUtils.getScaledSize(context, 0.127),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: ColorResources.GREY, // set border color
-        ), // set border width
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ), // set rounded corner radius
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: controller.selected.value,
-          items: genderOptions
-              .map(
-                (Map<String, dynamic> gender) => DropdownMenuItem(
-                  value: gender["index"],
-                  child: Text(gender["name"].toString()),
-                ),
-              )
-              .toList(),
-          onChanged: (newValue) {
-            controller.setSelected(newValue);
-          },
-        ),
-      ),
+    return DropDownButton1(
+      width: 0.5,
+      hint: "Giới tính",
+      value: controller.gender,
+      onChanged: controller.setSelected,
+      data: genderOptions
+          .map((Map<String, dynamic> gender) => gender["name"].toString())
+          .toList(),
     );
   }
 
@@ -177,9 +155,7 @@ class RegisterPage extends GetView<RegisterController> {
           border: Border.all(
             color: ColorResources.GREY, // set border color
           ), // set border width
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10.0),
-          ), // set rounded corner radius
+          borderRadius: BorderRadius.circular(10), // set rounded corner radius
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

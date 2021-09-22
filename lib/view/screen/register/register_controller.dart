@@ -90,6 +90,8 @@ class RegisterController extends GetxController {
         quality: 1),
   ];
 
+  String? gender;
+
   File? image;
 
   Future pickImage() async {
@@ -159,8 +161,9 @@ class RegisterController extends GetxController {
   void removeProduct() {}
 
   // ignore: use_setters_to_change_properties
-  void setSelected(String value) {
-    selected.value = value;
+  void setSelected(String? value) {
+    gender = value;
+    update();
   }
 
   // ignore: always_declare_return_types
