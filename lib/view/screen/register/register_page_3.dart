@@ -4,7 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
+import 'package:template/utils/device_utils.dart';
 
 // dimensions
 import 'package:template/utils/dimensions.dart';
@@ -14,186 +18,374 @@ import 'package:template/utils/images.dart';
 import 'register_controller.dart';
 
 class RegisterPage3 extends GetView<RegisterController> {
+  ///
+  ///bottom payment button
+  ///
+  Widget _bottomContainer(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.06),
+          vertical: DeviceUtils.getScaledSize(context, 0.03)),
+      height: DeviceUtils.getScaledSize(context, 0.55),
+      decoration: BoxDecoration(
+        color: ColorResources.WHITE,
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2, // Shadow position
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "Với việc đăng ký tài khoản lần đầu, bạn được tặng voucher giảm 25% tổng giá trị đơn hàng. Để đăng ký tài khoản bạn phải thực hiện mua đơn hàng trị giá ít nhất 2,500,000 đ.",
+            textAlign: TextAlign.justify,
+            style: titilliumItalic.copyWith(
+                color: ColorResources.PRIMARY, fontSize: 14),
+          ),
+          Text(
+            "Lưu ý: Hoá đơn sau khi trừ 25% phải lớn hơn hoặc bằng 2,500,000 đ",
+            style: titilliumSemiBold.copyWith(color: ColorResources.RED),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "Tổng tiền phải trả là: ${PriceConverter.convertPrice(context, controller.sum * .75)}",
+                style: titilliumBold.copyWith(fontSize: 16),
+              ),
+              SizedBox(width: DeviceUtils.getScaledSize(context, 0.025)),
+              Text(
+                PriceConverter.convertPrice(context, controller.sum.toDouble()),
+                style: titilliumBold.copyWith(
+                  color: ColorResources.GREY,
+                  fontSize: 16,
+                  decoration: TextDecoration.lineThrough,
+                  decorationColor: Colors.black,
+                  decorationStyle: TextDecorationStyle.double,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+          //btn checkout
+          GestureDetector(
+            onTap: () {
+              final double money = controller.sum * .75;
+              final bool moneyValid = money > 2500000;
+              if (moneyValid) {
+                print(
+                    "Hiện tại là ${controller.moneyNormalize(money, ",")} >= ${controller.moneyNormalize(2500000, ",")}");
+                print("Đăng ký thành công");
+
+                Get.toNamed(AppRoutes.REGISTER_PAGE_4);
+              } else {
+                Get.snackbar(
+                  "Đăng ký thất bại",
+                  "Hoá đơn hiện tại là ${PriceConverter.convertPrice(context, money)} đang thiếu ${PriceConverter.convertPrice(context, 2500000 - money)}",
+                  colorText: ColorResources.RED,
+                  backgroundGradient: const LinearGradient(colors: [
+                    Color(0xffffb8b3),
+                    Color(0xffff9b94),
+                    Color(0xffffb8b3),
+                  ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+                );
+              }
+            },
+            child: Container(
+              height: DeviceUtils.getScaledSize(context, 0.12),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Colors.green,
+                  ColorResources.PRIMARY,
+                  Colors.green,
+                ], begin: Alignment(0, -1), end: Alignment(0, 1)),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              alignment: Alignment.center,
+              width: double.infinity,
+              child: const Text(
+                "Hoàn thành",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  ///icons quality
+  ///
+  Widget _iconsquality(BuildContext context,
+      {VoidCallback? onTap, Icon? icon, String? text, Color? color}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.01)),
+        height: DeviceUtils.getScaledSize(context, 0.064),
+        width: DeviceUtils.getScaledSize(context, 0.064),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: color ?? ColorResources.PRIMARY),
+        ),
+        child: text != null ? Align(child: Text(text)) : icon,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => RegisterController());
-    final double width = MediaQuery.of(context).size.width;
-
-    final List<List<Item>> items = [
-      [
-        Item(url: Images.sp1, amount: 10000000, title: "Sản phẩm 1"),
-        Item(url: Images.sp1, amount: 183000, title: "Sản phẩm 2"),
-      ],
-      [
-        Item(url: Images.sp1, amount: 250000, title: "Sản phẩm 3"),
-        Item(url: Images.sp1, amount: 250000, title: "Sản phẩm 4"),
-      ],
-      [
-        Item(url: Images.sp1, amount: 652000, title: "Sản phẩm 5"),
-        Item(url: Images.sp1, amount: 29000, title: "Sản phẩm 6"),
-      ],
-      [
-        Item(url: Images.sp1, amount: 132000, title: "Sản phẩm 7"),
-        Item(url: Images.sp1, amount: 2500000, title: "Sản phẩm 8"),
-      ],
-      [
-        Item(url: Images.sp1, amount: 29000, title: "Sản phẩm 9"),
-        Item(url: Images.sp1, amount: 29000, title: "Sản phẩm 10"),
-      ],
-    ];
-
-    // final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-              //   child: Column(
-              //     children: [
-              //       Container(
-              //         margin: const EdgeInsets.only(top: 80),
-              //         child: Image.asset(Images.register_bg),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(height: 10),
-              Padding(
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                child: Column(
-                  children: [
-                    Column(
-                        children: items.map((element) {
-                      return Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              print("Hiện tại đang là ${controller.sum} đã thêm ${element[0].amount}");
-                              controller.sum += element[0].amount;
-                              print("Hiện tại: ${controller.sum}");
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              width: width / 2 -
-                                  Dimensions.PADDING_SIZE_EXTRA_LARGE,
-                              // color: Colors.red,
-                              child: Column(
-                                children: [
-                                  Image.asset(element[0].url),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      element[0].title,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      "${controller.moneyNormalize(element[0].amount*1, ",")}đ",
-                                      style: const TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 24,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              print("Hiện tại đang là ${controller.sum} đã thêm ${element[1].amount}");
-                              controller.sum += element[1].amount;
-                              print("Hiện tại: ${controller.sum}");
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              width: width / 2 -
-                                  Dimensions.PADDING_SIZE_EXTRA_LARGE,
-                              // color: Colors.red,
-                              child: Column(
-                                children: [
-                                  Image.asset(element[1].url),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      element[1].title,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      "${controller.moneyNormalize(element[1].amount*1, ",")}đ",
-                                      style: const TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 24,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList()),
-                    GestureDetector(
+    return GetBuilder<RegisterController>(
+        init: RegisterController(),
+        builder: (RegisterController value) {
+          return Scaffold(
+            bottomNavigationBar: _bottomContainer(context),
+            body: Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(
+                  top: DeviceUtils.getScaledSize(context, 0.063)),
+              child: GridView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.9,
+                    mainAxisSpacing: DeviceUtils.getScaledSize(context, 0.063),
+                  ),
+                  itemCount: controller.items.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return GestureDetector(
                       onTap: () {
-                        final double money = controller.sum * .75;
-                        final bool moneyValid = money > 2500000;
-                        if(moneyValid) {
-                          print("Hiện tại là ${controller.moneyNormalize(money, ",")} >= ${controller.moneyNormalize(2500000, ",")}");
-                          print("Đăng ký thành công");
+                        controller.qualityProduct.value = 1;
+                        if (controller.items[index].isChoose == false) {
+                          Get.defaultDialog(
+                            title: controller.items[index].title,
+                            buttonColor: ColorResources.PRIMARY,
+                            textConfirm: "Xác nhận",
+                            textCancel: "Huỷ",
+                            cancelTextColor: ColorResources.PRIMARY,
+                            confirmTextColor: ColorResources.WHITE,
+                            onConfirm: () {
+                              Get.back();
+                              controller.setSelected(index.toString());
+                              controller.accept(index);
+                              controller
+                                  .countTotal(controller.items[index].amount);
+                            },
+                            content: Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal:
+                                      DeviceUtils.getScaledSize(context, 0.025),
+                                  vertical: DeviceUtils.getScaledSize(
+                                      context, 0.025)),
+                              color: ColorResources.WHITE,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(7),
+                                        child: Image.asset(
+                                          controller.items[index].url,
+                                          height: DeviceUtils.getScaledSize(
+                                              context, 0.25),
+                                          width: DeviceUtils.getScaledSize(
+                                              context, 0.25),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: DeviceUtils.getScaledSize(
+                                            context, 0.063),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Obx(
+                                            () => Text(
+                                              PriceConverter.convertPrice(
+                                                  context,
+                                                  (controller.items[index]
+                                                              .amount *
+                                                          controller
+                                                              .qualityProduct
+                                                              .value)
+                                                      .toDouble()),
+                                              style: titilliumSemiBold.copyWith(
+                                                  color: Colors.grey,
+                                                  fontSize: 18),
+                                            ),
+                                          ),
 
-                          Get.toNamed(AppRoutes.DASHBOARD);
-                        } else {
-                          print("Hiện tại là ${controller.moneyNormalize(money, ",")} đang thiếu ${controller.moneyNormalize(2500000-money, ",")}");
-                          print("Đăng ký thất bại");
+                                          SizedBox(
+                                              height: DeviceUtils.getScaledSize(
+                                                  context, 0.02)),
+
+                                          //button quanlity
+                                          Obx(() => Row(
+                                                children: [
+                                                  //decrementQuality
+                                                  _iconsquality(context,
+                                                      onTap: () {
+                                                    controller
+                                                        .decrementQuality();
+                                                  },
+                                                      icon: Icon(Icons.remove,
+                                                          color: controller
+                                                                      .qualityProduct
+                                                                      .value >
+                                                                  1
+                                                              ? ColorResources
+                                                                  .PRIMARY
+                                                              : ColorResources
+                                                                  .GREY),
+                                                      color: controller
+                                                                  .qualityProduct
+                                                                  .value >
+                                                              1
+                                                          ? ColorResources
+                                                              .PRIMARY
+                                                          : ColorResources
+                                                              .GREY),
+
+                                                  //quanlity
+                                                  _iconsquality(context,
+                                                      text: controller
+                                                          .qualityProduct.value
+                                                          .toString()),
+
+                                                  //incrementQuality
+                                                  _iconsquality(context,
+                                                      onTap: () {
+                                                    controller
+                                                        .incrementQuality();
+                                                  },
+                                                      icon: const Icon(
+                                                          Icons.add_outlined,
+                                                          color: ColorResources
+                                                              .PRIMARY)),
+                                                ],
+                                              )),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         }
                       },
                       child: Container(
-                        margin: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            Color(0xFF59DC12),
-                            Color(0xFF61A63C),
-                          ], begin: Alignment(0, -1), end: Alignment(0, 1)),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(20),
-                        width: double.infinity,
-                        child: const Text(
-                          "Hoàn thành",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        margin: EdgeInsets.symmetric(
+                            horizontal:
+                                DeviceUtils.getScaledSize(context, 0.04)),
+                        decoration: BoxDecoration(
+                            color: ColorResources.WHITE,
+                            boxShadow: controller.items[index].isChoose == true
+                                ? [
+                                    BoxShadow(
+                                      blurRadius: 2,
+                                      color: ColorResources.PRIMARY
+                                          .withOpacity(0.3),
+                                      spreadRadius: 2, // Shadow position
+                                    )
+                                  ]
+                                : null,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            if (controller.items[index].isChoose == true)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.cancel(index);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(
+                                          DeviceUtils.getScaledWidth(
+                                              context, 0.01)),
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: ColorResources.GREY,
+                                      ),
+                                      child: Icon(
+                                        Icons.close_outlined,
+                                        size: DeviceUtils.getScaledHeight(
+                                            context, 0.023),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            else
+                              const SizedBox.shrink(),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: DeviceUtils.getScaledSize(
+                                      context, 0.038)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: DeviceUtils.getScaledSize(
+                                        context, 0.343),
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      image: DecorationImage(
+                                          image: AssetImage(controller
+                                              .items[index].url
+                                              .toString()),
+                                          fit: BoxFit.fill),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height: DeviceUtils.getScaledHeight(
+                                          context, 0.01)),
+                                  Text(
+                                    controller.items[index].title.toString(),
+                                    style: Dimensions.fontSizeStyle14w600(),
+                                  ),
+                                  Text(PriceConverter.convertPrice(
+                                      context,
+                                      controller.items[index].amount
+                                          .toDouble())),
+                                  if (controller.items[index].isChoose == true)
+                                    Text(
+                                      "Số lượng: ${controller.items[index].quality}",
+                                      style: Dimensions.fontSizeStyle14()
+                                          .copyWith(
+                                              color: ColorResources.PRIMARY),
+                                    )
+                                  else
+                                    const SizedBox.shrink(),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                    );
+                  }),
+            ),
+          );
+        });
   }
 }
 
@@ -226,6 +418,13 @@ class Item {
   String url;
   String title;
   int amount;
+  bool isChoose;
+  int quality;
 
-  Item({required this.url, required this.title, required this.amount});
+  Item(
+      {required this.url,
+      required this.title,
+      required this.amount,
+      required this.isChoose,
+      required this.quality});
 }

@@ -10,6 +10,7 @@ import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
+import 'package:template/view/screen/register/register_page_4.dart';
 
 import 'register_controller.dart';
 
@@ -68,34 +69,32 @@ class RegisterPage2 extends GetView<RegisterController> {
                 child: Column(
                   children: [
                     // Nơi đã và đang làm việc
-                    _normalInputWidget(
-                        "Nơi đã và đang làm việc", controllers["noidavadanglamviec"]!),
+                    _normalInputWidget("Nơi đã và đang làm việc",
+                        controllers["noidavadanglamviec"]!),
 
                     // Kinh nghiệm làm việc
-                    _normalInputWidget("Kinh nghiệm làm việc", controllers["kinhnghiemlamviec"]!),
+                    _normalInputWidget("Kinh nghiệm làm việc",
+                        controllers["kinhnghiemlamviec"]!),
 
                     // Khả năng nổi trội nhất
-                    _normalInputWidget("Khả năng nổi trội nhất", controllers["khanangnoitroinhat"]!),
+                    _normalInputWidget("Khả năng nổi trội nhất",
+                        controllers["khanangnoitroinhat"]!),
 
                     // Kinh nghiệm làm công tác viên
-                    _normalInputWidget(
-                        "Kinh nghiệm làm công tác viên", controllers["kinhnghiemlamcongtacvien"]!),
+                    _normalInputWidget("Kinh nghiệm làm công tác viên",
+                        controllers["kinhnghiemlamcongtacvien"]!),
 
                     GestureDetector(
                       onTap: () {
-                        Get.to(RegisterPage3());
+                        Get.to(RegisterPage4());
                       },
                       child: Container(
                         margin: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF59DC12),
-                              Color(0xFF61A63C),
-                            ],
-                            begin: Alignment(0, -1),
-                            end: Alignment(0, 1)
-                          ),
+                          gradient: LinearGradient(colors: [
+                            Color(0xFF59DC12),
+                            Color(0xFF61A63C),
+                          ], begin: Alignment(0, -1), end: Alignment(0, 1)),
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         alignment: Alignment.center,
@@ -103,10 +102,7 @@ class RegisterPage2 extends GetView<RegisterController> {
                         width: double.infinity,
                         child: const Text(
                           "Tiếp tục",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
                     )

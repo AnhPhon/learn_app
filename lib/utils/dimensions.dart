@@ -52,8 +52,6 @@ class Dimensions {
   static const double AVATAR_SQUARE_SIZE_LARGE = 150;
   static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
 
-
-
   Widget paddingDivider(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -88,6 +86,10 @@ class Dimensions {
 
   static TextStyle fontSizeStyle20w600() {
     return const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle fontSizeStyle22w600() {
+    return const TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle18w600() {

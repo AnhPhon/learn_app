@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
   CategoryWidget({
+    required this.text,
     required this.label,
     required this.content,
     required this.hasMore,
+    this.icon,
     this.onPressed,
   });
 
+  String text;
   String label;
   Widget content;
   bool hasMore;
+  Icon? icon;
   VoidCallback? onPressed;
 
   double labelFontSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
@@ -55,19 +60,21 @@ class CategoryWidget extends GetView {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
                           ),
+                          onPressed: onPressed,
                           child: Row(
                             children: [
                               Text(
-                                'Xem thêm',
+                                text,
                                 style: TextStyle(
-                                    fontSize: moreFontSize, color: moreColor),
+                                    fontSize: moreFontSize,
+                                    color: ColorResources.PRIMARY),
                               ),
-                              Icon(Icons.arrow_forward_ios_outlined,
-                                  color: moreColor,
-                                  size: Dimensions.FONT_SIZE_EXTRA_LARGE)
+                              icon ??
+                                  const Icon(Icons.arrow_forward_ios_outlined,
+                                      color: ColorResources.PRIMARY,
+                                      size: Dimensions.FONT_SIZE_EXTRA_LARGE)
                             ],
                           ),
-                          onPressed: onPressed,
                         )
                       : Container(),
                 )

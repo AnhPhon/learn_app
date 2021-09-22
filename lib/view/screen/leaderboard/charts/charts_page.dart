@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/leaderboard/charts/charts_controller.dart';
 
 class ChartsPage extends GetView<ChartsController> {
@@ -44,18 +44,14 @@ class ChartsPage extends GetView<ChartsController> {
         builder: (ChartsController value) {
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
-            appBar: AppBar(
-              backgroundColor: ColorResources.WHITE,
-              iconTheme: const IconThemeData(color: Colors.black),
-              title: const Text(
-                "Mục bảng thống kê",
-                style: TextStyle(color: ColorResources.BLACK),
-              ),
-            ),
-            body: Column(
-              children: [
-                Expanded(
-                    flex: 5,
+            appBar: CustomAppBar().customAppBar(title: "Mục bảng thống kê"),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: DeviceUtils.getScaledSize(context, 0.04)),
+                  SizedBox(
+                    height: DeviceUtils.getScaledSize(context, 0.75),
                     child: Stack(
                       children: [
                         Positioned(
@@ -131,107 +127,98 @@ class ChartsPage extends GetView<ChartsController> {
                           ),
                         ),
                       ],
-                    )),
-                Expanded(
-                    flex: 7,
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: DeviceUtils.getScaledSize(context, 0.063),
-                          vertical: DeviceUtils.getScaledSize(context, 0.025)),
-                      decoration: BoxDecoration(
-                        color: ColorResources.WHITE,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 2,
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2, // Shadow position
-                          ),
-                        ],
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(children: [
-                          SizedBox(
-                              height:
-                                  DeviceUtils.getScaledSize(context, 0.025)),
-                          ...List.generate(
-                              11,
-                              (index) => Column(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                DeviceUtils.getScaledSize(
-                                                    context, 0.03)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceUtils.getScaledSize(context, 0.063),
+                        vertical: DeviceUtils.getScaledSize(context, 0.025)),
+                    decoration: BoxDecoration(
+                      color: ColorResources.WHITE,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 2,
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2, // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Column(children: [
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.025)),
+                      ...List.generate(
+                          11,
+                          (index) => Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: DeviceUtils.getScaledSize(
+                                            context, 0.03)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "${index + 1}",
-                                                  style: Dimensions
-                                                      .fontSizeStyle18w600(),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal: DeviceUtils
-                                                          .getScaledSize(
-                                                              context, 0.025)),
-                                                  height:
-                                                      DeviceUtils.getScaledSize(
-                                                          context, 0.12),
-                                                  width:
-                                                      DeviceUtils.getScaledSize(
-                                                          context, 0.12),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            "assets/images/avatar_account.png")),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                ),
-                                                Text("Tên ${index + 1}"),
-                                              ],
+                                            Text(
+                                              "${index + 1}",
+                                              style: Dimensions
+                                                  .fontSizeStyle18w600(),
                                             ),
                                             Container(
-                                              padding: EdgeInsets.all(
-                                                  DeviceUtils.getScaledSize(
-                                                      context, 0.015)),
-                                              decoration: BoxDecoration(
-                                                  color: ColorResources.GREY,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16)),
-                                              child: const Text(
-                                                "5.000.000đ",
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      DeviceUtils.getScaledSize(
+                                                          context, 0.025)),
+                                              height: DeviceUtils.getScaledSize(
+                                                  context, 0.12),
+                                              width: DeviceUtils.getScaledSize(
+                                                  context, 0.12),
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/images/avatar_account.png")),
+                                                shape: BoxShape.circle,
                                               ),
                                             ),
+                                            Text("Tên ${index + 1}"),
                                           ],
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: DeviceUtils.getScaledSize(
-                                              context, 0.01),
-                                          horizontal: DeviceUtils.getScaledSize(
-                                              context, 0.05),
+                                        Container(
+                                          padding: EdgeInsets.all(
+                                              DeviceUtils.getScaledSize(
+                                                  context, 0.015)),
+                                          decoration: BoxDecoration(
+                                              color: ColorResources.GREY,
+                                              borderRadius:
+                                                  BorderRadius.circular(16)),
+                                          child: const Text(
+                                            "5.000.000đ",
+                                          ),
                                         ),
-                                        child: const Divider(
-                                          thickness: 1,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  )).toList(),
-                        ]),
-                      ),
-                    )),
-              ],
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: DeviceUtils.getScaledSize(
+                                          context, 0.01),
+                                      horizontal: DeviceUtils.getScaledSize(
+                                          context, 0.05),
+                                    ),
+                                    child: const Divider(
+                                      thickness: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              )).toList(),
+                    ]),
+                  ),
+                ],
+              ),
             ),
           );
         });

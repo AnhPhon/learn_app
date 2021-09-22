@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 // template
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
@@ -19,6 +21,7 @@ class LoginPage extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: ColorResources.WHITE,
       body: Stack(
         children: [
           // bottom
@@ -48,18 +51,18 @@ class LoginPage extends GetView<LoginController> {
                   ),
 
                   // username enter widget
-                  _usernameEnterWidget(usernameController!),
+                  _usernameEnterWidget(context, usernameController!),
                   const SizedBox(
                     height: 20,
                   ),
                   //  password enter widget
-                  _passwordEnterWidget(passwordController!),
+                  _passwordEnterWidget(context, passwordController!),
                   const SizedBox(
                     height: 50,
                   ),
 
                   //  login button widget
-                  _loginBtnWidget("Đăng nhập", width),
+                  _loginBtnWidget(context, "Đăng nhập", width),
                 ],
               ),
             ),
@@ -73,49 +76,115 @@ class LoginPage extends GetView<LoginController> {
 ///
 /// _usernameEnterWidget
 ///
-Widget _usernameEnterWidget(TextEditingController usernameController) {
+Widget _usernameEnterWidget(
+    BuildContext context, TextEditingController usernameController) {
   return TextField(
-    obscureText: false,
-    decoration: const InputDecoration(
-      border: OutlineInputBorder(),
-      labelText: 'Tài khoản',
-    ),
+    textInputAction: TextInputAction.done,
+    textAlignVertical: TextAlignVertical.center,
     controller: usernameController,
+    cursorColor: ColorResources.PRIMARY,
+    decoration: InputDecoration(
+      isDense: true,
+      contentPadding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.025),
+          vertical: DeviceUtils.getScaledSize(context, 0.038)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.GREY)),
+      disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.GREY)),
+      hintText: "Tài khoản",
+      filled: true,
+      fillColor: Colors.transparent,
+      suffixIconConstraints: BoxConstraints(
+        maxHeight: DeviceUtils.getScaledSize(context, 0.025) * 2,
+      ),
+      suffixIcon: Container(
+        padding:
+            EdgeInsets.only(right: DeviceUtils.getScaledSize(context, 0.025)),
+        child: Icon(
+          Icons.person,
+          size: DeviceUtils.getScaledSize(context, 0.045),
+          color: ColorResources.PRIMARY,
+        ),
+      ),
+    ),
   );
 }
 
 ///
 /// _passwordEnterWidget
 ///
-Widget _passwordEnterWidget(TextEditingController passwordController) {
+Widget _passwordEnterWidget(
+    BuildContext context, TextEditingController passwordController) {
   return TextField(
     obscureText: true,
-    decoration: const InputDecoration(
-      border: OutlineInputBorder(),
-      labelText: 'Mật khẩu',
-    ),
+    textInputAction: TextInputAction.done,
+    textAlignVertical: TextAlignVertical.center,
     controller: passwordController,
+    cursorColor: ColorResources.PRIMARY,
+    decoration: InputDecoration(
+      isDense: true,
+      contentPadding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.025),
+          vertical: DeviceUtils.getScaledSize(context, 0.038)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.GREY)),
+      disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: ColorResources.GREY)),
+      hintText: "Mật khẩu",
+      filled: true,
+      fillColor: Colors.transparent,
+      suffixIconConstraints: BoxConstraints(
+        maxHeight: DeviceUtils.getScaledSize(context, 0.025) * 2,
+      ),
+      suffixIcon: Container(
+        padding:
+            EdgeInsets.only(right: DeviceUtils.getScaledSize(context, 0.025)),
+        child: Icon(
+          Icons.lock,
+          size: DeviceUtils.getScaledSize(context, 0.045),
+          color: ColorResources.PRIMARY,
+        ),
+      ),
+    ),
   );
 }
 
 ///
 /// button login
 ///
-Widget _loginBtnWidget(String label, double width) {
+Widget _loginBtnWidget(BuildContext context, String label, double width) {
   return GestureDetector(
     onTap: () {
       Get.toNamed(AppRoutes.DASHBOARD);
     },
     child: Container(
-      padding: const EdgeInsets.all(Dimensions.FONT_SIZE_LARGE),
+      padding: EdgeInsets.symmetric(
+          vertical: DeviceUtils.getScaledSize(context, 0.035),
+          horizontal: DeviceUtils.getScaledSize(context, 0.03)),
       width: width,
       alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        borderRadius:
-            BorderRadius.all(Radius.circular(Dimensions.FONT_SIZE_LARGE * 2)),
-        gradient: LinearGradient(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: const LinearGradient(
           colors: [
-            Color(0xFF59DC12),
+            Color(0xFF61A63C),
             Color(0xFF61A63C),
           ],
         ),

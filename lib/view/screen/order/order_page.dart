@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/screen/account/account_controller.dart';
 import 'package:template/view/screen/order/order_controller.dart';
 
 class OrderPage extends GetView<OrderController> {
+  final AccountController accountController = Get.put(AccountController());
+
   ///
   ///order widget
   ///
@@ -169,9 +173,16 @@ class OrderPage extends GetView<OrderController> {
         init: OrderController(),
         builder: (OrderController value) {
           return DefaultTabController(
-            length: 5,
+            initialIndex: accountController.orderPages.value,
+            length: 6,
             child: Scaffold(
               appBar: AppBar(
+                leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: const Icon(Icons.arrow_back_ios)),
+                elevation: 1,
                 backgroundColor: ColorResources.WHITE,
                 iconTheme: const IconThemeData(color: Colors.black),
                 title: const Text(
@@ -185,6 +196,7 @@ class OrderPage extends GetView<OrderController> {
                   unselectedLabelColor: Colors.grey,
                   tabs: [
                     Tab(text: "Tất cả"),
+                    Tab(text: "Hoàn thành"),
                     Tab(text: "Chờ thanh toán"),
                     Tab(text: "Xử lý"),
                     Tab(text: "Shipping"),
@@ -196,6 +208,9 @@ class OrderPage extends GetView<OrderController> {
                 children: [
                   // tab all
                   _tabAll(context),
+
+                  //tab done
+                  Container(),
 
                   //tab pending
                   Container(),

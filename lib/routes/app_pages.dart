@@ -1,13 +1,17 @@
 import 'package:get/get.dart';
+import 'package:template/view/checkout/checkout_page.dart';
 import 'package:template/view/screen/account/rules/rules_page.dart';
 import 'package:template/view/screen/auth/auth_page.dart';
+import 'package:template/view/screen/cart/cart_page.dart';
 import 'package:template/view/screen/categories/categories_page.dart';
 import 'package:template/view/screen/categories/category_detail/category_detail_page.dart';
 import 'package:template/view/screen/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/group/group_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/leaderboard/charts/charts_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/news/news_detail/news_detail_page.dart';
 import 'package:template/view/screen/order/history/history_page.dart';
 import 'package:template/view/screen/order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/order/order_page.dart';
@@ -15,6 +19,7 @@ import 'package:template/view/screen/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/register/register_page.dart';
 import 'package:template/view/screen/register/register_page_2.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
+import 'package:template/view/screen/register/register_page_4.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
@@ -47,11 +52,13 @@ class AppPages {
       page: () => RegisterPage3(),
     ),
     GetPage(
-      name: AppRoutes.DASHBOARD,
-      page: () => DashboardPage(),
-      binding: DashboardBinding()
+      name: AppRoutes.REGISTER_PAGE_4,
+      page: () => RegisterPage4(),
     ),
-    
+    GetPage(
+        name: AppRoutes.DASHBOARD,
+        page: () => DashboardPage(),
+        binding: DashboardBinding()),
     GetPage(
       name: AppRoutes.CATEGORIES,
       page: () => CategoriesPage(),
@@ -88,6 +95,21 @@ class AppPages {
       name: AppRoutes.INTRO,
       page: () => IntroductionPage(),
     ),
-
+    GetPage(
+      name: AppRoutes.NEWS_DETAIL,
+      page: () => NewsDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.CART,
+      page: () => CartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.GROUP,
+      page: () => GroupPage(),
+    ),
+    GetPage(
+      name: AppRoutes.CHECKOUT,
+      page: () => CheckoutPage(),
+    ),
   ];
 }

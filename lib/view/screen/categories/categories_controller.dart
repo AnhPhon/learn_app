@@ -3,15 +3,25 @@ import 'package:template/routes/app_routes.dart';
 
 class CategoriesController extends GetxController {
   final List<Map> myCategories =
-      List.generate(4, (index) => {"id": index, "name": "Product $index"})
+      List.generate(10, (index) => {"id": index, "name": "Product $index"})
           .toList();
 
   List<String> categoriesName = [
+    "Nước giặt",
+    "Viên nén",
     "Kiềm",
-    "Dầu gội",
-    "Lau sàn",
-    "Sữa tắm",
-    "Khác"
+    "Viên Hàn Lâm",
+    "Hoá mỹ phẩm",
+    "Khác",
+  ];
+
+  List nameProduct = [
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
+    'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG'
   ];
   int categorySelectedIndex = 0;
 
@@ -22,5 +32,9 @@ class CategoriesController extends GetxController {
   void changeSelectedIndex(int selectedIndex) {
     categorySelectedIndex = selectedIndex;
     update();
+  }
+
+  void onProductClick() {
+    Get.toNamed(AppRoutes.PRODUCT_DETAIL);
   }
 }

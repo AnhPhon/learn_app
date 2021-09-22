@@ -3,6 +3,10 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/posts/posts_page.dart';
 
 class LeaderBoardController extends GetxController {
+  String title = "commodo elit at imperdiet dui accumsan sit";
+  String subtitle =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.";
+
   void onChartsClick() {
     Get.toNamed(AppRoutes.CHARTS);
   }

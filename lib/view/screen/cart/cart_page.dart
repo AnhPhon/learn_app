@@ -11,6 +11,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 
 import 'cart_controller.dart';
 
@@ -289,239 +290,30 @@ class CartPage extends GetView<CartController> {
   Widget _bottomContainer(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
-      height: DeviceUtils.getScaledSize(context, 0.254),
+      height: DeviceUtils.getScaledSize(context, 0.2),
       color: ColorResources.WHITE,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Expanded(child: SvgPicture.asset("assets/icon/coupons.svg")),
-              Expanded(
-                  flex: 8,
-                  child: Row(
-                    children: [
-                      //text voucher
-                      Text(
-                        "Nội dung khuyến mãi",
-                        style: Dimensions.fontSizeStyle16w600(),
-                      ),
-
-                      //icon check
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          padding: EdgeInsets.all(
-                              DeviceUtils.getScaledWidth(context, 0.005)),
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ColorResources.PRIMARY,
-                          ),
-                          child: Icon(
-                            Icons.check_outlined,
-                            color: ColorResources.WHITE,
-                            size: DeviceUtils.getScaledHeight(context, 0.012),
-                          ),
-                        ),
-                      ),
-
-                      //!
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.error,
-                            color: ColorResources.RED,
-                            size: DeviceUtils.getScaledHeight(context, 0.022),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    _showBottomSheet(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: DeviceUtils.getScaledHeight(context, 0.023),
-                  ),
-                ),
-              ),
-
-              ///
-              ///icon close
-              ///
-
-              // Expanded(
-              //   child: GestureDetector(
-              //     onTap: () {},
-              //     child: Container(
-              //       padding: EdgeInsets.all(
-              //           DeviceUtils.getScaledWidth(context, 0.01)),
-              //       alignment: Alignment.center,
-              //       decoration: const BoxDecoration(
-              //         shape: BoxShape.circle,
-              //         color: ColorResources.GREY,
-              //       ),
-              //       child: Icon(
-              //         Icons.close_outlined,
-              //         size: DeviceUtils.getScaledHeight(context, 0.022),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
-
-          //divider
-          Padding(
-            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.01)),
-            child: const Divider(
-              thickness: 1,
-              color: ColorResources.GREY,
-            ),
-          ),
-
           //button checkout
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-                color: ColorResources.PRIMARY,
-                borderRadius: BorderRadius.circular(20)),
-            child: Align(
-                child: Text("Thanh toán 275.000đ",
-                    style: Dimensions.fontSizeStyle16()
-                        .copyWith(color: ColorResources.WHITE))),
+          GestureDetector(
+            onTap: () {
+              controller.onCheckoutClick();
+            },
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                  color: ColorResources.PRIMARY,
+                  borderRadius: BorderRadius.circular(20)),
+              child: Align(
+                  child: Text("Thanh toán 275.000đ",
+                      style: Dimensions.fontSizeStyle16()
+                          .copyWith(color: ColorResources.WHITE))),
+            ),
           ),
         ],
       ),
     );
-  }
-
-  ///
-  ///show bottomsheet
-  ///
-  _showBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: Container(
-              height: 300,
-              padding: EdgeInsets.all(
-                DeviceUtils.getScaledSize(context, 0.02),
-              ),
-              decoration: const BoxDecoration(
-                  color: ColorResources.WHITE,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10))),
-              child: Column(
-                children: [
-                  // title
-                  Row(
-                    children: [
-                      Expanded(
-                          flex: 9,
-                          child: Align(
-                              child: Text(
-                            "Chọn khuyến mãi",
-                            style: Dimensions.fontSizeStyle18w600(),
-                          ))),
-                      Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: const Icon(Icons.close))),
-                    ],
-                  ),
-
-                  //divider
-                  const Divider(
-                    thickness: 1,
-                    color: ColorResources.GREY,
-                  ),
-
-                  //input voucher
-                  Container(
-                    height: DeviceUtils.getScaledSize(context, 0.102),
-                    margin: EdgeInsets.symmetric(
-                        horizontal: DeviceUtils.getScaledSize(context, 0.025),
-                        vertical: DeviceUtils.getScaledSize(context, 0.038)),
-                    child: TextFormField(
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal:
-                                DeviceUtils.getScaledSize(context, 0.025),
-                            vertical:
-                                DeviceUtils.getScaledSize(context, 0.025)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: ColorResources.GREY)),
-                        enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: ColorResources.GREY)),
-                      ),
-                    ),
-                  ),
-
-                  //voucher
-                  Padding(
-                    padding: EdgeInsets.all(
-                        DeviceUtils.getScaledSize(context, 0.025)),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 3,
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                  color: ColorResources.WHITE,
-                                  borderRadius: BorderRadius.circular(7),
-                                  border: Border(
-                                    top: BorderSide(
-                                        width: 16.0,
-                                        color: Colors.lightBlue.shade600),
-                                    bottom: BorderSide(
-                                        width: 16.0,
-                                        color: Colors.lightBlue.shade900),
-                                  )),
-                            )),
-                        Expanded(
-                            flex: 7,
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                  color: ColorResources.WHITE,
-                                  borderRadius: BorderRadius.circular(7),
-                                  border: const Border(
-                                      top: BorderSide(
-                                          color: ColorResources.GREY),
-                                      bottom: BorderSide(
-                                          color: ColorResources.GREY),
-                                      left: BorderSide(
-                                          color: ColorResources.GREY))),
-                            ))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
   }
 
   @override
@@ -533,18 +325,7 @@ class CartPage extends GetView<CartController> {
         init: CartController(),
         builder: (CartController value) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                title,
-                style: TextStyle(
-                  color: Color(0xFF27272A),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor: Colors.white,
-              centerTitle: true,
-              shadowColor: const Color(0x3F000000),
-            ),
+            appBar: CustomAppBar().customAppBar(title: "Giỏ hàng"),
             body: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: DeviceUtils.getScaledSize(context, 0.038)),

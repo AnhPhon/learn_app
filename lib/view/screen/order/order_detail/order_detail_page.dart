@@ -4,6 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/order/component/custom_stepper.dart';
 import 'package:template/view/screen/order/order_detail/order_detail_controller.dart';
 
@@ -250,14 +251,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
         init: OrderDetailController(),
         builder: (OrderDetailController value) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: ColorResources.WHITE,
-              iconTheme: const IconThemeData(color: Colors.black),
-              title: const Text(
-                "Order của tôi",
-                style: TextStyle(color: ColorResources.BLACK),
-              ),
-            ),
+            appBar: CustomAppBar().customAppBar(title: "Order của tôi"),
             body: Padding(
               padding:
                   EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.038)),

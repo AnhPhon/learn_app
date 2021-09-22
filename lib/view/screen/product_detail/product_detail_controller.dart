@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 
 class ProductDetailController extends GetxController {
+  void onCartClick() {
+    Get.toNamed(AppRoutes.CART);
+  }
+
   //  money normalize
   String moneyNormalize(int money, String splitSymbol) {
     String text = money.toString().split('').reversed.join();

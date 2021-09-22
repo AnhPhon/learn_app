@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/order/component/custom_stepper.dart';
 import 'package:template/view/screen/order/history/history_controller.dart';
 
@@ -36,14 +37,7 @@ class HistoryPage extends GetView<HistoryController> {
         builder: (HistoryController value) {
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
-            appBar: AppBar(
-              backgroundColor: ColorResources.WHITE,
-              iconTheme: const IconThemeData(color: Colors.black),
-              title: const Text(
-                "Lịch sử",
-                style: TextStyle(color: ColorResources.BLACK),
-              ),
-            ),
+            appBar: CustomAppBar().customAppBar(title: "Lịch sử"),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(

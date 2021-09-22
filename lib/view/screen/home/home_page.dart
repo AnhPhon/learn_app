@@ -1,9 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/home_page/info.dart';
 // template
 import 'package:template/data/template/categories.dart';
+import 'package:template/helper/price_converter.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
@@ -30,20 +34,42 @@ class HomePage extends GetView<HomeController> {
               //avatar background user
               _avatarBackgroundUser(context),
 
+              //banner
+              _imgProduct(context),
+
+              //Đội nhóm
+              SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+              _groupWidget(context, DeviceUtils.getScaledSize(context, 0.178),
+                  controller),
+
               // Danh mục
-              const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-              _categoryWidget(Dimensions.CATEGORY_WIDTH_DEFAULT, controller),
-
-              //Sản phẩm mới
-              const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-              _sanPhamMoi(controller),
-
-              // sản phẩm thịnh hành
-              const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-              _sanPhamThinhHanh(controller),
+              SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+              _categoryWidget(
+                  DeviceUtils.getScaledSize(context, 0.178), controller)
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  ///
+  /// banner
+  ///
+  Widget _imgProduct(BuildContext context) {
+    return CarouselSlider.builder(
+      itemCount: controller.banner.length,
+      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+        return Image.asset(
+          controller.banner[itemIndex].toString(),
+          fit: BoxFit.fill,
+          width: 1000,
+        );
+      },
+      options: CarouselOptions(
+        height: DeviceUtils.getScaledHeight(context, 0.3),
+        autoPlay: true,
+        viewportFraction: 1,
       ),
     );
   }
@@ -77,10 +103,10 @@ class HomePage extends GetView<HomeController> {
 
     final List<UserInfo> _basicInformationStatistic = [
       UserInfo(
-          money: controller.moneyNormalize(6700000, ","),
+          money: PriceConverter.convertPrice(context, 6000000),
           label: "Doanh số đội nhóm"),
       UserInfo(
-          money: controller.moneyNormalize(6000000, ","),
+          money: PriceConverter.convertPrice(context, 6000000),
           label: "Doanh số cá nhân"),
       UserInfo(money: "3", label: "Số lượng ID"),
       UserInfo(money: "17", label: "Số lượng đơn giá")
@@ -318,26 +344,32 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
           const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.only(right: 35),
-            alignment: Alignment.centerRight,
-            child:
-                Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
-              Text(
-                'Xem thêm',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                  fontWeight: FontWeight.normal,
-                  color: Color(0xFF1A94FF),
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: Dimensions.FONT_SIZE_DEFAULT,
-                color: Color(0xFF1A94FF),
-              ),
-            ]),
+          GestureDetector(
+            onTap: () {
+              controller.onGroupClick();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 35),
+              alignment: Alignment.centerRight,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text(
+                      'Xem thêm',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.normal,
+                        color: ColorResources.PRIMARY,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: Dimensions.FONT_SIZE_DEFAULT,
+                      color: ColorResources.PRIMARY,
+                    ),
+                  ]),
+            ),
           ),
         ],
       ),
@@ -346,13 +378,68 @@ class HomePage extends GetView<HomeController> {
 }
 
 ///
+/// Group widget
+///
+Widget _groupWidget(
+    BuildContext context, double size, HomeController controller) {
+  return CategoryWidget(
+    text: "Tạo ID",
+    label: 'Đội nhóm',
+    icon: Icon(Icons.add_outlined,
+        color: ColorResources.PRIMARY,
+        size: DeviceUtils.getScaledSize(context, 0.045)),
+    onPressed: () {
+      controller.onRegisterIdClick();
+    },
+    content: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _danhMucBtn(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(size / 3),
+                  child: Image.asset(
+                    Images.template,
+                    width: size,
+                    height: size,
+                  ),
+                ),
+                'Kho hàng điều kiện', () {
+              controller.onBtnCategoriesDetailClick();
+              print("2");
+            }),
+            _danhMucBtn(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(size / 3),
+                  child: Image.asset(
+                    Images.template,
+                    width: size,
+                    height: size,
+                  ),
+                ),
+                'Kho hàng trợ giá', () {
+              controller.onProductVoucherClick();
+              print("3");
+            }),
+          ],
+        ),
+      ],
+    ),
+    hasMore: true,
+  );
+}
+
+///
 /// Category widget
 ///
 Widget _categoryWidget(double size, HomeController controller) {
   return CategoryWidget(
+    text: "Xem thêm",
     label: 'Danh mục',
     onPressed: () {
-      controller.onBtnCategoriesClick();
+      controller.onBtnCategoriesClick(0);
     },
     content: Column(
       children: [
@@ -369,6 +456,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Nước giặt', () {
+              controller.onBtnCategoriesClick(0);
               print("1");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
@@ -382,6 +470,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Viên nén', () {
+              controller.onBtnCategoriesClick(1);
               print("2");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
@@ -395,6 +484,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Kiềm', () {
+              controller.onBtnCategoriesClick(2);
               print("3");
             }),
             const Spacer(),
@@ -414,6 +504,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Viên Hàn Lâm', () {
+              controller.onBtnCategoriesClick(3);
               print("4");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
@@ -427,6 +518,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Hóa mỹ phẩm', () {
+              controller.onBtnCategoriesClick(4);
               print("5");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
@@ -440,6 +532,7 @@ Widget _categoryWidget(double size, HomeController controller) {
                   ),
                 ),
                 'Khác', () {
+              controller.onBtnCategoriesClick(5);
               print("6");
             }),
             const Spacer(),
@@ -475,163 +568,5 @@ Widget _danhMucBtn(Widget widget, String label, Function() onTap) {
         ),
       ],
     ),
-  );
-}
-
-///
-/// nút trong danh muc
-///
-Widget _sanPhamDanhMucBtn(
-    Image image, String label, int money, HomeController controller) {
-  return SizedBox(
-      height: 280,
-      width: Dimensions.SQUARE_CATEGORY_SIZE,
-      child: GestureDetector(
-        child: Column(
-          children: [
-            Container(
-                alignment: Alignment.topLeft,
-                child: ClipRRect(
-                    // borderRadius: BorderRadius.circular(20),
-                    child: image)),
-            const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                label,
-                style: const TextStyle(
-                    color: Color(0xFF27272A),
-                    fontSize: Dimensions.FONT_SIZE_LARGE),
-              ),
-            ),
-            const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "${controller.moneyNormalize(money, ",")} vnd",
-                style: const TextStyle(
-                  color: Color(0xFF27272A),
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-        onTap: () {
-          controller.onProductClick();
-        },
-      ));
-}
-
-Widget _sanPhamMoi(HomeController controller) {
-  return CategoryWidget(
-    hasMore: true,
-    label: 'Sản phẩm mới',
-    content: Column(children: [
-      Row(children: [
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp3,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-          138000,
-          controller,
-        ),
-        const Spacer(),
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp4,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-          138000,
-          controller,
-        ),
-      ]),
-      const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 2),
-      Row(children: [
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp3,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-          138000,
-          controller,
-        ),
-        const Spacer(),
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp4,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-          138000,
-          controller,
-        ),
-      ])
-    ]),
-  );
-}
-
-Widget _sanPhamThinhHanh(HomeController controller) {
-  return CategoryWidget(
-    hasMore: true,
-    label: 'Sản phẩm thịnh hành',
-    content: Column(children: [
-      Row(children: [
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp3,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-          138000,
-          controller,
-        ),
-        const Spacer(),
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp4,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-          138000,
-          controller,
-        ),
-      ]),
-      const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 2),
-      Row(children: [
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp3,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-          138000,
-          controller,
-        ),
-        const Spacer(),
-        _sanPhamDanhMucBtn(
-          Image.asset(
-            Images.sp4,
-            width: Dimensions.SQUARE_CATEGORY_SIZE,
-            height: Dimensions.SQUARE_CATEGORY_SIZE,
-          ),
-          'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-          138000,
-          controller,
-        ),
-      ])
-    ]),
   );
 }

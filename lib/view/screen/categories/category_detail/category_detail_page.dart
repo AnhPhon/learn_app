@@ -5,6 +5,7 @@ import 'package:template/data/template/categories.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/categories/category_detail/category_detail_controller.dart';
 
 class CategoryDetailPage extends GetView<CategoryDetailController> {
@@ -13,6 +14,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
         height: 280,
         width: Dimensions.SQUARE_CATEGORY_SIZE,
         child: GestureDetector(
+          onTap: () {},
           child: Column(
             children: [
               Container(
@@ -44,7 +46,6 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
               ),
             ],
           ),
-          onTap: () {},
         ));
   }
 
@@ -127,14 +128,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
         builder: (CategoryDetailController value) {
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
-            appBar: AppBar(
-              iconTheme: const IconThemeData(color: Colors.black),
-              title: const Text(
-                "Chi tiết",
-                style: TextStyle(color: Colors.black),
-              ),
-              backgroundColor: Colors.white,
-            ),
+            appBar: CustomAppBar().customAppBar(title: "Chi tiết"),
             body: Container(
               padding: EdgeInsets.zero,
               margin: EdgeInsets.zero,

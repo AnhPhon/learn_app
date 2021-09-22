@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'dart:math' as math;
@@ -15,8 +16,8 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 100,
+      width: DeviceUtils.getScaledSize(context, 0.254),
+      height: DeviceUtils.getScaledSize(context, 0.254),
       decoration: BoxDecoration(
         color: isSelected ? ColorResources.WHITE : null,
       ),
@@ -27,7 +28,7 @@ class CategoryItem extends StatelessWidget {
             height: 50,
             width: 50,
             decoration: BoxDecoration(
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+              color: Color((math.Random().nextDouble() * 0xFFE8E8E8).toInt())
                   .withOpacity(1.0),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -43,7 +44,7 @@ class CategoryItem extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: titilliumSemiBold.copyWith(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                  color: isSelected ? ColorResources.BLACK : Colors.grey[600],
+                  color: isSelected ? Colors.grey[600] : ColorResources.BLACK,
                 )),
           ),
         ]),

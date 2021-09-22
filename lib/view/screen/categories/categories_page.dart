@@ -1,130 +1,100 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
-import 'package:template/view/screen/categories/component/category_item.dart';
+import 'package:template/view/screen/home/home_controller.dart';
 
 class CategoriesPage extends GetView<CategoriesController> {
+  final HomeController homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoriesController>(
         init: CategoriesController(),
         builder: (CategoriesController value) {
-          return Scaffold(
-            backgroundColor: ColorResources.WHITE,
-            appBar: AppBar(
-              iconTheme: const IconThemeData(color: Colors.black),
-              title: const Text(
-                "Danh mục",
-                style: TextStyle(color: Colors.black),
+          return DefaultTabController(
+            initialIndex: homeController.categoryPages,
+            length: controller.categoriesName.length,
+            child: Scaffold(
+              appBar: AppBar(
+                leading: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: const Icon(Icons.arrow_back_ios)),
+                elevation: 1,
+                backgroundColor: ColorResources.WHITE,
+                iconTheme: const IconThemeData(color: Colors.black),
+                title: Text(
+                  homeController.isCategory == false
+                      ? "Danh mục"
+                      : "Kho hàng trợ giá",
+                  style: const TextStyle(color: ColorResources.BLACK),
+                ),
+                bottom: TabBar(
+                  isScrollable: true,
+                  indicatorColor: ColorResources.PRIMARY,
+                  labelColor: ColorResources.PRIMARY,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: [...controller.categoriesName.map((e) => Tab(text: e))],
+                ),
               ),
-              backgroundColor: Colors.white,
-            ),
-            body: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 100,
-                  height: double.infinity,
-                  margin: const EdgeInsets.only(top: 3),
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF5F5FA),
-                  ),
-                  child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.all(0),
-                      itemCount: controller.categoriesName.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
+              body: TabBarView(
+                children: [
+                  ...List.generate(
+                    controller.categoriesName.length,
+                    (index) => GridView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 0.8,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: controller.nameProduct.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return GestureDetector(
                             onTap: () {
-                              controller.changeSelectedIndex(index);
+                              controller.onProductClick();
                             },
-                            child: CategoryItem(
-                              title: controller.categoriesName[index],
-                              icon: const Icon(Icons.person),
-                              isSelected:
-                                  controller.categorySelectedIndex == index,
-                            ));
-                      }),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: DeviceUtils.getScaledWidth(context, 0.05),
-                        vertical: DeviceUtils.getScaledWidth(context, 0.05)),
-                    alignment: Alignment.center,
-                    height: DeviceUtils.getScaledHeight(context, 0.5),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(width: 2, color: ColorResources.GREY),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                            height: DeviceUtils.getScaledHeight(context, 0.02)),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  DeviceUtils.getScaledHeight(context, 0.03),
-                              vertical:
-                                  DeviceUtils.getScaledWidth(context, 0.04)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Chi tiết",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              GestureDetector(
-                                onTap: () => controller.onBtnDetailClick(),
-                                child: const Icon(Icons.arrow_forward_ios),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10),
-                              itemCount: controller.myCategories.length,
-                              itemBuilder: (BuildContext context, index) {
-                                return Column(
-                                  children: [
-                                    Container(
-                                      height: 80,
-                                      width: 80,
-                                      alignment: Alignment.center,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/Untitled.png")),
-                                      ),
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 140,
+                                    decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      image: DecorationImage(
+                                          image: AssetImage(Images.sp3),
+                                          fit: BoxFit.fill),
                                     ),
-                                    SizedBox(
-                                        height: DeviceUtils.getScaledHeight(
-                                            context, 0.01)),
-                                    Text(controller.categoriesName[
-                                            controller.categorySelectedIndex] +
-                                        controller.myCategories[index]['name']
-                                            .toString()),
-                                  ],
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                                  ),
+                                  SizedBox(
+                                      height: DeviceUtils.getScaledHeight(
+                                          context, 0.01)),
+                                  Text(
+                                    controller.nameProduct[index].toString(),
+                                    maxLines: 2,
+                                    style: Dimensions.fontSizeStyle14w600(),
+                                  ),
+                                  Text(PriceConverter.convertPrice(
+                                      context, 180000))
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  )
+                ],
+              ),
             ),
           );
         });

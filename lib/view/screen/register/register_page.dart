@@ -4,11 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 // dimensions
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
 import 'package:template/view/screen/register/register_page_2.dart';
+import 'package:template/view/screen/register/register_page_3.dart';
 
 import 'register_controller.dart';
 
@@ -57,100 +61,113 @@ class RegisterPage extends GetView<RegisterController> {
           child: Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 80),
-                      child: Image.asset(Images.register_bg),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
+                  padding:
+                      EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.063)),
+                  child: Image.asset(Images.register_bg)),
+              SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
               Padding(
                 padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                    EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.063)),
                 child: Column(
                   children: [
                     // Mã giới thiệu
                     _normalInputWidget(
-                        "Mã giới thiệu", controllers["magioithieu"]!),
+                        context, "Mã giới thiệu", controllers["magioithieu"]!),
 
                     // Tài khoản
-                    _normalInputWidget("Tài khoản", controllers["taikhoan"]!),
+                    _normalInputWidget(
+                        context, "Tài khoản", controllers["taikhoan"]!),
 
                     // Mất khẩu
-                    _normalInputWidget("Mật khẩu", controllers["matkhau"]!),
+                    _normalInputWidget(
+                        context, "Mật khẩu", controllers["matkhau"]!),
 
                     // Xác nhận mật khẩu
-                    _normalInputWidget(
-                        "Xác nhận mật khẩu", controllers["xacnhanmatkhau"]!),
+                    _normalInputWidget(context, "Xác nhận mật khẩu",
+                        controllers["xacnhanmatkhau"]!),
 
                     // Số điện thoại
                     _normalInputWidget(
-                        "Số điện thoại", controllers["sodienthoai"]!),
+                        context, "Số điện thoại", controllers["sodienthoai"]!),
 
                     // Mã giới thiệu
-                    _normalInputWidget("Họ và tên", controllers["hoten"]!),
+                    _normalInputWidget(
+                        context, "Họ và tên", controllers["hoten"]!),
 
                     // gender
-                    _genderSelectionWidget(controller),
+                    _genderSelectionWidget(context, controller),
 
                     // Ngày sinh
                     _dateTimePick(context),
 
                     // cmnd
-                    _normalInputWidget(
-                        "Số chứng minh nhân dân", controllers["cmnd"]!),
+                    _normalInputWidget(context, "Số chứng minh nhân dân",
+                        controllers["cmnd"]!),
 
                     // ngày cấp
                     _dateTimePick(context),
 
                     // Nơi cấp
-                    _normalInputWidget("Nơi cấp", controllers["noicap"]!),
+                    _normalInputWidget(
+                        context, "Nơi cấp", controllers["noicap"]!),
 
                     // Nghề nghiệp
                     _normalInputWidget(
-                        "Nghề nghiệp", controllers["nghenghiep"]!),
+                        context, "Nghề nghiệp", controllers["nghenghiep"]!),
 
                     // Địa chỉ thường trú
-                    _normalInputWidget(
-                        "Địa chỉ thường trú", controllers["diachithuongtru"]!),
+                    _normalInputWidget(context, "Địa chỉ thường trú",
+                        controllers["diachithuongtru"]!),
 
                     // Địa chỉ liên lạc
-                    _normalInputWidget(
-                        "Địa chỉ liên lạc", controllers["diachitlienlac"]!),
+                    _normalInputWidget(context, "Địa chỉ liên lạc",
+                        controllers["diachitlienlac"]!),
 
                     GestureDetector(
                       onTap: () {
-                        Get.to(RegisterPage2());
+                        Get.to(RegisterPage3());
                       },
                       child: Container(
-                        margin: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
+                        margin: EdgeInsets.symmetric(
+                            vertical:
+                                DeviceUtils.getScaledSize(context, 0.035)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: DeviceUtils.getScaledSize(context, 0.035),
+                            horizontal:
+                                DeviceUtils.getScaledSize(context, 0.03)),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
                             colors: [
-                              Color(0xFF59DC12),
+                              Color(0xFF61A63C),
+                              Color(0xFF61A63C),
                               Color(0xFF61A63C),
                             ],
-                            begin: Alignment(0, -1),
-                            end: Alignment(0, 1)
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(20),
-                        width: double.infinity,
                         child: const Text(
                           "Tiếp tục",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
+                      // Container(
+                      //   margin: const EdgeInsets.all(10),
+                      //   decoration: const BoxDecoration(
+                      //     gradient: LinearGradient(colors: [
+                      //       Color(0xFF59DC12),
+                      //       Color(0xFF61A63C),
+                      //     ], begin: Alignment(0, -1), end: Alignment(0, 1)),
+                      //     borderRadius: BorderRadius.all(Radius.circular(30)),
+                      //   ),
+                      //   alignment: Alignment.center,
+                      //   padding: const EdgeInsets.all(20),
+                      //   width: double.infinity,
+                      //   child: const Text(
+                      //     "Tiếp tục",
+                      //     style: TextStyle(color: Colors.white, fontSize: 18),
+                      //   ),
+                      // ),
                     )
                   ],
                 ),
@@ -163,26 +180,49 @@ class RegisterPage extends GetView<RegisterController> {
   }
 }
 
-Widget _normalInputWidget(String? label, TextEditingController controller) {
+Widget _normalInputWidget(
+    BuildContext context, String? label, TextEditingController controller) {
   return Container(
-    margin: const EdgeInsets.all(10),
-    padding: const EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(
-        color: const Color(0xFFEBEDEF), // set border color
-        width: 3.0,
-      ), // set border width
-      borderRadius: const BorderRadius.all(
-        Radius.circular(10.0),
-      ), // set rounded corner radius
-    ),
+    margin: EdgeInsets.symmetric(
+        vertical: DeviceUtils.getScaledSize(context, 0.025)),
     child: TextField(
-      decoration: InputDecoration(
-        hintText: label,
-        border: InputBorder.none,
-      ),
+      textInputAction: TextInputAction.done,
+      textAlignVertical: TextAlignVertical.center,
       controller: controller,
+      cursorColor: ColorResources.PRIMARY,
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+            horizontal: DeviceUtils.getScaledSize(context, 0.025),
+            vertical: DeviceUtils.getScaledSize(context, 0.038)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: ColorResources.GREY)),
+        disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: ColorResources.GREY)),
+        hintText: label,
+        filled: true,
+        fillColor: Colors.transparent,
+        suffixIconConstraints: BoxConstraints(
+          maxHeight: DeviceUtils.getScaledSize(context, 0.025) * 2,
+        ),
+        // suffixIcon: Container(
+        //   padding:
+        //       EdgeInsets.only(right: DeviceUtils.getScaledSize(context, 0.025)),
+        //   child: Icon(
+        //     Icons.person,
+        //     size: DeviceUtils.getScaledSize(context, 0.045),
+        //     color: ColorResources.PRIMARY,
+        //   ),
+        // ),
+      ),
     ),
   );
 }
@@ -190,7 +230,7 @@ Widget _normalInputWidget(String? label, TextEditingController controller) {
 ///
 /// select
 ///
-Widget _genderSelectionWidget(controller) {
+Widget _genderSelectionWidget(BuildContext context, controller) {
   final List<Map<String, dynamic>> genderOptions = [
     {
       "index": "1",
@@ -203,14 +243,15 @@ Widget _genderSelectionWidget(controller) {
   ];
 
   return Container(
-    margin: const EdgeInsets.all(10),
-    padding: const EdgeInsets.all(10),
+    margin: EdgeInsets.symmetric(
+        vertical: DeviceUtils.getScaledSize(context, 0.025)),
+    padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
     width: double.infinity,
+    height: DeviceUtils.getScaledSize(context, 0.127),
     decoration: BoxDecoration(
       color: Colors.white,
       border: Border.all(
-        color: const Color(0xFFEBEDEF), // set border color
-        width: 3.0,
+        color: ColorResources.GREY, // set border color
       ), // set border width
       borderRadius: const BorderRadius.all(
         Radius.circular(10.0),
@@ -252,23 +293,34 @@ Widget _dateTimePick(BuildContext context) {
       );
     },
     child: Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(20),
-      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(
+          vertical: DeviceUtils.getScaledSize(context, 0.025)),
+      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
       width: double.infinity,
+      height: DeviceUtils.getScaledSize(context, 0.127),
+      alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: const Color(0xFFEBEDEF), // set border color
-          width: 3.0,
+          color: ColorResources.GREY, // set border color
         ), // set border width
         borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ), // set rounded corner radius
       ),
-      child: const Text(
-        '20/9/2021',
-        style: TextStyle(color: Colors.grey),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            DateConverter.estimatedDate(DateTime.now()),
+            style: const TextStyle(color: ColorResources.GREY),
+          ),
+          Icon(
+            Icons.calendar_today,
+            size: DeviceUtils.getScaledSize(context, 0.045),
+            color: ColorResources.PRIMARY,
+          ),
+        ],
       ),
     ),
   );

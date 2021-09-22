@@ -7,6 +7,8 @@ import 'package:template/routes/app_routes.dart';
 class AccountController extends GetxController {
   var counter = 1.obs;
 
+  var orderPages = 0.obs;
+
   List<Region> regionsList = [];
   bool isLoading = true;
 
@@ -14,7 +16,21 @@ class AccountController extends GetxController {
     Get.toNamed(AppRoutes.RULES);
   }
 
-  void onOrderClick() {
+  void onLogoutClick() {
+    Get.offNamed(AppRoutes.LOGIN);
+  }
+
+  void onOrderClick(int? index) {
+    if (index == 1) {
+      orderPages.value = 1;
+    } else if (index == 2) {
+      orderPages.value = 2;
+    } else if (index == 3) {
+      orderPages.value = 3;
+    } else {
+      orderPages.value = 0;
+    }
+    update();
     Get.toNamed(AppRoutes.ORDER);
   }
 

@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/introduction/introduction_controller.dart';
 
 class IntroductionPage extends GetView<IntroductionController> {
@@ -68,10 +71,14 @@ class IntroductionPage extends GetView<IntroductionController> {
             skipFlex: 0,
             nextFlex: 0,
             //rtl: true, // Display as right-to-left
-            skip: const Text('Skip'),
-            next: const Icon(Icons.arrow_forward),
+            skip: const Text('Skip',
+                style: TextStyle(color: ColorResources.PRIMARY)),
+            next:
+                const Icon(Icons.arrow_forward, color: ColorResources.PRIMARY),
             done: const Text('Done',
-                style: TextStyle(fontWeight: FontWeight.w600)),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: ColorResources.PRIMARY)),
             curve: Curves.fastLinearToSlowEaseIn,
             controlsMargin: const EdgeInsets.all(16),
             controlsPadding: kIsWeb
@@ -79,8 +86,9 @@ class IntroductionPage extends GetView<IntroductionController> {
                 : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
             dotsDecorator: const DotsDecorator(
               size: Size(10.0, 10.0),
-              color: Color(0xFFBDBDBD),
+              color: ColorResources.PRIMARY,
               activeSize: Size(22.0, 10.0),
+              activeColor: ColorResources.PRIMARY,
               activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
               ),

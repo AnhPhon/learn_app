@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/view/checkout/checkout_page.dart';
 import 'package:template/view/screen/posts/posts_page.dart';
 
 class CartController extends GetxController {
@@ -19,5 +21,9 @@ class CartController extends GetxController {
 
   void onBtnHomeClick() {
     Get.to(PostsPage());
+  }
+
+  void onCheckoutClick() {
+    Get.toNamed(AppRoutes.CHECKOUT);
   }
 }
