@@ -10,7 +10,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
-import 'package:template/view/checkout/checkout_controller.dart';
+import 'package:template/view/screen/checkout/checkout_controller.dart';
 import 'package:template/view/screen/register/register_controller.dart';
 
 class CheckoutPage extends GetView<CheckoutController> {
@@ -187,7 +187,7 @@ class CheckoutPage extends GetView<CheckoutController> {
                   GestureDetector(
                     onTap: () {
                       if (registerController.image != null) {
-                        Get.offNamed(AppRoutes.LOGIN);
+                        Get.offNamed(AppRoutes.DASHBOARD);
 
                         showAnimatedDialog(
                             context,

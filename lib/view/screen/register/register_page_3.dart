@@ -24,7 +24,7 @@ class RegisterPage3 extends GetView<RegisterController> {
   Widget _bottomContainer(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledSize(context, 0.06),
+          horizontal: DeviceUtils.getScaledSize(context, 0.04),
           vertical: DeviceUtils.getScaledSize(context, 0.03)),
       height: DeviceUtils.getScaledSize(context, 0.55),
       decoration: BoxDecoration(
@@ -60,7 +60,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                 "Tổng tiền phải trả là: ${PriceConverter.convertPrice(context, controller.sum * .75)}",
                 style: titilliumBold.copyWith(fontSize: 16),
               ),
-              SizedBox(width: DeviceUtils.getScaledSize(context, 0.025)),
+              SizedBox(width: DeviceUtils.getScaledSize(context, 0.015)),
               Text(
                 PriceConverter.convertPrice(context, controller.sum.toDouble()),
                 style: titilliumBold.copyWith(
@@ -80,10 +80,6 @@ class RegisterPage3 extends GetView<RegisterController> {
               final double money = controller.sum * .75;
               final bool moneyValid = money > 2500000;
               if (moneyValid) {
-                print(
-                    "Hiện tại là ${controller.moneyNormalize(money, ",")} >= ${controller.moneyNormalize(2500000, ",")}");
-                print("Đăng ký thành công");
-
                 Get.toNamed(AppRoutes.REGISTER_PAGE_4);
               } else {
                 Get.snackbar(

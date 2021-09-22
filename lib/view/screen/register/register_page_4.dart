@@ -155,7 +155,7 @@ class RegisterPage4 extends GetView<RegisterController> {
                                   vertical:
                                       DeviceUtils.getScaledSize(context, 0.01),
                                   horizontal:
-                                      DeviceUtils.getScaledSize(context, 0.1)),
+                                      DeviceUtils.getScaledSize(context, 0.05)),
                               child: const Divider(
                                 thickness: 1,
                                 color: Colors.grey,

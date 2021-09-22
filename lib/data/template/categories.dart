@@ -38,6 +38,7 @@ class CategoryWidget extends GetView {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   margin: const EdgeInsets.only(left: 10),

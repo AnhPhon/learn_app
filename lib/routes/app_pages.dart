@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:template/view/checkout/checkout_page.dart';
 import 'package:template/view/screen/account/rules/rules_page.dart';
 import 'package:template/view/screen/auth/auth_page.dart';
 import 'package:template/view/screen/cart/cart_page.dart';
 import 'package:template/view/screen/categories/categories_page.dart';
 import 'package:template/view/screen/categories/category_detail/category_detail_page.dart';
+import 'package:template/view/screen/checkout/checkout_page.dart';
 import 'package:template/view/screen/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/group/group_page.dart';

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,21 @@ import 'package:template/view/screen/register/register_page_3.dart';
 typedef Ham = void Function(int);
 
 class RegisterController extends GetxController {
+  final Map<String, TextEditingController> controllers = {
+    "magioithieu": TextEditingController(),
+    "taikhoan": TextEditingController(),
+    "matkhau": TextEditingController(),
+    "xacnhanmatkhau": TextEditingController(),
+    "sodienthoai": TextEditingController(),
+    "hoten": TextEditingController(),
+    "cmnd": TextEditingController(),
+    "ngaycap": TextEditingController(),
+    "noicap": TextEditingController(),
+    "nghenghiep": TextEditingController(),
+    "diachithuongtru": TextEditingController(),
+    "diachitlienlac": TextEditingController(),
+  };
+
   final List<Item> items = [
     Item(
         url: Images.sp1,
@@ -110,6 +126,10 @@ class RegisterController extends GetxController {
 
   int sum = 0;
 
+  bool isMaGioiThieuValid() {
+    return controllers["magioithieu"]!.text.contains(RegExp(r"^ytp(\d{4,})"));
+  }
+
   void accept(int index) {
     if (items[index].isChoose == false) {
       orderList.add(index);
@@ -147,27 +167,5 @@ class RegisterController extends GetxController {
   Ham? them(int val) {
     sum += val;
     update();
-  }
-
-  //  money normalize
-  String moneyNormalize(double money, String splitSymbol) {
-    final String text =
-        money.toString().split('.')[0].split('').reversed.join();
-    final int size = text.length;
-
-    String result = "";
-    int mark = 0;
-    for (int i = 0; i < size; i++) {
-      mark += 1;
-      result = text[i] + result;
-
-      if (mark % 3 == 0) {
-        result = splitSymbol + result;
-      }
-    }
-
-    if (result[0] == splitSymbol) result = result.substring(1, result.length);
-
-    return result;
   }
 }
