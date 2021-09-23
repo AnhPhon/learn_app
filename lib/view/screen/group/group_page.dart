@@ -86,7 +86,38 @@ class GroupPage extends GetView<GroupController> {
         init: GroupController(),
         builder: (GroupController value) {
           return Scaffold(
-            appBar: CustomAppBar().customAppBar(title: "Đội nhóm"),
+            appBar: AppBar(
+              elevation: 1,
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      right: DeviceUtils.getScaledSize(context, 0.025)),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDateRangePicker(
+                        locale: const Locale("vi", "VI"),
+                        context: context,
+                        firstDate: DateTime(2010),
+                        lastDate: DateTime(2050),
+                      ).then((value) => print("thời gian đã chọn: $value"));
+                    },
+                    child: const Icon(Icons.calendar_today_outlined,
+                        color: ColorResources.PRIMARY),
+                  ),
+                ),
+              ],
+              leading: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const Icon(Icons.arrow_back_ios)),
+              backgroundColor: ColorResources.WHITE,
+              iconTheme: const IconThemeData(color: Colors.black),
+              title: const Text(
+                "Đội nhóm",
+                style: TextStyle(color: ColorResources.BLACK),
+              ),
+            ),
             body: SingleChildScrollView(
               child: Stack(
                 children: [
@@ -138,42 +169,55 @@ class GroupPage extends GetView<GroupController> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${index + 1}",
-                                              style: Dimensions
-                                                  .fontSizeStyle18w600(),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      DeviceUtils.getScaledSize(
-                                                          context, 0.025)),
-                                              height: DeviceUtils.getScaledSize(
-                                                  context, 0.12),
-                                              width: DeviceUtils.getScaledSize(
-                                                  context, 0.12),
-                                              decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/avatar_account.png")),
-                                                shape: BoxShape.circle,
+                                        Expanded(
+                                          child: Text(
+                                            "${index + 1}",
+                                            style: Dimensions
+                                                .fontSizeStyle18w600(),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 8,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: DeviceUtils
+                                                        .getScaledSize(
+                                                            context, 0.025)),
+                                                height:
+                                                    DeviceUtils.getScaledSize(
+                                                        context, 0.12),
+                                                width:
+                                                    DeviceUtils.getScaledSize(
+                                                        context, 0.12),
+                                                decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/images/avatar_account.png")),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                              Text("Tên ${index + 1}"),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: Align(
+                                            child: Container(
+                                              padding: EdgeInsets.all(
+                                                  DeviceUtils.getScaledSize(
+                                                      context, 0.015)),
+                                              decoration: BoxDecoration(
+                                                  color: ColorResources.GREY,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16)),
+                                              child: const Text(
+                                                "5.000.000đ",
                                               ),
                                             ),
-                                            Text("Tên ${index + 1}"),
-                                          ],
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(
-                                              DeviceUtils.getScaledSize(
-                                                  context, 0.015)),
-                                          decoration: BoxDecoration(
-                                              color: ColorResources.GREY,
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          child: const Text(
-                                            "5.000.000đ",
                                           ),
                                         ),
                                       ],

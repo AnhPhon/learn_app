@@ -34,9 +34,6 @@ class HomePage extends GetView<HomeController> {
               //avatar background user
               _avatarBackgroundUser(context),
 
-              //banner
-              _imgProduct(context),
-
               //Đội nhóm
               SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
               _groupWidget(context, DeviceUtils.getScaledSize(context, 0.178),
@@ -44,7 +41,7 @@ class HomePage extends GetView<HomeController> {
 
               // Danh mục
               SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-              _categoryWidget(
+              _categoryWidget(context,
                   DeviceUtils.getScaledSize(context, 0.178), controller)
             ],
           ),
@@ -67,7 +64,7 @@ class HomePage extends GetView<HomeController> {
         );
       },
       options: CarouselOptions(
-        height: DeviceUtils.getScaledHeight(context, 0.3),
+        height: DeviceUtils.getScaledHeight(context, 0.35),
         autoPlay: true,
         viewportFraction: 1,
       ),
@@ -114,7 +111,7 @@ class HomePage extends GetView<HomeController> {
 
     return Container(
       color: Colors.white,
-      height: 420,
+      height: 460,
       child: Column(
         children: [
           Stack(
@@ -122,13 +119,12 @@ class HomePage extends GetView<HomeController> {
               // background
               Stack(
                 children: [
-                  Image.asset(
-                    Images.admin_background,
-                    width: width,
-                  ),
+                  //banner
+                  _imgProduct(context),
                   Container(
                     width: width,
                     height: partOneHeight,
+                    margin: const EdgeInsets.only(top: 50),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [Colors.transparent, Color(0xff333333)],
@@ -142,8 +138,7 @@ class HomePage extends GetView<HomeController> {
               // avatar user
               Container(
                   margin: const EdgeInsets.only(
-                      left: avatarMarginLeft,
-                      top: partOneHeight - avatarHeight / 2 - 10),
+                      left: avatarMarginLeft, top: 260 - avatarHeight / 2 - 10),
                   child: Stack(
                     children: [
                       // avatar
@@ -154,22 +149,6 @@ class HomePage extends GetView<HomeController> {
                           Colors.white, avatarWidth)
                     ],
                   )),
-
-              // notification - fix
-              Positioned(
-                right: 0,
-                top: 20,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: const Icon(
-                        CupertinoIcons.bell,
-                        size: 30,
-                        color: Colors.white,
-                      )),
-                ),
-              ),
             ],
           ),
           // basic information statistic
@@ -398,26 +377,34 @@ Widget _groupWidget(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.22),
+                  height: DeviceUtils.getScaledSize(context, 0.22),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/dieukien.png",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
                 'Kho hàng điều kiện', () {
-              controller.onBtnCategoriesDetailClick();
+              controller.onBtnKhoHangDieuKienClick();
               print("2");
             }),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.22),
+                  height: DeviceUtils.getScaledSize(context, 0.22),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/trogia.png",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
                 'Kho hàng trợ giá', () {
               controller.onProductVoucherClick();
@@ -434,7 +421,8 @@ Widget _groupWidget(
 ///
 /// Category widget
 ///
-Widget _categoryWidget(double size, HomeController controller) {
+Widget _categoryWidget(
+    BuildContext context, double size, HomeController controller) {
   return CategoryWidget(
     text: "Xem thêm",
     label: 'Danh mục',
@@ -444,46 +432,59 @@ Widget _categoryWidget(double size, HomeController controller) {
     content: Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Spacer(),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/thucpham.png",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Nước giặt', () {
+                'Thực phẩm', () {
               controller.onBtnCategoriesClick(0);
               print("1");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/thietyeu.jpg",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Viên nén', () {
+                'Đồ thiết yếu', () {
               controller.onBtnCategoriesClick(1);
               print("2");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/mevabe.png",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Kiềm', () {
+                'Mẹ và bé', () {
               controller.onBtnCategoriesClick(2);
               print("3");
             }),
@@ -492,46 +493,59 @@ Widget _categoryWidget(double size, HomeController controller) {
         ),
         const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 3),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Spacer(),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/mypham.jpg",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Viên Hàn Lâm', () {
+                'Mỹ phẩm', () {
               controller.onBtnCategoriesClick(3);
               print("4");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/quabieu.jpg",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Hóa mỹ phẩm', () {
+                'Quà biếu', () {
               controller.onBtnCategoriesClick(4);
               print("5");
             }),
             const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
             _danhMucBtn(
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(size / 3),
-                  child: Image.asset(
-                    Images.template,
-                    width: size,
-                    height: size,
-                  ),
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      border: Border.all(width: 3, color: Colors.grey.shade700),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            "assets/images/thucphamchucnang.png",
+                          ),
+                          fit: BoxFit.fill)),
                 ),
-                'Khác', () {
+                'Thực phẩm chức năng', () {
               controller.onBtnCategoriesClick(5);
               print("6");
             }),

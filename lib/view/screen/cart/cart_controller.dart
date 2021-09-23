@@ -25,4 +25,8 @@ class CartController extends GetxController {
   void onCheckoutClick() {
     Get.toNamed(AppRoutes.CHECKOUT);
   }
+
+  void onAddressClick() {
+    Get.toNamed(AppRoutes.ADDRESS);
+  }
 }

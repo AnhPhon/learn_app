@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class CategoryDetailController extends GetxController {
+class KhoHangDieuKienController extends GetxController {
   //  money normalize
   String moneyNormalize(int money, String splitSymbol) {
     String text = money.toString().split('').reversed.join();

@@ -27,65 +27,73 @@ class RegisterController extends GetxController {
     "diachitlienlac": TextEditingController(),
   };
 
+  String infoBank(
+      {required String stk,
+      required String ctk,
+      required String tenNganHang,
+      required String chiNhanh}) {
+    return "Thông tin tài khoản\nSố tài khoản: $stk\nTên chủ tài khoản: $ctk\nTên ngân hàng: $tenNganHang\nChi nhánh $chiNhanh";
+  }
+
   final List<Item> items = [
     Item(
         url: Images.sp1,
         amount: 10000000,
-        title: "Sản phẩm 1",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5.0",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 183000,
-        title: "Sản phẩm 2",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 2",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 250000,
-        title: "Sản phẩm 3",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 3",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 250000,
-        title: "Sản phẩm 4",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 4",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 652000,
-        title: "Sản phẩm 5",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 29000,
-        title: "Sản phẩm 6",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 6",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 132000,
-        title: "Sản phẩm 7",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 7",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 2500000,
-        title: "Sản phẩm 8",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 8",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 29000,
-        title: "Sản phẩm 9",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 9",
         isChoose: false,
         quality: 1),
     Item(
         url: Images.sp1,
         amount: 29000,
-        title: "Sản phẩm 10",
+        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 10",
         isChoose: false,
         quality: 1),
   ];
@@ -122,7 +130,6 @@ class RegisterController extends GetxController {
   }
 
   // It is mandatory initialize with one value from listType
-  final selected = "1".obs;
 
   List<int> orderList = [];
 
@@ -160,13 +167,12 @@ class RegisterController extends GetxController {
 
   void removeProduct() {}
 
-  // ignore: use_setters_to_change_properties
-  void setSelected(String? value) {
+  void setSelected(String value) {
     gender = value;
+    print("ddax chonj: $gender");
     update();
   }
 
-  // ignore: always_declare_return_types
   Ham? them(int val) {
     sum += val;
     update();

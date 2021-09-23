@@ -8,8 +8,6 @@ class HomeController extends GetxController {
 
   int categoryPages = 0;
 
-  bool isCategory = false;
-
   void onBtnHomeClick() {
     Get.to(PostsPage());
   }
@@ -19,7 +17,6 @@ class HomeController extends GetxController {
   }
 
   void onBtnCategoriesClick(int? index) {
-    isCategory = false;
     if (index == 0) {
       categoryPages = 0;
     } else if (index == 1) {
@@ -39,12 +36,11 @@ class HomeController extends GetxController {
   }
 
   void onProductVoucherClick() {
-    isCategory = true;
-    Get.toNamed(AppRoutes.CATEGORIES);
+    Get.toNamed(AppRoutes.KHOHANGTROGIA);
   }
 
-  void onBtnCategoriesDetailClick() {
-    Get.toNamed(AppRoutes.CATEGORY_DETAIL);
+  void onBtnKhoHangDieuKienClick() {
+    Get.toNamed(AppRoutes.KHOHANGDIEUKIEN);
   }
 
   void onProductClick() {

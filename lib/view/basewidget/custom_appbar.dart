@@ -6,6 +6,7 @@ class CustomAppBar {
   AppBar customAppBar({required String title}) {
     return AppBar(
       elevation: 1,
+      centerTitle: true,
       leading: GestureDetector(
           onTap: () {
             Get.back();

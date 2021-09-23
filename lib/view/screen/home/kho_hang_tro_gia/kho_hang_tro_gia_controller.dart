@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class CategoriesController extends GetxController {
+class KhoHangTroGiaController extends GetxController {
   final List<Map> myCategories =
       List.generate(10, (index) => {"id": index, "name": "Product $index"})
           .toList();

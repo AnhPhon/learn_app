@@ -10,7 +10,8 @@ class AppRoutes {
   static const String REGISTER_PAGE_4 = '/register4';
   static const String POST = '/post';
   static const String CATEGORIES = '/categories';
-  static const String CATEGORY_DETAIL = '/category_detail';
+  static const String KHOHANGDIEUKIEN = '/khohangdieukien';
+  static const String KHOHANGTROGIA = '/khohangtrogia';
   static const String PRODUCT_DETAIL = '/product_detail';
   static const String ORDER = '/order';
   static const String ORDER_DETAIL = '/order_detail';
@@ -22,4 +23,5 @@ class AppRoutes {
   static const String CART = '/cart';
   static const String GROUP = '/group';
   static const String CHECKOUT = '/checkout';
+  static const String ADDRESS = '/address';
 }

@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:template/app_binding.dart';
+import 'package:template/localization/app_localization.dart';
 import 'package:template/routes/app_pages.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/theme/app_theme.dart';
@@ -35,6 +37,18 @@ class MyApp extends StatelessWidget {
       _locals.add(Locale(app_constants.languages[i].languageCode.toString(),
           app_constants.languages[i].countryCode));
     }
+    Locale localeResolutionCallback(
+        Locale? locale, Iterable<Locale> supportedLocales) {
+      if (locale == null) {
+        return supportedLocales.first;
+      }
+      for (final supportedLocale in supportedLocales) {
+        if (supportedLocale.languageCode == locale.languageCode) {
+          return supportedLocale;
+        }
+      }
+      return supportedLocales.first;
+    }
 
     return GetMaterialApp(
       initialRoute: AppRoutes.SPLASH,
@@ -42,6 +56,13 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
+      supportedLocales: _locals,
+      localizationsDelegates: const [
+        AppLocalization.delegate, // Load dư liệu trước
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      localeResolutionCallback: localeResolutionCallback,
       // darkTheme: AppTheme.dark,
       // themeMode: ThemeMode.system,
       // locale: ,

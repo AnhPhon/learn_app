@@ -31,6 +31,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                       child: image)),
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
               Container(
+                height: DeviceUtils.getScaledSize(context, 0.14),
                 alignment: Alignment.topLeft,
                 child: Text(
                   label,
@@ -52,23 +53,6 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // ignore: prefer_if_elements_to_conditional_expressions
-                    discount != null
-                        ? Container(
-                            margin: EdgeInsets.all(
-                                DeviceUtils.getScaledSize(context, 0.008)),
-                            padding: EdgeInsets.all(
-                                DeviceUtils.getScaledSize(context, 0.008)),
-                            decoration: BoxDecoration(
-                                color: ColorResources.RED,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              "-$discount%",
-                              style: const TextStyle(
-                                  color: ColorResources.WHITE, fontSize: 10),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
                   ],
                 ),
               ),
@@ -80,9 +64,9 @@ class ProductDetailPage extends GetView<ProductDetailController> {
 
   Widget _sanPhamMoi(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: Column(children: [
-        Row(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           _sanPhamDanhMucBtn(
             context,
             Image.asset(
@@ -94,7 +78,6 @@ class ProductDetailPage extends GetView<ProductDetailController> {
             138000,
             discount: 10,
           ),
-          const Spacer(),
           _sanPhamDanhMucBtn(
             context,
             Image.asset(
@@ -252,7 +235,18 @@ class ProductDetailPage extends GetView<ProductDetailController> {
           Expanded(
               flex: 8,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.snackbar(
+                    "Thành công",
+                    "Đã thêm sản phẩm vào giỏ hàng",
+                    colorText: ColorResources.PRIMARY,
+                    backgroundGradient: const LinearGradient(colors: [
+                      Color(0xffd7ffba),
+                      Color(0xffeaffdb),
+                      Color(0xffd7ffba),
+                    ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+                  );
+                },
                 child: Container(
                   height: DeviceUtils.getScaledHeight(context, 0.068),
                   margin: EdgeInsets.only(
@@ -325,63 +319,63 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     ),
                   ),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.027),
-                  ),
+                  // SizedBox(
+                  //   height: DeviceUtils.getScaledHeight(context, 0.027),
+                  // ),
 
                   ///
                   ///shipping info
                   ///
-                  Container(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                    color: ColorResources.WHITE,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Thông tin shipping",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                            height:
-                                DeviceUtils.getScaledHeight(context, 0.013)),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: Dimensions.PADDING_SIZE_SMALL,
-                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: ColorResources.GREY),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text("Ship tới"),
-                                  SizedBox(
-                                      height: DeviceUtils.getScaledHeight(
-                                          context, 0.013)),
-                                  const Text(
-                                    "đây là địa chỉ giao hàng",
-                                    maxLines: 2,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              ),
-                              GestureDetector(
-                                  onTap: () {},
-                                  child: const Icon(Icons.arrow_forward_ios))
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding:
+                  //       const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                  //   color: ColorResources.WHITE,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       const Text(
+                  //         "Thông tin shipping",
+                  //         style: TextStyle(
+                  //             fontSize: 16, fontWeight: FontWeight.w600),
+                  //       ),
+                  //       SizedBox(
+                  //           height:
+                  //               DeviceUtils.getScaledHeight(context, 0.013)),
+                  //       Container(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  //         decoration: BoxDecoration(
+                  //           border: Border.all(color: ColorResources.GREY),
+                  //           borderRadius: BorderRadius.circular(10),
+                  //         ),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               children: [
+                  //                 const Text("Ship tới"),
+                  //                 SizedBox(
+                  //                     height: DeviceUtils.getScaledHeight(
+                  //                         context, 0.013)),
+                  //                 const Text(
+                  //                   "đây là địa chỉ giao hàng",
+                  //                   maxLines: 2,
+                  //                   style:
+                  //                       TextStyle(fontWeight: FontWeight.w600),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //             GestureDetector(
+                  //                 onTap: () {},
+                  //                 child: const Icon(Icons.arrow_forward_ios))
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(context, 0.027),

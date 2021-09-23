@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:template/data/template/categories.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/screen/categories/category_detail/category_detail_controller.dart';
+import 'package:template/view/screen/home/kho_hang_dieu_kien/kho_hang_dieu_kien_controller.dart';
 
-class CategoryDetailPage extends GetView<CategoryDetailController> {
-  Widget _sanPhamDanhMucBtn(Image image, String label, int money) {
+class KhoHangDieuKienPage extends GetView<KhoHangDieuKienController> {
+  Widget _sanPhamDanhMucBtn(
+      BuildContext context, Image image, String label, int money) {
     return SizedBox(
         height: 280,
         width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -24,12 +24,16 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
                       child: image)),
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
               Container(
+                height: DeviceUtils.getScaledSize(context, 0.14),
                 alignment: Alignment.topLeft,
                 child: Text(
                   label,
+                  maxLines: 3,
                   style: const TextStyle(
-                      color: Color(0xFF27272A),
-                      fontSize: Dimensions.FONT_SIZE_LARGE),
+                    color: Color(0xFF27272A),
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
@@ -40,7 +44,6 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
                   style: const TextStyle(
                     color: Color(0xFF27272A),
                     fontSize: Dimensions.FONT_SIZE_LARGE,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -49,12 +52,13 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
         ));
   }
 
-  Widget _sanPhamMoi() {
+  Widget _sanPhamMoi(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(children: [
         Row(children: [
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp3,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -65,6 +69,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
           ),
           const Spacer(),
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp4,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -77,6 +82,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
         const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 2),
         Row(children: [
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp3,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -87,6 +93,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
           ),
           const Spacer(),
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp4,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -98,6 +105,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
         ]),
         Row(children: [
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp3,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -108,6 +116,7 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
           ),
           const Spacer(),
           _sanPhamDanhMucBtn(
+            context,
             Image.asset(
               Images.sp4,
               width: Dimensions.SQUARE_CATEGORY_SIZE,
@@ -123,18 +132,18 @@ class CategoryDetailPage extends GetView<CategoryDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CategoryDetailController>(
-        init: CategoryDetailController(),
-        builder: (CategoryDetailController value) {
+    return GetBuilder<KhoHangDieuKienController>(
+        init: KhoHangDieuKienController(),
+        builder: (KhoHangDieuKienController value) {
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
-            appBar: CustomAppBar().customAppBar(title: "Chi tiết"),
+            appBar: CustomAppBar().customAppBar(title: "Kho hàng điều kiện"),
             body: Container(
               padding: EdgeInsets.zero,
               margin: EdgeInsets.zero,
               child: SingleChildScrollView(
                 child: Column(
-                  children: [_sanPhamMoi()],
+                  children: [_sanPhamMoi(context)],
                 ),
               ),
             ),

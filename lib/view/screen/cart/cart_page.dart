@@ -84,13 +84,16 @@ class CartPage extends GetView<CartController> {
                 flex: 9,
                 child: _shippingWidget(context,
                     icon: const Icon(Icons.location_on_outlined),
-                    text1: "Địa chỉ shop",
+                    text1: "Địa chỉ ship",
                     text2: "183 Quách Thị Trang",
                     text3: "Liên hệ: 0334125142"),
               ),
               Expanded(
                 child: GestureDetector(
-                    onTap: () {}, child: const Icon(Icons.arrow_forward_ios)),
+                    onTap: () {
+                      controller.onAddressClick();
+                    },
+                    child: const Icon(Icons.arrow_forward_ios)),
               ),
             ],
           ),

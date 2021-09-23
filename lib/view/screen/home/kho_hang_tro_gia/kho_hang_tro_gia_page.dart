@@ -5,19 +5,16 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
+import 'package:template/view/screen/home/kho_hang_tro_gia/kho_hang_tro_gia_controller.dart';
 
-class CategoriesPage extends GetView<CategoriesController> {
-  final HomeController homeController = Get.put(HomeController());
-
+class KhoHangTroGiaPage extends GetView<KhoHangTroGiaController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CategoriesController>(
-        init: CategoriesController(),
-        builder: (CategoriesController value) {
+    return GetBuilder<KhoHangTroGiaController>(
+        init: KhoHangTroGiaController(),
+        builder: (KhoHangTroGiaController value) {
           return DefaultTabController(
-            initialIndex: homeController.categoryPages,
             length: controller.categoriesName.length,
             child: Scaffold(
               backgroundColor: ColorResources.WHITE,
@@ -31,7 +28,7 @@ class CategoriesPage extends GetView<CategoriesController> {
                 backgroundColor: ColorResources.WHITE,
                 iconTheme: const IconThemeData(color: Colors.black),
                 title: const Text(
-                  "Danh mục",
+                  "Kho hàng trợ giá",
                   style: TextStyle(color: ColorResources.BLACK),
                 ),
                 bottom: TabBar(

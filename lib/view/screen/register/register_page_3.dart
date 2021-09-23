@@ -14,6 +14,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 
 import 'register_controller.dart';
 
@@ -144,21 +145,21 @@ class RegisterPage3 extends GetView<RegisterController> {
         init: RegisterController(),
         builder: (RegisterController value) {
           return Scaffold(
+            appBar: CustomAppBar().customAppBar(title: "Mua hàng điều kiện"),
             bottomNavigationBar: _bottomContainer(context),
-            body: Container(
-              color: Colors.white,
-              padding: EdgeInsets.only(
-                  top: DeviceUtils.getScaledSize(context, 0.063)),
-              child: GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.9,
-                    mainAxisSpacing: DeviceUtils.getScaledSize(context, 0.063),
-                  ),
-                  itemCount: controller.items.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return GestureDetector(
+            body: GridView.builder(
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  mainAxisSpacing: DeviceUtils.getScaledSize(context, 0.063),
+                ),
+                itemCount: controller.items.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                        top: DeviceUtils.getScaledSize(context, 0.03)),
+                    child: GestureDetector(
                       onTap: () {
                         controller.qualityProduct.value = 1;
                         if (controller.items[index].isChoose == false) {
@@ -171,7 +172,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                             confirmTextColor: ColorResources.WHITE,
                             onConfirm: () {
                               Get.back();
-                              controller.setSelected(index.toString());
+
                               controller.accept(index);
                               controller
                                   .countTotal(controller.items[index].amount);
@@ -302,6 +303,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                                 : null,
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (controller.items[index].isChoose == true)
                               Row(
@@ -318,7 +320,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                                       alignment: Alignment.center,
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: ColorResources.GREY,
+                                        color: ColorResources.WHITE,
                                       ),
                                       child: Icon(
                                         Icons.close_outlined,
@@ -354,9 +356,14 @@ class RegisterPage3 extends GetView<RegisterController> {
                                   SizedBox(
                                       height: DeviceUtils.getScaledHeight(
                                           context, 0.01)),
-                                  Text(
-                                    controller.items[index].title.toString(),
-                                    style: Dimensions.fontSizeStyle14w600(),
+                                  SizedBox(
+                                    height: DeviceUtils.getScaledHeight(
+                                        context, 0.068),
+                                    child: Text(
+                                      controller.items[index].title.toString(),
+                                      maxLines: 3,
+                                      style: Dimensions.fontSizeStyle14w600(),
+                                    ),
                                   ),
                                   Text(PriceConverter.convertPrice(
                                       context,
@@ -364,10 +371,9 @@ class RegisterPage3 extends GetView<RegisterController> {
                                           .toDouble())),
                                   if (controller.items[index].isChoose == true)
                                     Text(
-                                      "Số lượng: ${controller.items[index].quality}",
+                                      "Đang chọn: ${controller.items[index].quality}",
                                       style: Dimensions.fontSizeStyle14()
-                                          .copyWith(
-                                              color: ColorResources.PRIMARY),
+                                          .copyWith(color: ColorResources.RED),
                                     )
                                   else
                                     const SizedBox.shrink(),
@@ -377,9 +383,9 @@ class RegisterPage3 extends GetView<RegisterController> {
                           ],
                         ),
                       ),
-                    );
-                  }),
-            ),
+                    ),
+                  );
+                }),
           );
         });
   }

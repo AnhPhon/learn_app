@@ -2,17 +2,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
-// dimensions
-import 'package:template/utils/dimensions.dart';
+import 'package:intl/intl.dart';
 // images
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/register/register_page_2.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
 
 import 'register_controller.dart';
@@ -86,16 +84,6 @@ class RegisterPage extends GetView<RegisterController> {
           hintText: label,
           filled: true,
           fillColor: Colors.transparent,
-
-          // suffixIcon: Container(
-          //   padding:
-          //       EdgeInsets.only(right: DeviceUtils.getScaledSize(context, 0.025)),
-          //   child: Icon(
-          //     Icons.person,
-          //     size: DeviceUtils.getScaledSize(context, 0.045),
-          //     color: ColorResources.PRIMARY,
-          //   ),
-          // ),
         ),
       ),
     );
@@ -105,25 +93,16 @@ class RegisterPage extends GetView<RegisterController> {
   /// select
   ///
   Widget _genderSelectionWidget(BuildContext context, controllers) {
-    final List<Map<String, dynamic>> genderOptions = [
-      {
-        "index": "1",
-        "name": "Nam",
-      },
-      {
-        "index": "2",
-        "name": "Nữ",
-      }
-    ];
+    final List<String> genderOptions = ["Nam", "Nữ"];
 
     return DropDownButton1(
       width: 0.5,
       hint: "Giới tính",
       value: controller.gender,
-      onChanged: controller.setSelected,
-      data: genderOptions
-          .map((Map<String, dynamic> gender) => gender["name"].toString())
-          .toList(),
+      onChanged: (newValue) {
+        controller.setSelected(newValue!);
+      },
+      data: genderOptions,
     );
   }
 
@@ -133,14 +112,25 @@ class RegisterPage extends GetView<RegisterController> {
   Widget _dateTimePick(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        DatePicker.showDatePicker(
-          context,
-          minTime: DateTime(1900),
-          maxTime: DateTime(2022),
-          onChanged: (date) {},
-          onConfirm: (date) {},
-          currentTime: DateTime.now(),
-          locale: LocaleType.vi,
+        showDatePicker(
+          context: context,
+          locale: const Locale("vi", "VI"),
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2022),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData().copyWith(
+                primaryColor: ColorResources.PRIMARY,
+                accentColor: ColorResources.PRIMARY,
+                colorScheme:
+                    const ColorScheme.light(primary: ColorResources.PRIMARY),
+                buttonTheme:
+                    const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              ),
+              child: child!,
+            );
+          },
         );
       },
       child: Container(
@@ -161,8 +151,8 @@ class RegisterPage extends GetView<RegisterController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              DateConverter.estimatedDate(DateTime.now()),
-              style: const TextStyle(color: ColorResources.GREY),
+              DateFormat("dd MMMM yyyy", "vi").format(DateTime.now()),
+              style: const TextStyle(color: Colors.grey),
             ),
             Icon(
               Icons.calendar_today,
@@ -203,16 +193,17 @@ class RegisterPage extends GetView<RegisterController> {
           final controllers = controller.controllers;
 
           return Scaffold(
+            appBar: CustomAppBar().customAppBar(title: "Thông tin cá nhân"),
             body: SingleChildScrollView(
               child: Container(
                 color: Colors.white,
                 child: Column(
                   children: [
                     Padding(
-                        padding: EdgeInsets.all(
-                            DeviceUtils.getScaledSize(context, 0.063)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                DeviceUtils.getScaledSize(context, 0.03)),
                         child: Image.asset(Images.register_bg)),
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
                     Padding(
                       padding: EdgeInsets.all(
                           DeviceUtils.getScaledSize(context, 0.063)),
@@ -301,23 +292,6 @@ class RegisterPage extends GetView<RegisterController> {
                                     color: Colors.white, fontSize: 18),
                               ),
                             ),
-                            // Container(
-                            //   margin: const EdgeInsets.all(10),
-                            //   decoration: const BoxDecoration(
-                            //     gradient: LinearGradient(colors: [
-                            //       Color(0xFF59DC12),
-                            //       Color(0xFF61A63C),
-                            //     ], begin: Alignment(0, -1), end: Alignment(0, 1)),
-                            //     borderRadius: BorderRadius.all(Radius.circular(30)),
-                            //   ),
-                            //   alignment: Alignment.center,
-                            //   padding: const EdgeInsets.all(20),
-                            //   width: double.infinity,
-                            //   child: const Text(
-                            //     "Tiếp tục",
-                            //     style: TextStyle(color: Colors.white, fontSize: 18),
-                            //   ),
-                            // ),
                           )
                         ],
                       ),
