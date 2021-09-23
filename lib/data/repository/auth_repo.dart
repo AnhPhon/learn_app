@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/login_model.dart';
-import 'package:template/data/model/body/register_model.dart';
+ 
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,19 +24,18 @@ class AuthRepo {
   //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
   //   }
   // }
-
-  Future<ApiResponse> login(LoginModel loginBody) async {
-    try {
-      final Response response = await dioClient.post(
-        app_constants.login_uri,
-        data: loginBody.toJson(),
-      );
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
+  //
+  // Future<ApiResponse> login(LoginModel loginBody) async {
+  //   try {
+  //     final Response response = await dioClient.post(
+  //       app_constants.LOGIN_URI,
+  //       data: loginBody.toJson(),
+  //     );
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
   //
   // Future<ApiResponse> updateToken() async {
   //   try {
@@ -60,21 +58,21 @@ class AuthRepo {
   //   return _deviceToken;
   // }
   //
-  // for  user token
-  Future<void> saveUserToken(String token) async {
-    dioClient.token = token;
-    dioClient.dio!.options.headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $token'
-    };
-
-    try {
-      await sharedPreferences.setString(app_constants.TOKEN, token);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
+  // // for  user token
+  // Future<void> saveUserToken(String token) async {
+  //   dioClient.token = token;
+  //   dioClient.dio!.options.headers = {
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //     'Authorization': 'Bearer $token'
+  //   };
+  //
+  //   try {
+  //     await sharedPreferences.setString(app_constants.TOKEN, token);
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  //
   // String getUserToken() {
   //   return sharedPreferences.getString(app_constants.TOKEN) ?? '';
   // }

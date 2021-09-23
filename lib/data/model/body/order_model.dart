@@ -1,0 +1,65 @@
+class OrderModel {
+  String? idUser;
+  String? userAccept;
+  String? idImportWareHouse;
+  String? description;
+  String? imagePayment;
+  String? statusOrder;
+  String? statusPayment;
+  String? totalPrice;
+  String? discountPrice;
+  String? idProvince;
+  String? idDistrict;
+  String? address;
+  String? isChangeStatus;
+
+  OrderModel({
+      this.idUser,
+      this.userAccept,
+      this.idImportWareHouse,
+      this.description,
+      this.imagePayment,
+      this.statusOrder,
+      this.statusPayment,
+      this.totalPrice,
+      this.discountPrice,
+      this.idProvince,
+      this.idDistrict,
+      this.address,
+      this.isChangeStatus
+      });
+
+  OrderModel.fromJson(Map<String, dynamic> json) {
+    idUser = json['idUser'].toString();
+    userAccept = json['userAccept'].toString();
+    idImportWareHouse = json['idImportWareHouse'].toString();
+    description = json['description'].toString();
+    imagePayment = json['imagePayment'].toString();
+    statusOrder = json['statusOrder'].toString();
+    statusPayment = json['statusPayment'].toString();
+    totalPrice = json['totalPrice'].toString();
+    discountPrice = json['discountPrice'].toString();
+    idProvince = json['idProvince'].toString();
+    idDistrict = json['idDistrict'].toString();
+    address = json['address'].toString();
+    isChangeStatus = json['isChangeStatus'].toString();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idUser'] = idUser;
+    data['userAccept'] = userAccept;
+    data['idImportWareHouse'] = idImportWareHouse;
+    data['description'] = description;
+    data['imagePayment'] = imagePayment;
+    data['statusOrder'] = statusOrder;
+    data['statusPayment'] = statusPayment;
+    data['totalPrice'] = totalPrice;
+    data['discountPrice'] = discountPrice;
+    data['idProvince'] = idProvince;
+    data['idDistrict'] = idDistrict;
+    data['address'] = address;
+    data['isChangeStatus'] = isChangeStatus;
+    return data;
+  }
+}

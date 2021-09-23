@@ -22,12 +22,14 @@ class PostsPage extends StatelessWidget {
               );
             }
 
-            return ListView.builder(
-              itemCount: controller.regionsList.length,
-              itemBuilder: (context, index) => PostsListItem(
-                region: controller.regionsList[index],
-              ),
-            );
+            return Container();
+
+            // return ListView.builder(
+            //   itemCount: controller.regionsList.length,
+            //   itemBuilder: (context, index) => PostsListItem(
+            //     region: controller.regionsList[index],
+            //   ),
+            // );
           },
         ),
       ),
