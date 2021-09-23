@@ -26,7 +26,6 @@ class DashboardPage extends StatelessWidget {
               index: controller.tabIndex,
               children: [
                 HomePage(),
-                // CartPage(),
                 LeaderBoardPage(),
                 NewsPage(),
                 AccountPage(),
@@ -46,10 +45,6 @@ class DashboardPage extends StatelessWidget {
                 icon: CupertinoIcons.home,
                 label: 'Trang chủ',
               ),
-              // _bottomNavigationBarItem(
-              //   icon: CupertinoIcons.cart,
-              //   label: 'Giỏ hàng',
-              // ),
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.chart_bar,
                 label: 'Bảng xếp hạng',

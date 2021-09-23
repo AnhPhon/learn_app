@@ -14,7 +14,6 @@ class GroupPage extends GetView<GroupController> {
   /// avatar of user declared
   ///
   Widget _avatarUser(BuildContext context, String imageURL) {
-    // return
     return Container(
       width: DeviceUtils.getScaledSize(context, 0.254),
       height: DeviceUtils.getScaledSize(context, 0.254),
@@ -92,6 +91,8 @@ class GroupPage extends GetView<GroupController> {
                 Padding(
                   padding: EdgeInsets.only(
                       right: DeviceUtils.getScaledSize(context, 0.025)),
+
+                  //lọc bảng xếp hạng
                   child: GestureDetector(
                     onTap: () {
                       showDateRangePicker(
@@ -113,6 +114,7 @@ class GroupPage extends GetView<GroupController> {
                   child: const Icon(Icons.arrow_back_ios)),
               backgroundColor: ColorResources.WHITE,
               iconTheme: const IconThemeData(color: Colors.black),
+              centerTitle: true,
               title: const Text(
                 "Đội nhóm",
                 style: TextStyle(color: ColorResources.BLACK),

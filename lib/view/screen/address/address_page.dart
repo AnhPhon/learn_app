@@ -57,9 +57,9 @@ class AddressPage extends GetView<AddressController> {
   }
 
   ///
-  /// button login
+  /// button change
   ///
-  Widget _loginBtnWidget(BuildContext context) {
+  Widget _changeBtnWidget(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Get.back();
@@ -70,7 +70,6 @@ class AddressPage extends GetView<AddressController> {
         padding: EdgeInsets.symmetric(
             vertical: DeviceUtils.getScaledSize(context, 0.035),
             horizontal: DeviceUtils.getScaledSize(context, 0.03)),
-        // width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -121,7 +120,7 @@ class AddressPage extends GetView<AddressController> {
                   _inputWidget(context,
                       hint: "Nhập thôn/số nhà",
                       textController: controller.addressController),
-                  _loginBtnWidget(context)
+                  _changeBtnWidget(context)
                 ],
               ),
             ),

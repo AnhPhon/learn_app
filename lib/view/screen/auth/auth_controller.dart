@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  var counter = 1.obs;
+  RxInt counter = 1.obs;
 
   void increaseCounter() {
     counter.value += 12;
@@ -10,11 +10,11 @@ class AuthController extends GetxController {
     Get.snackbar(
       "Hey i'm a Get SnackBar!", // title
       "It's unbelievable! I'm using SnackBar without context!", // message
-      icon: Icon(Icons.alarm),
+      icon: const Icon(Icons.alarm),
       shouldIconPulse: true,
       isDismissible: true,
-      duration: Duration(seconds: 3),
-    ); 
+      duration: const Duration(seconds: 3),
+    );
     // Get.offNamed(AppRoutes.POSTPAGE);
   }
 }

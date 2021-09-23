@@ -1,10 +1,9 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'dart:math' as math;
 
 class CategoryItem extends StatelessWidget {
   final String title;

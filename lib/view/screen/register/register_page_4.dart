@@ -38,13 +38,19 @@ class RegisterPage4 extends GetView<RegisterController> {
         init: RegisterController(),
         builder: (RegisterController value) {
           return Scaffold(
+            //app bar
             appBar: CustomAppBar().customAppBar(title: "Thanh toán"),
+
             backgroundColor: ColorResources.WHITE,
+
+            //body
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: DeviceUtils.getScaledSize(context, 0.05)),
+
+                  //chi tiết hoá đơn
                   Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.03),
@@ -89,6 +95,8 @@ class RegisterPage4 extends GetView<RegisterController> {
                                     DeviceUtils.getScaledSize(context, 0.05),
                                 vertical:
                                     DeviceUtils.getScaledSize(context, 0.02)),
+
+                            //list sản phẩm đã chọn
                             child: Column(
                                 children: List.generate(
                               controller.orderList.length,
@@ -100,6 +108,7 @@ class RegisterPage4 extends GetView<RegisterController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      //hình ảnh sản phẩm
                                       Flexible(
                                         flex: 6,
                                         child: Row(
@@ -126,6 +135,7 @@ class RegisterPage4 extends GetView<RegisterController> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
+                                                  //tên sản phẩm
                                                   Text(
                                                     controller
                                                         .items[controller
@@ -135,6 +145,8 @@ class RegisterPage4 extends GetView<RegisterController> {
                                                     style: titilliumSemiBold
                                                         .copyWith(fontSize: 14),
                                                   ),
+
+                                                  //số lượng đã chọn
                                                   Text(
                                                     "x${controller.items[controller.orderList[index]].quality.toString()}",
                                                     style: titilliumSemiBold
@@ -147,6 +159,8 @@ class RegisterPage4 extends GetView<RegisterController> {
                                           ],
                                         ),
                                       ),
+
+                                      //giá tiền
                                       Flexible(
                                         flex: 3,
                                         child: Text(
@@ -175,6 +189,8 @@ class RegisterPage4 extends GetView<RegisterController> {
                                 ],
                               ),
                             ))),
+
+                        //tổng tiền
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
@@ -194,11 +210,14 @@ class RegisterPage4 extends GetView<RegisterController> {
                             ],
                           ),
                         ),
+
                         SizedBox(
                             height: DeviceUtils.getScaledSize(context, 0.027))
                       ],
                     ),
                   ),
+
+                  //thông tin tài khoản
                   Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.03),
@@ -248,7 +267,6 @@ class RegisterPage4 extends GetView<RegisterController> {
                                 color: ColorResources.BLACK),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
                                 _rowText(context,
                                     text1: "Số tài khoản:",
@@ -268,6 +286,8 @@ class RegisterPage4 extends GetView<RegisterController> {
                       ],
                     ),
                   ),
+
+                  //tải lên hình ảnh thanh toán
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.05),
@@ -287,22 +307,13 @@ class RegisterPage4 extends GetView<RegisterController> {
                               style: Dimensions.fontSizeStyle16w600()
                                   .copyWith(color: ColorResources.RED),
                             ),
-
-                            // if (controller.image != null)
-                            //   Image.file(
-                            //     controller.image!,
-                            //     height: DeviceUtils.getScaledSize(context, 0.127),
-                            //     width: DeviceUtils.getScaledSize(context, 0.178),
-                            //   )
-                            // else
-                            //   Icon(
-                            //     Icons.image_outlined,
-                            //     size: DeviceUtils.getScaledSize(context, 0.08),
-                            //   ),
                           ],
                         ),
+
                         SizedBox(
                             height: DeviceUtils.getScaledSize(context, 0.025)),
+
+                        //hình ảnh thanh toán
                         GestureDetector(
                           onTap: () {
                             controller.pickImage();
@@ -348,11 +359,12 @@ class RegisterPage4 extends GetView<RegisterController> {
                       ],
                     ),
                   ),
+
+                  //done button
                   GestureDetector(
                     onTap: () {
                       if (controller.image != null) {
                         Get.offNamed(AppRoutes.LOGIN);
-
                         showAnimatedDialog(
                             context,
                             const MyDialog(

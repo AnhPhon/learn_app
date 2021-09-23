@@ -25,6 +25,7 @@ class KhoHangTroGiaPage extends GetView<KhoHangTroGiaController> {
                     },
                     child: const Icon(Icons.arrow_back_ios)),
                 elevation: 1,
+                centerTitle: true,
                 backgroundColor: ColorResources.WHITE,
                 iconTheme: const IconThemeData(color: Colors.black),
                 title: const Text(

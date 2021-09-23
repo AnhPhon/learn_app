@@ -248,7 +248,6 @@ class CheckoutPage extends GetView<CheckoutController> {
                                 color: ColorResources.BLACK),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
                                 _rowText(context,
                                     text1: "Số tài khoản:",
@@ -287,18 +286,6 @@ class CheckoutPage extends GetView<CheckoutController> {
                               style: Dimensions.fontSizeStyle16w600()
                                   .copyWith(color: ColorResources.RED),
                             ),
-
-                            // if (controller.image != null)
-                            //   Image.file(
-                            //     controller.image!,
-                            //     height: DeviceUtils.getScaledSize(context, 0.127),
-                            //     width: DeviceUtils.getScaledSize(context, 0.178),
-                            //   )
-                            // else
-                            //   Icon(
-                            //     Icons.image_outlined,
-                            //     size: DeviceUtils.getScaledSize(context, 0.08),
-                            //   ),
                           ],
                         ),
                         SizedBox(

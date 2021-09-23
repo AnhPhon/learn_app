@@ -52,7 +52,7 @@ class KhoHangDieuKienPage extends GetView<KhoHangDieuKienController> {
         ));
   }
 
-  Widget _sanPhamMoi(BuildContext context) {
+  Widget _sanPham(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(children: [
@@ -143,7 +143,7 @@ class KhoHangDieuKienPage extends GetView<KhoHangDieuKienController> {
               margin: EdgeInsets.zero,
               child: SingleChildScrollView(
                 child: Column(
-                  children: [_sanPhamMoi(context)],
+                  children: [_sanPham(context)],
                 ),
               ),
             ),

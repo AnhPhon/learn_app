@@ -10,16 +10,20 @@ class AccountController extends GetxController {
   var orderPages = 0.obs;
 
   List<Region> regionsList = [];
+
   bool isLoading = true;
 
+  // tới màn hình rules
   void onRulesClick() {
     Get.toNamed(AppRoutes.RULES);
   }
 
+  //đăng xuất
   void onLogoutClick() {
     Get.offNamed(AppRoutes.LOGIN);
   }
 
+  //tới màn hình order
   void onOrderClick(int? index) {
     if (index == 1) {
       orderPages.value = 1;
@@ -53,17 +57,5 @@ class AccountController extends GetxController {
       print(error);
       update();
     });
-
-    // counter.value += 12;
-    // // Get.to(PostsPage());
-    // Get.snackbar(
-    //   "Hey i'm a Get SnackBar!", // title
-    //   "It's unbelievable! I'm using SnackBar without context!", // message
-    //   icon: Icon(Icons.alarm),
-    //   shouldIconPulse: true,
-    //   isDismissible: true,
-    //   duration: Duration(seconds: 3),
-    // );
-    // Get.offNamed(AppRoutes.POSTPAGE);
   }
 }

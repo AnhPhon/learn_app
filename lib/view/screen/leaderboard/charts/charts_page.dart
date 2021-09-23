@@ -50,6 +50,8 @@ class ChartsPage extends GetView<ChartsController> {
               child: Column(
                 children: [
                   SizedBox(height: DeviceUtils.getScaledSize(context, 0.04)),
+
+                  //rank
                   SizedBox(
                     height: DeviceUtils.getScaledSize(context, 0.75),
                     child: Stack(
@@ -129,6 +131,8 @@ class ChartsPage extends GetView<ChartsController> {
                       ],
                     ),
                   ),
+
+                  //list doanh thu
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(

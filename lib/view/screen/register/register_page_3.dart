@@ -145,8 +145,13 @@ class RegisterPage3 extends GetView<RegisterController> {
         init: RegisterController(),
         builder: (RegisterController value) {
           return Scaffold(
-            appBar: CustomAppBar().customAppBar(title: "Mua hàng điều kiện"),
+            //app bar
+            appBar: CustomAppBar().customAppBar(title: "Đơn hàng điều kiện"),
+
+            //bottom navigator
             bottomNavigationBar: _bottomContainer(context),
+
+            //body
             body: GridView.builder(
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -163,6 +168,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                       onTap: () {
                         controller.qualityProduct.value = 1;
                         if (controller.items[index].isChoose == false) {
+                          //dialog chọn sản phẩm
                           Get.defaultDialog(
                             title: controller.items[index].title,
                             buttonColor: ColorResources.PRIMARY,
@@ -190,6 +196,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      //hình ảnh sản phẩm trong dialog
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(7),
                                         child: Image.asset(
@@ -200,10 +207,13 @@ class RegisterPage3 extends GetView<RegisterController> {
                                               context, 0.25),
                                         ),
                                       ),
+
                                       SizedBox(
                                         width: DeviceUtils.getScaledSize(
                                             context, 0.063),
                                       ),
+
+                                      // chọn số lượng sản phẩm
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -285,12 +295,16 @@ class RegisterPage3 extends GetView<RegisterController> {
                           );
                         }
                       },
+
+                      //list sản phẩm
                       child: Container(
                         margin: EdgeInsets.symmetric(
                             horizontal:
                                 DeviceUtils.getScaledSize(context, 0.04)),
                         decoration: BoxDecoration(
                             color: ColorResources.WHITE,
+
+                            //nếu sản phẩm được chọn thì border
                             boxShadow: controller.items[index].isChoose == true
                                 ? [
                                     BoxShadow(
@@ -305,6 +319,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            //nếu sản phẩm được chọn thì show cancle button
                             if (controller.items[index].isChoose == true)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -333,6 +348,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                               )
                             else
                               const SizedBox.shrink(),
+
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: DeviceUtils.getScaledSize(
@@ -340,6 +356,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  //hình ảnh sản phẩm
                                   Container(
                                     height: DeviceUtils.getScaledSize(
                                         context, 0.343),
@@ -353,9 +370,12 @@ class RegisterPage3 extends GetView<RegisterController> {
                                           fit: BoxFit.fill),
                                     ),
                                   ),
+
                                   SizedBox(
                                       height: DeviceUtils.getScaledHeight(
                                           context, 0.01)),
+
+                                  //tên sản phẩm
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
                                         context, 0.068),
@@ -365,10 +385,13 @@ class RegisterPage3 extends GetView<RegisterController> {
                                       style: Dimensions.fontSizeStyle14w600(),
                                     ),
                                   ),
+
+                                  //giá tiền
                                   Text(PriceConverter.convertPrice(
                                       context,
                                       controller.items[index].amount
                                           .toDouble())),
+                                  //số lượng đã chọn
                                   if (controller.items[index].isChoose == true)
                                     Text(
                                       "Đang chọn: ${controller.items[index].quality}",
@@ -391,8 +414,8 @@ class RegisterPage3 extends GetView<RegisterController> {
   }
 }
 
-// ignore: unused_element
-Widget _normalInputWidget(String? label, TextEditingController controller) {
+//input
+Widget normalInputWidget(String? label, TextEditingController controller) {
   return Container(
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(10),

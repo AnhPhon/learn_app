@@ -23,13 +23,16 @@ class CategoriesController extends GetxController {
     'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
     'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG'
   ];
+
   int categorySelectedIndex = 0;
 
+  // set index cho danh mục
   void changeSelectedIndex(int selectedIndex) {
     categorySelectedIndex = selectedIndex;
     update();
   }
 
+  //xem sản phẩm
   void onProductClick() {
     Get.toNamed(AppRoutes.PRODUCT_DETAIL);
   }

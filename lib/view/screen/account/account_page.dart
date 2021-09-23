@@ -109,6 +109,7 @@ class AccountPage extends GetView<AccountController> {
                       shape: BoxShape.circle,
                     ),
                   ),
+
                   //name
                   Text(
                     "Khoi Minh",
@@ -125,7 +126,7 @@ class AccountPage extends GetView<AccountController> {
 
                   SizedBox(height: DeviceUtils.getScaledSize(context, 0.04)),
 
-                  //order cua toi
+                  //my order
                   _containerBox(context,
                       child: Column(
                         children: [

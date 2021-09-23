@@ -28,12 +28,15 @@ class CategoriesPage extends GetView<CategoriesController> {
                     },
                     child: const Icon(Icons.arrow_back_ios)),
                 elevation: 1,
+                centerTitle: true,
                 backgroundColor: ColorResources.WHITE,
                 iconTheme: const IconThemeData(color: Colors.black),
                 title: const Text(
                   "Danh mục",
                   style: TextStyle(color: ColorResources.BLACK),
                 ),
+
+                //tabbar
                 bottom: TabBar(
                   isScrollable: true,
                   indicatorColor: ColorResources.PRIMARY,
@@ -42,6 +45,8 @@ class CategoriesPage extends GetView<CategoriesController> {
                   tabs: [...controller.categoriesName.map((e) => Tab(text: e))],
                 ),
               ),
+
+              //tabbar view
               body: TabBarView(
                 children: [
                   ...List.generate(

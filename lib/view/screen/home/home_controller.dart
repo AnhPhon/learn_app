@@ -4,6 +4,7 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/screen/posts/posts_page.dart';
 
 class HomeController extends GetxController {
+  //banner
   List banner = [Images.banner1, Images.banner2, Images.banner3];
 
   int categoryPages = 0;
@@ -12,10 +13,12 @@ class HomeController extends GetxController {
     Get.to(PostsPage());
   }
 
+  // tạo id
   void onRegisterIdClick() {
     Get.toNamed(AppRoutes.REGISTER);
   }
 
+  //danh mục
   void onBtnCategoriesClick(int? index) {
     if (index == 0) {
       categoryPages = 0;
@@ -35,18 +38,17 @@ class HomeController extends GetxController {
     Get.toNamed(AppRoutes.CATEGORIES);
   }
 
+  //kho hàng trợ giá
   void onProductVoucherClick() {
     Get.toNamed(AppRoutes.KHOHANGTROGIA);
   }
 
+  // kho hàng điều kiện
   void onBtnKhoHangDieuKienClick() {
     Get.toNamed(AppRoutes.KHOHANGDIEUKIEN);
   }
 
-  void onProductClick() {
-    Get.toNamed(AppRoutes.PRODUCT_DETAIL);
-  }
-
+  //đội nhóm
   void onGroupClick() {
     Get.toNamed(AppRoutes.GROUP);
   }

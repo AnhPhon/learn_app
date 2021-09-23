@@ -98,10 +98,11 @@ class RegisterController extends GetxController {
         quality: 1),
   ];
 
+  //value dropdown
   String? gender;
 
+  //image picker
   File? image;
-
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -115,13 +116,16 @@ class RegisterController extends GetxController {
     }
   }
 
+  // quanlity product
   var qualityProduct = 1.obs;
 
+  // + quanlity product
   void incrementQuality() {
     qualityProduct += 1;
     update();
   }
 
+  // - quanlity product
   void decrementQuality() {
     if (qualityProduct > 1) {
       qualityProduct -= 1;
@@ -135,10 +139,13 @@ class RegisterController extends GetxController {
 
   int sum = 0;
 
+  //set điều kiện nếu mã giới thiệu không đúng định dạng
+  //thì không cho nhập các trường khác
   bool isMaGioiThieuValid() {
     return controllers["magioithieu"]!.text.contains(RegExp(r"^ytp(\d{4,})"));
   }
 
+  // set selected product
   void accept(int index) {
     if (items[index].isChoose == false) {
       orderList.add(index);
@@ -148,6 +155,7 @@ class RegisterController extends GetxController {
     update();
   }
 
+  // undselected product
   void cancel(int index) {
     sum -= items[index].amount * items[index].quality;
     items[index].isChoose = false;
@@ -156,10 +164,7 @@ class RegisterController extends GetxController {
     update();
   }
 
-  // void addOrder(Item item) {
-  //   orderList.add(item);
-  // }
-
+  // total price
   void countTotal(int amout) {
     sum += amout * qualityProduct.value;
     update();
@@ -167,6 +172,7 @@ class RegisterController extends GetxController {
 
   void removeProduct() {}
 
+  // set selected dropdown
   void setSelected(String value) {
     gender = value;
     print("ddax chonj: $gender");

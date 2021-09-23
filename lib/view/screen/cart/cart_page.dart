@@ -128,7 +128,7 @@ class CartPage extends GetView<CartController> {
   }
 
   ///
-  ///other product detail
+  ///list sản phẩm đã chọn
   ///
   Widget _otherProductDetail(BuildContext context) {
     return _containerBox(context,
@@ -215,6 +215,8 @@ class CartPage extends GetView<CartController> {
                               ],
                             ),
                           ),
+
+                          //xoá khỏi giỏ hàng
                           Expanded(
                             child: GestureDetector(
                               onTap: () {},
@@ -237,7 +239,7 @@ class CartPage extends GetView<CartController> {
                         ],
                       ),
 
-                      //devider
+                      //divider
                       Dimensions().paddingDivider(context),
                     ],
                   )),
