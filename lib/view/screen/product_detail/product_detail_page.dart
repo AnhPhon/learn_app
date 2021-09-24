@@ -8,9 +8,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
+import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/product_detail/product_detail_controller.dart';
+import 'package:template/view/screen/product_detail/product_specification_view.dart';
 
 class ProductDetailPage extends GetView<ProductDetailController> {
+  final categoriesController = Get.put(CategoriesController());
+
   ///
   ///san pham xem them
   ///
@@ -64,79 +68,65 @@ class ProductDetailPage extends GetView<ProductDetailController> {
 
   Widget _sanPhamMoi(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-      child: Column(children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp3,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-            138000,
-            discount: 10,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: GridView.builder(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 0.65,
+            crossAxisCount: 2,
           ),
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp4,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-            138000,
-          ),
-        ]),
-        const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 2),
-        Row(children: [
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp3,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-            138000,
-          ),
-          const Spacer(),
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp4,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-            138000,
-          ),
-        ]),
-        Row(children: [
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp3,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-CAM',
-            138000,
-          ),
-          const Spacer(),
-          _sanPhamDanhMucBtn(
-            context,
-            Image.asset(
-              Images.sp4,
-              width: Dimensions.SQUARE_CATEGORY_SIZE,
-              height: Dimensions.SQUARE_CATEGORY_SIZE,
-            ),
-            'DK NƯỚC GIẶT CAO CẤP HOSHI 3,8L-TRẮNG',
-            138000,
-          ),
-        ])
-      ]),
+          itemCount: categoriesController.productWithIdList.length,
+          itemBuilder: (BuildContext context, index) {
+            return GestureDetector(
+              onTap: () {
+                // controller.onProductClick();
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorResources.WHITE),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 150,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        child: Image.network(
+                          categoriesController
+                              .productWithIdList[index].thumbnail!,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        height: DeviceUtils.getScaledHeight(context, 0.01)),
+                    SizedBox(
+                      height: DeviceUtils.getScaledSize(context, 0.101),
+                      child: Text(
+                        categoriesController.productWithIdList[index].name!,
+                        maxLines: 2,
+                        style: Dimensions.fontSizeStyle14w600(),
+                      ),
+                    ),
+                    Text(PriceConverter.convertPrice(
+                        context,
+                        double.parse(categoriesController
+                            .productWithIdList[index].prices!)))
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 
@@ -147,8 +137,8 @@ class ProductDetailPage extends GetView<ProductDetailController> {
     return CarouselSlider.builder(
       itemCount: 5,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-        return Image.asset(
-          "assets/images/product.png",
+        return Image.network(
+          categoriesController.productWithId!.images!,
           fit: BoxFit.fill,
           width: 1000.0,
         );
@@ -236,6 +226,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
               flex: 8,
               child: GestureDetector(
                 onTap: () {
+                  controller.order();
                   Get.snackbar(
                     "Thành công",
                     "Đã thêm sản phẩm vào giỏ hàng",
@@ -303,12 +294,18 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Tên sản phẩm",
-                          ),
-                          Text(PriceConverter.convertPrice(context, 230000)),
                           Text(
-                            PriceConverter.convertPrice(context, 230000),
+                            categoriesController.productWithId!.name!,
+                          ),
+                          Text(PriceConverter.convertPrice(
+                              context,
+                              double.parse(categoriesController
+                                  .productWithId!.prices!))),
+                          Text(
+                            PriceConverter.convertPrice(
+                                context,
+                                double.parse(categoriesController
+                                    .productWithId!.prriceOrigin!)),
                             style: robotoBold.copyWith(
                               color: Theme.of(context).hintColor,
                               decoration: TextDecoration.lineThrough,
@@ -319,64 +316,6 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     ),
                   ),
 
-                  // SizedBox(
-                  //   height: DeviceUtils.getScaledHeight(context, 0.027),
-                  // ),
-
-                  ///
-                  ///shipping info
-                  ///
-                  // Container(
-                  //   padding:
-                  //       const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                  //   color: ColorResources.WHITE,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       const Text(
-                  //         "Thông tin shipping",
-                  //         style: TextStyle(
-                  //             fontSize: 16, fontWeight: FontWeight.w600),
-                  //       ),
-                  //       SizedBox(
-                  //           height:
-                  //               DeviceUtils.getScaledHeight(context, 0.013)),
-                  //       Container(
-                  //         padding: const EdgeInsets.symmetric(
-                  //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  //         decoration: BoxDecoration(
-                  //           border: Border.all(color: ColorResources.GREY),
-                  //           borderRadius: BorderRadius.circular(10),
-                  //         ),
-                  //         child: Row(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           children: [
-                  //             Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.start,
-                  //               children: [
-                  //                 const Text("Ship tới"),
-                  //                 SizedBox(
-                  //                     height: DeviceUtils.getScaledHeight(
-                  //                         context, 0.013)),
-                  //                 const Text(
-                  //                   "đây là địa chỉ giao hàng",
-                  //                   maxLines: 2,
-                  //                   style:
-                  //                       TextStyle(fontWeight: FontWeight.w600),
-                  //                 )
-                  //               ],
-                  //             ),
-                  //             GestureDetector(
-                  //                 onTap: () {},
-                  //                 child: const Icon(Icons.arrow_forward_ios))
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(context, 0.027),
                   ),
@@ -384,23 +323,9 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                   ///
                   ///product info
                   ///
-                  Container(
-                    height: DeviceUtils.getScaledHeight(context, 0.27),
-                    color: ColorResources.WHITE,
-                    padding: EdgeInsets.all(
-                        DeviceUtils.getScaledSize(context, 0.027)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const Text(
-                          "Thông tin sản phẩm",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ProductSpecification(
+                      productSpecification:
+                          categoriesController.productWithId!.description!),
 
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(context, 0.027),
@@ -416,11 +341,18 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Xem thêm",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: DeviceUtils.getScaledSize(context, 0.027),
+                              top: DeviceUtils.getScaledSize(context, 0.02),
+                              bottom: DeviceUtils.getScaledSize(context, 0.02)),
+                          child: const Text(
+                            "Xem thêm",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
                         ),
+                        const Divider(color: Colors.grey),
                         _sanPhamMoi(context),
                       ],
                     ),

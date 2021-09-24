@@ -71,11 +71,10 @@ class OrderItemProvider {
   ///
   Future<void> delete({
     required String id,
-    required OrderItemModel data,
     required Function(OrderItemModel orderItem) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.delete(id, data);
+    final ApiResponse apiResponse = await regionRepo!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success

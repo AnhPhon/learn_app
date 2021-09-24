@@ -6,7 +6,7 @@ import 'constants/preferences.dart';
 
 class SharedPreferenceHelper {
   // shared pref instance
-   final SharedPreferences _sharedPreference;
+  final SharedPreferences _sharedPreference;
 
   // constructor
   SharedPreferenceHelper(this._sharedPreference);
@@ -23,7 +23,6 @@ class SharedPreferenceHelper {
   Future<bool> removeJwtToken() async {
     return _sharedPreference.remove(Preferences.jwt_token);
   }
-
 
   // Theme:------------------------------------------------------
   bool get isDarkMode {

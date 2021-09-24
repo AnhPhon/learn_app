@@ -3,19 +3,17 @@ class CategoryModel {
   String? desciption;
   String? thumbnail;
   String? shortcut;
+  String? id;
 
-  CategoryModel({
-      this.name,
-      this.desciption,
-      this.thumbnail,
-      this.shortcut
-      });
+  CategoryModel(
+      {this.name, this.desciption, this.thumbnail, this.shortcut, this.id});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     name = json['name'].toString();
     desciption = json['desciption'].toString();
     thumbnail = json['thumbnail'].toString();
     shortcut = json['shortcut'].toString();
+    id = json['id'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +22,7 @@ class CategoryModel {
     data['desciption'] = desciption;
     data['thumbnail'] = thumbnail;
     data['shortcut'] = shortcut;
+    data['id'] = id;
     return data;
   }
 }

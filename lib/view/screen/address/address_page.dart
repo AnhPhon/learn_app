@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/address/address_controller.dart';
 
@@ -108,17 +109,21 @@ class AddressPage extends GetView<AddressController> {
                   borderRadius: BorderRadius.circular(12)),
               child: Column(
                 children: [
-                  _inputWidget(context,
-                      hint: "Nhập tỉnh/thành phố",
-                      textController: controller.provinceController),
-                  _inputWidget(context,
-                      hint: "Nhập Quận/huyện",
-                      textController: controller.districtController),
+                  DropDownButton1(
+                      hint: "Chọn tỉnh/thành phố",
+                      value: controller.province,
+                      onChanged: controller.setSelectedProvince,
+                      data: controller.provinceList),
+                  DropDownButton1(
+                      hint: "Chọn quận/huyện",
+                      value: controller.district,
+                      onChanged: controller.setSelectedDistrict,
+                      data: controller.districtList),
                   _inputWidget(context,
                       hint: "Nhập Phường/xã",
                       textController: controller.wardController),
                   _inputWidget(context,
-                      hint: "Nhập thôn/số nhà",
+                      hint: "Nhập địa chỉ",
                       textController: controller.addressController),
                   _changeBtnWidget(context)
                 ],

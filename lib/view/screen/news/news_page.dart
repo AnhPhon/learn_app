@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_point_tab_bar/pointTabBar.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/body/category_news_model.dart';
 import 'package:template/localization/language_constrants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -20,171 +21,150 @@ class NewsPage extends GetView<NewsController> {
     Get.put(NewsController());
     const String title = "Tin Tức";
 
-    final itemList = [
-      'Việt Nam',
-      'Công nghệ',
-      'Thế giới',
-    ];
-
-    final data = [
-      [
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Việt Nam',
-          Images.newsTemplate
-        ],
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Việt Nam',
-          Images.newsTemplate
-        ],
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Việt Nam',
-          Images.newsTemplate
-        ],
-      ],
-      [
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Công nghệ',
-          Images.newsTemplate
-        ],
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Công nghệ',
-          Images.newsTemplate
-        ],
-      ],
-      [
-        [
-          "YouTube's new features, let's take a look",
-          '45 phút',
-          'Thế Giới',
-          Images.newsTemplate
-        ],
-      ]
-    ];
-
     final searchWidget = _searchWidget(_searchController);
-    final tabbarWidget = _tabbarWidget(itemList, controller);
+    final tabbarWidget = _tabbarWidget(controller.categoryNewsList, controller);
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 1,
-          title: const Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFF27272A),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          shadowColor: const Color(0x3F000000),
-        ),
-        body: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // search widget
-            searchWidget,
-
-            // tabbar
-            tabbarWidget,
-
-            // underline
-            Container(height: 1, color: const Color(0xffBDBDBD)),
-
-            // content
-            Container(
-              padding:
-                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-              height: MediaQuery.of(context).size.height - 300,
-              child: TabBarView(
-                controller: controller.tabController,
-                children: data.map((List<List<String>> item) {
-                  final List<Widget> _rows = [];
-                  for (final element in item) {
-                    _rows.add(GestureDetector(
-                      onTap: () {
-                        controller.onNewsClick();
-                      },
-                      child: Row(children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .25,
-                          child: Image.asset(
-                            element[3],
-                            width: MediaQuery.of(context).size.width * .25,
-                            // height: 265,
-                          ),
-                        ),
-                        const Spacer(),
-
-                        //  text
-                        Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          padding: const EdgeInsets.all(
-                              Dimensions.PADDING_SIZE_DEFAULT),
-                          child: Column(
-                            children: [
-                              Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: const EdgeInsets.only(bottom: 7),
-                                  child: Text(element[0],
-                                      style: const TextStyle(
-                                        fontSize:
-                                            Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                        fontWeight: FontWeight.bold,
-                                      ))),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 130,
-                                    child: Text(element[1],
-                                        style: const TextStyle(
-                                            color: Color(0xFF898989))),
-                                  ),
-                                  SizedBox(
-                                      child: Text(
-                                    element[2],
-                                    style: const TextStyle(
-                                      color: Color(0xFF898989),
-                                    ),
-                                  ))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]),
-                    ));
-
-                    _rows.add(Padding(
-                      padding: EdgeInsets.all(
-                          DeviceUtils.getScaledSize(context, 0.025)),
-                      child: const Divider(
-                        color: ColorResources.GREY,
-                      ),
-                    ));
-                  }
-
-                  return SingleChildScrollView(
-                      child: Column(
-                          // alignment: Alignment.topLeft,
-                          // padding: const EdgeInsets.all(10),
-                          children: _rows));
-                }).toList(),
+    return GetBuilder<NewsController>(
+        init: NewsController(),
+        builder: (NewsController value) {
+          return Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                elevation: 1,
+                title: const Text(
+                  title,
+                  style: TextStyle(
+                    color: Color(0xFF27272A),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                shadowColor: const Color(0x3F000000),
               ),
-            )
-          ],
-        )));
+              body: SingleChildScrollView(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // search widget
+                  searchWidget,
+
+                  // tabbar
+                  tabbarWidget,
+
+                  // underline
+                  Container(height: 1, color: const Color(0xffBDBDBD)),
+
+                  // content
+                  Container(
+                    padding: const EdgeInsets.all(
+                        Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                    height: MediaQuery.of(context).size.height - 300,
+                    child: TabBarView(
+                      controller: controller.tabController,
+                      children: List.generate(
+                          controller.categoryNewsList.length,
+                          (index) => controller.newsList.isEmpty
+                              ? const Center(child: CircularProgressIndicator())
+                              : SingleChildScrollView(
+                                  child: controller.isLoading
+                                      ? const CircularProgressIndicator()
+                                      : Column(children: [
+                                          ...controller.newsList
+                                              .map(
+                                                (news) => Column(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        controller
+                                                            .onNewsClick();
+                                                      },
+                                                      child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  .25,
+                                                              height: DeviceUtils
+                                                                  .getScaledSize(
+                                                                      context,
+                                                                      0.25),
+                                                              child:
+                                                                  Image.network(
+                                                                news.image!,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    .25,
+                                                                // height: 265,
+                                                              ),
+                                                            ),
+                                                            const Spacer(),
+
+                                                            //  text
+                                                            Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  .6,
+                                                              padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      Dimensions
+                                                                          .PADDING_SIZE_DEFAULT),
+                                                              child: Column(
+                                                                children: [
+                                                                  Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerLeft,
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          bottom:
+                                                                              7),
+                                                                      child: Text(
+                                                                          news
+                                                                              .name!,
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ))),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ]),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.all(
+                                                          DeviceUtils
+                                                              .getScaledSize(
+                                                                  context,
+                                                                  0.025)),
+                                                      child: const Divider(
+                                                        color:
+                                                            ColorResources.GREY,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                              .toList(),
+                                        ]))).toList(),
+                    ),
+                  )
+                ],
+              )));
+        });
   }
 }
 
@@ -211,11 +191,13 @@ Container _searchWidget(TextEditingController controller) {
 }
 
 //tabbar widget
-Container _tabbarWidget(List<String> itemList, NewsController controller) {
+Container _tabbarWidget(
+    List<CategoryNewsModel> itemList, NewsController controller) {
   final GlobalKey stickyKey = GlobalKey();
   return Container(
     key: stickyKey,
     child: TabBar(
+      isScrollable: true,
       controller: controller.tabController,
       indicator: const UnderlineTabIndicator(
         borderSide: BorderSide(
@@ -225,7 +207,8 @@ Container _tabbarWidget(List<String> itemList, NewsController controller) {
       ),
       tabs: itemList.map((item) {
         return Tab(
-            child: Text(item, style: const TextStyle(color: Colors.black)));
+            child:
+                Text(item.name!, style: const TextStyle(color: Colors.black)));
       }).toList(),
     ),
   );

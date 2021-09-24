@@ -96,7 +96,6 @@ class RegisterPage extends GetView<RegisterController> {
     final List<String> genderOptions = ["Nam", "Nữ"];
 
     return DropDownButton1(
-      width: 0.5,
       hint: "Giới tính",
       value: controller.gender,
       onChanged: (newValue) {

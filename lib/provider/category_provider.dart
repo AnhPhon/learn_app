@@ -20,7 +20,7 @@ class CategoryProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
-      onSuccess(results
+      await onSuccess(results
           .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {

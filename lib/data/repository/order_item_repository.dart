@@ -26,7 +26,8 @@ class OrderItemRepository {
   ///
   Future<ApiResponse> add(OrderItemModel data) async {
     try {
-      final response = await dioClient!.post('/order-items', data: data.toJson());
+      final response =
+          await dioClient!.post('/order-items', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class OrderItemRepository {
   ///
   Future<ApiResponse> update(OrderItemModel data) async {
     try {
-      final response = await dioClient!.put('/order-items', data: data.toJson());
+      final response =
+          await dioClient!.put('/order-items', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -48,10 +50,9 @@ class OrderItemRepository {
   ///
   /// Update order-item to database
   ///
-  Future<ApiResponse> delete(String id, OrderItemModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
-      final response =
-          await dioClient!.delete('/order-items/$id', data: data.toJson());
+      final response = await dioClient!.delete('/order-items/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,7 +60,7 @@ class OrderItemRepository {
   }
 
   ///
-  /// Get paginate order-items "page": 1, "limit": 10, filter 
+  /// Get paginate order-items "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
