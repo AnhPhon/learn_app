@@ -1,19 +1,13 @@
 import 'package:template/data/model/response/language_model.dart';
 
-const String BASE_URL = 'http://localhost:4008/v1/';
-
-// api url
-const String region_uri = 'v1/regions';
+const String BASE_URL = 'http://103.146.23.186:5008/v1/';
+ 
 
 //login
 const String login_uri = 'auth/login';
 
-///
-///get users: GET
-///register: POST
-///find user by id: GET url/users/$id
-///
-const String users_uri = 'users';
+// TOPIC Firebase
+const String TOPIC = 'TOPIC';
 
 const String LANG_KEY = 'lang';
 const String COUNTRY_CODE = 'country_code';

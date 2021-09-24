@@ -21,7 +21,7 @@ class LoginPage extends GetView<LoginController> {
     return TextField(
       textInputAction: TextInputAction.done,
       textAlignVertical: TextAlignVertical.center,
-      controller: controller.userNameController,
+      controller: controller.usernameController,
       cursorColor: ColorResources.PRIMARY,
       decoration: InputDecoration(
         isDense: true,
@@ -110,9 +110,9 @@ class LoginPage extends GetView<LoginController> {
   ///
   Widget _loginBtnWidget(BuildContext context, String label, double width) {
     return GestureDetector(
-      onTap: () {
-        // controller.login();
-        Get.toNamed(AppRoutes.DASHBOARD);
+      onTap: () { 
+        // on login button click
+        controller.onLoginBtnClick();
       },
       child: Container(
         padding: EdgeInsets.symmetric(
