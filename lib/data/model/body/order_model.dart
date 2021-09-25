@@ -66,6 +66,25 @@ class OrderModel {
     return data;
   }
 
+  Map<String, dynamic> toJsonPut() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idUser'] = idUser;
+    data['userAccept'] = userAccept;
+    data['idWarehouse'] = idWarehouse;
+    data['description'] = description;
+    data['imagePayment'] = imagePayment;
+    data['statusOrder'] = statusOrder;
+    data['statusPayment'] = statusPayment;
+    data['totalPrice'] = totalPrice;
+    data['discountPrice'] = discountPrice;
+    data['idProvince'] = idProvince;
+    data['idDistrict'] = idDistrict;
+    data['address'] = address;
+    // data['isChangeStatus'] = isChangeStatus;
+    data['id'] = id;
+    return data;
+  }
+
   Map<String, dynamic> haveIDtoJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idUser'] = idUser;

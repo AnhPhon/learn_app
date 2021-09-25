@@ -97,4 +97,48 @@ class SharedPreferenceHelper {
   Future<bool> removeUserId() async {
     return _sharedPreference.remove(Preferences.userId);
   }
+
+  // ProvinceId: ----------------------------------------------------------
+  Future<String?> get provinceId async {
+    return _sharedPreference.getString(Preferences.province_id);
+  }
+
+  Future<bool> saveProvinceId(String id) async {
+    return _sharedPreference.setString(Preferences.province_id, id);
+  }
+
+  Future<bool> removeProvinceId() async {
+    return _sharedPreference.remove(Preferences.province_id);
+  }
+
+  // DistrictId: ----------------------------------------------------------
+  Future<String?> get districtId async {
+    return _sharedPreference.getString(Preferences.district_id);
+  }
+
+  Future<bool> saveDistrictId(String id) async {
+    return _sharedPreference.setString(Preferences.district_id, id);
+  }
+
+  Future<bool> removeDistrictId() async {
+    return _sharedPreference.remove(Preferences.district_id);
+  }
+
+  // Address: ----------------------------------------------------------
+  Future<String?> get address async {
+    return _sharedPreference.getString(Preferences.address);
+  }
+
+  Future<bool> saveAddress(String id) async {
+    return _sharedPreference.setString(Preferences.address, id);
+  }
+
+  // Address: ----------------------------------------------------------
+  Future<String?> get ward async {
+    return _sharedPreference.getString(Preferences.ward);
+  }
+
+  Future<bool> saveWard(String id) async {
+    return _sharedPreference.setString(Preferences.ward, id);
+  }
 }

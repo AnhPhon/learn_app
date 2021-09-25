@@ -15,12 +15,12 @@ class ProductSpecification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productDetailController = Get.put(ProductDetailController());
+    final productDetailController = Get.find<ProductDetailController>();
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     return Container(
       height: productDetailController.isLoadingMore
-          ? DeviceUtils.getScaledHeight(context, 0.4)
-          : null,
+          ? null
+          : DeviceUtils.getScaledHeight(context, 0.4),
       color: ColorResources.WHITE,
       padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.027)),
       child: Column(
@@ -44,8 +44,8 @@ class ProductSpecification extends StatelessWidget {
             const Center(child: Text('Chưa có mô tả sản phẩm'))
           else
             productDetailController.isLoadingMore
-                ? Flexible(child: Html(data: productSpecification))
-                : Html(data: productSpecification),
+                ? Html(data: productSpecification)
+                : Flexible(child: Html(data: productSpecification)),
 
           SizedBox(height: DeviceUtils.getScaledSize(context, 0.03)),
 
@@ -54,22 +54,22 @@ class ProductSpecification extends StatelessWidget {
           GestureDetector(
             onTap: () {
               productDetailController.isLoadingMore
-                  ? productDetailController.loadingLess()
-                  : productDetailController.loadingMore();
+                  ? productDetailController.loadingMore()
+                  : productDetailController.loadingLess();
             },
             child: Align(
               child: Column(
                 children: [
                   Text(
                     productDetailController.isLoadingMore
-                        ? "Xem thêm"
-                        : "Thu gọn",
+                        ? "Thu gọn"
+                        : "Xem thêm",
                     style: const TextStyle(color: ColorResources.PRIMARY),
                   ),
                   Icon(
                     productDetailController.isLoadingMore
-                        ? Icons.arrow_drop_down_outlined
-                        : Icons.arrow_drop_up_outlined,
+                        ? Icons.arrow_drop_up_outlined
+                        : Icons.arrow_drop_down_outlined,
                     color: ColorResources.PRIMARY,
                   )
                 ],

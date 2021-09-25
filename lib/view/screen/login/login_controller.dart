@@ -22,8 +22,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    usernameController.text = 'ytp3001';
-    passwordController.text = 'password';
+    // usernameController.text = 'ytp3001';
+    // passwordController.text = 'password';
 
     super.onInit();
   }
@@ -81,15 +81,15 @@ class LoginController extends GetxController {
 
             isLoading = false;
             auth = auth;
-            
-            userProvider.all(onSuccess: (data){
+
+            userProvider.all(onSuccess: (data) {
               for (final UserModel element in data) {
-                if(element.username == auth.username) {
+                if (element.username == auth.username) {
                   sl.get<SharedPreferenceHelper>().saveUserId(element.id!);
                   break;
                 }
               }
-            }, onError: (error){
+            }, onError: (error) {
               print(error);
               update();
             });

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
@@ -8,6 +6,7 @@ import 'package:template/data/model/body/user_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
+import 'package:template/provider/category_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -21,12 +20,15 @@ class HomeController extends GetxController {
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
 
+  CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
+
   UserModel userModel = UserModel();
   OrderModel orderModel = OrderModel();
   OrderItemModel orderItemModel = OrderItemModel();
 
-  final categoriesController = Get.put(CategoriesController());
-  final khoHangTroGiaController = Get.put(KhoHangTroGiaController());
+  final khoHangTroGiaController = Get.find<KhoHangTroGiaController>();
+
+  final categoriesController = Get.find<CategoriesController>();
   //banner
   List banner = [Images.banner1, Images.banner2, Images.banner3];
 
@@ -39,6 +41,7 @@ class HomeController extends GetxController {
 
   String name = "";
   String role = "";
+  bool isLoading = false;
 
   @override
   void onInit() {
@@ -50,6 +53,7 @@ class HomeController extends GetxController {
     soLuongId = 0;
     soLuongDonGia = 0;
 
+    categoriesController.getAllCategories();
     getUserById();
     khoHangTroGiaController.getAllCategories();
     update();
@@ -62,6 +66,22 @@ class HomeController extends GetxController {
 
   ///
   /// lấy thông tin user
+  ///get all categ
+  ///
+  // void getAllCategories() {
+  //   isLoading = true;
+  //   update();
+  //   categoryProvider.all(onSuccess: (value) {
+  //     categoriesController.categoriesList = value;
+  //     update();
+  //   }, onError: (error) {
+  //     print(error);
+  //     update();
+  //   }).then((value) => isLoading = false);
+  // }
+
+  ///
+  ///lấy thông tin user
   ///
   void getUserById() {
     update();
@@ -178,7 +198,7 @@ class HomeController extends GetxController {
   ///
   void onBtnCategoriesClick(int? index) {
     categoriesController.tabController!.index = index!;
-    Get.toNamed(AppRoutes.CATEGORIES);
+    Get.toNamed(AppRoutes.CATEGORIES)!;
   }
 
   ///

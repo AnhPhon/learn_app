@@ -55,6 +55,7 @@ class CategoriesController extends GetxController
   //lấy sản phẩm theo danh mục
   void getProductWithIdCateg({required String id}) {
     isLoading = true;
+
     update();
     productProvider
         .paginate(
@@ -62,6 +63,7 @@ class CategoriesController extends GetxController
             limit: 5,
             filter: "idCategory=$id",
             onSuccess: (value) {
+              productWithIdList.clear();
               productWithIdList = value;
               isLoading = false;
             },
@@ -73,6 +75,7 @@ class CategoriesController extends GetxController
 
   //xem sản phẩm
   void onProductClick(int index) {
+    print("productId=${productWithIdList[index].id!}");
     productProvider
         .find(
             id: productWithIdList[index].id!,
@@ -84,6 +87,7 @@ class CategoriesController extends GetxController
               print(error);
               update();
             })
-        .then((values) => Get.toNamed(AppRoutes.PRODUCT_DETAIL));
+        .then((values) => Get.toNamed(
+            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdList[index].id!}&categoryId=${productWithIdList[index].idCategory}&price=${productWithIdList[index].prices}"));
   }
 }

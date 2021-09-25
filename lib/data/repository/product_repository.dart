@@ -78,6 +78,22 @@ class ProductRepository {
   }
 
   ///
+  /// Get paginate products "page": 1, "limit": 10, filter
+  ///
+  Future<ApiResponse> findByIdOrder(int page, int limit, String idOrder) async {
+    try {
+      final String uri =
+          '/order-items/paginate?page=$page&limit=$limit&idOrder=$idOrder'
+              .toString();
+
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
   /// Find product by id
   ///
   Future<ApiResponse> find(String id) async {

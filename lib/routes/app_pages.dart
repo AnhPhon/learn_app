@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:template/view/screen/account/rules/rules_page.dart'; 
+import 'package:template/view/screen/account/rules/rules_page.dart';
 import 'package:template/view/screen/address/address_page.dart';
 import 'package:template/view/screen/auth/auth_page.dart';
 import 'package:template/view/screen/cart/cart_page.dart';

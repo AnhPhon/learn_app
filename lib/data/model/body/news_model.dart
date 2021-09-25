@@ -5,15 +5,19 @@ class NewsModel {
   String? tags;
   String? endAt;
   String? idCategoryNews;
+  String? id;
+  String? createdAt;
 
   NewsModel({
-      this.name,
-      this.image,
-      this.body,
-      this.tags,
-      this.endAt,
-      this.idCategoryNews
-      });
+    this.name,
+    this.image,
+    this.body,
+    this.tags,
+    this.endAt,
+    this.idCategoryNews,
+    this.id,
+    this.createdAt,
+  });
 
   NewsModel.fromJson(Map<String, dynamic> json) {
     name = json['name'].toString();
@@ -22,6 +26,8 @@ class NewsModel {
     tags = json['tags'].toString();
     endAt = json['endAt'].toString();
     idCategoryNews = json['idCategoryNews'].toString();
+    id = json['id'].toString();
+    createdAt = json['created_at'].toString();
   }
 
   Map<String, dynamic> toJson() {

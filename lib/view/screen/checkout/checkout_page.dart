@@ -34,13 +34,13 @@ class CheckoutPage extends GetView<CheckoutController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CheckoutController>(
-        init: CheckoutController(),
-        builder: (CheckoutController value) {
-          return Scaffold(
-            appBar: CustomAppBar().customAppBar(title: "Thanh toán"),
-            backgroundColor: ColorResources.WHITE,
-            body: SingleChildScrollView(
+    return Scaffold(
+      appBar: CustomAppBar().customAppBar(title: "Thanh toán"),
+      backgroundColor: ColorResources.WHITE,
+      body: GetBuilder<CheckoutController>(
+          init: CheckoutController(),
+          builder: (checkoutController) {
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,6 +59,10 @@ class CheckoutPage extends GetView<CheckoutController> {
                         ],
                         color: ColorResources.WHITE,
                         borderRadius: BorderRadius.circular(10)),
+
+                    ///
+                    ///
+                    ///
                     child: Column(
                       children: [
                         Container(
@@ -74,6 +78,10 @@ class CheckoutPage extends GetView<CheckoutController> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10))),
+
+                          ///
+                          ///bill detail
+                          ///
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -89,92 +97,103 @@ class CheckoutPage extends GetView<CheckoutController> {
                                     DeviceUtils.getScaledSize(context, 0.05),
                                 vertical:
                                     DeviceUtils.getScaledSize(context, 0.02)),
-                            child: Column(
-                                children: List.generate(
-                              controller.orderList.length,
-                              (index) => Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: checkoutController
+                                    .selectedProductList.length,
+                                itemBuilder: (BuildContext context, i) {
+                                  return Column(
                                     children: [
-                                      Flexible(
-                                        flex: 6,
-                                        child: Row(
-                                          children: [
-                                            Flexible(
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                                child: Image.asset(
-                                                  controller
-                                                      .items[controller
-                                                          .orderList[index]]
-                                                      .url,
-                                                  height: 70,
-                                                  width: 70,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    child: Image.network(
+                                                      checkoutController
+                                                          .selectedProductList[
+                                                              i]
+                                                          .idProduct!
+                                                          .images!,
+                                                      height: 70,
+                                                      width: 70,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Flexible(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    controller
-                                                        .items[controller
-                                                            .orderList[index]]
-                                                        .title,
-                                                    maxLines: 3,
-                                                    style: titilliumSemiBold
-                                                        .copyWith(fontSize: 14),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Flexible(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        checkoutController
+                                                            .selectedProductList[
+                                                                i]
+                                                            .idProduct!
+                                                            .name!,
+                                                        maxLines: 3,
+                                                        style: titilliumSemiBold
+                                                            .copyWith(
+                                                                fontSize: 14),
+                                                      ),
+                                                      Text(
+                                                        "x${checkoutController.selectedProductList[i].quantity.toString()}",
+                                                        style: titilliumSemiBold
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Text(
-                                                    "x${controller.items[controller.orderList[index]].quality.toString()}",
-                                                    style: titilliumSemiBold
-                                                        .copyWith(
-                                                            color: Colors.red),
-                                                  ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Flexible(
+                                            flex: 3,
+                                            child: Text(
+                                              PriceConverter.convertPrice(
+                                                  context,
+                                                  double.parse(
+                                                      checkoutController
+                                                          .selectedProductList[
+                                                              i]
+                                                          .idProduct!
+                                                          .prices!)),
+                                              style: titilliumSemiBold.copyWith(
+                                                  color: Colors.grey,
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Flexible(
-                                        flex: 3,
-                                        child: Text(
-                                          PriceConverter.convertPrice(
-                                              context,
-                                              controller
-                                                  .items[controller
-                                                      .orderList[index]]
-                                                  .amount
-                                                  .toDouble()),
-                                          style: titilliumSemiBold.copyWith(
-                                              color: Colors.grey, fontSize: 16),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: DeviceUtils.getScaledSize(
+                                                context, 0.01)),
+                                        child: const Divider(
+                                          thickness: 1,
+                                          color: Colors.grey,
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: DeviceUtils.getScaledSize(
-                                            context, 0.01)),
-                                    child: const Divider(
-                                      thickness: 1,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))),
+                                  );
+                                })),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
@@ -187,8 +206,9 @@ class CheckoutPage extends GetView<CheckoutController> {
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
                               Text(
-                                PriceConverter.convertPrice(
-                                    context, controller.sum * .75),
+                                PriceConverter.convertPrice(context,
+                                        checkoutController.price.toDouble())
+                                    .toString(),
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
                             ],
@@ -335,32 +355,13 @@ class CheckoutPage extends GetView<CheckoutController> {
                       ],
                     ),
                   ),
+
+                  ///
+                  ///done btn
+                  ///
                   GestureDetector(
                     onTap: () {
-                      if (controller.image != null) {
-                        Get.offNamed(AppRoutes.LOGIN);
-
-                        showAnimatedDialog(
-                            context,
-                            const MyDialog(
-                              icon: Icons.check,
-                              title: "Hoàn tất",
-                              description: "Đợi admin active",
-                            ),
-                            dismissible: false,
-                            isFlip: true);
-                      } else {
-                        Get.snackbar(
-                          "Thất bại",
-                          "Vui lòng tải lên hình ảnh thanh toán",
-                          colorText: ColorResources.RED,
-                          backgroundGradient: const LinearGradient(colors: [
-                            Color(0xffffb8b3),
-                            Color(0xffff9b94),
-                            Color(0xffffb8b3),
-                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                        );
-                      }
+                      checkoutController.onClickDoneBtn(context);
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(
@@ -381,8 +382,8 @@ class CheckoutPage extends GetView<CheckoutController> {
                   SizedBox(height: DeviceUtils.getScaledSize(context, 0.15)),
                 ],
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }
