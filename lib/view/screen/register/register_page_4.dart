@@ -365,7 +365,7 @@ class RegisterPage4 extends GetView<RegisterController> {
                     onTap: () {
                       if (controller.image != null) {
                         
-                        controller.updateImage();
+                        controller.uploadImage();
                         
                         // Get.offNamed(AppRoutes.LOGIN);
                         // showAnimatedDialog(

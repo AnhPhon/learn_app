@@ -26,9 +26,9 @@ class ImageUpdateRepository {
   ///
   /// Insert import-ware-house to database
   ///
-  Future<ApiResponse> add(File imageFile) async {
+  Future<ApiResponse> add(File file) async {
     try {
-      final response = await dioClient!.post('/uploads', data: imageFile);
+      final response = await dioClient!.uploadImage('/uploads', file: file);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -132,4 +132,32 @@ class DioClient {
       rethrow;
     }
   }
+
+  Future<Response> uploadImage(
+    String uri, {
+    required File file,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      String fileName = file.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(file.path, filename: fileName),
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

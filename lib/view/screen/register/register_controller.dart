@@ -15,7 +15,7 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
-import 'package:template/provider/upload-image.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
@@ -23,6 +23,11 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 
 typedef Ham = void Function(int);
 
@@ -103,7 +108,8 @@ class RegisterController extends GetxController {
     }
   }
 
-  void updateImage() {
+
+  void uploadImage() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
       final String orderId = value!;
       orderProvider.find(
@@ -113,10 +119,10 @@ class RegisterController extends GetxController {
 
           if (image != null) {
             imageProvider.add(
-                data: image!,
+                file: image!,
                 onSuccess: (image) {
                   print(image);
-                  tempModel.imagePayment = image.url;
+                  tempModel.imagePayment = image.data;
                   print(tempModel.haveIDtoJson());
                   orderProvider.update(
                     data: tempModel,

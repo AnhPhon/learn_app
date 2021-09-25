@@ -24,7 +24,7 @@ import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/province_provider.dart';
-import 'package:template/provider/upload-image.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/utils/firebase_service.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';

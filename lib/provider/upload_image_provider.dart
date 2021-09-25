@@ -35,13 +35,11 @@ class ImageUpdateProvider {
   /// Insert UploadImage to database
   ///
   Future<void> add({
-    required File data,
-    required Function(ImageUpdateModel UploadImage) onSuccess,
+    required File file,
+    required Function(ImageUpdateModel uploadImage) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    print("Image: ${data}");
-    final ApiResponse apiResponse = await regionRepo!.add(data);
-    print("Stauts: ${apiResponse.response.statusCode}");
+    final ApiResponse apiResponse = await regionRepo!.add(file);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
