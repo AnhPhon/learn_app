@@ -1,11 +1,13 @@
-// ignore_for_file: unnecessary_null_checks
+// ignore_for_file: unnecessary_null_checks, unnecessary_null_comparison
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
@@ -141,6 +143,31 @@ class RegisterPage3 extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => RegisterController());
+    GetIt sl = GetIt.instance;
+
+    // ignore: prefer_const_declarations
+    // final bool allowCreateOrder = sl.get<SharedPreferenceHelper>().orderId != null;
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      print(value);
+      if (value == null) {
+        final Map<String, dynamic> json = {
+          "idUser": "123",
+          "userAccept": "123",
+          "idWarehouse": "321",
+          "description": "321",
+          "imagePayment": "321",
+          "statusOrder": "321",
+          "statusPayment": "321",
+          "totalPrice": "321",
+          "discountPrice": "321",
+          "idProvince": "321",
+          "idDistrict": "321",
+          "address": "321",
+        };
+        controller.createOrder(json);
+      }
+    });
+
     return GetBuilder<RegisterController>(
         init: RegisterController(),
         builder: (RegisterController value) {

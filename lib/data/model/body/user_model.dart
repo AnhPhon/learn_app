@@ -65,7 +65,7 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    // data['id'] = id;
     data['idUser'] = idUser;
     data['idRole'] = idRole;
     data['idOptionalRole'] = idOptionalRole;
