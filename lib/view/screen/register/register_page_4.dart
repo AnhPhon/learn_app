@@ -364,27 +364,21 @@ class RegisterPage4 extends GetView<RegisterController> {
                   GestureDetector(
                     onTap: () {
                       if (controller.image != null) {
-                        Get.offNamed(AppRoutes.LOGIN);
-                        showAnimatedDialog(
-                            context,
-                            const MyDialog(
-                              icon: Icons.check,
-                              title: "Hoàn tất",
-                              description: "Đợi admin active",
-                            ),
-                            dismissible: false,
-                            isFlip: true);
+                        
+                        controller.updateImage();
+                        
+                        // Get.offNamed(AppRoutes.LOGIN);
+                        // showAnimatedDialog(
+                        //     context,
+                        //     const MyDialog(
+                        //       icon: Icons.check,
+                        //       title: "Hoàn tất",
+                        //       description: "Đợi admin active",
+                        //     ),
+                        //     dismissible: false,
+                        //     isFlip: true);
                       } else {
-                        Get.snackbar(
-                          "Thất bại",
-                          "Vui lòng tải lên hình ảnh thanh toán",
-                          colorText: ColorResources.RED,
-                          backgroundGradient: const LinearGradient(colors: [
-                            Color(0xffffb8b3),
-                            Color(0xffff9b94),
-                            Color(0xffffb8b3),
-                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                        );
+                        controller.hoanTatFaild();
                       }
                     },
                     child: Container(

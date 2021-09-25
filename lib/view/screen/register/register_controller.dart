@@ -11,10 +11,14 @@ import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
+import 'package:template/provider/product_provider.dart';
+import 'package:template/provider/upload-image.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
@@ -25,13 +29,19 @@ typedef Ham = void Function(int);
 class RegisterController extends GetxController {
   final UserProvider userProvider = GetIt.I.get<UserProvider>();
   final OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
+  final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
+  final ProductProvider productProvider = GetIt.I.get<ProductProvider>();
+  final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
+
   final homeController = Get.put(HomeController());
-  OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
-  GetIt sl = GetIt.instance;
   final categoriesController = Get.put(CategoriesController());
+
+  GetIt sl = GetIt.instance;
+
   List<ProductModel> productList = [];
   List<OrderItemModel> orderItemList = [];
   bool isLoadingMore = false;
+  OrderModel? orderModel;
 
   // Kiểm tra sản phẩm có trong cart
   bool isHave = false;
@@ -55,6 +65,14 @@ class RegisterController extends GetxController {
   DateTime? ngaysinh = DateTime.now();
   DateTime? ngaycap = DateTime.now();
 
+  String url = "";
+
+  @override
+  void onInit() {
+    loadDonHangDieuKien();
+    super.onInit();
+  }
+
   String infoBank(
       {required String stk,
       required String ctk,
@@ -63,85 +81,64 @@ class RegisterController extends GetxController {
     return "Thông tin tài khoản\nSố tài khoản: $stk\nTên chủ tài khoản: $ctk\nTên ngân hàng: $tenNganHang\nChi nhánh $chiNhanh";
   }
 
-  final List<Item> items = [
-    Item(
-        url: Images.sp1,
-        amount: 10000000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5.0",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 183000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 2",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 250000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 3",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 250000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 4",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 652000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 29000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 6",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 132000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 7",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 2500000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 8",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 29000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 9",
-        isChoose: false,
-        quality: 1),
-    Item(
-        url: Images.sp1,
-        amount: 29000,
-        title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 10",
-        isChoose: false,
-        quality: 1),
-  ];
+  List<Item> items = [];
 
   //value dropdown
   String? gender;
 
   //image picker
   File? image;
+  // String? imagePath;
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
+      // imagePath = image.path;
       this.image = imageTemporary;
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
+  }
+
+  void updateImage() {
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      final String orderId = value!;
+      orderProvider.find(
+        id: orderId,
+        onSuccess: (model) {
+          final OrderModel tempModel = model;
+
+          if (image != null) {
+            imageProvider.add(
+                data: image!,
+                onSuccess: (image) {
+                  print(image);
+                  tempModel.imagePayment = image.url;
+                  print(tempModel.haveIDtoJson());
+                  orderProvider.update(
+                    data: tempModel,
+                    onSuccess: (model) {
+                      print("success updated");
+                      update();
+                    },
+                    onError: (error) {},
+                  );
+                },
+                onError: (error) {
+                  print(error);
+                  update();
+                });
+          }
+        },
+        onError: (error) {
+          print(error);
+          update();
+        },
+      );
+    });
   }
 
   // quanlity product
@@ -212,23 +209,22 @@ class RegisterController extends GetxController {
     update();
   }
 
-  void createUser(Map<String, dynamic> json) {
-    final UserModel model = UserModel.fromJson(json);
+  void createUser(UserModel model) {
     userProvider.add(
-        data: model,
-        onSuccess: (model) {
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
+      data: model,
+      onSuccess: (model) {
+        update();
+      },
+      onError: (error) {
+        print(error);
+        update();
+      },
+    );
   }
 
-  void createOrder(Map<String, dynamic> json) {
-    final OrderModel model = OrderModel.fromJson(json);
+  void createOrder(OrderModel orderModel) {
     orderProvider.add(
-      data: model,
+      data: orderModel,
       onSuccess: (model) {
         final GetIt sl = GetIt.instance;
         sl.get<SharedPreferenceHelper>().saveOrderId(model.id!);
@@ -327,6 +323,90 @@ class RegisterController extends GetxController {
             price: price),
         onSuccess: (value) {
           print(value);
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  ///
+  /// faildNotification
+  ///
+  void faildNotification(BuildContext context, double money) {
+    Get.snackbar(
+      "Đăng ký thất bại",
+      "Hoá đơn hiện tại là ${PriceConverter.convertPrice(context, money)} đang thiếu ${PriceConverter.convertPrice(context, 2500000 - money)}",
+      colorText: ColorResources.RED,
+      backgroundGradient: const LinearGradient(colors: [
+        Color(0xffffb8b3),
+        Color(0xffff9b94),
+        Color(0xffffb8b3),
+      ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+    );
+  }
+
+  void hoanTatFaild() {
+    Get.snackbar(
+      "Thất bại",
+      "Vui lòng tải lên hình ảnh thanh toán",
+      colorText: ColorResources.RED,
+      backgroundGradient: const LinearGradient(colors: [
+        Color(0xffffb8b3),
+        Color(0xffff9b94),
+        Color(0xffffb8b3),
+      ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+    );
+  }
+
+  void addToDB(String orderId) {
+    items.forEach((element) {
+      if (element.isChoose == true) {
+        OrderItemModel model = OrderItemModel(
+          idOrder: orderId,
+          idProduct: element.id,
+          price: element.amount.toString(),
+          quantity: element.quality.toString(),
+        );
+
+        orderItemProvider.add(
+          data: model,
+          onSuccess: (value) {},
+          onError: (error) {
+            print(error);
+            update();
+          },
+        );
+      }
+    });
+  }
+
+  ///
+  ///loadDonHangDieuKien
+  ///
+  void loadDonHangDieuKien() {
+    productProvider.paginate(
+        page: 1,
+        limit: 20,
+        filter: "&type=1",
+        onSuccess: (value) {
+          items = value
+              .map((ProductModel model) => Item(
+                    id: model.id!,
+                    url: Images.sp1,
+                    amount: int.parse(model.prriceOrigin!),
+                    title: model.name!,
+                    isChoose: false,
+                    quality: 1,
+                  ))
+              .toList();
+
+          value.forEach((ProductModel model) {
+            print(model.resource);
+          });
+
+          print(items);
           update();
         },
         onError: (error) {

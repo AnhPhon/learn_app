@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -328,61 +329,36 @@ class RegisterPage extends GetView<RegisterController> {
 
                           GestureDetector(
                             onTap: () {
-                              final String magioithieu =
-                                  controllers["magioithieu"]!.text;
-                              final String taikhoan =
-                                  controllers["taikhoan"]!.text;
-                              final String matkhau =
-                                  controllers["matkhau"]!.text;
-                              final String xacnhanmatkhau =
-                                  controllers["xacnhanmatkhau"]!.text;
-                              final String sodienthoai =
-                                  controllers["sodienthoai"]!.text;
-                              final String hoten = controllers["hoten"]!.text;
-                              final String gender = controller.gender??"";
-                              final String ngaysinh =
-                                  DateConverter.estimatedDate(
-                                      controller.ngaysinh!);
-                              final String ngaycap =
-                                  DateConverter.estimatedDate(
-                                      controller.ngaycap!);
-                              final String cmnd = controllers["cmnd"]!.text;
-                              final String noicap = controllers["noicap"]!.text;
-                              final String nghenghiep =
-                                  controllers["nghenghiep"]!.text;
-                              final String diachithuongtru =
-                                  controllers["diachithuongtru"]!.text;
-                              final String diachitlienlac =
-                                  controllers["diachitlienlac"]!.text;
+                              // final String magioithieu =
+                              //     controllers["magioithieu"]!.text;
 
-                              var data = {
-                                "isEmailVerified": false,
-                                "password":matkhau,
-                                "idUser": "",
-                                "idRole": "",
-                                "idOptionalRole": "0",
-                                "fullname": hoten,
-                                "username": taikhoan,
-                                "sex": gender,
-                                "avatar":
+                              final UserModel userModel = UserModel(
+                                password: controllers["matkhau"]!.text,
+                                idUser: "",
+                                idRole: "",
+                                idOptionalRole: "0",
+                                fullname: controllers["hoten"]!.text,
+                                username: controllers["taikhoan"]!.text,
+                                sex: controller.gender ?? "",
+                                avatar:
                                     "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632456310...",
-                                "born": ngaysinh,
-                                "phone": sodienthoai,
-                                "address": diachithuongtru,
-                                "citizenIdentification": cmnd,
-                                "status": "1",
-                                "imageCitizenIdentification":
+                                born: DateConverter.estimatedDate(
+                                    controller.ngaysinh!),
+                                phone: controllers["sodienthoai"]!.text,
+                                address: controllers["diachithuongtru"]!.text,
+                                citizenIdentification:  controllers["cmnd"]!.text,
+                                status: "1",
+                                imageCitizenIdentification:
                                     "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455894...",
-                                "imageCitizenIdentification1":
+                                imageCitizenIdentification1:
                                     "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455901...",
-                                "paymentProofImage": ""
-                              };
-                              // print(data);
+                                paymentProofImage: "",
+                              );
 
                               // cho phép tạo
-                              bool allowCreate = false; 
-                              if(allowCreate == true) {
-                                controller.createUser(data);
+                              bool allowCreate = false;
+                              if (allowCreate == true) {
+                                controller.createUser(userModel);
                               }
                               Get.to(RegisterPage3());
                             },
