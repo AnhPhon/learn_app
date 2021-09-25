@@ -1,28 +1,33 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/product_model.dart';
+import 'package:template/data/model/body/product_by_id_order_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/product_provider.dart';
+import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/posts/posts_page.dart';
-import 'package:template/view/screen/product_detail/product_detail_controller.dart';
 
 class CartController extends GetxController {
+  GetIt sl = GetIt.instance;
+
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
 
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
-  final productDetailController = Get.put(ProductDetailController());
-
-  //list tổng tiền
-  List payment = ["Giá tiền", "Phí ship", "Khuyến mãi", "Tổng"];
-  List price = ["150.000đ", "15.000đ", "-50.000đ", "115.000đ"];
-
-  List<ProductModel> productFromCartList = [];
+  UserProvider userProvider = GetIt.I.get<UserProvider>();
 
   bool isLastProduct = false;
 
-  bool isLoading = false;
+  bool isLoading = true;
+
+  List<ProductByIdOrderModel> selectedProductList = [];
+
+  int price = 0;
+
+  UserModel? userModel;
 
   //số lượng sản phẩm
   int qualityProduct = 1;
@@ -30,40 +35,22 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getProductFromCart();
+    loadSelectedProduct();
+    getAddress();
   }
 
   ///
-  /// list sản phẩm trong giỏ hàng
+  ///load list selected product
   ///
-  void getProductFromCart() {
-    isLoading = true;
-    productFromCartList.clear();
-    if (productDetailController.orderItemList.isNotEmpty) {
-      for (var i = 0; i < productDetailController.orderItemList.length; i++) {
-        productProvider.find(
-            id: productDetailController.orderItemList[i].idProduct!,
-            onSuccess: (value) {
-              productFromCartList.add(value);
-              isLoading = false;
-              update();
-            },
-            onError: (error) {
-              print(error);
-              update();
-            });
-      }
-    } else {
-      isLoading = false;
-    }
-  }
-
-  //xoá khỏi giỏ hàng
-  void deleteItem() {
-    orderItemProvider.delete(
-        id: "614418d3527c6f1c0c5980e8",
+  void loadSelectedProduct() {
+    productProvider.findByIdOrder(
+        page: 1,
+        limit: 100,
+        idOrder: Get.parameters['idOrder'].toString(),
         onSuccess: (value) {
-          print(value);
+          selectedProductList = value;
+          calculatorPrice();
+          // isLoading = false;
           update();
         },
         onError: (error) {
@@ -72,29 +59,97 @@ class CartController extends GetxController {
         });
   }
 
-  //tăng số lượng
+  //xoá khỏi giỏ hàng
+  void deleteItem(int index) {
+    Get.defaultDialog(
+        middleText: "Bạn có chắc muốn xóa sản phẩm",
+        textCancel: "Hủy",
+        textConfirm: "Đồng ý",
+        cancelTextColor: ColorResources.BLACK,
+        confirmTextColor: ColorResources.RED,
+        onConfirm: () {
+          update();
+          orderItemProvider.delete(
+              id: selectedProductList[index].id.toString(),
+              onSuccess: (value) {
+                loadSelectedProduct();
+                update();
+              },
+              onError: (error) {
+                print(error);
+                update();
+              });
+          Get.back();
+        });
+  }
+
+  ///
+  ///calculator price
+  ///
+  void calculatorPrice() {
+    for (var i = 0; i < selectedProductList.length; i++) {
+      price = int.parse(selectedProductList[i].quantity!) *
+          int.parse(selectedProductList[i].idProduct!.prices!);
+      price += price;
+    }
+    update();
+  }
+
+  ///
+  ///tăng số lượng
+  ///
   void incrementQuality() {
     qualityProduct += 1;
     update();
   }
 
-  //giảm số lượng
+  ///
+  ///giảm số lượng
+  ///
   void decrementQuality() {
     qualityProduct -= 1;
     update();
   }
 
+  ///
+  ///address
+  ///
+
   void onBtnHomeClick() {
     Get.to(PostsPage());
   }
 
-  //thanh toán
-  void onCheckoutClick() {
-    Get.toNamed(AppRoutes.CHECKOUT);
+  ///
+  ///get address from iUser
+  ///
+  void getAddress() {
+    userProvider.find(
+        id: "614748250c57f118c4a40689",
+        onSuccess: (value) {
+          userModel = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
   }
 
-  //thay đổi địa chỉ
+  ///
+  ///thay đổi địa chỉ
+  ///
   void onAddressClick() {
     Get.toNamed(AppRoutes.ADDRESS);
+  }
+
+  ///
+  ///thanh toán
+  ///
+  void onCheckoutClick() {
+    sl
+        .get<SharedPreferenceHelper>()
+        .orderId
+        .then((value) => Get.toNamed("${AppRoutes.CHECKOUT}?idOrder=$value"));
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/product_by_id_order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
@@ -10,41 +11,79 @@ import 'package:template/provider/product_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 
 class ProductDetailController extends GetxController {
+  GetIt sl = GetIt.instance;
+
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
 
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
 
-  GetIt sl = GetIt.instance;
+  List<ProductByIdOrderModel> productFromCartList = [];
 
-  final homeController = Get.put(HomeController());
+  bool isLoadingMore = true;
 
-  final categoriesController = Get.put(CategoriesController());
+  ProductModel? productModel;
 
-  List<ProductModel> productList = [];
+  List<ProductModel> productModelList = [];
 
-  List<OrderItemModel> orderItemList = [];
+  bool isLoading = true;
 
-  bool isLoadingMore = false;
-
-  bool? isHave;
+  //số lượng sản phẩm
+  int qualityProduct = 1;
 
   @override
   void onInit() {
     super.onInit();
-    getProductFromCart();
+    getProductFromId();
+    getMoreProduct();
+    loadQuanlityCart();
+  }
+
+  ///
+  ///load product
+  ///
+  void getProductFromId() {
+    productProvider.find(
+        id: Get.parameters['productId'].toString(),
+        onSuccess: (value) {
+          productModel = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  ///
+  ///load more product
+  ///
+  void getMoreProduct() {
+    productProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter: "idCategory=${Get.parameters['categoryId']}",
+        onSuccess: (value) {
+          productModelList = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
   }
 
   ///
   /// xem thêm mô tả sản phẩm
   ///
   void loadingMore() {
-    isLoadingMore = true;
+    isLoadingMore = false;
     update();
   }
 
@@ -52,21 +91,8 @@ class ProductDetailController extends GetxController {
   /// thu gọn
   ///
   void loadingLess() {
-    isLoadingMore = false;
+    isLoadingMore = true;
     update();
-  }
-
-  ///
-  /// lấy tất cả sản phẩm
-  ///
-  void getAllProduct() {
-    productProvider.all(onSuccess: (value) {
-      productList = value;
-      update();
-    }, onError: (error) {
-      print(error);
-      update();
-    });
   }
 
   ///
@@ -77,7 +103,7 @@ class ProductDetailController extends GetxController {
       if (value == null) {
         await orderProvider.add(
             data: OrderModel(
-                idUser: homeController.userModel.id,
+                idUser: "614748250c57f118c4a40689",
                 statusOrder: "1",
                 statusPayment: "2",
                 description: "đây là nội dung",
@@ -91,6 +117,23 @@ class ProductDetailController extends GetxController {
                 imagePayment: "0"),
             onSuccess: (value) {
               sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
+              print("IDORDER: ${value.id}");
+
+              ///
+              ///add to cart
+              ///
+              addToCart(
+                  idOrder: value.id!,
+                  idProduct: Get.parameters['productId'].toString(),
+                  quanlity: qualityProduct.toString(),
+                  price: Get.parameters['price'].toString());
+
+              ///
+              ///load quality again
+              ///
+              loadQuanlityCart();
+
+              isLoading = false;
 
               ///
               ///show snackbar
@@ -113,8 +156,8 @@ class ProductDetailController extends GetxController {
             });
       } else {
         final idOrder = value;
-        final indexOrderItemList = orderItemList.indexWhere((element) =>
-            element.idProduct == categoriesController.productWithId!.id);
+        final indexOrderItemList = productFromCartList.indexWhere((element) =>
+            element.idProduct!.id == Get.parameters['productId'].toString());
         if (indexOrderItemList == -1) {
           Get.snackbar(
             "Thành công",
@@ -126,15 +169,25 @@ class ProductDetailController extends GetxController {
               Color(0xffd7ffba),
             ], begin: Alignment(2, -1), end: Alignment(1, 5)),
           );
-          getProductFromCart();
-          update();
+
+          ///
+          ///add to cart
+          ///
           addToCart(
               idOrder: idOrder,
-              idProduct: categoriesController.productWithId!.id!,
-              quanlity: "1",
-              price: categoriesController.productWithId!.prices!);
+              idProduct: Get.parameters['productId'].toString(),
+              quanlity: qualityProduct.toString(),
+              price: Get.parameters['price'].toString());
+
+          ///
+          ///load quality
+          ///
+          loadQuanlityCart();
+
+          isLoading = false;
           update();
         } else {
+          isLoading = false;
           Get.snackbar(
             "Thất bại",
             "Sản phẩm đã tồn tại trong giỏ hàng",
@@ -152,25 +205,25 @@ class ProductDetailController extends GetxController {
   }
 
   ///
-  /// lấy sản phẩm trong giỏ hàng
+  /// load cart
   ///
-  void getProductFromCart() {
-    sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      if (value != null) {
-        orderItemProvider.paginate(
+  void loadQuanlityCart() {
+    productFromCartList.clear();
+    sl
+        .get<SharedPreferenceHelper>()
+        .orderId
+        .then((value) => productProvider.findByIdOrder(
             page: 1,
             limit: 100,
-            filter: "&idOrder=$value",
+            idOrder: value!,
             onSuccess: (value) {
-              orderItemList = value;
+              productFromCartList = value;
               update();
             },
             onError: (error) {
               print(error);
               update();
-            });
-      }
-    });
+            }));
   }
 
   ///
@@ -198,29 +251,23 @@ class ProductDetailController extends GetxController {
   }
 
   void onCartClick() {
-    Get.toNamed(AppRoutes.CART);
+    sl
+        .get<SharedPreferenceHelper>()
+        .orderId
+        .then((value) => Get.toNamed("${AppRoutes.CART}?idOrder=$value"));
   }
 
-  ///
-  ///  money normalize
-  ///
-  String moneyNormalize(int money, String splitSymbol) {
-    String text = money.toString().split('').reversed.join();
-    int size = text.length;
+  //tăng số lượng
+  void incrementQuality() {
+    qualityProduct += 1;
+    update();
+  }
 
-    String result = "";
-    int mark = 0;
-    for (int i = 0; i < size; i++) {
-      mark += 1;
-      result = text[i] + result;
-
-      if (mark % 3 == 0) {
-        result = splitSymbol + result;
-      }
+  //giảm số lượng
+  void decrementQuality() {
+    if (qualityProduct > 1) {
+      qualityProduct -= 1;
     }
-
-    if (result[0] == splitSymbol) result = result.substring(1, result.length);
-
-    return result;
+    update();
   }
 }

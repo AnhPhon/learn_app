@@ -75,6 +75,7 @@ class CategoriesController extends GetxController
 
   //xem sản phẩm
   void onProductClick(int index) {
+    print("productId=${productWithIdList[index].id!}");
     productProvider
         .find(
             id: productWithIdList[index].id!,
@@ -86,6 +87,7 @@ class CategoriesController extends GetxController
               print(error);
               update();
             })
-        .then((values) => Get.toNamed(AppRoutes.PRODUCT_DETAIL));
+        .then((values) => Get.toNamed(
+            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdList[index].id!}&categoryId=${productWithIdList[index].idCategory}&price=${productWithIdList[index].prices}"));
   }
 }

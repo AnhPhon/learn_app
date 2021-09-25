@@ -16,6 +16,8 @@ import 'package:template/view/screen/categories/categories_controller.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
+  final categoriesController = Get.find<CategoriesController>();
+
   ///
   /// Group widget
   ///
@@ -93,7 +95,7 @@ class HomePage extends GetView<HomeController> {
             onPressed: () {
               controller.onBtnCategoriesClick(0);
             },
-            content: controller.categoryList.isEmpty
+            content: categoriesController.categoriesList.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : GridView.builder(
                     shrinkWrap: true,
@@ -103,11 +105,12 @@ class HomePage extends GetView<HomeController> {
                             childAspectRatio: 0.85,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10),
-                    itemCount: controller.categoryList.length <= 6
-                        ? controller.categoryList.length
+                    itemCount: categoriesController.categoriesList.length <= 6
+                        ? categoriesController.categoriesList.length
                         : 6,
                     itemBuilder: (BuildContext context, index) {
-                      final categoriesList = controller.categoryList;
+                      final categoriesList =
+                          categoriesController.categoriesList;
                       return _danhMucBtn(
                           Container(
                             width: DeviceUtils.getScaledSize(context, 0.178),

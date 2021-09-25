@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/category_news_model.dart';
 import 'package:template/data/model/body/news_model.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/news_provider.dart';
 import 'package:template/routes/app_routes.dart';

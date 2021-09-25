@@ -38,7 +38,7 @@ class OrderRepository {
   ///
   Future<ApiResponse> update(OrderModel data) async {
     try {
-      final response = await dioClient!.put('/orders', data: data.toJson());
+      final response = await dioClient!.put('/orders', data: data.toJsonPut());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

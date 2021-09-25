@@ -11,56 +11,62 @@ class AddressPage extends GetView<AddressController> {
   /// input Widget
   ///
   Widget _inputWidget(BuildContext context,
-      {required TextEditingController textController, required String hint}) {
+      {required TextEditingController controller, required String hint}) {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.03)),
-      child: TextField(
-        textInputAction: TextInputAction.done,
-        textAlignVertical: TextAlignVertical.center,
-        controller: textController,
-        cursorColor: ColorResources.PRIMARY,
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: DeviceUtils.getScaledSize(context, 0.025),
-              vertical: DeviceUtils.getScaledSize(context, 0.038)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          hintText: hint,
-          filled: true,
-          fillColor: Colors.transparent,
-          suffixIconConstraints: BoxConstraints(
-            maxHeight: DeviceUtils.getScaledSize(context, 0.025) * 2,
-          ),
-          suffixIcon: Container(
-            padding: EdgeInsets.only(
-                right: DeviceUtils.getScaledSize(context, 0.025)),
-            child: Icon(
-              Icons.home,
-              size: DeviceUtils.getScaledSize(context, 0.045),
-              color: ColorResources.PRIMARY,
-            ),
-          ),
-        ),
-      ),
+      child: GetBuilder<AddressController>(
+          init: AddressController(),
+          builder: (addressController) {
+            return TextField(
+              textInputAction: TextInputAction.done,
+              textAlignVertical: TextAlignVertical.center,
+              controller: controller,
+              cursorColor: ColorResources.PRIMARY,
+              decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: DeviceUtils.getScaledSize(context, 0.025),
+                    vertical: DeviceUtils.getScaledSize(context, 0.038)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARY)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: ColorResources.GREY)),
+                disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: ColorResources.GREY)),
+                hintText: hint,
+                filled: true,
+                fillColor: Colors.transparent,
+                suffixIconConstraints: BoxConstraints(
+                  maxHeight: DeviceUtils.getScaledSize(context, 0.025) * 2,
+                ),
+                suffixIcon: Container(
+                  padding: EdgeInsets.only(
+                      right: DeviceUtils.getScaledSize(context, 0.025)),
+                  child: Icon(
+                    Icons.home,
+                    size: DeviceUtils.getScaledSize(context, 0.045),
+                    color: ColorResources.PRIMARY,
+                  ),
+                ),
+              ),
+            );
+          }),
     );
   }
 
   ///
   /// button change
   ///
-  Widget _changeBtnWidget(BuildContext context) {
+  Widget _changeBtnWidget(
+      BuildContext context, AddressController addressController) {
     return GestureDetector(
       onTap: () {
         Get.back();
@@ -91,45 +97,47 @@ class AddressPage extends GetView<AddressController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddressController>(
-        init: AddressController(),
-        builder: (AddressController value) {
-          return Scaffold(
-            backgroundColor: ColorResources.WHITE,
-            appBar: CustomAppBar().customAppBar(title: "Địa chỉ"),
-            body: Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: DeviceUtils.getScaledSize(context, 0.04),
-                  horizontal: DeviceUtils.getScaledSize(context, 0.02)),
-              margin: EdgeInsets.symmetric(
-                  vertical: DeviceUtils.getScaledSize(context, 0.04),
-                  horizontal: DeviceUtils.getScaledSize(context, 0.05)),
-              decoration: BoxDecoration(
-                  color: ColorResources.WHITE,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Column(
-                children: [
-                  DropDownButton1(
-                      hint: "Chọn tỉnh/thành phố",
-                      value: controller.province,
-                      onChanged: controller.setSelectedProvince,
-                      data: controller.provinceList),
-                  DropDownButton1(
-                      hint: "Chọn quận/huyện",
-                      value: controller.district,
-                      onChanged: controller.setSelectedDistrict,
-                      data: controller.districtList),
-                  _inputWidget(context,
-                      hint: "Nhập Phường/xã",
-                      textController: controller.wardController),
-                  _inputWidget(context,
-                      hint: "Nhập địa chỉ",
-                      textController: controller.addressController),
-                  _changeBtnWidget(context)
-                ],
+    return Scaffold(
+      backgroundColor: ColorResources.WHITE,
+      appBar: CustomAppBar().customAppBar(title: "Địa chỉ"),
+      body: GetBuilder<AddressController>(
+          init: AddressController(),
+          builder: (addressController) {
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: DeviceUtils.getScaledSize(context, 0.04),
+                    horizontal: DeviceUtils.getScaledSize(context, 0.02)),
+                margin: EdgeInsets.symmetric(
+                    vertical: DeviceUtils.getScaledSize(context, 0.04),
+                    horizontal: DeviceUtils.getScaledSize(context, 0.05)),
+                decoration: BoxDecoration(
+                    color: ColorResources.WHITE,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  children: [
+                    DropDownButton1(
+                        hint: "Chọn tỉnh/thành phố",
+                        value: addressController.province,
+                        onChanged: addressController.setSelectedProvince,
+                        data: addressController.provinceList),
+                    DropDownButton1(
+                        hint: "Chọn quận/huyện",
+                        value: addressController.district,
+                        onChanged: addressController.setSelectedDistrict,
+                        data: addressController.districtList),
+                    _inputWidget(context,
+                        hint: "Nhập Phường/xã",
+                        controller: addressController.wardController),
+                    _inputWidget(context,
+                        hint: "Nhập địa chỉ",
+                        controller: addressController.addressController),
+                    _changeBtnWidget(context, addressController),
+                  ],
+                ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }

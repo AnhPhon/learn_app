@@ -23,8 +23,6 @@ class HomeController extends GetxController {
   //banner
   List banner = [Images.banner1, Images.banner2, Images.banner3];
 
-  List<CategoryModel> categoryList = [];
-
   int categoryPages = 0;
 
   bool isLoading = false;
@@ -45,17 +43,17 @@ class HomeController extends GetxController {
   ///
   ///get all categ
   ///
-  void getAllCategories() {
-    isLoading = true;
-    update();
-    categoryProvider.all(onSuccess: (value) {
-      categoryList = value;
-      update();
-    }, onError: (error) {
-      print(error);
-      update();
-    }).then((value) => isLoading = false);
-  }
+  // void getAllCategories() {
+  //   isLoading = true;
+  //   update();
+  //   categoryProvider.all(onSuccess: (value) {
+  //     categoriesController.categoriesList = value;
+  //     update();
+  //   }, onError: (error) {
+  //     print(error);
+  //     update();
+  //   }).then((value) => isLoading = false);
+  // }
 
   ///
   ///lấy thông tin user
