@@ -6,29 +6,39 @@ import 'package:template/data/model/body/news_model.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/news_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/news/news_detail/news_detail_controller.dart';
-import 'package:template/view/screen/posts/posts_page.dart';
 
 class NewsController extends GetxController with SingleGetTickerProviderMixin {
   TabController? tabController;
+  final searchController = TextEditingController();
   CategoryNewsProvider categoryNewsProvider =
       GetIt.I.get<CategoryNewsProvider>();
   NewsProvider newsProvider = GetIt.I.get<NewsProvider>();
-  final newsDetailController = Get.put(NewsDetailController());
 
   List<CategoryNewsModel> categoryNewsList = [];
+
   List<NewsModel> newsList = [];
+
+  NewsModel? newsModel;
 
   bool isLoading = false;
 
   int isSelectedIndexTab = 0;
 
+  int isSelectedIndexNews = 0;
+
   @override
   void onInit() {
     super.onInit();
+    getAllCategoryNews();
+  }
+
+  ///
+  ///get all categoryNews
+  ///
+  void getAllCategoryNews() {
     categoryNewsProvider.all(onSuccess: (value) {
       categoryNewsList = value;
-      this.tabController =
+      tabController =
           TabController(vsync: this, length: categoryNewsList.length);
       tabController!.addListener(() {
         isSelectedIndexTab = tabController!.index;
@@ -40,10 +50,11 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
       print(error);
       update();
     });
-    newsDetailController.getAllNews();
   }
 
-  //get news with categry news
+  ///
+  /// get news with category news
+  ///
   void getNewsWithIdCateg({required String id}) {
     newsProvider.paginate(
         page: 1,
@@ -60,7 +71,21 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
         });
   }
 
-  void onNewsClick() {
-    Get.toNamed(AppRoutes.NEWS_DETAIL);
+  ///
+  ///get news from id
+  ///
+  void getNewsFromId({required int index}) {
+    newsProvider
+        .find(
+            id: newsList[index].id!,
+            onSuccess: (value) {
+              newsModel = value;
+              update();
+            },
+            onError: (error) {
+              print(error);
+              update();
+            })
+        .then((value) => Get.toNamed(AppRoutes.NEWS_DETAIL));
   }
 }

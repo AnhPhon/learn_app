@@ -55,6 +55,7 @@ class CategoriesController extends GetxController
   //lấy sản phẩm theo danh mục
   void getProductWithIdCateg({required String id}) {
     isLoading = true;
+
     update();
     productProvider
         .paginate(
@@ -62,6 +63,7 @@ class CategoriesController extends GetxController
             limit: 5,
             filter: "idCategory=$id",
             onSuccess: (value) {
+              productWithIdList.clear();
               productWithIdList = value;
               isLoading = false;
             },

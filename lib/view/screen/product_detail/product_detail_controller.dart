@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
@@ -8,6 +9,7 @@ import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 
@@ -30,7 +32,7 @@ class ProductDetailController extends GetxController {
 
   bool isLoadingMore = false;
 
-  bool isHave = false;
+  bool? isHave;
 
   @override
   void onInit() {
@@ -38,19 +40,25 @@ class ProductDetailController extends GetxController {
     getProductFromCart();
   }
 
-  // xem thêm mô tả sản phẩm
+  ///
+  /// xem thêm mô tả sản phẩm
+  ///
   void loadingMore() {
     isLoadingMore = true;
     update();
   }
 
-  // thu gọn
+  ///
+  /// thu gọn
+  ///
   void loadingLess() {
     isLoadingMore = false;
     update();
   }
 
-  // lấy tất cả sản phẩm
+  ///
+  /// lấy tất cả sản phẩm
+  ///
   void getAllProduct() {
     productProvider.all(onSuccess: (value) {
       productList = value;
@@ -61,7 +69,9 @@ class ProductDetailController extends GetxController {
     });
   }
 
-  //tạo id đơn hàng
+  ///
+  ///tạo id đơn hàng
+  ///
   void order() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) async {
       if (value == null) {
@@ -82,7 +92,19 @@ class ProductDetailController extends GetxController {
             onSuccess: (value) {
               sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
 
-              print("isHave-1: $isHave");
+              ///
+              ///show snackbar
+              ///
+              Get.snackbar(
+                "Thành công",
+                "Đã thêm sản phẩm vào giỏ hàng",
+                colorText: ColorResources.PRIMARY,
+                backgroundGradient: const LinearGradient(colors: [
+                  Color(0xffd7ffba),
+                  Color(0xffeaffdb),
+                  Color(0xffd7ffba),
+                ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+              );
               update();
             },
             onError: (error) {
@@ -94,11 +116,18 @@ class ProductDetailController extends GetxController {
         final indexOrderItemList = orderItemList.indexWhere((element) =>
             element.idProduct == categoriesController.productWithId!.id);
         if (indexOrderItemList == -1) {
-          isHave = false;
-          print("isHave0: $isHave");
+          Get.snackbar(
+            "Thành công",
+            "Đã thêm sản phẩm vào giỏ hàng",
+            colorText: ColorResources.PRIMARY,
+            backgroundGradient: const LinearGradient(colors: [
+              Color(0xffd7ffba),
+              Color(0xffeaffdb),
+              Color(0xffd7ffba),
+            ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+          );
           getProductFromCart();
           update();
-          print("indexOrderItemList: 0");
           addToCart(
               idOrder: idOrder,
               idProduct: categoriesController.productWithId!.id!,
@@ -106,16 +135,25 @@ class ProductDetailController extends GetxController {
               price: categoriesController.productWithId!.prices!);
           update();
         } else {
-          print("indexOrderItemList: 1");
-          isHave = true;
-          print("isHave1: $isHave");
+          Get.snackbar(
+            "Thất bại",
+            "Sản phẩm đã tồn tại trong giỏ hàng",
+            colorText: ColorResources.RED,
+            backgroundGradient: const LinearGradient(colors: [
+              Color(0xfffffcfc),
+              Color(0xfffff5f5),
+              Color(0xfffffcfc),
+            ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+          );
           update();
         }
       }
     });
   }
 
-  //lấy sản phẩm trong giỏ hàng
+  ///
+  /// lấy sản phẩm trong giỏ hàng
+  ///
   void getProductFromCart() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
       if (value != null) {
@@ -135,7 +173,9 @@ class ProductDetailController extends GetxController {
     });
   }
 
-  //thêm vào giỏ hàng
+  ///
+  /// thêm vào giỏ hàng
+  ///
   void addToCart(
       {required String idOrder,
       required String idProduct,
@@ -161,7 +201,9 @@ class ProductDetailController extends GetxController {
     Get.toNamed(AppRoutes.CART);
   }
 
-  //  money normalize
+  ///
+  ///  money normalize
+  ///
   String moneyNormalize(int money, String splitSymbol) {
     String text = money.toString().split('').reversed.join();
     int size = text.length;

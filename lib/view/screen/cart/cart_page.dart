@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/home_page/info.dart';
-// template
-import 'package:template/data/template/categories.dart';
+import 'package:http/http.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-// images
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
+import 'package:template/view/screen/product_detail/product_detail_controller.dart';
 
 import 'cart_controller.dart';
 
 class CartPage extends GetView<CartController> {
+  final productDetailController = Get.put(ProductDetailController());
+
   ///
   ///container box
   ///
@@ -133,116 +132,126 @@ class CartPage extends GetView<CartController> {
   Widget _otherProductDetail(BuildContext context) {
     return _containerBox(context,
         child: Column(children: [
-          ...List.generate(
-              3,
-              (index) => Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 9,
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(7),
-                                      child: Image.asset(
-                                        "assets/images/Untitled.png",
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Sản phẩm",
-                                          style: titilliumSemiBold.copyWith(
-                                              fontSize: 16),
-                                        ),
-                                        Text(
-                                          "200.000đ",
-                                          style: titilliumSemiBold.copyWith(
-                                              color: Colors.grey),
-                                        ),
-
-                                        SizedBox(
-                                            height: DeviceUtils.getScaledSize(
-                                                context, 0.02)),
-
-                                        //button quanlity
-                                        Row(
-                                          children: [
-                                            _iconsquality(context, onTap: () {
-                                              controller.decrementQuality();
-                                            },
-                                                icon: Icon(Icons.remove,
-                                                    color: controller
-                                                                .qualityProduct ==
-                                                            1
-                                                        ? Colors.grey
-                                                        : ColorResources
-                                                            .PRIMARY),
-                                                color:
-                                                    controller.qualityProduct ==
-                                                            1
-                                                        ? Colors.grey
-                                                        : null),
-                                            _iconsquality(context,
-                                                text: controller.qualityProduct
-                                                    .toString()),
-                                            _iconsquality(context, onTap: () {
-                                              controller.incrementQuality();
-                                            },
-                                                icon: const Icon(
-                                                    Icons.add_outlined,
-                                                    color: Colors.grey)),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          //xoá khỏi giỏ hàng
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                padding: EdgeInsets.all(
-                                    DeviceUtils.getScaledWidth(context, 0.01)),
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorResources.GREY,
-                                ),
-                                child: Icon(
-                                  Icons.close_outlined,
-                                  size: DeviceUtils.getScaledHeight(
-                                      context, 0.023),
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: controller.productFromCartList.length,
+              itemBuilder: (BuildContext context, i) {
+                return Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(7),
+                                  child: Image.network(
+                                    controller.productFromCartList[i].images!,
+                                    height: DeviceUtils.getScaledSize(
+                                        context, 0.178),
+                                    width: DeviceUtils.getScaledSize(
+                                        context, 0.178),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                flex: 7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      controller.productFromCartList[i].name!,
+                                      maxLines: 2,
+                                      style: titilliumSemiBold.copyWith(
+                                          fontSize: 16),
+                                    ),
+                                    Text(
+                                      PriceConverter.convertPrice(
+                                          context,
+                                          double.parse(controller
+                                              .productFromCartList[i].prices!)),
+                                      style: titilliumSemiBold.copyWith(
+                                          color: Colors.grey),
+                                    ),
 
-                      //divider
-                      Dimensions().paddingDivider(context),
-                    ],
-                  )),
+                                    SizedBox(
+                                        height: DeviceUtils.getScaledSize(
+                                            context, 0.02)),
+
+                                    //button quanlity
+                                    Row(
+                                      children: [
+                                        _iconsquality(context, onTap: () {
+                                          controller.decrementQuality();
+                                        },
+                                            icon: Icon(Icons.remove,
+                                                color: controller
+                                                            .qualityProduct ==
+                                                        1
+                                                    ? Colors.grey
+                                                    : ColorResources.PRIMARY),
+                                            color:
+                                                controller.qualityProduct == 1
+                                                    ? Colors.grey
+                                                    : null),
+                                        _iconsquality(context,
+                                            text: controller.qualityProduct
+                                                .toString()),
+                                        _iconsquality(context, onTap: () {
+                                          controller.incrementQuality();
+                                        },
+                                            icon: const Icon(Icons.add_outlined,
+                                                color: Colors.grey)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              ///
+                              /// xoá khỏi giỏ hàng
+                              ///
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.all(
+                                        DeviceUtils.getScaledWidth(
+                                            context, 0.01)),
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ColorResources.GREY,
+                                    ),
+                                    child: Icon(
+                                      Icons.close_outlined,
+                                      size: DeviceUtils.getScaledHeight(
+                                          context, 0.023),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    //divider
+                    Dimensions().paddingDivider(context),
+                  ],
+                );
+              }),
 
           //payment detail
           _paymentDetail(context),
@@ -300,7 +309,9 @@ class CartPage extends GetView<CartController> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //button checkout
+          ///
+          /// button checkout
+          ///
           GestureDetector(
             onTap: () {
               controller.deleteItem();
@@ -332,38 +343,56 @@ class CartPage extends GetView<CartController> {
         builder: (CartController value) {
           return Scaffold(
             appBar: CustomAppBar().customAppBar(title: "Giỏ hàng"),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledSize(context, 0.038)),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.03)),
+            body: controller.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : controller.productFromCartList.isEmpty
+                    ? const Center(child: Text("Giỏ hàng trống"))
+                    : Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                DeviceUtils.getScaledSize(context, 0.038)),
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                  height:
+                                      DeviceUtils.getScaledSize(context, 0.03)),
 
-                    //shipping detail
-                    Text(
-                      "Chi tiết về shipping",
-                      style: Dimensions.fontSizeStyle18w600(),
-                    ),
-                    _shipping(context),
+                              ///
+                              ///shipping detail
+                              ///
+                              Text(
+                                "Chi tiết về shipping",
+                                style: Dimensions.fontSizeStyle18w600(),
+                              ),
+                              _shipping(context),
 
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
+                              SizedBox(
+                                  height:
+                                      DeviceUtils.getScaledSize(context, 0.02)),
 
-                    //other product detail
-                    Text(
-                      "Chi tiết sản phẩm khác",
-                      style: Dimensions.fontSizeStyle18w600(),
-                    ),
-                    _otherProductDetail(context),
+                              ///
+                              /// other product detail
+                              ///
+                              Text(
+                                "Chi tiết đơn hàng",
+                                style: Dimensions.fontSizeStyle18w600(),
+                              ),
+                              _otherProductDetail(context),
 
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.03)),
-                  ],
-                ),
-              ),
-            ),
-            //bottomSheet payment button
+                              SizedBox(
+                                  height:
+                                      DeviceUtils.getScaledSize(context, 0.03)),
+                            ],
+                          ),
+                        ),
+                      ),
+
+            ///
+            ///bottomSheet payment button
+            ///
             bottomNavigationBar: _bottomContainer(context),
           );
         });

@@ -227,27 +227,6 @@ class ProductDetailPage extends GetView<ProductDetailController> {
               child: GestureDetector(
                 onTap: () {
                   controller.order();
-                  controller.isHave
-                      ? Get.snackbar(
-                          "Thất bại",
-                          "Sản phẩm đã tồn tại trong giỏ hàng",
-                          colorText: ColorResources.RED,
-                          backgroundGradient: const LinearGradient(colors: [
-                            Color(0xfffffcfc),
-                            Color(0xfffff5f5),
-                            Color(0xfffffcfc),
-                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                        )
-                      : Get.snackbar(
-                          "Thành công",
-                          "Đã thêm sản phẩm vào giỏ hàng",
-                          colorText: ColorResources.PRIMARY,
-                          backgroundGradient: const LinearGradient(colors: [
-                            Color(0xffd7ffba),
-                            Color(0xffeaffdb),
-                            Color(0xffd7ffba),
-                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                        );
                 },
                 child: Container(
                   height: DeviceUtils.getScaledHeight(context, 0.068),

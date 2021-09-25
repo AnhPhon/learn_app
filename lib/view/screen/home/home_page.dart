@@ -16,8 +16,6 @@ import 'package:template/view/screen/categories/categories_controller.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
-  final categoriesController = Get.put(CategoriesController());
-
   ///
   /// Group widget
   ///
@@ -87,43 +85,51 @@ class HomePage extends GetView<HomeController> {
   ///
   Widget _categoryWidget(
       BuildContext context, double size, HomeController controller) {
-    return CategoryWidget(
-      text: "Xem thêm",
-      label: 'Danh mục',
-      onPressed: () {
-        controller.onBtnCategoriesClick(0);
-      },
-      content: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.85, crossAxisCount: 3, mainAxisSpacing: 10),
-          itemCount: categoriesController.categoriesList.length <= 6
-              ? categoriesController.categoriesList.length
-              : 6,
-          itemBuilder: (BuildContext context, index) {
-            final categoriesList = categoriesController.categoriesList;
-            return _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(size / 3),
-                    border: Border.all(width: 3, color: Colors.grey.shade700),
-                  ),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      child: Image.network(
-                        categoriesList[index].thumbnail!,
-                        fit: BoxFit.fill,
-                      )),
-                ),
-                categoriesList[index].name!, () {
-              controller.onBtnCategoriesClick(index);
-            });
-          }),
-      hasMore: true,
-    );
+    return controller.isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : CategoryWidget(
+            text: "Xem thêm",
+            label: 'Danh mục',
+            onPressed: () {
+              controller.onBtnCategoriesClick(0);
+            },
+            content: controller.categoryList.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 0.85,
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10),
+                    itemCount: controller.categoryList.length <= 6
+                        ? controller.categoryList.length
+                        : 6,
+                    itemBuilder: (BuildContext context, index) {
+                      final categoriesList = controller.categoryList;
+                      return _danhMucBtn(
+                          Container(
+                            width: DeviceUtils.getScaledSize(context, 0.178),
+                            height: DeviceUtils.getScaledSize(context, 0.178),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(size / 3),
+                              border: Border.all(
+                                  width: 3, color: Colors.grey.shade700),
+                            ),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(size / 3),
+                                child: Image.network(
+                                  categoriesList[index].thumbnail!,
+                                  fit: BoxFit.fill,
+                                )),
+                          ),
+                          categoriesList[index].name!, () {
+                        controller.onBtnCategoriesClick(index);
+                      });
+                    }),
+            hasMore: true,
+          );
   }
 
   ///
@@ -150,41 +156,6 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    /**
-     * Create home 2 part
-     * - part 1: background and avatar and name
-     * - part 2: content
-     */
-
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.zero,
-        margin: EdgeInsets.zero,
-        color: const Color(0xFFF5F5FA),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              //avatar background user
-              _avatarBackgroundUser(context),
-
-              //Đội nhóm
-              SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-              _groupWidget(context, DeviceUtils.getScaledSize(context, 0.178),
-                  controller),
-
-              // Danh mục
-              SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-              _categoryWidget(context,
-                  DeviceUtils.getScaledSize(context, 0.178), controller)
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -492,5 +463,44 @@ class HomePage extends GetView<HomeController> {
         ],
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /**
+     * Create home 2 part
+     * - part 1: background and avatar and name
+     * - part 2: content
+     */
+
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (HomeController value) {
+          return Scaffold(
+            body: Container(
+              padding: EdgeInsets.zero,
+              margin: EdgeInsets.zero,
+              color: const Color(0xFFF5F5FA),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //avatar background user
+                    _avatarBackgroundUser(context),
+
+                    //Đội nhóm
+                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+                    _groupWidget(context,
+                        DeviceUtils.getScaledSize(context, 0.178), controller),
+
+                    // Danh mục
+                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+                    _categoryWidget(context,
+                        DeviceUtils.getScaledSize(context, 0.178), controller)
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
