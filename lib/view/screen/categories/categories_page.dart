@@ -52,15 +52,14 @@ class CategoriesPage extends GetView<CategoriesController> {
               children: controller.productWithIdList.isEmpty
                   ? [
                       ...List.generate(
-                              controller.categoriesList.length,
-                              (index) =>
-                                  Center(child: CircularProgressIndicator()))
-                          .toList()
+                          controller.categoriesList.length,
+                          (index) =>
+                              const Center(child: CircularProgressIndicator()))
                     ]
                   : [
                       ...List.generate(
                         controller.categoriesList.length,
-                        (index) => controller.productWithIdList.isEmpty
+                        (index) => controller.isLoading == true
                             ? const Center(child: CircularProgressIndicator())
                             : GridView.builder(
                                 physics: const BouncingScrollPhysics(),

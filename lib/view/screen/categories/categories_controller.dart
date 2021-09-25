@@ -54,18 +54,21 @@ class CategoriesController extends GetxController
 
   //lấy sản phẩm theo danh mục
   void getProductWithIdCateg({required String id}) {
-    productProvider.paginate(
-        page: 1,
-        limit: 5,
-        filter: "idCategory=$id",
-        onSuccess: (value) {
-          productWithIdList = value;
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
+    isLoading = true;
+    update();
+    productProvider
+        .paginate(
+            page: 1,
+            limit: 5,
+            filter: "idCategory=$id",
+            onSuccess: (value) {
+              productWithIdList = value;
+              isLoading = false;
+            },
+            onError: (error) {
+              print(error);
+            })
+        .then((value) => update());
   }
 
   //xem sản phẩm

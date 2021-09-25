@@ -28,13 +28,13 @@ class OrderItemModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    // data['id'] = id;
     data['idOrder'] = idOrder;
     data['idProduct'] = idProduct;
     data['quantity'] = quantity;
     data['price'] = price;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
+    // data['createdAt'] = createdAt;
+    // data['updatedAt'] = updatedAt;
     return data;
   }
 }

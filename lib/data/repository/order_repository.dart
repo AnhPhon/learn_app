@@ -59,7 +59,7 @@ class OrderRepository {
   }
 
   ///
-  /// Get paginate orders "page": 1, "limit": 10, filter 
+  /// Get paginate orders "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
