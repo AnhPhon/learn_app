@@ -206,7 +206,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                           color: ColorResources.RED,
                         ),
                         child: Text(
-                          "1",
+                          controller.orderItemList.length.toString(),
                           style: titilliumSemiBold.copyWith(
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                               color: Theme.of(context).accentColor),
@@ -227,16 +227,27 @@ class ProductDetailPage extends GetView<ProductDetailController> {
               child: GestureDetector(
                 onTap: () {
                   controller.order();
-                  Get.snackbar(
-                    "Thành công",
-                    "Đã thêm sản phẩm vào giỏ hàng",
-                    colorText: ColorResources.PRIMARY,
-                    backgroundGradient: const LinearGradient(colors: [
-                      Color(0xffd7ffba),
-                      Color(0xffeaffdb),
-                      Color(0xffd7ffba),
-                    ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                  );
+                  controller.isHave
+                      ? Get.snackbar(
+                          "Thất bại",
+                          "Sản phẩm đã tồn tại trong giỏ hàng",
+                          colorText: ColorResources.RED,
+                          backgroundGradient: const LinearGradient(colors: [
+                            Color(0xfffffcfc),
+                            Color(0xfffff5f5),
+                            Color(0xfffffcfc),
+                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+                        )
+                      : Get.snackbar(
+                          "Thành công",
+                          "Đã thêm sản phẩm vào giỏ hàng",
+                          colorText: ColorResources.PRIMARY,
+                          backgroundGradient: const LinearGradient(colors: [
+                            Color(0xffd7ffba),
+                            Color(0xffeaffdb),
+                            Color(0xffd7ffba),
+                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+                        );
                 },
                 child: Container(
                   height: DeviceUtils.getScaledHeight(context, 0.068),

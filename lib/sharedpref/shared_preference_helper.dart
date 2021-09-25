@@ -39,7 +39,7 @@ class SharedPreferenceHelper {
 
   Future<bool> removeUsername() async {
     return _sharedPreference.remove(Preferences.username);
-  } 
+  }
 
   // General Methods: Password
   Future<String?> get password async {
@@ -52,8 +52,7 @@ class SharedPreferenceHelper {
 
   Future<bool> removePassword() async {
     return _sharedPreference.remove(Preferences.password);
-  } 
-
+  }
 
   // Theme:------------------------------------------------------
   bool get isDarkMode {
@@ -72,7 +71,7 @@ class SharedPreferenceHelper {
   Future<void> changeLanguage(String language) {
     return _sharedPreference.setString(Preferences.current_language, language);
   }
-  
+
   // Order: ----------------------------------------------------------
   Future<String?> get orderId async {
     return _sharedPreference.getString(Preferences.orderId);
