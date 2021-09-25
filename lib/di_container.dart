@@ -5,9 +5,11 @@ import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/category_news_repository.dart';
 import 'package:template/data/repository/category_repository.dart';
 import 'package:template/data/repository/district_repository.dart';
+import 'package:template/data/repository/image_repository.dart';
 import 'package:template/data/repository/news_repository.dart';
 import 'package:template/data/repository/order_item_repository.dart';
 import 'package:template/data/repository/order_repository.dart';
+import 'package:template/data/repository/personal_honor_repository.dart';
 import 'package:template/data/repository/product_repository.dart';
 import 'package:template/data/repository/province_repository.dart';
 import 'package:template/data/repository/user_repository.dart';
@@ -21,8 +23,10 @@ import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/news_provider.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
+import 'package:template/provider/personal_honor_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/province_provider.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/utils/firebase_service.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
@@ -55,6 +59,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ProvinceRepository());
   sl.registerLazySingleton(() => DistrictRepository());
   sl.registerLazySingleton(() => UserRepository());
+  sl.registerLazySingleton(() => ImageUpdateRepository());
+  sl.registerLazySingleton(() => PersonalHonorRepository());
 
   // Provider
   // sl.registerFactory(() => RegionProvider());
@@ -68,6 +74,8 @@ Future<void> init() async {
   sl.registerFactory(() => ProvinceProvider());
   sl.registerFactory(() => DistrictProvider());
   sl.registerFactory(() => UserProvider());
+  sl.registerFactory(() => ImageUpdateProvider());
+  sl.registerFactory(() => PersonalHonorProvider());
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider

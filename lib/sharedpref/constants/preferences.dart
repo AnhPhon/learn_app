@@ -7,6 +7,7 @@ class Preferences {
   static const String orderId = "order_id";
   static const String username = "username";
   static const String password = "password";
+  static const String userId = "user";
   static const String province_id = "province_id";
   static const String district_id = "district_id";
   static const String address = "address";

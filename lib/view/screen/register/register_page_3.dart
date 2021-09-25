@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/order_model.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
@@ -15,8 +16,8 @@ import 'package:template/utils/device_utils.dart';
 // dimensions
 import 'package:template/utils/dimensions.dart';
 // images
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
+import 'package:template/view/screen/register/register_page_4.dart';
 
 import 'register_controller.dart';
 
@@ -77,24 +78,22 @@ class RegisterPage3 extends GetView<RegisterController> {
             ],
           ),
           SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-          //btn checkout
+
+          // btn checkout
           GestureDetector(
             onTap: () {
               final double money = controller.sum * .75;
               final bool moneyValid = money > 2500000;
               if (moneyValid) {
-                Get.toNamed(AppRoutes.REGISTER_PAGE_4);
+                // Thành công
+                // Get.toNamed(AppRoutes.REGISTER_PAGE_4);
+                sl.get<SharedPreferenceHelper>().orderId.then((value) {
+                  final String orderId = value!;
+                  controller.addToDB(orderId);
+                  Get.to(RegisterPage4());
+                });
               } else {
-                Get.snackbar(
-                  "Đăng ký thất bại",
-                  "Hoá đơn hiện tại là ${PriceConverter.convertPrice(context, money)} đang thiếu ${PriceConverter.convertPrice(context, 2500000 - money)}",
-                  colorText: ColorResources.RED,
-                  backgroundGradient: const LinearGradient(colors: [
-                    Color(0xffffb8b3),
-                    Color(0xffff9b94),
-                    Color(0xffffb8b3),
-                  ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                );
+                controller.faildNotification(context, money);
               }
             },
             child: Container(
@@ -143,28 +142,26 @@ class RegisterPage3 extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => RegisterController());
-    GetIt sl = GetIt.instance;
-
+    GetIt sl = GetIt.instance;    
     // ignore: prefer_const_declarations
     // final bool allowCreateOrder = sl.get<SharedPreferenceHelper>().orderId != null;
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      print(value);
+      print("Run ${value}");
       if (value == null) {
-        final Map<String, dynamic> json = {
-          "idUser": "123",
-          "userAccept": "123",
-          "idWarehouse": "321",
-          "description": "321",
-          "imagePayment": "321",
-          "statusOrder": "321",
-          "statusPayment": "321",
-          "totalPrice": "321",
-          "discountPrice": "321",
-          "idProvince": "321",
-          "idDistrict": "321",
-          "address": "321",
-        };
-        controller.createOrder(json);
+        controller.createOrder(OrderModel(
+          idUser: "123",
+          userAccept: "123",
+          idWarehouse: "321",
+          description: "321",
+          imagePayment: "321",
+          statusOrder: "321",
+          statusPayment: "321",
+          totalPrice: "321",
+          discountPrice: "321",
+          idProvince: "321",
+          idDistrict: "321",
+          address: "321",
+        ));
       }
     });
 
@@ -205,7 +202,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                             confirmTextColor: ColorResources.WHITE,
                             onConfirm: () {
                               Get.back();
-
+                              // controller.addItemToOrder();
                               controller.accept(index);
                               controller
                                   .countTotal(controller.items[index].amount);
@@ -472,9 +469,11 @@ class Item {
   int amount;
   bool isChoose;
   int quality;
+  String id;
 
   Item(
-      {required this.url,
+      {required this.id,
+      required this.url,
       required this.title,
       required this.amount,
       required this.isChoose,

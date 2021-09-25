@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
@@ -364,6 +365,11 @@ class RegisterPage4 extends GetView<RegisterController> {
                   GestureDetector(
                     onTap: () {
                       if (controller.image != null) {
+                        
+                        controller.uploadImage();
+                        controller.sl.get<SharedPreferenceHelper>().removeOrderId();
+                        
+                        
                         Get.offNamed(AppRoutes.LOGIN);
                         showAnimatedDialog(
                             context,
@@ -375,16 +381,7 @@ class RegisterPage4 extends GetView<RegisterController> {
                             dismissible: false,
                             isFlip: true);
                       } else {
-                        Get.snackbar(
-                          "Thất bại",
-                          "Vui lòng tải lên hình ảnh thanh toán",
-                          colorText: ColorResources.RED,
-                          backgroundGradient: const LinearGradient(colors: [
-                            Color(0xffffb8b3),
-                            Color(0xffff9b94),
-                            Color(0xffffb8b3),
-                          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-                        );
+                        controller.hoanTatFaild();
                       }
                     },
                     child: Container(

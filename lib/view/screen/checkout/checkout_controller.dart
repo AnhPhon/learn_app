@@ -15,8 +15,71 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/view/screen/register/register_page_3.dart';
 
 class CheckoutController extends GetxController {
+  final List<Item> items = [
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 10000000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5.0",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 183000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 2",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 250000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 3",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 250000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 4",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 652000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 29000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 6",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 132000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 7",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 2500000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 8",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 29000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 9",
+    //     isChoose: false,
+    //     quality: 1),
+    // Item(
+    //     url: Images.sp1,
+    //     amount: 29000,
+    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 10",
+    //     isChoose: false,
+    //     quality: 1),
+  ];
   GetIt sl = GetIt.instance;
 
   File? image;

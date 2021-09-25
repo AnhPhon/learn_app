@@ -1,20 +1,22 @@
+import 'dart:io';
+
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/image_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
-class OrderRepository {
+class ImageUpdateRepository {
   DioClient? dioClient = GetIt.I.get<DioClient>();
 
-  OrderRepository();
+  ImageUpdateRepository();
 
   ///
-  /// Get all orders
+  /// Get all uploads
   ///
   Future<ApiResponse> get() async {
     try {
-      final response = await dioClient!.get('/orders');
+      final response = await dioClient!.get('/uploads');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -22,11 +24,11 @@ class OrderRepository {
   }
 
   ///
-  /// Insert order to database
+  /// Insert import-ware-house to database
   ///
-  Future<ApiResponse> add(OrderModel data) async {
+  Future<ApiResponse> add(File file) async {
     try {
-      final response = await dioClient!.post('/orders', data: data.toJson());
+      final response = await dioClient!.uploadImage('/uploads', file: file);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -34,11 +36,11 @@ class OrderRepository {
   }
 
   ///
-  /// Update order to database
+  /// Update import-ware-house to database
   ///
-  Future<ApiResponse> update(OrderModel data) async {
+  Future<ApiResponse> update(ImageUpdateModel data) async {
     try {
-      final response = await dioClient!.put('/orders', data: data.toJsonPut());
+      final response = await dioClient!.put('/uploads', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -46,12 +48,12 @@ class OrderRepository {
   }
 
   ///
-  /// Update order to database
+  /// Update import-ware-house to database
   ///
-  Future<ApiResponse> delete(String id, OrderModel data) async {
+  Future<ApiResponse> delete(String id, ImageUpdateModel data) async {
     try {
       final response =
-          await dioClient!.delete('/orders/$id', data: data.toJson());
+          await dioClient!.delete('/uploads/$id', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,15 +61,15 @@ class OrderRepository {
   }
 
   ///
-  /// Get paginate orders "page": 1, "limit": 10, filter
+  /// Get paginate uploads "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/orders/paginate?page=$page&limit=$limit'.toString();
+      String uri = '/uploads/paginate?page=$page&limit=$limit'.toString();
 
       // add condition filter
       if (filter != '') {
-        uri = '/orders/paginate?page=$page&limit=$limit$filter';
+        uri = '/uploads/paginate?page=$page&limit=$limit$filter';
       }
 
       final response = await dioClient!.get(uri);
@@ -78,24 +80,11 @@ class OrderRepository {
   }
 
   ///
-  /// Find order by id
+  /// Find import-ware-house by id
   ///
   Future<ApiResponse> find(String id) async {
     try {
-      final String uri = '/orders/$id';
-      final response = await dioClient!.get(uri);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
-  ///
-  /// getWith
-  ///
-  Future<ApiResponse> getWith(String userId, String dateStart, String dateEnd) async {
-    try {
-      final String uri = '/orders/dateStart-dateEnd?idUser=${userId}&dateStart=${dateStart}&dateEnd=${dateEnd}';
+      final String uri = '/uploads/$id';
       final response = await dioClient!.get(uri);
       return ApiResponse.withSuccess(response);
     } catch (e) {
