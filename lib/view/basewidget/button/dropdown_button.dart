@@ -8,12 +8,10 @@ class DropDownButton1 extends StatelessWidget {
     required this.hint,
     required this.onChanged,
     required this.data,
-    required this.width,
     this.value,
   });
 
   final String hint;
-  final double width;
   final Function(String? i) onChanged;
   final List<String> data;
   final String? value;

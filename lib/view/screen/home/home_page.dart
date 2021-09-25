@@ -11,10 +11,149 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
+import 'package:template/view/screen/categories/categories_controller.dart';
 
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
+  final categoriesController = Get.put(CategoriesController());
+
+  ///
+  /// Group widget
+  ///
+  Widget _groupWidget(
+      BuildContext context, double size, HomeController controller) {
+    return CategoryWidget(
+      text: "Tạo ID",
+      label: 'Đội nhóm',
+      icon: Icon(Icons.add_outlined,
+          color: ColorResources.PRIMARY,
+          size: DeviceUtils.getScaledSize(context, 0.045)),
+      onPressed: () {
+        controller.onRegisterIdClick();
+      },
+      content: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _danhMucBtn(
+                  Container(
+                    width: DeviceUtils.getScaledSize(context, 0.22),
+                    height: DeviceUtils.getScaledSize(context, 0.22),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(size / 3),
+                        border:
+                            Border.all(width: 3, color: Colors.grey.shade700),
+                        image: const DecorationImage(
+                            image: AssetImage(
+                              "assets/images/dieukien.png",
+                            ),
+                            fit: BoxFit.fill)),
+                  ),
+                  'Kho hàng điều kiện', () {
+                controller.onBtnKhoHangDieuKienClick();
+                print("2");
+              }),
+              _danhMucBtn(
+                  Container(
+                    width: DeviceUtils.getScaledSize(context, 0.22),
+                    height: DeviceUtils.getScaledSize(context, 0.22),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(size / 3),
+                        border:
+                            Border.all(width: 3, color: Colors.grey.shade700),
+                        image: const DecorationImage(
+                            image: AssetImage(
+                              "assets/images/trogia.png",
+                            ),
+                            fit: BoxFit.fill)),
+                  ),
+                  'Kho hàng trợ giá', () {
+                controller.onProductVoucherClick();
+                print("3");
+              }),
+            ],
+          ),
+        ],
+      ),
+      hasMore: true,
+    );
+  }
+
+  ///
+  /// Category widget
+  ///
+  Widget _categoryWidget(
+      BuildContext context, double size, HomeController controller) {
+    return CategoryWidget(
+      text: "Xem thêm",
+      label: 'Danh mục',
+      onPressed: () {
+        controller.onBtnCategoriesClick(0);
+      },
+      content: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.85, crossAxisCount: 3, mainAxisSpacing: 10),
+          itemCount: categoriesController.categoriesList.length <= 6
+              ? categoriesController.categoriesList.length
+              : 6,
+          itemBuilder: (BuildContext context, index) {
+            final categoriesList = categoriesController.categoriesList;
+            return _danhMucBtn(
+                Container(
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.178),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size / 3),
+                    border: Border.all(width: 3, color: Colors.grey.shade700),
+                  ),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(size / 3),
+                      child: Image.network(
+                        categoriesList[index].thumbnail!,
+                        fit: BoxFit.fill,
+                      )),
+                ),
+                categoriesList[index].name!, () {
+              controller.onBtnCategoriesClick(index);
+            });
+          }),
+      hasMore: true,
+    );
+  }
+
+  ///
+  /// nút trong danh muc
+  ///
+  Widget _danhMucBtn(Widget widget, String label, Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          widget,
+          const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
+          Container(
+            alignment: Alignment.center,
+            width: Dimensions.CATEGORY_WIDTH_DEFAULT,
+            child: Text(
+              label,
+              maxLines: 3,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFF27272A),
+                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     /**
@@ -354,233 +493,4 @@ class HomePage extends GetView<HomeController> {
       ),
     );
   }
-}
-
-///
-/// Group widget
-///
-Widget _groupWidget(
-    BuildContext context, double size, HomeController controller) {
-  return CategoryWidget(
-    text: "Tạo ID",
-    label: 'Đội nhóm',
-    icon: Icon(Icons.add_outlined,
-        color: ColorResources.PRIMARY,
-        size: DeviceUtils.getScaledSize(context, 0.045)),
-    onPressed: () {
-      controller.onRegisterIdClick();
-    },
-    content: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.22),
-                  height: DeviceUtils.getScaledSize(context, 0.22),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/dieukien.png",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Kho hàng điều kiện', () {
-              controller.onBtnKhoHangDieuKienClick();
-              print("2");
-            }),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.22),
-                  height: DeviceUtils.getScaledSize(context, 0.22),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/trogia.png",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Kho hàng trợ giá', () {
-              controller.onProductVoucherClick();
-              print("3");
-            }),
-          ],
-        ),
-      ],
-    ),
-    hasMore: true,
-  );
-}
-
-///
-/// Category widget
-///
-Widget _categoryWidget(
-    BuildContext context, double size, HomeController controller) {
-  return CategoryWidget(
-    text: "Xem thêm",
-    label: 'Danh mục',
-    onPressed: () {
-      controller.onBtnCategoriesClick(0);
-    },
-    content: Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Spacer(),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/thucpham.png",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Thực phẩm', () {
-              controller.onBtnCategoriesClick(0);
-              print("1");
-            }),
-            const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/thietyeu.jpg",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Đồ thiết yếu', () {
-              controller.onBtnCategoriesClick(1);
-              print("2");
-            }),
-            const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/mevabe.png",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Mẹ và bé', () {
-              controller.onBtnCategoriesClick(2);
-              print("3");
-            }),
-            const Spacer(),
-          ],
-        ),
-        const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT * 3),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Spacer(),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/mypham.jpg",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Mỹ phẩm', () {
-              controller.onBtnCategoriesClick(3);
-              print("4");
-            }),
-            const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/quabieu.jpg",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Quà biếu', () {
-              controller.onBtnCategoriesClick(4);
-              print("5");
-            }),
-            const SizedBox(width: Dimensions.SPACE_WIDTH_FAR),
-            _danhMucBtn(
-                Container(
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.178),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(size / 3),
-                      border: Border.all(width: 3, color: Colors.grey.shade700),
-                      image: const DecorationImage(
-                          image: AssetImage(
-                            "assets/images/thucphamchucnang.png",
-                          ),
-                          fit: BoxFit.fill)),
-                ),
-                'Thực phẩm chức năng', () {
-              controller.onBtnCategoriesClick(5);
-              print("6");
-            }),
-            const Spacer(),
-          ],
-        )
-      ],
-    ),
-    hasMore: true,
-  );
-}
-
-///
-/// nút trong danh muc
-///
-Widget _danhMucBtn(Widget widget, String label, Function() onTap) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Column(
-      children: [
-        widget,
-        const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT),
-        Container(
-          alignment: Alignment.center,
-          width: Dimensions.CATEGORY_WIDTH_DEFAULT,
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF27272A),
-              fontSize: Dimensions.FONT_SIZE_DEFAULT,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }

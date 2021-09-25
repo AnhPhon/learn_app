@@ -72,4 +72,17 @@ class SharedPreferenceHelper {
   Future<void> changeLanguage(String language) {
     return _sharedPreference.setString(Preferences.current_language, language);
   }
+  
+  // Order: ----------------------------------------------------------
+  Future<String?> get orderId async {
+    return _sharedPreference.getString(Preferences.orderId);
+  }
+
+  Future<bool> saveOrderId(String id) async {
+    return _sharedPreference.setString(Preferences.orderId, id);
+  }
+
+  Future<bool> removeOrderId() async {
+    return _sharedPreference.remove(Preferences.orderId);
+  }
 }

@@ -57,7 +57,7 @@ class RegisterPage2 extends GetView<RegisterController> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 80),
-                      child: Image.asset(Images.register_bg),
+                      child: Image.asset(Images.logo_image),
                     )
                   ],
                 ),

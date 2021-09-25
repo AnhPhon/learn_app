@@ -59,7 +59,7 @@ class DistrictRepository {
   }
 
   ///
-  /// Get paginate districts "page": 1, "limit": 10, filter 
+  /// Get paginate districts "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
@@ -67,7 +67,7 @@ class DistrictRepository {
 
       // add condition filter
       if (filter != '') {
-        uri = '/districts/paginate?page=$page&limit=$limit$filter';
+        uri = '/districts/paginate?page=$page&limit=$limit&$filter';
       }
 
       final response = await dioClient!.get(uri);

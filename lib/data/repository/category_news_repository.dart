@@ -26,7 +26,8 @@ class CategoryNewsRepository {
   ///
   Future<ApiResponse> add(CategoryNewsModel data) async {
     try {
-      final response = await dioClient!.post('/category-newss', data: data.toJson());
+      final response =
+          await dioClient!.post('/category-newss', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class CategoryNewsRepository {
   ///
   Future<ApiResponse> update(CategoryNewsModel data) async {
     try {
-      final response = await dioClient!.put('/category-newss', data: data.toJson());
+      final response =
+          await dioClient!.put('/category-newss', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,15 +61,16 @@ class CategoryNewsRepository {
   }
 
   ///
-  /// Get paginate category-newss "page": 1, "limit": 10, filter 
+  /// Get paginate category-newss "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/category-newss/paginate?page=$page&limit=$limit'.toString();
+      String uri =
+          '/category-newss/paginate?page=$page&limit=$limit'.toString();
 
       // add condition filter
       if (filter != '') {
-        uri = '/category-newss/paginate?page=$page&limit=$limit$filter';
+        uri = '/category-newss/paginate?page=$page&limit=$limit&$filter';
       }
 
       final response = await dioClient!.get(uri);

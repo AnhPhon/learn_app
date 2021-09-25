@@ -303,6 +303,7 @@ class CartPage extends GetView<CartController> {
           //button checkout
           GestureDetector(
             onTap: () {
+              controller.deleteItem();
               controller.onCheckoutClick();
             },
             child: Container(

@@ -9,9 +9,10 @@ class ProductModel {
   String? prices;
   String? prriceOrigin;
   String? type;
+  String? id;
 
-  ProductModel({
-      this.idCategory,
+  ProductModel(
+      {this.idCategory,
       this.name,
       this.resource,
       this.madeIn,
@@ -20,8 +21,8 @@ class ProductModel {
       this.images,
       this.prices,
       this.prriceOrigin,
-      this.type
-      });
+      this.type,
+      this.id});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     idCategory = json['idCategory'].toString();
@@ -34,6 +35,7 @@ class ProductModel {
     prices = json['prices'].toString();
     prriceOrigin = json['prriceOrigin'].toString();
     type = json['type'].toString();
+    id = json['id'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +50,7 @@ class ProductModel {
     data['prices'] = prices;
     data['prriceOrigin'] = prriceOrigin;
     data['type'] = type;
+    data['id'] = id;
     return data;
   }
 }

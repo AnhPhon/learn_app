@@ -1,6 +1,35 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/product_model.dart';
+import 'package:template/provider/product_provider.dart';
 
 class KhoHangDieuKienController extends GetxController {
+  ProductProvider productProvider = GetIt.I.get<ProductProvider>();
+
+  List<ProductModel> productList = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllProduct();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
+  // lấy tất cả sản phẩm
+  void getAllProduct() {
+    productProvider.all(onSuccess: (value) {
+      productList = value;
+      update();
+    }, onError: (error) {
+      print(error);
+      update();
+    });
+  }
+
   //  money normalize
   String moneyNormalize(int money, String splitSymbol) {
     String text = money.toString().split('').reversed.join();

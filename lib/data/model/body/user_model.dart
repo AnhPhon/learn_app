@@ -1,4 +1,5 @@
 class UserModel {
+  String? id;
   String? idUser;
   String? idRole;
   String? idOptionalRole;
@@ -18,7 +19,8 @@ class UserModel {
   String? imageCitizenIdentification;
   String? imageCitizenIdentification1;
 
-  UserModel({
+  UserModel(
+      {this.id,
       this.idUser,
       this.idRole,
       this.idOptionalRole,
@@ -36,10 +38,10 @@ class UserModel {
       this.addressCurrent,
       this.paymentProofImage,
       this.imageCitizenIdentification,
-      this.imageCitizenIdentification1
-      });
+      this.imageCitizenIdentification1});
 
   UserModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
     idUser = json['idUser'].toString();
     idRole = json['idRole'].toString();
     idOptionalRole = json['idOptionalRole'].toString();
@@ -57,11 +59,13 @@ class UserModel {
     addressCurrent = json['addressCurrent'].toString();
     paymentProofImage = json['paymentProofImage'].toString();
     imageCitizenIdentification = json['imageCitizenIdentification'].toString();
-    imageCitizenIdentification1 = json['imageCitizenIdentification1'].toString();
+    imageCitizenIdentification1 =
+        json['imageCitizenIdentification1'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    // data['id'] = id;
     data['idUser'] = idUser;
     data['idRole'] = idRole;
     data['idOptionalRole'] = idOptionalRole;

@@ -1,7 +1,7 @@
 class OrderModel {
   String? idUser;
   String? userAccept;
-  String? idImportWareHouse;
+  String? idWarehouse;
   String? description;
   String? imagePayment;
   String? statusOrder;
@@ -11,12 +11,13 @@ class OrderModel {
   String? idProvince;
   String? idDistrict;
   String? address;
-  String? isChangeStatus;
+  // String? isChangeStatus;
+  String? id;
 
-  OrderModel({
-      this.idUser,
+  OrderModel(
+      {this.idUser,
       this.userAccept,
-      this.idImportWareHouse,
+      this.idWarehouse,
       this.description,
       this.imagePayment,
       this.statusOrder,
@@ -26,13 +27,13 @@ class OrderModel {
       this.idProvince,
       this.idDistrict,
       this.address,
-      this.isChangeStatus
-      });
+      // this.isChangeStatus,
+      this.id});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     idUser = json['idUser'].toString();
     userAccept = json['userAccept'].toString();
-    idImportWareHouse = json['idImportWareHouse'].toString();
+    idWarehouse = json['idWarehouse'].toString();
     description = json['description'].toString();
     imagePayment = json['imagePayment'].toString();
     statusOrder = json['statusOrder'].toString();
@@ -42,14 +43,15 @@ class OrderModel {
     idProvince = json['idProvince'].toString();
     idDistrict = json['idDistrict'].toString();
     address = json['address'].toString();
-    isChangeStatus = json['isChangeStatus'].toString();
+    // isChangeStatus = json['isChangeStatus'].toString();
+    id = json['id'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idUser'] = idUser;
     data['userAccept'] = userAccept;
-    data['idImportWareHouse'] = idImportWareHouse;
+    data['idWarehouse'] = idWarehouse;
     data['description'] = description;
     data['imagePayment'] = imagePayment;
     data['statusOrder'] = statusOrder;
@@ -59,7 +61,8 @@ class OrderModel {
     data['idProvince'] = idProvince;
     data['idDistrict'] = idDistrict;
     data['address'] = address;
-    data['isChangeStatus'] = isChangeStatus;
+    // data['isChangeStatus'] = isChangeStatus;
+    // data['id'] = id;
     return data;
   }
 }
