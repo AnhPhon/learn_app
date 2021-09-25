@@ -24,37 +24,6 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.jwt_token);
   }
 
-  bool containsKey() {
-    return _sharedPreference.containsKey(Preferences.jwt_token);
-  }
-
-  // General Methods: username
-  Future<String?> get username async {
-    return _sharedPreference.getString(Preferences.username);
-  }
-
-  Future<bool> saveUsername(String username) async {
-    return _sharedPreference.setString(Preferences.username, username);
-  }
-
-  Future<bool> removeUsername() async {
-    return _sharedPreference.remove(Preferences.username);
-  } 
-
-  // General Methods: Password
-  Future<String?> get password async {
-    return _sharedPreference.getString(Preferences.password);
-  }
-
-  Future<bool> savePassword(String password) async {
-    return _sharedPreference.setString(Preferences.password, password);
-  }
-
-  Future<bool> removePassword() async {
-    return _sharedPreference.remove(Preferences.password);
-  } 
-
-
   // Theme:------------------------------------------------------
   bool get isDarkMode {
     return _sharedPreference.getBool(Preferences.is_dark_mode) ?? false;
