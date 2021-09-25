@@ -1,5 +1,4 @@
-class UserModel {
-  String? id;
+class AuthModel {
   String? idUser;
   String? idRole;
   String? idOptionalRole;
@@ -18,10 +17,11 @@ class UserModel {
   String? paymentProofImage;
   String? imageCitizenIdentification;
   String? imageCitizenIdentification1;
+  String? access;
+  String? refresh;
 
-  UserModel(
-      {this.id,
-      this.idUser,
+  AuthModel(
+      {this.idUser,
       this.idRole,
       this.idOptionalRole,
       this.fullname,
@@ -38,10 +38,11 @@ class UserModel {
       this.addressCurrent,
       this.paymentProofImage,
       this.imageCitizenIdentification,
-      this.imageCitizenIdentification1});
+      this.imageCitizenIdentification1,
+      this.access,
+      this.refresh});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+  AuthModel.fromJson(Map<String, dynamic> json) {
     idUser = json['idUser'].toString();
     idRole = json['idRole'].toString();
     idOptionalRole = json['idOptionalRole'].toString();
@@ -61,11 +62,12 @@ class UserModel {
     imageCitizenIdentification = json['imageCitizenIdentification'].toString();
     imageCitizenIdentification1 =
         json['imageCitizenIdentification1'].toString();
+    access = json['access'].toString();
+    refresh = json['refresh'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    // data['id'] = id;
     data['idUser'] = idUser;
     data['idRole'] = idRole;
     data['idOptionalRole'] = idOptionalRole;
@@ -84,6 +86,8 @@ class UserModel {
     data['paymentProofImage'] = paymentProofImage;
     data['imageCitizenIdentification'] = imageCitizenIdentification;
     data['imageCitizenIdentification1'] = imageCitizenIdentification1;
+    data['access'] = access;
+    data['refresh'] = refresh;
     return data;
   }
 }

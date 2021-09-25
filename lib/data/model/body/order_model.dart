@@ -11,7 +11,7 @@ class OrderModel {
   String? idProvince;
   String? idDistrict;
   String? address;
-  String? isChangeStatus;
+  // String? isChangeStatus;
   String? id;
 
   OrderModel(
@@ -27,7 +27,7 @@ class OrderModel {
       this.idProvince,
       this.idDistrict,
       this.address,
-      this.isChangeStatus,
+      // this.isChangeStatus,
       this.id});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
@@ -43,7 +43,7 @@ class OrderModel {
     idProvince = json['idProvince'].toString();
     idDistrict = json['idDistrict'].toString();
     address = json['address'].toString();
-    isChangeStatus = json['isChangeStatus'].toString();
+    // isChangeStatus = json['isChangeStatus'].toString();
     id = json['id'].toString();
   }
 

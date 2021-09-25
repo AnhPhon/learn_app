@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
-import 'package:template/data/repository/auth_repo.dart';
+// import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/data/repository/category_news_repository.dart';
 import 'package:template/data/repository/category_repository.dart';
 import 'package:template/data/repository/district_repository.dart';
@@ -11,8 +11,9 @@ import 'package:template/data/repository/order_repository.dart';
 import 'package:template/data/repository/product_repository.dart';
 import 'package:template/data/repository/province_repository.dart';
 import 'package:template/data/repository/user_repository.dart';
+import 'package:template/data/repository/auth_repository.dart';
 import 'package:template/helper/network_info.dart';
-// import 'package:template/provider/auth_provider.dart';
+import 'package:template/provider/auth_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/category_provider.dart';
@@ -44,8 +45,7 @@ Future<void> init() async {
 
   // Repository
   // sl.registerLazySingleton(() => RegionRepo());
-  sl.registerLazySingleton(
-      () => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => CategoryRepository());
   sl.registerLazySingleton(() => CategoryNewsRepository());
   sl.registerLazySingleton(() => ProductRepository());
@@ -68,4 +68,8 @@ Future<void> init() async {
   sl.registerFactory(() => ProvinceProvider());
   sl.registerFactory(() => DistrictProvider());
   sl.registerFactory(() => UserProvider());
+  sl.registerLazySingleton(() => AuthRepository());
+
+  // Provider
+  sl.registerFactory(() => AuthProvider());
 }

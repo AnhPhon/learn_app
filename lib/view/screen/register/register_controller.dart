@@ -5,13 +5,37 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/data/model/body/order_item_model.dart';
+import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/product_model.dart';
+import 'package:template/data/model/body/user_model.dart';
+import 'package:template/provider/order_item_provider.dart';
+import 'package:template/provider/order_provider.dart';
+import 'package:template/provider/user_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/screen/categories/categories_controller.dart';
+import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
 
 typedef Ham = void Function(int);
 
 class RegisterController extends GetxController {
+  final UserProvider userProvider = GetIt.I.get<UserProvider>();
+  final OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
+  final homeController = Get.put(HomeController());
+  OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
+  GetIt sl = GetIt.instance;
+  final categoriesController = Get.put(CategoriesController());
+  List<ProductModel> productList = [];
+  List<OrderItemModel> orderItemList = [];
+  bool isLoadingMore = false;
+
+  // Kiểm tra sản phẩm có trong cart
+  bool isHave = false;
+
   final Map<String, TextEditingController> controllers = {
     "magioithieu": TextEditingController(),
     "taikhoan": TextEditingController(),
@@ -20,12 +44,16 @@ class RegisterController extends GetxController {
     "sodienthoai": TextEditingController(),
     "hoten": TextEditingController(),
     "cmnd": TextEditingController(),
-    "ngaycap": TextEditingController(),
     "noicap": TextEditingController(),
     "nghenghiep": TextEditingController(),
     "diachithuongtru": TextEditingController(),
     "diachitlienlac": TextEditingController(),
   };
+
+  String? orderID;
+
+  DateTime? ngaysinh = DateTime.now();
+  DateTime? ngaycap = DateTime.now();
 
   String infoBank(
       {required String stk,
@@ -182,5 +210,128 @@ class RegisterController extends GetxController {
   Ham? them(int val) {
     sum += val;
     update();
+  }
+
+  void createUser(Map<String, dynamic> json) {
+    final UserModel model = UserModel.fromJson(json);
+    userProvider.add(
+        data: model,
+        onSuccess: (model) {
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  void createOrder(Map<String, dynamic> json) {
+    final OrderModel model = OrderModel.fromJson(json);
+    orderProvider.add(
+      data: model,
+      onSuccess: (model) {
+        final GetIt sl = GetIt.instance;
+        sl.get<SharedPreferenceHelper>().saveOrderId(model.id!);
+        update();
+      },
+      onError: (error) {
+        print(error);
+        update();
+      },
+    );
+  }
+
+  //tạo id đơn hàng
+  void order() {
+    GetIt sl = GetIt.instance;
+
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      if (value == null) {
+        isHave = false;
+        orderProvider.add(
+            data: OrderModel(
+                idUser: homeController.userModel.id,
+                statusOrder: "1",
+                statusPayment: "2",
+                description: "đây là nội dung",
+                address: "dia chi nha",
+                idDistrict: "61435cf012594e54736dd6ca",
+                idProvince: "61435cf012594e54736dd6ca",
+                discountPrice: "0",
+                idWarehouse: "614457d87fee3b5dc8c1c75e",
+                userAccept: "614748250c57f118c4a40689",
+                totalPrice: "0",
+                imagePayment: "0"),
+            onSuccess: (value) {
+              sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
+              update();
+            },
+            onError: (error) {
+              print(error);
+              update();
+            });
+      } else {
+        final idOrder = value;
+        final indexOrderItemList = orderItemList.indexWhere((element) =>
+            element.idProduct == categoriesController.productWithId!.id);
+        if (indexOrderItemList == -1) {
+          isHave = false;
+          getProductFromCart();
+          update();
+          print("indexOrderItemList: 0");
+          addToCart(
+              idOrder: idOrder,
+              idProduct: categoriesController.productWithId!.id!,
+              quanlity: "1",
+              price: categoriesController.productWithId!.prices!);
+        } else {
+          print("indexOrderItemList: 1");
+          isHave = true;
+          update();
+        }
+      }
+    });
+  }
+
+  //lấy sản phẩm trong giỏ hàng
+  void getProductFromCart() {
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      if (value != null) {
+        orderItemProvider.paginate(
+            page: 1,
+            limit: 100,
+            filter: "&idOrder=$value",
+            onSuccess: (value) {
+              orderItemList = value;
+              update();
+            },
+            onError: (error) {
+              print(error);
+              update();
+            });
+      }
+    });
+  }
+
+  //thêm vào giỏ hàng
+  void addToCart(
+      {required String idOrder,
+      required String idProduct,
+      required String quanlity,
+      required String price}) {
+    orderItemProvider.add(
+        data: OrderItemModel(
+            idOrder: idOrder,
+            idProduct: idProduct,
+            quantity: quanlity,
+            price: price),
+        onSuccess: (value) {
+          print(value);
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
   }
 }

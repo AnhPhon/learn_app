@@ -106,9 +106,9 @@ class RegisterPage extends GetView<RegisterController> {
   }
 
   ///
-  /// datetimepick
+  /// _dateTimePickNgaySinh
   ///
-  Widget _dateTimePick(BuildContext context) {
+  Widget _dateTimePickNgaySinh(BuildContext context) {
     return GestureDetector(
       onTap: () {
         showDatePicker(
@@ -130,7 +130,72 @@ class RegisterPage extends GetView<RegisterController> {
               child: child!,
             );
           },
-        );
+        ).then((value) {
+          controller.ngaysinh = value;
+          print(controller.ngaysinh);
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            vertical: DeviceUtils.getScaledSize(context, 0.025)),
+        padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
+        width: double.infinity,
+        height: DeviceUtils.getScaledSize(context, 0.127),
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: ColorResources.GREY, // set border color
+          ), // set border width
+          borderRadius: BorderRadius.circular(10), // set rounded corner radius
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              DateFormat("dd MMMM yyyy", "vi").format(DateTime.now()),
+              style: const TextStyle(color: Colors.grey),
+            ),
+            Icon(
+              Icons.calendar_today,
+              size: DeviceUtils.getScaledSize(context, 0.045),
+              color: ColorResources.PRIMARY,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// _dateTimePickNgayCap
+  ///
+  Widget _dateTimePickNgayCap(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDatePicker(
+          context: context,
+          locale: const Locale("vi", "VI"),
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2022),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData().copyWith(
+                primaryColor: ColorResources.PRIMARY,
+                accentColor: ColorResources.PRIMARY,
+                colorScheme:
+                    const ColorScheme.light(primary: ColorResources.PRIMARY),
+                buttonTheme:
+                    const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              ),
+              child: child!,
+            );
+          },
+        ).then((value) {
+          controller.ngaycap = value;
+          print(controller.ngaycap);
+        });
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -202,7 +267,7 @@ class RegisterPage extends GetView<RegisterController> {
                         padding: EdgeInsets.symmetric(
                             horizontal:
                                 DeviceUtils.getScaledSize(context, 0.03)),
-                        child: Image.asset(Images.register_bg)),
+                        child: Image.asset(Images.logo_image)),
                     Padding(
                       padding: EdgeInsets.all(
                           DeviceUtils.getScaledSize(context, 0.063)),
@@ -236,14 +301,14 @@ class RegisterPage extends GetView<RegisterController> {
                           _genderSelectionWidget(context, controller),
 
                           // Ngày sinh
-                          _dateTimePick(context),
+                          _dateTimePickNgaySinh(context),
 
                           // cmnd
                           _normalInputWidget(context, "Số chứng minh nhân dân",
                               controllers["cmnd"]!),
 
                           // ngày cấp
-                          _dateTimePick(context),
+                          _dateTimePickNgayCap(context),
 
                           // Nơi cấp
                           _normalInputWidget(
@@ -263,6 +328,62 @@ class RegisterPage extends GetView<RegisterController> {
 
                           GestureDetector(
                             onTap: () {
+                              final String magioithieu =
+                                  controllers["magioithieu"]!.text;
+                              final String taikhoan =
+                                  controllers["taikhoan"]!.text;
+                              final String matkhau =
+                                  controllers["matkhau"]!.text;
+                              final String xacnhanmatkhau =
+                                  controllers["xacnhanmatkhau"]!.text;
+                              final String sodienthoai =
+                                  controllers["sodienthoai"]!.text;
+                              final String hoten = controllers["hoten"]!.text;
+                              final String gender = controller.gender??"";
+                              final String ngaysinh =
+                                  DateConverter.estimatedDate(
+                                      controller.ngaysinh!);
+                              final String ngaycap =
+                                  DateConverter.estimatedDate(
+                                      controller.ngaycap!);
+                              final String cmnd = controllers["cmnd"]!.text;
+                              final String noicap = controllers["noicap"]!.text;
+                              final String nghenghiep =
+                                  controllers["nghenghiep"]!.text;
+                              final String diachithuongtru =
+                                  controllers["diachithuongtru"]!.text;
+                              final String diachitlienlac =
+                                  controllers["diachitlienlac"]!.text;
+
+                              var data = {
+                                "isEmailVerified": false,
+                                "password":matkhau,
+                                "idUser": "",
+                                "idRole": "",
+                                "idOptionalRole": "0",
+                                "fullname": hoten,
+                                "username": taikhoan,
+                                "sex": gender,
+                                "avatar":
+                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632456310...",
+                                "born": ngaysinh,
+                                "phone": sodienthoai,
+                                "address": diachithuongtru,
+                                "citizenIdentification": cmnd,
+                                "status": "1",
+                                "imageCitizenIdentification":
+                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455894...",
+                                "imageCitizenIdentification1":
+                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455901...",
+                                "paymentProofImage": ""
+                              };
+                              // print(data);
+
+                              // cho phép tạo
+                              bool allowCreate = false; 
+                              if(allowCreate == true) {
+                                controller.createUser(data);
+                              }
                               Get.to(RegisterPage3());
                             },
                             child: Container(
