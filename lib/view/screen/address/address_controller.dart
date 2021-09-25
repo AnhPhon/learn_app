@@ -5,13 +5,16 @@ import 'package:template/data/model/body/district_model.dart';
 import 'package:template/data/model/body/province_model.dart';
 import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/province_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class AddressController extends GetxController {
+  GetIt sl = GetIt.instance;
+
   ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
 
-  final wardController = TextEditingController();
-  final addressController = TextEditingController();
+  final TextEditingController wardController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   String? province;
   String? district;
@@ -26,25 +29,32 @@ class AddressController extends GetxController {
   List<String> districtList = [];
 
   @override
-  void onInit() {
-    super.onInit();
-    getProvince();
+  void onClose() {
+    super.onClose();
+    addressController.dispose();
+    wardController.dispose();
   }
 
   @override
-  void onClose() {
-    super.onClose();
-    wardController.dispose();
-    addressController.dispose();
+  void onInit() {
+    super.onInit();
+    getProvince();
+    provinceModelList.clear();
+    districtModelList.clear();
+    addressController.clear();
   }
 
+  ///
+  ///get province
+  ///
   void getProvince() {
+    districtList.clear();
+    districtModelList.clear();
     provinceProvider.all(onSuccess: (value) {
       provinceModelList = value;
       provinceModelList
           .map((province) => provinceList.add(province.name!))
           .toList();
-      print("provinceList.length: ${provinceList.length}");
       update();
     }, onError: (error) {
       print(error);
@@ -52,6 +62,9 @@ class AddressController extends GetxController {
     });
   }
 
+  ///
+  ///get district
+  ///
   void getDistrict(String id) {
     districtProvider.paginate(
         page: 1,
@@ -70,21 +83,44 @@ class AddressController extends GetxController {
         });
   }
 
+  ///
+  ///set selected province
+  ///
   void setSelectedProvince(String? value) {
     province = value;
     final indexProvince = provinceModelList
         .indexWhere((element) => element.name!.trim() == value!.trim());
-    print("indexProvince: $indexProvince");
     idProvince = provinceModelList[indexProvince].id;
     getDistrict(idProvince!);
     update();
   }
 
+  ///
+  ///set selected district
+  ///
   void setSelectedDistrict(String? value) {
     district = value;
     final indexDistrict =
         districtModelList.indexWhere((element) => element.name == value);
     idDistrict = districtModelList[indexDistrict].id;
     update();
+  }
+
+  ///
+  ///save address
+  ///
+  void changeAddress() {
+    if (province!.isEmpty ||
+        district!.isEmpty ||
+        wardController.text.isEmpty ||
+        addressController.text.isEmpty) {
+      Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường",
+          snackPosition: SnackPosition.BOTTOM);
+    } else {
+      sl.get<SharedPreferenceHelper>().saveProvinceId(idProvince!);
+      sl.get<SharedPreferenceHelper>().saveDistrictId(idDistrict!);
+      sl.get<SharedPreferenceHelper>().saveAddress(addressController.text);
+      Get.back();
+    }
   }
 }

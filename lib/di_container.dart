@@ -68,7 +68,7 @@ Future<void> init() async {
   sl.registerFactory(() => ProvinceProvider());
   sl.registerFactory(() => DistrictProvider());
   sl.registerFactory(() => UserProvider());
-  sl.registerLazySingleton(() => AuthRepository());
+  // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider
   sl.registerFactory(() => AuthProvider());

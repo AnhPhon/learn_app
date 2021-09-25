@@ -6,9 +6,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
+import 'package:template/view/screen/news/news_controller.dart';
 import 'package:template/view/screen/news/news_detail/news_detail_controller.dart';
+import 'package:template/view/screen/news/news_detail/news_specification.dart';
 
 class NewsDetailPage extends GetView<NewsDetailController> {
+  final newsController = Get.find<NewsController>();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NewsDetailController>(
@@ -30,19 +34,21 @@ class NewsDetailPage extends GetView<NewsDetailController> {
                         height: DeviceUtils.getScaledSize(context, 0.6),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: const DecorationImage(
-                                image: AssetImage(Images.news),
-                                fit: BoxFit.fill)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Image.network(
+                          newsController.newsModel!.image!,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
-                                  DeviceUtils.getScaledSize(context, 0.13),
+                                  DeviceUtils.getScaledSize(context, 0.05),
                               vertical:
                                   DeviceUtils.getScaledSize(context, 0.04)),
                           child: Text(
-                            controller.title.first.toString(),
+                            newsController.newsModel!.name!,
                             style: Dimensions.fontSizeStyle20w600()
                                 .copyWith(color: ColorResources.BLACK),
                             textAlign: TextAlign.center,
@@ -50,11 +56,11 @@ class NewsDetailPage extends GetView<NewsDetailController> {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                DeviceUtils.getScaledSize(context, 0.25)),
+                                DeviceUtils.getScaledSize(context, 0.1)),
                         child: Row(children: [
-                          Text(controller.categories.first.toString()),
+                          Text(newsController.newsModel!.tags!),
                           const Spacer(),
-                          Text(controller.time.first.toString()),
+                          Text(newsController.newsModel!.createdAt!),
                         ]),
                       ),
                       Padding(
@@ -63,10 +69,12 @@ class NewsDetailPage extends GetView<NewsDetailController> {
                             vertical: DeviceUtils.getScaledSize(context, 0.03)),
                         child: const Divider(color: ColorResources.GREY),
                       ),
-                      Text(
-                        controller.subtitle.first.toString(),
-                        textAlign: TextAlign.justify,
-                      ),
+
+                      ///
+                      ///body
+                      ///
+                      NewsSpecification(
+                          newsSpecification: newsController.newsModel!.body!),
                     ],
                   ),
                 ),

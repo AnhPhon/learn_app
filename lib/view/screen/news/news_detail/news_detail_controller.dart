@@ -1,11 +1,7 @@
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/news_model.dart';
-import 'package:template/provider/news_provider.dart';
 
 class NewsDetailController extends GetxController {
-  NewsProvider newsProvider = GetIt.I.get<NewsProvider>();
-
   List<NewsModel> newsDetailList = [];
 
   List title = ["YouTube's new features,let's take a look"];
@@ -17,14 +13,4 @@ class NewsDetailController extends GetxController {
   List categories = ["Công nghệ"];
 
   List time = ["45 phút"];
-
-  void getAllNews() {
-    newsProvider.all(onSuccess: (value) {
-      newsDetailList = value;
-      update();
-    }, onError: (error) {
-      print(error);
-      update();
-    });
-  }
 }
