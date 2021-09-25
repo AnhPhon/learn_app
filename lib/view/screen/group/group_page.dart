@@ -41,41 +41,46 @@ class GroupPage extends GetView<GroupController> {
     // @ is prefix rule name
     const String prefixRuleName = "@";
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.012)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              userName,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: userNameSize,
-                  fontWeight: FontWeight.bold,
-                  color: userColor),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              prefixRuleName + ruleName,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: ruleNameSize,
-                fontWeight: FontWeight.normal,
-                color: ruleColor,
+    return GetBuilder<GroupController>(
+      init: GroupController(),
+      builder: (controller) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+              vertical: DeviceUtils.getScaledSize(context, 0.012)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  userName,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: userNameSize,
+                      fontWeight: FontWeight.bold,
+                      color: userColor),
+                ),
               ),
-            ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  prefixRuleName + ruleName,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: ruleNameSize,
+                    fontWeight: FontWeight.normal,
+                    color: ruleColor,
+                  ),
+                ),
+              ),
+              Text(
+                  "Doanh số cá nhân: ${PriceConverter.convertPrice(context, controller.doanhSoCaNhan!)}"),
+              Text(
+                  "Doanh số đội nhóm: ${PriceConverter.convertPrice(context, controller.doanhSoDoiNhom!)}")
+            ],
           ),
-          Text(
-              "Doanh số cá nhân: ${PriceConverter.convertPrice(context, 10000000)}"),
-          Text(
-              "Doanh số đội nhóm: ${PriceConverter.convertPrice(context, 60000000)}")
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -142,7 +147,7 @@ class GroupPage extends GetView<GroupController> {
                               width: DeviceUtils.getScaledSize(context, 0.04)),
 
                           // info of user
-                          _infoUser(context, 'Khoi Minh', 'administration',
+                          _infoUser(context, controller.name!, controller.role!,
                               Colors.black, Colors.black, 100)
                         ],
                       )),
@@ -160,7 +165,7 @@ class GroupPage extends GetView<GroupController> {
                       SizedBox(
                           height: DeviceUtils.getScaledSize(context, 0.025)),
                       ...List.generate(
-                          20,
+                          controller.doiNhom.length,
                           (index) => Column(
                                 children: [
                                   Padding(
@@ -200,7 +205,7 @@ class GroupPage extends GetView<GroupController> {
                                                   shape: BoxShape.circle,
                                                 ),
                                               ),
-                                              Text("Tên ${index + 1}"),
+                                              Text("${controller.doiNhom[index].label} ${index + 1}"),
                                             ],
                                           ),
                                         ),
@@ -216,8 +221,8 @@ class GroupPage extends GetView<GroupController> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           16)),
-                                              child: const Text(
-                                                "5.000.000đ",
+                                              child: Text(
+                                                PriceConverter.convertPrice(context, double.parse(controller.doiNhom[index].money!)).toString(),
                                               ),
                                             ),
                                           ),

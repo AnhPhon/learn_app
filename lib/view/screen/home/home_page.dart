@@ -237,169 +237,165 @@ class HomePage extends GetView<HomeController> {
     const FontWeight _moneyFontWeight = FontWeight.bold;
     const FontWeight _labelFontWeight = FontWeight.normal;
 
-    final List<UserInfo> _basicInformationStatistic = [
-      UserInfo(
-          money: PriceConverter.convertPrice(context, 6000000),
-          label: "Doanh số đội nhóm"),
-      UserInfo(
-          money: PriceConverter.convertPrice(context, 6000000),
-          label: "Doanh số cá nhân"),
-      UserInfo(money: "3", label: "Số lượng ID"),
-      UserInfo(money: "17", label: "Số lượng đơn giá")
-    ];
-
-    return Container(
-      color: Colors.white,
-      height: 460,
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              // background
-              Stack(
-                children: [
-                  //banner
-                  _imgProduct(context),
-                  Container(
-                    width: width,
-                    height: partOneHeight,
-                    margin: const EdgeInsets.only(top: 50),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.transparent, Color(0xff333333)],
-                        begin: Alignment.center,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              // avatar user
-              Container(
-                  margin: const EdgeInsets.only(
-                      left: avatarMarginLeft, top: 260 - avatarHeight / 2 - 10),
-                  child: Stack(
-                    children: [
-                      // avatar
-                      _avatarUser(
-                          Images.admin_avatar, avatarWidth, avatarHeight),
-                      // info of user
-                      _infoUser('Khoi Minh', 'administration', Colors.white,
-                          Colors.white, avatarWidth)
-                    ],
-                  )),
-            ],
-          ),
-          // basic information statistic
-          Column(
-            children: [
-              const SizedBox(
-                height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: width / 2,
-                    child: Column(
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (controller) {
+          return Container(
+            color: Colors.white,
+            height: 460,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    // background
+                    Stack(
                       children: [
-                        Text(
-                          _basicInformationStatistic[0].money!,
-                          style: const TextStyle(
-                            fontSize: _moneyTextSize,
-                            fontWeight: _moneyFontWeight,
-                          ),
-                        ),
-                        Text(
-                          _basicInformationStatistic[0].label!,
-                          style: const TextStyle(
-                            fontSize: _labelTextSize,
-                            fontWeight: _labelFontWeight,
-                            color: Color(0xff999999),
+                        //banner
+                        _imgProduct(context),
+                        Container(
+                          width: width,
+                          height: partOneHeight,
+                          margin: const EdgeInsets.only(top: 50),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.transparent, Color(0xff333333)],
+                              begin: Alignment.center,
+                              end: Alignment.bottomCenter,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: width / 2,
-                    child: Column(
+                    // avatar user
+                    Container(
+                        margin: const EdgeInsets.only(
+                            left: avatarMarginLeft,
+                            top: 260 - avatarHeight / 2 - 10),
+                        child: Stack(
+                          children: [
+                            // avatar
+                            _avatarUser(
+                                Images.admin_avatar, avatarWidth, avatarHeight),
+                            // info of user
+                            _infoUser(controller.name, controller.role,
+                                Colors.white, Colors.white, avatarWidth)
+                          ],
+                        )),
+                  ],
+                ),
+                // basic information statistic
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
+                    ),
+                    Row(
                       children: [
-                        Text(
-                          _basicInformationStatistic[1].money!,
-                          style: const TextStyle(
-                            fontSize: _moneyTextSize,
-                            fontWeight: _moneyFontWeight,
+                        SizedBox(
+                          width: width / 2,
+                          child: Column(
+                            children: [
+                              Text(
+                                PriceConverter.convertPrice(
+                                    context, controller.doanhSoDoiNhom!),
+                                style: const TextStyle(
+                                  fontSize: _moneyTextSize,
+                                  fontWeight: _moneyFontWeight,
+                                ),
+                              ),
+                              const Text(
+                                "Doanh số đội nhóm",
+                                style: TextStyle(
+                                  fontSize: _labelTextSize,
+                                  fontWeight: _labelFontWeight,
+                                  color: Color(0xff999999),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          _basicInformationStatistic[1].label!,
-                          style: const TextStyle(
-                            fontSize: _labelTextSize,
-                            fontWeight: _labelFontWeight,
-                            color: Color(0xff999999),
+                        SizedBox(
+                          width: width / 2,
+                          child: Column(
+                            children: [
+                              Text(
+                                PriceConverter.convertPrice(
+                                    context, controller.doanhSoCaNhan!),
+                                style: const TextStyle(
+                                  fontSize: _moneyTextSize,
+                                  fontWeight: _moneyFontWeight,
+                                ),
+                              ),
+                              const Text(
+                                "Doanh số cá nhân",
+                                style: TextStyle(
+                                  fontSize: _labelTextSize,
+                                  fontWeight: _labelFontWeight,
+                                  color: Color(0xff999999),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: width / 2,
-                    child: Column(
+                    const SizedBox(
+                      height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
+                    ),
+                    Row(
                       children: [
-                        Text(
-                          _basicInformationStatistic[2].money!,
-                          style: const TextStyle(
-                            fontSize: _moneyTextSize,
-                            fontWeight: _moneyFontWeight,
+                        SizedBox(
+                          width: width / 2,
+                          child: Column(
+                            children: [
+                              Text(
+                                controller.soLuongId!.toString(),
+                                style: const TextStyle(
+                                  fontSize: _moneyTextSize,
+                                  fontWeight: _moneyFontWeight,
+                                ),
+                              ),
+                              const Text(
+                                "Số lượng ID",
+                                style: TextStyle(
+                                  fontSize: _labelTextSize,
+                                  fontWeight: _labelFontWeight,
+                                  color: Color(0xff999999),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          _basicInformationStatistic[2].label!,
-                          style: const TextStyle(
-                            fontSize: _labelTextSize,
-                            fontWeight: _labelFontWeight,
-                            color: Color(0xff999999),
+                        SizedBox(
+                          width: width / 2,
+                          child: Column(
+                            children: [
+                              Text(
+                                controller.soLuongDonGia!.toString(),
+                                style: const TextStyle(
+                                  fontSize: _moneyTextSize,
+                                  fontWeight: _moneyFontWeight,
+                                ),
+                              ),
+                              const Text(
+                                "Số lượng đơn giá",
+                                style: TextStyle(
+                                  fontSize: _labelTextSize,
+                                  fontWeight: _labelFontWeight,
+                                  color: Color(0xff999999),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: width / 2,
-                    child: Column(
-                      children: [
-                        Text(
-                          _basicInformationStatistic[3].money!,
-                          style: const TextStyle(
-                            fontSize: _moneyTextSize,
-                            fontWeight: _moneyFontWeight,
-                          ),
-                        ),
-                        Text(
-                          _basicInformationStatistic[3].label!,
-                          style: const TextStyle(
-                            fontSize: _labelTextSize,
-                            fontWeight: _labelFontWeight,
-                            color: Color(0xff999999),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+                  ],
+                )
+              ],
+            ),
+          );
+        });
   }
 
   ///

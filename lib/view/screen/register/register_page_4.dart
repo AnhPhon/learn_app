@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
@@ -366,17 +367,19 @@ class RegisterPage4 extends GetView<RegisterController> {
                       if (controller.image != null) {
                         
                         controller.uploadImage();
+                        controller.sl.get<SharedPreferenceHelper>().removeOrderId();
                         
-                        // Get.offNamed(AppRoutes.LOGIN);
-                        // showAnimatedDialog(
-                        //     context,
-                        //     const MyDialog(
-                        //       icon: Icons.check,
-                        //       title: "Hoàn tất",
-                        //       description: "Đợi admin active",
-                        //     ),
-                        //     dismissible: false,
-                        //     isFlip: true);
+                        
+                        Get.offNamed(AppRoutes.LOGIN);
+                        showAnimatedDialog(
+                            context,
+                            const MyDialog(
+                              icon: Icons.check,
+                              title: "Hoàn tất",
+                              description: "Đợi admin active",
+                            ),
+                            dismissible: false,
+                            isFlip: true);
                       } else {
                         controller.hoanTatFaild();
                       }

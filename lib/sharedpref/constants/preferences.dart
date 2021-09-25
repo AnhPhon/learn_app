@@ -7,4 +7,5 @@ class Preferences {
   static const String orderId = "order_id";
   static const String username = "username";
   static const String password = "password";
+  static const String userId = "user";
 }

@@ -86,10 +86,10 @@ class RegisterPage3 extends GetView<RegisterController> {
               final bool moneyValid = money > 2500000;
               if (moneyValid) {
                 // Thành công
-
                 // Get.toNamed(AppRoutes.REGISTER_PAGE_4);
                 sl.get<SharedPreferenceHelper>().orderId.then((value) {
                   final String orderId = value!;
+                  controller.addToDB(orderId);
                   Get.to(RegisterPage4());
                 });
               } else {

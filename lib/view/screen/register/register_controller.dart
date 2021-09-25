@@ -108,7 +108,6 @@ class RegisterController extends GetxController {
     }
   }
 
-
   void uploadImage() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
       final String orderId = value!;
@@ -118,25 +117,35 @@ class RegisterController extends GetxController {
           final OrderModel tempModel = model;
 
           if (image != null) {
-            imageProvider.add(
-                file: image!,
-                onSuccess: (image) {
-                  print(image);
-                  tempModel.imagePayment = image.data;
-                  print(tempModel.haveIDtoJson());
-                  orderProvider.update(
-                    data: tempModel,
-                    onSuccess: (model) {
-                      print("success updated");
-                      update();
-                    },
-                    onError: (error) {},
-                  );
-                },
-                onError: (error) {
-                  print(error);
-                  update();
-                });
+            tempModel.imagePayment =
+                r'C:\Users\pduon\Pictures\GameCenter\Warface\Warface_sample.jpg';
+            orderProvider.update(
+              data: tempModel,
+              onSuccess: (model) {
+                print("success updated");
+                update();
+              },
+              onError: (error) {},
+            );
+            // imageProvider.add(
+            //     file: image!,
+            //     onSuccess: (image) {
+            //       // print(image);
+            //       tempModel.imagePayment = image.data;
+            //       // print(tempModel.haveIDtoJson());
+            //       orderProvider.update(
+            //         data: tempModel,
+            //         onSuccess: (model) {
+            //           print("success updated");
+            //           update();
+            //         },
+            //         onError: (error) {},
+            //       );
+            //     },
+            //     onError: (error) {
+            //       print(error);
+            //       update();
+            //     });
           }
         },
         onError: (error) {

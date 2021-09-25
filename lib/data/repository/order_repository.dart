@@ -89,4 +89,17 @@ class OrderRepository {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  ///
+  /// getWith
+  ///
+  Future<ApiResponse> getWith(String userId, String dateStart, String dateEnd) async {
+    try {
+      final String uri = '/orders/dateStart-dateEnd?idUser=${userId}&dateStart=${dateStart}&dateEnd=${dateEnd}';
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

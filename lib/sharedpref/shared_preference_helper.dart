@@ -84,4 +84,17 @@ class SharedPreferenceHelper {
   Future<bool> removeOrderId() async {
     return _sharedPreference.remove(Preferences.orderId);
   }
+
+  // user: ----------------------------------------------------------
+  Future<String?> get userId async {
+    return _sharedPreference.getString(Preferences.userId);
+  }
+
+  Future<bool> saveUserId(String id) async {
+    return _sharedPreference.setString(Preferences.userId, id);
+  }
+
+  Future<bool> removeUserId() async {
+    return _sharedPreference.remove(Preferences.userId);
+  }
 }
