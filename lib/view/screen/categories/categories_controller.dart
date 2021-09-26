@@ -15,7 +15,6 @@ class CategoriesController extends GetxController
   bool isLoadingListView = true;
 
   TabController? tabController;
-  int isSelectedTabCateg = 0;
 
   List<CategoryModel> categoriesList = [];
   List<ProductModel> productWithIdCategList = [];
@@ -48,7 +47,13 @@ class CategoriesController extends GetxController
       listenerTabController();
 
       // set tab active
-      tabController!.index = int.parse(Get.parameters['indexTab'].toString());
+      final int tabIndex = int.parse(Get.parameters['indexTab'].toString());
+      if (tabIndex == 0) {
+        // load data product with id categories with index 0
+        getProductWithIdCateg(id: categoriesList[tabController!.index].id!);
+      } else {
+        tabController!.index = int.parse(Get.parameters['indexTab'].toString());
+      }
 
       isLoading = false;
       update();
@@ -69,10 +74,8 @@ class CategoriesController extends GetxController
       productWithIdCategList.clear();
       update();
 
-      isSelectedTabCateg = tabController!.index;
-
       // load data product with id categories
-      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+      getProductWithIdCateg(id: categoriesList[tabController!.index].id!);
     });
   }
 
