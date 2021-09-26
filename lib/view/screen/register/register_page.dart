@@ -55,7 +55,7 @@ class RegisterPage extends GetView<RegisterController> {
 
 //input widget
   Widget _normalInputWidget(
-      BuildContext context, String? label, TextEditingController controllers) {
+      BuildContext context, String? label, TextEditingController controllers,TextInputType extInputType) {
     return Container(
       margin: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.025)),
@@ -63,7 +63,8 @@ class RegisterPage extends GetView<RegisterController> {
         enabled: controller.isMaGioiThieuValid(),
         textInputAction: TextInputAction.done,
         textAlignVertical: TextAlignVertical.center,
-        controller: controllers,
+        controller: controllers, 
+        keyboardType: extInputType,
         cursorColor: ColorResources.PRIMARY,
         decoration: InputDecoration(
           isDense: true,
@@ -216,7 +217,7 @@ class RegisterPage extends GetView<RegisterController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              DateFormat("dd MMMM yyyy", "vi").format(DateTime.now()),
+              'Ngày cấp',
               style: const TextStyle(color: Colors.grey),
             ),
             Icon(
@@ -280,23 +281,23 @@ class RegisterPage extends GetView<RegisterController> {
 
                           // Tài khoản
                           _normalInputWidget(
-                              context, "Tài khoản", controllers["taikhoan"]!),
+                              context, "Tài khoản", controllers["taikhoan"]!, TextInputType.text),
 
                           // Mất khẩu
                           _normalInputWidget(
-                              context, "Mật khẩu", controllers["matkhau"]!),
+                              context, "Mật khẩu", controllers["matkhau"]!, TextInputType.visiblePassword),
 
                           // Xác nhận mật khẩu
                           _normalInputWidget(context, "Xác nhận mật khẩu",
-                              controllers["xacnhanmatkhau"]!),
+                              controllers["xacnhanmatkhau"]!, TextInputType.visiblePassword),
 
                           // Số điện thoại
                           _normalInputWidget(context, "Số điện thoại",
-                              controllers["sodienthoai"]!),
+                              controllers["sodienthoai"]!, TextInputType.number),
 
                           // Mã giới thiệu
                           _normalInputWidget(
-                              context, "Họ và tên", controllers["hoten"]!),
+                              context, "Họ và tên", controllers["hoten"]!, TextInputType.text),
 
                           // gender
                           _genderSelectionWidget(context, controller),
@@ -306,26 +307,26 @@ class RegisterPage extends GetView<RegisterController> {
 
                           // cmnd
                           _normalInputWidget(context, "Số chứng minh nhân dân",
-                              controllers["cmnd"]!),
+                              controllers["cmnd"]!, TextInputType.number),
 
                           // ngày cấp
                           _dateTimePickNgayCap(context),
 
                           // Nơi cấp
                           _normalInputWidget(
-                              context, "Nơi cấp", controllers["noicap"]!),
+                              context, "Nơi cấp", controllers["noicap"]!, TextInputType.text),
 
                           // Nghề nghiệp
                           _normalInputWidget(context, "Nghề nghiệp",
-                              controllers["nghenghiep"]!),
+                              controllers["nghenghiep"]!, TextInputType.text),
 
                           // Địa chỉ thường trú
                           _normalInputWidget(context, "Địa chỉ thường trú",
-                              controllers["diachithuongtru"]!),
+                              controllers["diachithuongtru"]!, TextInputType.text),
 
                           // Địa chỉ liên lạc
                           _normalInputWidget(context, "Địa chỉ liên lạc",
-                              controllers["diachitlienlac"]!),
+                              controllers["diachitlienlac"]!, TextInputType.text),
 
                           GestureDetector(
                             onTap: () {

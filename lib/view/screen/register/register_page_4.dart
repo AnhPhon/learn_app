@@ -118,13 +118,15 @@ class RegisterPage4 extends GetView<RegisterController> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(7),
-                                                child: Image.asset(
-                                                  controller
-                                                      .items[controller
-                                                          .orderList[index]]
-                                                      .url,
+                                                child: Image(
                                                   height: 70,
                                                   width: 70,
+                                                  image: NetworkImage(
+                                                    controller
+                                                        .items[controller
+                                                            .orderList[index]]
+                                                        .url,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -271,15 +273,15 @@ class RegisterPage4 extends GetView<RegisterController> {
                               children: [
                                 _rowText(context,
                                     text1: "Số tài khoản:",
-                                    text2: "XXXX XXXX XXXX"),
+                                    text2: "1234 5678 9012"),
                                 _rowText(context,
                                     text1: "Tên chủ tài khoản",
-                                    text2: "Nguyễn Văn A"),
+                                    text2: "Nguyễn Thị Thảo"),
                                 _rowText(context,
                                     text1: "Tên ngân hàng",
                                     text2: "Ngân hàng Sacombank"),
                                 _rowText(context,
-                                    text1: "Chi nhánh", text2: "Gia Lai"),
+                                    text1: "Chi nhánh", text2: "Hà Nội"),
                               ],
                             ),
                           ),
@@ -365,11 +367,11 @@ class RegisterPage4 extends GetView<RegisterController> {
                   GestureDetector(
                     onTap: () {
                       if (controller.image != null) {
-                        
                         controller.uploadImage();
-                        controller.sl.get<SharedPreferenceHelper>().removeOrderId();
-                        
-                        
+                        controller.sl
+                            .get<SharedPreferenceHelper>()
+                            .removeOrderId();
+
                         Get.offNamed(AppRoutes.LOGIN);
                         showAnimatedDialog(
                             context,

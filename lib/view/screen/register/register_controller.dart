@@ -409,7 +409,7 @@ class RegisterController extends GetxController {
           items = value
               .map((ProductModel model) => Item(
                     id: model.id!,
-                    url: Images.sp1,
+                    url: model.thumbnail.toString(),
                     amount: int.parse(model.prriceOrigin!),
                     title: model.name!,
                     isChoose: false,

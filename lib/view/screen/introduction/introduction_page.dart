@@ -32,27 +32,25 @@ class IntroductionPage extends GetView<IntroductionController> {
 
             pages: [
               PageViewModel(
-                title: "Fractional shares",
+                title: "Bảo vệ môi trường",
                 body:
-                    "Instead of having to buy an entire share, invest any amount you want.",
+                    "Cùng nhau lan tỏa lợi ích về tiết kiệm tài chính và bảo vệ môi trường đến toàn cộng đồng.",
                 image: _buildImage("img1.jpg"),
                 decoration: pageDecoration,
               ),
               PageViewModel(
-                title: "Learn as you go",
+                title: "Sản phẩm xanh",
                 body:
-                    "Download the Stockpile app and master the market with our mini-lesson.",
+                    "Mang tới những sản phẩm tốt, thân thiện và bảo vệ môi trường xanh sạch tới cộng đồng (như viên nén tiết kiệm và bảo vệ môi trường Yamamoto…).",
                 image: _buildImage("img2.jpg"),
                 decoration: pageDecoration,
               ),
               PageViewModel(
-                title: "Title of last page - reversed",
+                title: "YTP Mang tới lợi ích và sự hỗ trợ tài chính",
                 bodyWidget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text("Click on ", style: bodyStyle),
-                    Icon(Icons.edit),
-                    Text(" to edit a post", style: bodyStyle),
+                    Text("Cộng đồng bảo vệ môi trường xanh", style: bodyStyle),
                   ],
                 ),
                 decoration: pageDecoration.copyWith(
@@ -71,11 +69,11 @@ class IntroductionPage extends GetView<IntroductionController> {
             skipFlex: 0,
             nextFlex: 0,
             //rtl: true, // Display as right-to-left
-            skip: const Text('Skip',
+            skip: const Text('Bỏ qua',
                 style: TextStyle(color: ColorResources.PRIMARY)),
             next:
                 const Icon(Icons.arrow_forward, color: ColorResources.PRIMARY),
-            done: const Text('Done',
+            done: const Text('Đăng ký',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: ColorResources.PRIMARY)),

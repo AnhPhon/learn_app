@@ -142,7 +142,7 @@ class RegisterPage3 extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => RegisterController());
-    GetIt sl = GetIt.instance;    
+    GetIt sl = GetIt.instance;
     // ignore: prefer_const_declarations
     // final bool allowCreateOrder = sl.get<SharedPreferenceHelper>().orderId != null;
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
@@ -223,12 +223,15 @@ class RegisterPage3 extends GetView<RegisterController> {
                                       //hình ảnh sản phẩm trong dialog
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(7),
-                                        child: Image.asset(
-                                          controller.items[index].url,
+                                        child: Image(
                                           height: DeviceUtils.getScaledSize(
                                               context, 0.25),
                                           width: DeviceUtils.getScaledSize(
                                               context, 0.25),
+                                          image: NetworkImage(
+                                            controller.items[index].url
+                                                .toString(),
+                                          ), 
                                         ),
                                       ),
 
@@ -385,14 +388,13 @@ class RegisterPage3 extends GetView<RegisterController> {
                                     height: DeviceUtils.getScaledSize(
                                         context, 0.343),
                                     decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                      image: DecorationImage(
-                                          image: AssetImage(controller
-                                              .items[index].url
-                                              .toString()),
-                                          fit: BoxFit.fill),
-                                    ),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        image: DecorationImage(
+                                            image: NetworkImage(controller
+                                                .items[index].url
+                                                .toString()),
+                                            fit: BoxFit.cover)),
                                   ),
 
                                   SizedBox(
