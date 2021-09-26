@@ -4,6 +4,7 @@ import 'package:template/data/datasource/remote/dio/dio_client.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/data/repository/category_news_repository.dart';
 import 'package:template/data/repository/category_repository.dart';
+import 'package:template/data/repository/context_repository.dart';
 import 'package:template/data/repository/district_repository.dart';
 import 'package:template/data/repository/image_repository.dart';
 import 'package:template/data/repository/news_repository.dart';
@@ -19,6 +20,7 @@ import 'package:template/provider/auth_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/category_provider.dart';
+import 'package:template/provider/context_provider.dart';
 import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/news_provider.dart';
 import 'package:template/provider/order_item_provider.dart';
@@ -61,6 +63,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UserRepository());
   sl.registerLazySingleton(() => ImageUpdateRepository());
   sl.registerLazySingleton(() => PersonalHonorRepository());
+  sl.registerLazySingleton(() => ContextRepository());
 
   // Provider
   // sl.registerFactory(() => RegionProvider());
@@ -76,6 +79,7 @@ Future<void> init() async {
   sl.registerFactory(() => UserProvider());
   sl.registerFactory(() => ImageUpdateProvider());
   sl.registerFactory(() => PersonalHonorProvider());
+  sl.registerFactory(() => ContextProvider());
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider

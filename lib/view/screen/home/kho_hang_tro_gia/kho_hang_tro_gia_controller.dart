@@ -16,31 +16,37 @@ class KhoHangTroGiaController extends GetxController
 
   List<CategoryModel> categoriesList = [];
 
-  List<ProductModel> productWithIdList = [];
+  List<ProductModel> productWithIdCategList = [];
+
+  ProductModel? productWithId;
 
   int isSelectedTabCateg = 0;
+
+  bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
+    getAllCategories();
   }
 
   @override
   void onClose() {
     super.onClose();
+    tabController!.dispose();
   }
 
-  //lấy tất cả danh mục
+  ///
+  ///lấy tất cả danh mục
+  ///
   void getAllCategories() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
-      update();
       tabController = TabController(length: categoriesList.length, vsync: this);
-      tabController!.addListener(() {
-        isSelectedTabCateg = tabController!.index;
-        getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
-      });
+      print("tabController!.index: ${tabController!.index}");
       getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+      listenerTabController();
+      isLoading = false;
       update();
     }, onError: (error) {
       print(error);
@@ -48,14 +54,32 @@ class KhoHangTroGiaController extends GetxController
     });
   }
 
-  //lấy sản phẩm theo danh mục
+  ///
+  ///listener tabController
+  ///
+  void listenerTabController() {
+    tabController!.addListener(() {
+      isSelectedTabCateg = tabController!.index;
+      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+      update();
+    });
+  }
+
+  ///
+  ///lấy sản phẩm theo danh mục
+  ///
   void getProductWithIdCateg({required String id}) {
+    productWithIdCategList.clear();
+    update();
     productProvider.paginate(
         page: 1,
         limit: 5,
         filter: "idCategory=$id",
         onSuccess: (value) {
-          productWithIdList = value;
+          print("trong005");
+          productWithIdCategList = value;
+          // isLoading = false;
+          print("trong00");
           update();
         },
         onError: (error) {
@@ -64,7 +88,22 @@ class KhoHangTroGiaController extends GetxController
         });
   }
 
-  void onProductClick() {
-    Get.toNamed(AppRoutes.PRODUCT_DETAIL);
+  //xem sản phẩm
+  void onProductClick(int index) {
+    print("productId=${productWithIdCategList[index].id!}");
+    productProvider
+        .find(
+            id: productWithIdCategList[index].id!,
+            onSuccess: (value) {
+              productWithId = value;
+
+              update();
+            },
+            onError: (error) {
+              print(error);
+              update();
+            })
+        .then((values) => Get.toNamed(
+            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdCategList[index].id!}&categoryId=${productWithIdCategList[index].idCategory}&price=${productWithIdCategList[index].prices}"));
   }
 }

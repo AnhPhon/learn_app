@@ -5,16 +5,18 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
-import 'package:template/view/screen/home/home_controller.dart';
 
 class CategoriesPage extends GetView<CategoriesController> {
-  final HomeController homeController = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoriesController>(
         init: CategoriesController(),
-        builder: (CategoriesController value) {
+        builder: (controller) {
+          if (controller.isLoading) {
+            return Container(
+                color: ColorResources.WHITE,
+                child: const Center(child: CircularProgressIndicator()));
+          }
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
             appBar: AppBar(
@@ -39,102 +41,96 @@ class CategoriesPage extends GetView<CategoriesController> {
                 indicatorColor: ColorResources.PRIMARY,
                 labelColor: ColorResources.PRIMARY,
                 unselectedLabelColor: Colors.grey,
-                tabs: [
-                  ...controller.categoriesList
-                      .map((categories) => Tab(text: categories.name))
-                ],
+                tabs: controller.categoriesList
+                    .map((categories) => Tab(text: categories.name))
+                    .toList(),
               ),
             ),
 
             //tabbar view
             body: TabBarView(
               controller: controller.tabController,
-              children: controller.productWithIdList.isEmpty
-                  ? [
-                      ...List.generate(
-                          controller.categoriesList.length,
-                          (index) =>
-                              const Center(child: CircularProgressIndicator()))
-                    ]
-                  : [
-                      ...List.generate(
-                        controller.categoriesList.length,
-                        (index) => controller.isLoading == true
-                            ? const Center(child: CircularProgressIndicator())
-                            : GridView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 0.72,
-                                  crossAxisCount: 2,
-                                ),
-                                itemCount: controller.productWithIdList.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      controller.onProductClick(index);
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 10),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 15),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: ColorResources.WHITE),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 150,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10)),
-                                              child: Image.network(
-                                                controller
-                                                    .productWithIdList[index]
-                                                    .thumbnail!,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
+              children: [
+                ...List.generate(
+                  controller.categoriesList.length,
+                  (index) => GetBuilder<CategoriesController>(
+                      init: CategoriesController(),
+                      builder: (controller) {
+                        if (controller.isLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 0.72,
+                              crossAxisCount: 2,
+                            ),
+                            itemCount: controller.productWithIdCategList.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  controller.onProductClick(index);
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 15),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: ColorResources.WHITE),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 150,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          child: Image.network(
+                                            controller
+                                                .productWithIdCategList[index]
+                                                .thumbnail!,
+                                            fit: BoxFit.fill,
                                           ),
-                                          SizedBox(
-                                              height:
-                                                  DeviceUtils.getScaledHeight(
-                                                      context, 0.01)),
-                                          SizedBox(
-                                            height: DeviceUtils.getScaledSize(
-                                                context, 0.101),
-                                            child: Text(
-                                              controller
-                                                  .productWithIdList[index]
-                                                  .name!,
-                                              maxLines: 2,
-                                              style: Dimensions
-                                                  .fontSizeStyle14w600(),
-                                            ),
-                                          ),
-                                          Text(PriceConverter.convertPrice(
-                                              context,
-                                              double.parse(controller
-                                                  .productWithIdList[index]
-                                                  .prices!)))
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
-                      ).toList()
-                    ],
+                                      SizedBox(
+                                          height: DeviceUtils.getScaledHeight(
+                                              context, 0.01)),
+                                      SizedBox(
+                                        height: DeviceUtils.getScaledSize(
+                                            context, 0.101),
+                                        child: Text(
+                                          controller
+                                              .productWithIdCategList[index]
+                                              .name!,
+                                          maxLines: 2,
+                                          style:
+                                              Dimensions.fontSizeStyle14w600(),
+                                        ),
+                                      ),
+                                      Text(PriceConverter.convertPrice(
+                                          context,
+                                          double.parse(controller
+                                              .productWithIdCategList[index]
+                                              .prices!)))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      }),
+                ).toList()
+              ],
             ),
           );
         });

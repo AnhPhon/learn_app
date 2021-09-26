@@ -1,4 +1,4 @@
-class ProductByIdOrderModel {
+class ProductResponse {
   String? idOrder;
   IdProduct? idProduct;
   String? quantity;
@@ -7,7 +7,7 @@ class ProductByIdOrderModel {
   String? updatedAt;
   String? id;
 
-  ProductByIdOrderModel({
+  ProductResponse({
     this.idOrder,
     this.idProduct,
     this.quantity,
@@ -17,8 +17,8 @@ class ProductByIdOrderModel {
     this.id,
   });
 
-  factory ProductByIdOrderModel.fromJson(Map<String, dynamic> json) =>
-      ProductByIdOrderModel(
+  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
+      ProductResponse(
         idOrder: json['idOrder'] as String?,
         idProduct: json['idProduct'] == null
             ? null

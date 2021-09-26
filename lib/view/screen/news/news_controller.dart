@@ -7,12 +7,16 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/news_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsController extends GetxController with SingleGetTickerProviderMixin {
-  TabController? tabController;
-  final searchController = TextEditingController();
   CategoryNewsProvider categoryNewsProvider =
       GetIt.I.get<CategoryNewsProvider>();
+
+  TabController? tabController;
+
+  final searchController = TextEditingController();
+
   NewsProvider newsProvider = GetIt.I.get<NewsProvider>();
 
   List<CategoryNewsModel> categoryNewsList = [];
@@ -73,20 +77,19 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   ///
-  ///get news from id
+  ///view news
   ///
-  void getNewsFromId({required int index}) {
-    newsProvider
-        .find(
-            id: newsList[index].id!,
-            onSuccess: (value) {
-              newsModel = value;
-              update();
-            },
-            onError: (error) {
-              print(error);
-              update();
-            })
-        .then((value) => Get.toNamed(AppRoutes.NEWS_DETAIL));
+  void onClickNewsDetail({required int index}) {
+    Get.toNamed("${AppRoutes.NEWS_DETAIL}?idNews=${newsList[index].id}");
+  }
+
+  String timeAgo(String dateTime) {
+    timeago.setLocaleMessages('vi', timeago.ViMessages());
+    final String time = dateTime;
+    final loadedTime = DateConverter.convertStringToDatetime(
+        time.replaceAll("T", " ").substring(0, time.length - 1));
+    final now = DateTime.now();
+    final difference = now.difference(loadedTime);
+    return timeago.format(now.subtract(difference), locale: "vi");
   }
 }

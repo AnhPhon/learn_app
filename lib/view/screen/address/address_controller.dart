@@ -13,8 +13,8 @@ class AddressController extends GetxController {
   ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
 
-  final TextEditingController wardController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final wardController = TextEditingController();
+  final addressController = TextEditingController();
 
   String? province;
   String? district;
@@ -41,7 +41,6 @@ class AddressController extends GetxController {
     getProvince();
     provinceModelList.clear();
     districtModelList.clear();
-    addressController.clear();
   }
 
   ///
@@ -117,6 +116,7 @@ class AddressController extends GetxController {
       Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường",
           snackPosition: SnackPosition.BOTTOM);
     } else {
+      print("addressController.text: ${addressController.text}");
       sl.get<SharedPreferenceHelper>().saveProvinceId(idProvince!);
       sl.get<SharedPreferenceHelper>().saveDistrictId(idDistrict!);
       sl.get<SharedPreferenceHelper>().saveAddress(addressController.text);

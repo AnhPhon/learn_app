@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/home_page/info.dart';
 // template
 import 'package:template/data/template/categories.dart';
 import 'package:template/helper/price_converter.dart';
@@ -11,13 +10,10 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
 
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
-  final categoriesController = Get.find<CategoriesController>();
-
   ///
   /// Group widget
   ///
@@ -95,7 +91,7 @@ class HomePage extends GetView<HomeController> {
             onPressed: () {
               controller.onBtnCategoriesClick(0);
             },
-            content: categoriesController.categoriesList.isEmpty
+            content: controller.categoriesList.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : GridView.builder(
                     shrinkWrap: true,
@@ -105,12 +101,10 @@ class HomePage extends GetView<HomeController> {
                             childAspectRatio: 0.85,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10),
-                    itemCount: categoriesController.categoriesList.length <= 6
-                        ? categoriesController.categoriesList.length
+                    itemCount: controller.categoriesList.length <= 6
+                        ? controller.categoriesList.length
                         : 6,
                     itemBuilder: (BuildContext context, index) {
-                      final categoriesList =
-                          categoriesController.categoriesList;
                       return _danhMucBtn(
                           Container(
                             width: DeviceUtils.getScaledSize(context, 0.178),
@@ -123,11 +117,11 @@ class HomePage extends GetView<HomeController> {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(size / 3),
                                 child: Image.network(
-                                  categoriesList[index].thumbnail!,
+                                  controller.categoriesList[index].thumbnail!,
                                   fit: BoxFit.fill,
                                 )),
                           ),
-                          categoriesList[index].name!, () {
+                          controller.categoriesList[index].name!, () {
                         controller.onBtnCategoriesClick(index);
                       });
                     }),
@@ -472,11 +466,16 @@ class HomePage extends GetView<HomeController> {
      * - part 2: content
      */
 
-    return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (HomeController value) {
-          return Scaffold(
-            body: Container(
+    return Scaffold(
+      body: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (HomeController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Container(
               padding: EdgeInsets.zero,
               margin: EdgeInsets.zero,
               color: const Color(0xFFF5F5FA),
@@ -498,8 +497,8 @@ class HomePage extends GetView<HomeController> {
                   ],
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 }

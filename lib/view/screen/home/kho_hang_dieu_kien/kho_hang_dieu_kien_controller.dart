@@ -8,46 +8,25 @@ class KhoHangDieuKienController extends GetxController {
 
   List<ProductModel> productList = [];
 
+  bool isLoading = true;
+
   @override
   void onInit() {
     super.onInit();
     getAllProduct();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  // lấy tất cả sản phẩm
+  ///
+  /// lấy tất cả sản phẩm
+  ///
   void getAllProduct() {
     productProvider.all(onSuccess: (value) {
       productList = value;
+      isLoading = false;
       update();
     }, onError: (error) {
       print(error);
       update();
     });
-  }
-
-  //  money normalize
-  String moneyNormalize(int money, String splitSymbol) {
-    String text = money.toString().split('').reversed.join();
-    int size = text.length;
-
-    String result = "";
-    int mark = 0;
-    for (int i = 0; i < size; i++) {
-      mark += 1;
-      result = text[i] + result;
-
-      if (mark % 3 == 0) {
-        result = splitSymbol + result;
-      }
-    }
-
-    if (result[0] == splitSymbol) result = result.substring(1, result.length);
-
-    return result;
   }
 }

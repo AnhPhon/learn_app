@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/product_by_id_order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/data/repository/product_repository.dart';
 
 class ProductProvider {
@@ -118,7 +118,7 @@ class ProductProvider {
     required int page,
     required int limit,
     required String idOrder,
-    required Function(List<ProductByIdOrderModel> products) onSuccess,
+    required Function(List<ProductResponse> products) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -128,7 +128,7 @@ class ProductProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ProductByIdOrderModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ProductResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);

@@ -21,7 +21,8 @@ class CartPage extends GetView<CartController> {
   Container _containerBox(BuildContext context, {required Widget child}) {
     return Container(
       margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.017)),
+          vertical: DeviceUtils.getScaledSize(context, 0.035),
+          horizontal: DeviceUtils.getScaledSize(context, 0.038)),
       padding: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.04),
           horizontal: DeviceUtils.getScaledSize(context, 0.05)),
@@ -363,42 +364,48 @@ class CartPage extends GetView<CartController> {
             }
             return cartController.selectedProductList.isEmpty
                 ? const Center(child: Text("Giỏ hàng trống"))
-                : Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: DeviceUtils.getScaledSize(context, 0.038)),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              height: DeviceUtils.getScaledSize(context, 0.03)),
+                : SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            height: DeviceUtils.getScaledSize(context, 0.03)),
 
-                          ///
-                          ///shipping detail
-                          ///
-                          Text(
+                        ///
+                        ///shipping detail
+                        ///
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  DeviceUtils.getScaledSize(context, 0.038)),
+                          child: Text(
                             "Chi tiết về shipping",
                             style: Dimensions.fontSizeStyle18w600(),
                           ),
-                          _shipping(context, cartController),
+                        ),
+                        _shipping(context, cartController),
 
-                          SizedBox(
-                              height: DeviceUtils.getScaledSize(context, 0.02)),
+                        SizedBox(
+                            height: DeviceUtils.getScaledSize(context, 0.02)),
 
-                          ///
-                          /// other product detail
-                          ///
-                          Text(
+                        ///
+                        /// other product detail
+                        ///
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  DeviceUtils.getScaledSize(context, 0.038)),
+                          child: Text(
                             "Chi tiết đơn hàng",
                             style: Dimensions.fontSizeStyle18w600(),
                           ),
-                          _otherProductDetail(context),
+                        ),
+                        _otherProductDetail(context),
 
-                          SizedBox(
-                              height: DeviceUtils.getScaledSize(context, 0.03)),
-                        ],
-                      ),
+                        SizedBox(
+                            height: DeviceUtils.getScaledSize(context, 0.03)),
+                      ],
                     ),
                   );
           }),

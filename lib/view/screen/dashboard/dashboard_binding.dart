@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
-import 'package:template/view/screen/home/kho_hang_tro_gia/kho_hang_tro_gia_controller.dart';
+import 'package:template/view/screen/leaderboard/leaderboard_controller.dart';
 import 'package:template/view/screen/posts/posts_controller.dart';
 import 'package:template/view/screen/splash/splash_controller.dart';
 
@@ -11,7 +10,6 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<PostsController>(() => PostsController());
     Get.lazyPut<SplashController>(() => SplashController());
-    Get.lazyPut<CategoriesController>(() => CategoriesController());
-    Get.lazyPut<KhoHangTroGiaController>(() => KhoHangTroGiaController());
+    Get.lazyPut<LeaderBoardController>(() => LeaderBoardController());
   }
 }

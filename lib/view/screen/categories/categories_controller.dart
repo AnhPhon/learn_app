@@ -16,17 +16,18 @@ class CategoriesController extends GetxController
 
   List<CategoryModel> categoriesList = [];
 
-  List<ProductModel> productWithIdList = [];
+  List<ProductModel> productWithIdCategList = [];
 
   ProductModel? productWithId;
 
   int isSelectedTabCateg = 0;
 
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
+    getAllCategories();
   }
 
   @override
@@ -35,16 +36,15 @@ class CategoriesController extends GetxController
     tabController!.dispose();
   }
 
-  //lấy tất cả danh mục
+  ///
+  ///lấy tất cả danh mục
+  ///
   void getAllCategories() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
       tabController = TabController(length: categoriesList.length, vsync: this);
-      tabController!.addListener(() {
-        isSelectedTabCateg = tabController!.index;
-        getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
-      });
-      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+      onClickCategoryFromHome();
+      listenerTabController();
       update();
     }, onError: (error) {
       print(error);
@@ -52,35 +52,57 @@ class CategoriesController extends GetxController
     });
   }
 
-  //lấy sản phẩm theo danh mục
-  void getProductWithIdCateg({required String id}) {
-    isLoading = true;
-
-    update();
-    productProvider
-        .paginate(
-            page: 1,
-            limit: 5,
-            filter: "idCategory=$id",
-            onSuccess: (value) {
-              productWithIdList.clear();
-              productWithIdList = value;
-              isLoading = false;
-            },
-            onError: (error) {
-              print(error);
-            })
-        .then((value) => update());
+  ///
+  ///listener tabController
+  ///
+  void listenerTabController() {
+    tabController!.addListener(() {
+      isSelectedTabCateg = tabController!.index;
+      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+      update();
+    });
   }
 
-  //xem sản phẩm
+  ///
+  ///on Click categories HomePage to Category Page
+  ///
+  void onClickCategoryFromHome() {
+    tabController!.index = int.parse(Get.parameters['indexTab'].toString());
+    getProductWithIdCateg(id: Get.parameters['idCategory'].toString());
+  }
+
+  ///
+  ///lấy sản phẩm theo danh mục
+  ///
+  void getProductWithIdCateg({required String id}) {
+    productWithIdCategList.clear();
+    update();
+    productProvider.paginate(
+        page: 1,
+        limit: 5,
+        filter: "idCategory=$id",
+        onSuccess: (value) {
+          productWithIdCategList = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  ///
+  ///xem sản phẩm
+  ///
   void onProductClick(int index) {
-    print("productId=${productWithIdList[index].id!}");
+    print("productId=${productWithIdCategList[index].id!}");
     productProvider
         .find(
-            id: productWithIdList[index].id!,
+            id: productWithIdCategList[index].id!,
             onSuccess: (value) {
               productWithId = value;
+
               update();
             },
             onError: (error) {
@@ -88,6 +110,6 @@ class CategoriesController extends GetxController
               update();
             })
         .then((values) => Get.toNamed(
-            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdList[index].id!}&categoryId=${productWithIdList[index].idCategory}&price=${productWithIdList[index].prices}"));
+            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdCategList[index].id!}&categoryId=${productWithIdCategList[index].idCategory}&price=${productWithIdCategList[index].prices}"));
   }
 }

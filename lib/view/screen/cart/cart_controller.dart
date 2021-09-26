@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/product_by_id_order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/user_provider.dart';
@@ -23,7 +23,7 @@ class CartController extends GetxController {
 
   bool isLoading = true;
 
-  List<ProductByIdOrderModel> selectedProductList = [];
+  List<ProductResponse> selectedProductList = [];
 
   int price = 0;
 
@@ -43,6 +43,7 @@ class CartController extends GetxController {
   ///load list selected product
   ///
   void loadSelectedProduct() {
+    selectedProductList.clear();
     productProvider.findByIdOrder(
         page: 1,
         limit: 100,
