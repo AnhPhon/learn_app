@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/body/user_model.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:intl/intl.dart';
@@ -10,19 +8,17 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/screen/register/register_page_3.dart';
+import 'information_user_controller.dart';
 
-import 'register_controller.dart';
-
-class RegisterPage extends GetView<RegisterController> {
+class InformationUserPage extends GetView<InformationUserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar().customAppBar(title: "Thông tin cá nhân"),
       body: SingleChildScrollView(
-          child: GetBuilder<RegisterController>(
-              init: RegisterController(),
-              builder: (RegisterController controller) {
+          child: GetBuilder<InformationUserController>(
+              init: InformationUserController(),
+              builder: (InformationUserController controller) {
                 return Container(
                   color: Colors.white,
                   child: Column(
@@ -44,21 +40,21 @@ class RegisterPage extends GetView<RegisterController> {
                                 controller.textEditControllers["magioithieu"]!),
 
                             // Tài khoản
-                            _normalInputWidget(
-                                context,
-                                "Tài khoản",
-                                controller.textEditControllers["taikhoan"]!,
-                                TextInputType.text),
+                            // _normalInputWidget(
+                            //     context,
+                            //     "Tài khoản",
+                            //     controller.textEditControllers["taikhoan"]!,
+                            //     TextInputType.text),
 
                             // Mất khẩu
-                            _normalInputWidget(
+                            _passwordInputWidget(
                                 context,
                                 "Mật khẩu",
                                 controller.textEditControllers["matkhau"]!,
                                 TextInputType.visiblePassword),
 
                             // Xác nhận mật khẩu
-                            _normalInputWidget(
+                            _passwordInputWidget(
                                 context,
                                 "Xác nhận mật khẩu",
                                 controller
@@ -102,6 +98,12 @@ class RegisterPage extends GetView<RegisterController> {
                                 controller.textEditControllers["noicap"]!,
                                 TextInputType.text),
 
+                            // mặt trước cmnd
+                            _uploadCmndFront(context),
+
+                            // mặt sau cmnd
+                            _uploadCmndBack(context),
+
                             // Nghề nghiệp
                             _normalInputWidget(
                                 context,
@@ -118,7 +120,7 @@ class RegisterPage extends GetView<RegisterController> {
                                 TextInputType.text),
 
                             // Địa chỉ liên lạc
-                            _normalInputWidget(
+                            _addressInputWidget(
                                 context,
                                 "Địa chỉ liên lạc",
                                 controller
@@ -126,75 +128,7 @@ class RegisterPage extends GetView<RegisterController> {
                                 TextInputType.text),
 
                             // tiếp tục button
-                            GestureDetector(
-                              onTap: () {
-                                // final String magioithieu =
-                                //     controller.textEditControllers["magioithieu"]!.text;
-
-                                final UserModel userModel = UserModel(
-                                  password: controller
-                                      .textEditControllers["matkhau"]!.text,
-                                  idUser: "",
-                                  idRole: "",
-                                  idOptionalRole: "0",
-                                  fullname: controller
-                                      .textEditControllers["hoten"]!.text,
-                                  username: controller
-                                      .textEditControllers["taikhoan"]!.text,
-                                  sex: controller.gender ?? "",
-                                  avatar:
-                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632456310...",
-                                  born: DateConverter.estimatedDate(
-                                      controller.ngaysinh!),
-                                  phone: controller
-                                      .textEditControllers["sodienthoai"]!.text,
-                                  address: controller
-                                      .textEditControllers["diachithuongtru"]!
-                                      .text,
-                                  citizenIdentification: controller
-                                      .textEditControllers["cmnd"]!.text,
-                                  status: "1",
-                                  imageCitizenIdentification:
-                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455894...",
-                                  imageCitizenIdentification1:
-                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455901...",
-                                  paymentProofImage: "",
-                                );
-
-                                // cho phép tạo
-                                bool allowCreate = false;
-                                if (allowCreate == true) {
-                                  controller.createUser(userModel);
-                                }
-                                Get.to(RegisterPage3());
-                              },
-                              child: Container(
-                                margin: EdgeInsets.symmetric(
-                                    vertical: DeviceUtils.getScaledSize(
-                                        context, 0.035)),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: DeviceUtils.getScaledSize(
-                                        context, 0.035),
-                                    horizontal: DeviceUtils.getScaledSize(
-                                        context, 0.03)),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFF61A63C),
-                                      Color(0xFF61A63C),
-                                      Color(0xFF61A63C),
-                                    ],
-                                  ),
-                                ),
-                                child: const Text(
-                                  "Tiếp tục",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ),
-                            )
+                            _buttonContinue(context),
                           ],
                         ),
                       )
@@ -208,15 +142,16 @@ class RegisterPage extends GetView<RegisterController> {
   ///
   /// input ma gioi thieu
   ///
-  Widget _inputMaGioiThieu(
-      BuildContext context, String? label, TextEditingController controller) {
+  Widget _inputMaGioiThieu(BuildContext context, String? label,
+      TextEditingController editTextcontroller) {
     return Container(
       margin: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.025)),
       child: TextField(
-        textInputAction: TextInputAction.done,
+        textInputAction: TextInputAction.next,
         textAlignVertical: TextAlignVertical.center,
-        controller: controller,
+        controller: editTextcontroller,
+        focusNode: controller.focusNodeMaGioiThieu,
         cursorColor: ColorResources.PRIMARY,
         decoration: InputDecoration(
           isDense: true,
@@ -252,7 +187,87 @@ class RegisterPage extends GetView<RegisterController> {
       margin: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.025)),
       child: TextField(
-        enabled: controller.isMaGioiThieuValid(),
+        textInputAction: TextInputAction.next,
+        textAlignVertical: TextAlignVertical.center,
+        controller: controllers,
+        keyboardType: extInputType,
+        cursorColor: ColorResources.PRIMARY,
+        decoration: InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceUtils.getScaledSize(context, 0.025),
+              vertical: DeviceUtils.getScaledSize(context, 0.038)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.GREY)),
+          disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.GREY)),
+          hintText: label,
+          filled: true,
+          fillColor: Colors.transparent,
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// input widget
+  ///
+  Widget _passwordInputWidget(BuildContext context, String? label,
+      TextEditingController controllers, TextInputType extInputType) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+          vertical: DeviceUtils.getScaledSize(context, 0.025)),
+      child: TextField(
+        textInputAction: TextInputAction.next,
+        textAlignVertical: TextAlignVertical.center,
+        controller: controllers,
+        keyboardType: extInputType,
+        cursorColor: ColorResources.PRIMARY,
+        obscureText: true,
+        enableSuggestions: false,
+        autocorrect: false,
+        decoration: InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceUtils.getScaledSize(context, 0.025),
+              vertical: DeviceUtils.getScaledSize(context, 0.038)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.GREY)),
+          disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorResources.GREY)),
+          hintText: label,
+          filled: true,
+          fillColor: Colors.transparent,
+        ),
+      ),
+    );
+  }
+
+  ///
+  ///  address input widget
+  ///
+  Widget _addressInputWidget(BuildContext context, String? label,
+      TextEditingController controllers, TextInputType extInputType) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+          vertical: DeviceUtils.getScaledSize(context, 0.025)),
+      child: TextField(
         textInputAction: TextInputAction.done,
         textAlignVertical: TextAlignVertical.center,
         controller: controllers,
@@ -287,14 +302,12 @@ class RegisterPage extends GetView<RegisterController> {
   /// select gender
   ///
   Widget _genderSelectionWidget(BuildContext context, controllers) {
-    final List<String> genderOptions = ["Nam", "Nữ"];
+    final List<String> genderOptions = ["Nam", "Nữ"]; 
 
     return DropDownButton1(
       hint: "Giới tính",
       value: controller.gender,
-      onChanged: (newValue) {
-        controller.setSelected(newValue!);
-      },
+      onChanged: (newValue) => controller.onGenderChange(newValue!),
       data: genderOptions,
     );
   }
@@ -308,7 +321,7 @@ class RegisterPage extends GetView<RegisterController> {
         showDatePicker(
           context: context,
           locale: const Locale("vi", "VI"),
-          initialDate: DateTime.now(),
+          initialDate: DateTime(1990),
           firstDate: DateTime(1900),
           lastDate: DateTime(2022),
           builder: (BuildContext context, Widget? child) {
@@ -324,10 +337,7 @@ class RegisterPage extends GetView<RegisterController> {
               child: child!,
             );
           },
-        ).then((value) {
-          controller.ngaysinh = value;
-          print(controller.ngaysinh);
-        });
+        ).then((value) => controller.onNgaySinhChange(value));
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -347,7 +357,7 @@ class RegisterPage extends GetView<RegisterController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              DateFormat("dd MMMM yyyy", "vi").format(DateTime.now()),
+              controller.ngaySinh.toString(),
               style: const TextStyle(color: Colors.grey),
             ),
             Icon(
@@ -370,7 +380,7 @@ class RegisterPage extends GetView<RegisterController> {
         showDatePicker(
           context: context,
           locale: const Locale("vi", "VI"),
-          initialDate: DateTime.now(),
+          initialDate: DateTime(1990),
           firstDate: DateTime(1900),
           lastDate: DateTime(2022),
           builder: (BuildContext context, Widget? child) {
@@ -386,10 +396,7 @@ class RegisterPage extends GetView<RegisterController> {
               child: child!,
             );
           },
-        ).then((value) {
-          controller.ngaycap = value;
-          print(controller.ngaycap);
-        });
+        ).then((value) => controller.onNgayCapChange(value));
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -408,8 +415,8 @@ class RegisterPage extends GetView<RegisterController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Ngày cấp',
+            Text(
+              controller.ngayCap.toString(),
               style: const TextStyle(color: Colors.grey),
             ),
             Icon(
@@ -418,6 +425,185 @@ class RegisterPage extends GetView<RegisterController> {
               color: ColorResources.PRIMARY,
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// upload cmnd front
+  ///
+  Widget _uploadCmndFront(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.05),
+          vertical: DeviceUtils.getScaledSize(context, 0.03)),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "Tải lên CMND/CCCD mặt trước",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.BLACK),
+              ),
+              Text(
+                "*",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.RED),
+              ),
+            ],
+          ),
+
+          SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+
+          // hình ảnh thanh toán
+          GestureDetector(
+            onTap: () => controller.onCmndFrontPicker(),
+            child: Container(
+              height: DeviceUtils.getScaledSize(context, 0.382),
+              width: DeviceUtils.getScaledSize(context, 0.509),
+              padding: EdgeInsets.symmetric(
+                  horizontal: DeviceUtils.getScaledSize(
+                      context, controller.cmndFrontFile != null ? 0 : 0.101)),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: controller.cmndFrontFile != null
+                    ? null
+                    : Border.all(width: 2, color: Colors.grey),
+              ),
+              child: controller.cmndFrontFile != null
+                  ? Image.file(
+                      controller.cmndFrontFile!,
+                      height: double.infinity,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/bill.png",
+                          height: 50,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          "Bấm vào đây để tải lên",
+                          textAlign: TextAlign.center,
+                          style: Dimensions.fontSizeStyle14w600()
+                              .copyWith(color: Colors.grey),
+                        )
+                      ],
+                    ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// upload cmnd back
+  ///
+  Widget _uploadCmndBack(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.05),
+          vertical: DeviceUtils.getScaledSize(context, 0.03)),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "Tải lên CMND/CCCD mặt sau",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.BLACK),
+              ),
+              Text(
+                "*",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.RED),
+              ),
+            ],
+          ),
+
+          SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+
+          // hình ảnh thanh toán
+          GestureDetector(
+            onTap: () => controller.onCmndBackPicker(),
+            child: Container(
+              height: DeviceUtils.getScaledSize(context, 0.382),
+              width: DeviceUtils.getScaledSize(context, 0.509),
+              padding: EdgeInsets.symmetric(
+                  horizontal: DeviceUtils.getScaledSize(
+                      context, controller.cmndBackFile != null ? 0 : 0.101)),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: controller.cmndBackFile != null
+                    ? null
+                    : Border.all(width: 2, color: Colors.grey),
+              ),
+              child: controller.cmndBackFile != null
+                  ? Image.file(
+                      controller.cmndBackFile!,
+                      height: double.infinity,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/bill.png",
+                          height: 50,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          "Bấm vào đây để tải lên",
+                          textAlign: TextAlign.center,
+                          style: Dimensions.fontSizeStyle14w600()
+                              .copyWith(color: Colors.grey),
+                        )
+                      ],
+                    ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// button tiếp tục
+  ///
+  Widget _buttonContinue(BuildContext context) {
+    return GestureDetector(
+      onTap: () => controller.onBtnContinueClick(),
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            vertical: DeviceUtils.getScaledSize(context, 0.035)),
+        padding: EdgeInsets.symmetric(
+            vertical: DeviceUtils.getScaledSize(context, 0.035),
+            horizontal: DeviceUtils.getScaledSize(context, 0.03)),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFF61A63C),
+              Color(0xFF61A63C),
+              Color(0xFF61A63C),
+            ],
+          ),
+        ),
+        child: const Text(
+          "Tiếp tục",
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
     );

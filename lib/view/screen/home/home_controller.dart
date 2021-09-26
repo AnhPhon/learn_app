@@ -12,8 +12,7 @@ import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
+import 'package:template/utils/images.dart'; 
 import 'package:template/view/screen/posts/posts_page.dart';
 
 class HomeController extends GetxController {
@@ -190,7 +189,7 @@ class HomeController extends GetxController {
   /// onRegisterIdClick
   ///
   void onRegisterIdClick() {
-    Get.toNamed(AppRoutes.REGISTER);
+    Get.toNamed(AppRoutes.INFORMATION_USER);
   }
 
   ///

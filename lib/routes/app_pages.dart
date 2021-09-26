@@ -18,6 +18,9 @@ import 'package:template/view/screen/order/history/history_page.dart';
 import 'package:template/view/screen/order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/order/order_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
+import 'package:template/view/screen/register/information_user/information_user_page.dart';
+import 'package:template/view/screen/register/order_condition/order_condition_page.dart';
+import 'package:template/view/screen/register/payment/payment_page.dart';
 import 'package:template/view/screen/register/register_page.dart';
 import 'package:template/view/screen/register/register_page_2.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
@@ -42,20 +45,16 @@ class AppPages {
       page: () => LoginPage(),
     ),
     GetPage(
-      name: AppRoutes.REGISTER,
-      page: () => RegisterPage(),
+      name: AppRoutes.INFORMATION_USER,
+      page: () => InformationUserPage(),
     ),
     GetPage(
-      name: AppRoutes.REGISTER_PAGE_2,
-      page: () => RegisterPage2(),
+      name: AppRoutes.ORDER_CONDITION,
+      page: () => OrderConditionPage(),
     ),
     GetPage(
-      name: AppRoutes.REGISTER_PAGE_3,
-      page: () => RegisterPage3(),
-    ),
-    GetPage(
-      name: AppRoutes.REGISTER_PAGE_4,
-      page: () => RegisterPage4(),
+      name: AppRoutes.PAYMENT,
+      page: () => PaymentPage(),
     ),
     GetPage(
         name: AppRoutes.DASHBOARD,
