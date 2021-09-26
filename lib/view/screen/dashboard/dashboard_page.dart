@@ -26,9 +26,9 @@ class DashboardPage extends StatelessWidget {
               index: controller.tabIndex,
               children: [
                 HomePage(),
-                // LeaderBoardPage(),
-                // NewsPage(),
-                // AccountPage(),
+                LeaderBoardPage(),
+                NewsPage(),
+                AccountPage(),
               ],
             ),
           ),

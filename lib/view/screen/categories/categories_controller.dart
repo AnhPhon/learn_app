@@ -57,7 +57,7 @@ class CategoriesController extends GetxController
 
       isLoading = false;
       update();
-    }, onError: (error) {
+    }, onError: (error) { 
       print(error);
       update();
     });
@@ -103,7 +103,6 @@ class CategoriesController extends GetxController
   ///xem sản phẩm
   ///
   void onProductClick(int index) {
-    print("productId=${productWithIdCategList[index].id!}");
     productProvider
         .find(
             id: productWithIdCategList[index].id!,

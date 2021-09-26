@@ -258,7 +258,12 @@ class ProductDetailController extends GetxController {
     sl
         .get<SharedPreferenceHelper>()
         .orderId
-        .then((value) => Get.toNamed("${AppRoutes.CART}?idOrder=$value"));
+        .then((value){
+         Get.toNamed("${AppRoutes.CART}?idOrder=$value")!.then((value){
+           print('data tra ve la ${value}');
+           loadQuanlityCart();
+         });
+        });
   }
 
   //tăng số lượng
