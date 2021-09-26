@@ -17,6 +17,7 @@ class CategoriesPage extends GetView<CategoriesController> {
                 color: ColorResources.WHITE,
                 child: const Center(child: CircularProgressIndicator()));
           }
+
           return Scaffold(
             backgroundColor: ColorResources.WHITE,
             appBar: AppBar(
@@ -47,7 +48,7 @@ class CategoriesPage extends GetView<CategoriesController> {
               ),
             ),
 
-            //tabbar view
+            // tabbar view
             body: TabBarView(
               controller: controller.tabController,
               children: [
@@ -56,11 +57,11 @@ class CategoriesPage extends GetView<CategoriesController> {
                   (index) => GetBuilder<CategoriesController>(
                       init: CategoriesController(),
                       builder: (controller) {
-                        if (controller.isLoading) {
+                        if (controller.isLoadingListView) {
                           return const Center(
                               child: CircularProgressIndicator());
                         }
-                        
+
                         return GridView.builder(
                             physics: const BouncingScrollPhysics(),
                             gridDelegate:

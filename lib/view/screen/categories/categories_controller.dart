@@ -12,6 +12,7 @@ class CategoriesController extends GetxController
   CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
   bool isLoading = true;
+  bool isLoadingListView = true;
 
   TabController? tabController;
   int isSelectedTabCateg = 0;
@@ -41,7 +42,7 @@ class CategoriesController extends GetxController
       categoriesList = value;
 
       // binding data tab
-      tabController = TabController(length: categoriesList.length, vsync: this); 
+      tabController = TabController(length: categoriesList.length, vsync: this);
 
       // listen tab controller
       listenerTabController();
@@ -49,7 +50,8 @@ class CategoriesController extends GetxController
       // set tab active
       tabController!.index = int.parse(Get.parameters['indexTab'].toString());
 
-      // getProductWithIdCateg(id: Get.parameters['idCategory'].toString());
+      isLoading = false;
+      update();
     }, onError: (error) {
       print(error);
       update();
@@ -62,6 +64,11 @@ class CategoriesController extends GetxController
   void listenerTabController() {
     // listen tab
     tabController!.addListener(() {
+      // add loading and clear data
+      isLoadingListView = true;
+      productWithIdCategList.clear();
+      update();
+
       isSelectedTabCateg = tabController!.index;
 
       // load data product with id categories
@@ -73,10 +80,6 @@ class CategoriesController extends GetxController
   ///lấy sản phẩm theo danh mục
   ///
   void getProductWithIdCateg({required String id}) {
-    isLoading = true;
-    productWithIdCategList.clear();
-    update();
-
     // get data product filter by id category
     productProvider.paginate(
         page: 1,
@@ -84,7 +87,7 @@ class CategoriesController extends GetxController
         filter: "idCategory=$id",
         onSuccess: (value) {
           productWithIdCategList = value;
-          isLoading = false;
+          isLoadingListView = false;
           update();
         },
         onError: (error) {
