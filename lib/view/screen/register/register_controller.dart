@@ -96,12 +96,9 @@ class RegisterController extends GetxController {
   // String? imagePath;
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-      // imagePath = image.path;
-      this.image = imageTemporary;
+      final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (picker == null) return;
+      image = File(picker.path);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -109,51 +106,72 @@ class RegisterController extends GetxController {
   }
 
   void uploadImage() {
-    sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      final String orderId = value!;
-      orderProvider.find(
-        id: orderId,
-        onSuccess: (model) {
-          final OrderModel tempModel = model;
+    imageProvider.add(
+        file: image!,
+        onSuccess: (image) {
+          print('link image nè ${image.data}');
 
-          if (image != null) {
-            tempModel.imagePayment =
-                r'C:\Users\pduon\Pictures\GameCenter\Warface\Warface_sample.jpg';
-            orderProvider.update(
-              data: tempModel,
-              onSuccess: (model) {
-                print("success updated");
-                update();
-              },
-              onError: (error) {},
-            );
-            // imageProvider.add(
-            //     file: image!,
-            //     onSuccess: (image) {
-            //       // print(image);
-            //       tempModel.imagePayment = image.data;
-            //       // print(tempModel.haveIDtoJson());
-            //       orderProvider.update(
-            //         data: tempModel,
-            //         onSuccess: (model) {
-            //           print("success updated");
-            //           update();
-            //         },
-            //         onError: (error) {},
-            //       );
-            //     },
-            //     onError: (error) {
-            //       print(error);
-            //       update();
-            //     });
-          }
+          // tempModel.imagePayment = image.data;
+          // // print(tempModel.haveIDtoJson());
+          // orderProvider.update(
+          //   data: tempModel,
+          //   onSuccess: (model) {
+          //     print("success updated");
+          //     update();
+          //   },
+          //   onError: (error) {},
+          // );
         },
         onError: (error) {
           print(error);
           update();
-        },
-      );
-    });
+        });
+
+    // sl.get<SharedPreferenceHelper>().orderId.then((value) {
+    //   final String orderId = value!;
+    //   orderProvider.find(
+    //     id: orderId,
+    //     onSuccess: (model) {
+    //       final OrderModel tempModel = model;
+
+    //       if (image != null) {
+    //         tempModel.imagePayment =
+    //             r'C:\Users\pduon\Pictures\GameCenter\Warface\Warface_sample.jpg';
+    //         orderProvider.update(
+    //           data: tempModel,
+    //           onSuccess: (model) {
+    //             print("success updated");
+    //             update();
+    //           },
+    //           onError: (error) {},
+    //         );
+    //         // imageProvider.add(
+    //         //     file: image!,
+    //         //     onSuccess: (image) {
+    //         //       // print(image);
+    //         //       tempModel.imagePayment = image.data;
+    //         //       // print(tempModel.haveIDtoJson());
+    //         //       orderProvider.update(
+    //         //         data: tempModel,
+    //         //         onSuccess: (model) {
+    //         //           print("success updated");
+    //         //           update();
+    //         //         },
+    //         //         onError: (error) {},
+    //         //       );
+    //         //     },
+    //         //     onError: (error) {
+    //         //       print(error);
+    //         //       update();
+    //         //     });
+    //       }
+    //     },
+    //     onError: (error) {
+    //       print(error);
+    //       update();
+    //     },
+    //   );
+    // });
   }
 
   // quanlity product
