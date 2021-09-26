@@ -366,25 +366,27 @@ class RegisterPage4 extends GetView<RegisterController> {
                   //done button
                   GestureDetector(
                     onTap: () {
-                      if (controller.image != null) {
-                        controller.uploadImage();
-                        controller.sl
-                            .get<SharedPreferenceHelper>()
-                            .removeOrderId();
+                      controller.uploadImage();
 
-                        Get.offNamed(AppRoutes.LOGIN);
-                        showAnimatedDialog(
-                            context,
-                            const MyDialog(
-                              icon: Icons.check,
-                              title: "Hoàn tất",
-                              description: "Đợi admin active",
-                            ),
-                            dismissible: false,
-                            isFlip: true);
-                      } else {
-                        controller.hoanTatFaild();
-                      }
+                      // if (controller.image != null) {
+                      //   controller.uploadImage();
+                      //   controller.sl
+                      //       .get<SharedPreferenceHelper>()
+                      //       .removeOrderId();
+
+                      //   Get.offNamed(AppRoutes.LOGIN);
+                      //   showAnimatedDialog(
+                      //       context,
+                      //       const MyDialog(
+                      //         icon: Icons.check,
+                      //         title: "Hoàn tất",
+                      //         description: "Đợi admin active",
+                      //       ),
+                      //       dismissible: false,
+                      //       isFlip: true);
+                      // } else {
+                      //   controller.hoanTatFaild();
+                      // }
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(

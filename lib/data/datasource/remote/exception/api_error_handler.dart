@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:template/data/model/response/base/error_response.dart';
 
 class ApiErrorHandler {
-  static dynamic getMessage(dynamic error) {
-    print("ERROROROROROROROR: ${error.response}");
+  static dynamic getMessage(dynamic error) { 
     dynamic errorDescription = '';
     if (error is Exception) {
       try {

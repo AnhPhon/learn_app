@@ -144,7 +144,7 @@ class DioClient {
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "image": await MultipartFile.fromFile(file.path, filename: fileName),
-      });
+      }); 
 
       final response = await dio!.post(
         uri,
@@ -153,6 +153,7 @@ class DioClient {
         options: options,
         cancelToken: cancelToken,
       );
+
       return response;
     } on FormatException catch (_) {
       throw const FormatException('Unable to process the data');

@@ -5,17 +5,17 @@ class LoggingInterceptor extends InterceptorsWrapper {
 
   @override
   Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    print('--> ${options.method} ${options.uri}');
-    print('Headers: ${options.headers.toString()}');
-    print('<-- END HTTP');
+    // print('--> ${options.method} ${options.uri}');
+    // print('Headers: ${options.headers.toString()}');
+    // print('<-- END HTTP');
 
     return super.onRequest(options, handler);
   }
 
   @override
   Future onResponse(Response response, ResponseInterceptorHandler handler) async {
-    print(
-        '<-- ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}');
+    // print(
+    //     '<-- ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}');
 
     final String responseAsString = response.data.toString();
 
@@ -33,14 +33,14 @@ class LoggingInterceptor extends InterceptorsWrapper {
       print('Data ${response.data}');
     }
 
-    print('<-- END HTTP');
+    // print('<-- END HTTP');
 
-    return super.onResponse(response, handler);
+    return super.onResponse(response, handler); 
   }
 
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) async {
-    print('ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+    print('ERROR [${err.response?.statusCode}] Message[${err.response?.data}] => PATH: ${err.requestOptions.path}');
     return super.onError(err, handler);
   }
 }
