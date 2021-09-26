@@ -483,12 +483,12 @@ class HomePage extends GetView<HomeController> {
                 child: Column(
                   children: [
                     //avatar background user
-                    _avatarBackgroundUser(context),
+                    // _avatarBackgroundUser(context),
 
-                    //Đội nhóm
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-                    _groupWidget(context,
-                        DeviceUtils.getScaledSize(context, 0.178), controller),
+                    // Đội nhóm
+                    // SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+                    // _groupWidget(context,
+                    //     DeviceUtils.getScaledSize(context, 0.178), controller),
 
                     // Danh mục
                     SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),

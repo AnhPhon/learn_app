@@ -60,6 +60,7 @@ class CategoriesPage extends GetView<CategoriesController> {
                           return const Center(
                               child: CircularProgressIndicator());
                         }
+                        
                         return GridView.builder(
                             physics: const BouncingScrollPhysics(),
                             gridDelegate:

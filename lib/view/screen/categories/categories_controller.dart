@@ -11,22 +11,19 @@ class CategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
+  bool isLoading = true;
 
   TabController? tabController;
-
-  List<CategoryModel> categoriesList = [];
-
-  List<ProductModel> productWithIdCategList = [];
-
-  ProductModel? productWithId;
-
   int isSelectedTabCateg = 0;
 
-  bool isLoading = true;
+  List<CategoryModel> categoriesList = [];
+  List<ProductModel> productWithIdCategList = [];
+  ProductModel? productWithId;
 
   @override
   void onInit() {
     super.onInit();
+    // get all categries
     getAllCategories();
   }
 
@@ -42,10 +39,17 @@ class CategoriesController extends GetxController
   void getAllCategories() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
-      tabController = TabController(length: categoriesList.length, vsync: this);
-      onClickCategoryFromHome();
+
+      // binding data tab
+      tabController = TabController(length: categoriesList.length, vsync: this); 
+
+      // listen tab controller
       listenerTabController();
-      update();
+
+      // set tab active
+      tabController!.index = int.parse(Get.parameters['indexTab'].toString());
+
+      // getProductWithIdCateg(id: Get.parameters['idCategory'].toString());
     }, onError: (error) {
       print(error);
       update();
@@ -56,27 +60,24 @@ class CategoriesController extends GetxController
   ///listener tabController
   ///
   void listenerTabController() {
+    // listen tab
     tabController!.addListener(() {
       isSelectedTabCateg = tabController!.index;
-      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
-      update();
-    });
-  }
 
-  ///
-  ///on Click categories HomePage to Category Page
-  ///
-  void onClickCategoryFromHome() {
-    tabController!.index = int.parse(Get.parameters['indexTab'].toString());
-    getProductWithIdCateg(id: Get.parameters['idCategory'].toString());
+      // load data product with id categories
+      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+    });
   }
 
   ///
   ///lấy sản phẩm theo danh mục
   ///
   void getProductWithIdCateg({required String id}) {
+    isLoading = true;
     productWithIdCategList.clear();
     update();
+
+    // get data product filter by id category
     productProvider.paginate(
         page: 1,
         limit: 5,
