@@ -7,28 +7,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
-import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
-import 'package:template/provider/order_provider.dart';
-import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/provider/user_provider.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
 
-typedef Ham = void Function(int);
-
 class PaymentController extends GetxController {
   GetIt sl = GetIt.instance;
 
-  final UserProvider userProvider = GetIt.I.get<UserProvider>();
-  final OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
   final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
-  final ProductProvider productProvider = GetIt.I.get<ProductProvider>();
   final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
 
   final homeController = Get.put(HomeController());
@@ -42,27 +32,6 @@ class PaymentController extends GetxController {
   // Kiểm tra sản phẩm có trong cart
   bool isHave = false;
 
-  final Map<String, TextEditingController> textEditControllers = {
-    "magioithieu": TextEditingController(),
-    "taikhoan": TextEditingController(),
-    "matkhau": TextEditingController(),
-    "xacnhanmatkhau": TextEditingController(),
-    "sodienthoai": TextEditingController(),
-    "hoten": TextEditingController(),
-    "cmnd": TextEditingController(),
-    "noicap": TextEditingController(),
-    "nghenghiep": TextEditingController(),
-    "diachithuongtru": TextEditingController(),
-    "diachitlienlac": TextEditingController(),
-  };
-
-  String? orderID;
-
-  DateTime? ngaysinh = DateTime.now();
-  DateTime? ngaycap = DateTime.now();
-
-  String url = "";
-
   List<Item> items = [];
 
   // value dropdown
@@ -71,27 +40,17 @@ class PaymentController extends GetxController {
   // image picker
   File? image;
 
-  @override
-  void onInit() {
-    loadDonHangDieuKien();
-    super.onInit();
-  }
+  // quanlity product
+  RxInt qualityProduct = 1.obs;
 
   // It is mandatory initialize with one value from listType
-
   List<int> orderList = [];
 
   int sum = 0;
 
-  //set điều kiện nếu mã giới thiệu không đúng định dạng
-  //thì không cho nhập các trường khác
-  bool isMaGioiThieuValid() {
-    return textEditControllers["magioithieu"]!
-        .text
-        .contains(RegExp(r"^ytp(\d{4,})"));
-  }
-
-  // set selected product
+  ///
+  /// set selected product
+  ///
   void accept(int index) {
     if (items[index].isChoose == false) {
       orderList.add(index);
@@ -101,7 +60,9 @@ class PaymentController extends GetxController {
     update();
   }
 
-  // undselected product
+  ///
+  /// undselected product
+  ///
   void cancel(int index) {
     sum -= items[index].amount * items[index].quality;
     items[index].isChoose = false;
@@ -110,132 +71,32 @@ class PaymentController extends GetxController {
     update();
   }
 
-  // total price
+  ///
+  /// total price
+  ///
   void countTotal(int amout) {
     sum += amout * qualityProduct.value;
     update();
   }
 
-  void removeProduct() {}
-
-  // set selected dropdown
+  ///
+  /// set selected dropdown
+  ///
   void setSelected(String value) {
     gender = value;
     print("ddax chonj: $gender");
     update();
   }
-
-  Ham? them(int val) {
-    sum += val;
-    update();
-  }
-
-  void createUser(UserModel model) {
-    userProvider.add(
-      data: model,
-      onSuccess: (model) {
-        update();
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
-  }
-
-  void createOrder(OrderModel orderModel) {
-    orderProvider.add(
-      data: orderModel,
-      onSuccess: (model) {
-        final GetIt sl = GetIt.instance;
-        sl.get<SharedPreferenceHelper>().saveOrderId(model.id!);
-        update();
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
-  }
-
-  //tạo id đơn hàng
-  void order() {
-    GetIt sl = GetIt.instance;
-
-    sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      if (value == null) {
-        isHave = false;
-        orderProvider.add(
-            data: OrderModel(
-                idUser: homeController.userModel.id,
-                statusOrder: "1",
-                statusPayment: "2",
-                description: "đây là nội dung",
-                address: "dia chi nha",
-                idDistrict: "61435cf012594e54736dd6ca",
-                idProvince: "61435cf012594e54736dd6ca",
-                discountPrice: "0",
-                idWarehouse: "614457d87fee3b5dc8c1c75e",
-                userAccept: "614748250c57f118c4a40689",
-                totalPrice: "0",
-                imagePayment: "0"),
-            onSuccess: (value) {
-              sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
-              update();
-            },
-            onError: (error) {
-              print(error);
-              update();
-            });
-      } else {
-        final idOrder = value;
-        final indexOrderItemList = orderItemList.indexWhere((element) =>
-            element.idProduct == categoriesController.productWithId!.id);
-        if (indexOrderItemList == -1) {
-          isHave = false;
-          getProductFromCart();
-          update();
-          print("indexOrderItemList: 0");
-          addToCart(
-              idOrder: idOrder,
-              idProduct: categoriesController.productWithId!.id!,
-              quanlity: "1",
-              price: categoriesController.productWithId!.prices!);
-        } else {
-          print("indexOrderItemList: 1");
-          isHave = true;
-          update();
-        }
-      }
-    });
-  }
-
-  //lấy sản phẩm trong giỏ hàng
-  void getProductFromCart() {
-    sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      if (value != null) {
-        orderItemProvider.paginate(
-            page: 1,
-            limit: 100,
-            filter: "&idOrder=$value",
-            onSuccess: (value) {
-              orderItemList = value;
-              update();
-            },
-            onError: (error) {
-              print(error);
-              update();
-            });
-      }
-    });
-  }
-
-  //thêm vào giỏ hàng
-  void addToCart(
-      {required String idOrder,
-      required String idProduct,
-      required String quanlity,
-      required String price}) {
+  
+  ///
+  /// thêm vào giỏ hàng
+  ///
+  void addToCart({
+    required String idOrder,
+    required String idProduct,
+    required String quanlity,
+    required String price,
+  }) {
     orderItemProvider.add(
         data: OrderItemModel(
             idOrder: idOrder,
@@ -268,6 +129,9 @@ class PaymentController extends GetxController {
     );
   }
 
+  ///
+  /// hoanTatFaild
+  ///
   void hoanTatFaild() {
     Get.snackbar(
       "Thất bại",
@@ -281,69 +145,9 @@ class PaymentController extends GetxController {
     );
   }
 
-  void addToDB(String orderId) {
-    items.forEach((element) {
-      if (element.isChoose == true) {
-        OrderItemModel model = OrderItemModel(
-          idOrder: orderId,
-          idProduct: element.id,
-          price: element.amount.toString(),
-          quantity: element.quality.toString(),
-        );
-
-        orderItemProvider.add(
-          data: model,
-          onSuccess: (value) {},
-          onError: (error) {
-            print(error);
-            update();
-          },
-        );
-      }
-    });
-  }
-
   ///
-  ///loadDonHangDieuKien
+  /// pick image
   ///
-  void loadDonHangDieuKien() {
-    productProvider.paginate(
-        page: 1,
-        limit: 20,
-        filter: "&type=1",
-        onSuccess: (value) {
-          items = value
-              .map((ProductModel model) => Item(
-                    id: model.id!,
-                    url: model.thumbnail.toString(),
-                    amount: int.parse(model.prriceOrigin!),
-                    title: model.name!,
-                    isChoose: false,
-                    quality: 1,
-                  ))
-              .toList();
-
-          value.forEach((ProductModel model) {
-            print(model.resource);
-          });
-
-          print(items);
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
-  }
-
-  String infoBank(
-      {required String stk,
-      required String ctk,
-      required String tenNganHang,
-      required String chiNhanh}) {
-    return "Thông tin tài khoản\nSố tài khoản: $stk\nTên chủ tài khoản: $ctk\nTên ngân hàng: $tenNganHang\nChi nhánh $chiNhanh";
-  }
-
   Future pickImage() async {
     try {
       final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -355,85 +159,32 @@ class PaymentController extends GetxController {
     }
   }
 
+  ///
+  /// upload image
+  ///
   void uploadImage() {
     imageProvider.add(
         file: image!,
         onSuccess: (image) {
-          print('link image nè ${image.data}');
-
-          // tempModel.imagePayment = image.data;
-          // // print(tempModel.haveIDtoJson());
-          // orderProvider.update(
-          //   data: tempModel,
-          //   onSuccess: (model) {
-          //     print("success updated");
-          //     update();
-          //   },
-          //   onError: (error) {},
-          // );
+          print('link image ${image.data}');
         },
         onError: (error) {
           print(error);
           update();
         });
-
-    // sl.get<SharedPreferenceHelper>().orderId.then((value) {
-    //   final String orderId = value!;
-    //   orderProvider.find(
-    //     id: orderId,
-    //     onSuccess: (model) {
-    //       final OrderModel tempModel = model;
-
-    //       if (image != null) {
-    //         tempModel.imagePayment =
-    //             r'C:\Users\pduon\Pictures\GameCenter\Warface\Warface_sample.jpg';
-    //         orderProvider.update(
-    //           data: tempModel,
-    //           onSuccess: (model) {
-    //             print("success updated");
-    //             update();
-    //           },
-    //           onError: (error) {},
-    //         );
-    //         // imageProvider.add(
-    //         //     file: image!,
-    //         //     onSuccess: (image) {
-    //         //       // print(image);
-    //         //       tempModel.imagePayment = image.data;
-    //         //       // print(tempModel.haveIDtoJson());
-    //         //       orderProvider.update(
-    //         //         data: tempModel,
-    //         //         onSuccess: (model) {
-    //         //           print("success updated");
-    //         //           update();
-    //         //         },
-    //         //         onError: (error) {},
-    //         //       );
-    //         //     },
-    //         //     onError: (error) {
-    //         //       print(error);
-    //         //       update();
-    //         //     });
-    //       }
-    //     },
-    //     onError: (error) {
-    //       print(error);
-    //       update();
-    //     },
-    //   );
-    // });
   }
 
-  // quanlity product
-  var qualityProduct = 1.obs;
-
-  // + quanlity product
+  ///
+  /// + quanlity product
+  ///
   void incrementQuality() {
     qualityProduct += 1;
     update();
   }
 
-  // - quanlity product
+  ///
+  /// - quanlity product
+  ///
   void decrementQuality() {
     if (qualityProduct > 1) {
       qualityProduct -= 1;
