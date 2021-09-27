@@ -9,7 +9,6 @@ import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/register/order_condition/order_condition_page.dart';
 
 class InformationUserController extends GetxController {
@@ -45,8 +44,6 @@ class InformationUserController extends GetxController {
   @override
   void onInit() {
     focusNodeMaGioiThieu.addListener(() {
-      print('focusNode.hasFocus ${focusNodeMaGioiThieu.hasFocus}');
-
       // listen lost focus
       if (!focusNodeMaGioiThieu.hasFocus) {
         // kiểm tra mã nhập vào có đúng không
@@ -65,20 +62,7 @@ class InformationUserController extends GetxController {
     born = DateConverter.formatDate(value!);
     update();
   }
-
-  void createUser(UserModel model) {
-    userProvider.add(
-      data: model,
-      onSuccess: (model) {
-        update();
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
-  }
-
+ 
   ///
   /// on CMND front picker
   ///
@@ -137,7 +121,7 @@ class InformationUserController extends GetxController {
             // create model
             final UserModel user = UserModel();
             user.idUser = userData.id;
-            user.username = 'temp1';
+            user.username = 'ytp3xxx';
             user.password = textEditPasswordController.text;
             user.phone = textEditPhoneController.text;
             user.fullname = textEditFullnameController.text;
