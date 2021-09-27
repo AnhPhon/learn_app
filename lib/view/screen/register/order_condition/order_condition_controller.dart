@@ -4,21 +4,20 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
-import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
+import 'package:template/view/screen/register/payment/payment_page.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
 
 class OrderConditionController extends GetxController {
   GetIt sl = GetIt.instance;
 
-  final OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
   final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   final ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
@@ -83,24 +82,6 @@ class OrderConditionController extends GetxController {
   }
 
   ///
-  /// createOrder
-  ///
-  void createOrder(OrderModel orderModel) {
-    orderProvider.add(
-      data: orderModel,
-      onSuccess: (model) {
-        final GetIt sl = GetIt.instance;
-        sl.get<SharedPreferenceHelper>().saveOrderId(model.id!);
-        update();
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
-  }
-
-  ///
   /// faildNotification
   ///
   void faildNotification(BuildContext context, double money) {
@@ -114,31 +95,6 @@ class OrderConditionController extends GetxController {
         Color(0xffffb8b3),
       ], begin: Alignment(2, -1), end: Alignment(1, 5)),
     );
-  }
-
-  ///
-  /// addToDB
-  ///
-  void addToDB(String orderId) {
-    items.forEach((element) {
-      if (element.isChoose == true) {
-        final OrderItemModel model = OrderItemModel(
-          idOrder: orderId,
-          idProduct: element.id,
-          price: element.amount.toString(),
-          quantity: element.quality.toString(),
-        );
-
-        orderItemProvider.add(
-          data: model,
-          onSuccess: (value) {},
-          onError: (error) {
-            print(error);
-            update();
-          },
-        );
-      }
-    });
   }
 
   ///
@@ -199,17 +155,20 @@ class OrderConditionController extends GetxController {
   ///
   /// continue button
   ///
-  void btnContinue(BuildContext context) {
+  void btnContinue(
+    BuildContext context,
+    UserModel user,
+    OrderModel orderModel,
+  ) {
     final double money = sum * .75;
     final bool moneyValid = money > 2500000;
     if (moneyValid) {
       // Thành công
-      sl.get<SharedPreferenceHelper>().orderId.then((value) {
-        final String orderId = value!;
-        addToDB(orderId);
-
-        Get.toNamed(AppRoutes.PAYMENT);
-      });
+      Get.to(PaymentPage(
+        user: user,
+        order: orderModel,
+        items: items,
+      ));
     } else {
       faildNotification(context, money);
     }

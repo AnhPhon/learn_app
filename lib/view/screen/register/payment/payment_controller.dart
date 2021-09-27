@@ -7,10 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
+import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
+import 'package:template/provider/user_provider.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/register_page_3.dart';
@@ -18,25 +25,15 @@ import 'package:template/view/screen/register/register_page_3.dart';
 class PaymentController extends GetxController {
   GetIt sl = GetIt.instance;
 
+  final UserProvider userProvider = GetIt.I.get<UserProvider>();
+  final OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
   final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
 
   final homeController = Get.put(HomeController());
   final categoriesController = Get.put(CategoriesController());
 
-  List<ProductModel> productList = [];
-  List<OrderItemModel> orderItemList = [];
   bool isLoadingMore = false;
-  OrderModel? orderModel;
-
-  // Kiểm tra sản phẩm có trong cart
-  bool isHave = false;
-
-  List<Item> items = [];
-
-  // value dropdown
-  String? gender;
-
   // image picker
   File? image;
 
@@ -48,46 +45,6 @@ class PaymentController extends GetxController {
 
   int sum = 0;
 
-  ///
-  /// set selected product
-  ///
-  void accept(int index) {
-    if (items[index].isChoose == false) {
-      orderList.add(index);
-    }
-    items[index].isChoose = true;
-    items[index].quality = qualityProduct.value;
-    update();
-  }
-
-  ///
-  /// undselected product
-  ///
-  void cancel(int index) {
-    sum -= items[index].amount * items[index].quality;
-    items[index].isChoose = false;
-    items[index].quality = 1;
-    orderList.remove(index);
-    update();
-  }
-
-  ///
-  /// total price
-  ///
-  void countTotal(int amout) {
-    sum += amout * qualityProduct.value;
-    update();
-  }
-
-  ///
-  /// set selected dropdown
-  ///
-  void setSelected(String value) {
-    gender = value;
-    print("ddax chonj: $gender");
-    update();
-  }
-  
   ///
   /// thêm vào giỏ hàng
   ///
@@ -160,35 +117,106 @@ class PaymentController extends GetxController {
   }
 
   ///
+  /// createOrder
+  ///
+  void createOrder(OrderModel orderModel) {
+    orderProvider.add(
+      data: orderModel,
+      onSuccess: (model) {
+        final GetIt sl = GetIt.instance;
+        sl.get<SharedPreferenceHelper>().saveOrderId(model.id!);
+        update();
+      },
+      onError: (error) {
+        print(error);
+        update();
+      },
+    );
+    print("Order added");
+  }
+
+  ///
+  /// addToDB
+  ///
+  void addToDB(String orderId, List<Item> items) {
+    items.forEach((element) {
+      if (element.isChoose == true) {
+        final OrderItemModel model = OrderItemModel(
+          idOrder: orderId,
+          idProduct: element.id,
+          price: element.amount.toString(),
+          quantity: element.quality.toString(),
+        );
+
+        orderItemProvider.add(
+          data: model,
+          onSuccess: (value) {},
+          onError: (error) {
+            print(error);
+            update();
+          },
+        );
+
+        print("Order item added");
+      }
+    });
+  }
+
+  ///
   /// upload image
   ///
-  void uploadImage() {
+  void uploadImage(BuildContext context) {
     imageProvider.add(
-        file: image!,
-        onSuccess: (image) {
-          print('link image ${image.data}');
+      file: image!,
+      onSuccess: (image) {
+        print('link image ${image.data}');
+      },
+      onError: (error) {
+        print(error);
+        update();
+      },
+    );
+  }
+
+  void userAdd(UserModel user) {
+    userProvider.add(
+        data: user,
+        onSuccess: (value) {
+          print("User added");
+          update();
         },
         onError: (error) {
           print(error);
-          update();
         });
   }
 
-  ///
-  /// + quanlity product
-  ///
-  void incrementQuality() {
-    qualityProduct += 1;
-    update();
-  }
+  void btnFinish(
+    BuildContext context,
+    UserModel user,
+    OrderModel order,
+    List<Item> items,
+  ) {
+    uploadImage(context);
 
-  ///
-  /// - quanlity product
-  ///
-  void decrementQuality() {
-    if (qualityProduct > 1) {
-      qualityProduct -= 1;
-    }
-    update();
+    print(user);
+    userAdd(user);
+
+    createOrder(order);
+
+    sl.get<SharedPreferenceHelper>().orderId.then((orderId) {
+      addToDB(orderId!, items);
+    });
+
+    Get.offNamed(AppRoutes.LOGIN);
+
+    showAnimatedDialog(
+        context,
+        const MyDialog(
+          icon: Icons.check,
+          title: "Hoàn tất",
+          description: "Đợi admin active",
+        ),
+        dismissible: false,
+        isFlip: true);
   }
 }

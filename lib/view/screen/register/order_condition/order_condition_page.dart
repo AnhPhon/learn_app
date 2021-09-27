@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
@@ -16,32 +15,33 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
 import 'package:template/view/basewidget/custom_appbar.dart';
+// import 'package:template/view/screen/register/register_page_4.dart';
 
 import 'order_condition_controller.dart';
 
 class OrderConditionPage extends GetView<OrderConditionController> {
   final UserModel user;
+  late OrderModel orderModel;
 
-  const OrderConditionPage({Key? key, required this.user}) : super(key: key);
+  OrderConditionPage({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final GetIt sl = GetIt.instance;
-    if (user.id != null) {
-      controller.createOrder(OrderModel(
-        idUser: user.id,
+    if (user.id == null) {
+      orderModel = OrderModel(
+        idUser: "123",
         userAccept: user.idUser,
         idWarehouse: "1",
-        description: "",
+        description: "ABC",
         imagePayment: "",
         statusOrder: "1",
         statusPayment: "1",
         totalPrice: 0.toString(),
         discountPrice: 0.toString(),
-        idProvince: "",
-        idDistrict: "",
-        address: "",
-      ));
+        idProvince: "1",
+        idDistrict: "2",
+        address: "abc",
+      );
     }
 
     return GetBuilder<OrderConditionController>(
@@ -390,7 +390,7 @@ class OrderConditionPage extends GetView<OrderConditionController> {
           // btn checkout
           GestureDetector(
             onTap: () {
-              controller.btnContinue(context);
+              controller.btnContinue(context, user, orderModel);
             },
             child: _btnContinueWidget(context),
           ),
