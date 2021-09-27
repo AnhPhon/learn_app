@@ -89,4 +89,17 @@ class UserRepository {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  ///
+  /// Check username exists
+  ///
+  Future<ApiResponse> checkUsernameExists(String username) async {
+    try {
+      final String uri = '/users/username/$username';
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

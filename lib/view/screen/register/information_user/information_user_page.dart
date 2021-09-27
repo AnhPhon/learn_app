@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
-import 'package:intl/intl.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
@@ -37,42 +36,34 @@ class InformationUserPage extends GetView<InformationUserController> {
                           children: [
                             // Mã giới thiệu
                             _inputMaGioiThieu(context, "Mã giới thiệu",
-                                controller.textEditControllers["magioithieu"]!),
-
-                            // Tài khoản
-                            // _normalInputWidget(
-                            //     context,
-                            //     "Tài khoản",
-                            //     controller.textEditControllers["taikhoan"]!,
-                            //     TextInputType.text),
+                                controller.textEditInviteUsernameController),
 
                             // Mất khẩu
                             _passwordInputWidget(
                                 context,
                                 "Mật khẩu",
-                                controller.textEditControllers["matkhau"]!,
+                                controller.textEditPasswordController,
                                 TextInputType.visiblePassword),
 
                             // Xác nhận mật khẩu
                             _passwordInputWidget(
                                 context,
                                 "Xác nhận mật khẩu",
-                                controller
-                                    .textEditControllers["xacnhanmatkhau"]!,
+                                controller.textEditRePasswordController,
                                 TextInputType.visiblePassword),
 
                             // Số điện thoại
                             _normalInputWidget(
                                 context,
                                 "Số điện thoại",
-                                controller.textEditControllers["sodienthoai"]!,
+                                controller.textEditPhoneController,
                                 TextInputType.number),
 
                             // Mã giới thiệu
                             _normalInputWidget(
                                 context,
                                 "Họ và tên",
-                                controller.textEditControllers["hoten"]!,
+                                controller.textEditFullnameController,
                                 TextInputType.text),
 
                             // gender
@@ -85,17 +76,14 @@ class InformationUserPage extends GetView<InformationUserController> {
                             _normalInputWidget(
                                 context,
                                 "Số chứng minh nhân dân",
-                                controller.textEditControllers["cmnd"]!,
+                                controller.textEditCmndController,
                                 TextInputType.number),
 
-                            // ngày cấp
-                            _dateTimePickNgayCap(context),
-
-                            // Nơi cấp
-                            _normalInputWidget(
+                            // Địa chỉ liên lạc
+                            _addressInputWidget(
                                 context,
-                                "Nơi cấp",
-                                controller.textEditControllers["noicap"]!,
+                                "Địa chỉ liên lạc",
+                                controller.textEditAddressController,
                                 TextInputType.text),
 
                             // mặt trước cmnd
@@ -103,29 +91,6 @@ class InformationUserPage extends GetView<InformationUserController> {
 
                             // mặt sau cmnd
                             _uploadCmndBack(context),
-
-                            // Nghề nghiệp
-                            _normalInputWidget(
-                                context,
-                                "Nghề nghiệp",
-                                controller.textEditControllers["nghenghiep"]!,
-                                TextInputType.text),
-
-                            // Địa chỉ thường trú
-                            _normalInputWidget(
-                                context,
-                                "Địa chỉ thường trú",
-                                controller
-                                    .textEditControllers["diachithuongtru"]!,
-                                TextInputType.text),
-
-                            // Địa chỉ liên lạc
-                            _addressInputWidget(
-                                context,
-                                "Địa chỉ liên lạc",
-                                controller
-                                    .textEditControllers["diachitlienlac"]!,
-                                TextInputType.text),
 
                             // tiếp tục button
                             _buttonContinue(context),
@@ -302,7 +267,7 @@ class InformationUserPage extends GetView<InformationUserController> {
   /// select gender
   ///
   Widget _genderSelectionWidget(BuildContext context, controllers) {
-    final List<String> genderOptions = ["Nam", "Nữ"]; 
+    final List<String> genderOptions = ["Nam", "Nữ"];
 
     return DropDownButton1(
       hint: "Giới tính",
@@ -358,65 +323,6 @@ class InformationUserPage extends GetView<InformationUserController> {
           children: [
             Text(
               controller.ngaySinh.toString(),
-              style: const TextStyle(color: Colors.grey),
-            ),
-            Icon(
-              Icons.calendar_today,
-              size: DeviceUtils.getScaledSize(context, 0.045),
-              color: ColorResources.PRIMARY,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ///
-  /// _dateTimePickNgayCap
-  ///
-  Widget _dateTimePickNgayCap(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showDatePicker(
-          context: context,
-          locale: const Locale("vi", "VI"),
-          initialDate: DateTime(1990),
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2022),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData().copyWith(
-                primaryColor: ColorResources.PRIMARY,
-                accentColor: ColorResources.PRIMARY,
-                colorScheme:
-                    const ColorScheme.light(primary: ColorResources.PRIMARY),
-                buttonTheme:
-                    const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-              ),
-              child: child!,
-            );
-          },
-        ).then((value) => controller.onNgayCapChange(value));
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: DeviceUtils.getScaledSize(context, 0.025)),
-        padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
-        width: double.infinity,
-        height: DeviceUtils.getScaledSize(context, 0.127),
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: ColorResources.GREY, // set border color
-          ), // set border width
-          borderRadius: BorderRadius.circular(10), // set rounded corner radius
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              controller.ngayCap.toString(),
               style: const TextStyle(color: Colors.grey),
             ),
             Icon(

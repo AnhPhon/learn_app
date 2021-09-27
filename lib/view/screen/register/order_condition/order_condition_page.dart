@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
@@ -23,6 +24,10 @@ import 'package:template/view/screen/register/register_page_4.dart';
 import 'order_condition_controller.dart';
 
 class OrderConditionPage extends GetView<OrderConditionController> {
+  final UserModel user;
+
+  const OrderConditionPage({Key? key, required this.user}) : super(key: key);
+
   ///
   ///bottom payment button
   ///
@@ -92,7 +97,6 @@ class OrderConditionPage extends GetView<OrderConditionController> {
                   final String orderId = value!;
                   controller.addToDB(orderId);
 
-
                   Get.toNamed(AppRoutes.PAYMENT);
                 });
               } else {
@@ -143,7 +147,7 @@ class OrderConditionPage extends GetView<OrderConditionController> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     GetIt sl = GetIt.instance;
     // ignore: prefer_const_declarations
     // final bool allowCreateOrder = sl.get<SharedPreferenceHelper>().orderId != null;
@@ -233,7 +237,7 @@ class OrderConditionPage extends GetView<OrderConditionController> {
                                           image: NetworkImage(
                                             controller.items[index].url
                                                 .toString(),
-                                          ), 
+                                          ),
                                         ),
                                       ),
 

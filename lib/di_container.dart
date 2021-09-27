@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
+import 'package:template/data/model/body/user_model.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/data/repository/category_news_repository.dart';
 import 'package:template/data/repository/category_repository.dart';
@@ -83,5 +84,5 @@ Future<void> init() async {
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider
-  sl.registerFactory(() => AuthProvider());
+  sl.registerFactory(() => AuthProvider()); 
 }

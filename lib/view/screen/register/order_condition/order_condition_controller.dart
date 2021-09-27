@@ -42,20 +42,6 @@ class OrderConditionController extends GetxController {
   // Kiểm tra sản phẩm có trong cart
   bool isHave = false;
 
-  final Map<String, TextEditingController> textEditControllers = {
-    "magioithieu": TextEditingController(),
-    "taikhoan": TextEditingController(),
-    "matkhau": TextEditingController(),
-    "xacnhanmatkhau": TextEditingController(),
-    "sodienthoai": TextEditingController(),
-    "hoten": TextEditingController(),
-    "cmnd": TextEditingController(),
-    "noicap": TextEditingController(),
-    "nghenghiep": TextEditingController(),
-    "diachithuongtru": TextEditingController(),
-    "diachitlienlac": TextEditingController(),
-  };
-
   String? orderID;
 
   DateTime? ngaysinh = DateTime.now();
@@ -74,6 +60,7 @@ class OrderConditionController extends GetxController {
   @override
   void onInit() {
     loadDonHangDieuKien();
+
     super.onInit();
   }
 
@@ -82,14 +69,6 @@ class OrderConditionController extends GetxController {
   List<int> orderList = [];
 
   int sum = 0;
-
-  //set điều kiện nếu mã giới thiệu không đúng định dạng
-  //thì không cho nhập các trường khác
-  bool isMaGioiThieuValid() {
-    return textEditControllers["magioithieu"]!
-        .text
-        .contains(RegExp(r"^ytp(\d{4,})"));
-  }
 
   // set selected product
   void accept(int index) {
