@@ -5,6 +5,7 @@ import 'package:template/data/model/body/district_model.dart';
 import 'package:template/data/model/body/province_model.dart';
 import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/province_provider.dart';
+import 'package:template/provider/user_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class AddressController extends GetxController {
@@ -12,6 +13,7 @@ class AddressController extends GetxController {
 
   ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
+  UserProvider userProvider = GetIt.I.get<UserProvider>();
 
   final wardController = TextEditingController();
   final addressController = TextEditingController();
@@ -27,6 +29,8 @@ class AddressController extends GetxController {
 
   List<String> provinceList = [];
   List<String> districtList = [];
+
+  bool isReloadData = false;
 
   @override
   void onClose() {
@@ -109,6 +113,7 @@ class AddressController extends GetxController {
   ///save address
   ///
   void changeAddress() {
+    isReloadData = true;
     if (province!.isEmpty ||
         district!.isEmpty ||
         wardController.text.isEmpty ||
@@ -120,7 +125,12 @@ class AddressController extends GetxController {
       sl.get<SharedPreferenceHelper>().saveProvinceId(idProvince!);
       sl.get<SharedPreferenceHelper>().saveDistrictId(idDistrict!);
       sl.get<SharedPreferenceHelper>().saveAddress(addressController.text);
-      Get.back();
+
+      // update address
+      // userProvider.update(data: data, onSuccess: onSuccess, onError: onError);
+
+      //back to cart
+      Get.back(result: isReloadData);
     }
   }
 }

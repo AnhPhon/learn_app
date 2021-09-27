@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/user_model.dart';
@@ -19,15 +20,25 @@ class CartController extends GetxController {
 
   UserProvider userProvider = GetIt.I.get<UserProvider>();
 
+  final qualityController = TextEditingController();
+  final focusNode = FocusNode();
+
+  UserModel? userModel;
+
   bool isLastProduct = false;
 
   bool isLoading = true;
 
+  bool isLoadingQuality = false;
+  bool isReloadData = false;
+
   List<ProductResponse> selectedProductList = [];
 
-  int price = 0;
+  String? idUser;
 
-  UserModel? userModel;
+  // List<String> qualityHint = [];
+
+  int price = 0;
 
   //số lượng sản phẩm
   int qualityProduct = 1;
@@ -37,30 +48,59 @@ class CartController extends GetxController {
     super.onInit();
     loadSelectedProduct();
     getAddress();
+    sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value);
   }
 
   ///
   ///load list selected product
   ///
   void loadSelectedProduct() {
+    // qualityHint.clear();
+    print("trong0");
     selectedProductList.clear();
-    productProvider.findByIdOrder(
-        page: 1,
-        limit: 100,
-        idOrder: Get.parameters['idOrder'].toString(),
-        onSuccess: (value) {
-          selectedProductList = value;
-          calculatorPrice();
-          // isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
+    if (Get.parameters['idOrder'].toString() != "null") {
+      print("trong1");
+      productProvider.findByIdOrder(
+          page: 1,
+          limit: 100,
+          idOrder: Get.parameters['idOrder'].toString(),
+          onSuccess: (value) {
+            print("trong2");
+            selectedProductList = value;
+            calculatorPrice();
+            update();
+          },
+          onError: (error) {
+            print(error);
+            update();
+          });
+    }
   }
 
-  //xoá khỏi giỏ hàng
+  ///
+  ///get order id
+  ///
+  // void getOrderItem(int index) {
+  //   focusNode.addListener(() {
+  //     print("qualityController.text: ${qualityController.text}");
+  //     orderItemProvider.update(
+  //         data: OrderItemModel(
+  //             id: selectedProductList[index].id,
+  //             idOrder: selectedProductList[index].idOrder,
+  //             idProduct: selectedProductList[index].idProduct!.id,
+  //             price: selectedProductList[index].idProduct!.prices,
+  //             quantity: qualityController.text),
+  //         onSuccess: (value) {
+  //           isLoadingQuality = false;
+  //           update();
+  //         },
+  //         onError: (error) {});
+  //   });
+  // }
+
+  ///
+  ///xoá khỏi giỏ hàng
+  ///
   void deleteItem(int index) {
     Get.defaultDialog(
         middleText: "Bạn có chắc muốn xóa sản phẩm",
@@ -69,11 +109,14 @@ class CartController extends GetxController {
         cancelTextColor: ColorResources.BLACK,
         confirmTextColor: ColorResources.RED,
         onConfirm: () {
+          isLoadingQuality = true;
           update();
           orderItemProvider.delete(
               id: selectedProductList[index].id.toString(),
               onSuccess: (value) {
                 loadSelectedProduct();
+                isReloadData = true;
+                isLoadingQuality = false;
                 update();
               },
               onError: (error) {
@@ -97,22 +140,6 @@ class CartController extends GetxController {
   }
 
   ///
-  ///tăng số lượng
-  ///
-  void incrementQuality() {
-    qualityProduct += 1;
-    update();
-  }
-
-  ///
-  ///giảm số lượng
-  ///
-  void decrementQuality() {
-    qualityProduct -= 1;
-    update();
-  }
-
-  ///
   ///address
   ///
 
@@ -125,7 +152,7 @@ class CartController extends GetxController {
   ///
   void getAddress() {
     userProvider.find(
-        id: "614748250c57f118c4a40689",
+        id: idUser!,
         onSuccess: (value) {
           userModel = value;
           isLoading = false;
@@ -142,6 +169,11 @@ class CartController extends GetxController {
   ///
   void onAddressClick() {
     Get.toNamed(AppRoutes.ADDRESS);
+    // .then((value) {
+    //   if (value == true) {
+    //     sl.get<SharedPreferenceHelper>().address.then((value) => null);
+    //   }
+    // });
   }
 
   ///
@@ -152,5 +184,12 @@ class CartController extends GetxController {
         .get<SharedPreferenceHelper>()
         .orderId
         .then((value) => Get.toNamed("${AppRoutes.CHECKOUT}?idOrder=$value"));
+  }
+
+  ///
+  ///get back
+  ///
+  void onGetBack() {
+    Get.back(result: isReloadData);
   }
 }

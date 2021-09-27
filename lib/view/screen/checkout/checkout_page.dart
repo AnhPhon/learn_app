@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/view/screen/checkout/checkout_controller.dart';
 
 class CheckoutPage extends GetView<CheckoutController> {

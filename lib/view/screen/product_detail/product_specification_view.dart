@@ -50,32 +50,34 @@ class ProductSpecification extends StatelessWidget {
           SizedBox(height: DeviceUtils.getScaledSize(context, 0.03)),
 
           //more
-
-          GestureDetector(
-            onTap: () {
-              productDetailController.isLoadingMore
-                  ? productDetailController.loadingMore()
-                  : productDetailController.loadingLess();
-            },
-            child: Align(
-              child: Column(
-                children: [
-                  Text(
-                    productDetailController.isLoadingMore
-                        ? "Thu gọn"
-                        : "Xem thêm",
-                    style: const TextStyle(color: ColorResources.PRIMARY),
-                  ),
-                  Icon(
-                    productDetailController.isLoadingMore
-                        ? Icons.arrow_drop_up_outlined
-                        : Icons.arrow_drop_down_outlined,
-                    color: ColorResources.PRIMARY,
-                  )
-                ],
+          if (productSpecification.isEmpty)
+            const SizedBox.shrink()
+          else
+            GestureDetector(
+              onTap: () {
+                productDetailController.isLoadingMore
+                    ? productDetailController.loadingMore()
+                    : productDetailController.loadingLess();
+              },
+              child: Align(
+                child: Column(
+                  children: [
+                    Text(
+                      productDetailController.isLoadingMore
+                          ? "Thu gọn"
+                          : "Xem thêm",
+                      style: const TextStyle(color: ColorResources.PRIMARY),
+                    ),
+                    Icon(
+                      productDetailController.isLoadingMore
+                          ? Icons.arrow_drop_up_outlined
+                          : Icons.arrow_drop_down_outlined,
+                      color: ColorResources.PRIMARY,
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );

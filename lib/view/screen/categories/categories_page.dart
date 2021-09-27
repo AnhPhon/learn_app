@@ -4,6 +4,7 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/screen/categories/categories_controller.dart';
 
 class CategoriesPage extends GetView<CategoriesController> {
@@ -97,11 +98,17 @@ class CategoriesPage extends GetView<CategoriesController> {
                                         child: ClipRRect(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(10)),
-                                          child: Image.network(
-                                            controller
+                                          child: FadeInImage.assetNetwork(
+                                            placeholder: Images.placeholder,
+                                            image: controller
                                                 .productWithIdCategList[index]
                                                 .thumbnail!,
+                                            width: double.infinity,
                                             fit: BoxFit.fill,
+                                            imageErrorBuilder: (c, o, s) =>
+                                                Image.asset(
+                                              Images.placeholder,
+                                            ),
                                           ),
                                         ),
                                       ),

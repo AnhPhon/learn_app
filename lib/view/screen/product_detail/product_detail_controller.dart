@@ -37,17 +37,18 @@ class ProductDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getProductFromId();
+    getProductFromId(Get.parameters['productId'].toString());
     getMoreProduct();
     loadQuanlityCart();
+    print(Get.parameters['productId'].toString());
   }
 
   ///
   ///load product
   ///
-  void getProductFromId() {
+  void getProductFromId(String idProduct) {
     productProvider.find(
-        id: Get.parameters['productId'].toString(),
+        id: idProduct,
         onSuccess: (value) {
           productModel = value;
           isLoading = false;
@@ -55,7 +56,6 @@ class ProductDetailController extends GetxController {
         },
         onError: (error) {
           print(error);
-          update();
         });
   }
 
@@ -68,6 +68,10 @@ class ProductDetailController extends GetxController {
         limit: 100,
         filter: "idCategory=${Get.parameters['categoryId']}",
         onSuccess: (value) {
+          // minus selected product
+          final int indexIdInitialProduct = value.indexWhere((element) =>
+              element.id.toString() == Get.parameters['productId'].toString());
+          value.removeAt(indexIdInitialProduct);
           productModelList = value;
           isLoading = false;
           update();
@@ -207,13 +211,12 @@ class ProductDetailController extends GetxController {
   }
 
   ///
-  /// load cart
+  /// load cart initial
   ///
   void loadQuanlityCart() {
     productFromCartList.clear();
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
       if (value != null) {
-        print("trong1");
         productProvider.findByIdOrder(
             page: 1,
             limit: 100,
@@ -224,7 +227,6 @@ class ProductDetailController extends GetxController {
             },
             onError: (error) {
               print(error);
-              update();
             });
       }
     });
@@ -254,25 +256,65 @@ class ProductDetailController extends GetxController {
         });
   }
 
+  ///
+  ///go to cart page
+  ///
   void onCartClick() {
-    sl
-        .get<SharedPreferenceHelper>()
-        .orderId
-        .then((value){
-         Get.toNamed("${AppRoutes.CART}?idOrder=$value")!.then((value){
-           print('data tra ve la ${value}');
-           loadQuanlityCart();
-         });
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      Get.toNamed("${AppRoutes.CART}?idOrder=$value")!.then((value) {
+        if (value == true) {
+          loadQuanlityCart();
+        }
+      });
+    });
+  }
+
+  ///
+  ///on Click more product
+  ///
+  void onClickMoreProduct(int index) {
+    isLoading = true;
+    update();
+    getProductFromId(productModelList[index].id!);
+    reloadMoreProduct(productModelList[index].id!);
+  }
+
+  ///
+  ///reload more product
+  ///
+  void reloadMoreProduct(String id) {
+    productProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter: "idCategory=${Get.parameters['categoryId']}",
+        onSuccess: (value) {
+          // minus selected product
+          final int indexIdInitialProduct =
+              value.indexWhere((element) => element.id == id);
+          value.removeAt(indexIdInitialProduct);
+
+          //reload list
+          productModelList = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
         });
   }
 
-  //tăng số lượng
+  ///
+  ///tăng số lượng
+  ///
   void incrementQuality() {
     qualityProduct += 1;
     update();
   }
 
-  //giảm số lượng
+  ///
+  ///giảm số lượng
+  ///
   void decrementQuality() {
     if (qualityProduct > 1) {
       qualityProduct -= 1;

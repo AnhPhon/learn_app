@@ -115,11 +115,17 @@ class HomePage extends GetView<HomeController> {
                                   width: 3, color: Colors.grey.shade700),
                             ),
                             child: ClipRRect(
-                                borderRadius: BorderRadius.circular(size / 3),
-                                child: Image.network(
-                                  controller.categoriesList[index].thumbnail!,
-                                  fit: BoxFit.fill,
-                                )),
+                              borderRadius: BorderRadius.circular(size / 3),
+                              child: FadeInImage.assetNetwork(
+                                placeholder: Images.placeholder,
+                                image:
+                                    controller.categoriesList[index].thumbnail!,
+                                fit: BoxFit.fill,
+                                imageErrorBuilder: (c, o, s) => Image.asset(
+                                  Images.placeholder,
+                                ),
+                              ),
+                            ),
                           ),
                           controller.categoriesList[index].name!, () {
                         controller.onBtnCategoriesClick(index);

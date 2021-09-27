@@ -4,86 +4,24 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/data/model/body/image_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
-import 'package:template/view/screen/register/register_page_3.dart';
 
 class CheckoutController extends GetxController {
-  final List<Item> items = [
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 10000000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5.0",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 183000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 2",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 250000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 3",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 250000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 4",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 652000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 5",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 29000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 6",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 132000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 7",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 2500000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 8",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 29000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 9",
-    //     isChoose: false,
-    //     quality: 1),
-    // Item(
-    //     url: Images.sp1,
-    //     amount: 29000,
-    //     title: "DK VIÊN NÉN TIẾT KIỆM NHIÊN LIỆU YAMAMOTO 10",
-    //     isChoose: false,
-    //     quality: 1),
-  ];
   GetIt sl = GetIt.instance;
-
   File? image;
-
+  ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
@@ -94,9 +32,12 @@ class CheckoutController extends GetxController {
 
   UserModel? userModel;
 
+  ImageUpdateModel? imageUpdateModel;
+
   int price = 0;
 
   bool isLoading = true;
+  bool isLoadingImage = false;
 
   late final String orderId;
   late final String address;
@@ -150,12 +91,14 @@ class CheckoutController extends GetxController {
   ///pick image
   ///
   Future pickImage() async {
+    isLoadingImage = true;
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
+      uploadImage();
+      isLoadingImage = false;
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -163,9 +106,27 @@ class CheckoutController extends GetxController {
   }
 
   ///
+  ///upload image
+  ///
+  void uploadImage() {
+    imageProvider.add(
+        file: image!,
+        onSuccess: (image) {
+          imageUpdateModel = image;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  ///
   ///on Done
   ///
-  void onClickDoneBtn(BuildContext context) {
+  void onClickDoneBtn(
+    BuildContext context,
+  ) {
     if (image != null) {
       orderProvider.update(
           data: OrderModel(
@@ -181,10 +142,9 @@ class CheckoutController extends GetxController {
               idWarehouse: "614457d87fee3b5dc8c1c75e",
               userAccept: "614748250c57f118c4a40689",
               totalPrice: price.toString(),
-              imagePayment:
-                  "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632467128649_217393826_152304257001167_594051930663616020_n.jpg"),
+              imagePayment: imageUpdateModel!.data),
           onSuccess: (value) {
-            Get.offNamed(AppRoutes.DASHBOARD);
+            Get.offAllNamed(AppRoutes.DASHBOARD);
             sl.get<SharedPreferenceHelper>().removeOrderId();
             showAnimatedDialog(
                 context,
@@ -220,10 +180,10 @@ class CheckoutController extends GetxController {
   ///
   void getValue() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) => orderId = value!);
-    sl
-        .get<SharedPreferenceHelper>()
-        .address
-        .then((value) => print("assress: $value"));
+    // sl
+    //     .get<SharedPreferenceHelper>()
+    //     .address
+    //     .then((value) => print("assress: $value"));
     sl
         .get<SharedPreferenceHelper>()
         .provinceId

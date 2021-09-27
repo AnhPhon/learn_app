@@ -8,7 +8,6 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
 import 'package:template/view/screen/product_detail/product_detail_controller.dart';
 import 'package:template/view/screen/product_detail/product_specification_view.dart';
 
@@ -34,7 +33,8 @@ class ProductDetailPage extends GetView<ProductDetailController> {
     );
   }
 
-  Widget _sanPhamMoi(BuildContext context, ProductDetailController controller) {
+  Widget _sanPhamTuongTu(
+      BuildContext context, ProductDetailController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: GridView.builder(
@@ -48,7 +48,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
               onTap: () {
-                // controller.onProductClick();
+                controller.onClickMoreProduct(index);
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -63,6 +63,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                   children: [
                     Container(
                       height: 150,
+                      width: double.infinity,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
@@ -101,19 +102,27 @@ class ProductDetailPage extends GetView<ProductDetailController> {
   ///Hinh anh cua san pham
   ///
   Widget _imgProduct(BuildContext context, ProductDetailController controller) {
-    return CarouselSlider.builder(
-      itemCount: 5,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-        return Image.network(
-          controller.productModel!.images!,
-          fit: BoxFit.fill,
-          width: 1000.0,
-        );
-      },
-      options: CarouselOptions(
-        height: DeviceUtils.getScaledHeight(context, 0.4),
-        autoPlay: true,
-        viewportFraction: 1,
+    return SizedBox(
+      width: double.infinity,
+      child: CarouselSlider.builder(
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+          return FadeInImage.assetNetwork(
+            placeholder: Images.placeholder,
+            width: double.infinity,
+            image: controller.productModel!.images!,
+            fit: BoxFit.fill,
+            imageErrorBuilder: (c, o, s) => Image.asset(
+              Images.placeholder,
+              width: double.infinity,
+            ),
+          );
+        },
+        options: CarouselOptions(
+          height: DeviceUtils.getScaledHeight(context, 0.4),
+          autoPlay: true,
+          viewportFraction: 1,
+        ),
       ),
     );
   }
@@ -323,10 +332,13 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                                               fontSize: 16),
                                                     ),
                                                     Text(
-                                                      PriceConverter.convertPrice(
-                                                          context,
-                                                          double.parse(
-                                                              controller
+                                                      controller.productModel!
+                                                              .prices!
+                                                              .contains(",")
+                                                          ? "${controller.productModel!.prices!} đ"
+                                                          : PriceConverter.convertPrice(
+                                                              context,
+                                                              double.parse(controller
                                                                   .productModel!
                                                                   .prices!)),
                                                       style: titilliumSemiBold
@@ -476,7 +488,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     color: ColorResources.WHITE,
                     child: DefaultTextStyle(
                       style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           color: ColorResources.BLACK,
                           fontWeight: FontWeight.w600),
                       child: Column(
@@ -484,9 +496,20 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                         children: [
                           Text(
                             controller.productModel!.name!,
+                            textAlign: TextAlign.justify,
                           ),
-                          Text(PriceConverter.convertPrice(context,
-                              double.parse(controller.productModel!.prices!))),
+                          SizedBox(
+                              height:
+                                  DeviceUtils.getScaledHeight(context, 0.01)),
+                          Text(
+                              "Giá: ${PriceConverter.convertPrice(context, double.parse(controller.productModel!.prices!))}",
+                              style: const TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                  color: ColorResources.RED,
+                                  fontWeight: FontWeight.w600)),
+                          SizedBox(
+                              height:
+                                  DeviceUtils.getScaledHeight(context, 0.01)),
                           Text(
                             PriceConverter.convertPrice(
                                 context,
@@ -539,7 +562,17 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                           ),
                         ),
                         const Divider(color: Colors.grey),
-                        _sanPhamMoi(context, controller),
+                        if (controller.productModelList.isEmpty)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical:
+                                    DeviceUtils.getScaledSize(context, 0.03)),
+                            child: const Center(
+                              child: Text("Chưa có sản phẩm tương tự"),
+                            ),
+                          )
+                        else
+                          _sanPhamTuongTu(context, controller),
                       ],
                     ),
                   ),
