@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/group/group_controller.dart';
 
 class GroupPage extends GetView<GroupController> {
@@ -19,10 +17,14 @@ class GroupPage extends GetView<GroupController> {
       height: DeviceUtils.getScaledSize(context, 0.254),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        image: DecorationImage(
-          image: AssetImage(imageURL),
-        ),
         border: Border.all(width: 3, color: ColorResources.WHITE),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+        child: Image(
+            image: NetworkImage(
+          imageURL,
+        )),
       ),
     );
   }
@@ -74,9 +76,9 @@ class GroupPage extends GetView<GroupController> {
                 ),
               ),
               Text(
-                  "Doanh số cá nhân: ${PriceConverter.convertPrice(context, controller.doanhSoCaNhan!)}"),
+                  "Doanh số cá nhân: ${PriceConverter.convertPrice(context, controller.staticUserResponse.doanSoCaNhan!)}"),
               Text(
-                  "Doanh số đội nhóm: ${PriceConverter.convertPrice(context, controller.doanhSoDoiNhom!)}")
+                  "Doanh số đội nhóm: ${PriceConverter.convertPrice(context, controller.staticUserResponse.doanhSoDoiNhom!)}")
             ],
           ),
         );
@@ -86,46 +88,52 @@ class GroupPage extends GetView<GroupController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GroupController>(
-        init: GroupController(),
-        builder: (GroupController value) {
-          return Scaffold(
-            appBar: AppBar(
-              elevation: 1,
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: DeviceUtils.getScaledSize(context, 0.025)),
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 1,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                  right: DeviceUtils.getScaledSize(context, 0.025)),
 
-                  //lọc bảng xếp hạng
-                  child: GestureDetector(
-                    onTap: () {
-                      showDateRangePicker(
-                        locale: const Locale("vi", "VI"),
-                        context: context,
-                        firstDate: DateTime(2010),
-                        lastDate: DateTime(2050),
-                      ).then((value) => print("thời gian đã chọn: $value"));
-                    },
-                    child: const Icon(Icons.calendar_today_outlined,
-                        color: ColorResources.PRIMARY),
-                  ),
-                ),
-              ],
-              leading: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(Icons.arrow_back_ios)),
-              backgroundColor: ColorResources.WHITE,
-              iconTheme: const IconThemeData(color: Colors.black),
-              centerTitle: true,
-              title: const Text(
-                "Đội nhóm",
-                style: TextStyle(color: ColorResources.BLACK),
+              //lọc bảng xếp hạng
+              child: GestureDetector(
+                onTap: () {
+                  showDateRangePicker(
+                    locale: const Locale("vi", "VI"),
+                    context: context,
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2050),
+                  ).then((value) => print("thời gian đã chọn: $value"));
+                },
+                child: const Icon(Icons.calendar_today_outlined,
+                    color: ColorResources.PRIMARY),
               ),
             ),
-            body: SingleChildScrollView(
+          ],
+          leading: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(Icons.arrow_back_ios)),
+          backgroundColor: ColorResources.WHITE,
+          iconTheme: const IconThemeData(color: Colors.black),
+          centerTitle: true,
+          title: const Text(
+            "Đội nhóm",
+            style: TextStyle(color: ColorResources.BLACK),
+          ),
+        ),
+        body: GetBuilder<GroupController>(
+          init: GroupController(),
+          builder: (GroupController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return SingleChildScrollView(
               child: Stack(
                 children: [
                   Image.asset(
@@ -141,14 +149,20 @@ class GroupPage extends GetView<GroupController> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           // avatar
-                          _avatarUser(context, Images.admin_avatar),
+                          _avatarUser(
+                              context, controller.userModel.avatar.toString()),
 
                           SizedBox(
                               width: DeviceUtils.getScaledSize(context, 0.04)),
 
                           // info of user
-                          _infoUser(context, controller.name!, controller.role!,
-                              Colors.black, Colors.black, 100)
+                          _infoUser(
+                              context,
+                              controller.userModel.fullname.toString(),
+                              controller.userModel.username.toString(),
+                              Colors.black,
+                              Colors.black,
+                              100)
                         ],
                       )),
                   Container(
@@ -165,7 +179,7 @@ class GroupPage extends GetView<GroupController> {
                       SizedBox(
                           height: DeviceUtils.getScaledSize(context, 0.025)),
                       ...List.generate(
-                          controller.doiNhom.length,
+                          controller.subTeamsResponse.length,
                           (index) => Column(
                                 children: [
                                   Padding(
@@ -205,7 +219,10 @@ class GroupPage extends GetView<GroupController> {
                                                   shape: BoxShape.circle,
                                                 ),
                                               ),
-                                              Text("${controller.doiNhom[index].label} ${index + 1}"),
+                                              Text(controller
+                                                  .subTeamsResponse[index]
+                                                  .fullname
+                                                  .toString()),
                                             ],
                                           ),
                                         ),
@@ -222,7 +239,13 @@ class GroupPage extends GetView<GroupController> {
                                                       BorderRadius.circular(
                                                           16)),
                                               child: Text(
-                                                PriceConverter.convertPrice(context, double.parse(controller.doiNhom[index].money!)).toString(),
+                                                PriceConverter.convertPrice(
+                                                        context,
+                                                        double.parse(controller
+                                                            .subTeamsResponse[
+                                                                index]
+                                                            .revenue!))
+                                                    .toString(),
                                               ),
                                             ),
                                           ),
@@ -248,8 +271,8 @@ class GroupPage extends GetView<GroupController> {
                   ),
                 ],
               ),
-            ),
-          );
-        });
+            );
+          },
+        ));
   }
 }

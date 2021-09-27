@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:template/data/template/categories.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
@@ -14,6 +15,94 @@ import 'package:template/utils/images.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
+  @override
+  Widget build(BuildContext context) {
+    /**
+     * Create home 2 part
+     * - part 1: background and avatar and name
+     * - part 2: content
+     */
+
+    return Scaffold(
+      body: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (HomeController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return Container(
+              padding: EdgeInsets.zero,
+              margin: EdgeInsets.zero,
+              color: const Color(0xFFF5F5FA),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //avatar background user
+                    _avatarBackgroundUser(context),
+
+                    // Đội nhóm
+                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+                    _groupWidget(context,
+                        DeviceUtils.getScaledSize(context, 0.178), controller),
+
+                    // Danh mục
+                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+                    _categoryWidget(context,
+                        DeviceUtils.getScaledSize(context, 0.178), controller)
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  ///
+  ///cart btn
+  ///
+  Widget cartButton(BuildContext context, HomeController controller) {
+    return Stack(
+      children: [
+        Container(
+          height: 50,
+          width: 50,
+          padding:
+              const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL + 2),
+          decoration: const ShapeDecoration(
+              shape: CircleBorder(
+                  side: BorderSide(width: 2, color: ColorResources.PRIMARY))),
+          child: Image.asset(
+            Images.cart,
+            color: ColorResources.PRIMARY,
+          ),
+        ),
+        Positioned(
+          top: 10,
+          right: DeviceUtils.getScaledHeight(context, 0.027),
+          child: Container(
+            height: DeviceUtils.getScaledHeight(context, 0.02),
+            width: DeviceUtils.getScaledWidth(context, 0.04),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorResources.RED,
+            ),
+            child: Text(
+              "1",
+              // controller.productFromCartList.length.toString(),
+              style: titilliumSemiBold.copyWith(
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                  color: Theme.of(context).accentColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   ///
   /// Group widget
   ///
@@ -196,8 +285,6 @@ class HomePage extends GetView<HomeController> {
     final double width = context.mediaQuerySize.width;
     // final double height = context.mediaQuerySize.height;
 
-    // pixel unit
-    const double partOneHeight = 210;
     // const double partTwoHeight = 400;
 
     // margin left of avatar
@@ -214,9 +301,15 @@ class HomePage extends GetView<HomeController> {
     return GetBuilder<HomeController>(
         init: HomeController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           return Container(
             color: Colors.white,
-            height: 460,
+            height: DeviceUtils.getScaledSize(context, 1.17),
             child: Column(
               children: [
                 Stack(
@@ -228,8 +321,9 @@ class HomePage extends GetView<HomeController> {
                         _imgProduct(context),
                         Container(
                           width: width,
-                          height: partOneHeight,
-                          margin: const EdgeInsets.only(top: 50),
+                          height: DeviceUtils.getScaledSize(context, 0.5347),
+                          margin: EdgeInsets.only(
+                              top: DeviceUtils.getScaledSize(context, 0.127)),
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Colors.transparent, Color(0xff333333)],
@@ -240,6 +334,7 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ],
                     ),
+
                     // avatar user
                     Container(
                         margin: const EdgeInsets.only(
@@ -248,13 +343,61 @@ class HomePage extends GetView<HomeController> {
                         child: Stack(
                           children: [
                             // avatar
-                            _avatarUser(
-                                Images.admin_avatar, avatarWidth, avatarHeight),
+                            _avatarUser(controller.userModel.avatar.toString(),
+                                avatarWidth, avatarHeight),
                             // info of user
-                            _infoUser(controller.name, controller.role,
-                                Colors.white, Colors.white, avatarWidth)
+                            _infoUser(
+                                controller.userModel.fullname.toString(),
+                                controller.userModel.username.toString(),
+                                Colors.white,
+                                Colors.white,
+                                avatarWidth),
                           ],
                         )),
+                    //cart btn
+                    // Positioned(
+                    //   bottom: 13,
+                    //   left: 140,
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       controller.onCartClick();
+                    //     },
+                    //     child: Container(
+                    //       height: 30,
+                    //       width: 30,
+                    //       padding: const EdgeInsets.all(4),
+                    //       decoration: const ShapeDecoration(
+                    //           shape: CircleBorder(
+                    //               side: BorderSide(
+                    //                   width: 2,
+                    //                   color: ColorResources.PRIMARY))),
+                    //       child: Image.asset(
+                    //         Images.cart,
+                    //         color: ColorResources.PRIMARY,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   bottom: 32,
+                    //   left: 160,
+                    //   child: Container(
+                    //     height: DeviceUtils.getScaledHeight(context, 0.02),
+                    //     width: DeviceUtils.getScaledWidth(context, 0.04),
+                    //     alignment: Alignment.center,
+                    //     decoration: const BoxDecoration(
+                    //       shape: BoxShape.circle,
+                    //       color: ColorResources.RED,
+                    //     ),
+                    //     child: Text(
+                    //       controller.productFromCartList.length.toString(),
+                    //       // controller.productFromCartList.length.toString(),
+                    //       style: titilliumSemiBold.copyWith(
+                    //           fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                    //           color: Theme.of(context).accentColor),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 // basic information statistic
@@ -271,7 +414,9 @@ class HomePage extends GetView<HomeController> {
                             children: [
                               Text(
                                 PriceConverter.convertPrice(
-                                    context, controller.doanhSoDoiNhom!),
+                                    context,
+                                    controller
+                                        .staticUserResponse.doanhSoDoiNhom!),
                                 style: const TextStyle(
                                   fontSize: _moneyTextSize,
                                   fontWeight: _moneyFontWeight,
@@ -294,7 +439,9 @@ class HomePage extends GetView<HomeController> {
                             children: [
                               Text(
                                 PriceConverter.convertPrice(
-                                    context, controller.doanhSoCaNhan!),
+                                    context,
+                                    controller
+                                        .staticUserResponse.doanSoCaNhan!),
                                 style: const TextStyle(
                                   fontSize: _moneyTextSize,
                                   fontWeight: _moneyFontWeight,
@@ -323,7 +470,8 @@ class HomePage extends GetView<HomeController> {
                           child: Column(
                             children: [
                               Text(
-                                controller.soLuongId!.toString(),
+                                controller.staticUserResponse.soLuongId
+                                    .toString(),
                                 style: const TextStyle(
                                   fontSize: _moneyTextSize,
                                   fontWeight: _moneyFontWeight,
@@ -345,14 +493,15 @@ class HomePage extends GetView<HomeController> {
                           child: Column(
                             children: [
                               Text(
-                                controller.soLuongDonGia!.toString(),
+                                controller.staticUserResponse.soLuongDonHang
+                                    .toString(),
                                 style: const TextStyle(
                                   fontSize: _moneyTextSize,
                                   fontWeight: _moneyFontWeight,
                                 ),
                               ),
                               const Text(
-                                "Số lượng đơn giá",
+                                "Số lượng đơn hàng",
                                 style: TextStyle(
                                   fontSize: _labelTextSize,
                                   fontWeight: _labelFontWeight,
@@ -384,8 +533,13 @@ class HomePage extends GetView<HomeController> {
         borderRadius: BorderRadius.all(Radius.circular(width)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(width)),
-        child: Image.asset(imageURL, width: width, height: height),
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+        child: Image(
+            width: width,
+            height: height,
+            image: NetworkImage(
+              imageURL,
+            )),
       ),
     );
   }
@@ -461,50 +615,6 @@ class HomePage extends GetView<HomeController> {
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    /**
-     * Create home 2 part
-     * - part 1: background and avatar and name
-     * - part 2: content
-     */
-
-    return Scaffold(
-      body: GetBuilder<HomeController>(
-          init: HomeController(),
-          builder: (HomeController controller) {
-            if (controller.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Container(
-              padding: EdgeInsets.zero,
-              margin: EdgeInsets.zero,
-              color: const Color(0xFFF5F5FA),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //avatar background user
-                    _avatarBackgroundUser(context),
-
-                    // Đội nhóm
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-                    _groupWidget(context,
-                        DeviceUtils.getScaledSize(context, 0.178), controller),
-
-                    // Danh mục
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-                    _categoryWidget(context,
-                        DeviceUtils.getScaledSize(context, 0.178), controller)
-                  ],
-                ),
-              ),
-            );
-          }),
     );
   }
 }

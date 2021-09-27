@@ -138,6 +138,7 @@ class ProductDetailController extends GetxController {
               loadQuanlityCart();
 
               isLoading = false;
+              update();
 
               ///
               ///show snackbar
@@ -152,7 +153,6 @@ class ProductDetailController extends GetxController {
                   Color(0xffd7ffba),
                 ], begin: Alignment(2, -1), end: Alignment(1, 5)),
               );
-              update();
             },
             onError: (error) {
               print(error);
