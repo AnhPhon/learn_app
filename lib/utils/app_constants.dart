@@ -5,7 +5,6 @@ const String BASE_URL = 'http://103.146.23.186:5008/v1/';
 
 // api url
 const String region_uri = 'v1/regions';
- 
 
 //login
 const String login_uri = 'auth/login';
