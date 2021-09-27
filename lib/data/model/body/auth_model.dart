@@ -1,4 +1,5 @@
 class AuthModel {
+  String? id;
   String? idUser;
   String? idRole;
   String? idOptionalRole;
@@ -21,7 +22,8 @@ class AuthModel {
   String? refresh;
 
   AuthModel(
-      {this.idUser,
+      {this.id,
+      this.idUser,
       this.idRole,
       this.idOptionalRole,
       this.fullname,
@@ -43,6 +45,7 @@ class AuthModel {
       this.refresh});
 
   AuthModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
     idUser = json['idUser'].toString();
     idRole = json['idRole'].toString();
     idOptionalRole = json['idOptionalRole'].toString();
@@ -68,6 +71,7 @@ class AuthModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['idUser'] = idUser;
     data['idRole'] = idRole;
     data['idOptionalRole'] = idOptionalRole;

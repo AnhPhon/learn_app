@@ -12,6 +12,7 @@ class SharedPreferenceHelper {
   SharedPreferenceHelper(this._sharedPreference);
 
   // General Methods: ----------------------------------------------------------
+  // General Methods: Access token
   Future<String?> get jwtToken async {
     return _sharedPreference.getString(Preferences.jwt_token);
   }
@@ -26,6 +27,19 @@ class SharedPreferenceHelper {
 
   bool containsKey() {
     return _sharedPreference.containsKey(Preferences.jwt_token);
+  }
+
+  // General Methods: refresh token
+  Future<String?> get refreshToken async {
+    return _sharedPreference.getString(Preferences.refresh);
+  }
+
+  Future<bool> saveRefreshToken(String refresh) async {
+    return _sharedPreference.setString(Preferences.refresh, refresh);
+  }
+
+  Future<bool> removeRefreshToken() async {
+    return _sharedPreference.remove(Preferences.refresh);
   }
 
   // General Methods: username
