@@ -17,16 +17,17 @@ class KhoHangTroGiaController extends GetxController
   List<CategoryModel> categoriesList = [];
 
   List<ProductModel> productWithIdCategList = [];
-
   ProductModel? productWithId;
 
   int isSelectedTabCateg = 0;
 
   bool isLoading = true;
+  bool isLoadingListView = true;
 
   @override
   void onInit() {
     super.onInit();
+    // get all categries
     getAllCategories();
   }
 
@@ -42,10 +43,15 @@ class KhoHangTroGiaController extends GetxController
   void getAllCategories() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
+
+      // binding data tab
       tabController = TabController(length: categoriesList.length, vsync: this);
-      print("tabController!.index: ${tabController!.index}");
-      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+
+      // listen tab controller
       listenerTabController();
+
+      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+
       isLoading = false;
       update();
     }, onError: (error) {
@@ -58,10 +64,16 @@ class KhoHangTroGiaController extends GetxController
   ///listener tabController
   ///
   void listenerTabController() {
+    // listen tab
     tabController!.addListener(() {
+      // add loading and clear data
+      isLoadingListView = true;
+      productWithIdCategList.clear();
+      update();
+
+      // load data product with id categories
       isSelectedTabCateg = tabController!.index;
       getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
-      update();
     });
   }
 
@@ -69,28 +81,23 @@ class KhoHangTroGiaController extends GetxController
   ///lấy sản phẩm theo danh mục
   ///
   void getProductWithIdCateg({required String id}) {
-    productWithIdCategList.clear();
-    update();
+    // get data product filter by id category
     productProvider.paginate(
         page: 1,
         limit: 5,
         filter: "idCategory=$id",
         onSuccess: (value) {
-          print("trong005");
           productWithIdCategList = value;
-          // isLoading = false;
-          print("trong00");
+          isLoadingListView = false;
           update();
         },
         onError: (error) {
           print(error);
-          update();
         });
   }
 
   //xem sản phẩm
   void onProductClick(int index) {
-    print("productId=${productWithIdCategList[index].id!}");
     productProvider
         .find(
             id: productWithIdCategList[index].id!,

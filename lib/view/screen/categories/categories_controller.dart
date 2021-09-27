@@ -57,7 +57,7 @@ class CategoriesController extends GetxController
 
       isLoading = false;
       update();
-    }, onError: (error) { 
+    }, onError: (error) {
       print(error);
       update();
     });
@@ -95,7 +95,6 @@ class CategoriesController extends GetxController
         },
         onError: (error) {
           print(error);
-          update();
         });
   }
 

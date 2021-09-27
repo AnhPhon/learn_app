@@ -124,23 +124,63 @@ class CartPage extends GetView<CartController> {
   }
 
   ///
+  /// input quanlity
+  ///
+  // Widget inputWidget({required BuildContext context, required CartController controller, required TextEditingController textController, required FocusNode focusNode}) {
+  //   return SizedBox(
+  //     height: 35,
+  //     width: 35,
+  //     child: TextField(
+  //       focusNode: controller.focusNode,
+  //       // autofillHints: [hint],
+  //       textInputAction: TextInputAction.done,
+  //       // textAlignVertical: TextAlignVertical.center,
+  //       textAlign: TextAlign.center,
+  //       controller: controller.qualityController,
+  //       cursorColor: ColorResources.PRIMARY,
+  //       decoration: InputDecoration(
+  //         isDense: true,
+  //         contentPadding: EdgeInsets.symmetric(
+  //             horizontal: DeviceUtils.getScaledSize(context, 0.015),
+  //             vertical: DeviceUtils.getScaledSize(context, 0.02)),
+  //         border: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(5),
+  //         ),
+  //         focusedBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(10),
+  //             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+  //         enabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(10),
+  //             borderSide: const BorderSide(color: ColorResources.GREY)),
+  //         disabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(10),
+  //             borderSide: const BorderSide(color: ColorResources.GREY)),
+  //         // hintText: "Tài khoản",
+  //         filled: true,
+  //         fillColor: Colors.transparent,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  ///
   ///list sản phẩm đã chọn
   ///
-  Widget _otherProductDetail(BuildContext context) {
+  Widget _otherProductDetail(
+      BuildContext context, CartController cartController) {
+    if (cartController.isLoadingQuality) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return _containerBox(context,
-        child: GetBuilder<CartController>(
-            init: CartController(),
-            builder: (cartController) {
-              if (cartController.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return Column(children: [
-                ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: cartController.selectedProductList.length,
-                    itemBuilder: (BuildContext context, i) {
-                      return Column(
+        child: Column(children: [
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: cartController.selectedProductList.length,
+              itemBuilder: (BuildContext context, i) {
+                return cartController.isLoadingQuality
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,24 +223,44 @@ class CartPage extends GetView<CartController> {
                                             style: titilliumSemiBold.copyWith(
                                                 fontSize: 16),
                                           ),
-                                          Text(
-                                            PriceConverter.convertPrice(
-                                                context,
-                                                double.parse(cartController
-                                                    .selectedProductList[i]
-                                                    .idProduct!
-                                                    .prices!)),
-                                            style: titilliumSemiBold.copyWith(
-                                                color: Colors.grey),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  PriceConverter.convertPrice(
+                                                      context,
+                                                      double.parse(cartController
+                                                          .selectedProductList[
+                                                              i]
+                                                          .idProduct!
+                                                          .prices!)),
+                                                  style: titilliumSemiBold
+                                                      .copyWith(
+                                                          fontSize: 16,
+                                                          color: Colors.grey),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "x${cartController.selectedProductList[i].quantity!}",
+                                                  style: titilliumSemiBold
+                                                      .copyWith(
+                                                          fontSize: 16,
+                                                          color: Colors.red),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                              height: DeviceUtils.getScaledSize(
-                                                  context, 0.02)),
-                                          Text(
-                                            "x${cartController.selectedProductList[i].quantity!}",
-                                            style: titilliumSemiBold.copyWith(
-                                                color: Colors.grey),
-                                          ),
+
+                                          // Row(
+                                          //   children: [
+                                          //     const Text("Nhập số lượng "),
+                                          //     inputWidget(
+                                          //         context, cartController),
+                                          //   ],
+                                          // ),
                                           SizedBox(
                                               height: DeviceUtils.getScaledSize(
                                                   context, 0.02)),
@@ -243,12 +303,11 @@ class CartPage extends GetView<CartController> {
                           Dimensions().paddingDivider(context),
                         ],
                       );
-                    }),
+              }),
 
-                //payment detail
-                _paymentDetail(context, cartController),
-              ]);
-            }));
+          //payment detail
+          _paymentDetail(context, cartController),
+        ]));
   }
 
   ///
@@ -305,47 +364,48 @@ class CartPage extends GetView<CartController> {
     return GetBuilder<CartController>(
         init: CartController(),
         builder: (cartController) {
-          return cartController.selectedProductList.isEmpty
-              ? Container()
-              : Container(
-                  padding:
-                      EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
-                  height: DeviceUtils.getScaledSize(context, 0.2),
-                  decoration: BoxDecoration(
-                    color: ColorResources.WHITE,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 2,
-                        color: ColorResources.PRIMARY.withOpacity(0.3),
-                        spreadRadius: 2, // Shadow position
-                      ),
-                    ],
+          return
+              // cartController.selectedProductList.isEmpty
+              //     ? Container()
+              //     :
+              Container(
+            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
+            height: DeviceUtils.getScaledSize(context, 0.2),
+            decoration: BoxDecoration(
+              color: ColorResources.WHITE,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 2,
+                  color: ColorResources.PRIMARY.withOpacity(0.3),
+                  spreadRadius: 2, // Shadow position
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ///
+                /// button checkout
+                ///
+                GestureDetector(
+                  onTap: () {
+                    cartController.onCheckoutClick();
+                  },
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: ColorResources.PRIMARY,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Align(
+                        child: Text(
+                            "Thanh toán ${PriceConverter.convertPrice(context, cartController.price.toDouble())}",
+                            style: Dimensions.fontSizeStyle16()
+                                .copyWith(color: ColorResources.WHITE))),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ///
-                      /// button checkout
-                      ///
-                      GestureDetector(
-                        onTap: () {
-                          cartController.onCheckoutClick();
-                        },
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: ColorResources.PRIMARY,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Align(
-                              child: Text(
-                                  "Thanh toán ${PriceConverter.convertPrice(context, cartController.price.toDouble())}",
-                                  style: Dimensions.fontSizeStyle16()
-                                      .copyWith(color: ColorResources.WHITE))),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                ),
+              ],
+            ),
+          );
         });
   }
 
@@ -355,14 +415,27 @@ class CartPage extends GetView<CartController> {
     const String title = "Giỏ hàng";
 
     return Scaffold(
-      appBar: CustomAppBar().customAppBar(title: "Giỏ hàng"),
+      appBar: AppBar(
+          leading: GestureDetector(
+              onTap: () {
+                controller.onGetBack();
+              },
+              child: const Icon(Icons.arrow_back_ios)),
+          elevation: 1,
+          centerTitle: true,
+          backgroundColor: ColorResources.WHITE,
+          iconTheme: const IconThemeData(color: Colors.black),
+          title: const Text(
+            "Giỏ hàng",
+            style: TextStyle(color: ColorResources.BLACK),
+          )),
       body: GetBuilder<CartController>(
           init: CartController(),
-          builder: (cartController) {
-            if (cartController.isLoading) {
+          builder: (controller) {
+            if (controller.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            return cartController.selectedProductList.isEmpty
+            return controller.selectedProductList.isEmpty
                 ? const Center(child: Text("Giỏ hàng trống"))
                 : SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
@@ -384,7 +457,7 @@ class CartPage extends GetView<CartController> {
                             style: Dimensions.fontSizeStyle18w600(),
                           ),
                         ),
-                        _shipping(context, cartController),
+                        _shipping(context, controller),
 
                         SizedBox(
                             height: DeviceUtils.getScaledSize(context, 0.02)),
@@ -401,7 +474,7 @@ class CartPage extends GetView<CartController> {
                             style: Dimensions.fontSizeStyle18w600(),
                           ),
                         ),
-                        _otherProductDetail(context),
+                        _otherProductDetail(context, controller),
 
                         SizedBox(
                             height: DeviceUtils.getScaledSize(context, 0.03)),

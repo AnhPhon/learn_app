@@ -10,10 +10,10 @@ import 'package:template/routes/app_routes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NewsController extends GetxController with SingleGetTickerProviderMixin {
+  TabController? tabController;
+
   CategoryNewsProvider categoryNewsProvider =
       GetIt.I.get<CategoryNewsProvider>();
-
-  TabController? tabController;
 
   final searchController = TextEditingController();
 
@@ -25,7 +25,9 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
 
   NewsModel? newsModel;
 
-  bool isLoading = false;
+  bool isLoading = true;
+
+  bool isLoadingNews = false;
 
   int isSelectedIndexTab = 0;
 
@@ -37,23 +39,50 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
     getAllCategoryNews();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    tabController!.dispose();
+  }
+
   ///
   ///get all categoryNews
   ///
   void getAllCategoryNews() {
     categoryNewsProvider.all(onSuccess: (value) {
       categoryNewsList = value;
+
+      // binding data tab
       tabController =
           TabController(vsync: this, length: categoryNewsList.length);
-      tabController!.addListener(() {
-        isSelectedIndexTab = tabController!.index;
-        getNewsWithIdCateg(id: categoryNewsList[isSelectedIndexTab].id!);
-      });
+
+      // listen tab controller
+      listenerTabController();
+
+      // load data product with id categories
       getNewsWithIdCateg(id: categoryNewsList[isSelectedIndexTab].id!);
+
+      isLoading = false;
       update();
     }, onError: (error) {
       print(error);
       update();
+    });
+  }
+
+  ///
+  ///listener tabController
+  ///
+  void listenerTabController() {
+    // listen tab
+    tabController!.addListener(() {
+      // add loading and clear data
+      isLoadingNews = true;
+      newsList.clear();
+      update();
+
+      // load data product with id categories
+      getNewsWithIdCateg(id: categoryNewsList[tabController!.index].id!);
     });
   }
 
@@ -67,12 +96,11 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
         filter: "idCategoryNews=$id",
         onSuccess: (value) {
           newsList = value;
-
+          isLoadingNews = false;
           update();
         },
         onError: (error) {
           print(error);
-          update();
         });
   }
 
@@ -83,6 +111,9 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
     Get.toNamed("${AppRoutes.NEWS_DETAIL}?idNews=${newsList[index].id}");
   }
 
+  ///
+  ///time diff
+  ///
   String timeAgo(String dateTime) {
     timeago.setLocaleMessages('vi', timeago.ViMessages());
     final String time = dateTime;

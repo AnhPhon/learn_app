@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/news/news_detail/news_detail_controller.dart';
 import 'package:template/view/screen/news/news_detail/news_specification.dart';
@@ -37,9 +38,13 @@ class NewsDetailPage extends GetView<NewsDetailController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Image.network(
-                              controller.newsModel!.image!,
+                            child: FadeInImage.assetNetwork(
+                              placeholder: Images.placeholder,
+                              image: controller.newsModel!.image!,
                               fit: BoxFit.fill,
+                              imageErrorBuilder: (c, o, s) => Image.asset(
+                                Images.placeholder,
+                              ),
                             ),
                           ),
                           Padding(

@@ -37,4 +37,16 @@ class OrderItemModel {
     // data['updatedAt'] = updatedAt;
     return data;
   }
+
+  Map<String, dynamic> toJsonPut() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['idOrder'] = idOrder;
+    data['idProduct'] = idProduct;
+    data['quantity'] = quantity;
+    data['price'] = price;
+    // data['createdAt'] = createdAt;
+    // data['updatedAt'] = updatedAt;
+    return data;
+  }
 }
