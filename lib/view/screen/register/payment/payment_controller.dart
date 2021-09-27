@@ -22,7 +22,7 @@ import 'package:template/view/screen/register/register_page_3.dart';
 
 typedef Ham = void Function(int);
 
-class RegisterController extends GetxController {
+class PaymentController extends GetxController {
   GetIt sl = GetIt.instance;
 
   final UserProvider userProvider = GetIt.I.get<UserProvider>();

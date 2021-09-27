@@ -184,7 +184,7 @@ class HomeController extends GetxController {
   /// onRegisterIdClick
   ///
   void onRegisterIdClick() {
-    Get.toNamed(AppRoutes.REGISTER);
+    Get.toNamed(AppRoutes.INFORMATION_USER);
   }
 
   ///
