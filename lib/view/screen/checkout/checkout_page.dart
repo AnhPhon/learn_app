@@ -132,6 +132,7 @@ class CheckoutPage extends GetView<CheckoutController> {
                                                   width: 10,
                                                 ),
                                                 Flexible(
+                                                  flex: 2,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -143,6 +144,8 @@ class CheckoutPage extends GetView<CheckoutController> {
                                                                 i]
                                                             .idProduct!
                                                             .name!,
+                                                        textAlign:
+                                                            TextAlign.left,
                                                         maxLines: 3,
                                                         style: titilliumSemiBold
                                                             .copyWith(

@@ -4,6 +4,7 @@ import 'package:template/data/model/body/category_model.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
@@ -34,6 +35,8 @@ class HomeController extends GetxController {
 
   List<CategoryModel> categoriesList = [];
 
+  // List<ProductResponse> productFromCartList = [];
+
   double? doanhSoDoiNhom;
   double? doanhSoCaNhan;
   int? soLuongId;
@@ -50,6 +53,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getAllCategory();
+    // loadQualityProduct();
 
     doanhSoDoiNhom = 0;
     doanhSoCaNhan = 0;
@@ -176,8 +180,33 @@ class HomeController extends GetxController {
     update();
   }
 
-  void onBtnHomeClick() {
-    Get.to(PostsPage());
+  ///
+  ///load quality product in cart
+  ///
+  // void loadQualityProduct() {
+  //   productFromCartList.clear();
+  //   sl.get<SharedPreferenceHelper>().orderId.then((value) {
+  //     if (value != null) {
+  //       productProvider.findByIdOrder(
+  //           page: 1,
+  //           limit: 100,
+  //           idOrder: value,
+  //           onSuccess: (value) {
+  //             productFromCartList = value;
+  //             update();
+  //           },
+  //           onError: (error) {
+  //             print(error);
+  //           });
+  //     }
+  //   });
+  // }
+
+  ///
+  ///onCartClick
+  ///
+  void onCartClick() {
+    Get.toNamed(AppRoutes.CART);
   }
 
   ///

@@ -43,10 +43,12 @@ class CheckoutController extends GetxController {
   late final String address;
   late final String provinceId;
   late final String districtId;
+  String? idUser;
 
   @override
   void onInit() {
     super.onInit();
+    sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value);
     loadSelectedProduct();
     getValue();
     getInfoUser();
@@ -113,6 +115,7 @@ class CheckoutController extends GetxController {
         file: image!,
         onSuccess: (image) {
           imageUpdateModel = image;
+          print(imageUpdateModel!.data);
           update();
         },
         onError: (error) {
@@ -131,7 +134,7 @@ class CheckoutController extends GetxController {
       orderProvider.update(
           data: OrderModel(
               id: orderId,
-              idUser: "614748250c57f118c4a40689",
+              idUser: idUser,
               statusOrder: "1",
               statusPayment: "2",
               description: "đây là nội dung",

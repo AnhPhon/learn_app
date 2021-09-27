@@ -42,7 +42,7 @@ class OrderItemModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['idOrder'] = idOrder;
-    data['idProduct'] = idProduct;
+    // data['idProduct'] = idProduct;
     data['quantity'] = quantity;
     data['price'] = price;
     // data['createdAt'] = createdAt;

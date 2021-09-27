@@ -67,12 +67,30 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: Image.network(
-                          controller.productModelList[index].thumbnail!,
-                          fit: BoxFit.fill,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 2,
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2, // Shadow position
+                              ),
+                            ]),
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7)),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: Images.placeholder,
+                            image:
+                                controller.productModelList[index].thumbnail!,
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                            imageErrorBuilder: (c, o, s) => Image.asset(
+                              Images.placeholder,
+                            ),
+                          ),
                         ),
                       ),
                     ),
