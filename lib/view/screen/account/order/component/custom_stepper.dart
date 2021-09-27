@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/order/component/line_painter.dart';
+import 'package:template/view/screen/account/order/component/line_painter.dart';
 
 class CustomStepper extends StatelessWidget {
   final String title;

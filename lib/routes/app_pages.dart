@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/account/order/history/history_page.dart';
+import 'package:template/view/screen/account/order/order_detail/order_detail_page.dart';
+import 'package:template/view/screen/account/order/order_page.dart';
 import 'package:template/view/screen/account/rules/rules_page.dart';
 import 'package:template/view/screen/address/address_page.dart';
 import 'package:template/view/screen/auth/auth_page.dart';
@@ -14,12 +17,9 @@ import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/leaderboard/charts/charts_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/news/news_detail/news_detail_page.dart';
-import 'package:template/view/screen/order/history/history_page.dart';
-import 'package:template/view/screen/order/order_detail/order_detail_page.dart';
-import 'package:template/view/screen/order/order_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
-import 'package:template/view/screen/register/information_user/information_user_page.dart'; 
-import 'package:template/view/screen/register/payment/payment_page.dart'; 
+import 'package:template/view/screen/register/information_user/information_user_page.dart';
+import 'package:template/view/screen/register/payment/payment_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';

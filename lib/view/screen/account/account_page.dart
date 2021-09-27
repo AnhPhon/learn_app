@@ -5,6 +5,7 @@ import 'package:share/share.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'account_controller.dart';
 
 class AccountPage extends GetView<AccountController> {
@@ -90,105 +91,125 @@ class AccountPage extends GetView<AccountController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.038)),
-            child: Align(
-              child: Column(
-                children: [
-                  //image
-                  Container(
-                    margin: EdgeInsets.only(
-                        bottom: DeviceUtils.getScaledSize(context, 0.02)),
-                    height: DeviceUtils.getScaledSize(context, 0.183),
-                    width: DeviceUtils.getScaledSize(context, 0.183),
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage("assets/images/avatar_account.png")),
-                      shape: BoxShape.circle,
+        body: GetBuilder<AccountController>(
+            init: AccountController(),
+            builder: (controller) {
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.038)),
+                  child: Align(
+                    child: Column(
+                      children: [
+                        //image
+                        Container(
+                          margin: EdgeInsets.only(
+                              bottom: DeviceUtils.getScaledSize(context, 0.02)),
+                          height: DeviceUtils.getScaledSize(context, 0.183),
+                          width: DeviceUtils.getScaledSize(context, 0.183),
+                          child: ClipOval(
+                            child: FadeInImage.assetNetwork(
+                                placeholder: Images.placeholder,
+                                image: controller.userModel.avatar.toString(),
+                                fit: BoxFit.cover,
+                                imageErrorBuilder: (c, o, s) =>
+                                    const CircleAvatar(
+                                        backgroundImage:
+                                            AssetImage(Images.placeholder))),
+                          ),
+                        ),
+
+                        //name
+                        Text(
+                          controller.userModel.fullname.toString(),
+                          style: Dimensions.fontSizeStyle16w600(),
+                        ),
+
+                        SizedBox(
+                            height: DeviceUtils.getScaledSize(context, 0.02)),
+
+                        //ID
+                        Text(
+                          controller.userModel.idUser.toString(),
+                          style: Dimensions.fontSizeStyle16(),
+                        ),
+
+                        SizedBox(
+                            height: DeviceUtils.getScaledSize(context, 0.04)),
+
+                        //my order
+                        _containerBox(context,
+                            child: Column(
+                              children: [
+                                _row3(context,
+                                    text1: "Order của tôi",
+                                    text2: "Xem thêm", onTap: () {
+                                  controller.onOrderClick(0);
+                                }),
+                                SizedBox(
+                                    height: DeviceUtils.getScaledSize(
+                                        context, 0.1)),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _iconMethod(context,
+                                        imgUrl:
+                                            "assets/icon/delivery_truck.svg",
+                                        text: "Đã vận chuyển", onTap: () {
+                                      controller.onOrderClick(3);
+                                    }),
+                                    _iconMethod(context,
+                                        imgUrl: "assets/icon/wallet.svg",
+                                        text: "Đã giao hàng", onTap: () {
+                                      controller.onOrderClick(4);
+                                    }),
+                                    _iconMethod(context,
+                                        imgUrl:
+                                            "assets/icon/forklift_truck.svg",
+                                        text: "Đang xử lý", onTap: () {
+                                      controller.onOrderClick(2);
+                                    }),
+                                  ],
+                                ),
+                              ],
+                            )),
+
+                        //rules
+                        _containerBox(context,
+                            child: _row3(context,
+                                text1: "Điều khoản",
+                                text2: "Chi tiết", onTap: () {
+                              controller.onRulesClick();
+                            })),
+
+                        //share
+                        _containerBox(
+                          context,
+                          child: _row3(context, text1: "Chia sẻ", text2: "",
+                              onTap: () {
+                            Share.share('https://ytp.vn');
+                          }),
+                        ),
+
+                        //logout
+                        _containerBox(
+                          context,
+                          child: _row3(context, text1: "Đăng xuất", text2: "",
+                              onTap: () {
+                            controller.onLogoutClick();
+                          }),
+                        )
+                      ],
                     ),
                   ),
-
-                  //name
-                  Text(
-                    "Khoi Minh",
-                    style: Dimensions.fontSizeStyle16w600(),
-                  ),
-
-                  SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
-
-                  //ID
-                  Text(
-                    "ID: ytb00000",
-                    style: Dimensions.fontSizeStyle16(),
-                  ),
-
-                  SizedBox(height: DeviceUtils.getScaledSize(context, 0.04)),
-
-                  //my order
-                  _containerBox(context,
-                      child: Column(
-                        children: [
-                          _row3(context,
-                              text1: "Order của tôi",
-                              text2: "Xem thêm", onTap: () {
-                            controller.onOrderClick(0);
-                          }),
-                          SizedBox(
-                              height: DeviceUtils.getScaledSize(context, 0.1)),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _iconMethod(context,
-                                  imgUrl: "assets/icon/delivery_truck.svg",
-                                  text: "Hoàn thành", onTap: () {
-                                controller.onOrderClick(1);
-                              }),
-                              _iconMethod(context,
-                                  imgUrl: "assets/icon/wallet.svg",
-                                  text: "Chờ thanh toán", onTap: () {
-                                controller.onOrderClick(2);
-                              }),
-                              _iconMethod(context,
-                                  imgUrl: "assets/icon/forklift_truck.svg",
-                                  text: "Xử lý", onTap: () {
-                                controller.onOrderClick(3);
-                              }),
-                            ],
-                          ),
-                        ],
-                      )),
-
-                  //rules
-                  _containerBox(context,
-                      child: _row3(context,
-                          text1: "Điều khoản", text2: "Chi tiết", onTap: () {
-                        controller.onRulesClick();
-                      })),
-
-                  //share
-                  _containerBox(
-                    context,
-                    child:
-                        _row3(context, text1: "Chia sẻ", text2: "", onTap: () {
-                      Share.share('https://ytp.vn');
-                    }),
-                  ),
-
-                  //logout
-                  _containerBox(
-                    context,
-                    child: _row3(context, text1: "Đăng xuất", text2: "",
-                        onTap: () {
-                      controller.onLogoutClick();
-                    }),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }
