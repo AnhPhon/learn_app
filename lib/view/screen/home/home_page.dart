@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:template/data/template/categories.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 // images
@@ -14,6 +15,49 @@ import 'package:template/utils/images.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
+  ///
+  ///cart btn
+  ///
+  Widget cartButton(BuildContext context, HomeController controller) {
+    return Stack(
+      children: [
+        Container(
+          height: 50,
+          width: 50,
+          padding:
+              const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL + 2),
+          decoration: const ShapeDecoration(
+              shape: CircleBorder(
+                  side: BorderSide(width: 2, color: ColorResources.PRIMARY))),
+          child: Image.asset(
+            Images.cart,
+            color: ColorResources.PRIMARY,
+          ),
+        ),
+        Positioned(
+          top: 10,
+          right: DeviceUtils.getScaledHeight(context, 0.027),
+          child: Container(
+            height: DeviceUtils.getScaledHeight(context, 0.02),
+            width: DeviceUtils.getScaledWidth(context, 0.04),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: ColorResources.RED,
+            ),
+            child: Text(
+              "1",
+              // controller.productFromCartList.length.toString(),
+              style: titilliumSemiBold.copyWith(
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                  color: Theme.of(context).accentColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   ///
   /// Group widget
   ///
@@ -196,8 +240,6 @@ class HomePage extends GetView<HomeController> {
     final double width = context.mediaQuerySize.width;
     // final double height = context.mediaQuerySize.height;
 
-    // pixel unit
-    const double partOneHeight = 210;
     // const double partTwoHeight = 400;
 
     // margin left of avatar
@@ -216,7 +258,7 @@ class HomePage extends GetView<HomeController> {
         builder: (controller) {
           return Container(
             color: Colors.white,
-            height: 460,
+            height: DeviceUtils.getScaledSize(context, 1.17),
             child: Column(
               children: [
                 Stack(
@@ -228,8 +270,9 @@ class HomePage extends GetView<HomeController> {
                         _imgProduct(context),
                         Container(
                           width: width,
-                          height: partOneHeight,
-                          margin: const EdgeInsets.only(top: 50),
+                          height: DeviceUtils.getScaledSize(context, 0.5347),
+                          margin: EdgeInsets.only(
+                              top: DeviceUtils.getScaledSize(context, 0.127)),
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Colors.transparent, Color(0xff333333)],
@@ -240,6 +283,7 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ],
                     ),
+
                     // avatar user
                     Container(
                         margin: const EdgeInsets.only(
@@ -252,9 +296,53 @@ class HomePage extends GetView<HomeController> {
                                 Images.admin_avatar, avatarWidth, avatarHeight),
                             // info of user
                             _infoUser(controller.name, controller.role,
-                                Colors.white, Colors.white, avatarWidth)
+                                Colors.white, Colors.white, avatarWidth),
                           ],
                         )),
+                    //cart btn
+                    // Positioned(
+                    //   bottom: 13,
+                    //   left: 140,
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       controller.onCartClick();
+                    //     },
+                    //     child: Container(
+                    //       height: 30,
+                    //       width: 30,
+                    //       padding: const EdgeInsets.all(4),
+                    //       decoration: const ShapeDecoration(
+                    //           shape: CircleBorder(
+                    //               side: BorderSide(
+                    //                   width: 2,
+                    //                   color: ColorResources.PRIMARY))),
+                    //       child: Image.asset(
+                    //         Images.cart,
+                    //         color: ColorResources.PRIMARY,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   bottom: 32,
+                    //   left: 160,
+                    //   child: Container(
+                    //     height: DeviceUtils.getScaledHeight(context, 0.02),
+                    //     width: DeviceUtils.getScaledWidth(context, 0.04),
+                    //     alignment: Alignment.center,
+                    //     decoration: const BoxDecoration(
+                    //       shape: BoxShape.circle,
+                    //       color: ColorResources.RED,
+                    //     ),
+                    //     child: Text(
+                    //       controller.productFromCartList.length.toString(),
+                    //       // controller.productFromCartList.length.toString(),
+                    //       style: titilliumSemiBold.copyWith(
+                    //           fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                    //           color: Theme.of(context).accentColor),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 // basic information statistic

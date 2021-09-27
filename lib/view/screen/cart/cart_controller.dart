@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/provider/order_item_provider.dart';
@@ -34,21 +35,18 @@ class CartController extends GetxController {
 
   List<ProductResponse> selectedProductList = [];
 
-  String? idUser;
-
   // List<String> qualityHint = [];
 
   int price = 0;
 
   //số lượng sản phẩm
-  int qualityProduct = 1;
+  List<int> qualityProduct = [];
 
   @override
   void onInit() {
     super.onInit();
     loadSelectedProduct();
     getAddress();
-    sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value);
   }
 
   ///
@@ -56,18 +54,22 @@ class CartController extends GetxController {
   ///
   void loadSelectedProduct() {
     // qualityHint.clear();
-    print("trong0");
-    selectedProductList.clear();
+
     if (Get.parameters['idOrder'].toString() != "null") {
-      print("trong1");
       productProvider.findByIdOrder(
           page: 1,
           limit: 100,
           idOrder: Get.parameters['idOrder'].toString(),
           onSuccess: (value) {
-            print("trong2");
+            selectedProductList.clear();
             selectedProductList = value;
+            value
+                .map((quanlity) =>
+                    qualityProduct.add(int.parse(quanlity.quantity!)))
+                .toList();
+            print("object: ${qualityProduct.length}");
             calculatorPrice();
+            isLoading = false;
             update();
           },
           onError: (error) {
@@ -115,7 +117,6 @@ class CartController extends GetxController {
               id: selectedProductList[index].id.toString(),
               onSuccess: (value) {
                 loadSelectedProduct();
-                isReloadData = true;
                 isLoadingQuality = false;
                 update();
               },
@@ -140,6 +141,62 @@ class CartController extends GetxController {
   }
 
   ///
+  ///tăng số lượng
+  ///
+  void incrementQuality(int index) {
+    qualityProduct[index] += 1;
+    calculatorPriceReload(index);
+    update();
+    orderItemProvider.update(
+        data: OrderItemModel(
+            id: selectedProductList[index].id,
+            idOrder: Get.parameters['idOrder'].toString(),
+            quantity: qualityProduct[index].toString(),
+            price: (qualityProduct[index] *
+                    int.parse(selectedProductList[index].idProduct!.prices!))
+                .toString()),
+        onSuccess: (value) {
+          print("tăng thành công");
+        },
+        onError: (error) {});
+  }
+
+  ///
+  ///giảm số lượng
+  ///
+  void decrementQuality(int index) {
+    if (qualityProduct[index] > 1) {
+      qualityProduct[index] -= 1;
+      calculatorPriceReload(index);
+      update();
+      orderItemProvider.update(
+          data: OrderItemModel(
+              id: selectedProductList[index].id,
+              idOrder: Get.parameters['idOrder'].toString(),
+              quantity: qualityProduct[index].toString(),
+              price: (qualityProduct[index] *
+                      int.parse(selectedProductList[index].idProduct!.prices!))
+                  .toString()),
+          onSuccess: (value) {
+            print("giảm thành công");
+          },
+          onError: (error) {});
+    }
+  }
+
+  ///
+  ///reload price
+  ///
+  void calculatorPriceReload(int index) {
+    for (var i = 0; i < selectedProductList.length; i++) {
+      price = qualityProduct[index] *
+          int.parse(selectedProductList[i].idProduct!.prices!);
+      price += price;
+    }
+    update();
+  }
+
+  ///
   ///address
   ///
 
@@ -151,17 +208,15 @@ class CartController extends GetxController {
   ///get address from iUser
   ///
   void getAddress() {
-    userProvider.find(
-        id: idUser!,
+    sl.get<SharedPreferenceHelper>().userId.then((value) => userProvider.find(
+        id: value!,
         onSuccess: (value) {
           userModel = value;
-          isLoading = false;
           update();
         },
         onError: (error) {
           print(error);
-          update();
-        });
+        }));
   }
 
   ///

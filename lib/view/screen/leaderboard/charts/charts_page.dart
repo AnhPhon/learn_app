@@ -219,24 +219,24 @@ class ChartsPage extends GetView<ChartsController> {
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          flex: 4,
-                                          child: Align(
-                                            child: Container(
-                                              padding: EdgeInsets.all(
-                                                  DeviceUtils.getScaledSize(
-                                                      context, 0.015)),
-                                              decoration: BoxDecoration(
-                                                  color: ColorResources.GREY,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16)),
-                                              child: const Text(
-                                                "5.000.000đ",
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        // Expanded(
+                                        //   flex: 4,
+                                        //   child: Align(
+                                        //     child: Container(
+                                        //       padding: EdgeInsets.all(
+                                        //           DeviceUtils.getScaledSize(
+                                        //               context, 0.015)),
+                                        //       decoration: BoxDecoration(
+                                        //           color: ColorResources.GREY,
+                                        //           borderRadius:
+                                        //               BorderRadius.circular(
+                                        //                   16)),
+                                        //       child: const Text(
+                                        //         "5.000.000đ",
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),

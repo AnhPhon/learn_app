@@ -231,7 +231,7 @@ class RegisterPage3 extends GetView<RegisterController> {
                                           image: NetworkImage(
                                             controller.items[index].url
                                                 .toString(),
-                                          ), 
+                                          ),
                                         ),
                                       ),
 

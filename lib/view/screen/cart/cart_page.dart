@@ -164,6 +164,26 @@ class CartPage extends GetView<CartController> {
   // }
 
   ///
+  ///icons quality
+  ///
+  Widget _iconsquality(BuildContext context,
+      {VoidCallback? onTap, Icon? icon, String? text, Color? color}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.01)),
+        height: DeviceUtils.getScaledSize(context, 0.064),
+        width: DeviceUtils.getScaledSize(context, 0.064),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: color ?? ColorResources.PRIMARY),
+        ),
+        child: text != null ? Align(child: Text(text)) : icon,
+      ),
+    );
+  }
+
+  ///
   ///list sản phẩm đã chọn
   ///
   Widget _otherProductDetail(
@@ -177,7 +197,7 @@ class CartPage extends GetView<CartController> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: cartController.selectedProductList.length,
-              itemBuilder: (BuildContext context, i) {
+              itemBuilder: (BuildContext context, int index) {
                 return cartController.isLoadingQuality
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
@@ -194,8 +214,10 @@ class CartPage extends GetView<CartController> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(7),
                                         child: Image.network(
-                                          cartController.selectedProductList[i]
-                                              .idProduct!.images!,
+                                          cartController
+                                              .selectedProductList[index]
+                                              .idProduct!
+                                              .images!,
                                           height: DeviceUtils.getScaledSize(
                                               context, 0.178),
                                           width: DeviceUtils.getScaledSize(
@@ -216,7 +238,7 @@ class CartPage extends GetView<CartController> {
                                         children: [
                                           Text(
                                             cartController
-                                                .selectedProductList[i]
+                                                .selectedProductList[index]
                                                 .idProduct!
                                                 .name!,
                                             maxLines: 2,
@@ -232,7 +254,7 @@ class CartPage extends GetView<CartController> {
                                                       context,
                                                       double.parse(cartController
                                                           .selectedProductList[
-                                                              i]
+                                                              index]
                                                           .idProduct!
                                                           .prices!)),
                                                   style: titilliumSemiBold
@@ -241,26 +263,50 @@ class CartPage extends GetView<CartController> {
                                                           color: Colors.grey),
                                                 ),
                                               ),
-                                              Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  "x${cartController.selectedProductList[i].quantity!}",
-                                                  style: titilliumSemiBold
-                                                      .copyWith(
-                                                          fontSize: 16,
-                                                          color: Colors.red),
-                                                ),
-                                              ),
                                             ],
                                           ),
+                                          Row(
+                                            children: [
+                                              //decrementQuality
+                                              _iconsquality(context, onTap: () {
+                                                controller
+                                                    .decrementQuality(index);
+                                              },
+                                                  icon: Icon(Icons.remove,
+                                                      color:
+                                                          controller.qualityProduct[
+                                                                      index] >
+                                                                  1
+                                                              ? ColorResources
+                                                                  .PRIMARY
+                                                              : ColorResources
+                                                                  .GREY),
+                                                  color:
+                                                      controller.qualityProduct[
+                                                                  index] >
+                                                              1
+                                                          ? ColorResources
+                                                              .PRIMARY
+                                                          : ColorResources
+                                                              .GREY),
 
-                                          // Row(
-                                          //   children: [
-                                          //     const Text("Nhập số lượng "),
-                                          //     inputWidget(
-                                          //         context, cartController),
-                                          //   ],
-                                          // ),
+                                              //quanlity
+                                              _iconsquality(context,
+                                                  text: controller
+                                                      .qualityProduct[index]
+                                                      .toString()),
+
+                                              //incrementQuality
+                                              _iconsquality(context, onTap: () {
+                                                controller
+                                                    .incrementQuality(index);
+                                              },
+                                                  icon: const Icon(
+                                                      Icons.add_outlined,
+                                                      color: ColorResources
+                                                          .PRIMARY)),
+                                            ],
+                                          ),
                                           SizedBox(
                                               height: DeviceUtils.getScaledSize(
                                                   context, 0.02)),
@@ -274,7 +320,7 @@ class CartPage extends GetView<CartController> {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          controller.deleteItem(i);
+                                          controller.deleteItem(index);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.all(
@@ -363,49 +409,48 @@ class CartPage extends GetView<CartController> {
   Widget _bottomContainer(BuildContext context) {
     return GetBuilder<CartController>(
         init: CartController(),
-        builder: (cartController) {
-          return
-              // cartController.selectedProductList.isEmpty
-              //     ? Container()
-              //     :
-              Container(
-            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
-            height: DeviceUtils.getScaledSize(context, 0.2),
-            decoration: BoxDecoration(
-              color: ColorResources.WHITE,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 2,
-                  color: ColorResources.PRIMARY.withOpacity(0.3),
-                  spreadRadius: 2, // Shadow position
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ///
-                /// button checkout
-                ///
-                GestureDetector(
-                  onTap: () {
-                    cartController.onCheckoutClick();
-                  },
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: ColorResources.PRIMARY,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Align(
-                        child: Text(
-                            "Thanh toán ${PriceConverter.convertPrice(context, cartController.price.toDouble())}",
-                            style: Dimensions.fontSizeStyle16()
-                                .copyWith(color: ColorResources.WHITE))),
+        builder: (controller) {
+          return controller.selectedProductList.isEmpty
+              ? const SizedBox.shrink()
+              : Container(
+                  padding:
+                      EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
+                  height: DeviceUtils.getScaledSize(context, 0.2),
+                  decoration: BoxDecoration(
+                    color: ColorResources.WHITE,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2,
+                        color: ColorResources.PRIMARY.withOpacity(0.3),
+                        spreadRadius: 2, // Shadow position
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          );
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ///
+                      /// button checkout
+                      ///
+                      GestureDetector(
+                        onTap: () {
+                          controller.onCheckoutClick();
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: ColorResources.PRIMARY,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Align(
+                              child: Text(
+                                  "Thanh toán ${PriceConverter.convertPrice(context, controller.price.toDouble())}",
+                                  style: Dimensions.fontSizeStyle16()
+                                      .copyWith(color: ColorResources.WHITE))),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
         });
   }
 
@@ -432,9 +477,6 @@ class CartPage extends GetView<CartController> {
       body: GetBuilder<CartController>(
           init: CartController(),
           builder: (controller) {
-            if (controller.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
             return controller.selectedProductList.isEmpty
                 ? const Center(child: Text("Giỏ hàng trống"))
                 : SingleChildScrollView(
