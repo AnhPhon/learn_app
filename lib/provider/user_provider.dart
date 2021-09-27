@@ -128,4 +128,28 @@ class UserProvider {
       onError(apiResponse.error);
     }
   }
+
+  ///
+  /// Check username exists
+  ///
+  Future<void> checkUsernameExists({
+    required String username,
+    required Function(UserModel user) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse =
+        await regionRepo!.checkUsernameExists(username);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      if (results.toString() != '') {
+        onSuccess(UserModel.fromJson(results as Map<String, dynamic>));
+      } else {
+        onSuccess(UserModel());
+      }
+    } else {
+      onError(apiResponse.error);
+    }
+  }
 }

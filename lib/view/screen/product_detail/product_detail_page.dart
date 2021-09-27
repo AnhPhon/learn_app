@@ -234,7 +234,8 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return Container(
-                                    height: 250,
+                                    height:
+                                        DeviceUtils.getScaledSize(context, 0.7),
                                     padding: const EdgeInsets.all(20),
                                     child: Column(
                                       children: [

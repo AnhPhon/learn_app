@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_checks
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,7 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:intl/intl.dart';
-// images
+import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
@@ -17,7 +15,199 @@ import 'package:template/view/screen/register/register_page_3.dart';
 import 'register_controller.dart';
 
 class RegisterPage extends GetView<RegisterController> {
-//input ma gioi thieu
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar().customAppBar(title: "Thông tin cá nhân"),
+      body: SingleChildScrollView(
+          child: GetBuilder<RegisterController>(
+              init: RegisterController(),
+              builder: (RegisterController controller) {
+                return Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      // logo
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  DeviceUtils.getScaledSize(context, 0.03)),
+                          child: Image.asset(Images.logo_image)),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: Dimensions.PADDING_SIZE_DEFAULT,
+                            right: Dimensions.PADDING_SIZE_DEFAULT),
+                        child: Column(
+                          children: [
+                            // Mã giới thiệu
+                            _inputMaGioiThieu(context, "Mã giới thiệu",
+                                controller.textEditControllers["magioithieu"]!),
+
+                            // Tài khoản
+                            _normalInputWidget(
+                                context,
+                                "Tài khoản",
+                                controller.textEditControllers["taikhoan"]!,
+                                TextInputType.text),
+
+                            // Mất khẩu
+                            _normalInputWidget(
+                                context,
+                                "Mật khẩu",
+                                controller.textEditControllers["matkhau"]!,
+                                TextInputType.visiblePassword),
+
+                            // Xác nhận mật khẩu
+                            _normalInputWidget(
+                                context,
+                                "Xác nhận mật khẩu",
+                                controller
+                                    .textEditControllers["xacnhanmatkhau"]!,
+                                TextInputType.visiblePassword),
+
+                            // Số điện thoại
+                            _normalInputWidget(
+                                context,
+                                "Số điện thoại",
+                                controller.textEditControllers["sodienthoai"]!,
+                                TextInputType.number),
+
+                            // Mã giới thiệu
+                            _normalInputWidget(
+                                context,
+                                "Họ và tên",
+                                controller.textEditControllers["hoten"]!,
+                                TextInputType.text),
+
+                            // gender
+                            _genderSelectionWidget(context, controller),
+
+                            // Ngày sinh
+                            _dateTimePickNgaySinh(context),
+
+                            // cmnd
+                            _normalInputWidget(
+                                context,
+                                "Số chứng minh nhân dân",
+                                controller.textEditControllers["cmnd"]!,
+                                TextInputType.number),
+
+                            // ngày cấp
+                            _dateTimePickNgayCap(context),
+
+                            // Nơi cấp
+                            _normalInputWidget(
+                                context,
+                                "Nơi cấp",
+                                controller.textEditControllers["noicap"]!,
+                                TextInputType.text),
+
+                            // Nghề nghiệp
+                            _normalInputWidget(
+                                context,
+                                "Nghề nghiệp",
+                                controller.textEditControllers["nghenghiep"]!,
+                                TextInputType.text),
+
+                            // Địa chỉ thường trú
+                            _normalInputWidget(
+                                context,
+                                "Địa chỉ thường trú",
+                                controller
+                                    .textEditControllers["diachithuongtru"]!,
+                                TextInputType.text),
+
+                            // Địa chỉ liên lạc
+                            _normalInputWidget(
+                                context,
+                                "Địa chỉ liên lạc",
+                                controller
+                                    .textEditControllers["diachitlienlac"]!,
+                                TextInputType.text),
+
+                            // tiếp tục button
+                            GestureDetector(
+                              onTap: () {
+                                // final String magioithieu =
+                                //     controller.textEditControllers["magioithieu"]!.text;
+
+                                final UserModel userModel = UserModel(
+                                  password: controller
+                                      .textEditControllers["matkhau"]!.text,
+                                  idUser: "",
+                                  idRole: "",
+                                  idOptionalRole: "0",
+                                  fullname: controller
+                                      .textEditControllers["hoten"]!.text,
+                                  username: controller
+                                      .textEditControllers["taikhoan"]!.text,
+                                  sex: controller.gender ?? "",
+                                  avatar:
+                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632456310...",
+                                  born: DateConverter.estimatedDate(
+                                      controller.ngaysinh!),
+                                  phone: controller
+                                      .textEditControllers["sodienthoai"]!.text,
+                                  address: controller
+                                      .textEditControllers["diachithuongtru"]!
+                                      .text,
+                                  citizenIdentification: controller
+                                      .textEditControllers["cmnd"]!.text,
+                                  status: "1",
+                                  imageCitizenIdentification:
+                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455894...",
+                                  imageCitizenIdentification1:
+                                      "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455901...",
+                                  paymentProofImage: "",
+                                );
+
+                                // cho phép tạo
+                                bool allowCreate = false;
+                                if (allowCreate == true) {
+                                  controller.createUser(userModel);
+                                }
+                                Get.to(RegisterPage3());
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: DeviceUtils.getScaledSize(
+                                        context, 0.035)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: DeviceUtils.getScaledSize(
+                                        context, 0.035),
+                                    horizontal: DeviceUtils.getScaledSize(
+                                        context, 0.03)),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFF61A63C),
+                                      Color(0xFF61A63C),
+                                      Color(0xFF61A63C),
+                                    ],
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Tiếp tục",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              })),
+    );
+  }
+
+  ///
+  /// input ma gioi thieu
+  ///
   Widget _inputMaGioiThieu(
       BuildContext context, String? label, TextEditingController controller) {
     return Container(
@@ -53,9 +243,11 @@ class RegisterPage extends GetView<RegisterController> {
     );
   }
 
-//input widget
-  Widget _normalInputWidget(
-      BuildContext context, String? label, TextEditingController controllers,TextInputType extInputType) {
+  ///
+  /// input widget
+  ///
+  Widget _normalInputWidget(BuildContext context, String? label,
+      TextEditingController controllers, TextInputType extInputType) {
     return Container(
       margin: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.025)),
@@ -63,7 +255,7 @@ class RegisterPage extends GetView<RegisterController> {
         enabled: controller.isMaGioiThieuValid(),
         textInputAction: TextInputAction.done,
         textAlignVertical: TextAlignVertical.center,
-        controller: controllers, 
+        controller: controllers,
         keyboardType: extInputType,
         cursorColor: ColorResources.PRIMARY,
         decoration: InputDecoration(
@@ -92,7 +284,7 @@ class RegisterPage extends GetView<RegisterController> {
   }
 
   ///
-  /// select
+  /// select gender
   ///
   Widget _genderSelectionWidget(BuildContext context, controllers) {
     final List<String> genderOptions = ["Nam", "Nữ"];
@@ -216,7 +408,7 @@ class RegisterPage extends GetView<RegisterController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'Ngày cấp',
               style: const TextStyle(color: Colors.grey),
             ),
@@ -229,175 +421,5 @@ class RegisterPage extends GetView<RegisterController> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Get.lazyPut(() => RegisterController());
-    // final double width = MediaQuery.of(context).size.width;
-
-    /**
-     * Mã giới thiệu
-     * Tài khoản
-     * mật khẩu
-     * xác nhận mật khẩu
-     * Sô điện thoại
-     * họ và tên
-     * giới tính
-     * Ngày sinh
-     * Nơi sinh
-     * Số CMND
-     * Cấp ngày, tại
-     * Nghề nghiệp
-     * Địa chỉ thường trú
-     * Địa chỉ liên lạc
-     */
-
-    return GetBuilder<RegisterController>(
-        init: RegisterController(),
-        builder: (RegisterController value) {
-          final controllers = controller.controllers;
-
-          return Scaffold(
-            appBar: CustomAppBar().customAppBar(title: "Thông tin cá nhân"),
-            body: SingleChildScrollView(
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                DeviceUtils.getScaledSize(context, 0.03)),
-                        child: Image.asset(Images.logo_image)),
-                    Padding(
-                      padding: EdgeInsets.all(
-                          DeviceUtils.getScaledSize(context, 0.063)),
-                      child: Column(
-                        children: [
-                          // Mã giới thiệu
-                          _inputMaGioiThieu(context, "Mã giới thiệu",
-                              controllers["magioithieu"]!),
-
-                          // Tài khoản
-                          _normalInputWidget(
-                              context, "Tài khoản", controllers["taikhoan"]!, TextInputType.text),
-
-                          // Mất khẩu
-                          _normalInputWidget(
-                              context, "Mật khẩu", controllers["matkhau"]!, TextInputType.visiblePassword),
-
-                          // Xác nhận mật khẩu
-                          _normalInputWidget(context, "Xác nhận mật khẩu",
-                              controllers["xacnhanmatkhau"]!, TextInputType.visiblePassword),
-
-                          // Số điện thoại
-                          _normalInputWidget(context, "Số điện thoại",
-                              controllers["sodienthoai"]!, TextInputType.number),
-
-                          // Mã giới thiệu
-                          _normalInputWidget(
-                              context, "Họ và tên", controllers["hoten"]!, TextInputType.text),
-
-                          // gender
-                          _genderSelectionWidget(context, controller),
-
-                          // Ngày sinh
-                          _dateTimePickNgaySinh(context),
-
-                          // cmnd
-                          _normalInputWidget(context, "Số chứng minh nhân dân",
-                              controllers["cmnd"]!, TextInputType.number),
-
-                          // ngày cấp
-                          _dateTimePickNgayCap(context),
-
-                          // Nơi cấp
-                          _normalInputWidget(
-                              context, "Nơi cấp", controllers["noicap"]!, TextInputType.text),
-
-                          // Nghề nghiệp
-                          _normalInputWidget(context, "Nghề nghiệp",
-                              controllers["nghenghiep"]!, TextInputType.text),
-
-                          // Địa chỉ thường trú
-                          _normalInputWidget(context, "Địa chỉ thường trú",
-                              controllers["diachithuongtru"]!, TextInputType.text),
-
-                          // Địa chỉ liên lạc
-                          _normalInputWidget(context, "Địa chỉ liên lạc",
-                              controllers["diachitlienlac"]!, TextInputType.text),
-
-                          GestureDetector(
-                            onTap: () {
-                              // final String magioithieu =
-                              //     controllers["magioithieu"]!.text;
-
-                              final UserModel userModel = UserModel(
-                                password: controllers["matkhau"]!.text,
-                                idUser: "",
-                                idRole: "",
-                                idOptionalRole: "0",
-                                fullname: controllers["hoten"]!.text,
-                                username: controllers["taikhoan"]!.text,
-                                sex: controller.gender ?? "",
-                                avatar:
-                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632456310...",
-                                born: DateConverter.estimatedDate(
-                                    controller.ngaysinh!),
-                                phone: controllers["sodienthoai"]!.text,
-                                address: controllers["diachithuongtru"]!.text,
-                                citizenIdentification:  controllers["cmnd"]!.text,
-                                status: "1",
-                                imageCitizenIdentification:
-                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455894...",
-                                imageCitizenIdentification1:
-                                    "https://izisoft.s3.ap-southeast-1.amazonaws.com/p08yamamoto/1632455901...",
-                                paymentProofImage: "",
-                              );
-
-                              // cho phép tạo
-                              bool allowCreate = false;
-                              if (allowCreate == true) {
-                                controller.createUser(userModel);
-                              }
-                              Get.to(RegisterPage3());
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  vertical: DeviceUtils.getScaledSize(
-                                      context, 0.035)),
-                              padding: EdgeInsets.symmetric(
-                                  vertical:
-                                      DeviceUtils.getScaledSize(context, 0.035),
-                                  horizontal:
-                                      DeviceUtils.getScaledSize(context, 0.03)),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF61A63C),
-                                    Color(0xFF61A63C),
-                                    Color(0xFF61A63C),
-                                  ],
-                                ),
-                              ),
-                              child: const Text(
-                                "Tiếp tục",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
   }
 }

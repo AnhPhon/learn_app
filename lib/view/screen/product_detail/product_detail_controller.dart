@@ -3,15 +3,14 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
-import 'package:template/data/model/body/product_by_id_order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/home/home_controller.dart';
 
 class ProductDetailController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -22,9 +21,9 @@ class ProductDetailController extends GetxController {
 
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
 
-  List<ProductByIdOrderModel> productFromCartList = [];
+  List<ProductResponse> productFromCartList = [];
 
-  bool isLoadingMore = true;
+  bool isLoadingMore = false;
 
   ProductModel? productModel;
 
@@ -101,6 +100,7 @@ class ProductDetailController extends GetxController {
   void order() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) async {
       if (value == null) {
+        print("trong0");
         await orderProvider.add(
             data: OrderModel(
                 idUser: "614748250c57f118c4a40689",
@@ -159,6 +159,7 @@ class ProductDetailController extends GetxController {
         final indexOrderItemList = productFromCartList.indexWhere((element) =>
             element.idProduct!.id == Get.parameters['productId'].toString());
         if (indexOrderItemList == -1) {
+          print("trong2");
           Get.snackbar(
             "Thành công",
             "Đã thêm sản phẩm vào giỏ hàng",
@@ -187,6 +188,7 @@ class ProductDetailController extends GetxController {
           isLoading = false;
           update();
         } else {
+          print("trong4");
           isLoading = false;
           Get.snackbar(
             "Thất bại",
@@ -209,13 +211,13 @@ class ProductDetailController extends GetxController {
   ///
   void loadQuanlityCart() {
     productFromCartList.clear();
-    sl
-        .get<SharedPreferenceHelper>()
-        .orderId
-        .then((value) => productProvider.findByIdOrder(
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      if (value != null) {
+        print("trong1");
+        productProvider.findByIdOrder(
             page: 1,
             limit: 100,
-            idOrder: value!,
+            idOrder: value,
             onSuccess: (value) {
               productFromCartList = value;
               update();
@@ -223,7 +225,9 @@ class ProductDetailController extends GetxController {
             onError: (error) {
               print(error);
               update();
-            }));
+            });
+      }
+    });
   }
 
   ///
@@ -254,7 +258,12 @@ class ProductDetailController extends GetxController {
     sl
         .get<SharedPreferenceHelper>()
         .orderId
-        .then((value) => Get.toNamed("${AppRoutes.CART}?idOrder=$value"));
+        .then((value){
+         Get.toNamed("${AppRoutes.CART}?idOrder=$value")!.then((value){
+           print('data tra ve la ${value}');
+           loadQuanlityCart();
+         });
+        });
   }
 
   //tăng số lượng

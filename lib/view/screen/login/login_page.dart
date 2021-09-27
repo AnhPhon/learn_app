@@ -4,12 +4,9 @@ import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
-// template
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/screen/register/register_page.dart';
-import 'package:template/view/screen/register/register_page_2.dart';
-// images
 
 import 'login_controller.dart';
 
@@ -110,7 +107,7 @@ class LoginPage extends GetView<LoginController> {
   ///
   Widget _loginBtnWidget(BuildContext context, String label, double width) {
     return GestureDetector(
-      onTap: () { 
+      onTap: () {
         // on login button click
         controller.onLoginBtnClick();
       },
@@ -154,8 +151,7 @@ class LoginPage extends GetView<LoginController> {
                   const Text("Bạn chưa có tài khoản? "),
                   GestureDetector(
                     onTap: () {
-                      Get.put(RegisterPage());
-                      Get.toNamed(AppRoutes.REGISTER);
+                      Get.toNamed(AppRoutes.INFORMATION_USER);
                     },
                     child: const Text(
                       "Đăng ký",

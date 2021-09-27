@@ -11,22 +11,20 @@ class CategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
+  bool isLoading = true;
+  bool isLoadingListView = true;
 
   TabController? tabController;
 
   List<CategoryModel> categoriesList = [];
-
-  List<ProductModel> productWithIdList = [];
-
+  List<ProductModel> productWithIdCategList = [];
   ProductModel? productWithId;
-
-  int isSelectedTabCateg = 0;
-
-  bool isLoading = false;
 
   @override
   void onInit() {
     super.onInit();
+    // get all categries
+    getAllCategories();
   }
 
   @override
@@ -35,52 +33,82 @@ class CategoriesController extends GetxController
     tabController!.dispose();
   }
 
-  //lấy tất cả danh mục
+  ///
+  ///lấy tất cả danh mục
+  ///
   void getAllCategories() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
+
+      // binding data tab
       tabController = TabController(length: categoriesList.length, vsync: this);
-      tabController!.addListener(() {
-        isSelectedTabCateg = tabController!.index;
-        getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
-      });
-      getProductWithIdCateg(id: categoriesList[isSelectedTabCateg].id!);
+
+      // listen tab controller
+      listenerTabController();
+
+      // set tab active
+      final int tabIndex = int.parse(Get.parameters['indexTab'].toString());
+      if (tabIndex == 0) {
+        // load data product with id categories with index 0
+        getProductWithIdCateg(id: categoriesList[tabController!.index].id!);
+      } else {
+        tabController!.index = int.parse(Get.parameters['indexTab'].toString());
+      }
+
+      isLoading = false;
       update();
-    }, onError: (error) {
+    }, onError: (error) { 
       print(error);
       update();
     });
   }
 
-  //lấy sản phẩm theo danh mục
-  void getProductWithIdCateg({required String id}) {
-    isLoading = true;
+  ///
+  ///listener tabController
+  ///
+  void listenerTabController() {
+    // listen tab
+    tabController!.addListener(() {
+      // add loading and clear data
+      isLoadingListView = true;
+      productWithIdCategList.clear();
+      update();
 
-    update();
-    productProvider
-        .paginate(
-            page: 1,
-            limit: 5,
-            filter: "idCategory=$id",
-            onSuccess: (value) {
-              productWithIdList.clear();
-              productWithIdList = value;
-              isLoading = false;
-            },
-            onError: (error) {
-              print(error);
-            })
-        .then((value) => update());
+      // load data product with id categories
+      getProductWithIdCateg(id: categoriesList[tabController!.index].id!);
+    });
   }
 
-  //xem sản phẩm
+  ///
+  ///lấy sản phẩm theo danh mục
+  ///
+  void getProductWithIdCateg({required String id}) {
+    // get data product filter by id category
+    productProvider.paginate(
+        page: 1,
+        limit: 5,
+        filter: "idCategory=$id",
+        onSuccess: (value) {
+          productWithIdCategList = value;
+          isLoadingListView = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  ///
+  ///xem sản phẩm
+  ///
   void onProductClick(int index) {
-    print("productId=${productWithIdList[index].id!}");
     productProvider
         .find(
-            id: productWithIdList[index].id!,
+            id: productWithIdCategList[index].id!,
             onSuccess: (value) {
               productWithId = value;
+
               update();
             },
             onError: (error) {
@@ -88,6 +116,6 @@ class CategoriesController extends GetxController
               update();
             })
         .then((values) => Get.toNamed(
-            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdList[index].id!}&categoryId=${productWithIdList[index].idCategory}&price=${productWithIdList[index].prices}"));
+            "${AppRoutes.PRODUCT_DETAIL}?productId=${productWithIdCategList[index].id!}&categoryId=${productWithIdCategList[index].idCategory}&price=${productWithIdCategList[index].prices}"));
   }
 }

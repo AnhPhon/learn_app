@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
-import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
@@ -22,8 +21,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // usernameController.text = 'ytp3001';
-    // passwordController.text = 'password';
+    usernameController.text = 'ytp3001';
+    passwordController.text = 'password';
 
     super.onInit();
   }
@@ -48,25 +47,6 @@ class LoginController extends GetxController {
       request.username = usernameController.text.toString();
       request.password = passwordController.text.toString();
 
-      // Get.snackbar(
-      //   "Thành công!", // title
-      //   'Đăng nhập thành công', // message
-      //   icon: const Icon(Icons.error_outline),
-      //   shouldIconPulse: true,
-      //   isDismissible: true,
-      //   duration: const Duration(seconds: 2),
-      // );
-
-      // isLoading = false;
-      // auth = auth;
-      // if(auth != null) {
-      //   sl.get<SharedPreferenceHelper>().saveUserId(auth!.idUser!);
-      // }
-      // update();
-
-      // // go to dashboard
-      // Get.offAndToNamed(AppRoutes.DASHBOARD);
-
       authProvider.login(
           request: request,
           onSuccess: (auth) {
@@ -82,17 +62,10 @@ class LoginController extends GetxController {
             isLoading = false;
             auth = auth;
 
-            userProvider.all(onSuccess: (data) {
-              for (final UserModel element in data) {
-                if (element.username == auth.username) {
-                  sl.get<SharedPreferenceHelper>().saveUserId(element.id!);
-                  break;
-                }
-              }
-            }, onError: (error) {
-              print(error);
-              update();
-            });
+            // save info token and info user
+            sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
+            sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
+            sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
 
             update();
 
@@ -111,7 +84,7 @@ class LoginController extends GetxController {
             );
             print(error);
             update();
-          });
+          }); 
     }
   }
 }

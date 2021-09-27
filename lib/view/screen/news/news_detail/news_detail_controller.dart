@@ -1,16 +1,47 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/news_model.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/news_provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsDetailController extends GetxController {
-  List<NewsModel> newsDetailList = [];
+  NewsProvider newsProvider = GetIt.I.get<NewsProvider>();
 
-  List title = ["YouTube's new features,let's take a look"];
+  NewsModel? newsModel;
 
-  List subtitle = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  ];
+  bool isLoading = true;
 
-  List categories = ["Công nghệ"];
+  @override
+  void onInit() {
+    super.onInit();
+    getNewsFromId();
+  }
 
-  List time = ["45 phút"];
+  ///
+  ///get news from id
+  ///
+  void getNewsFromId() {
+    newsProvider.find(
+        id: Get.parameters['idNews'].toString(),
+        onSuccess: (value) {
+          newsModel = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+          update();
+        });
+  }
+
+  String timeAgo(String dateTime) {
+    timeago.setLocaleMessages('vi', timeago.ViMessages());
+    final String time = dateTime;
+    final loadedTime = DateConverter.convertStringToDatetime(
+        time.replaceAll("T", " ").substring(0, time.length - 1));
+    final now = DateTime.now();
+    final difference = now.difference(loadedTime);
+    return timeago.format(now.subtract(difference), locale: "vi");
+  }
 }

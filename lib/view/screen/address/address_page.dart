@@ -69,7 +69,7 @@ class AddressPage extends GetView<AddressController> {
       BuildContext context, AddressController addressController) {
     return GestureDetector(
       onTap: () {
-        Get.back();
+        addressController.changeAddress();
       },
       child: Container(
         margin: EdgeInsets.symmetric(

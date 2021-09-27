@@ -30,7 +30,7 @@ class LoggingInterceptor extends InterceptorsWrapper {
             responseAsString.substring(i * maxCharactersPerLine, endingIndex));
       }
     } else {
-      print('Data ${response.data}');
+      // print('Data ${response.data}');
     }
 
     // print('<-- END HTTP');

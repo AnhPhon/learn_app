@@ -116,7 +116,7 @@ class NewsPage extends GetView<NewsController> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  controller.getNewsFromId(
+                                                  controller.onClickNewsDetail(
                                                       index: index);
                                                 },
                                                 child: Row(
@@ -143,6 +143,7 @@ class NewsPage extends GetView<NewsController> {
                                                                   .width *
                                                               .25,
                                                           // height: 265,
+                                                          fit: BoxFit.fill,
                                                         ),
                                                       ),
                                                       const Spacer(),
@@ -158,21 +159,23 @@ class NewsPage extends GetView<NewsController> {
                                                                 .symmetric(
                                                             horizontal: Dimensions
                                                                 .PADDING_SIZE_DEFAULT),
-                                                        child: Column(
-                                                          children: [
-                                                            Container(
-                                                                alignment: Alignment
-                                                                    .centerLeft,
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        bottom:
-                                                                            7),
-                                                                child: Text(
+                                                        child: Container(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
                                                                     controller
                                                                         .newsList[
                                                                             index]
                                                                         .name!,
+                                                                    maxLines: 3,
                                                                     style:
                                                                         const TextStyle(
                                                                       fontSize:
@@ -181,9 +184,29 @@ class NewsPage extends GetView<NewsController> {
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold,
-                                                                    ))),
-                                                          ],
-                                                        ),
+                                                                    )),
+                                                                SizedBox(
+                                                                    height: DeviceUtils
+                                                                        .getScaledSize(
+                                                                            context,
+                                                                            0.04)),
+                                                                Text(
+                                                                    controller.timeAgo(controller
+                                                                        .newsList[
+                                                                            index]
+                                                                        .createdAt!),
+                                                                    maxLines: 1,
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            Dimensions
+                                                                                .FONT_SIZE_DEFAULT,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        color: Colors
+                                                                            .grey)),
+                                                              ],
+                                                            )),
                                                       ),
                                                     ]),
                                               ),

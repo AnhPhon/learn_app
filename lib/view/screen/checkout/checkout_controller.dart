@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/body/order_model.dart';
-import 'package:template/data/model/body/product_by_id_order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/user_provider.dart';
@@ -90,7 +90,7 @@ class CheckoutController extends GetxController {
 
   UserProvider userProvider = GetIt.I.get<UserProvider>();
 
-  List<ProductByIdOrderModel> selectedProductList = [];
+  List<ProductResponse> selectedProductList = [];
 
   UserModel? userModel;
 
