@@ -59,7 +59,7 @@ class UserRepository {
   }
 
   ///
-  /// Get paginate users "page": 1, "limit": 10, filter 
+  /// Get paginate users "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
@@ -96,6 +96,32 @@ class UserRepository {
   Future<ApiResponse> checkUsernameExists(String username) async {
     try {
       final String uri = '/users/username/$username';
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// get sub team of user
+  ///
+  Future<ApiResponse> getSubTeamUser(String idUser) async {
+    try {
+      final String uri = '/users/subteam?idUser=$idUser';
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// static user
+  ///
+  Future<ApiResponse> statisUser(String idUser) async {
+    try {
+      final String uri = '/users/statis?idUser=$idUser';
       final response = await dioClient!.get(uri);
       return ApiResponse.withSuccess(response);
     } catch (e) {

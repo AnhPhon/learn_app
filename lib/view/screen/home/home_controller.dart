@@ -1,67 +1,67 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/category_model.dart';
-import 'package:template/data/model/body/order_item_model.dart';
-import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
-import 'package:template/data/model/response/product_response_model.dart';
+import 'package:template/data/model/response/static_user_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/provider/order_item_provider.dart';
-import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/category_provider.dart';
-import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/posts/posts_page.dart';
 
 class HomeController extends GetxController {
   UserProvider userProvider = GetIt.I.get<UserProvider>();
-
-  OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
-
-  OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
-
-  ProductProvider productProvider = GetIt.I.get<ProductProvider>();
-
   CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
 
   UserModel userModel = UserModel();
-  OrderModel orderModel = OrderModel();
-  OrderItemModel orderItemModel = OrderItemModel();
-  //banner
-  List banner = [Images.banner1, Images.banner2, Images.banner3];
+  StaticUserResponse staticUserResponse = StaticUserResponse();
 
+  // banner
+  List banner = [Images.banner1, Images.banner2, Images.banner3];
   List<CategoryModel> categoriesList = [];
 
-  // List<ProductResponse> productFromCartList = [];
-
-  double? doanhSoDoiNhom;
-  double? doanhSoCaNhan;
-  int? soLuongId;
-  int? soLuongDonGia;
-
   int categoryPages = 0;
-
-  String name = "";
-  String role = "";
 
   bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
+
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (userId) {
+        // load data user by id
+        getUserById(userId!);
+      },
+    );
+
+    // load data categories
     getAllCategory();
-    // loadQualityProduct();
+  }
 
-    doanhSoDoiNhom = 0;
-    doanhSoCaNhan = 0;
-    soLuongId = 0;
-    soLuongDonGia = 0;
-
-    getUserById();
-    update();
+  ///
+  /// lấy thông tin user
+  ///
+  void getUserById(String userId) {
+    // load data user by id
+    userProvider.find(
+        id: userId,
+        onSuccess: (data) {
+          userModel = data;
+          // load data revanue and statistical of team
+          userProvider.statisUser(
+              idUser: userId,
+              onSuccess: (data) {
+                staticUserResponse = data;
+                isLoading = false;
+                update();
+              },
+              onError: (error) {});
+        },
+        onError: (error) {
+          print(error);
+        });
   }
 
   ///
@@ -70,137 +70,12 @@ class HomeController extends GetxController {
   void getAllCategory() {
     categoryProvider.all(onSuccess: (value) {
       categoriesList = value;
-      isLoading = false;
       update();
     }, onError: (error) {
       print(error);
       update();
     });
   }
-
-  ///
-  ///lấy thông tin user
-  ///
-  void getUserById() {
-    update();
-    sl.get<SharedPreferenceHelper>().userId.then(
-      (value) {
-        final String userId = value!;
-        userProvider.find(
-            id: userId,
-            onSuccess: (value) {
-              name = value.fullname!;
-
-              // ??????
-              role = value.idOptionalRole!;
-              update();
-            },
-            onError: (error) {
-              print(error);
-            });
-
-        orderProvider.paginate(
-          filter: '&idUser=$userId',
-          limit: 100,
-          page: 1,
-          onSuccess: (data) {
-            for (final OrderModel element in data) {
-              final String orderId = element.id!;
-              // order item
-              orderItemProvider.paginate(
-                page: 1,
-                limit: 100,
-                filter: "&idOrder=$orderId",
-                onSuccess: (models) {
-                  for (final OrderItemModel model in models) {
-                    if (model.idOrder! == orderId) {
-                      soLuongDonGia =
-                          soLuongDonGia! + int.parse(model.quantity!);
-                      doanhSoCaNhan = doanhSoCaNhan! +
-                          int.parse(model.price!) * int.parse(model.quantity!);
-                      update();
-                    }
-                  }
-                },
-                onError: (error) {
-                  print(error);
-                },
-              );
-            }
-          },
-          onError: (error) {
-            print(error);
-          },
-        );
-
-        userProvider.find(
-          id: userId,
-          onSuccess: (models) {
-            soLuongId = soLuongId! + 1;
-            orderProvider.paginate(
-              filter: '&idUser=${models.id}',
-              limit: 100,
-              page: 1,
-              onSuccess: (data) {
-                for (final OrderModel element in data) {
-                  final String orderId = element.id!;
-                  // order item
-                  orderItemProvider.paginate(
-                    page: 1,
-                    limit: 100,
-                    filter: "&idOrder=$orderId",
-                    onSuccess: (models) {
-                      for (final OrderItemModel model in models) {
-                        if (model.idOrder! == orderId) {
-                          doanhSoDoiNhom = doanhSoDoiNhom! +
-                              int.parse(model.price!) *
-                                  int.parse(model.quantity!);
-                          update();
-                        }
-                      }
-                    },
-                    onError: (error) {
-                      print(error);
-                    },
-                  );
-                }
-              },
-              onError: (error) {
-                print(error);
-              },
-            );
-          },
-          onError: (error) {
-            print(error);
-            // update();
-          },
-        );
-      },
-    );
-    update();
-  }
-
-  ///
-  ///load quality product in cart
-  ///
-  // void loadQualityProduct() {
-  //   productFromCartList.clear();
-  //   sl.get<SharedPreferenceHelper>().orderId.then((value) {
-  //     if (value != null) {
-  //       productProvider.findByIdOrder(
-  //           page: 1,
-  //           limit: 100,
-  //           idOrder: value,
-  //           onSuccess: (value) {
-  //             productFromCartList = value;
-  //             update();
-  //           },
-  //           onError: (error) {
-  //             print(error);
-  //           });
-  //     }
-  //   });
-  // }
 
   ///
   ///onCartClick

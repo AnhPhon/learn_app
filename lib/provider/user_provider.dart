@@ -1,10 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/response/static_user_response.dart';
+import 'package:template/data/model/response/sub_team_response.dart';
 import 'package:template/data/repository/user_repository.dart';
 
 class UserProvider {
-  UserRepository? regionRepo = GetIt.I.get<UserRepository>();
+  UserRepository? userRepo = GetIt.I.get<UserRepository>();
 
   UserProvider();
 
@@ -15,7 +17,7 @@ class UserProvider {
     required Function(List<UserModel> users) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.get();
+    final ApiResponse apiResponse = await userRepo!.get();
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -36,7 +38,7 @@ class UserProvider {
     required Function(UserModel user) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.add(data);
+    final ApiResponse apiResponse = await userRepo!.add(data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -55,7 +57,7 @@ class UserProvider {
     required Function(UserModel user) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.update(data);
+    final ApiResponse apiResponse = await userRepo!.update(data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -75,7 +77,7 @@ class UserProvider {
     required Function(UserModel user) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.delete(id, data);
+    final ApiResponse apiResponse = await userRepo!.delete(id, data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -97,7 +99,7 @@ class UserProvider {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
-        await regionRepo!.paginate(page, limit, filter);
+        await userRepo!.paginate(page, limit, filter);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -118,7 +120,7 @@ class UserProvider {
     required Function(UserModel user) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await regionRepo!.find(id);
+    final ApiResponse apiResponse = await userRepo!.find(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -138,7 +140,7 @@ class UserProvider {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
-        await regionRepo!.checkUsernameExists(username);
+        await userRepo!.checkUsernameExists(username);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -147,6 +149,54 @@ class UserProvider {
         onSuccess(UserModel.fromJson(results as Map<String, dynamic>));
       } else {
         onSuccess(UserModel());
+      }
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// get sub team of user
+  ///
+  Future<void> getSubTeamUser({
+    required String idUser,
+    required Function(List<SubTeamResponse> user) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await userRepo!.getSubTeamUser(idUser);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as List<dynamic>;
+      if (results.toString() != '') {
+        onSuccess(results
+            .map((e) => SubTeamResponse.fromJson(e as Map<String, dynamic>))
+            .toList());
+      } else {
+        onSuccess([]);
+      }
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// statis user
+  ///
+  Future<void> statisUser({
+    required String idUser,
+    required Function(StaticUserResponse user) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await userRepo!.statisUser(idUser);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      if (results.toString() != '') {
+        onSuccess(StaticUserResponse.fromJson(results as Map<String, dynamic>));
+      } else {
+        onSuccess(StaticUserResponse());
       }
     } else {
       onError(apiResponse.error);
