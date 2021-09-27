@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/account/account_page.dart'; 
+import 'package:template/view/screen/account/account_page.dart';
 import 'package:template/view/screen/home/home_page.dart';
 import 'package:template/view/screen/leaderboard/leaderboard_page.dart';
-import 'package:template/view/screen/news/news_page.dart'; 
+import 'package:template/view/screen/news/news_page.dart';
 
 import 'dashboard_controller.dart';
 
@@ -18,9 +18,9 @@ class DashboardPage extends StatelessWidget {
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {
-        return Scaffold(
-          body: Container(
-            child: IndexedStack(
+        return SafeArea(
+          child: Scaffold(
+            body: IndexedStack(
               index: controller.tabIndex,
               children: [
                 HomePage(),
@@ -29,33 +29,33 @@ class DashboardPage extends StatelessWidget {
                 AccountPage(),
               ],
             ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: ColorResources.PRIMARY,
-            backgroundColor: ColorResources.WHITE,
-            onTap: controller.changeTabIndex,
-            currentIndex: controller.tabIndex,
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            items: [
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.home,
-                label: 'Trang chủ',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.chart_bar,
-                label: 'Bảng xếp hạng', 
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.news,
-                label: 'Tin tức',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.person,
-                label: 'Tài khoản',
-              ),
-            ],
+            bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: ColorResources.PRIMARY,
+              backgroundColor: ColorResources.WHITE,
+              onTap: controller.changeTabIndex,
+              currentIndex: controller.tabIndex,
+              type: BottomNavigationBarType.fixed,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              items: [
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.home,
+                  label: 'Trang chủ',
+                ),
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.chart_bar,
+                  label: 'Bảng xếp hạng',
+                ),
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.news,
+                  label: 'Tin tức',
+                ),
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.person,
+                  label: 'Tài khoản',
+                ),
+              ],
+            ),
           ),
         );
       },
