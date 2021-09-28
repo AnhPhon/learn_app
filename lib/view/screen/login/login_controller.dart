@@ -23,6 +23,14 @@ class LoginController extends GetxController {
   void onInit() {
     usernameController.text = 'ytp3001';
     passwordController.text = 'password';
+    // sl.get<SharedPreferenceHelper>().removeIsLogin();
+
+    sl.get<SharedPreferenceHelper>().isLogin.then((value) {
+      print("IS LOGIN: $value");
+      if (value == true) {
+        Get.offAndToNamed(AppRoutes.DASHBOARD);
+      }
+    });
 
     super.onInit();
   }
@@ -66,6 +74,7 @@ class LoginController extends GetxController {
             sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
             sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
             sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
+            sl.get<SharedPreferenceHelper>().saveIsLogin(true);
 
             update();
 
@@ -84,7 +93,7 @@ class LoginController extends GetxController {
             );
             print(error);
             update();
-          }); 
+          });
     }
   }
 }

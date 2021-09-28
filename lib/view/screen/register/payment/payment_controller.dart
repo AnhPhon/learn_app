@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +9,7 @@ import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_condition_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -37,20 +39,9 @@ class PaymentController extends GetxController {
 
   int sum = 0;
 
-  ///
-  /// hoanTatFaild
-  ///
-  void hoanTatFaild() {
-    Get.snackbar(
-      "Thất bại",
-      "Vui lòng tải lên hình ảnh thanh toán",
-      colorText: ColorResources.RED,
-      backgroundGradient: const LinearGradient(colors: [
-        Color(0xffffb8b3),
-        Color(0xffff9b94),
-        Color(0xffffb8b3),
-      ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-    );
+  @override
+  void onInit() {
+    super.onInit();
   }
 
   ///
@@ -75,100 +66,147 @@ class PaymentController extends GetxController {
     UserModel user,
     List<ProductConditionModel> items,
   ) {
-    imageProvider.add(
-      file: image!,
-      onSuccess: (image) {
-        print('link image ${image.data}');
+    if (image != null) {
+      EasyLoading.show(status: 'loading...');
 
-        userProvider.genUsername(onSuccess: (genModel) {
-          user.paymentProofImage = image.data;
-          user.username = genModel.username;
-          userProvider.add(
-            data: user,
-            onSuccess: (userModel) {
-              print("User added");
+      // image provider
+      imageProvider.add(
+        file: image!,
+        onSuccess: (image) {
+          print('link image ${image.data}');
 
-              final OrderModel order = OrderModel(
+          // gen username
+          userProvider.genUsername(onSuccess: (genModel) {
+            user.paymentProofImage = image.data;
+            user.username = genModel.username;
+
+            // add api user provider
+            userProvider.add(
+              data: user,
+              onSuccess: (userModel) {
+                print("User added");
+
+                final OrderModel order = OrderModel(
                   idUser: userModel.id,
-                  address: '123',
+                  address: userModel.address,
                   idDistrict: '1',
                   idProvince: '1',
                   idWarehouse: '1',
                   imagePayment: image.data,
                   statusOrder: '1',
                   statusPayment: '1',
-                  totalPrice: '0',
+                  totalPrice: convertSum(context, items),
                   userAccept: userModel.idUser,
-                  description: 'ABC',
-                  discountPrice: "0");
+                  description: 'Đơn hàng mới',
+                  discountPrice: "0",
+                );
+                
+                // add api order provider
+                orderProvider.add(
+                  data: order,
+                  onSuccess: (model) {
+                    // add Order Item To database
+                    _addOrderItemToDB(model.id!, items);
 
-              orderProvider.add(
-                data: order,
-                onSuccess: (model) {
-                  _addToDB(model.id!, items);
-                  update();
-                },
-                onError: (error) {
-                  print(error);
-                  update();
-                },
-              );
+                    Get.offAllNamed(AppRoutes.LOGIN);
 
-              update();
-            },
-            onError: (error) {
-              print(error);
-            },
-          );
-
-          Get.offNamed(AppRoutes.LOGIN);
-
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Đợi admin active",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
-        }, onError: (error) {
+                    EasyLoading.dismiss();
+                    showAnimatedDialog(
+                      context,
+                      const MyDialog(
+                        icon: Icons.check,
+                        title: "Hoàn tất",
+                        description: "Đợi admin active",
+                      ),
+                      dismissible: false,
+                      isFlip: true,
+                    );
+                  },
+                  onError: (error) {
+                    print(error);
+                  },
+                );
+              },
+              onError: (error) {
+                print(error);
+              },
+            );
+          }, onError: (error) {
+            print(error);
+          });
+        },
+        onError: (error) {
           print(error);
-        });
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
+        },
+      );
+    } else {
+      _showSnakebar(
+        "Upload hình lỗi",
+        "Bạn cần phải bổ sung hình trước khi thanh toán",
+        2,
+      );
+    }
   }
 
   ///
-  /// addToDB
+  /// _add order item to database
   ///
-  void _addToDB(String orderId, List<ProductConditionModel> items) {
+  void _addOrderItemToDB(String orderId, List<ProductConditionModel> items) {
+
+    // duyệt các sản phẩm
     items.forEach((element) {
-      if (element.isChoose == true) {
-        print(element.id);
-        final OrderItemModel model = OrderItemModel(
-          idOrder: orderId,
-          idProduct: element.id,
-          price: element.amount.toString(),
-          quantity: element.quality.toString(),
-        );
+      final OrderItemModel model = OrderItemModel(
+        idOrder: orderId,
+        idProduct: element.id,
+        price: element.amount.toString(),
+        quantity: element.quality.toString(),
+      );
 
-        orderItemProvider.add(
-          data: model,
-          onSuccess: (value) {},
-          onError: (error) {
-            print(error);
-            update();
-          },
-        );
+      // add api của order item
+      orderItemProvider.add(
+        data: model,
+        onSuccess: (value) {},
+        onError: (error) {
+          print(error);
+        },
+      );
 
-        print("Order item added");
-      }
+      print("Order item added");
     });
+  }
+
+  ///
+  /// convert sum number to sum string
+  ///
+  String convertSum(BuildContext context, List<ProductConditionModel> items) {
+    return PriceConverter.convertPrice(context, sumCalculator(items));
+  }
+
+  ///
+  /// tính tổng tiền
+  ///
+  double sumCalculator(List<ProductConditionModel> items) {
+    int sum = 0;
+    
+    // tổng (số lượng và đơn giá) của các sản phẩm
+    items.forEach((element) {
+      sum += element.quality * element.amount;
+    });
+    return sum.toDouble();
+  }
+
+  ///
+  /// show snackbar
+  ///
+  void _showSnakebar(String title, String message, int seconds) {
+    Get.snackbar(
+      title, // title
+      message, // message
+      backgroundColor: const Color(0xffFFEBEE),
+      icon: const Icon(Icons.error_outline),
+      shouldIconPulse: true,
+      isDismissible: true,
+      duration: Duration(seconds: seconds),
+    );
   }
 }

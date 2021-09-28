@@ -95,7 +95,7 @@ class PaymentPage extends GetView<PaymentController> {
                             ),
                             Text(
                               PriceConverter.convertPrice(
-                                  context, controller.sum * .75),
+                                  context, controller.sumCalculator(items) * .75),
                               style: Dimensions.fontSizeStyle16w600(),
                             ),
                           ],

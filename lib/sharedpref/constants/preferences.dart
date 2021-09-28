@@ -13,4 +13,6 @@ class Preferences {
   static const String district_id = "district_id";
   static const String address = "address";
   static const String ward = "ward";
+  static const String isLogin = "login";
+  static const String isFirst = "first";
 }

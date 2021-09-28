@@ -54,11 +54,8 @@ class OrderConditionPage extends GetView<OrderConditionController> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    controller.qualityProduct.value = 1;
-                    if (controller.items[index].isChoose == false) {
-                      //dialog chọn sản phẩm
-                      _callProductChooseWidget(context, index);
-                    }
+                    // controller.qualityProduct.value = /;
+                    _callProductChooseWidget(context, index);
                   },
 
                   //list sản phẩm
@@ -230,6 +227,11 @@ class OrderConditionPage extends GetView<OrderConditionController> {
   /// Choose quaility widget
   ///
   Widget _quailityWidget(BuildContext context, int index) {
+    if (controller.items[index].isChoose == false) {
+      controller.qualityProduct = 1.obs;
+    } else {
+      controller.qualityProduct = controller.items[index].quality.obs;
+    }
     // chọn số lượng sản phẩm
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
