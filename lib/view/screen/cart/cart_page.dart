@@ -45,7 +45,7 @@ class CartPage extends GetView<CartController> {
       Icon? icon,
       required String text1,
       required String text2,
-      required String text3}) {
+      String? text3}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -58,22 +58,28 @@ class CartPage extends GetView<CartController> {
         else
           icon!,
         SizedBox(width: DeviceUtils.getScaledSize(context, 0.02)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              text1,
-              style: Dimensions.fontSizeStyle16(),
-            ),
-            Text(
-              text2,
-              style: Dimensions.fontSizeStyle16w600(),
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(text3,
-                style:
-                    Dimensions.fontSizeStyle16().copyWith(color: Colors.grey)),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                text1,
+                style: Dimensions.fontSizeStyle16(),
+              ),
+              Text(
+                text2,
+                maxLines: 1,
+                style: Dimensions.fontSizeStyle16w600(),
+                overflow: TextOverflow.ellipsis,
+              ),
+              if (text3 == null)
+                const SizedBox.shrink()
+              else
+                Text(text3.toString(),
+                    style: Dimensions.fontSizeStyle16()
+                        .copyWith(color: Colors.grey)),
+            ],
+          ),
         ),
       ],
     );
@@ -82,7 +88,7 @@ class CartPage extends GetView<CartController> {
   ///
   ///shipping
   ///
-  Widget _shipping(BuildContext context, CartController cartController) {
+  Widget _shipping(BuildContext context, CartController controller) {
     return _containerBox(
       context,
       child: Column(
@@ -91,14 +97,24 @@ class CartPage extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 9,
-                child: _shippingWidget(context,
-                    icon: const Icon(
-                      Icons.location_on_outlined,
-                      color: ColorResources.PRIMARY,
-                    ),
-                    text1: "Địa chỉ ship",
-                    text2: cartController.userModel!.address!,
-                    text3: "Liên hệ: 0334125142"),
+                child: controller.address == null ||
+                        controller.district == null ||
+                        controller.province == null
+                    ? _shippingWidget(context,
+                        icon: const Icon(
+                          Icons.location_on_outlined,
+                          color: ColorResources.PRIMARY,
+                        ),
+                        text1: "Địa chỉ ship",
+                        text2: "Vui lòng nhập địa chỉ")
+                    : _shippingWidget(context,
+                        icon: const Icon(
+                          Icons.location_on_outlined,
+                          color: ColorResources.PRIMARY,
+                        ),
+                        text1: "Địa chỉ ship",
+                        text2:
+                            "${controller.address}, ${controller.district}, ${controller.province}"),
               ),
               Expanded(
                 child: GestureDetector(
@@ -196,7 +212,7 @@ class CartPage extends GetView<CartController> {
           ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: cartController.selectedProductList.length,
+              itemCount: cartController.orderItemProductList.length,
               itemBuilder: (BuildContext context, int index) {
                 return cartController.isLoadingQuality
                     ? const Center(child: CircularProgressIndicator())
@@ -215,7 +231,7 @@ class CartPage extends GetView<CartController> {
                                         borderRadius: BorderRadius.circular(7),
                                         child: Image.network(
                                           cartController
-                                              .selectedProductList[index]
+                                              .orderItemProductList[index]
                                               .idProduct!
                                               .images!,
                                           height: DeviceUtils.getScaledSize(
@@ -238,7 +254,7 @@ class CartPage extends GetView<CartController> {
                                         children: [
                                           Text(
                                             cartController
-                                                .selectedProductList[index]
+                                                .orderItemProductList[index]
                                                 .idProduct!
                                                 .name!,
                                             maxLines: 2,
@@ -253,7 +269,7 @@ class CartPage extends GetView<CartController> {
                                                   PriceConverter.convertPrice(
                                                       context,
                                                       double.parse(cartController
-                                                          .selectedProductList[
+                                                          .orderItemProductList[
                                                               index]
                                                           .idProduct!
                                                           .prices!)),
@@ -410,7 +426,7 @@ class CartPage extends GetView<CartController> {
     return GetBuilder<CartController>(
         init: CartController(),
         builder: (controller) {
-          return controller.selectedProductList.isEmpty
+          return controller.orderItemProductList.isEmpty
               ? const SizedBox.shrink()
               : Container(
                   padding:
@@ -482,7 +498,7 @@ class CartPage extends GetView<CartController> {
                 child: CircularProgressIndicator(),
               );
             }
-            return controller.selectedProductList.isEmpty
+            return controller.orderItemProductList.isEmpty
                 ? const Center(child: Text("Giỏ hàng trống"))
                 : SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),

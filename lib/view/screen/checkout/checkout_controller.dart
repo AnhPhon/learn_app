@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/body/image_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
-import 'package:template/data/model/response/product_response_model.dart';
+import 'package:template/data/model/response/order_item_response_model.dart';
+import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -22,27 +23,27 @@ class CheckoutController extends GetxController {
   GetIt sl = GetIt.instance;
   File? image;
   ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
-  ProductProvider productProvider = GetIt.I.get<ProductProvider>();
-
-  OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
+  ImageUpdateModel? imageUpdateModel;
 
   UserProvider userProvider = GetIt.I.get<UserProvider>();
-
-  List<ProductResponse> selectedProductList = [];
-
   UserModel? userModel;
 
-  ImageUpdateModel? imageUpdateModel;
+  ProductProvider productProvider = GetIt.I.get<ProductProvider>();
+
+  OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
+  List<OrderItemResponseModel> selectedProductList = [];
+
+  OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
 
   int price = 0;
 
   bool isLoading = true;
   bool isLoadingImage = false;
 
-  late final String orderId;
-  late final String address;
-  late final String provinceId;
-  late final String districtId;
+  String? orderId;
+  String? address;
+  String? provinceId;
+  String? districtId;
   String? idUser;
 
   @override
@@ -51,7 +52,6 @@ class CheckoutController extends GetxController {
     sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value);
     loadSelectedProduct();
     getValue();
-    getInfoUser();
   }
 
   ///
@@ -61,7 +61,7 @@ class CheckoutController extends GetxController {
     sl
         .get<SharedPreferenceHelper>()
         .orderId
-        .then((value) => productProvider.findByIdOrder(
+        .then((value) => orderItemProvider.findByIdOrder(
             page: 1,
             limit: 100,
             idOrder: Get.parameters['idOrder'].toString(),
@@ -138,7 +138,7 @@ class CheckoutController extends GetxController {
               statusOrder: "1",
               statusPayment: "2",
               description: "đây là nội dung",
-              address: userModel!.address,
+              address: address,
               idDistrict: districtId,
               idProvince: provinceId,
               discountPrice: "0",
@@ -183,10 +183,7 @@ class CheckoutController extends GetxController {
   ///
   void getValue() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) => orderId = value!);
-    // sl
-    //     .get<SharedPreferenceHelper>()
-    //     .address
-    //     .then((value) => print("assress: $value"));
+    sl.get<SharedPreferenceHelper>().address.then((value) => address = value!);
     sl
         .get<SharedPreferenceHelper>()
         .provinceId
@@ -196,18 +193,5 @@ class CheckoutController extends GetxController {
         .districtId
         .then((value) => districtId = value!);
     update();
-  }
-
-  ///
-  ///get infomation users
-  ///
-  void getInfoUser() {
-    userProvider.find(
-        id: "614748250c57f118c4a40689",
-        onSuccess: (value) {
-          userModel = value;
-          update();
-        },
-        onError: (error) {});
   }
 }

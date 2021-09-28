@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/personal_honor_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/response/personal_honors_reponse_model.dart';
 import 'package:template/data/repository/personal_honor_repository.dart';
 
 class PersonalHonorProvider {
@@ -104,6 +105,32 @@ class PersonalHonorProvider {
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
           .map((e) => PersonalHonorModel.fromJson(e as Map<String, dynamic>))
+          .toList());
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// Get paginate personalHonors "page": 1, "limit": 10
+  ///
+  Future<void> findByIdContext({
+    required int page,
+    required int limit,
+    required String idContext,
+    required Function(List<PersonalHonorsResponseModel> personalHonors)
+        onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse =
+        await regionRepo!.findByIdContext(page, limit, idContext);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data['results'] as List<dynamic>;
+      onSuccess(results
+          .map((e) =>
+              PersonalHonorsResponseModel.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);

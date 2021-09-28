@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
-import 'package:template/data/model/response/product_response_model.dart';
+import 'package:template/data/model/response/order_item_response_model.dart';
 import 'package:template/di_container.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -18,6 +19,10 @@ class OrderController extends GetxController with SingleGetTickerProviderMixin {
 
   int indexTab = 0;
 
+  Map<String, String> statusPayment = {
+    "1": "Chưa thanh toán",
+    "2": "Đã thanh toán",
+  };
   Map<String, String> statusLabel = {
     "1": "Mới tạo",
     "2": "Đang xử lý",
@@ -80,8 +85,22 @@ class OrderController extends GetxController with SingleGetTickerProviderMixin {
             }));
   }
 
-  void onOrderWidgetClick(int i, String index) {
-    Get.toNamed(
-        "${AppRoutes.ORDER_DETAIL}?idOrder=${orderStatusList[int.parse(index) - 1][i].id}");
+  ///
+  ///convert Date
+  ///
+  String convertDateTime(String orderDate) {
+    final loadedTime = DateConverter.isoStringToLocalDateHMS(
+        orderDate.replaceAll("T", " ").substring(0, orderDate.length - 1));
+    return loadedTime;
+  }
+
+  void onOrderWidgetClick({int? i, String? index, int? indexTabAll}) {
+    if (indexTabAll != null) {
+      Get.toNamed(
+          "${AppRoutes.ORDER_DETAIL}?idOrder=${orderList[indexTabAll].id}");
+    } else {
+      Get.toNamed(
+          "${AppRoutes.ORDER_DETAIL}?idOrder=${orderStatusList[int.parse(index!) - 1][i!].id}");
+    }
   }
 }

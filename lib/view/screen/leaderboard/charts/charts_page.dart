@@ -84,10 +84,12 @@ class ChartsPage extends GetView<ChartsController> {
                                         height: DeviceUtils.getScaledSize(
                                             context, 0.08)),
                                     _circleAvatar(context,
-                                        imgUrl:
-                                            "assets/images/avatar_account.png",
+                                        imgUrl: controller.personalHonorList[1]
+                                            .idUser!.avatar!,
                                         rank: 2),
-                                    Text("Bảo\n45.000.000 đ",
+                                    Text(
+                                        controller.personalHonorList[1].idUser!
+                                            .fullname!,
                                         textAlign: TextAlign.center,
                                         style:
                                             Dimensions.fontSizeStyle14w600()),
@@ -100,8 +102,10 @@ class ChartsPage extends GetView<ChartsController> {
                                     Stack(
                                       children: [
                                         _circleAvatar(context,
-                                            imgUrl:
-                                                "assets/images/avatar_account.png",
+                                            imgUrl: controller
+                                                .personalHonorList[0]
+                                                .idUser!
+                                                .avatar!,
                                             rank: 1),
                                         Positioned(
                                             right: DeviceUtils.getScaledSize(
@@ -110,7 +114,9 @@ class ChartsPage extends GetView<ChartsController> {
                                                 "assets/icon/crown.svg")),
                                       ],
                                     ),
-                                    Text("Phương\n50.000.000 đ",
+                                    Text(
+                                        controller.personalHonorList[0].idUser!
+                                            .fullname!,
                                         textAlign: TextAlign.center,
                                         style:
                                             Dimensions.fontSizeStyle14w600()),
@@ -124,10 +130,12 @@ class ChartsPage extends GetView<ChartsController> {
                                         height: DeviceUtils.getScaledSize(
                                             context, 0.08)),
                                     _circleAvatar(context,
-                                        imgUrl:
-                                            "assets/images/avatar_account.png",
+                                        imgUrl: controller.personalHonorList[2]
+                                            .idUser!.avatar!,
                                         rank: 3),
-                                    Text("Thành\n40.000.000 đ",
+                                    Text(
+                                        controller.personalHonorList[2].idUser!
+                                            .fullname!,
                                         textAlign: TextAlign.center,
                                         style:
                                             Dimensions.fontSizeStyle14w600()),
@@ -201,7 +209,10 @@ class ChartsPage extends GetView<ChartsController> {
                                                   child: FadeInImage.assetNetwork(
                                                       placeholder:
                                                           Images.placeholder,
-                                                      image: "imgUrl",
+                                                      image: controller
+                                                          .personalHonorList[i]
+                                                          .idUser!
+                                                          .avatar!,
                                                       fit: BoxFit.cover,
                                                       imageErrorBuilder: (c, o,
                                                               s) =>
@@ -214,7 +225,8 @@ class ChartsPage extends GetView<ChartsController> {
                                               Flexible(
                                                 child: Text(controller
                                                     .personalHonorList[i]
-                                                    .idUser!),
+                                                    .idUser!
+                                                    .fullname!),
                                               ),
                                             ],
                                           ),
