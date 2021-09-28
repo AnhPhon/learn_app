@@ -82,7 +82,7 @@ class AccountController extends GetxController
   void onLogoutClick() {
     sl.get<SharedPreferenceHelper>().removeUserId();
     sl.get<SharedPreferenceHelper>().removeIsLogin();
-    Get.offAllNamed(AppRoutes.LOGIN);
+    Get.back();
   }
 
   ///

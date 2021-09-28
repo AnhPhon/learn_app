@@ -147,7 +147,7 @@ class CheckoutController extends GetxController {
               totalPrice: price.toString(),
               imagePayment: imageUpdateModel!.data),
           onSuccess: (value) {
-            Get.offAllNamed(AppRoutes.DASHBOARD);
+            Get.toNamed(AppRoutes.DASHBOARD);
             sl.get<SharedPreferenceHelper>().removeOrderId();
             showAnimatedDialog(
                 context,

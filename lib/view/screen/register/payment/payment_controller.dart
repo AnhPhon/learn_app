@@ -108,7 +108,9 @@ class PaymentController extends GetxController {
                     // add Order Item To database
                     _addOrderItemToDB(model.id!, items);
 
-                    Get.offAllNamed(AppRoutes.LOGIN);
+                    Get.back();
+                    Get.back();
+                    Get.back();
 
                     EasyLoading.dismiss();
                     showAnimatedDialog(

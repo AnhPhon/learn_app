@@ -110,7 +110,7 @@ class HomePage extends GetView<HomeController> {
       BuildContext context, double size, HomeController controller) {
     return CategoryWidget(
       text: "Tạo ID",
-      label: 'Đội nhóm',
+      label: 'YTP',
       icon: Icon(Icons.add_outlined,
           color: ColorResources.PRIMARY,
           size: DeviceUtils.getScaledSize(context, 0.045)),
