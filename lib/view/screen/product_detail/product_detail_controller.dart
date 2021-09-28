@@ -158,115 +158,7 @@ class ProductDetailController extends GetxController {
             onError: (error) {});
       }
     });
-
     // sau khi ấn view cart thì cần phải get all order item để tính toán tiền để update ngược lại cho đơn hàng để thông tin nó ok
-
-    // sl.get<SharedPreferenceHelper>().orderId.then((value) async {
-    //   if (value == null) {
-    //     print("trong0");
-    //     await orderProvider.add(
-    //         data: OrderModel(
-    //             idUser: "614748250c57f118c4a40689",
-    //             statusOrder: "1",
-    //             statusPayment: "2",
-    //             description: "đây là nội dung",
-    //             address: "dia chi nha",
-    //             idDistrict: "61435cf012594e54736dd6ca",
-    //             idProvince: "61435cf012594e54736dd6ca",
-    //             discountPrice: "0",
-    //             idWarehouse: "614457d87fee3b5dc8c1c75e",
-    //             userAccept: "614748250c57f118c4a40689",
-    //             totalPrice: "0",
-    //             imagePayment: "0"),
-    //         onSuccess: (value) {
-    //           sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
-    //           print("IDORDER: ${value.id}");
-
-    //           ///
-    //           ///add to cart
-    //           ///
-    //           addToCart(
-    //               idOrder: value.id!,
-    //               idProduct: Get.parameters['productId'].toString(),
-    //               quanlity: qualityProduct.toString(),
-    //               price: Get.parameters['price'].toString());
-
-    //           ///
-    //           /// load quality again
-    //           ///
-    //           loadQuanlityCart();
-
-    //           isLoading = false;
-    //           update();
-
-    //           ///
-    //           ///show snackbar
-    //           ///
-    //           Get.snackbar(
-    //             "Thành công",
-    //             "Đã thêm sản phẩm vào giỏ hàng",
-    //             colorText: ColorResources.PRIMARY,
-    //             backgroundGradient: const LinearGradient(colors: [
-    //               Color(0xffd7ffba),
-    //               Color(0xffeaffdb),
-    //               Color(0xffd7ffba),
-    //             ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-    //           );
-    //         },
-    //         onError: (error) {
-    //           print(error);
-    //           update();
-    //         });
-    //   } else {
-    //     final idOrder = value;
-    //     final indexOrderItemList = productFromCartList.indexWhere((element) =>
-    //         element.idProduct!.id == Get.parameters['productId'].toString());
-    //     if (indexOrderItemList == -1) {
-    //       print("trong2");
-    //       Get.snackbar(
-    //         "Thành công",
-    //         "Đã thêm sản phẩm vào giỏ hàng",
-    //         colorText: ColorResources.PRIMARY,
-    //         backgroundGradient: const LinearGradient(colors: [
-    //           Color(0xffd7ffba),
-    //           Color(0xffeaffdb),
-    //           Color(0xffd7ffba),
-    //         ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-    //       );
-
-    //       ///
-    //       ///add to cart
-    //       ///
-    //       addToCart(
-    //           idOrder: idOrder,
-    //           idProduct: Get.parameters['productId'].toString(),
-    //           quanlity: qualityProduct.toString(),
-    //           price: Get.parameters['price'].toString());
-
-    //       ///
-    //       ///load quality
-    //       ///
-    //       loadQuanlityCart();
-
-    //       isLoading = false;
-    //       update();
-    //     } else {
-    //       print("trong4");
-    //       isLoading = false;
-    //       Get.snackbar(
-    //         "Thất bại",
-    //         "Sản phẩm đã tồn tại trong giỏ hàng",
-    //         colorText: ColorResources.RED,
-    //         backgroundGradient: const LinearGradient(colors: [
-    //           Color(0xfffffcfc),
-    //           Color(0xfffff5f5),
-    //           Color(0xfffffcfc),
-    //         ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-    //       );
-    //       update();
-    //     }
-    //   }
-    // });
   }
 
   ///
@@ -316,30 +208,7 @@ class ProductDetailController extends GetxController {
     isLoadingMore = true;
     update();
   }
-
-  ///
-  /// thêm vào giỏ hàng
-  ///
-  void addToCart(
-      {required String idOrder,
-      required String idProduct,
-      required String quanlity,
-      required String price}) {
-    orderItemProvider.add(
-        data: OrderItemModel(
-            idOrder: idOrder,
-            idProduct: idProduct,
-            quantity: quanlity,
-            price: price),
-        onSuccess: (value) {
-          print(value);
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
-  }
+ 
 
   ///
   ///go to cart page
