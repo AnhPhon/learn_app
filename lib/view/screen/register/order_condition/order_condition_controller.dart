@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
-import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/product_condition_model.dart';
 import 'package:template/data/model/body/product_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/product_provider.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/categories/categories_controller.dart';
-import 'package:template/view/screen/home/home_controller.dart';
+// import 'package:template/view/screen/categories/categories_controller.dart';
+// import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/payment/payment_page.dart';
-import 'package:template/view/screen/register/register_page_3.dart';
 
 class OrderConditionController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -21,8 +19,8 @@ class OrderConditionController extends GetxController {
   final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   final ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
-  final homeController = Get.put(HomeController());
-  final categoriesController = Get.put(CategoriesController());
+  // final homeController = Get.put(HomeController());
+  // final categoriesController = Get.put(CategoriesController());
 
   final String notificateValidMessage =
       "Với việc đăng ký tài khoản lần đầu, bạn được tặng voucher giảm 25% tổng giá trị đơn hàng. Để đăng ký tài khoản bạn phải thực hiện mua đơn hàng trị giá ít nhất 2,500,000 đ.";
@@ -30,35 +28,36 @@ class OrderConditionController extends GetxController {
       "Lưu ý: Hoá đơn sau khi trừ 25% phải lớn hơn hoặc bằng 2,500,000 đ";
   List<ProductModel> productList = [];
   List<OrderItemModel> orderItemList = [];
-  bool isLoadingMore = false;
-  OrderModel? orderModel;
 
-  // Kiểm tra sản phẩm có trong cart
-  bool isHave = false;
+  List<ProductConditionModel> items = [];
 
-  String url = "";
-
-  List<Item> items = [];
+  // It is mandatory initialize with one value from listType
+  List<ProductConditionModel> orderList = [];
+  int sum = 0;
 
   @override
   void onInit() {
     loadDonHangDieuKien();
+
     super.onInit();
   }
-
-  // It is mandatory initialize with one value from listType
-  List<int> orderList = [];
-  int sum = 0;
 
   ///
   /// set selected product
   ///
   void accept(int index) {
     if (items[index].isChoose == false) {
-      orderList.add(index);
+      items[index].isChoose = true;
+      items[index].quality = qualityProduct.value;
+      orderList.add(items[index]);
+    } else {
+      for (int i = 0; i < orderList.length; i++) {
+        if (orderList[i].title == items[index].title) {
+          orderList[i].quality = qualityProduct.value;
+        }
+      }
     }
-    items[index].isChoose = true;
-    items[index].quality = qualityProduct.value;
+
     update();
   }
 
@@ -69,7 +68,7 @@ class OrderConditionController extends GetxController {
     sum -= items[index].amount * items[index].quality;
     items[index].isChoose = false;
     items[index].quality = 1;
-    orderList.remove(index);
+    orderList.remove(items[index]);
     update();
   }
 
@@ -107,7 +106,7 @@ class OrderConditionController extends GetxController {
       filter: "&type=1",
       onSuccess: (value) {
         items = value
-            .map((ProductModel model) => Item(
+            .map((ProductModel model) => ProductConditionModel(
                   id: model.id!,
                   url: model.thumbnail.toString(),
                   amount: int.parse(model.prriceOrigin!),
@@ -158,7 +157,7 @@ class OrderConditionController extends GetxController {
   void btnContinue(
     BuildContext context,
     UserModel user,
-    OrderModel orderModel,
+    // OrderModel orderModel,
   ) {
     final double money = sum * .75;
     final bool moneyValid = money > 2500000;
@@ -166,8 +165,7 @@ class OrderConditionController extends GetxController {
       // Thành công
       Get.to(PaymentPage(
         user: user,
-        order: orderModel,
-        items: items,
+        items: orderList,
       ));
     } else {
       faildNotification(context, money);
