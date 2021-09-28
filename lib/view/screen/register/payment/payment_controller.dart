@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +9,7 @@ import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_condition_model.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -36,6 +38,11 @@ class PaymentController extends GetxController {
   List<int> orderList = [];
 
   int sum = 0;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   ///
   /// hoanTatFaild
@@ -75,82 +82,88 @@ class PaymentController extends GetxController {
     UserModel user,
     List<ProductConditionModel> items,
   ) {
-    imageProvider.add(
-      file: image!,
-      onSuccess: (image) {
-        print('link image ${image.data}');
+    if (image != null) {
+      EasyLoading.show(status: 'loading...');
+      imageProvider.add(
+        file: image!,
+        onSuccess: (image) {
+          print('link image ${image.data}');
 
-        userProvider.genUsername(onSuccess: (genModel) {
-          user.paymentProofImage = image.data;
-          user.username = genModel.username;
-          userProvider.add(
-            data: user,
-            onSuccess: (userModel) {
-              print("User added");
+          userProvider.genUsername(onSuccess: (genModel) {
+            user.paymentProofImage = image.data;
+            user.username = genModel.username;
+            userProvider.add(
+              data: user,
+              onSuccess: (userModel) {
+                print("User added");
 
-              final OrderModel order = OrderModel(
+                final OrderModel order = OrderModel(
                   idUser: userModel.id,
-                  address: '123',
+                  address: userModel.address,
                   idDistrict: '1',
                   idProvince: '1',
                   idWarehouse: '1',
                   imagePayment: image.data,
                   statusOrder: '1',
                   statusPayment: '1',
-                  totalPrice: '0',
+                  totalPrice: getSum(context, items),
                   userAccept: userModel.idUser,
-                  description: 'ABC',
-                  discountPrice: "0");
+                  description: 'Đơn hàng mới',
+                  discountPrice: "0",
+                );
 
-              orderProvider.add(
-                data: order,
-                onSuccess: (model) {
-                  _addToDB(model.id!, items);
-                  update();
-                },
-                onError: (error) {
-                  print(error);
-                  update();
-                },
-              );
+                orderProvider.add(
+                  data: order,
+                  onSuccess: (model) {
+                    // add Order Item To database
+                    _addOrderItemToDB(model.id!, items);
 
-              update();
-            },
-            onError: (error) {
-              print(error);
-            },
-          );
+                    Get.offAllNamed(AppRoutes.LOGIN);
 
-          Get.offNamed(AppRoutes.LOGIN);
-
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Đợi admin active",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
-        }, onError: (error) {
+                    EasyLoading.dismiss();
+                    showAnimatedDialog(
+                      context,
+                      const MyDialog(
+                        icon: Icons.check,
+                        title: "Hoàn tất",
+                        description: "Đợi admin active",
+                      ),
+                      dismissible: false,
+                      isFlip: true,
+                    );
+                  },
+                  onError: (error) {
+                    print(error);
+                  },
+                );
+              },
+              onError: (error) {
+                print(error);
+              },
+            );
+          }, onError: (error) {
+            print(error);
+          });
+        },
+        onError: (error) {
           print(error);
-        });
-      },
-      onError: (error) {
-        print(error);
-        update();
-      },
-    );
+        },
+      );
+    } else {
+      _showSnakebar(
+        "Upload hình lỗi",
+        "Bạn cần phải bổ sung hình trước khi thanh toán",
+        2,
+      );
+    }
   }
 
   ///
   /// addToDB
   ///
-  void _addToDB(String orderId, List<ProductConditionModel> items) {
+  void _addOrderItemToDB(String orderId, List<ProductConditionModel> items) {
     items.forEach((element) {
       if (element.isChoose == true) {
-        print(element.id);
         final OrderItemModel model = OrderItemModel(
           idOrder: orderId,
           idProduct: element.id,
@@ -163,12 +176,38 @@ class PaymentController extends GetxController {
           onSuccess: (value) {},
           onError: (error) {
             print(error);
-            update();
           },
         );
 
         print("Order item added");
       }
     });
+  }
+
+  String getSum(BuildContext context, List<ProductConditionModel> items) {
+    return PriceConverter.convertPrice(context, sumCalculator(items));
+  }
+
+  double sumCalculator(List<ProductConditionModel> items) {
+    int sum = 0;
+    items.forEach((element) {
+      sum += element.quality * element.amount;
+    });
+    return sum.toDouble();
+  }
+
+  ///
+  /// show snackbar
+  ///
+  void _showSnakebar(String title, String message, int seconds) {
+    Get.snackbar(
+      title, // title
+      message, // message
+      backgroundColor: Color(0xffFFEBEE),
+      icon: const Icon(Icons.error_outline),
+      shouldIconPulse: true,
+      isDismissible: true,
+      duration: Duration(seconds: seconds),
+    );
   }
 }
