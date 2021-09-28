@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/response/product_response_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/order_provider.dart';
+import 'package:template/provider/product_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class OrderController extends GetxController with SingleGetTickerProviderMixin {
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
-
-  bool isLoading = true;
-
+  List<List<OrderModel>> orderStatusList = [[], [], [], [], []];
   List<OrderModel> orderList = [];
 
-  List<List<OrderModel>> orderStatusList = [[], [], [], [], []];
+  bool isLoading = true;
 
   int indexTab = 0;
 
@@ -52,7 +52,6 @@ class OrderController extends GetxController with SingleGetTickerProviderMixin {
     });
     indexTab = int.parse(Get.parameters['indexTab'].toString());
     update();
-    print(Get.parameters['indexTab']);
   }
 
   ///
@@ -81,7 +80,8 @@ class OrderController extends GetxController with SingleGetTickerProviderMixin {
             }));
   }
 
-  void onOrderWidgetClick() {
-    Get.toNamed(AppRoutes.ORDER_DETAIL);
+  void onOrderWidgetClick(int i, String index) {
+    Get.toNamed(
+        "${AppRoutes.ORDER_DETAIL}?idOrder=${orderStatusList[int.parse(index) - 1][i].id}");
   }
 }

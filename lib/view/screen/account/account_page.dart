@@ -29,9 +29,7 @@ class AccountPage extends GetView<AccountController> {
   ///row co 3 item
   ///
   Row _row3(BuildContext context,
-      {required String text1,
-      required String text2,
-      required VoidCallback onTap}) {
+      {required String text1, required String text2, VoidCallback? onTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -197,12 +195,18 @@ class AccountPage extends GetView<AccountController> {
                         ),
 
                         //logout
-                        _containerBox(
-                          context,
-                          child: _row3(context, text1: "Đăng xuất", text2: "",
-                              onTap: () {
+                        GestureDetector(
+                          onTap: () {
                             controller.onLogoutClick();
-                          }),
+                          },
+                          child: _containerBox(
+                            context,
+                            child: _row3(
+                              context,
+                              text1: "Đăng xuất",
+                              text2: "",
+                            ),
+                          ),
                         )
                       ],
                     ),
