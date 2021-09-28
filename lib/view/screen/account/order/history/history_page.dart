@@ -5,8 +5,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/screen/order/component/custom_stepper.dart';
-import 'package:template/view/screen/order/history/history_controller.dart';
+import 'package:template/view/screen/account/order/component/custom_stepper.dart';
+import 'package:template/view/screen/account/order/history/history_controller.dart';
 
 class HistoryPage extends GetView<HistoryController> {
   ///

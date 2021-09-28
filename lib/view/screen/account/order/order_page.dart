@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/account/account_controller.dart';
-import 'package:template/view/screen/order/order_controller.dart';
+import 'package:template/view/screen/account/order/order_controller.dart';
 
 class OrderPage extends GetView<OrderController> {
-  final AccountController accountController = Get.put(AccountController());
-
   ///
   ///order widget
   ///
-  Widget orderWidget(BuildContext context,
-      {required String orderStatus,
+  Widget orderWidget(BuildContext context, OrderController controller,
+      {required String status,
       required String imgUrl,
       required int price,
       required int quantity,
@@ -41,32 +37,16 @@ class OrderPage extends GetView<OrderController> {
             Container(
               padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
               decoration: BoxDecoration(
-                  color: orderStatus == "Đã giao hàng"
-                      ? const Color(0xffD7FAE0)
-                      : orderStatus == "Shipping"
-                          ? const Color(0xffDBEEFF)
-                          : orderStatus == "Xử lý"
-                              ? const Color(0xffFFF5C7)
-                              : orderStatus == "Chờ thanh toán"
-                                  ? const Color(0xffFFDBDE)
-                                  : orderStatus == "Huỷ bỏ"
-                                      ? const Color(0xffF5F5FA)
-                                      : Colors.white,
+                  color: status == "0"
+                      ? Colors.white
+                      : controller.statusBackgroundColor[status],
                   borderRadius: BorderRadius.circular(16)),
               child: Text(
-                orderStatus,
+                controller.statusLabel[status].toString(),
                 style: TextStyle(
-                  color: orderStatus == "Đã giao hàng"
-                      ? const Color(0xff007D3A)
-                      : orderStatus == "Shipping"
-                          ? const Color(0xff0D5BB5)
-                          : orderStatus == "Xử lý"
-                              ? const Color(0xffCC8100)
-                              : orderStatus == "Chờ thanh toán"
-                                  ? const Color(0xffBF1D28)
-                                  : orderStatus == "Huỷ bỏ"
-                                      ? const Color(0xffA6A6B0)
-                                      : Colors.white,
+                  color: status == "0"
+                      ? Colors.white
+                      : controller.statusColor[status],
                 ),
               ),
             ),
@@ -126,54 +106,48 @@ class OrderPage extends GetView<OrderController> {
   ///tab all
   ///
   Widget _tabAll(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          // tab all
-          orderWidget(context,
+    return ListView.builder(
+        itemCount: controller.orderList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return orderWidget(context, controller,
+              status: controller.orderList[index].statusOrder.toString(),
               imgUrl: "assets/images/Untitled.png",
-              orderStatus: "Đã giao hàng",
               paymentMethod: "Momo",
               price: 380000,
-              quantity: 2),
-          orderWidget(context,
-              imgUrl: "assets/images/Untitled.png",
-              orderStatus: "Shipping",
-              paymentMethod: "ZaloPay",
-              price: 380000,
-              quantity: 2),
-          orderWidget(context,
-              imgUrl: "assets/images/Untitled.png",
-              orderStatus: "Xử lý",
-              paymentMethod: "COD",
-              price: 380000,
-              quantity: 2),
-          orderWidget(context,
-              imgUrl: "assets/images/Untitled.png",
-              orderStatus: "Chờ thanh toán",
-              paymentMethod: "Credit Card",
-              price: 380000,
-              quantity: 2),
-          orderWidget(context,
-              imgUrl: "assets/images/Untitled.png",
-              orderStatus: "Huỷ bỏ",
-              paymentMethod: "ATM",
-              price: 380000,
-              quantity: 2),
-        ],
-      ),
-    );
+              quantity: 2);
+        });
+  }
+
+  ///
+  ///tab index
+  ///
+  Widget _tabIndex(BuildContext context, String index) {
+    return GetBuilder<OrderController>(
+        init: OrderController(),
+        builder: (controller) {
+          return ListView.builder(
+              itemCount: controller.orderStatusList[int.parse(index)].length,
+              itemBuilder: (BuildContext context, int i) {
+                return controller.orderStatusList[int.parse(index)].isEmpty
+                    ? Container()
+                    : orderWidget(context, controller,
+                        status: (int.parse(index) + 1).toString(),
+                        imgUrl: "assets/images/Untitled.png",
+                        paymentMethod: "Momo",
+                        price: 380000,
+                        quantity: 2);
+              });
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
     return GetBuilder<OrderController>(
         init: OrderController(),
-        builder: (OrderController value) {
+        builder: (controller) {
+          print(controller.statusLabel.keys.length);
           return DefaultTabController(
-            initialIndex: accountController.orderPages.value,
+            initialIndex: controller.indexTab,
             length: 6,
             child: Scaffold(
               appBar: AppBar(
@@ -189,40 +163,30 @@ class OrderPage extends GetView<OrderController> {
                   "Order của tôi",
                   style: TextStyle(color: ColorResources.BLACK),
                 ),
-                bottom: const TabBar(
+                bottom: TabBar(
                   isScrollable: true,
+                  // onTap: controller.seletecTabfromAccount,
                   indicatorColor: ColorResources.PRIMARY,
                   labelColor: ColorResources.PRIMARY,
                   unselectedLabelColor: Colors.grey,
                   tabs: [
-                    Tab(text: "Tất cả"),
-                    Tab(text: "Hoàn thành"),
-                    Tab(text: "Chờ thanh toán"),
-                    Tab(text: "Xử lý"),
-                    Tab(text: "Shipping"),
-                    Tab(text: "Huỷ bỏ"),
+                    const Tab(text: "Tất cả"),
+                    ...List.generate(
+                      controller.statusLabel.keys.length,
+                      (index) => Tab(
+                          text: controller.statusLabel.values.toList()[index]),
+                    )
                   ],
                 ),
               ),
               body: TabBarView(
+                physics: const BouncingScrollPhysics(),
                 children: [
                   // tab all
                   _tabAll(context),
 
-                  //tab done
-                  Container(),
-
-                  //tab pending
-                  Container(),
-
-                  //tab processing
-                  Container(),
-
-                  //tab shipping
-                  Container(),
-
-                  //tab cancle
-                  Container(),
+                  ...List.generate(controller.statusLabel.keys.length,
+                      (index) => _tabIndex(context, (index).toString())),
                 ],
               ),
             ),
