@@ -45,22 +45,6 @@ class PaymentController extends GetxController {
   }
 
   ///
-  /// hoanTatFaild
-  ///
-  void hoanTatFaild() {
-    Get.snackbar(
-      "Thất bại",
-      "Vui lòng tải lên hình ảnh thanh toán",
-      colorText: ColorResources.RED,
-      backgroundGradient: const LinearGradient(colors: [
-        Color(0xffffb8b3),
-        Color(0xffff9b94),
-        Color(0xffffb8b3),
-      ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-    );
-  }
-
-  ///
   /// pick image
   ///
   Future pickImage() async {
@@ -84,14 +68,19 @@ class PaymentController extends GetxController {
   ) {
     if (image != null) {
       EasyLoading.show(status: 'loading...');
+
+      // image provider
       imageProvider.add(
         file: image!,
         onSuccess: (image) {
           print('link image ${image.data}');
 
+          // gen username
           userProvider.genUsername(onSuccess: (genModel) {
             user.paymentProofImage = image.data;
             user.username = genModel.username;
+
+            // add api user provider
             userProvider.add(
               data: user,
               onSuccess: (userModel) {
@@ -106,12 +95,13 @@ class PaymentController extends GetxController {
                   imagePayment: image.data,
                   statusOrder: '1',
                   statusPayment: '1',
-                  totalPrice: getSum(context, items),
+                  totalPrice: convertSum(context, items),
                   userAccept: userModel.idUser,
                   description: 'Đơn hàng mới',
                   discountPrice: "0",
                 );
-
+                
+                // add api order provider
                 orderProvider.add(
                   data: order,
                   onSuccess: (model) {
@@ -159,37 +149,46 @@ class PaymentController extends GetxController {
   }
 
   ///
-  /// addToDB
+  /// _add order item to database
   ///
   void _addOrderItemToDB(String orderId, List<ProductConditionModel> items) {
+
+    // duyệt các sản phẩm
     items.forEach((element) {
-      if (element.isChoose == true) {
-        final OrderItemModel model = OrderItemModel(
-          idOrder: orderId,
-          idProduct: element.id,
-          price: element.amount.toString(),
-          quantity: element.quality.toString(),
-        );
+      final OrderItemModel model = OrderItemModel(
+        idOrder: orderId,
+        idProduct: element.id,
+        price: element.amount.toString(),
+        quantity: element.quality.toString(),
+      );
 
-        orderItemProvider.add(
-          data: model,
-          onSuccess: (value) {},
-          onError: (error) {
-            print(error);
-          },
-        );
+      // add api của order item
+      orderItemProvider.add(
+        data: model,
+        onSuccess: (value) {},
+        onError: (error) {
+          print(error);
+        },
+      );
 
-        print("Order item added");
-      }
+      print("Order item added");
     });
   }
 
-  String getSum(BuildContext context, List<ProductConditionModel> items) {
+  ///
+  /// convert sum number to sum string
+  ///
+  String convertSum(BuildContext context, List<ProductConditionModel> items) {
     return PriceConverter.convertPrice(context, sumCalculator(items));
   }
 
+  ///
+  /// tính tổng tiền
+  ///
   double sumCalculator(List<ProductConditionModel> items) {
     int sum = 0;
+    
+    // tổng (số lượng và đơn giá) của các sản phẩm
     items.forEach((element) {
       sum += element.quality * element.amount;
     });
@@ -203,7 +202,7 @@ class PaymentController extends GetxController {
     Get.snackbar(
       title, // title
       message, // message
-      backgroundColor: Color(0xffFFEBEE),
+      backgroundColor: const Color(0xffFFEBEE),
       icon: const Icon(Icons.error_outline),
       shouldIconPulse: true,
       isDismissible: true,

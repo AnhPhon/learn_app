@@ -9,8 +9,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/utils/color_resources.dart';
-// import 'package:template/view/screen/categories/categories_controller.dart';
-// import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/screen/register/payment/payment_page.dart';
 
 class OrderConditionController extends GetxController {
@@ -19,16 +17,12 @@ class OrderConditionController extends GetxController {
   final OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   final ProductProvider productProvider = GetIt.I.get<ProductProvider>();
 
-  // final homeController = Get.put(HomeController());
-  // final categoriesController = Get.put(CategoriesController());
-
   final String notificateValidMessage =
       "Với việc đăng ký tài khoản lần đầu, bạn được tặng voucher giảm 25% tổng giá trị đơn hàng. Để đăng ký tài khoản bạn phải thực hiện mua đơn hàng trị giá ít nhất 2,500,000 đ.";
   final String twoFivePercent =
       "Lưu ý: Hoá đơn sau khi trừ 25% phải lớn hơn hoặc bằng 2,500,000 đ";
   List<ProductModel> productList = [];
   List<OrderItemModel> orderItemList = [];
-
   List<ProductConditionModel> items = [];
 
   // It is mandatory initialize with one value from listType
@@ -46,11 +40,13 @@ class OrderConditionController extends GetxController {
   /// set selected product
   ///
   void accept(int index) {
+    // kiếm tra 
     if (items[index].isChoose == false) {
       items[index].isChoose = true;
       items[index].quality = qualityProduct.value;
       orderList.add(items[index]);
     } else {
+      sum -= items[index].quality * items[index].amount;
       for (int i = 0; i < orderList.length; i++) {
         if (orderList[i].title == items[index].title) {
           orderList[i].quality = qualityProduct.value;
@@ -115,12 +111,6 @@ class OrderConditionController extends GetxController {
                   quality: 1,
                 ))
             .toList();
-
-        value.forEach((ProductModel model) {
-          print(model.resource);
-        });
-
-        print(items);
         update();
       },
       onError: (error) {
@@ -157,7 +147,6 @@ class OrderConditionController extends GetxController {
   void btnContinue(
     BuildContext context,
     UserModel user,
-    // OrderModel orderModel,
   ) {
     final double money = sum * .75;
     final bool moneyValid = money > 2500000;
