@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:template/data/model/response/base/error_response.dart';
 
 class ApiErrorHandler {
-  static dynamic getMessage(dynamic error) { 
+  static dynamic getMessage(dynamic error) {
     dynamic errorDescription = '';
     if (error is Exception) {
       try {
@@ -16,11 +18,11 @@ class ApiErrorHandler {
               break;
             case DioErrorType.other:
               errorDescription =
-              'Connection to API server failed due to internet connection';
+                  'Connection to API server failed due to internet connection';
               break;
             case DioErrorType.receiveTimeout:
               errorDescription =
-              'Receive timeout in connection with API server';
+                  'Receive timeout in connection with API server';
               break;
             case DioErrorType.response:
               switch (error.response!.statusCode) {
@@ -30,14 +32,12 @@ class ApiErrorHandler {
                   errorDescription = error.response!.statusMessage;
                   break;
                 default:
-                  final ErrorResponse errorResponse =
-                  ErrorResponse.fromJson(error.response!.data);
-                  if (
-                      errorResponse.errors.isNotEmpty) {
-                    errorDescription = errorResponse;
+                  final Errors errors = Errors.fromJson(error.response!.data);
+                  if (errors.message != '') {
+                    errorDescription = errors.message;
                   } else {
                     errorDescription =
-                    'Failed to load data - status code: ${error.response!.statusCode}';
+                        'Failed to load data - status code: ${error.response!.statusCode}';
                   }
               }
               break;
@@ -54,6 +54,17 @@ class ApiErrorHandler {
     } else {
       errorDescription = 'is not a subtype of exception';
     }
+
+    // show errors
+    Get.snackbar(
+      "Hey i'm a Errors SnackBar!", // title
+      errorDescription.toString(), // message
+      icon: const Icon(Icons.error_outline),
+      backgroundColor: Color(0xffFFCDD2),
+      shouldIconPulse: true,
+      isDismissible: true,
+      duration: const Duration(seconds: 3),
+    );
     return errorDescription;
   }
 }

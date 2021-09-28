@@ -10,7 +10,7 @@ import 'package:template/data/repository/auth_repository.dart';
 import 'package:template/helper/api_checker.dart';
 
 class AuthProvider with ChangeNotifier {
-   AuthRepository? authRepository = GetIt.I.get<AuthRepository>();
+  AuthRepository? authRepository = GetIt.I.get<AuthRepository>();
 
   AuthProvider();
 
@@ -27,7 +27,8 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      final AuthModel authResponse = AuthModel.fromJson(results['user'] as Map<String, dynamic>);
+      final AuthModel authResponse =
+          AuthModel.fromJson(results['user'] as Map<String, dynamic>);
       authResponse.access = results['tokens']['access']['token'].toString();
       authResponse.refresh = results['tokens']['refresh']['token'].toString();
       onSuccess(authResponse);
