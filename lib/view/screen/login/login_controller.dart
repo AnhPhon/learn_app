@@ -21,16 +21,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    usernameController.text = 'ytp3001';
-    passwordController.text = 'password';
-    // sl.get<SharedPreferenceHelper>().removeIsLogin();
-
-    sl.get<SharedPreferenceHelper>().isLogin.then((value) {
-      if (value == true) {
-        Get.toNamed(AppRoutes.DASHBOARD);
-      }
-    });
-
+    // usernameController.text = 'ytp3001';
+    // passwordController.text = 'password';
     super.onInit();
   }
 

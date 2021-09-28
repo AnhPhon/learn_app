@@ -9,14 +9,7 @@ class IntroductionController extends GetxController {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   @override
-  void onInit() {
-    sl.get<SharedPreferenceHelper>().isFirst.then((value) {
-      print(value);
-      if (value == true) {
-        Get.toNamed(AppRoutes.LOGIN);
-      }
-    });
-
+  void onInit() {  
     super.onInit();
   }
 
