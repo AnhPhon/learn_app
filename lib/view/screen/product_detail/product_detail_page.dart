@@ -9,13 +9,132 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/product_detail/product_detail_controller.dart';
-import 'package:template/view/screen/product_detail/product_specification_view.dart';
+
+import 'components/product_specification_view.dart';
 
 class ProductDetailPage extends GetView<ProductDetailController> {
-  // final categoriesController = Get.put(CategoriesController());
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar().customAppBar(title: "Chi tiết sản phẩm"),
+      bottomNavigationBar: _bottomCart(context),
+      body: GetBuilder<ProductDetailController>(
+          init: ProductDetailController(),
+          builder: (controller) {
+            if (controller.isLoadingProductDetail) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // img product
+                  _imgProduct(context, controller),
+
+                  // header product detail
+                  Container(
+                    padding:
+                        const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                    color: ColorResources.WHITE,
+                    child: DefaultTextStyle(
+                      style: const TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                          color: ColorResources.BLACK,
+                          fontWeight: FontWeight.w600),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.productModel!.name!,
+                            textAlign: TextAlign.justify,
+                          ),
+                          SizedBox(
+                              height:
+                                  DeviceUtils.getScaledHeight(context, 0.01)),
+                          Text(
+                              "Giá: ${PriceConverter.convertPrice(context, double.parse(controller.productModel!.prices!))}",
+                              style: const TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                  color: ColorResources.RED,
+                                  fontWeight: FontWeight.w600)),
+                          SizedBox(
+                              height:
+                                  DeviceUtils.getScaledHeight(context, 0.01)),
+                          Text(
+                            PriceConverter.convertPrice(
+                                context,
+                                double.parse(
+                                    controller.productModel!.prriceOrigin!)),
+                            style: robotoBold.copyWith(
+                              color: Theme.of(context).hintColor,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, 0.027),
+                  ),
+
+                  // product info
+                  ProductSpecification(
+                      productSpecification:
+                          controller.productModel!.description!),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, 0.027),
+                  ),
+
+                  // Xem them
+                  Container(
+                    color: ColorResources.WHITE,
+                    padding: EdgeInsets.all(
+                        DeviceUtils.getScaledSize(context, 0.027)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: DeviceUtils.getScaledSize(context, 0.027),
+                              top: DeviceUtils.getScaledSize(context, 0.02),
+                              bottom: DeviceUtils.getScaledSize(context, 0.02)),
+                          child: const Text(
+                            "Xem thêm",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
+                        ),
+                        const Divider(color: Colors.grey),
+                        if (controller.productModelList.isEmpty)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical:
+                                    DeviceUtils.getScaledSize(context, 0.03)),
+                            child: const Center(
+                              child: Text("Chưa có sản phẩm tương tự"),
+                            ),
+                          )
+                        else
+                          _sanPhamTuongTu(context, controller),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
 
   ///
-  ///icons quality
+  /// icons quality
   ///
   Widget _iconsquality(BuildContext context,
       {VoidCallback? onTap, Icon? icon, String? text, Color? color}) {
@@ -33,8 +152,17 @@ class ProductDetailPage extends GetView<ProductDetailController> {
     );
   }
 
+  ///
+  /// sản phẩm tương tự
+  ///
   Widget _sanPhamTuongTu(
       BuildContext context, ProductDetailController controller) {
+    if (controller.isLoadingProductRelative) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: GridView.builder(
@@ -117,7 +245,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
   }
 
   ///
-  ///Hinh anh cua san pham
+  /// Hinh anh cua san pham
   ///
   Widget _imgProduct(BuildContext context, ProductDetailController controller) {
     return SizedBox(
@@ -145,15 +273,13 @@ class ProductDetailPage extends GetView<ProductDetailController> {
     );
   }
 
+  ///
+  /// bottom cart
+  ///
   Widget _bottomCart(BuildContext context) {
     return GetBuilder<ProductDetailController>(
         init: ProductDetailController(),
         builder: (controller) {
-          if (controller.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
           return Container(
             height: DeviceUtils.getScaledHeight(context, 0.08),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -205,11 +331,6 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                           GetBuilder<ProductDetailController>(
                               init: ProductDetailController(),
                               builder: (ProductDetailController controller) {
-                                if (controller.isLoading) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
                                 return Positioned(
                                   top: 0,
                                   right: DeviceUtils.getScaledHeight(
@@ -225,7 +346,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                       color: ColorResources.RED,
                                     ),
                                     child: Text(
-                                      controller.productFromCartList.length
+                                      controller.listOrderItem.length
                                           .toString(),
                                       style: titilliumSemiBold.copyWith(
                                           fontSize:
@@ -241,210 +362,19 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                   ),
                 ),
 
-                ///
-                ///button add to cart
-                ///
+                // button add to cart
                 Expanded(
                   flex: 8,
                   child: GetBuilder<ProductDetailController>(
                       init: ProductDetailController(),
                       builder: (controller) {
-                        if (controller.isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
                         return GestureDetector(
                           onTap: () {
-                            controller.qualityProduct = 1;
+                            controller.quantityProduct = 1;
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Container(
-                                    height:
-                                        DeviceUtils.getScaledSize(context, 0.8),
-                                    padding: const EdgeInsets.all(20),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 9,
-                                                child: Center(
-                                                    child: Text(
-                                                  "Chọn số lượng",
-                                                  style: Dimensions
-                                                      .fontSizeStyle16w600(),
-                                                ))),
-
-                                            ///
-                                            /// close
-                                            ///
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Get.back();
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.all(
-                                                      DeviceUtils
-                                                          .getScaledWidth(
-                                                              context, 0.01)),
-                                                  alignment: Alignment.center,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: ColorResources.GREY,
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.close_outlined,
-                                                    size: DeviceUtils
-                                                        .getScaledHeight(
-                                                            context, 0.023),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Divider(color: Colors.grey),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                                child: Image.network(
-                                                  controller
-                                                      .productModel!.images!,
-                                                  height:
-                                                      DeviceUtils.getScaledSize(
-                                                          context, 0.178),
-                                                  width:
-                                                      DeviceUtils.getScaledSize(
-                                                          context, 0.178),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              flex: 7,
-                                              child: GetBuilder(builder:
-                                                  (ProductDetailController
-                                                      value) {
-                                                return Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                          .productModel!.name!,
-                                                      maxLines: 2,
-                                                      style: titilliumSemiBold
-                                                          .copyWith(
-                                                              fontSize: 16),
-                                                    ),
-                                                    Text(
-                                                      controller.productModel!
-                                                              .prices!
-                                                              .contains(",")
-                                                          ? "${controller.productModel!.prices!} đ"
-                                                          : PriceConverter.convertPrice(
-                                                              context,
-                                                              double.parse(controller
-                                                                  .productModel!
-                                                                  .prices!)),
-                                                      style: titilliumSemiBold
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.grey),
-                                                    ),
-
-                                                    SizedBox(
-                                                        height: DeviceUtils
-                                                            .getScaledSize(
-                                                                context, 0.02)),
-
-                                                    //button quanlity
-                                                    Row(
-                                                      children: [
-                                                        _iconsquality(context,
-                                                            onTap: () {
-                                                          controller
-                                                              .decrementQuality();
-                                                        },
-                                                            icon: Icon(
-                                                                Icons.remove,
-                                                                color: controller
-                                                                            .qualityProduct ==
-                                                                        1
-                                                                    ? Colors
-                                                                        .grey
-                                                                    : ColorResources
-                                                                        .PRIMARY),
-                                                            color: controller
-                                                                        .qualityProduct ==
-                                                                    1
-                                                                ? Colors.grey
-                                                                : null),
-                                                        _iconsquality(context,
-                                                            text: controller
-                                                                .qualityProduct
-                                                                .toString()),
-                                                        _iconsquality(context,
-                                                            onTap: () {
-                                                          controller
-                                                              .incrementQuality();
-                                                        },
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .add_outlined,
-                                                                color: Colors
-                                                                    .grey)),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                );
-                                              }),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 20),
-                                        GestureDetector(
-                                          onTap: () {
-                                            controller.order();
-                                            Get.back();
-                                          },
-                                          child: Container(
-                                            height: DeviceUtils.getScaledHeight(
-                                                context, 0.068),
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    DeviceUtils.getScaledHeight(
-                                                        context, 0.012)),
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: ColorResources.PRIMARY,
-                                            ),
-                                            child: Text(
-                                              "Thêm vào giỏ hàng",
-                                              style: titilliumSemiBold.copyWith(
-                                                  fontSize: Dimensions
-                                                      .FONT_SIZE_LARGE,
-                                                  color: ColorResources.WHITE),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return _pickItemOrder(context);
                                 });
                           },
                           child: Container(
@@ -473,131 +403,144 @@ class ProductDetailPage extends GetView<ProductDetailController> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar().customAppBar(title: "Chi tiết sản phẩm"),
-      bottomNavigationBar: _bottomCart(context),
-      body: GetBuilder<ProductDetailController>(
-          init: ProductDetailController(),
-          builder: (controller) {
-            if (controller.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ///
-                  ///img product
-                  ///
-                  _imgProduct(context, controller),
+  ///
+  /// _pick Item Order
+  ///
+  Widget _pickItemOrder(BuildContext context) {
+    return Container(
+      height: DeviceUtils.getScaledSize(context, 0.8),
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                  flex: 9,
+                  child: Center(
+                      child: Text(
+                    "Chọn số lượng",
+                    style: Dimensions.fontSizeStyle16w600(),
+                  ))),
 
-                  ///
-                  ///header product detail
-                  ///
+              ///
+              /// close
+              ///
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(
+                        DeviceUtils.getScaledWidth(context, 0.01)),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorResources.GREY,
+                    ),
+                    child: Icon(
+                      Icons.close_outlined,
+                      size: DeviceUtils.getScaledHeight(context, 0.023),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Divider(color: Colors.grey),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: Image.network(
+                    controller.productModel!.images!,
+                    height: DeviceUtils.getScaledSize(context, 0.178),
+                    width: DeviceUtils.getScaledSize(context, 0.178),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                flex: 7,
+                child: GetBuilder(builder: (ProductDetailController value) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.productModel!.name!,
+                        maxLines: 2,
+                        style: titilliumSemiBold.copyWith(fontSize: 16),
+                      ),
+                      Text(
+                        controller.productModel!.prices!.contains(",")
+                            ? "${controller.productModel!.prices!} đ"
+                            : PriceConverter.convertPrice(context,
+                                double.parse(controller.productModel!.prices!)),
+                        style: titilliumSemiBold.copyWith(color: Colors.grey),
+                      ),
 
-                  Container(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                    color: ColorResources.WHITE,
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_LARGE,
-                          color: ColorResources.BLACK,
-                          fontWeight: FontWeight.w600),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.02)),
+
+                      //button quanlity
+                      Row(
                         children: [
-                          Text(
-                            controller.productModel!.name!,
-                            textAlign: TextAlign.justify,
-                          ),
-                          SizedBox(
-                              height:
-                                  DeviceUtils.getScaledHeight(context, 0.01)),
-                          Text(
-                              "Giá: ${PriceConverter.convertPrice(context, double.parse(controller.productModel!.prices!))}",
-                              style: const TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                  color: ColorResources.RED,
-                                  fontWeight: FontWeight.w600)),
-                          SizedBox(
-                              height:
-                                  DeviceUtils.getScaledHeight(context, 0.01)),
-                          Text(
-                            PriceConverter.convertPrice(
-                                context,
-                                double.parse(
-                                    controller.productModel!.prriceOrigin!)),
-                            style: robotoBold.copyWith(
-                              color: Theme.of(context).hintColor,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          )
+                          _iconsquality(context, onTap: () {
+                            controller.decrementQuality();
+                          },
+                              icon: Icon(Icons.remove,
+                                  color: controller.quantityProduct == 1
+                                      ? Colors.grey
+                                      : ColorResources.PRIMARY),
+                              color: controller.quantityProduct == 1
+                                  ? Colors.grey
+                                  : null),
+                          _iconsquality(context,
+                              text: controller.quantityProduct.toString()),
+                          _iconsquality(context, onTap: () {
+                            controller.incrementQuality();
+                          },
+                              icon: const Icon(Icons.add_outlined,
+                                  color: Colors.grey)),
                         ],
                       ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.027),
-                  ),
-
-                  ///
-                  ///product info
-                  ///
-                  ProductSpecification(
-                      productSpecification:
-                          controller.productModel!.description!),
-
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.027),
-                  ),
-
-                  ///
-                  ///Xem them
-                  ///
-                  Container(
-                    color: ColorResources.WHITE,
-                    padding: EdgeInsets.all(
-                        DeviceUtils.getScaledSize(context, 0.027)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: DeviceUtils.getScaledSize(context, 0.027),
-                              top: DeviceUtils.getScaledSize(context, 0.02),
-                              bottom: DeviceUtils.getScaledSize(context, 0.02)),
-                          child: const Text(
-                            "Xem thêm",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 16),
-                          ),
-                        ),
-                        const Divider(color: Colors.grey),
-                        if (controller.productModelList.isEmpty)
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical:
-                                    DeviceUtils.getScaledSize(context, 0.03)),
-                            child: const Center(
-                              child: Text("Chưa có sản phẩm tương tự"),
-                            ),
-                          )
-                        else
-                          _sanPhamTuongTu(context, controller),
-                      ],
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                }),
               ),
-            );
-          }),
+            ],
+          ),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              controller.addProductToCartTap();
+
+              // close dialog
+              Get.back();
+            },
+            child: Container(
+              height: DeviceUtils.getScaledHeight(context, 0.068),
+              margin: EdgeInsets.only(
+                  left: DeviceUtils.getScaledHeight(context, 0.012)),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: ColorResources.PRIMARY,
+              ),
+              child: Text(
+                "Thêm vào giỏ hàng",
+                style: titilliumSemiBold.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                    color: ColorResources.WHITE),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

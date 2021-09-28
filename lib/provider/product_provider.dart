@@ -112,6 +112,25 @@ class ProductProvider {
   }
 
   ///
+  /// Delete product to database
+  ///
+  Future<void> find({
+    required String id,
+    required Function(ProductModel product) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await regionRepo!.find(id);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      onSuccess(ProductModel.fromJson(results as Map<String, dynamic>));
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
   /// Get paginate products "page": 1, "limit": 10
   ///
   Future<void> findByIdOrder({
@@ -130,25 +149,6 @@ class ProductProvider {
       onSuccess(results
           .map((e) => ProductResponse.fromJson(e as Map<String, dynamic>))
           .toList());
-    } else {
-      onError(apiResponse.error);
-    }
-  }
-
-  ///
-  /// Delete product to database
-  ///
-  Future<void> find({
-    required String id,
-    required Function(ProductModel product) onSuccess,
-    required Function(dynamic error) onError,
-  }) async {
-    final ApiResponse apiResponse = await regionRepo!.find(id);
-    if (apiResponse.response.statusCode! >= 200 &&
-        apiResponse.response.statusCode! <= 300) {
-      // call back data success
-      final results = apiResponse.response.data as dynamic;
-      onSuccess(ProductModel.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
