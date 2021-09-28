@@ -155,4 +155,30 @@ class SharedPreferenceHelper {
   Future<bool> saveWard(String id) async {
     return _sharedPreference.setString(Preferences.ward, id);
   }
+
+  // Login: ----------------------------------------------------------
+  Future<bool?> get isLogin async {
+    return _sharedPreference.getBool(Preferences.isLogin);
+  }
+
+  Future<bool> saveIsLogin(bool id) async {
+    return _sharedPreference.setBool(Preferences.isLogin, id);
+  }
+
+  Future<bool> removeIsLogin() async {
+    return _sharedPreference.remove(Preferences.isLogin);
+  }
+
+  // First: ----------------------------------------------------------
+  Future<bool?> get isFirst async {
+    return _sharedPreference.getBool(Preferences.isFirst);
+  }
+
+  Future<bool> saveIsFirst(bool id) async {
+    return _sharedPreference.setBool(Preferences.isFirst, id);
+  }
+
+  Future<bool> removeIsFirst() async {
+    return _sharedPreference.remove(Preferences.isFirst);
+  }
 }
