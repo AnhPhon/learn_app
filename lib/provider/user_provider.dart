@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/gen_user_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/static_user_response.dart';
@@ -44,6 +45,24 @@ class UserProvider {
       // call back data success
       final results = apiResponse.response.data as dynamic;
       onSuccess(UserModel.fromJson(results as Map<String, dynamic>));
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// Gen username
+  ///
+  Future<void> genUsername({
+    required Function(GenUserModel user) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await userRepo!.genUsername();
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      onSuccess(GenUserModel.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

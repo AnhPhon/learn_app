@@ -21,32 +21,16 @@ import 'order_condition_controller.dart';
 
 class OrderConditionPage extends GetView<OrderConditionController> {
   final UserModel user;
-  late OrderModel orderModel;
+  OrderModel? orderModel;
 
   OrderConditionPage({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (user.id == null) {
-      orderModel = OrderModel(
-        idUser: "123",
-        userAccept: user.idUser,
-        idWarehouse: "1",
-        description: "ABC",
-        imagePayment: "",
-        statusOrder: "1",
-        statusPayment: "1",
-        totalPrice: 0.toString(),
-        discountPrice: 0.toString(),
-        idProvince: "1",
-        idDistrict: "2",
-        address: "abc",
-      );
-    }
-
     return GetBuilder<OrderConditionController>(
       init: OrderConditionController(),
       builder: (OrderConditionController value) {
+        // orderModel = controller.orderModel;
         return Scaffold(
           //app bar
           appBar: CustomAppBar().customAppBar(title: "Đơn hàng điều kiện"),
@@ -390,7 +374,7 @@ class OrderConditionPage extends GetView<OrderConditionController> {
           // btn checkout
           GestureDetector(
             onTap: () {
-              controller.btnContinue(context, user, orderModel);
+              controller.btnContinue(context, user);
             },
             child: _btnContinueWidget(context),
           ),
@@ -468,22 +452,4 @@ Widget normalInputWidget(String? label, TextEditingController controller) {
       controller: controller,
     ),
   );
-}
-
-class Item {
-  String url;
-  String title;
-  int amount;
-  bool isChoose;
-  int quality;
-  String id;
-
-  Item({
-    required this.id,
-    required this.url,
-    required this.title,
-    required this.amount,
-    required this.isChoose,
-    required this.quality,
-  });
 }

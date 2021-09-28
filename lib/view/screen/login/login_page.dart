@@ -6,7 +6,6 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/register/register_page.dart';
 
 import 'login_controller.dart';
 
