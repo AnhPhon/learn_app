@@ -477,6 +477,11 @@ class CartPage extends GetView<CartController> {
       body: GetBuilder<CartController>(
           init: CartController(),
           builder: (controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return controller.selectedProductList.isEmpty
                 ? const Center(child: Text("Giỏ hàng trống"))
                 : SingleChildScrollView(

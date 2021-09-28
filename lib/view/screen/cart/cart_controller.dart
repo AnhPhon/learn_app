@@ -67,7 +67,6 @@ class CartController extends GetxController {
                 .map((quanlity) =>
                     qualityProduct.add(int.parse(quanlity.quantity!)))
                 .toList();
-            print("object: ${qualityProduct.length}");
             calculatorPrice();
             isLoading = false;
             update();

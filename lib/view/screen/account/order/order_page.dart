@@ -16,88 +16,82 @@ class OrderPage extends GetView<OrderController> {
       required int price,
       required int quantity,
       required String paymentMethod}) {
-    return GestureDetector(
-      onTap: () {
-        controller.onOrderWidgetClick();
-      },
-      child: Container(
-        margin: EdgeInsets.only(
-            left: DeviceUtils.getScaledSize(context, 0.03),
-            right: DeviceUtils.getScaledSize(context, 0.03),
-            bottom: DeviceUtils.getScaledSize(context, 0.02),
-            top: DeviceUtils.getScaledSize(context, 0.03)),
-        padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.04)),
-        decoration: BoxDecoration(
-            color: ColorResources.WHITE,
-            borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //status order
-            Container(
-              padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
-              decoration: BoxDecoration(
-                  color: status == "0"
-                      ? Colors.white
-                      : controller.statusBackgroundColor[status],
-                  borderRadius: BorderRadius.circular(16)),
-              child: Text(
-                controller.statusLabel[status].toString(),
-                style: TextStyle(
-                  color: status == "0"
-                      ? Colors.white
-                      : controller.statusColor[status],
-                ),
+    return Container(
+      margin: EdgeInsets.only(
+          left: DeviceUtils.getScaledSize(context, 0.03),
+          right: DeviceUtils.getScaledSize(context, 0.03),
+          bottom: DeviceUtils.getScaledSize(context, 0.02),
+          top: DeviceUtils.getScaledSize(context, 0.03)),
+      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.04)),
+      decoration: BoxDecoration(
+          color: ColorResources.WHITE, borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //status order
+          Container(
+            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
+            decoration: BoxDecoration(
+                color: status == "0"
+                    ? Colors.white
+                    : controller.statusBackgroundColor[status],
+                borderRadius: BorderRadius.circular(16)),
+            child: Text(
+              controller.statusLabel[status].toString(),
+              style: TextStyle(
+                color: status == "0"
+                    ? Colors.white
+                    : controller.statusColor[status],
               ),
             ),
-            const SizedBox(height: 20),
-            //product info
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(7),
-                  child: Image.asset(
-                    imgUrl,
-                    height: 50,
-                    width: 50,
+          ),
+          const SizedBox(height: 20),
+          //product info
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(7),
+                child: Image.asset(
+                  imgUrl,
+                  height: 50,
+                  width: 50,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sản phẩm",
+                    style: titilliumSemiBold.copyWith(fontSize: 16),
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Sản phẩm",
-                      style: titilliumSemiBold.copyWith(fontSize: 16),
-                    ),
-                    Text(
-                      "$quantity sản phẩm | $price đ",
-                      style: titilliumSemiBold.copyWith(color: Colors.grey),
-                    ),
-                  ],
-                )
+                  Text(
+                    "$quantity sản phẩm | $price đ",
+                    style: titilliumSemiBold.copyWith(color: Colors.grey),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Dimensions().paddingDivider(context),
+
+          //payment method
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const Text("Phương thức thanh toán"),
+                Text(paymentMethod,
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
               ],
             ),
-            Dimensions().paddingDivider(context),
-
-            //payment method
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text("Phương thức thanh toán"),
-                  Text(paymentMethod,
-                      style: const TextStyle(fontWeight: FontWeight.w600)),
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -130,12 +124,18 @@ class OrderPage extends GetView<OrderController> {
               itemBuilder: (BuildContext context, int i) {
                 return controller.orderStatusList[int.parse(index)].isEmpty
                     ? Container()
-                    : orderWidget(context, controller,
-                        status: (int.parse(index) + 1).toString(),
-                        imgUrl: "assets/images/Untitled.png",
-                        paymentMethod: "Momo",
-                        price: 380000,
-                        quantity: 2);
+                    : GestureDetector(
+                        onTap: () {
+                          controller.onOrderWidgetClick(
+                              i, (int.parse(index) + 1).toString());
+                        },
+                        child: orderWidget(context, controller,
+                            status: (int.parse(index) + 1).toString(),
+                            imgUrl: "assets/images/Untitled.png",
+                            paymentMethod: "Momo",
+                            price: 380000,
+                            quantity: 2),
+                      );
               });
         });
   }
@@ -145,7 +145,6 @@ class OrderPage extends GetView<OrderController> {
     return GetBuilder<OrderController>(
         init: OrderController(),
         builder: (controller) {
-          print(controller.statusLabel.keys.length);
           return DefaultTabController(
             initialIndex: controller.indexTab,
             length: 6,
