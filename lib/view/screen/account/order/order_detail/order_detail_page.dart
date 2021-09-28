@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/account/order/component/custom_stepper.dart';
+import 'package:template/view/screen/account/order/order_controller.dart';
 import 'package:template/view/screen/account/order/order_detail/order_detail_controller.dart';
 
 class OrderDetailPage extends GetView<OrderDetailController> {
@@ -178,124 +181,165 @@ class OrderDetailPage extends GetView<OrderDetailController> {
   ///
   ///product info
   ///
-  Widget _productInfo(BuildContext context) {
+  Widget _productInfo(BuildContext context, OrderDetailController controller) {
     return _containerBox(context,
-        child: Column(
-          children: List.generate(
-              3,
-              (index) => Column(
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.orderItemList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(7),
-                            child: Image.asset(
-                              "assets/images/Untitled.png",
-                              height: 50,
-                              width: 50,
+                      Expanded(
+                        flex: 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: Images.placeholder,
+                            image: controller
+                                .orderItemList[index].idProduct!.thumbnail
+                                .toString(),
+                            height: DeviceUtils.getScaledSize(context, 0.178),
+                            width: DeviceUtils.getScaledSize(context, 0.178),
+                            fit: BoxFit.fill,
+                            imageErrorBuilder: (c, o, s) => Image.asset(
+                              Images.placeholder,
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Sản phẩm",
-                                style: titilliumSemiBold.copyWith(fontSize: 16),
-                              ),
-                              Text(
-                                "200.000đ x1",
-                                style: titilliumSemiBold.copyWith(
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          )
-                        ],
+                        ),
                       ),
-                      if (index == 2)
-                        const SizedBox.shrink()
-                      else
-                        Dimensions().paddingDivider(context),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 7,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              controller.orderItemList[index].idProduct!.name
+                                  .toString(),
+                              maxLines: 2,
+                              style: titilliumSemiBold.copyWith(fontSize: 16),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Text(
+                                    PriceConverter.convertPrice(
+                                        context,
+                                        double.parse(controller
+                                                .orderItemList[index]
+                                                .idProduct!
+                                                .prices!) *
+                                            double.parse(controller
+                                                .orderItemList[index]
+                                                .quantity!)),
+                                    style: titilliumSemiBold.copyWith(
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Text(
+                                    "x${controller.orderItemList[index].quantity}",
+                                    style: titilliumSemiBold.copyWith(
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
                     ],
-                  )),
-        ));
+                  ),
+                  if (index == 2)
+                    const SizedBox.shrink()
+                  else
+                    Dimensions().paddingDivider(context),
+                ],
+              );
+            }));
   }
 
   ///
   ///payment detail
   ///
-  Widget _paymentDetail(BuildContext context) {
+  Widget _paymentDetail(
+      BuildContext context, OrderDetailController controller) {
     return _containerBox(context,
         child: Column(
           children: [
-            ...List.generate(
-                controller.payment.length,
-                (index) => Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: DeviceUtils.getScaledSize(context, 0.015)),
-                      child: rowText(
-                          text1: controller.payment[index].toString(),
-                          text2: controller.price[index].toString(),
-                          color: index == 2 ? ColorResources.PRIMARY : null),
-                    )).toList()
+            Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: DeviceUtils.getScaledSize(context, 0.015)),
+                child: rowText(
+                    text1: "Giá tiền",
+                    text2: PriceConverter.convertPrice(
+                        context, controller.price!)))
           ],
         ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<OrderDetailController>(
-        init: OrderDetailController(),
-        builder: (OrderDetailController value) {
-          return Scaffold(
-            appBar: CustomAppBar().customAppBar(title: "Order của tôi"),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledSize(context, 0.038)),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.05)),
-                    //thong tin chung
-                    Text(
-                      "Thông tin chung",
-                      style: Dimensions.fontSizeStyle18w600(),
-                    ),
-                    _thongTinChung(context),
+    return Scaffold(
+        appBar: CustomAppBar().customAppBar(title: "Order của tôi"),
+        body: GetBuilder<OrderDetailController>(
+            init: OrderDetailController(),
+            builder: (controller) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: DeviceUtils.getScaledSize(context, 0.038)),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.05)),
+                      //thong tin chung
+                      Text(
+                        "Thông tin chung",
+                        style: Dimensions.fontSizeStyle18w600(),
+                      ),
+                      _thongTinChung(context),
 
-                    // SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
+                      // SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
 
-                    //lich su
-                    // _lichSu(context),
+                      //lich su
+                      // _lichSu(context),
 
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.05)),
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.05)),
 
-                    //shipping
-                    _shipping(context),
+                      //shipping
+                      _shipping(context),
 
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.02)),
 
-                    //product info
-                    Text("Thông tin sản phẩm",
-                        style: Dimensions.fontSizeStyle18w600()),
-                    _productInfo(context),
+                      //product info
+                      Text("Thông tin sản phẩm",
+                          style: Dimensions.fontSizeStyle18w600()),
+                      _productInfo(context, controller),
 
-                    //payment detail
-                    Text(
-                      "Chi tiết thanh toán",
-                      style: Dimensions.fontSizeStyle18w600(),
-                    ),
-                    _paymentDetail(context),
-                  ],
+                      //payment detail
+                      Text(
+                        "Chi tiết thanh toán",
+                        style: Dimensions.fontSizeStyle18w600(),
+                      ),
+                      _paymentDetail(context, controller)
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          );
-        });
+              );
+            }));
   }
 }
