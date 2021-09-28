@@ -26,9 +26,8 @@ class LoginController extends GetxController {
     // sl.get<SharedPreferenceHelper>().removeIsLogin();
 
     sl.get<SharedPreferenceHelper>().isLogin.then((value) {
-      print("IS LOGIN: $value");
       if (value == true) {
-        Get.offAndToNamed(AppRoutes.DASHBOARD);
+        Get.toNamed(AppRoutes.DASHBOARD);
       }
     });
 
@@ -79,7 +78,7 @@ class LoginController extends GetxController {
             update();
 
             // go to dashboard
-            Get.offAndToNamed(AppRoutes.DASHBOARD);
+            Get.toNamed(AppRoutes.DASHBOARD);
           },
           onError: (error) {
             isLoading = false;
