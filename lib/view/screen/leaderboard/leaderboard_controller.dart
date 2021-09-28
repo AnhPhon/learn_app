@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/context_model.dart';
 import 'package:template/provider/context_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:html/parser.dart';
 
 class LeaderBoardController extends GetxController {
   ContextProvider contextProvider = GetIt.I.get<ContextProvider>();
@@ -36,5 +37,15 @@ class LeaderBoardController extends GetxController {
       print(error);
       update();
     });
+  }
+
+  ///
+  ///  parse Html String
+  ///
+  String parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString =
+        parse(document.body!.text).documentElement!.text;
+    return parsedString;
   }
 }

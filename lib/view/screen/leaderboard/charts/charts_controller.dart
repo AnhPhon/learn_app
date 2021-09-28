@@ -31,8 +31,8 @@ class ChartsController extends GetxController {
           personalHonorList = value;
           personalHonorList.sort((a, b) =>
               int.parse(a.position!).compareTo(int.parse(b.position!)));
-          update();
           isLoading = false;
+          update();
         },
         onError: (error) {
           print(error);
