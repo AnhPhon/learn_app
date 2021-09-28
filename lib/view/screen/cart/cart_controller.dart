@@ -120,6 +120,7 @@ class CartController extends GetxController {
               id: orderItemProductList[index].id.toString(),
               onSuccess: (value) {
                 loadSelectedProduct();
+                isReloadData = true;
                 isLoadingQuality = false;
                 update();
               },
