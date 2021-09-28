@@ -299,186 +299,212 @@ class HomePage extends GetView<HomeController> {
     const FontWeight _labelFontWeight = FontWeight.normal;
 
     return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (controller) {
-          if (controller.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      init: HomeController(),
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          return Container(
-            color: Colors.white,
-            height: DeviceUtils.getScaledSize(context, 1.17),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    // background
-                    Stack(
-                      children: [
-                        //banner
-                        _imgProduct(context),
-                        Positioned(
-                          bottom: 0,
-                          child: Container(
-                            width: width,
-                            height: DeviceUtils.getScaledSize(context, 0.5347),
-                            margin: EdgeInsets.only(
-                                top: DeviceUtils.getScaledSize(context, 0.127)),
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.transparent, Color(0xff333333)],
-                                begin: Alignment.center,
-                                end: Alignment.bottomCenter,
-                              ),
+        return Container(
+          color: Colors.white,
+          height: DeviceUtils.getScaledSize(context, 1.17),
+          child: Stack(
+            children: [
+              Stack(
+                children: [
+                  // background
+                  Stack(
+                    children: [
+                      //banner
+                      _imgProduct(context),
+
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          width: width,
+                          height: DeviceUtils.getScaledSize(context, 0.5347),
+                          margin: EdgeInsets.only(
+                              top: DeviceUtils.getScaledSize(context, 0.127)),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.transparent, Color(0xff333333)],
+                              begin: Alignment.center,
+                              end: Alignment.bottomCenter,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-
-                    // avatar user
-                    Container(
-                        margin: const EdgeInsets.only(
-                          left: avatarMarginLeft,
-                          top: 240 - avatarHeight / 2 - 10,
                         ),
-                        child: Stack(
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              // const SizedBox(
+              //   height: avatarHeight / 2,
+              // ),
+              Positioned(
+                bottom: 50,
+                child: Stack(
+                  children: [
+                    // basic information statistic
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
+                        ),
+                        Row(
                           children: [
-                            // avatar
-                            _avatarUser(controller.userModel.avatar.toString(),
-                                avatarWidth, avatarHeight),
-                            // info of user
-                            _infoUser(
-                                controller.userModel.fullname.toString(),
-                                controller.userModel.username.toString(),
-                                Colors.white,
-                                Colors.white,
-                                avatarWidth),
+                            SizedBox(
+                              width: width / 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    PriceConverter.convertPrice(
+                                        context,
+                                        controller.staticUserResponse
+                                            .doanhSoDoiNhom!),
+                                    style: const TextStyle(
+                                      fontSize: _moneyTextSize,
+                                      fontWeight: _moneyFontWeight,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Doanh số đội nhóm",
+                                    style: TextStyle(
+                                      fontSize: _labelTextSize,
+                                      fontWeight: _labelFontWeight,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: width / 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    PriceConverter.convertPrice(
+                                        context,
+                                        controller
+                                            .staticUserResponse.doanSoCaNhan!),
+                                    style: const TextStyle(
+                                      fontSize: _moneyTextSize,
+                                      fontWeight: _moneyFontWeight,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Doanh số cá nhân",
+                                    style: TextStyle(
+                                      fontSize: _labelTextSize,
+                                      fontWeight: _labelFontWeight,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
-                        )),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: width / 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    controller.staticUserResponse.soLuongId
+                                        .toString(),
+                                    style: const TextStyle(
+                                      fontSize: _moneyTextSize,
+                                      fontWeight: _moneyFontWeight,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Số lượng ID",
+                                    style: TextStyle(
+                                      fontSize: _labelTextSize,
+                                      fontWeight: _labelFontWeight,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: width / 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    controller.staticUserResponse.soLuongDonHang
+                                        .toString(),
+                                    style: const TextStyle(
+                                      fontSize: _moneyTextSize,
+                                      fontWeight: _moneyFontWeight,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Số lượng đơn hàng",
+                                    style: TextStyle(
+                                      fontSize: _labelTextSize,
+                                      fontWeight: _labelFontWeight,
+                                      color: Color(0xff999999),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                   ],
                 ),
-                // basic information statistic
-                Column(
+              ),
+
+              Positioned(
+                bottom: 190,
+                child: Stack(
                   children: [
-                    const SizedBox(
-                      height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: width / 2,
-                          child: Column(
-                            children: [
-                              Text(
-                                PriceConverter.convertPrice(
-                                    context,
-                                    controller
-                                        .staticUserResponse.doanhSoDoiNhom!),
-                                style: const TextStyle(
-                                  fontSize: _moneyTextSize,
-                                  fontWeight: _moneyFontWeight,
-                                ),
-                              ),
-                              const Text(
-                                "Doanh số đội nhóm",
-                                style: TextStyle(
-                                  fontSize: _labelTextSize,
-                                  fontWeight: _labelFontWeight,
-                                  color: Color(0xff999999),
-                                ),
-                              ),
-                            ],
+                    Container(
+                      decoration: const BoxDecoration(),
+                      margin: const EdgeInsets.only(
+                        left: avatarMarginLeft,
+                        // top: 240 - avatarHeight / 2 - 10,
+                      ),
+                      child: Stack(
+                        children: [
+                          // avatar
+                          _avatarUser(
+                            controller.userModel.avatar.toString(),
+                            avatarWidth,
+                            avatarHeight,
                           ),
-                        ),
-                        SizedBox(
-                          width: width / 2,
-                          child: Column(
-                            children: [
-                              Text(
-                                PriceConverter.convertPrice(
-                                    context,
-                                    controller
-                                        .staticUserResponse.doanSoCaNhan!),
-                                style: const TextStyle(
-                                  fontSize: _moneyTextSize,
-                                  fontWeight: _moneyFontWeight,
-                                ),
-                              ),
-                              const Text(
-                                "Doanh số cá nhân",
-                                style: TextStyle(
-                                  fontSize: _labelTextSize,
-                                  fontWeight: _labelFontWeight,
-                                  color: Color(0xff999999),
-                                ),
-                              ),
-                            ],
+
+                          // info of user
+                          _infoUser(
+                            controller.userModel.fullname.toString(),
+                            controller.userModel.username.toString(),
+                            Colors.white,
+                            Colors.white,
+                            avatarWidth,
+                            MediaQuery.of(context).size.width
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: width / 2,
-                          child: Column(
-                            children: [
-                              Text(
-                                controller.staticUserResponse.soLuongId
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: _moneyTextSize,
-                                  fontWeight: _moneyFontWeight,
-                                ),
-                              ),
-                              const Text(
-                                "Số lượng ID",
-                                style: TextStyle(
-                                  fontSize: _labelTextSize,
-                                  fontWeight: _labelFontWeight,
-                                  color: Color(0xff999999),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: width / 2,
-                          child: Column(
-                            children: [
-                              Text(
-                                controller.staticUserResponse.soLuongDonHang
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: _moneyTextSize,
-                                  fontWeight: _moneyFontWeight,
-                                ),
-                              ),
-                              const Text(
-                                "Số lượng đơn hàng",
-                                style: TextStyle(
-                                  fontSize: _labelTextSize,
-                                  fontWeight: _labelFontWeight,
-                                  color: Color(0xff999999),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    )
                   ],
-                )
-              ],
-            ),
-          );
-        });
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   ///
@@ -493,13 +519,14 @@ class HomePage extends GetView<HomeController> {
         borderRadius: BorderRadius.all(Radius.circular(width)),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(50)),
+        borderRadius: const BorderRadius.all(Radius.circular(50)),
         child: Image(
-            width: width,
-            height: height,
-            image: NetworkImage(
-              imageURL,
-            )),
+          width: width,
+          height: height,
+          image: NetworkImage(
+            imageURL,
+          ),
+        ),
       ),
     );
   }
@@ -507,8 +534,14 @@ class HomePage extends GetView<HomeController> {
   ///
   /// info of info declared
   ///
-  Widget _infoUser(String userName, String ruleName, Color userColor,
-      Color ruleColor, double marginLeft) {
+  Widget _infoUser(
+    String userName,
+    String ruleName,
+    Color userColor,
+    Color ruleColor,
+    double marginLeft,
+    double width,
+  ) {
     // user name size is FONT_SIZE_EXTRA_LARGE
     const double userNameSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
 
@@ -519,6 +552,7 @@ class HomePage extends GetView<HomeController> {
     const String prefixRuleName = "@";
 
     return Container(
+      width: width - 130,
       margin: EdgeInsets.only(left: marginLeft + 20, top: marginLeft / 4 - 10),
       child: Column(
         children: [
@@ -528,12 +562,14 @@ class HomePage extends GetView<HomeController> {
               userName,
               textAlign: TextAlign.left,
               style: TextStyle(
-                  fontSize: userNameSize,
-                  fontWeight: FontWeight.bold,
-                  color: userColor),
+                fontSize: userNameSize,
+                fontWeight: FontWeight.bold,
+                color: userColor,
+              ),
             ),
           ),
           Container(
+            // width: width/3,
             alignment: Alignment.centerLeft,
             child: Text(
               prefixRuleName + ruleName,
