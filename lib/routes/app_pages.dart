@@ -19,7 +19,6 @@ import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/news/news_detail/news_detail_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/register/information_user/information_user_page.dart';
-import 'package:template/view/screen/register/payment/payment_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
@@ -42,14 +41,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.INFORMATION_USER,
       page: () => InformationUserPage(),
-    ),
-    // GetPage(
-    //   name: AppRoutes.ORDER_CONDITION,
-    //   page: () => OrderConditionPage(),
-    // ),
-    GetPage(
-      name: AppRoutes.PAYMENT,
-      page: () => PaymentPage(),
     ),
     GetPage(
         name: AppRoutes.DASHBOARD,
