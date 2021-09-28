@@ -15,7 +15,7 @@ class IntroductionController extends GetxController {
 
   void onIntroEnd(BuildContext context) {
     sl.get<SharedPreferenceHelper>().saveIsFirst(true);
-    Get.offNamed(AppRoutes.LOGIN);
+    Get.toNamed(AppRoutes.LOGIN);
     update();
   }
 }
