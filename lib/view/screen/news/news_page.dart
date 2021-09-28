@@ -87,32 +87,47 @@ class NewsPage extends GetView<NewsController> {
                                                     height: DeviceUtils
                                                         .getScaledSize(
                                                             context, 0.25),
-                                                    child: FadeInImage
-                                                        .assetNetwork(
-                                                      placeholder:
-                                                          Images.placeholder,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              .25,
-                                                      image: controller
-                                                          .newsList[index]
-                                                          .image!,
-                                                      fit: BoxFit.fill,
-                                                      imageErrorBuilder:
-                                                          (c, o, s) =>
-                                                              Image.asset(
-                                                        Images.placeholder,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              7),
+                                                      child: FadeInImage
+                                                          .assetNetwork(
+                                                        placeholder:
+                                                            Images.placeholder,
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
                                                             .25,
+                                                        image: controller
+                                                            .newsList[index]
+                                                            .image!,
+                                                        fit: BoxFit.fill,
+                                                        imageErrorBuilder:
+                                                            (c, o, s) =>
+                                                                Image.asset(
+                                                          Images.placeholder,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              .25,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                  const Spacer(),
+                                                  SizedBox(
+                                                      width: DeviceUtils
+                                                          .getScaledSize(
+                                                              context, 0.02)),
+                                                  Container(
+                                                    height: DeviceUtils
+                                                        .getScaledSize(
+                                                            context, 0.25),
+                                                    width: 1,
+                                                    color: Colors.grey,
+                                                  ),
 
                                                   //  text
                                                   Container(
@@ -121,10 +136,11 @@ class NewsPage extends GetView<NewsController> {
                                                                 .size
                                                                 .width *
                                                             .6,
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: Dimensions
-                                                            .PADDING_SIZE_DEFAULT),
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal: DeviceUtils
+                                                            .getScaledSize(
+                                                                context,
+                                                                0.015)),
                                                     child: Container(
                                                         alignment: Alignment
                                                             .centerLeft,

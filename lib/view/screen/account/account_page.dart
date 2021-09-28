@@ -133,7 +133,7 @@ class AccountPage extends GetView<AccountController> {
 
                         //ID
                         Text(
-                          controller.userModel.idUser.toString(),
+                          "@${controller.userModel.username}",
                           style: Dimensions.fontSizeStyle16(),
                         ),
 

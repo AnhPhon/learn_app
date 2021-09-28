@@ -50,6 +50,11 @@ class ChartsPage extends GetView<ChartsController> {
         body: GetBuilder<ChartsController>(
             init: ChartsController(),
             builder: (controller) {
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -62,87 +67,78 @@ class ChartsPage extends GetView<ChartsController> {
                       child: Stack(
                         children: [
                           Positioned(
-                            top: DeviceUtils.getScaledSize(context, 0.325),
+                            top: DeviceUtils.getScaledSize(context, 0.38),
                             right: DeviceUtils.getScaledSize(context, 0.19),
                             child: Image.asset(
                               Images.charts,
                               height: DeviceUtils.getScaledSize(context, 0.4),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    DeviceUtils.getScaledSize(context, 0.09)),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //2nd
+                          Positioned(
+                            left: 50,
+                            top: 50,
+                            child: _circleAvatar(context,
+                                imgUrl: controller
+                                    .personalHonorList[1].idUser!.avatar!,
+                                rank: 2),
+                          ),
+
+                          Positioned(
+                            left: 20,
+                            bottom: 140,
+                            child: Text(
+                                controller
+                                    .personalHonorList[1].idUser!.fullname!,
+                                textAlign: TextAlign.center,
+                                style: Dimensions.fontSizeStyle14w600()),
+                          ),
+
+                          //1st
+                          Positioned(
+                            left: 160,
+                            top: 5,
+                            child: Stack(
                               children: [
-                                //2nd
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                        height: DeviceUtils.getScaledSize(
-                                            context, 0.08)),
-                                    _circleAvatar(context,
-                                        imgUrl: controller.personalHonorList[1]
-                                            .idUser!.avatar!,
-                                        rank: 2),
-                                    Text(
-                                        controller.personalHonorList[1].idUser!
-                                            .fullname!,
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            Dimensions.fontSizeStyle14w600()),
-                                  ],
-                                ),
-
-                                //1st
-                                Column(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        _circleAvatar(context,
-                                            imgUrl: controller
-                                                .personalHonorList[0]
-                                                .idUser!
-                                                .avatar!,
-                                            rank: 1),
-                                        Positioned(
-                                            right: DeviceUtils.getScaledSize(
-                                                context, 0.06),
-                                            child: SvgPicture.asset(
-                                                "assets/icon/crown.svg")),
-                                      ],
-                                    ),
-                                    Text(
-                                        controller.personalHonorList[0].idUser!
-                                            .fullname!,
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            Dimensions.fontSizeStyle14w600()),
-                                  ],
-                                ),
-
-                                //3rd
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                        height: DeviceUtils.getScaledSize(
-                                            context, 0.08)),
-                                    _circleAvatar(context,
-                                        imgUrl: controller.personalHonorList[2]
-                                            .idUser!.avatar!,
-                                        rank: 3),
-                                    Text(
-                                        controller.personalHonorList[2].idUser!
-                                            .fullname!,
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            Dimensions.fontSizeStyle14w600()),
-                                  ],
-                                ),
+                                _circleAvatar(context,
+                                    imgUrl: controller
+                                        .personalHonorList[0].idUser!.avatar!,
+                                    rank: 1),
+                                Positioned(
+                                    right: DeviceUtils.getScaledSize(
+                                        context, 0.06),
+                                    child: SvgPicture.asset(
+                                        "assets/icon/crown.svg")),
                               ],
                             ),
+                          ),
+                          Positioned(
+                            left: 140,
+                            top: 100,
+                            child: Text(
+                                controller
+                                    .personalHonorList[0].idUser!.fullname!,
+                                textAlign: TextAlign.center,
+                                style: Dimensions.fontSizeStyle14w600()),
+                          ),
+
+                          //3rd
+                          Positioned(
+                            right: 50,
+                            top: 50,
+                            child: _circleAvatar(context,
+                                imgUrl: controller
+                                    .personalHonorList[2].idUser!.avatar!,
+                                rank: 3),
+                          ),
+                          Positioned(
+                            right: 35,
+                            top: 140,
+                            child: Text(
+                                controller
+                                    .personalHonorList[2].idUser!.fullname!,
+                                textAlign: TextAlign.center,
+                                style: Dimensions.fontSizeStyle14w600()),
                           ),
                         ],
                       ),

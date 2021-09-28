@@ -26,6 +26,7 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
           centerTitle: true,
           shadowColor: const Color(0x3F000000),
         ),
+        backgroundColor: ColorResources.WHITE,
         body: GetBuilder<LeaderBoardController>(
             init: LeaderBoardController(),
             builder: (controller) {
@@ -60,16 +61,11 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                               context, 0.025)),
                                       decoration: BoxDecoration(
                                         color: ColorResources.WHITE,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 2,
-                                            color: Colors.grey.withOpacity(0.3),
-                                            spreadRadius: 2, // Shadow position
-                                          ),
-                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
                                               flex: 3,
@@ -97,6 +93,15 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                                   ),
                                                 ),
                                               )),
+                                          SizedBox(
+                                              width: DeviceUtils.getScaledSize(
+                                                  context, 0.02)),
+                                          Container(
+                                            height: DeviceUtils.getScaledSize(
+                                                context, 0.25),
+                                            width: 1,
+                                            color: ColorResources.GREY,
+                                          ),
                                           Expanded(
                                               flex: 7,
                                               child: Padding(
@@ -113,30 +118,13 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                                         controller
                                                             .contextList[i]
                                                             .name!,
-                                                        maxLines: 2,
+                                                        maxLines: 3,
                                                         style: Dimensions
                                                             .fontSizeStyle18w600()),
                                                     SizedBox(
                                                         height: DeviceUtils
                                                             .getScaledSize(
-                                                                context, 0.01)),
-                                                    Text(
-                                                        controller
-                                                            .contextList[i]
-                                                            .content!,
-                                                        maxLines: 3,
-                                                        textAlign:
-                                                            TextAlign.justify,
-                                                        style: Dimensions
-                                                                .fontSizeStyle16w600()
-                                                            .copyWith(
-                                                                color:
-                                                                    ColorResources
-                                                                        .GREY)),
-                                                    SizedBox(
-                                                        height: DeviceUtils
-                                                            .getScaledSize(
-                                                                context, 0.01)),
+                                                                context, 0.02)),
                                                     Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -146,12 +134,16 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                                             "Từ ${DateConverter.isoStringToLocalDateFull(controller.contextList[i].beginContext!)}",
                                                             style: Dimensions
                                                                     .fontSizeStyle14()
-                                                                .copyWith()),
+                                                                .copyWith(
+                                                                    color: ColorResources
+                                                                        .RED)),
                                                         Text(
                                                             "đến ${DateConverter.isoStringToLocalDateFull(controller.contextList[i].endContext!)}",
                                                             style: Dimensions
                                                                     .fontSizeStyle14()
-                                                                .copyWith()),
+                                                                .copyWith(
+                                                                    color: ColorResources
+                                                                        .RED)),
                                                       ],
                                                     ),
                                                   ],
@@ -161,9 +153,15 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                      height: DeviceUtils.getScaledSize(
-                                          context, 0.07)),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: DeviceUtils.getScaledSize(
+                                          context, 0.1),
+                                    ),
+                                    child: const Divider(
+                                      color: Colors.grey,
+                                    ),
+                                  )
                                 ],
                               );
                             }),
