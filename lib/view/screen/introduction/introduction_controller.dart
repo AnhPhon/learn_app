@@ -13,7 +13,7 @@ class IntroductionController extends GetxController {
     sl.get<SharedPreferenceHelper>().isFirst.then((value) {
       print(value);
       if (value == true) {
-        Get.offNamed(AppRoutes.LOGIN);
+        Get.toNamed(AppRoutes.LOGIN);
       }
     });
 
@@ -22,7 +22,7 @@ class IntroductionController extends GetxController {
 
   void onIntroEnd(BuildContext context) {
     sl.get<SharedPreferenceHelper>().saveIsFirst(true);
-    Get.offNamed(AppRoutes.LOGIN);
+    Get.toNamed(AppRoutes.LOGIN);
     update();
   }
 }

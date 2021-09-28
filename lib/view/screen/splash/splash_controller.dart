@@ -17,7 +17,7 @@ class SplashController extends GetxController
 
     _animationController!
         .forward()
-        .whenComplete(() => Get.offNamed(AppRoutes.INTRO));
+        .whenComplete(() => Get.toNamed(AppRoutes.INTRO));
 
     super.onInit();
   }

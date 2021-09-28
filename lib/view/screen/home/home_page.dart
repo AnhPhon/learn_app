@@ -319,27 +319,31 @@ class HomePage extends GetView<HomeController> {
                       children: [
                         //banner
                         _imgProduct(context),
-                        Container(
-                          width: width,
-                          height: DeviceUtils.getScaledSize(context, 0.5347),
-                          margin: EdgeInsets.only(
-                              top: DeviceUtils.getScaledSize(context, 0.127)),
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.transparent, Color(0xff333333)],
-                              begin: Alignment.center,
-                              end: Alignment.bottomCenter,
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            width: width,
+                            height: DeviceUtils.getScaledSize(context, 0.5347),
+                            margin: EdgeInsets.only(
+                                top: DeviceUtils.getScaledSize(context, 0.127)),
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.transparent, Color(0xff333333)],
+                                begin: Alignment.center,
+                                end: Alignment.bottomCenter,
+                              ),
                             ),
                           ),
-                        ),
+                        )
                       ],
                     ),
 
                     // avatar user
                     Container(
                         margin: const EdgeInsets.only(
-                            left: avatarMarginLeft,
-                            top: 260 - avatarHeight / 2 - 10),
+                          left: avatarMarginLeft,
+                          top: 240 - avatarHeight / 2 - 10,
+                        ),
                         child: Stack(
                           children: [
                             // avatar
@@ -354,50 +358,6 @@ class HomePage extends GetView<HomeController> {
                                 avatarWidth),
                           ],
                         )),
-                    //cart btn
-                    // Positioned(
-                    //   bottom: 13,
-                    //   left: 140,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       controller.onCartClick();
-                    //     },
-                    //     child: Container(
-                    //       height: 30,
-                    //       width: 30,
-                    //       padding: const EdgeInsets.all(4),
-                    //       decoration: const ShapeDecoration(
-                    //           shape: CircleBorder(
-                    //               side: BorderSide(
-                    //                   width: 2,
-                    //                   color: ColorResources.PRIMARY))),
-                    //       child: Image.asset(
-                    //         Images.cart,
-                    //         color: ColorResources.PRIMARY,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Positioned(
-                    //   bottom: 32,
-                    //   left: 160,
-                    //   child: Container(
-                    //     height: DeviceUtils.getScaledHeight(context, 0.02),
-                    //     width: DeviceUtils.getScaledWidth(context, 0.04),
-                    //     alignment: Alignment.center,
-                    //     decoration: const BoxDecoration(
-                    //       shape: BoxShape.circle,
-                    //       color: ColorResources.RED,
-                    //     ),
-                    //     child: Text(
-                    //       controller.productFromCartList.length.toString(),
-                    //       // controller.productFromCartList.length.toString(),
-                    //       style: titilliumSemiBold.copyWith(
-                    //           fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                    //           color: Theme.of(context).accentColor),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 // basic information statistic
