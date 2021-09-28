@@ -119,7 +119,6 @@ class NewsController extends GetxController with SingleGetTickerProviderMixin {
     final String time = dateTime;
     final loadedTime = DateConverter.convertStringToDatetime(
         time.replaceAll("T", " ").substring(0, time.length - 1));
-    ;
     final now = DateTime.now();
     final difference = now.difference(loadedTime);
     return timeago.format(now.subtract(difference), locale: "vi");

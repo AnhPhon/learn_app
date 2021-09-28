@@ -51,16 +51,23 @@ class OrderDetailPage extends GetView<OrderDetailController> {
   ///
   ///thong tin chung
   ///
-  Widget _thongTinChung(BuildContext context) {
+  Widget _thongTinChung(
+      BuildContext context, OrderDetailController controller) {
     return _containerBox(
       context,
       child: Column(
         children: [
-          rowText(text1: "Order Id", text2: "00000000"),
+          rowText(text1: "Id", text2: controller.orderId.toString()),
           Dimensions().paddingDivider(context),
-          rowText(text1: "Ngày order", text2: "13:35 17/09/2021"),
+          rowText(
+              text1: "Ngày đặt hàng",
+              text2: controller
+                  .convertDateTime(controller.orderModel.updatedAt.toString())),
           Dimensions().paddingDivider(context),
-          rowText(text1: "Trạng thái", text2: "Đã giao hàng"),
+          rowText(
+              text1: "Trạng thái",
+              text2: controller.statusLabel[controller.orderModel.statusOrder]
+                  .toString()),
         ],
       ),
     );
@@ -84,7 +91,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
             ),
             GestureDetector(
               onTap: () {
-                controller.onHistoryClick();
+                // controller.onHistoryClick();
               },
               child: const Text("Chi tiết",
                   style: TextStyle(
@@ -124,7 +131,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
       Icon? icon,
       required String text1,
       required String text2,
-      required String text3}) {
+      String? text3}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -137,18 +144,26 @@ class OrderDetailPage extends GetView<OrderDetailController> {
         else
           icon!,
         SizedBox(width: DeviceUtils.getScaledSize(context, 0.02)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              text1,
-              style: Dimensions.fontSizeStyle16(),
-            ),
-            Text(text2, style: Dimensions.fontSizeStyle16w600()),
-            Text(text3,
-                style:
-                    Dimensions.fontSizeStyle16().copyWith(color: Colors.grey)),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                text1,
+                style: Dimensions.fontSizeStyle16(),
+              ),
+              Text(text2,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Dimensions.fontSizeStyle16w600()),
+              if (text3 == null)
+                const SizedBox.shrink()
+              else
+                Text(text3,
+                    style: Dimensions.fontSizeStyle16()
+                        .copyWith(color: Colors.grey)),
+            ],
+          ),
         ),
       ],
     );
@@ -157,16 +172,30 @@ class OrderDetailPage extends GetView<OrderDetailController> {
   ///
   ///shipping
   ///
-  Widget _shipping(BuildContext context) {
+  Widget _shipping(BuildContext context, OrderDetailController controller) {
     return _containerBox(
       context,
       child: Column(
         children: [
-          _shippingWidget(context,
-              icon: const Icon(Icons.location_on_outlined),
-              text1: "Địa chỉ shop",
-              text2: "183 Quách Thị Trang",
-              text3: "Liên hệ: 0334125142"),
+          if (controller.address == null ||
+              controller.district == null ||
+              controller.province == null)
+            _shippingWidget(context,
+                icon: const Icon(
+                  Icons.location_on_outlined,
+                  color: ColorResources.PRIMARY,
+                ),
+                text1: "Địa chỉ ship",
+                text2: "")
+          else
+            _shippingWidget(context,
+                icon: const Icon(
+                  Icons.location_on_outlined,
+                  color: ColorResources.PRIMARY,
+                ),
+                text1: "Địa chỉ ship",
+                text2:
+                    "${controller.address}, ${controller.district}, ${controller.province}"),
           Dimensions().paddingDivider(context),
           _shippingWidget(context,
               image: Image.asset("assets/images/logo.png"),
@@ -184,6 +213,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
   Widget _productInfo(BuildContext context, OrderDetailController controller) {
     return _containerBox(context,
         child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: controller.orderItemList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -234,12 +264,9 @@ class OrderDetailPage extends GetView<OrderDetailController> {
                                     PriceConverter.convertPrice(
                                         context,
                                         double.parse(controller
-                                                .orderItemList[index]
-                                                .idProduct!
-                                                .prices!) *
-                                            double.parse(controller
-                                                .orderItemList[index]
-                                                .quantity!)),
+                                            .orderItemList[index]
+                                            .idProduct!
+                                            .prices!)),
                                     style: titilliumSemiBold.copyWith(
                                         color: Colors.grey),
                                   ),
@@ -274,16 +301,24 @@ class OrderDetailPage extends GetView<OrderDetailController> {
   Widget _paymentDetail(
       BuildContext context, OrderDetailController controller) {
     return _containerBox(context,
-        child: Column(
-          children: [
-            Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: DeviceUtils.getScaledSize(context, 0.015)),
-                child: rowText(
-                    text1: "Giá tiền",
-                    text2: PriceConverter.convertPrice(
-                        context, controller.price!)))
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: DeviceUtils.getScaledSize(context, 0.015)),
+          child: Column(
+            children: [
+              rowText(
+                  text1: "Giá tiền",
+                  text2: PriceConverter.convertPrice(
+                      context, controller.price!.toDouble())),
+              SizedBox(height: DeviceUtils.getScaledSize(context, 0.015)),
+              rowText(text1: "Phí ship", text2: "0 đ"),
+              SizedBox(height: DeviceUtils.getScaledSize(context, 0.015)),
+              rowText(
+                  text1: "Tổng tiền",
+                  text2: PriceConverter.convertPrice(
+                      context, controller.price!.toDouble())),
+            ],
+          ),
         ));
   }
 
@@ -294,6 +329,11 @@ class OrderDetailPage extends GetView<OrderDetailController> {
         body: GetBuilder<OrderDetailController>(
             init: OrderDetailController(),
             builder: (controller) {
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: DeviceUtils.getScaledSize(context, 0.038)),
@@ -309,7 +349,9 @@ class OrderDetailPage extends GetView<OrderDetailController> {
                         "Thông tin chung",
                         style: Dimensions.fontSizeStyle18w600(),
                       ),
-                      _thongTinChung(context),
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.015)),
+                      _thongTinChung(context, controller),
 
                       // SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
 
@@ -320,21 +362,27 @@ class OrderDetailPage extends GetView<OrderDetailController> {
                           height: DeviceUtils.getScaledSize(context, 0.05)),
 
                       //shipping
-                      _shipping(context),
+                      _shipping(context, controller),
 
                       SizedBox(
-                          height: DeviceUtils.getScaledSize(context, 0.02)),
+                          height: DeviceUtils.getScaledSize(context, 0.05)),
 
                       //product info
                       Text("Thông tin sản phẩm",
                           style: Dimensions.fontSizeStyle18w600()),
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.015)),
                       _productInfo(context, controller),
 
                       //payment detail
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.05)),
                       Text(
                         "Chi tiết thanh toán",
                         style: Dimensions.fontSizeStyle18w600(),
                       ),
+                      SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.015)),
                       _paymentDetail(context, controller)
                     ],
                   ),

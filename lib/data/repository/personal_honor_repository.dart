@@ -26,7 +26,8 @@ class PersonalHonorRepository {
   ///
   Future<ApiResponse> add(PersonalHonorModel data) async {
     try {
-      final response = await dioClient!.post('/personal-honors', data: data.toJson());
+      final response =
+          await dioClient!.post('/personal-honors', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class PersonalHonorRepository {
   ///
   Future<ApiResponse> update(PersonalHonorModel data) async {
     try {
-      final response = await dioClient!.put('/personal-honors', data: data.toJson());
+      final response =
+          await dioClient!.put('/personal-honors', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,15 +61,37 @@ class PersonalHonorRepository {
   }
 
   ///
-  /// Get paginate personal-honors "page": 1, "limit": 10, filter 
+  /// Get paginate personal-honors "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/personal-honors/paginate?page=$page&limit=$limit'.toString();
+      String uri =
+          '/personal-honors/paginate?page=$page&limit=$limit'.toString();
 
       // add condition filter
       if (filter != '') {
         uri = '/personal-honors/paginate?page=$page&limit=$limit$filter';
+      }
+
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Get paginate personal-honors "page": 1, "limit": 10, filter
+  ///
+  Future<ApiResponse> findByIdContext(
+      int page, int limit, String idContext) async {
+    try {
+      String uri =
+          '/personal-honors/paginate?page=$page&limit=$limit'.toString();
+
+      // add condition filter
+      if (idContext != '') {
+        uri = '/personal-honors/paginate?page=$page&limit=$limit$idContext';
       }
 
       final response = await dioClient!.get(uri);

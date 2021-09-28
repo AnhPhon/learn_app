@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/personal_honor_model.dart';
+import 'package:template/data/model/response/personal_honors_reponse_model.dart';
 import 'package:template/provider/personal_honor_provider.dart';
 
 class ChartsController extends GetxController {
   PersonalHonorProvider personalHonorProvider =
       GetIt.I.get<PersonalHonorProvider>();
-  List<PersonalHonorModel> personalHonorList = [];
+  List<PersonalHonorsResponseModel> personalHonorList = [];
+
+  Map<String, PersonalHonorsResponseModel> rank = {};
 
   bool isLoading = true;
 
@@ -20,10 +23,10 @@ class ChartsController extends GetxController {
   ///get charts from idContext
   ///
   void getChart() {
-    personalHonorProvider.paginate(
+    personalHonorProvider.findByIdContext(
         page: 1,
         limit: 100,
-        filter: "&idContext=${Get.parameters['idChart']}",
+        idContext: "&idContext=${Get.parameters['idChart']}",
         onSuccess: (value) {
           personalHonorList = value;
           personalHonorList.sort((a, b) =>
@@ -35,9 +38,4 @@ class ChartsController extends GetxController {
           print(error);
         });
   }
-
-  ///
-  ///get user name from id user
-  ///
-  void getName() {}
 }

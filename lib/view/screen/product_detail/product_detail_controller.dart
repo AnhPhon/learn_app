@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
-import 'package:template/data/model/response/product_response_model.dart';
+import 'package:template/data/model/response/order_item_response_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
@@ -21,7 +21,7 @@ class ProductDetailController extends GetxController {
 
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
 
-  List<ProductResponse> productFromCartList = [];
+  List<OrderItemResponseModel> productFromCartList = [];
 
   bool isLoadingMore = false;
 
@@ -217,7 +217,7 @@ class ProductDetailController extends GetxController {
     productFromCartList.clear();
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
       if (value != null) {
-        productProvider.findByIdOrder(
+        orderItemProvider.findByIdOrder(
             page: 1,
             limit: 100,
             idOrder: value,
@@ -308,6 +308,7 @@ class ProductDetailController extends GetxController {
   ///tăng số lượng
   ///
   void incrementQuality() {
+    sl.get<SharedPreferenceHelper>().removeOrderId();
     qualityProduct += 1;
     update();
   }

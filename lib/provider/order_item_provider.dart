@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/response/order_item_response_model.dart';
 import 'package:template/data/repository/order_item_repository.dart';
 
 class OrderItemProvider {
@@ -103,6 +104,31 @@ class OrderItemProvider {
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
           .map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>))
+          .toList());
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// Get paginate orderItem "page": 1, "limit": 10
+  ///
+  Future<void> findByIdOrder({
+    required int page,
+    required int limit,
+    required String idOrder,
+    required Function(List<OrderItemResponseModel> products) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse =
+        await regionRepo!.findByIdOrder(page, limit, idOrder);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data['results'] as List<dynamic>;
+      onSuccess(results
+          .map(
+              (e) => OrderItemResponseModel.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);

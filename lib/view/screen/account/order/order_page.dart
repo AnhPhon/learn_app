@@ -4,6 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/screen/account/order/order_controller.dart';
 
 class OrderPage extends GetView<OrderController> {
@@ -13,9 +14,9 @@ class OrderPage extends GetView<OrderController> {
   Widget orderWidget(BuildContext context, OrderController controller,
       {required String status,
       required String imgUrl,
-      required int price,
-      required int quantity,
-      required String paymentMethod}) {
+      required String idOrder,
+      required String orderDate,
+      required String statusPayment}) {
     return Container(
       margin: EdgeInsets.only(
           left: DeviceUtils.getScaledSize(context, 0.03),
@@ -48,31 +49,41 @@ class OrderPage extends GetView<OrderController> {
           const SizedBox(height: 20),
           //product info
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(7),
-                child: Image.asset(
-                  imgUrl,
-                  height: 50,
-                  width: 50,
+                child: FadeInImage.assetNetwork(
+                  placeholder: Images.placeholder,
+                  image: imgUrl,
+                  width: DeviceUtils.getScaledSize(context, 0.178),
+                  height: DeviceUtils.getScaledSize(context, 0.152),
+                  fit: BoxFit.fill,
+                  imageErrorBuilder: (c, o, s) => Image.asset(
+                    Images.placeholder,
+                    height: DeviceUtils.getScaledSize(context, 0.152),
+                    width: DeviceUtils.getScaledSize(context, 0.178),
+                  ),
                 ),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Sản phẩm",
-                    style: titilliumSemiBold.copyWith(fontSize: 16),
-                  ),
-                  Text(
-                    "$quantity sản phẩm | $price đ",
-                    style: titilliumSemiBold.copyWith(color: Colors.grey),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Id: $idOrder",
+                      maxLines: 2,
+                      style: titilliumSemiBold.copyWith(fontSize: 16),
+                    ),
+                    Text(
+                      "Ngày đặt hàng: $orderDate",
+                      style: titilliumSemiBold.copyWith(color: Colors.grey),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
@@ -85,8 +96,8 @@ class OrderPage extends GetView<OrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                const Text("Phương thức thanh toán"),
-                Text(paymentMethod,
+                const Text("Tình trạng thanh toán"),
+                Text(statusPayment,
                     style: const TextStyle(fontWeight: FontWeight.w600)),
               ],
             ),
@@ -103,12 +114,20 @@ class OrderPage extends GetView<OrderController> {
     return ListView.builder(
         itemCount: controller.orderList.length,
         itemBuilder: (BuildContext context, int index) {
-          return orderWidget(context, controller,
-              status: controller.orderList[index].statusOrder.toString(),
-              imgUrl: "assets/images/Untitled.png",
-              paymentMethod: "Momo",
-              price: 380000,
-              quantity: 2);
+          return GestureDetector(
+            onTap: () {
+              controller.onOrderWidgetClick(indexTabAll: index);
+            },
+            child: orderWidget(context, controller,
+                status: controller.orderList[index].statusOrder.toString(),
+                imgUrl: controller.orderList[index].imagePayment.toString(),
+                idOrder: controller.orderList[index].id.toString(),
+                orderDate: controller.convertDateTime(
+                    controller.orderList[index].updatedAt.toString()),
+                statusPayment: controller
+                    .statusPayment[controller.orderList[index].statusPayment]
+                    .toString()),
+          );
         });
   }
 
@@ -127,14 +146,24 @@ class OrderPage extends GetView<OrderController> {
                     : GestureDetector(
                         onTap: () {
                           controller.onOrderWidgetClick(
-                              i, (int.parse(index) + 1).toString());
+                              i: i, index: (int.parse(index) + 1).toString());
                         },
                         child: orderWidget(context, controller,
                             status: (int.parse(index) + 1).toString(),
-                            imgUrl: "assets/images/Untitled.png",
-                            paymentMethod: "Momo",
-                            price: 380000,
-                            quantity: 2),
+                            imgUrl: controller
+                                .orderStatusList[int.parse(index)][i]
+                                .imagePayment
+                                .toString(),
+                            idOrder: controller
+                                .orderStatusList[int.parse(index)][i].id
+                                .toString(),
+                            orderDate: controller.convertDateTime(controller
+                                .orderStatusList[int.parse(index)][i].updatedAt
+                                .toString()),
+                            statusPayment: controller.statusPayment[controller
+                                    .orderStatusList[int.parse(index)][i]
+                                    .statusPayment]
+                                .toString()),
                       );
               });
         });
