@@ -73,7 +73,6 @@ Future<void> init() async {
   sl.registerFactory(() => CategoryNewsProvider());
   sl.registerFactory(() => ProductProvider());
   sl.registerFactory(() => NewsProvider());
-  sl.registerFactory(() => OrderItemProvider());
   sl.registerFactory(() => OrderProvider());
   sl.registerFactory(() => ProvinceProvider());
   sl.registerFactory(() => DistrictProvider());
@@ -81,6 +80,7 @@ Future<void> init() async {
   sl.registerFactory(() => ImageUpdateProvider());
   sl.registerFactory(() => PersonalHonorProvider());
   sl.registerFactory(() => ContextProvider());
+  sl.registerFactory(() => OrderItemProvider());
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider

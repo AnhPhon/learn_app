@@ -86,6 +86,9 @@ class InformationUserPage extends GetView<InformationUserController> {
                                 controller.textEditAddressController,
                                 TextInputType.text),
 
+                            // avatar
+                            _uploadAvatar(context),
+
                             // mặt trước cmnd
                             _uploadCmndFront(context),
 
@@ -335,6 +338,81 @@ class InformationUserPage extends GetView<InformationUserController> {
       ),
     );
   }
+
+  ///
+  /// upload avatar
+  ///
+  Widget _uploadAvatar(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: DeviceUtils.getScaledSize(context, 0.05),
+          vertical: DeviceUtils.getScaledSize(context, 0.03)),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                "Tải lên avatar",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.BLACK),
+              ),
+              Text(
+                "*",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.RED),
+              ),
+            ],
+          ),
+
+          SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+
+          // hình ảnh thanh toán
+          GestureDetector(
+            onTap: () => controller.onAvatarPicker(),
+            child: Container(
+              height: DeviceUtils.getScaledSize(context, 0.382),
+              width: DeviceUtils.getScaledSize(context, 0.509),
+              padding: EdgeInsets.symmetric(
+                  horizontal: DeviceUtils.getScaledSize(
+                      context, controller.avatarFile != null ? 0 : 0.101)),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: controller.avatarFile != null
+                    ? null
+                    : Border.all(width: 2, color: Colors.grey),
+              ),
+              child: controller.avatarFile != null
+                  ? Image.file(
+                      controller.avatarFile!,
+                      height: double.infinity,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/bill.png",
+                          height: 50,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          "Bấm vào đây để tải lên",
+                          textAlign: TextAlign.center,
+                          style: Dimensions.fontSizeStyle14w600()
+                              .copyWith(color: Colors.grey),
+                        )
+                      ],
+                    ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  
 
   ///
   /// upload cmnd front

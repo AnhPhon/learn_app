@@ -7,6 +7,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/view/screen/product_detail/product_detail_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:html/parser.dart';
 
 class ProductSpecification extends StatelessWidget {
   final String productSpecification;
@@ -44,8 +45,9 @@ class ProductSpecification extends StatelessWidget {
             const Center(child: Text('Chưa có mô tả sản phẩm'))
           else
             productDetailController.isLoadingMore
-                ? Html(data: productSpecification)
-                : Flexible(child: Html(data: productSpecification)),
+                ? Html(data: _parseHtmlString(productSpecification))
+                : Flexible(
+                    child: Html(data: _parseHtmlString(productSpecification))),
 
           SizedBox(height: DeviceUtils.getScaledSize(context, 0.03)),
 
@@ -81,5 +83,15 @@ class ProductSpecification extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ///
+  ///  parse Html String
+  ///
+  String _parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString =
+        parse(document.body!.text).documentElement!.text;
+    return parsedString;
   }
 }

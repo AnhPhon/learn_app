@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/product_condition_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
@@ -9,15 +9,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
 import 'package:template/view/screen/register/payment/payment_controller.dart';
-import 'package:template/view/screen/register/register_page_3.dart';
 
 class PaymentPage extends GetView<PaymentController> {
   final UserModel user;
-  final OrderModel order;
-  final List<Item> items;
+  // final OrderModel order;
+  final List<ProductConditionModel> items;
 
-  const PaymentPage(
-      {Key? key, required this.user, required this.order, required this.items})
+  const PaymentPage({Key? key, required this.user, required this.items})
       : super(key: key);
 
   @override
@@ -148,7 +146,7 @@ class PaymentPage extends GetView<PaymentController> {
       //list sản phẩm đã chọn
       child: Column(
         children: List.generate(
-          controller.orderList.length,
+          items.length,
           (index) => Column(
             children: [
               Row(
@@ -184,8 +182,8 @@ class PaymentPage extends GetView<PaymentController> {
     return Flexible(
       flex: 3,
       child: Text(
-        PriceConverter.convertPrice(context,
-            items[controller.orderList[index]].amount.toDouble()),
+        PriceConverter.convertPrice(
+            context, items[index].amount.toDouble()),
         style: titilliumSemiBold.copyWith(color: Colors.grey, fontSize: 16),
       ),
     );
@@ -195,7 +193,6 @@ class PaymentPage extends GetView<PaymentController> {
   /// product image
   ///
   Widget _productImage(BuildContext context, int index) {
-    print(items);
     return Flexible(
       flex: 6,
       child: Row(
@@ -207,7 +204,7 @@ class PaymentPage extends GetView<PaymentController> {
                 height: 70,
                 width: 70,
                 image: NetworkImage(
-                  items[controller.orderList[index]].url,
+                  items[index].url,
                 ),
               ),
             ),
@@ -221,14 +218,14 @@ class PaymentPage extends GetView<PaymentController> {
               children: [
                 //tên sản phẩm
                 Text(
-                  items[controller.orderList[index]].title,
+                  items[index].title,
                   maxLines: 3,
                   style: titilliumSemiBold.copyWith(fontSize: 14),
                 ),
 
                 //số lượng đã chọn
                 Text(
-                  "x${items[controller.orderList[index]].quality.toString()}",
+                  "x${items[index].quality.toString()}",
                   style: titilliumSemiBold.copyWith(color: Colors.red),
                 ),
               ],
@@ -392,7 +389,7 @@ class PaymentPage extends GetView<PaymentController> {
   Widget _btnDone(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.btnFinish(context, user, order, items);
+        controller.onBtnFinishTap(context, user, items);
       },
       child: Container(
         margin: EdgeInsets.symmetric(

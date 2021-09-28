@@ -129,4 +129,28 @@ class ProductProvider {
       onError(apiResponse.error);
     }
   }
+
+  // ///
+  // /// Get paginate products "page": 1, "limit": 10
+  // ///
+  // Future<void> findByIdOrder({
+  //   required int page,
+  //   required int limit,
+  //   required String idOrder,
+  //   required Function(List<OrderItemResponseModel> products) onSuccess,
+  //   required Function(dynamic error) onError,
+  // }) async {
+  //   final ApiResponse apiResponse =
+  //       await regionRepo!.findByIdOrder(page, limit, idOrder);
+  //   if (apiResponse.response.statusCode! >= 200 &&
+  //       apiResponse.response.statusCode! <= 300) {
+  //     // call back data success
+  //     final results = apiResponse.response.data['results'] as List<dynamic>;
+  //     onSuccess(results
+  //         .map((e) => OrderItemResponseModel.fromJson(e as Map<String, dynamic>))
+  //         .toList());
+  //   } else {
+  //     onError(apiResponse.error);
+  //   }
+  // }
 }

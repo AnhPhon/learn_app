@@ -34,6 +34,9 @@ class InformationUserController extends GetxController {
   String? gender;
 
   // cmnd front file
+  File? avatarFile;
+
+  // cmnd front file
   File? cmndFrontFile;
 
   // cmnd back file
@@ -62,7 +65,21 @@ class InformationUserController extends GetxController {
     born = DateConverter.formatDate(value!);
     update();
   }
- 
+
+  ///
+  /// on avatar picker
+  ///
+  Future onAvatarPicker() async {
+    try {
+      final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (picker == null) return;
+      avatarFile = File(picker.path);
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
+
   ///
   /// on CMND front picker
   ///
@@ -136,34 +153,47 @@ class InformationUserController extends GetxController {
             // show loading
             EasyLoading.show(status: 'loading...');
 
-            // upload cmnd
             imageProvider.add(
-                file: cmndFrontFile!,
-                onSuccess: (imageFront) {
-                  // mặt trước cmnd
-                  user.imageCitizenIdentification = imageFront.data;
+              file: avatarFile!,
+              onSuccess: (imageFront) {
+                // mặt trước cmnd
+                user.avatar = imageFront.data;
 
-                  imageProvider.add(
-                      file: cmndFrontFile!,
-                      onSuccess: (imageBack) {
-                        // mặt sau cmnd
-                        user.imageCitizenIdentification1 = imageBack.data;
+                // upload cmnd
+                imageProvider.add(
+                  file: cmndFrontFile!,
+                  onSuccess: (imageFront) {
+                    // mặt trước cmnd
+                    user.imageCitizenIdentification = imageFront.data;
 
-                        // hide loading
-                        EasyLoading.dismiss();
+                    imageProvider.add(
+                        file: cmndFrontFile!,
+                        onSuccess: (imageBack) {
+                          // mặt sau cmnd
+                          user.imageCitizenIdentification1 = imageBack.data;
 
-                        // sent data user to order condition page
-                        Get.to(OrderConditionPage(user: user));
-                      },
-                      onError: (error) {
-                        print(error);
-                        update();
-                      });
-                },
-                onError: (error) {
-                  print(error);
-                  update();
-                });
+                          // hide loading
+                          EasyLoading.dismiss();
+
+                          // sent data user to order condition page
+                          Get.to(OrderConditionPage(user: user));
+                        },
+                        onError: (error) {
+                          print(error);
+                          update();
+                        });
+                  },
+                  onError: (error) {
+                    print(error);
+                    update();
+                  },
+                );
+              },
+              onError: (error) {
+                print(error);
+                update();
+              },
+            );
 
             // sent model to order information page
           }
@@ -230,6 +260,12 @@ class InformationUserController extends GetxController {
             'Vui lòng kiểm tra lại!', 'CMND/CCCD không được để trống', 3);
         return false;
       }
+    }
+
+    if (avatarFile == null) {
+      // cmnd front
+      _showSnakebar('Vui lòng kiểm tra lại!', 'Cần thêm avatar', 3);
+      return false;
     }
 
     if (cmndFrontFile == null) {

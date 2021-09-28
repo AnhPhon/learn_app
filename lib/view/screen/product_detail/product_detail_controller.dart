@@ -16,31 +16,42 @@ class ProductDetailController extends GetxController {
   GetIt sl = GetIt.instance;
 
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
-
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
-
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
-
-  List<OrderItemResponseModel> productFromCartList = [];
+  List<OrderItemModel> listOrderItem = [];
 
   bool isLoadingMore = false;
-
+  List<ProductModel> productModelList = [];
   ProductModel? productModel;
 
-  List<ProductModel> productModelList = [];
+  bool isLoadingProductDetail = true;
+  bool isLoadingProductRelative = true;
 
-  bool isLoading = true;
+  String idProduct = '';
+  String idUser = '';
 
-  //số lượng sản phẩm
-  int qualityProduct = 1;
+  // số lượng sản phẩm
+  int quantityProduct = 1;
 
   @override
   void onInit() {
     super.onInit();
-    getProductFromId(Get.parameters['productId'].toString());
+
+    // get id product from parameter
+    idProduct = Get.parameters['productId'].toString();
+    print('phuong $idProduct');
+
+    // load id user
+    idUser = sl.get<SharedPreferenceHelper>().userId.toString();
+
+    // get detail product by id
+    getProductFromId(idProduct);
+
+    // load product relative
     getMoreProduct();
+
+    // load quantity cart
     loadQuanlityCart();
-    print(Get.parameters['productId'].toString());
   }
 
   ///
@@ -51,7 +62,9 @@ class ProductDetailController extends GetxController {
         id: idProduct,
         onSuccess: (value) {
           productModel = value;
-          isLoading = false;
+          print('phuong $isLoadingProductDetail');
+          print('phuong ${productModel!.toJson()}');
+          isLoadingProductDetail = false;
           update();
         },
         onError: (error) {
@@ -73,13 +86,111 @@ class ProductDetailController extends GetxController {
               element.id.toString() == Get.parameters['productId'].toString());
           value.removeAt(indexIdInitialProduct);
           productModelList = value;
-          isLoading = false;
+          isLoadingProductRelative = false;
           update();
         },
         onError: (error) {
           print(error);
           update();
         });
+  }
+
+  ///
+  /// load cart initial
+  ///
+  void loadQuanlityCart() {
+    listOrderItem.clear();
+
+    // load info order item
+    sl.get<SharedPreferenceHelper>().orderId.then((orderId) {
+      print('orderId $orderId');
+      if (orderId != null) {
+        // load all product item by id order
+        orderItemProvider.paginate(
+            page: 1,
+            limit: 100,
+            filter: "&idOrder=$orderId",
+            onSuccess: (data) {
+              listOrderItem = data;
+
+              print('listOrderItem ${listOrderItem.length}');
+              update();
+            },
+            onError: (error) {});
+      }
+    });
+  }
+
+  ///
+  /// tạo id đơn hàng
+  ///
+  void addProductToCartTap() {
+    // kiểm tra đã có đơn hàng nào của user này chưa
+    sl.get<SharedPreferenceHelper>().orderId.then((idOrder) async {
+      // nếu có rồi thì dùng idOrder đó tạo orderItem
+      if (idOrder != null) {
+        // add order item to database
+        addOrderItemToDatabase(idOrder);
+      } else {
+        // nếu chưa có thì tạo ra 1 order sau đó lưu id lại
+        final OrderModel orderModel = OrderModel();
+        orderModel.idUser = idUser;
+        orderModel.userAccept = ' ';
+        orderModel.idWarehouse = ' ';
+        orderModel.description = 'Đơn đặt hàng mới';
+        orderModel.statusOrder = '1';
+        orderModel.statusPayment = '1';
+        orderModel.totalPrice = '0';
+        orderModel.discountPrice = '0';
+        orderModel.idProvince = 'idProvince';
+        orderModel.idDistrict = 'idDistrict';
+        orderModel.address = 'address';
+        orderProvider.add(
+            data: orderModel,
+            onSuccess: (data) {
+              print('phuong ${data.toJson()}');
+              // save id order
+              sl.get<SharedPreferenceHelper>().saveOrderId(data.id.toString());
+
+              // add order item to database
+              addOrderItemToDatabase(data.id.toString());
+            },
+            onError: (error) {});
+      }
+    });
+    // sau khi ấn view cart thì cần phải get all order item để tính toán tiền để update ngược lại cho đơn hàng để thông tin nó ok
+  }
+
+  ///
+  /// add Order Item To Database
+  ///
+  void addOrderItemToDatabase(String idOrder) {
+    final OrderItemModel itemModel = OrderItemModel();
+    itemModel.idOrder = idOrder;
+    itemModel.idProduct = idProduct;
+    itemModel.quantity = quantityProduct.toString();
+    itemModel.price = productModel!.prices;
+
+    orderItemProvider.add(
+        data: itemModel,
+        onSuccess: (data) {
+          print('add order item sucess $data');
+          Get.snackbar(
+            "Thành công",
+            "Đã thêm sản phẩm vào giỏ hàng",
+            colorText: ColorResources.PRIMARY,
+            duration: const Duration(seconds: 3),
+            backgroundGradient: const LinearGradient(colors: [
+              Color(0xffd7ffba),
+              Color(0xffeaffdb),
+              Color(0xffd7ffba),
+            ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+          );
+
+          // sau khi add xong thì call lại method load số lượng đơn hàng trong cart
+          loadQuanlityCart();
+        },
+        onError: (error) {});
   }
 
   ///
@@ -97,164 +208,7 @@ class ProductDetailController extends GetxController {
     isLoadingMore = true;
     update();
   }
-
-  ///
-  ///tạo id đơn hàng
-  ///
-  void order() {
-    sl.get<SharedPreferenceHelper>().orderId.then((value) async {
-      if (value == null) {
-        print("trong0");
-        await orderProvider.add(
-            data: OrderModel(
-                idUser: "614748250c57f118c4a40689",
-                statusOrder: "1",
-                statusPayment: "2",
-                description: "đây là nội dung",
-                address: "dia chi nha",
-                idDistrict: "61435cf012594e54736dd6ca",
-                idProvince: "61435cf012594e54736dd6ca",
-                discountPrice: "0",
-                idWarehouse: "614457d87fee3b5dc8c1c75e",
-                userAccept: "614748250c57f118c4a40689",
-                totalPrice: "0",
-                imagePayment: "0"),
-            onSuccess: (value) {
-              sl.get<SharedPreferenceHelper>().saveOrderId(value.id.toString());
-              print("IDORDER: ${value.id}");
-
-              ///
-              ///add to cart
-              ///
-              addToCart(
-                  idOrder: value.id!,
-                  idProduct: Get.parameters['productId'].toString(),
-                  quanlity: qualityProduct.toString(),
-                  price: Get.parameters['price'].toString());
-
-              ///
-              ///load quality again
-              ///
-              loadQuanlityCart();
-
-              isLoading = false;
-              update();
-
-              ///
-              ///show snackbar
-              ///
-              Get.snackbar(
-                "Thành công",
-                "Đã thêm sản phẩm vào giỏ hàng",
-                colorText: ColorResources.PRIMARY,
-                backgroundGradient: const LinearGradient(colors: [
-                  Color(0xffd7ffba),
-                  Color(0xffeaffdb),
-                  Color(0xffd7ffba),
-                ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-              );
-            },
-            onError: (error) {
-              print(error);
-              update();
-            });
-      } else {
-        final idOrder = value;
-        final indexOrderItemList = productFromCartList.indexWhere((element) =>
-            element.idProduct!.id == Get.parameters['productId'].toString());
-        if (indexOrderItemList == -1) {
-          print("trong2");
-          Get.snackbar(
-            "Thành công",
-            "Đã thêm sản phẩm vào giỏ hàng",
-            colorText: ColorResources.PRIMARY,
-            backgroundGradient: const LinearGradient(colors: [
-              Color(0xffd7ffba),
-              Color(0xffeaffdb),
-              Color(0xffd7ffba),
-            ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-          );
-
-          ///
-          ///add to cart
-          ///
-          addToCart(
-              idOrder: idOrder,
-              idProduct: Get.parameters['productId'].toString(),
-              quanlity: qualityProduct.toString(),
-              price: Get.parameters['price'].toString());
-
-          ///
-          ///load quality
-          ///
-          loadQuanlityCart();
-
-          isLoading = false;
-          update();
-        } else {
-          print("trong4");
-          isLoading = false;
-          Get.snackbar(
-            "Thất bại",
-            "Sản phẩm đã tồn tại trong giỏ hàng",
-            colorText: ColorResources.RED,
-            backgroundGradient: const LinearGradient(colors: [
-              Color(0xfffffcfc),
-              Color(0xfffff5f5),
-              Color(0xfffffcfc),
-            ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-          );
-          update();
-        }
-      }
-    });
-  }
-
-  ///
-  /// load cart initial
-  ///
-  void loadQuanlityCart() {
-    productFromCartList.clear();
-    sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      if (value != null) {
-        orderItemProvider.findByIdOrder(
-            page: 1,
-            limit: 100,
-            idOrder: value,
-            onSuccess: (value) {
-              productFromCartList = value;
-              update();
-            },
-            onError: (error) {
-              print(error);
-            });
-      }
-    });
-  }
-
-  ///
-  /// thêm vào giỏ hàng
-  ///
-  void addToCart(
-      {required String idOrder,
-      required String idProduct,
-      required String quanlity,
-      required String price}) {
-    orderItemProvider.add(
-        data: OrderItemModel(
-            idOrder: idOrder,
-            idProduct: idProduct,
-            quantity: quanlity,
-            price: price),
-        onSuccess: (value) {
-          print(value);
-          update();
-        },
-        onError: (error) {
-          print(error);
-          update();
-        });
-  }
+ 
 
   ///
   ///go to cart page
@@ -273,7 +227,6 @@ class ProductDetailController extends GetxController {
   ///on Click more product
   ///
   void onClickMoreProduct(int index) {
-    isLoading = true;
     update();
     getProductFromId(productModelList[index].id!);
     reloadMoreProduct(productModelList[index].id!);
@@ -295,7 +248,6 @@ class ProductDetailController extends GetxController {
 
           //reload list
           productModelList = value;
-          isLoading = false;
           update();
         },
         onError: (error) {
@@ -308,8 +260,7 @@ class ProductDetailController extends GetxController {
   ///tăng số lượng
   ///
   void incrementQuality() {
-    sl.get<SharedPreferenceHelper>().removeOrderId();
-    qualityProduct += 1;
+    quantityProduct += 1;
     update();
   }
 
@@ -317,8 +268,8 @@ class ProductDetailController extends GetxController {
   ///giảm số lượng
   ///
   void decrementQuality() {
-    if (qualityProduct > 1) {
-      qualityProduct -= 1;
+    if (quantityProduct > 1) {
+      quantityProduct -= 1;
     }
     update();
   }

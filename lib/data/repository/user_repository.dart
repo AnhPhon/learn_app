@@ -34,6 +34,18 @@ class UserRepository {
   }
 
   ///
+  /// Insert user to database
+  ///
+  Future<ApiResponse> genUsername() async {
+    try {
+      final response = await dioClient!.get('/users/gen');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
   /// Update user to database
   ///
   Future<ApiResponse> update(UserModel data) async {
