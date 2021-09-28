@@ -5,8 +5,8 @@ import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/custom_appbar.dart';
-import 'package:template/view/screen/order/component/custom_stepper.dart';
-import 'package:template/view/screen/order/order_detail/order_detail_controller.dart';
+import 'package:template/view/screen/account/order/component/custom_stepper.dart';
+import 'package:template/view/screen/account/order/order_detail/order_detail_controller.dart';
 
 class OrderDetailPage extends GetView<OrderDetailController> {
   ///
@@ -253,13 +253,14 @@ class OrderDetailPage extends GetView<OrderDetailController> {
           return Scaffold(
             appBar: CustomAppBar().customAppBar(title: "Order của tôi"),
             body: Padding(
-              padding:
-                  EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.038)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: DeviceUtils.getScaledSize(context, 0.038)),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.05)),
                     //thong tin chung
                     Text(
                       "Thông tin chung",
@@ -267,10 +268,10 @@ class OrderDetailPage extends GetView<OrderDetailController> {
                     ),
                     _thongTinChung(context),
 
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
+                    // SizedBox(height: DeviceUtils.getScaledSize(context, 0.02)),
 
                     //lich su
-                    _lichSu(context),
+                    // _lichSu(context),
 
                     SizedBox(height: DeviceUtils.getScaledSize(context, 0.05)),
 
