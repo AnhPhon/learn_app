@@ -11,17 +11,17 @@ class AddressPage extends GetView<AddressController> {
   /// input Widget
   ///
   Widget _inputWidget(BuildContext context,
-      {required TextEditingController controller, required String hint}) {
+      {required TextEditingController textController, required String hint}) {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: DeviceUtils.getScaledSize(context, 0.03)),
       child: GetBuilder<AddressController>(
           init: AddressController(),
-          builder: (addressController) {
+          builder: (controller) {
             return TextField(
               textInputAction: TextInputAction.done,
               textAlignVertical: TextAlignVertical.center,
-              controller: controller,
+              controller: textController,
               cursorColor: ColorResources.PRIMARY,
               decoration: InputDecoration(
                 isDense: true,
@@ -102,7 +102,12 @@ class AddressPage extends GetView<AddressController> {
       appBar: CustomAppBar().customAppBar(title: "Địa chỉ"),
       body: GetBuilder<AddressController>(
           init: AddressController(),
-          builder: (addressController) {
+          builder: (controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -118,18 +123,18 @@ class AddressPage extends GetView<AddressController> {
                   children: [
                     DropDownButton1(
                         hint: "Chọn tỉnh/thành phố",
-                        value: addressController.province,
-                        onChanged: addressController.setSelectedProvince,
-                        data: addressController.provinceList),
+                        value: controller.province,
+                        onChanged: controller.setSelectedProvince,
+                        data: controller.provinceList),
                     DropDownButton1(
                         hint: "Chọn quận/huyện",
-                        value: addressController.district,
-                        onChanged: addressController.setSelectedDistrict,
-                        data: addressController.districtList),
+                        value: controller.district,
+                        onChanged: controller.setSelectedDistrict,
+                        data: controller.districtList),
                     _inputWidget(context,
                         hint: "Nhập địa chỉ",
-                        controller: addressController.addressController),
-                    _changeBtnWidget(context, addressController),
+                        textController: controller.addressTextController),
+                    _changeBtnWidget(context, controller),
                   ],
                 ),
               ),

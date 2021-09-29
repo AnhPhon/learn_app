@@ -38,10 +38,7 @@ class ProductDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    scrollController = ScrollController()
-      ..addListener(() {
-        scrollToTop();
-      });
+    scrollController = ScrollController()..addListener(() {});
 
     // get id product from parameter
     idProduct = Get.parameters['productId'].toString();
@@ -226,7 +223,11 @@ class ProductDetailController extends GetxController {
   ///
   void onCartClick() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      Get.toNamed("${AppRoutes.CARTS}?idOrder=$value");
+      Get.toNamed("${AppRoutes.CARTS}?idOrder=$value")!.then((value) {
+        if (value == true) {
+          loadQuanlityCart();
+        }
+      });
     });
   }
 
@@ -234,6 +235,9 @@ class ProductDetailController extends GetxController {
   ///on Click more product
   ///
   void onClickMoreProduct(int index) {
+    //back to top after click more product
+    scrollToTop();
+
     //gán lại idProduct sau khi click vào sản phẩm tương tự
     idProduct = productModelList[index].id!;
 
@@ -274,7 +278,7 @@ class ProductDetailController extends GetxController {
   ///
   void scrollToTop() {
     scrollController!.animateTo(0,
-        duration: const Duration(seconds: 3), curve: Curves.linear);
+        duration: const Duration(seconds: 1), curve: Curves.linear);
   }
 
   ///

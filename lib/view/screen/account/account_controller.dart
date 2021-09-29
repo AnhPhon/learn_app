@@ -77,6 +77,15 @@ class AccountController extends GetxController
   }
 
   ///
+  /// tới màn hình cart
+  ///
+  void onCartClick() {
+    sl.get<SharedPreferenceHelper>().orderId.then((value) {
+      Get.toNamed("${AppRoutes.CARTS}?idOrder=$value");
+    });
+  }
+
+  ///
   ///đăng xuất
   ///
   void onLogoutClick() {

@@ -140,46 +140,6 @@ class CartPage extends GetView<CartController> {
   }
 
   ///
-  /// input quanlity
-  ///
-  // Widget inputWidget({required BuildContext context, required CartController controller, required TextEditingController textController, required FocusNode focusNode}) {
-  //   return SizedBox(
-  //     height: 35,
-  //     width: 35,
-  //     child: TextField(
-  //       focusNode: controller.focusNode,
-  //       // autofillHints: [hint],
-  //       textInputAction: TextInputAction.done,
-  //       // textAlignVertical: TextAlignVertical.center,
-  //       textAlign: TextAlign.center,
-  //       controller: controller.qualityController,
-  //       cursorColor: ColorResources.PRIMARY,
-  //       decoration: InputDecoration(
-  //         isDense: true,
-  //         contentPadding: EdgeInsets.symmetric(
-  //             horizontal: DeviceUtils.getScaledSize(context, 0.015),
-  //             vertical: DeviceUtils.getScaledSize(context, 0.02)),
-  //         border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(5),
-  //         ),
-  //         focusedBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-  //         enabledBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.GREY)),
-  //         disabledBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.GREY)),
-  //         // hintText: "Tài khoản",
-  //         filled: true,
-  //         fillColor: Colors.transparent,
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  ///
   ///icons quality
   ///
   Widget _iconsquality(BuildContext context,

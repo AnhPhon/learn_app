@@ -177,6 +177,19 @@ class AccountPage extends GetView<AccountController> {
                               ],
                             )),
 
+                        //cart
+                        GestureDetector(
+                          onTap: () {
+                            controller.onCartClick();
+                          },
+                          child: _containerBox(context,
+                              child: _row3(
+                                context,
+                                text1: "Giỏ hàng",
+                                text2: "Chi tiết",
+                              )),
+                        ),
+
                         //rules
                         GestureDetector(
                           onTap: () {

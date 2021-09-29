@@ -58,9 +58,9 @@ class CartController extends GetxController {
   ///load list selected product
   ///
   void loadSelectedProduct() {
-    // qualityHint.clear();
     orderItemProductList = [];
     if (Get.parameters['idOrder'].toString() != "null") {
+      //lấy thông tin sản phẩm từ idOrder
       orderItemProvider.findByIdOrder(
           page: 1,
           limit: 100,
@@ -73,7 +73,6 @@ class CartController extends GetxController {
                     qualityProduct.add(int.parse(quanlity.quantity!)))
                 .toList();
             calculatorPrice();
-            // isLoading = false;
             update();
           },
           onError: (error) {
@@ -98,6 +97,8 @@ class CartController extends GetxController {
         onConfirm: () {
           isLoadingQuality = true;
           update();
+
+          //xoá sản phẩm
           orderItemProvider.delete(
               id: orderItemProductList[index].id.toString(),
               onSuccess: (value) {
@@ -179,36 +180,39 @@ class CartController extends GetxController {
   }
 
   ///
-  ///address
-  ///
-
-  void onBtnHomeClick() {
-    Get.to(PostsPage());
-  }
-
-  ///
   ///get address from iUser
   ///
   void getAddress() {
     sl.get<SharedPreferenceHelper>().userId.then((value) {
+      //lấy thông tin
       userProvider.find(
           id: value!,
-          onSuccess: (value) {
-            userModel = value;
-            provinceProvider.find(
-                id: value.provinceOrder!,
-                onSuccess: (value) {
-                  provinceName = value.name!;
-                  update();
-                },
-                onError: (error) {});
-            districtProvider.find(
-                id: value.districtOrder!,
-                onSuccess: (value) {
-                  districtName = value.name!;
-                  update();
-                },
-                onError: (error) {});
+          onSuccess: (data) {
+            userModel = data;
+
+            // nếu địa chỉ nhận hàng khác rỗng thì hiển thị lên màn hình
+            if (data.addressOrder != "" ||
+                data.provinceOrder != "" ||
+                data.districtOrder != "") {
+              //lấy tên tỉnh từ id
+              provinceProvider.find(
+                  id: data.provinceOrder!,
+                  onSuccess: (values) {
+                    provinceName = values.name!;
+                    print("qq $provinceName");
+                    update();
+                  },
+                  onError: (error) {});
+              //lấy tên huyện từ id
+              districtProvider.find(
+                  id: data.districtOrder!,
+                  onSuccess: (values) {
+                    districtName = values.name!;
+                    print(districtName);
+                    update();
+                  },
+                  onError: (error) {});
+            }
             isLoading = false;
             update();
           },
@@ -223,8 +227,10 @@ class CartController extends GetxController {
   ///
   void onAddressClick() {
     Get.toNamed(AppRoutes.ADDRESS)!.then((value) {
+      //nếu có thực hiện thay đổi địa chỉ thì reload lại
       if (value == true) {
         getAddress();
+        update();
       }
     });
   }
@@ -233,6 +239,7 @@ class CartController extends GetxController {
   ///thanh toán
   ///
   void onCheckoutClick() {
+    //kiểm tra điều kiện trước khi thanh toán
     if (userModel!.addressOrder == '' ||
         userModel!.districtOrder == '' ||
         userModel!.provinceOrder == '') {

@@ -16,7 +16,7 @@ class AddressController extends GetxController {
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
   UserProvider userProvider = GetIt.I.get<UserProvider>();
 
-  final addressController = TextEditingController();
+  final addressTextController = TextEditingController();
 
   String? province;
   String? district;
@@ -32,19 +32,18 @@ class AddressController extends GetxController {
 
   UserModel userModel = UserModel();
 
+  bool isLoading = true;
+
   @override
   void onClose() {
     super.onClose();
-    addressController.dispose();
+    addressTextController.dispose();
   }
 
   @override
   void onInit() {
     super.onInit();
     getUserInfo();
-    getProvince();
-    provinceModelList.clear();
-    districtModelList.clear();
   }
 
   ///
@@ -56,7 +55,11 @@ class AddressController extends GetxController {
           id: value!,
           onSuccess: (value) {
             userModel = value;
-            update();
+            //get province
+            getProvince();
+            if (value.address != "") {
+              addressTextController.text = value.addressOrder.toString();
+            }
           },
           onError: (error) {
             print(error);
@@ -68,51 +71,61 @@ class AddressController extends GetxController {
   ///get province
   ///
   void getProvince() {
-    districtList.clear();
-    districtModelList.clear();
     provinceProvider.all(onSuccess: (value) {
       provinceModelList = value;
-      provinceModelList
-          .map((province) => provinceList.add(province.name!))
-          .toList();
+      value.map((item) {
+        if (item.id == userModel.provinceOrder) {
+          print("111");
+          province = item.name;
+          getDistrict();
+        } else {
+          isLoading = false;
+        }
+        provinceList.add(item.name!);
+      }).toList();
+
       update();
     }, onError: (error) {
       print(error);
-      update();
     });
+  }
+
+  ///
+  ///
+  ///
+  void setSelectedProvince(String? value) {
+    district = null;
+    districtList.clear();
+    province = value;
+    userModel.provinceOrder = provinceModelList[
+            provinceModelList.indexWhere((element) => element.name == value)]
+        .id;
+    getDistrict();
+    update();
   }
 
   ///
   ///get district
   ///
-  void getDistrict(String id) {
+  void getDistrict() {
     districtProvider.paginate(
         page: 1,
         limit: 100,
-        filter: "idProvince=$id",
+        filter: "idProvince=${userModel.provinceOrder}",
         onSuccess: (value) {
           districtModelList = value;
-          districtModelList
-              .map((district) => districtList.add(district.name!))
-              .toList();
+          value.map((item) {
+            if (item.id == userModel.districtOrder) {
+              district = item.name;
+            }
+            districtList.add(item.name!);
+          }).toList();
+          isLoading = false;
           update();
         },
         onError: (error) {
           print(error);
-          update();
         });
-  }
-
-  ///
-  ///set selected province
-  ///
-  void setSelectedProvince(String? value) {
-    province = value;
-    final indexProvince = provinceModelList
-        .indexWhere((element) => element.name!.trim() == value!.trim());
-    idProvince = provinceModelList[indexProvince].id;
-    getDistrict(idProvince!);
-    update();
   }
 
   ///
@@ -120,9 +133,9 @@ class AddressController extends GetxController {
   ///
   void setSelectedDistrict(String? value) {
     district = value;
-    final indexDistrict =
-        districtModelList.indexWhere((element) => element.name == value);
-    idDistrict = districtModelList[indexDistrict].id;
+    userModel.districtOrder = districtModelList[districtModelList
+            .indexWhere((element) => element.name!.trim() == value!.trim())]
+        .id;
     update();
   }
 
@@ -130,13 +143,12 @@ class AddressController extends GetxController {
   ///save address
   ///
   void changeAddress() {
-    if (province!.isEmpty ||
-        district!.isEmpty ||
-        addressController.text.isEmpty) {
-      Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường",
-          snackPosition: SnackPosition.BOTTOM);
+    if (userModel.provinceOrder!.isEmpty ||
+        userModel.districtOrder!.isEmpty ||
+        addressTextController.text.isEmpty) {
+      Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường");
     } else {
-      print("addressController.text: ${addressController.text}");
+      print("addressController.text: ${addressTextController.text}");
 
       // update address
 
@@ -160,17 +172,17 @@ class AddressController extends GetxController {
             status: userModel.status,
             username: userModel.username,
             addressCurrent: userModel.addressCurrent,
-            addressOrder: addressController.text,
-            districtOrder: idDistrict,
-            provinceOrder: idProvince,
+            addressOrder: addressTextController.text,
+            districtOrder: userModel.districtOrder,
+            provinceOrder: userModel.provinceOrder,
           ),
           onSuccess: (value) {},
           onError: (error) {
             print(error);
           });
-      update();
       //back to cart
       Get.back(result: true);
+      update();
     }
   }
 }
