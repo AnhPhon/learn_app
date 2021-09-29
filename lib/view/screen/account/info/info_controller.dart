@@ -73,10 +73,12 @@ class EditInfoController extends GetxController {
       userProvider.find(
           id: value!,
           onSuccess: (userData) {
+            // print(userData.toJson());
             // validate input user
             final bool isValid = _checkValidateInput();
 
             if (isValid) {
+              avatarFile ??= File(avatarPath!);
               imageProvider.add(
                 file: avatarFile!,
                 onSuccess: (image) {
@@ -91,7 +93,7 @@ class EditInfoController extends GetxController {
                   // show loading
                   EasyLoading.show(status: 'loading...');
 
-                  // print(userData.toHaveIdJson());
+                  // print(userData.toJson());
 
                   userProvider.update(
                     data: userData,
