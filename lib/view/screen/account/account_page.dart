@@ -150,8 +150,10 @@ class AccountPage extends GetView<AccountController> {
                                       ],
                                     ),
                                     Positioned(
-                                      right: 25,
-                                      bottom: 30,
+                                      right: DeviceUtils.getScaledSize(
+                                          context, 0.005),
+                                      bottom: DeviceUtils.getScaledSize(
+                                          context, 0.076),
                                       child: GestureDetector(
                                         onTap: () {
                                           controller.onEditInfoClick();
@@ -162,10 +164,11 @@ class AccountPage extends GetView<AccountController> {
                                               color: Colors.green,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(50))),
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.edit,
                                             color: Colors.white,
-                                            size: 18,
+                                            size: DeviceUtils.getScaledSize(
+                                                context, 0.045),
                                           ),
                                         ),
                                       ),

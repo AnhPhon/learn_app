@@ -277,18 +277,11 @@ class HomePage extends GetView<HomeController> {
   /// avatar background user
   ///
   Widget _avatarBackgroundUser(BuildContext context) {
-    // avatar width and height
-    const double avatarWidth = 100;
-    const double avatarHeight = 100;
-
     // get width and height
     final double width = context.mediaQuerySize.width;
     // final double height = context.mediaQuerySize.height;
 
     // const double partTwoHeight = 400;
-
-    // margin left of avatar
-    const double avatarMarginLeft = 20;
 
     // basic font size
     const double _moneyTextSize = Dimensions.FONT_SIZE_OVER_LARGE;
@@ -344,14 +337,14 @@ class HomePage extends GetView<HomeController> {
               //   height: avatarHeight / 2,
               // ),
               Positioned(
-                bottom: 50,
+                bottom: DeviceUtils.getScaledSize(context, 0.127),
                 child: Stack(
                   children: [
                     // basic information statistic
                     Column(
                       children: [
-                        const SizedBox(
-                          height: Dimensions.SPACE_HEIGHT_DEFAULT * 2,
+                        SizedBox(
+                          height: DeviceUtils.getScaledSize(context, 0.05),
                         ),
                         Row(
                           children: [
@@ -472,27 +465,27 @@ class HomePage extends GetView<HomeController> {
                   children: [
                     Container(
                       decoration: const BoxDecoration(),
-                      margin: const EdgeInsets.only(
-                        left: avatarMarginLeft,
+                      margin: EdgeInsets.only(
+                        left: DeviceUtils.getScaledSize(context, 0.05),
                         // top: 240 - avatarHeight / 2 - 10,
                       ),
                       child: Stack(
                         children: [
                           // avatar
                           _avatarUser(
-                            avatarWidth,
-                            avatarHeight,
+                            DeviceUtils.getScaledSize(context, 0.254),
+                            DeviceUtils.getScaledSize(context, 0.254),
                           ),
 
                           // info of user
                           _infoUser(
-                            controller.userModel!.fullname.toString(),
-                            controller.userModel!.username.toString(),
-                            Colors.white,
-                            Colors.white,
-                            avatarWidth,
-                            MediaQuery.of(context).size.width
-                          ),
+                              context,
+                              controller.userModel!.fullname.toString(),
+                              controller.userModel!.username.toString(),
+                              Colors.white,
+                              Colors.white,
+                              DeviceUtils.getScaledSize(context, 0.254),
+                              MediaQuery.of(context).size.width),
                         ],
                       ),
                     )
@@ -534,6 +527,7 @@ class HomePage extends GetView<HomeController> {
   /// info of info declared
   ///
   Widget _infoUser(
+    BuildContext context,
     String userName,
     String ruleName,
     Color userColor,
@@ -541,12 +535,6 @@ class HomePage extends GetView<HomeController> {
     double marginLeft,
     double width,
   ) {
-    // user name size is FONT_SIZE_EXTRA_LARGE
-    const double userNameSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
-
-    // rule name size is FONT_SIZE_DEFAULT
-    const double ruleNameSize = Dimensions.FONT_SIZE_DEFAULT;
-
     // @ is prefix rule name
     const String prefixRuleName = "@";
 
@@ -561,7 +549,7 @@ class HomePage extends GetView<HomeController> {
               userName,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: userNameSize,
+                fontSize: DeviceUtils.getScaledSize(context, 0.035),
                 fontWeight: FontWeight.bold,
                 color: userColor,
               ),
@@ -574,7 +562,7 @@ class HomePage extends GetView<HomeController> {
               prefixRuleName + ruleName,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: ruleNameSize,
+                fontSize: DeviceUtils.getScaledSize(context, 0.035),
                 fontWeight: FontWeight.normal,
                 color: ruleColor,
               ),
