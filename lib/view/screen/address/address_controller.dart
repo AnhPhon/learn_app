@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/district_model.dart';
 import 'package:template/data/model/body/province_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/province_provider.dart';
 import 'package:template/provider/user_provider.dart';
@@ -15,7 +16,6 @@ class AddressController extends GetxController {
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
   UserProvider userProvider = GetIt.I.get<UserProvider>();
 
-  final wardController = TextEditingController();
   final addressController = TextEditingController();
 
   String? province;
@@ -30,21 +30,38 @@ class AddressController extends GetxController {
   List<String> provinceList = [];
   List<String> districtList = [];
 
-  bool isReloadData = false;
+  UserModel userModel = UserModel();
 
   @override
   void onClose() {
     super.onClose();
     addressController.dispose();
-    wardController.dispose();
   }
 
   @override
   void onInit() {
     super.onInit();
+    getUserInfo();
     getProvince();
     provinceModelList.clear();
     districtModelList.clear();
+  }
+
+  ///
+  ///get user info
+  ///
+  void getUserInfo() {
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      userProvider.find(
+          id: value!,
+          onSuccess: (value) {
+            userModel = value;
+            update();
+          },
+          onError: (error) {
+            print(error);
+          });
+    });
   }
 
   ///
@@ -113,24 +130,47 @@ class AddressController extends GetxController {
   ///save address
   ///
   void changeAddress() {
-    isReloadData = true;
     if (province!.isEmpty ||
         district!.isEmpty ||
-        wardController.text.isEmpty ||
         addressController.text.isEmpty) {
       Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường",
           snackPosition: SnackPosition.BOTTOM);
     } else {
       print("addressController.text: ${addressController.text}");
-      sl.get<SharedPreferenceHelper>().saveProvinceId(idProvince!);
-      sl.get<SharedPreferenceHelper>().saveDistrictId(idDistrict!);
-      sl.get<SharedPreferenceHelper>().saveAddress(addressController.text);
 
       // update address
-      // userProvider.update(data: data, onSuccess: onSuccess, onError: onError);
 
+      userProvider.update(
+          data: UserModel(
+            id: userModel.id,
+            address: userModel.address,
+            avatar: userModel.avatar,
+            born: userModel.born,
+            citizenIdentification: userModel.citizenIdentification,
+            email: userModel.email,
+            phone: userModel.phone,
+            fullname: userModel.fullname,
+            idOptionalRole: userModel.idOptionalRole,
+            idRole: userModel.idRole,
+            idUser: userModel.idUser,
+            imageCitizenIdentification1: userModel.imageCitizenIdentification1,
+            imageCitizenIdentification: userModel.imageCitizenIdentification,
+            paymentProofImage: userModel.paymentProofImage,
+            sex: userModel.sex,
+            status: userModel.status,
+            username: userModel.username,
+            addressCurrent: userModel.addressCurrent,
+            addressOrder: addressController.text,
+            districtOrder: idDistrict,
+            provinceOrder: idProvince,
+          ),
+          onSuccess: (value) {},
+          onError: (error) {
+            print(error);
+          });
+      update();
       //back to cart
-      Get.back(result: isReloadData);
+      Get.back(result: true);
     }
   }
 }

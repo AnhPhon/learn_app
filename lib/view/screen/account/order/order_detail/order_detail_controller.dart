@@ -52,11 +52,7 @@ class OrderDetailController extends GetxController {
   void onInit() {
     super.onInit();
     orderId = Get.parameters['idOrder'].toString();
-    // sl.get<SharedPreferenceHelper>().userId.then((value) {
-    //   getAddress(value.toString());
-    // });
     getOrderItem();
-    getAddress();
     getOrderInfo();
   }
 
@@ -86,6 +82,7 @@ class OrderDetailController extends GetxController {
         id: orderId.toString(),
         onSuccess: (value) {
           orderModel = value;
+          getAddress(value.idProvince!, value.idDistrict!);
           convertDateTime(value.updatedAt.toString());
           update();
         },
@@ -117,38 +114,26 @@ class OrderDetailController extends GetxController {
   ///
   ///get address from iUser
   ///
-  void getAddress() {
-    // userProvider.find(
-    //     id: userId,
-    //     onSuccess: (value) {
-    //       userModel = value;
-    //     },
-    //     onError: (error) {
-    //       print(error);
-    //     });
-
-    sl.get<SharedPreferenceHelper>().address.then((value) => address = value);
-    sl.get<SharedPreferenceHelper>().provinceId.then((value) {
-      provinceProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            province = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    sl.get<SharedPreferenceHelper>().districtId.then((value) {
-      districtProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            district = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    update();
+  void getAddress(String provinceId, String districtId) {
+    //get province
+    provinceProvider.find(
+        id: provinceId,
+        onSuccess: (value) {
+          province = value.name;
+          update();
+        },
+        onError: (error) {
+          print(error);
+        });
+    districtProvider.find(
+        id: districtId,
+        onSuccess: (value) {
+          district = value.name;
+          update();
+        },
+        onError: (error) {
+          print(error);
+        });
   }
 
   // void onHistoryClick() {

@@ -91,7 +91,7 @@ class AppPages {
       page: () => NewsDetailPage(),
     ),
     GetPage(
-      name: AppRoutes.CART,
+      name: AppRoutes.CARTS,
       page: () => CartPage(),
     ),
     GetPage(

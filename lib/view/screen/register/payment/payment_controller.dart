@@ -100,7 +100,7 @@ class PaymentController extends GetxController {
                   description: 'Đơn hàng mới',
                   discountPrice: "0",
                 );
-                
+
                 // add api order provider
                 orderProvider.add(
                   data: order,
@@ -154,7 +154,6 @@ class PaymentController extends GetxController {
   /// _add order item to database
   ///
   void _addOrderItemToDB(String orderId, List<ProductConditionModel> items) {
-
     // duyệt các sản phẩm
     items.forEach((element) {
       final OrderItemModel model = OrderItemModel(
@@ -189,7 +188,7 @@ class PaymentController extends GetxController {
   ///
   double sumCalculator(List<ProductConditionModel> items) {
     int sum = 0;
-    
+
     // tổng (số lượng và đơn giá) của các sản phẩm
     items.forEach((element) {
       sum += element.quality * element.amount;

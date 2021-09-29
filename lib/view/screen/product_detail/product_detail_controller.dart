@@ -226,7 +226,7 @@ class ProductDetailController extends GetxController {
   ///
   void onCartClick() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      Get.toNamed("${AppRoutes.CART}?idOrder=$value");
+      Get.toNamed("${AppRoutes.CARTS}?idOrder=$value");
     });
   }
 

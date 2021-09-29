@@ -174,9 +174,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
       context,
       child: Column(
         children: [
-          if (controller.address == null ||
-              controller.district == null ||
-              controller.province == null)
+          if (controller.district == null || controller.province == null)
             _shippingWidget(context,
                 icon: const Icon(
                   Icons.location_on_outlined,
@@ -191,8 +189,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
                   color: ColorResources.PRIMARY,
                 ),
                 text1: "Địa chỉ ship",
-                text2:
-                    "${controller.address}, ${controller.district}, ${controller.province}"),
+                text2: "${controller.district}, ${controller.province}"),
           Dimensions().paddingDivider(context),
           _shippingWidget(context,
               image: Image.asset("assets/images/logo.png"),

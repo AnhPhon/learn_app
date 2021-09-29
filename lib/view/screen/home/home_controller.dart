@@ -81,7 +81,7 @@ class HomeController extends GetxController {
   ///onCartClick
   ///
   void onCartClick() {
-    Get.toNamed(AppRoutes.CART);
+    Get.toNamed(AppRoutes.CARTS);
   }
 
   ///

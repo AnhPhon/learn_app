@@ -147,6 +147,11 @@ class InformationUserController extends GetxController {
             user.citizenIdentification = textEditCmndController.text;
             user.address = textEditAddressController.text;
 
+            //địa chỉ nhận hàng
+            user.addressOrder = '';
+            user.districtOrder = '';
+            user.addressOrder = '';
+
             // chờ duyệt
             user.status = '1';
 

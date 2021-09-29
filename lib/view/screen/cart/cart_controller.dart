@@ -26,16 +26,15 @@ class CartController extends GetxController {
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   List<OrderItemResponseModel> orderItemProductList = [];
 
+  ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
+  DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
+  String provinceName = "";
+  String districtName = "";
+
   UserProvider userProvider = GetIt.I.get<UserProvider>();
   UserModel? userModel;
 
-  ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
-  String? province;
-
-  DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
-  String? district;
-
-  String? address;
+  String idUser = '';
 
   bool isLastProduct = false;
   bool isLoading = true;
@@ -50,6 +49,7 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value!);
     loadSelectedProduct();
     getAddress();
   }
@@ -59,7 +59,7 @@ class CartController extends GetxController {
   ///
   void loadSelectedProduct() {
     // qualityHint.clear();
-
+    orderItemProductList = [];
     if (Get.parameters['idOrder'].toString() != "null") {
       orderItemProvider.findByIdOrder(
           page: 1,
@@ -73,7 +73,7 @@ class CartController extends GetxController {
                     qualityProduct.add(int.parse(quanlity.quantity!)))
                 .toList();
             calculatorPrice();
-            isLoading = false;
+            // isLoading = false;
             update();
           },
           onError: (error) {
@@ -81,30 +81,9 @@ class CartController extends GetxController {
             update();
           });
     } else {
-      orderItemProductList = [];
+      isLoading = false;
     }
   }
-
-  ///
-  ///get order id
-  ///
-  // void getOrderItem(int index) {
-  //   focusNode.addListener(() {
-  //     print("qualityController.text: ${qualityController.text}");
-  //     orderItemProvider.update(
-  //         data: OrderItemModel(
-  //             id: orderItemProductList[index].id,
-  //             idOrder: orderItemProductList[index].idOrder,
-  //             idProduct: orderItemProductList[index].idProduct!.id,
-  //             price: orderItemProductList[index].idProduct!.prices,
-  //             quantity: qualityController.text),
-  //         onSuccess: (value) {
-  //           isLoadingQuality = false;
-  //           update();
-  //         },
-  //         onError: (error) {});
-  //   });
-  // }
 
   ///
   ///xoá khỏi giỏ hàng
@@ -162,9 +141,7 @@ class CartController extends GetxController {
             price: (qualityProduct[index] *
                     int.parse(orderItemProductList[index].idProduct!.prices!))
                 .toString()),
-        onSuccess: (value) {
-          print("tăng thành công");
-        },
+        onSuccess: (value) {},
         onError: (error) {});
   }
 
@@ -184,9 +161,7 @@ class CartController extends GetxController {
               price: (qualityProduct[index] *
                       int.parse(orderItemProductList[index].idProduct!.prices!))
                   .toString()),
-          onSuccess: (value) {
-            print("giảm thành công");
-          },
+          onSuccess: (value) {},
           onError: (error) {});
     }
   }
@@ -215,65 +190,66 @@ class CartController extends GetxController {
   ///get address from iUser
   ///
   void getAddress() {
-    sl.get<SharedPreferenceHelper>().address.then((value) => address = value);
-    sl.get<SharedPreferenceHelper>().provinceId.then((value) {
-      provinceProvider.find(
-          id: value.toString(),
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      userProvider.find(
+          id: value!,
           onSuccess: (value) {
-            province = value.name.toString();
+            userModel = value;
+            provinceProvider.find(
+                id: value.provinceOrder!,
+                onSuccess: (value) {
+                  provinceName = value.name!;
+                  update();
+                },
+                onError: (error) {});
+            districtProvider.find(
+                id: value.districtOrder!,
+                onSuccess: (value) {
+                  districtName = value.name!;
+                  update();
+                },
+                onError: (error) {});
+            isLoading = false;
+            update();
           },
           onError: (error) {
             print(error);
           });
     });
-    sl.get<SharedPreferenceHelper>().districtId.then((value) {
-      districtProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            district = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    update();
   }
 
   ///
   ///thay đổi địa chỉ
   ///
   void onAddressClick() {
-    Get.toNamed(AppRoutes.ADDRESS);
-    // .then((value) {
-    //   if (value == true) {
-    //     sl.get<SharedPreferenceHelper>().address.then((value) => null);
-    //   }
-    // });
+    Get.toNamed(AppRoutes.ADDRESS)!.then((value) {
+      if (value == true) {
+        getAddress();
+      }
+    });
   }
 
   ///
   ///thanh toán
   ///
   void onCheckoutClick() {
-    // if (userModel!.addressOrder == '' ||
-    //     userModel!.districtOrder == '' ||
-    //     userModel!.provinceOrder == '') {
-    //   /// show snackbar
-    //   Get.snackbar(
-    //     "Vui lòng kiểm tra lại", // title
-    //     "Nhập địa chỉ nhận hàng", // message
-    //     backgroundColor: const Color(0xffFFEBEE),
-    //     icon: const Icon(Icons.error_outline),
-    //     shouldIconPulse: true,
-    //     isDismissible: true,
-    //     duration: const Duration(seconds: 3),
-    //   );
-    // } else {
-    sl
-        .get<SharedPreferenceHelper>()
-        .orderId
-        .then((value) => Get.toNamed("${AppRoutes.CHECKOUT}?idOrder=$value"));
-    // }
+    if (userModel!.addressOrder == '' ||
+        userModel!.districtOrder == '' ||
+        userModel!.provinceOrder == '') {
+      /// show snackbar
+      Get.snackbar(
+        "Vui lòng kiểm tra lại", // title
+        "Nhập địa chỉ nhận hàng", // message
+        backgroundColor: const Color(0xffFFEBEE),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 3),
+      );
+    } else {
+      sl.get<SharedPreferenceHelper>().orderId.then((value) => Get.toNamed(
+          "${AppRoutes.CHECKOUT}?idOrder=$value&idProvince=${userModel!.provinceOrder}&idDistrict=${userModel!.districtOrder}"));
+    }
   }
 
   ///
