@@ -78,14 +78,16 @@ class EditInfoController extends GetxController {
             final bool isValid = _checkValidateInput();
 
             if (isValid) {
-              avatarFile ??= File(avatarPath!);
               imageProvider.add(
                 file: avatarFile!,
                 onSuccess: (image) {
-                  // create model
-                  userData.fullname = textEditFullnameController.text;
-                  userData.address = textEditAddressController.text;
-                  userData.avatar = image.data;
+
+                  final Map<String, String> data = {
+                    "id": userData.id!,
+                    "fullname": textEditFullnameController.text,
+                    "address": textEditAddressController.text,
+                    "avatar": image.data!,
+                  };
                   avatarPath = image.data;
                   // chờ duyệt
                   // user.status = '1';
@@ -95,11 +97,12 @@ class EditInfoController extends GetxController {
 
                   // print(userData.toJson());
 
-                  userProvider.update(
-                    data: userData,
+                  userProvider.infoUpdate(
+                    data: data,
                     onSuccess: (user) {
                       // Thực hiện update
                       print("User updated");
+                      update();
                       Get.back();
                       showAnimatedDialog(
                         context,
@@ -111,7 +114,6 @@ class EditInfoController extends GetxController {
                         dismissible: false,
                         isFlip: true,
                       );
-                      update();
                       EasyLoading.dismiss();
                     },
                     onError: (error) {
@@ -148,10 +150,10 @@ class EditInfoController extends GetxController {
       return false;
     }
 
-    if (avatarFile == null && avatarPath == null) {
+    if (avatarFile == null || avatarPath == null) {
       // Địa chỉ liên lạc
       _showSnakebar(
-          'Vui lòng kiểm tra lại!', 'Hình avatar không được để trống', 3);
+          'Vui lòng kiểm tra lại!', 'Hình ảnh vẫn còn trống', 3);
       return false;
     }
 

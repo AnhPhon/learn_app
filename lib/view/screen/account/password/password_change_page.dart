@@ -27,11 +27,11 @@ class PasswordChangePage extends GetView<PasswordChangeController> {
                     child: Column(
                       children: [
                         // mật khẩu cũ
-                        _passwordInputWidget(
-                            context,
-                            "Mật khẩu cũ",
-                            controller.textEditPasswordController,
-                            TextInputType.visiblePassword),
+                        // _passwordInputWidget(
+                        //     context,
+                        //     "Mật khẩu cũ",
+                        //     controller.textEditOldPasswordController,
+                        //     TextInputType.visiblePassword),
 
                         // Mất khẩu
                         _passwordInputWidget(
@@ -56,45 +56,6 @@ class PasswordChangePage extends GetView<PasswordChangeController> {
               ),
             );
           },
-        ),
-      ),
-    );
-  }
-
-  ///
-  /// input widget
-  ///
-  Widget _normalInputWidget(BuildContext context, String? label,
-      TextEditingController controllers, TextInputType extInputType) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.025)),
-      child: TextField(
-        textInputAction: TextInputAction.next,
-        textAlignVertical: TextAlignVertical.center,
-        controller: controllers,
-        keyboardType: extInputType,
-        cursorColor: ColorResources.PRIMARY,
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: DeviceUtils.getScaledSize(context, 0.025),
-              vertical: DeviceUtils.getScaledSize(context, 0.038)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          hintText: label,
-          filled: true,
-          fillColor: Colors.transparent,
         ),
       ),
     );
@@ -151,7 +112,7 @@ class PasswordChangePage extends GetView<PasswordChangeController> {
   ///
   Widget _buttonUpdate(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.onBtnUpdateClick(),
+      onTap: () => controller.onBtnUpdateClick(context),
       child: Container(
         margin: EdgeInsets.symmetric(
             vertical: DeviceUtils.getScaledSize(context, 0.035)),
