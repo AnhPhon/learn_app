@@ -257,10 +257,10 @@ class HomePage extends GetView<HomeController> {
   ///
   Widget _imgProduct(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: controller.banner.length,
+      itemCount: controller.bannerList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-        return Image.asset(
-          controller.banner[itemIndex].toString(),
+        return Image.network(
+          controller.bannerList[itemIndex].imageUrl!,
           fit: BoxFit.fill,
           width: 1000,
         );
@@ -480,15 +480,14 @@ class HomePage extends GetView<HomeController> {
                         children: [
                           // avatar
                           _avatarUser(
-                            controller.userModel.avatar.toString(),
                             avatarWidth,
                             avatarHeight,
                           ),
 
                           // info of user
                           _infoUser(
-                            controller.userModel.fullname.toString(),
-                            controller.userModel.username.toString(),
+                            controller.userModel!.fullname.toString(),
+                            controller.userModel!.username.toString(),
                             Colors.white,
                             Colors.white,
                             avatarWidth,
@@ -510,7 +509,7 @@ class HomePage extends GetView<HomeController> {
   ///
   /// avatar of user declared
   ///
-  Widget _avatarUser(String imageURL, double width, double height) {
+  Widget _avatarUser(double width, double height) {
     // return
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -524,7 +523,7 @@ class HomePage extends GetView<HomeController> {
           width: width,
           height: height,
           image: NetworkImage(
-            imageURL,
+            controller.userModel!.avatar.toString(),
           ),
         ),
       ),

@@ -88,6 +88,25 @@ class UserProvider {
   }
 
   ///
+  /// Update user to database
+  ///
+  Future<void> infoUpdate({
+    required Map<String, String> data,
+    required Function(UserModel user) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await userRepo!.infoUpdate(data);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      onSuccess(UserModel.fromJson(results as Map<String, dynamic>));
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
   /// Delete user to database
   ///
   Future<void> delete({

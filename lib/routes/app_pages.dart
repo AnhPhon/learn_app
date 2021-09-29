@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/account/info/info_page.dart';
 import 'package:template/view/screen/account/order/history/history_page.dart';
 import 'package:template/view/screen/account/order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/account/order/order_page.dart';
+import 'package:template/view/screen/account/password/password_change_page.dart';
 import 'package:template/view/screen/account/rules/rules_page.dart';
 import 'package:template/view/screen/address/address_page.dart';
 import 'package:template/view/screen/auth/auth_page.dart';
@@ -105,6 +107,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.ADDRESS,
       page: () => AddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PASSWORD_CHANGE,
+      page: () => PasswordChangePage(),
+    ),
+    GetPage(
+      name: AppRoutes.EDIT_INFO,
+      page: () => EditInfoPage(),
     ),
   ];
 }

@@ -1,25 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/di_container.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/screen/home/home_controller.dart';
 
 class AccountController extends GetxController
     with SingleGetTickerProviderMixin {
   UserProvider userProvider = GetIt.I.get<UserProvider>();
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
-
-  var counter = 1.obs;
-
-  var orderPages = 0.obs;
-
   UserModel userModel = UserModel();
   List<OrderModel> orderStatusList = [];
+
+  final homeController = Get.put(HomeController());
 
   String? userId;
 
@@ -40,14 +37,15 @@ class AccountController extends GetxController
   ///
   void getUserById() {
     userProvider.find(
-        id: userId.toString(),
-        onSuccess: (value) {
-          userModel = value;
-          update();
-        },
-        onError: (error) {
-          print(error);
-        });
+      id: userId!,
+      onSuccess: (value) {
+        userModel = value;
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
   }
 
   ///
@@ -70,6 +68,21 @@ class AccountController extends GetxController
   }
 
   ///
+  /// Thay đổi thông tin
+  ///
+  void onEditInfoClick() {
+    Get.toNamed(AppRoutes.EDIT_INFO)!.then((value) {
+      if (value == true) {
+        sl.get<SharedPreferenceHelper>().userId.then((value) {
+          getUserById();
+          getOrder();
+          homeController.getUserById(value!);
+        });
+      }
+    });
+  }
+
+  ///
   /// tới màn hình rules
   ///
   void onRulesClick() {
@@ -83,6 +96,13 @@ class AccountController extends GetxController
     sl.get<SharedPreferenceHelper>().removeUserId();
     sl.get<SharedPreferenceHelper>().removeIsLogin();
     Get.back();
+  }
+
+  ///
+  /// đổi mật khẩu
+  ///
+  void onChangePasswordClick() {
+    Get.toNamed(AppRoutes.PASSWORD_CHANGE);
   }
 
   ///

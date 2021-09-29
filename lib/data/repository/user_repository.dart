@@ -50,7 +50,19 @@ class UserRepository {
   ///
   Future<ApiResponse> update(UserModel data) async {
     try {
-      final response = await dioClient!.put('/users', data: data.toJson());
+      final response = await dioClient!.put('/users', data: data.toHaveIdJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Update user to database
+  ///
+  Future<ApiResponse> infoUpdate(Map<String, String> data) async {
+    try {
+      final response = await dioClient!.put('/users', data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
