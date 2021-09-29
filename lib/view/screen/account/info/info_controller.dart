@@ -5,7 +5,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:template/data/model/body/user_model.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -17,7 +16,9 @@ class EditInfoController extends GetxController {
 
   final UserProvider userProvider = GetIt.I.get<UserProvider>();
   final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
+
   bool isLoading = false;
+  
 
   TextEditingController textEditFullnameController = TextEditingController();
   TextEditingController textEditAddressController = TextEditingController();
@@ -81,7 +82,6 @@ class EditInfoController extends GetxController {
               imageProvider.add(
                 file: avatarFile!,
                 onSuccess: (image) {
-
                   final Map<String, String> data = {
                     "id": userData.id!,
                     "fullname": textEditFullnameController.text,
@@ -101,9 +101,9 @@ class EditInfoController extends GetxController {
                     data: data,
                     onSuccess: (user) {
                       // Thực hiện update
+                      Get.back(result: true);
                       print("User updated");
                       update();
-                      Get.back();
                       showAnimatedDialog(
                         context,
                         const MyDialog(
@@ -152,8 +152,7 @@ class EditInfoController extends GetxController {
 
     if (avatarFile == null || avatarPath == null) {
       // Địa chỉ liên lạc
-      _showSnakebar(
-          'Vui lòng kiểm tra lại!', 'Hình ảnh vẫn còn trống', 3);
+      _showSnakebar('Vui lòng kiểm tra lại!', 'Hình ảnh vẫn còn trống', 3);
       return false;
     }
 

@@ -10,18 +10,16 @@ import 'package:template/provider/category_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/images.dart';
 
 class HomeController extends GetxController {
   UserProvider userProvider = GetIt.I.get<UserProvider>();
   CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
   BannerProvider bannerProvider = GetIt.I.get<BannerProvider>();
 
-  UserModel userModel = UserModel();
+  UserModel? userModel;
   StaticUserResponse staticUserResponse = StaticUserResponse();
 
   // banner
-  List banner = [Images.banner1, Images.banner2, Images.banner3];
   List<CategoryModel> categoriesList = [];
   List<BannerModel> bannerList = [];
 
@@ -29,14 +27,13 @@ class HomeController extends GetxController {
 
   bool isLoading = true;
 
-  
-
   @override
   void onInit() {
     super.onInit();
 
     sl.get<SharedPreferenceHelper>().userId.then(
       (userId) {
+
         // load data user by id
         getUserById(userId!);
       },
@@ -54,23 +51,28 @@ class HomeController extends GetxController {
   ///
   void getUserById(String userId) {
     // load data user by id
+
     userProvider.find(
-        id: userId,
-        onSuccess: (data) {
-          userModel = data;
-          // load data revanue and statistical of team
-          userProvider.statisUser(
-              idUser: userId,
-              onSuccess: (data) {
-                staticUserResponse = data;
-                isLoading = false;
-                update();
-              },
-              onError: (error) {});
-        },
-        onError: (error) {
-          print(error);
-        });
+      id: userId,
+      onSuccess: (data) {
+        userModel = data;
+        // load data revanue and statistical of team
+        userProvider.statisUser(
+          idUser: userId,
+          onSuccess: (data) {
+            staticUserResponse = data;
+            isLoading = false;
+            update();
+          },
+          onError: (error) {
+            print(error);
+          },
+        );
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
   }
 
   ///

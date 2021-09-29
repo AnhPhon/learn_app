@@ -42,8 +42,8 @@ class PasswordChangeController extends GetxController {
                 data: data,
                 onSuccess: (user) {
                   // Thực hiện update
+                  Get.back();
                   print("Password updated");
-                  update();
                   showAnimatedDialog(
                     context,
                     const MyDialog(
@@ -54,8 +54,8 @@ class PasswordChangeController extends GetxController {
                     dismissible: false,
                     isFlip: true,
                   );
-                  Get.back();
                   EasyLoading.dismiss();
+                  update();
                 },
                 onError: (error) {
                   print(error);
