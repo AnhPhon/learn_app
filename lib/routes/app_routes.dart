@@ -23,4 +23,7 @@ class AppRoutes {
   static const String GROUP = '/group';
   static const String CHECKOUT = '/checkout';
   static const String ADDRESS = '/address';
+
+  static const String PASSWORD_CHANGE = '/password_change';
+  static const String EDIT_INFO = '/edit_info';
 }

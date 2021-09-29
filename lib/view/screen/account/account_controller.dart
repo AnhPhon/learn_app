@@ -8,6 +8,7 @@ import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/screen/account/password/password_change_page.dart';
 
 class AccountController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -70,11 +71,19 @@ class AccountController extends GetxController
   }
 
   ///
+  /// Thay đổi thông tin
+  ///
+  void onEditInfoClick() {
+    Get.toNamed(AppRoutes.EDIT_INFO);
+  }
+
+  ///
   /// tới màn hình rules
   ///
   void onRulesClick() {
     Get.toNamed(AppRoutes.RULES);
   }
+  
 
   ///
   ///đăng xuất
@@ -83,6 +92,13 @@ class AccountController extends GetxController
     sl.get<SharedPreferenceHelper>().removeUserId();
     sl.get<SharedPreferenceHelper>().removeIsLogin();
     Get.back();
+  }
+
+  ///
+  /// đổi mật khẩu
+  ///
+  void onChangePasswordClick() {
+    Get.toNamed(AppRoutes.PASSWORD_CHANGE);
   }
 
   ///

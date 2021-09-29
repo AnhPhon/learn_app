@@ -86,4 +86,28 @@ class UserModel {
     data['imageCitizenIdentification1'] = imageCitizenIdentification1;
     return data;
   }
+
+  Map<String, dynamic> toHaveIdJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['idUser'] = idUser;
+    data['idRole'] = idRole;
+    data['idOptionalRole'] = idOptionalRole;
+    data['fullname'] = fullname;
+    data['username'] = username;
+    data['password'] = password;
+    data['sex'] = sex;
+    data['avatar'] = avatar;
+    data['born'] = born;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['address'] = address;
+    data['citizenIdentification'] = citizenIdentification;
+    data['status'] = status;
+    data['addressCurrent'] = addressCurrent;
+    data['paymentProofImage'] = paymentProofImage;
+    data['imageCitizenIdentification'] = imageCitizenIdentification;
+    data['imageCitizenIdentification1'] = imageCitizenIdentification1;
+    return data;
+  }
 }
