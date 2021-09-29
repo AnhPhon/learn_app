@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -17,6 +16,12 @@ class EditInfoPage extends GetView<EditInfoController> {
           child: GetBuilder<EditInfoController>(
               init: EditInfoController(),
               builder: (EditInfoController controller) {
+                if(controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
                 return Container(
                   color: Colors.white,
                   child: Column(
@@ -139,11 +144,6 @@ class EditInfoPage extends GetView<EditInfoController> {
   /// upload avatar
   ///
   Widget _uploadAvatar(BuildContext context) {
-    if (controller.avatarPath == null && controller.avatarFile == null) {
-      EasyLoading.show(status: "Loading....");
-    } else {
-      EasyLoading.dismiss();
-    }
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: DeviceUtils.getScaledSize(context, 0.05),
@@ -157,11 +157,6 @@ class EditInfoPage extends GetView<EditInfoController> {
                 "Tải lên avatar",
                 style: Dimensions.fontSizeStyle16w600()
                     .copyWith(color: ColorResources.BLACK),
-              ),
-              Text(
-                "*",
-                style: Dimensions.fontSizeStyle16w600()
-                    .copyWith(color: ColorResources.RED),
               ),
             ],
           ),
@@ -194,8 +189,6 @@ class EditInfoPage extends GetView<EditInfoController> {
                   : (controller.avatarPath != null)
                       ? Image.network(
                           controller.avatarPath!,
-                          // height: 50,
-                          // color: Colors.grey,
                           fit: BoxFit.fitHeight,
                         )
                       : Container(),
@@ -211,9 +204,7 @@ class EditInfoPage extends GetView<EditInfoController> {
   ///
   Widget _buttonUpdate(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        controller.onBtnUpdateClick(context);
-      },
+      onTap: () => controller.onBtnUpdateClick(context),
       child: Container(
         margin: EdgeInsets.symmetric(
             vertical: DeviceUtils.getScaledSize(context, 0.035)),

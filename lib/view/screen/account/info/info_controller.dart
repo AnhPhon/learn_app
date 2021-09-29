@@ -14,12 +14,14 @@ import 'package:template/view/basewidget/my_dialog.dart';
 class EditInfoController extends GetxController {
   GetIt sl = GetIt.instance;
 
+  //
   final UserProvider userProvider = GetIt.I.get<UserProvider>();
   final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
 
-  bool isLoading = false;
-  
+  // khai báo is loading
+  bool isLoading = true;
 
+  //
   TextEditingController textEditFullnameController = TextEditingController();
   TextEditingController textEditAddressController = TextEditingController();
 
@@ -32,15 +34,17 @@ class EditInfoController extends GetxController {
     // first load
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
-        print(value);
+        // load user theo id
         userProvider.find(
           id: value!,
           onSuccess: (userData) {
+            // assign data to TextEditController
             textEditFullnameController.text = userData.fullname!;
             textEditAddressController.text = userData.address!;
             avatarPath = userData.avatar;
+
+            isLoading = false;
             update();
-            EasyLoading.dismiss();
           },
           onError: (error) {
             print(error);
@@ -69,68 +73,53 @@ class EditInfoController extends GetxController {
   /// on button Update click
   ///
   void onBtnUpdateClick(BuildContext context) {
-    sl.get<SharedPreferenceHelper>().userId.then((value) {
-      // kiểm tra mã giới thiệu đúng không
-      userProvider.find(
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (value) {
+        EasyLoading.show(status: 'loading...');
+
+        // kiểm tra mã giới thiệu đúng không
+        userProvider.find(
           id: value!,
           onSuccess: (userData) {
-            // print(userData.toJson());
-            // validate input user
+            // declare validate
             final bool isValid = _checkValidateInput();
 
+            // check validate
             if (isValid) {
-              imageProvider.add(
-                file: avatarFile!,
-                onSuccess: (image) {
-                  final Map<String, String> data = {
-                    "id": userData.id!,
-                    "fullname": textEditFullnameController.text,
-                    "address": textEditAddressController.text,
-                    "avatar": image.data!,
-                  };
-                  avatarPath = image.data;
-                  // chờ duyệt
-                  // user.status = '1';
+              // declare data
+              final Map<String, String> data = {
+                "id": userData.id!,
+                "fullname": textEditFullnameController.text,
+                "address": textEditAddressController.text,
+              };
 
-                  // show loading
-                  EasyLoading.show(status: 'loading...');
+              // check avatar file
+              if (avatarFile != null) {
+                // image provider added
+                imageProvider.add(
+                  file: avatarFile!,
+                  onSuccess: (image) {
+                    data["avatar"] = image.data!;
+                    avatarPath = image.data;
 
-                  // print(userData.toJson());
-
-                  userProvider.infoUpdate(
-                    data: data,
-                    onSuccess: (user) {
-                      // Thực hiện update
-                      Get.back(result: true);
-                      print("User updated");
-                      update();
-                      showAnimatedDialog(
-                        context,
-                        const MyDialog(
-                          icon: Icons.check,
-                          title: "Hoàn tất",
-                          description: "Cập nhật hoàn tất",
-                        ),
-                        dismissible: false,
-                        isFlip: true,
-                      );
-                      EasyLoading.dismiss();
-                    },
-                    onError: (error) {
-                      print(error);
-                      update();
-                    },
-                  );
-                },
-                onError: (error) {},
-              );
+                    // user updated
+                    userUpdate(data, context);
+                  },
+                  onError: (error) {},
+                );
+              } else {
+                // user updated
+                userUpdate(data, context);
+              }
             }
           },
           onError: (error) {
             print(error);
             update();
-          });
-    });
+          },
+        );
+      },
+    );
   }
 
   ///
@@ -140,23 +129,53 @@ class EditInfoController extends GetxController {
     if (textEditFullnameController.text == '') {
       // Fullname
       _showSnakebar(
-          'Vui lòng kiểm tra lại!', 'Họ và tên không được để trống', 3);
+        'Vui lòng kiểm tra lại!',
+        'Họ và tên không được để trống',
+        3,
+      );
       return false;
     }
     if (textEditAddressController.text == '') {
       // Địa chỉ liên lạc
       _showSnakebar(
-          'Vui lòng kiểm tra lại!', 'Địa chỉ liên lạc không được để trống', 3);
-      return false;
-    }
-
-    if (avatarFile == null || avatarPath == null) {
-      // Địa chỉ liên lạc
-      _showSnakebar('Vui lòng kiểm tra lại!', 'Hình ảnh vẫn còn trống', 3);
+        'Vui lòng kiểm tra lại!',
+        'Địa chỉ liên lạc không được để trống',
+        3,
+      );
       return false;
     }
 
     return true;
+  }
+
+  ///
+  /// user update
+  ///
+  void userUpdate(Map<String, String> data, BuildContext context) {
+    userProvider.infoUpdate(
+      data: data,
+      onSuccess: (user) {
+        EasyLoading.dismiss();
+
+        // screen back
+        Get.back(result: true);
+
+        // show Animated Dialog
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Hoàn tất",
+            description: "Cập nhật hoàn tất",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
   }
 
   ///
