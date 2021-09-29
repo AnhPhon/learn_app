@@ -18,6 +18,9 @@ class UserModel {
   String? paymentProofImage;
   String? imageCitizenIdentification;
   String? imageCitizenIdentification1;
+  String? districtOrder;
+  String? provinceOrder;
+  String? addressOrder;
 
   UserModel(
       {this.id,
@@ -38,7 +41,10 @@ class UserModel {
       this.addressCurrent,
       this.paymentProofImage,
       this.imageCitizenIdentification,
-      this.imageCitizenIdentification1});
+      this.imageCitizenIdentification1,
+      this.districtOrder,
+      this.provinceOrder,
+      this.addressOrder});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -61,6 +67,9 @@ class UserModel {
     imageCitizenIdentification = json['imageCitizenIdentification'].toString();
     imageCitizenIdentification1 =
         json['imageCitizenIdentification1'].toString();
+    districtOrder = json['districtOrder'].toString();
+    provinceOrder = json['provinceOrder'].toString();
+    addressOrder = json['addressOrder'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -84,6 +93,38 @@ class UserModel {
     data['paymentProofImage'] = paymentProofImage;
     data['imageCitizenIdentification'] = imageCitizenIdentification;
     data['imageCitizenIdentification1'] = imageCitizenIdentification1;
+    // data['districtOrder'] = districtOrder;
+    // data['provinceOrder'] = provinceOrder;
+    // data['addressOrder'] = addressOrder;
+
+    return data;
+  }
+
+  Map<String, dynamic> toJsonHaveId() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['idUser'] = idUser;
+    data['idRole'] = idRole;
+    data['idOptionalRole'] = idOptionalRole;
+    data['fullname'] = fullname;
+    data['username'] = username;
+    // data['password'] = password;
+    data['sex'] = sex;
+    data['avatar'] = avatar;
+    data['born'] = born;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['address'] = address;
+    data['citizenIdentification'] = citizenIdentification;
+    data['status'] = status;
+    data['addressCurrent'] = addressCurrent;
+    data['paymentProofImage'] = paymentProofImage;
+    data['imageCitizenIdentification'] = imageCitizenIdentification;
+    data['imageCitizenIdentification1'] = imageCitizenIdentification1;
+    data['districtOrder'] = districtOrder;
+    data['provinceOrder'] = provinceOrder;
+    data['addressOrder'] = addressOrder;
+
     return data;
   }
 

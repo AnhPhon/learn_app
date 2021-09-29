@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
@@ -25,16 +26,15 @@ class CartController extends GetxController {
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   List<OrderItemResponseModel> orderItemProductList = [];
 
+  ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
+  DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
+  String provinceName = "";
+  String districtName = "";
+
   UserProvider userProvider = GetIt.I.get<UserProvider>();
   UserModel? userModel;
 
-  ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
-  String? province;
-
-  DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
-  String? district;
-
-  String? address;
+  String idUser = '';
 
   bool isLastProduct = false;
   bool isLoading = true;
@@ -49,6 +49,7 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value!);
     loadSelectedProduct();
     getAddress();
   }
@@ -57,9 +58,9 @@ class CartController extends GetxController {
   ///load list selected product
   ///
   void loadSelectedProduct() {
-    // qualityHint.clear();
-
+    orderItemProductList = [];
     if (Get.parameters['idOrder'].toString() != "null") {
+      //lấy thông tin sản phẩm từ idOrder
       orderItemProvider.findByIdOrder(
           page: 1,
           limit: 100,
@@ -72,36 +73,16 @@ class CartController extends GetxController {
                     qualityProduct.add(int.parse(quanlity.quantity!)))
                 .toList();
             calculatorPrice();
-            isLoading = false;
             update();
           },
           onError: (error) {
             print(error);
             update();
           });
+    } else {
+      isLoading = false;
     }
   }
-
-  ///
-  ///get order id
-  ///
-  // void getOrderItem(int index) {
-  //   focusNode.addListener(() {
-  //     print("qualityController.text: ${qualityController.text}");
-  //     orderItemProvider.update(
-  //         data: OrderItemModel(
-  //             id: orderItemProductList[index].id,
-  //             idOrder: orderItemProductList[index].idOrder,
-  //             idProduct: orderItemProductList[index].idProduct!.id,
-  //             price: orderItemProductList[index].idProduct!.prices,
-  //             quantity: qualityController.text),
-  //         onSuccess: (value) {
-  //           isLoadingQuality = false;
-  //           update();
-  //         },
-  //         onError: (error) {});
-  //   });
-  // }
 
   ///
   ///xoá khỏi giỏ hàng
@@ -116,6 +97,8 @@ class CartController extends GetxController {
         onConfirm: () {
           isLoadingQuality = true;
           update();
+
+          //xoá sản phẩm
           orderItemProvider.delete(
               id: orderItemProductList[index].id.toString(),
               onSuccess: (value) {
@@ -159,9 +142,7 @@ class CartController extends GetxController {
             price: (qualityProduct[index] *
                     int.parse(orderItemProductList[index].idProduct!.prices!))
                 .toString()),
-        onSuccess: (value) {
-          print("tăng thành công");
-        },
+        onSuccess: (value) {},
         onError: (error) {});
   }
 
@@ -181,9 +162,7 @@ class CartController extends GetxController {
               price: (qualityProduct[index] *
                       int.parse(orderItemProductList[index].idProduct!.prices!))
                   .toString()),
-          onSuccess: (value) {
-            print("giảm thành công");
-          },
+          onSuccess: (value) {},
           onError: (error) {});
     }
   }
@@ -201,61 +180,83 @@ class CartController extends GetxController {
   }
 
   ///
-  ///address
-  ///
-
-  void onBtnHomeClick() {
-    Get.to(PostsPage());
-  }
-
-  ///
   ///get address from iUser
   ///
   void getAddress() {
-    sl.get<SharedPreferenceHelper>().address.then((value) => address = value);
-    sl.get<SharedPreferenceHelper>().provinceId.then((value) {
-      provinceProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            province = value.name.toString();
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      //lấy thông tin
+      userProvider.find(
+          id: value!,
+          onSuccess: (data) {
+            userModel = data;
+
+            // nếu địa chỉ nhận hàng khác rỗng thì hiển thị lên màn hình
+            if (data.addressOrder != "" ||
+                data.provinceOrder != "" ||
+                data.districtOrder != "") {
+              //lấy tên tỉnh từ id
+              provinceProvider.find(
+                  id: data.provinceOrder!,
+                  onSuccess: (values) {
+                    provinceName = values.name!;
+                    print("qq $provinceName");
+                    update();
+                  },
+                  onError: (error) {});
+              //lấy tên huyện từ id
+              districtProvider.find(
+                  id: data.districtOrder!,
+                  onSuccess: (values) {
+                    districtName = values.name!;
+                    print(districtName);
+                    update();
+                  },
+                  onError: (error) {});
+            }
+            isLoading = false;
+            update();
           },
           onError: (error) {
             print(error);
           });
     });
-    sl.get<SharedPreferenceHelper>().districtId.then((value) {
-      districtProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            district = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    update();
   }
 
   ///
   ///thay đổi địa chỉ
   ///
   void onAddressClick() {
-    Get.toNamed(AppRoutes.ADDRESS);
-    // .then((value) {
-    //   if (value == true) {
-    //     sl.get<SharedPreferenceHelper>().address.then((value) => null);
-    //   }
-    // });
+    Get.toNamed(AppRoutes.ADDRESS)!.then((value) {
+      //nếu có thực hiện thay đổi địa chỉ thì reload lại
+      if (value == true) {
+        getAddress();
+        update();
+      }
+    });
   }
 
   ///
   ///thanh toán
   ///
   void onCheckoutClick() {
-    sl
-        .get<SharedPreferenceHelper>()
-        .orderId
-        .then((value) => Get.toNamed("${AppRoutes.CHECKOUT}?idOrder=$value"));
+    //kiểm tra điều kiện trước khi thanh toán
+    if (userModel!.addressOrder == '' ||
+        userModel!.districtOrder == '' ||
+        userModel!.provinceOrder == '') {
+      /// show snackbar
+      Get.snackbar(
+        "Vui lòng kiểm tra lại", // title
+        "Nhập địa chỉ nhận hàng", // message
+        backgroundColor: const Color(0xffFFEBEE),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 3),
+      );
+    } else {
+      sl.get<SharedPreferenceHelper>().orderId.then((value) => Get.toNamed(
+          "${AppRoutes.CHECKOUT}?idOrder=$value&idProvince=${userModel!.provinceOrder}&idDistrict=${userModel!.districtOrder}"));
+    }
   }
 
   ///

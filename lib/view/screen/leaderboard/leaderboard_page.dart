@@ -133,17 +133,17 @@ class LeaderBoardPage extends GetView<LeaderBoardController> {
                                                         Text(
                                                             "Từ ${DateConverter.isoStringToLocalDateFull(controller.contextList[i].beginContext!)}",
                                                             style: Dimensions
-                                                                    .fontSizeStyle14()
+                                                                    .fontSizeStyle14w600()
                                                                 .copyWith(
-                                                                    color: ColorResources
-                                                                        .RED)),
+                                                                    color: Colors
+                                                                        .grey)),
                                                         Text(
                                                             "đến ${DateConverter.isoStringToLocalDateFull(controller.contextList[i].endContext!)}",
                                                             style: Dimensions
-                                                                    .fontSizeStyle14()
+                                                                    .fontSizeStyle14w600()
                                                                 .copyWith(
-                                                                    color: ColorResources
-                                                                        .RED)),
+                                                                    color: Colors
+                                                                        .grey)),
                                                       ],
                                                     ),
                                                   ],

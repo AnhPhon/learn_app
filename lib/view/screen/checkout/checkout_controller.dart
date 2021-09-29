@@ -8,9 +8,11 @@ import 'package:template/data/model/body/image_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/order_item_response_model.dart';
+import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
+import 'package:template/provider/province_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -18,6 +20,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/view/screen/dashboard/dashboard_page.dart';
 
 class CheckoutController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -33,25 +36,27 @@ class CheckoutController extends GetxController {
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   List<OrderItemResponseModel> selectedProductList = [];
 
+  ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
+  String? province;
+
+  DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
+  String? district;
+
   OrderProvider orderProvider = GetIt.I.get<OrderProvider>();
 
   int price = 0;
 
   bool isLoading = true;
   bool isLoadingImage = false;
+  bool isLoadingCheckout = false;
 
   String? orderId;
-  String? address;
-  String? provinceId;
-  String? districtId;
-  String? idUser;
 
   @override
   void onInit() {
     super.onInit();
-    sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value);
+    sl.get<SharedPreferenceHelper>().orderId.then((value) => orderId = value);
     loadSelectedProduct();
-    getValue();
   }
 
   ///
@@ -125,73 +130,85 @@ class CheckoutController extends GetxController {
   }
 
   ///
+  ///get address
+  ///
+  void getAddress() {}
+
+  ///
   ///on Done
   ///
   void onClickDoneBtn(
     BuildContext context,
   ) {
-    if (image != null) {
-      orderProvider.update(
-          data: OrderModel(
-              id: orderId,
-              idUser: idUser,
-              statusOrder: "1",
-              statusPayment: "2",
-              description: "đây là nội dung",
-              address: address,
-              idDistrict: districtId,
-              idProvince: provinceId,
-              discountPrice: "0",
-              idWarehouse: "614457d87fee3b5dc8c1c75e",
-              userAccept: "614748250c57f118c4a40689",
-              totalPrice: price.toString(),
-              imagePayment: imageUpdateModel!.data),
-          onSuccess: (value) {
-            Get.toNamed(AppRoutes.DASHBOARD);
-            sl.get<SharedPreferenceHelper>().removeOrderId();
-            showAnimatedDialog(
-                context,
-                const MyDialog(
-                  icon: Icons.check,
-                  title: "Hoàn tất",
-                  description: "Đặt hàng thành công",
-                ),
-                dismissible: false,
-                isFlip: true);
-            update();
-          },
-          onError: (error) {
-            print(error);
-            update();
-          });
-    } else {
-      Get.snackbar(
-        "Thất bại",
-        "Vui lòng tải lên hình ảnh thanh toán",
-        colorText: ColorResources.RED,
-        backgroundGradient: const LinearGradient(colors: [
-          Color(0xffffb8b3),
-          Color(0xffff9b94),
-          Color(0xffffb8b3),
-        ], begin: Alignment(2, -1), end: Alignment(1, 5)),
-      );
-    }
-  }
-
-  ///
-  ///get value from SharedPreferenceHelper
-  ///
-  void getValue() {
-    sl.get<SharedPreferenceHelper>().orderId.then((value) => orderId = value!);
-    sl.get<SharedPreferenceHelper>().address.then((value) => address = value!);
-    sl
-        .get<SharedPreferenceHelper>()
-        .provinceId
-        .then((value) => provinceId = value!);
-    sl
-        .get<SharedPreferenceHelper>()
-        .districtId
-        .then((value) => districtId = value!);
+    isLoadingCheckout = true;
     update();
+    if (image != null) {
+      sl.get<SharedPreferenceHelper>().userId.then((dataUserId) {
+        //get idUser from SharedPreferenceHelper
+        userProvider.find(
+            id: dataUserId!,
+            onSuccess: (value) {
+              //checkout
+              orderProvider.update(
+                  data: OrderModel(
+                      id: orderId,
+                      idUser: dataUserId,
+                      statusOrder: "1",
+                      statusPayment: "1",
+                      description: "Đơn hàng mới",
+                      address: value.addressOrder,
+                      idDistrict: Get.parameters['idDistrict'],
+                      idProvince: Get.parameters['idProvince'],
+                      discountPrice: "0",
+                      idWarehouse: "0",
+                      userAccept: "0",
+                      totalPrice: price.toString(),
+                      imagePayment: imageUpdateModel!.data),
+                  onSuccess: (value) {
+                    sl.get<SharedPreferenceHelper>().removeOrderId();
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                    Future.delayed(const Duration(seconds: 2)).then((value) {
+                      isLoadingCheckout = false;
+                      update();
+                    });
+                    showAnimatedDialog(
+                        context,
+                        const MyDialog(
+                          icon: Icons.check,
+                          title: "Hoàn tất",
+                          description: "Đặt hàng thành công",
+                        ),
+                        dismissible: false,
+                        isFlip: true);
+                  },
+                  onError: (error) {
+                    print(error);
+                    update();
+                  });
+            },
+            onError: (error) {
+              print(error);
+            });
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        isLoadingCheckout = false;
+
+        Get.snackbar(
+          "Thất bại",
+          "Vui lòng tải lên hình ảnh thanh toán",
+          colorText: ColorResources.RED,
+          backgroundGradient: const LinearGradient(colors: [
+            Color(0xffffb8b3),
+            Color(0xffff9b94),
+            Color(0xffffb8b3),
+          ], begin: Alignment(2, -1), end: Alignment(1, 5)),
+        );
+        update();
+      });
+    }
   }
 }

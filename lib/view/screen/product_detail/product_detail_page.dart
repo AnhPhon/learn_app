@@ -28,6 +28,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
             }
 
             return SingleChildScrollView(
+              controller: controller.scrollController,
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

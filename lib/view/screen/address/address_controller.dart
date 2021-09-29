@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/district_model.dart';
 import 'package:template/data/model/body/province_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/provider/district_provider.dart';
 import 'package:template/provider/province_provider.dart';
 import 'package:template/provider/user_provider.dart';
@@ -15,8 +16,7 @@ class AddressController extends GetxController {
   DistrictProvider districtProvider = GetIt.I.get<DistrictProvider>();
   UserProvider userProvider = GetIt.I.get<UserProvider>();
 
-  final wardController = TextEditingController();
-  final addressController = TextEditingController();
+  final addressTextController = TextEditingController();
 
   String? province;
   String? district;
@@ -30,72 +30,102 @@ class AddressController extends GetxController {
   List<String> provinceList = [];
   List<String> districtList = [];
 
-  bool isReloadData = false;
+  UserModel userModel = UserModel();
+
+  bool isLoading = true;
 
   @override
   void onClose() {
     super.onClose();
-    addressController.dispose();
-    wardController.dispose();
+    addressTextController.dispose();
   }
 
   @override
   void onInit() {
     super.onInit();
-    getProvince();
-    provinceModelList.clear();
-    districtModelList.clear();
+    getUserInfo();
+  }
+
+  ///
+  ///get user info
+  ///
+  void getUserInfo() {
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      userProvider.find(
+          id: value!,
+          onSuccess: (value) {
+            userModel = value;
+            //get province
+            getProvince();
+            if (value.address != "") {
+              addressTextController.text = value.addressOrder.toString();
+            }
+          },
+          onError: (error) {
+            print(error);
+          });
+    });
   }
 
   ///
   ///get province
   ///
   void getProvince() {
-    districtList.clear();
-    districtModelList.clear();
     provinceProvider.all(onSuccess: (value) {
       provinceModelList = value;
-      provinceModelList
-          .map((province) => provinceList.add(province.name!))
-          .toList();
+      value.map((item) {
+        if (item.id == userModel.provinceOrder) {
+          print("111");
+          province = item.name;
+          getDistrict();
+        } else {
+          isLoading = false;
+        }
+        provinceList.add(item.name!);
+      }).toList();
+
       update();
     }, onError: (error) {
       print(error);
-      update();
     });
+  }
+
+  ///
+  ///
+  ///
+  void setSelectedProvince(String? value) {
+    district = null;
+    districtList.clear();
+    province = value;
+    userModel.provinceOrder = provinceModelList[
+            provinceModelList.indexWhere((element) => element.name == value)]
+        .id;
+    getDistrict();
+    update();
   }
 
   ///
   ///get district
   ///
-  void getDistrict(String id) {
+  void getDistrict() {
     districtProvider.paginate(
         page: 1,
         limit: 100,
-        filter: "idProvince=$id",
+        filter: "idProvince=${userModel.provinceOrder}",
         onSuccess: (value) {
           districtModelList = value;
-          districtModelList
-              .map((district) => districtList.add(district.name!))
-              .toList();
+          value.map((item) {
+            if (item.id == userModel.districtOrder) {
+              district = item.name;
+            }
+            districtList.add(item.name!);
+          }).toList();
+          isLoading = false;
           update();
         },
         onError: (error) {
           print(error);
-          update();
         });
-  }
-
-  ///
-  ///set selected province
-  ///
-  void setSelectedProvince(String? value) {
-    province = value;
-    final indexProvince = provinceModelList
-        .indexWhere((element) => element.name!.trim() == value!.trim());
-    idProvince = provinceModelList[indexProvince].id;
-    getDistrict(idProvince!);
-    update();
   }
 
   ///
@@ -103,9 +133,9 @@ class AddressController extends GetxController {
   ///
   void setSelectedDistrict(String? value) {
     district = value;
-    final indexDistrict =
-        districtModelList.indexWhere((element) => element.name == value);
-    idDistrict = districtModelList[indexDistrict].id;
+    userModel.districtOrder = districtModelList[districtModelList
+            .indexWhere((element) => element.name!.trim() == value!.trim())]
+        .id;
     update();
   }
 
@@ -113,24 +143,46 @@ class AddressController extends GetxController {
   ///save address
   ///
   void changeAddress() {
-    isReloadData = true;
-    if (province!.isEmpty ||
-        district!.isEmpty ||
-        wardController.text.isEmpty ||
-        addressController.text.isEmpty) {
-      Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường",
-          snackPosition: SnackPosition.BOTTOM);
+    if (userModel.provinceOrder!.isEmpty ||
+        userModel.districtOrder!.isEmpty ||
+        addressTextController.text.isEmpty) {
+      Get.snackbar("Thất bại!", "Vui lòng nhập đủ các trường");
     } else {
-      print("addressController.text: ${addressController.text}");
-      sl.get<SharedPreferenceHelper>().saveProvinceId(idProvince!);
-      sl.get<SharedPreferenceHelper>().saveDistrictId(idDistrict!);
-      sl.get<SharedPreferenceHelper>().saveAddress(addressController.text);
+      print("addressController.text: ${addressTextController.text}");
 
       // update address
-      // userProvider.update(data: data, onSuccess: onSuccess, onError: onError);
 
+      userProvider.addressOrderUpdate(
+          data: UserModel(
+            id: userModel.id,
+            address: userModel.address,
+            avatar: userModel.avatar,
+            born: userModel.born,
+            citizenIdentification: userModel.citizenIdentification,
+            email: userModel.email,
+            phone: userModel.phone,
+            fullname: userModel.fullname,
+            idOptionalRole: userModel.idOptionalRole,
+            idRole: userModel.idRole,
+            idUser: userModel.idUser,
+            imageCitizenIdentification1: userModel.imageCitizenIdentification1,
+            imageCitizenIdentification: userModel.imageCitizenIdentification,
+            paymentProofImage: userModel.paymentProofImage,
+            sex: userModel.sex,
+            status: userModel.status,
+            username: userModel.username,
+            addressCurrent: userModel.addressCurrent,
+            addressOrder: addressTextController.text,
+            districtOrder: userModel.districtOrder,
+            provinceOrder: userModel.provinceOrder,
+          ),
+          onSuccess: (value) {},
+          onError: (error) {
+            print(error);
+          });
       //back to cart
-      Get.back(result: isReloadData);
+      Get.back(result: true);
+      update();
     }
   }
 }

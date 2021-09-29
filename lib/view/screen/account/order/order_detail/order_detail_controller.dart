@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_model.dart';
+import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/order_item_response_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
@@ -9,6 +10,7 @@ import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
 import 'package:template/provider/province_provider.dart';
+import 'package:template/provider/user_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class OrderDetailController extends GetxController {
@@ -17,10 +19,11 @@ class OrderDetailController extends GetxController {
   OrderModel orderModel = OrderModel();
   String? orderId;
 
-  ProductProvider productProvider = GetIt.I.get<ProductProvider>();
-
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
   List<OrderItemResponseModel> orderItemList = [];
+
+  UserProvider userProvider = GetIt.I.get<UserProvider>();
+  UserModel userModel = UserModel();
 
   ProvinceProvider provinceProvider = GetIt.I.get<ProvinceProvider>();
   String? province;
@@ -32,6 +35,8 @@ class OrderDetailController extends GetxController {
 
   String? userId;
   int? price;
+
+  String orderTime = '';
 
   bool isLoading = true;
 
@@ -47,10 +52,8 @@ class OrderDetailController extends GetxController {
   void onInit() {
     super.onInit();
     orderId = Get.parameters['idOrder'].toString();
-    getAddress();
     getOrderItem();
     getOrderInfo();
-    update();
   }
 
   ///
@@ -64,6 +67,7 @@ class OrderDetailController extends GetxController {
         onSuccess: (value) {
           orderItemList = value;
           getPrice();
+          update();
         },
         onError: (error) {
           print(error);
@@ -78,6 +82,9 @@ class OrderDetailController extends GetxController {
         id: orderId.toString(),
         onSuccess: (value) {
           orderModel = value;
+          getAddress(value.idProvince!, value.idDistrict!);
+          convertDateTime(value.updatedAt.toString());
+          update();
         },
         onError: (error) {
           print(error);
@@ -87,14 +94,13 @@ class OrderDetailController extends GetxController {
   ///
   ///convert datetime
   ///
-  String convertDateTime(String orderDate) {
-    final loadedTime = DateConverter.isoStringToLocalDateHMS(
+  void convertDateTime(String orderDate) {
+    orderTime = DateConverter.isoStringToLocalDateHMS(
         orderDate.replaceAll("T", " ").substring(0, orderDate.length - 1));
-    return loadedTime;
   }
 
   ///
-  ///get price
+  ///get price total
   ///
   void getPrice() {
     for (var i = 0; i < orderItemList.length; i++) {
@@ -108,29 +114,26 @@ class OrderDetailController extends GetxController {
   ///
   ///get address from iUser
   ///
-  void getAddress() {
-    sl.get<SharedPreferenceHelper>().address.then((value) => address = value);
-    sl.get<SharedPreferenceHelper>().provinceId.then((value) {
-      provinceProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            province = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    sl.get<SharedPreferenceHelper>().districtId.then((value) {
-      districtProvider.find(
-          id: value.toString(),
-          onSuccess: (value) {
-            district = value.name.toString();
-          },
-          onError: (error) {
-            print(error);
-          });
-    });
-    update();
+  void getAddress(String provinceId, String districtId) {
+    //get province
+    provinceProvider.find(
+        id: provinceId,
+        onSuccess: (value) {
+          province = value.name;
+          update();
+        },
+        onError: (error) {
+          print(error);
+        });
+    districtProvider.find(
+        id: districtId,
+        onSuccess: (value) {
+          district = value.name;
+          update();
+        },
+        onError: (error) {
+          print(error);
+        });
   }
 
   // void onHistoryClick() {

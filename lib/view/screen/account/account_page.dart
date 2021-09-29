@@ -150,8 +150,10 @@ class AccountPage extends GetView<AccountController> {
                                       ],
                                     ),
                                     Positioned(
-                                      right: 25,
-                                      bottom: 30,
+                                      right: DeviceUtils.getScaledSize(
+                                          context, 0.005),
+                                      bottom: DeviceUtils.getScaledSize(
+                                          context, 0.076),
                                       child: GestureDetector(
                                         onTap: () {
                                           controller.onEditInfoClick();
@@ -162,10 +164,11 @@ class AccountPage extends GetView<AccountController> {
                                               color: Colors.green,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(50))),
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.edit,
                                             color: Colors.white,
-                                            size: 18,
+                                            size: DeviceUtils.getScaledSize(
+                                                context, 0.045),
                                           ),
                                         ),
                                       ),
@@ -224,21 +227,45 @@ class AccountPage extends GetView<AccountController> {
                               ],
                             )),
 
+                        //cart
+                        GestureDetector(
+                          onTap: () {
+                            controller.onCartClick();
+                          },
+                          child: _containerBox(context,
+                              child: _row3(
+                                context,
+                                text1: "Giỏ hàng",
+                                text2: "Chi tiết",
+                              )),
+                        ),
+
                         //rules
-                        _containerBox(context,
-                            child: _row3(context,
+                        GestureDetector(
+                          onTap: () {
+                            controller.onRulesClick();
+                          },
+                          child: _containerBox(context,
+                              child: _row3(
+                                context,
                                 text1: "Điều khoản",
-                                text2: "Chi tiết", onTap: () {
-                              controller.onRulesClick();
-                            })),
+                                text2: "Chi tiết",
+                              )),
+                        ),
 
                         //share
-                        _containerBox(
-                          context,
-                          child: _row3(context, text1: "Chia sẻ", text2: "",
-                              onTap: () {
+                        GestureDetector(
+                          onTap: () {
                             Share.share('https://ytp.vn');
-                          }),
+                          },
+                          child: _containerBox(
+                            context,
+                            child: _row3(
+                              context,
+                              text1: "Chia sẻ",
+                              text2: "",
+                            ),
+                          ),
                         ),
 
                         //password_change

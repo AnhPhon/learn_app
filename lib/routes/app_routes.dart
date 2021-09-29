@@ -19,7 +19,7 @@ class AppRoutes {
   static const String CHARTS = '/charts';
   static const String INTRO = '/intro';
   static const String NEWS_DETAIL = '/news_detail';
-  static const String CART = '/cart';
+  static const String CARTS = '/carts';
   static const String GROUP = '/group';
   static const String CHECKOUT = '/checkout';
   static const String ADDRESS = '/address';

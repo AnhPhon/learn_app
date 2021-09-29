@@ -97,9 +97,9 @@ class CartPage extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 9,
-                child: controller.address == null ||
-                        controller.district == null ||
-                        controller.province == null
+                child: controller.userModel!.addressOrder == "" ||
+                        controller.userModel!.districtOrder == "" ||
+                        controller.userModel!.provinceOrder == ""
                     ? _shippingWidget(context,
                         icon: const Icon(
                           Icons.location_on_outlined,
@@ -114,7 +114,7 @@ class CartPage extends GetView<CartController> {
                         ),
                         text1: "Địa chỉ ship",
                         text2:
-                            "${controller.address}, ${controller.district}, ${controller.province}"),
+                            "${controller.userModel!.addressOrder}, ${controller.districtName}, ${controller.provinceName}"),
               ),
               Expanded(
                 child: GestureDetector(
@@ -138,46 +138,6 @@ class CartPage extends GetView<CartController> {
       ),
     );
   }
-
-  ///
-  /// input quanlity
-  ///
-  // Widget inputWidget({required BuildContext context, required CartController controller, required TextEditingController textController, required FocusNode focusNode}) {
-  //   return SizedBox(
-  //     height: 35,
-  //     width: 35,
-  //     child: TextField(
-  //       focusNode: controller.focusNode,
-  //       // autofillHints: [hint],
-  //       textInputAction: TextInputAction.done,
-  //       // textAlignVertical: TextAlignVertical.center,
-  //       textAlign: TextAlign.center,
-  //       controller: controller.qualityController,
-  //       cursorColor: ColorResources.PRIMARY,
-  //       decoration: InputDecoration(
-  //         isDense: true,
-  //         contentPadding: EdgeInsets.symmetric(
-  //             horizontal: DeviceUtils.getScaledSize(context, 0.015),
-  //             vertical: DeviceUtils.getScaledSize(context, 0.02)),
-  //         border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(5),
-  //         ),
-  //         focusedBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-  //         enabledBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.GREY)),
-  //         disabledBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //             borderSide: const BorderSide(color: ColorResources.GREY)),
-  //         // hintText: "Tài khoản",
-  //         filled: true,
-  //         fillColor: Colors.transparent,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   ///
   ///icons quality
@@ -472,7 +432,6 @@ class CartPage extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
     const String title = "Giỏ hàng";
 
     return Scaffold(

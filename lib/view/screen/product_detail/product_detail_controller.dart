@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
 import 'package:template/data/model/body/order_model.dart';
 import 'package:template/data/model/body/product_model.dart';
-import 'package:template/data/model/response/order_item_response_model.dart';
 import 'package:template/provider/order_item_provider.dart';
 import 'package:template/provider/order_provider.dart';
 import 'package:template/provider/product_provider.dart';
@@ -14,6 +13,9 @@ import 'package:template/utils/color_resources.dart';
 
 class ProductDetailController extends GetxController {
   GetIt sl = GetIt.instance;
+
+  //initialize scroll controller
+  ScrollController? scrollController;
 
   ProductProvider productProvider = GetIt.I.get<ProductProvider>();
   OrderItemProvider orderItemProvider = GetIt.I.get<OrderItemProvider>();
@@ -36,13 +38,14 @@ class ProductDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    scrollController = ScrollController()..addListener(() {});
 
     // get id product from parameter
     idProduct = Get.parameters['productId'].toString();
     print('phuong $idProduct');
 
     // load id user
-    idUser = sl.get<SharedPreferenceHelper>().userId.toString();
+    sl.get<SharedPreferenceHelper>().userId.then((value) => idUser = value!);
 
     // get detail product by id
     getProductFromId(idProduct);
@@ -52,6 +55,12 @@ class ProductDetailController extends GetxController {
 
     // load quantity cart
     loadQuanlityCart();
+  }
+
+  @override
+  void dispose() {
+    scrollController!.dispose(); // dispose the controller
+    super.dispose();
   }
 
   ///
@@ -135,8 +144,8 @@ class ProductDetailController extends GetxController {
         // nếu chưa có thì tạo ra 1 order sau đó lưu id lại
         final OrderModel orderModel = OrderModel();
         orderModel.idUser = idUser;
-        orderModel.userAccept = ' ';
-        orderModel.idWarehouse = ' ';
+        orderModel.userAccept = '0';
+        orderModel.idWarehouse = '0';
         orderModel.description = 'Đơn đặt hàng mới';
         orderModel.statusOrder = '1';
         orderModel.statusPayment = '1';
@@ -208,14 +217,13 @@ class ProductDetailController extends GetxController {
     isLoadingMore = true;
     update();
   }
- 
 
   ///
   ///go to cart page
   ///
   void onCartClick() {
     sl.get<SharedPreferenceHelper>().orderId.then((value) {
-      Get.toNamed("${AppRoutes.CART}?idOrder=$value")!.then((value) {
+      Get.toNamed("${AppRoutes.CARTS}?idOrder=$value")!.then((value) {
         if (value == true) {
           loadQuanlityCart();
         }
@@ -227,8 +235,16 @@ class ProductDetailController extends GetxController {
   ///on Click more product
   ///
   void onClickMoreProduct(int index) {
-    update();
+    //back to top after click more product
+    scrollToTop();
+
+    //gán lại idProduct sau khi click vào sản phẩm tương tự
+    idProduct = productModelList[index].id!;
+
+    // Load sản phẩm từ sản phẩm tương tự
     getProductFromId(productModelList[index].id!);
+
+    //reload lại list sản phẩm tương tự, remove sản phẩm đã chọn khỏi list
     reloadMoreProduct(productModelList[index].id!);
   }
 
@@ -248,12 +264,21 @@ class ProductDetailController extends GetxController {
 
           //reload list
           productModelList = value;
+          scrollToTop();
           update();
         },
         onError: (error) {
           print(error);
           update();
         });
+  }
+
+  ///
+  ///scroll to top when click other product
+  ///
+  void scrollToTop() {
+    scrollController!.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.linear);
   }
 
   ///

@@ -87,5 +87,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BannerProvider());
 
   // Provider
-  sl.registerFactory(() => AuthProvider()); 
+  sl.registerFactory(() => AuthProvider());
 }
