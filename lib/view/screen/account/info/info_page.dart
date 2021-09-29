@@ -212,7 +212,7 @@ class EditInfoPage extends GetView<EditInfoController> {
   Widget _buttonUpdate(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // controller.onBtnUpdateClick(context);
+        controller.onBtnUpdateClick(context);
       },
       child: Container(
         margin: EdgeInsets.symmetric(

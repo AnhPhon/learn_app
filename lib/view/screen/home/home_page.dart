@@ -257,10 +257,10 @@ class HomePage extends GetView<HomeController> {
   ///
   Widget _imgProduct(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: controller.banner.length,
+      itemCount: controller.bannerList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-        return Image.asset(
-          controller.banner[itemIndex].toString(),
+        return Image.network(
+          controller.bannerList[itemIndex].imageUrl!,
           fit: BoxFit.fill,
           width: 1000,
         );
