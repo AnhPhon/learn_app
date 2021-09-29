@@ -18,6 +18,9 @@ class UserModel {
   String? paymentProofImage;
   String? imageCitizenIdentification;
   String? imageCitizenIdentification1;
+  String? districtOrder;
+  String? provinceOrder;
+  String? addressOrder;
 
   UserModel(
       {this.id,
@@ -38,7 +41,10 @@ class UserModel {
       this.addressCurrent,
       this.paymentProofImage,
       this.imageCitizenIdentification,
-      this.imageCitizenIdentification1});
+      this.imageCitizenIdentification1,
+      this.districtOrder,
+      this.provinceOrder,
+      this.addressOrder});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -61,6 +67,9 @@ class UserModel {
     imageCitizenIdentification = json['imageCitizenIdentification'].toString();
     imageCitizenIdentification1 =
         json['imageCitizenIdentification1'].toString();
+    districtOrder = json['districtOrder'].toString();
+    provinceOrder = json['provinceOrder'].toString();
+    addressOrder = json['addressOrder'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -84,6 +93,10 @@ class UserModel {
     data['paymentProofImage'] = paymentProofImage;
     data['imageCitizenIdentification'] = imageCitizenIdentification;
     data['imageCitizenIdentification1'] = imageCitizenIdentification1;
+    data['districtOrder'] = districtOrder;
+    data['provinceOrder'] = provinceOrder;
+    data['addressOrder'] = addressOrder;
+
     return data;
   }
 }

@@ -84,5 +84,5 @@ Future<void> init() async {
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider
-  sl.registerFactory(() => AuthProvider()); 
+  sl.registerFactory(() => AuthProvider());
 }

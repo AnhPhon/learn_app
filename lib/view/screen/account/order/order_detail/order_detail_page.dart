@@ -59,10 +59,7 @@ class OrderDetailPage extends GetView<OrderDetailController> {
         children: [
           rowText(text1: "Id", text2: controller.orderId.toString()),
           Dimensions().paddingDivider(context),
-          rowText(
-              text1: "Ngày đặt hàng",
-              text2: controller
-                  .convertDateTime(controller.orderModel.updatedAt.toString())),
+          rowText(text1: "Ngày đặt hàng", text2: controller.orderTime),
           Dimensions().paddingDivider(context),
           rowText(
               text1: "Trạng thái",

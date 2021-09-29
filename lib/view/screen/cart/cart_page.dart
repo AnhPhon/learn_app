@@ -97,24 +97,29 @@ class CartPage extends GetView<CartController> {
             children: [
               Expanded(
                 flex: 9,
-                child: controller.address == null ||
-                        controller.district == null ||
-                        controller.province == null
-                    ? _shippingWidget(context,
-                        icon: const Icon(
-                          Icons.location_on_outlined,
-                          color: ColorResources.PRIMARY,
-                        ),
-                        text1: "Địa chỉ ship",
-                        text2: "Vui lòng nhập địa chỉ")
-                    : _shippingWidget(context,
-                        icon: const Icon(
-                          Icons.location_on_outlined,
-                          color: ColorResources.PRIMARY,
-                        ),
-                        text1: "Địa chỉ ship",
-                        text2:
-                            "${controller.address}, ${controller.district}, ${controller.province}"),
+                child:
+                    // controller.userModel!.addressOrder == null ||
+                    //         controller.userModel!.districtOrder== null ||
+                    //         controller.userModel!.provinceOrder == null
+                    controller.address == null ||
+                            controller.district == null ||
+                            controller.province == null
+                        ? _shippingWidget(context,
+                            icon: const Icon(
+                              Icons.location_on_outlined,
+                              color: ColorResources.PRIMARY,
+                            ),
+                            text1: "Địa chỉ ship",
+                            text2: "Vui lòng nhập địa chỉ")
+                        : _shippingWidget(context,
+                            icon: const Icon(
+                              Icons.location_on_outlined,
+                              color: ColorResources.PRIMARY,
+                            ),
+                            text1: "Địa chỉ ship",
+                            text2:
+                                "${controller.address}, ${controller.district}, ${controller.province}"),
+                // "${controller.userModel!.addressOrder}, ${controller.userModel!.districtOrder}, ${controller.userModel!.provinceOrder}"),
               ),
               Expanded(
                 child: GestureDetector(

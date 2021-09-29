@@ -76,8 +76,8 @@ class ChartsPage extends GetView<ChartsController> {
                           ),
                           //2nd
                           Positioned(
-                            left: 50,
-                            top: 50,
+                            left: DeviceUtils.getScaledSize(context, 0.127),
+                            top: DeviceUtils.getScaledSize(context, 0.127),
                             child: _circleAvatar(context,
                                 imgUrl: controller
                                     .personalHonorList[1].idUser!.avatar!,
@@ -85,8 +85,8 @@ class ChartsPage extends GetView<ChartsController> {
                           ),
 
                           Positioned(
-                            left: 20,
-                            bottom: 140,
+                            left: DeviceUtils.getScaledSize(context, 0.05),
+                            bottom: DeviceUtils.getScaledSize(context, 0.356),
                             child: Text(
                                 controller
                                     .personalHonorList[1].idUser!.fullname!,
@@ -96,8 +96,8 @@ class ChartsPage extends GetView<ChartsController> {
 
                           //1st
                           Positioned(
-                            left: 160,
-                            top: 5,
+                            left: DeviceUtils.getScaledSize(context, 0.407),
+                            top: DeviceUtils.getScaledSize(context, 0.012),
                             child: Stack(
                               children: [
                                 _circleAvatar(context,
@@ -113,8 +113,8 @@ class ChartsPage extends GetView<ChartsController> {
                             ),
                           ),
                           Positioned(
-                            left: 140,
-                            top: 100,
+                            left: DeviceUtils.getScaledSize(context, 0.356),
+                            top: DeviceUtils.getScaledSize(context, 0.254),
                             child: Text(
                                 controller
                                     .personalHonorList[0].idUser!.fullname!,
@@ -124,16 +124,16 @@ class ChartsPage extends GetView<ChartsController> {
 
                           //3rd
                           Positioned(
-                            right: 50,
-                            top: 50,
+                            right: DeviceUtils.getScaledSize(context, 0.127),
+                            top: DeviceUtils.getScaledSize(context, 0.127),
                             child: _circleAvatar(context,
                                 imgUrl: controller
                                     .personalHonorList[2].idUser!.avatar!,
                                 rank: 3),
                           ),
                           Positioned(
-                            right: 35,
-                            top: 140,
+                            right: DeviceUtils.getScaledSize(context, 0.089),
+                            top: DeviceUtils.getScaledSize(context, 0.356),
                             child: Text(
                                 controller
                                     .personalHonorList[2].idUser!.fullname!,

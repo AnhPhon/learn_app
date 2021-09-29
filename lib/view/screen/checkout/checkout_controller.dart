@@ -131,24 +131,31 @@ class CheckoutController extends GetxController {
     BuildContext context,
   ) {
     if (image != null) {
+      // print(orderId);
+      // print(idUser);
+      // print(address);
+      // print(districtId);
+      // print(provinceId);
+      // print(imageUpdateModel!.data);
+      // print(price.toString());
       orderProvider.update(
           data: OrderModel(
               id: orderId,
               idUser: idUser,
               statusOrder: "1",
               statusPayment: "2",
-              description: "đây là nội dung",
+              description: " ",
               address: address,
               idDistrict: districtId,
               idProvince: provinceId,
               discountPrice: "0",
-              idWarehouse: "614457d87fee3b5dc8c1c75e",
-              userAccept: "614748250c57f118c4a40689",
+              idWarehouse: "0",
+              userAccept: "0",
               totalPrice: price.toString(),
               imagePayment: imageUpdateModel!.data),
           onSuccess: (value) {
-            Get.toNamed(AppRoutes.DASHBOARD);
             sl.get<SharedPreferenceHelper>().removeOrderId();
+            Get.offAllNamed(AppRoutes.DASHBOARD);
             showAnimatedDialog(
                 context,
                 const MyDialog(

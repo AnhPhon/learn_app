@@ -178,20 +178,31 @@ class AccountPage extends GetView<AccountController> {
                             )),
 
                         //rules
-                        _containerBox(context,
-                            child: _row3(context,
+                        GestureDetector(
+                          onTap: () {
+                            controller.onRulesClick();
+                          },
+                          child: _containerBox(context,
+                              child: _row3(
+                                context,
                                 text1: "Điều khoản",
-                                text2: "Chi tiết", onTap: () {
-                              controller.onRulesClick();
-                            })),
+                                text2: "Chi tiết",
+                              )),
+                        ),
 
                         //share
-                        _containerBox(
-                          context,
-                          child: _row3(context, text1: "Chia sẻ", text2: "",
-                              onTap: () {
+                        GestureDetector(
+                          onTap: () {
                             Share.share('https://ytp.vn');
-                          }),
+                          },
+                          child: _containerBox(
+                            context,
+                            child: _row3(
+                              context,
+                              text1: "Chia sẻ",
+                              text2: "",
+                            ),
+                          ),
                         ),
 
                         //logout

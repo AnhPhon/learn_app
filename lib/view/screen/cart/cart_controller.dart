@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/order_item_model.dart';
@@ -79,6 +80,8 @@ class CartController extends GetxController {
             print(error);
             update();
           });
+    } else {
+      orderItemProductList = [];
     }
   }
 
@@ -252,10 +255,25 @@ class CartController extends GetxController {
   ///thanh toán
   ///
   void onCheckoutClick() {
+    // if (userModel!.addressOrder == '' ||
+    //     userModel!.districtOrder == '' ||
+    //     userModel!.provinceOrder == '') {
+    //   /// show snackbar
+    //   Get.snackbar(
+    //     "Vui lòng kiểm tra lại", // title
+    //     "Nhập địa chỉ nhận hàng", // message
+    //     backgroundColor: const Color(0xffFFEBEE),
+    //     icon: const Icon(Icons.error_outline),
+    //     shouldIconPulse: true,
+    //     isDismissible: true,
+    //     duration: const Duration(seconds: 3),
+    //   );
+    // } else {
     sl
         .get<SharedPreferenceHelper>()
         .orderId
         .then((value) => Get.toNamed("${AppRoutes.CHECKOUT}?idOrder=$value"));
+    // }
   }
 
   ///
