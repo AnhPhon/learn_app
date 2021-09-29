@@ -104,32 +104,78 @@ class AccountPage extends GetView<AccountController> {
                   child: Align(
                     child: Column(
                       children: [
-                        //image
                         Container(
-                          margin: EdgeInsets.only(
-                              bottom: DeviceUtils.getScaledSize(context, 0.02)),
-                          height: DeviceUtils.getScaledSize(context, 0.183),
-                          width: DeviceUtils.getScaledSize(context, 0.183),
-                          child: ClipOval(
-                            child: FadeInImage.assetNetwork(
-                                placeholder: Images.placeholder,
-                                image: controller.userModel.avatar.toString(),
-                                fit: BoxFit.cover,
-                                imageErrorBuilder: (c, o, s) =>
-                                    const CircleAvatar(
-                                        backgroundImage:
-                                            AssetImage(Images.placeholder))),
+                          child: Stack(
+                            children: [
+                              Container(
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        //image
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              bottom: DeviceUtils.getScaledSize(
+                                                  context, 0.02)),
+                                          height: DeviceUtils.getScaledSize(
+                                              context, 0.183),
+                                          width: DeviceUtils.getScaledSize(
+                                              context, 0.183),
+                                          child: ClipOval(
+                                            child: FadeInImage.assetNetwork(
+                                                placeholder: Images.placeholder,
+                                                image: controller
+                                                    .userModel.avatar
+                                                    .toString(),
+                                                fit: BoxFit.cover,
+                                                imageErrorBuilder: (c, o, s) =>
+                                                    const CircleAvatar(
+                                                        backgroundImage:
+                                                            AssetImage(Images
+                                                                .placeholder))),
+                                          ),
+                                        ),
+
+                                        //name
+                                        Text(
+                                          controller.userModel.fullname
+                                              .toString(),
+                                          style:
+                                              Dimensions.fontSizeStyle16w600(),
+                                        ),
+
+                                        SizedBox(
+                                            height: DeviceUtils.getScaledSize(
+                                                context, 0.02)),
+                                      ],
+                                    ),
+                                    Positioned(
+                                      right: 25,
+                                      bottom: 30,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          controller.onEditInfoClick();
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: const BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(50))),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                         ),
-
-                        //name
-                        Text(
-                          controller.userModel.fullname.toString(),
-                          style: Dimensions.fontSizeStyle16w600(),
-                        ),
-
-                        SizedBox(
-                            height: DeviceUtils.getScaledSize(context, 0.02)),
 
                         //ID
                         Text(
@@ -138,7 +184,8 @@ class AccountPage extends GetView<AccountController> {
                         ),
 
                         SizedBox(
-                            height: DeviceUtils.getScaledSize(context, 0.04)),
+                          height: DeviceUtils.getScaledSize(context, 0.04),
+                        ),
 
                         //my order
                         _containerBox(context,
@@ -217,6 +264,13 @@ class AccountPage extends GetView<AccountController> {
                             ),
                           ),
                         ),
+
+                        //password_change
+                        _containerBox(context,
+                            child: _row3(context,
+                                text1: "Đổi mật khẩu", text2: "", onTap: () {
+                              controller.onChangePasswordClick();
+                            })),
 
                         //logout
                         GestureDetector(

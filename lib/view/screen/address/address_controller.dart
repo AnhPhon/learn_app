@@ -152,7 +152,7 @@ class AddressController extends GetxController {
 
       // update address
 
-      userProvider.update(
+      userProvider.addressOrderUpdate(
           data: UserModel(
             id: userModel.id,
             address: userModel.address,

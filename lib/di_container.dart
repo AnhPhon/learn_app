@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/model/body/user_model.dart';
+import 'package:template/data/repository/banner_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/data/repository/category_news_repository.dart';
 import 'package:template/data/repository/category_repository.dart';
@@ -19,6 +20,7 @@ import 'package:template/data/repository/auth_repository.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/provider/banner_provider.dart';
 import 'package:template/provider/category_news_provider.dart';
 import 'package:template/provider/category_provider.dart';
 import 'package:template/provider/context_provider.dart';
@@ -64,6 +66,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UserRepository());
   sl.registerLazySingleton(() => ImageUpdateRepository());
   sl.registerLazySingleton(() => PersonalHonorRepository());
+  sl.registerLazySingleton(() => BannerRepository());
   sl.registerLazySingleton(() => ContextRepository());
 
   // Provider
@@ -81,7 +84,7 @@ Future<void> init() async {
   sl.registerFactory(() => PersonalHonorProvider());
   sl.registerFactory(() => ContextProvider());
   sl.registerFactory(() => OrderItemProvider());
-  // sl.registerLazySingleton(() => AuthRepository());
+  sl.registerLazySingleton(() => BannerProvider());
 
   // Provider
   sl.registerFactory(() => AuthProvider());
