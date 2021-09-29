@@ -19,20 +19,18 @@ class SplashController extends GetxController
       final bool? isFirst = await sl.get<SharedPreferenceHelper>().isFirst;
       final bool? isLogin = await sl.get<SharedPreferenceHelper>().isLogin;
 
-      Get.offNamed(AppRoutes.LOGIN);
-
-      // // is first time
-      // if (isFirst == null) {
-      //   Get.offNamed(AppRoutes.INTRO);
-      // } else {
-      //   // check if is login
-      //   if (isLogin != null && isLogin) {
-      //     Get.offNamed(AppRoutes.DASHBOARD);
-      //   } else {
-      //     // is not login
-      //     Get.offNamed(AppRoutes.LOGIN);
-      //   }
-      // }
+      // is first time
+      if (isFirst == null) {
+        Get.offNamed(AppRoutes.INTRO);
+      } else {
+        // check if is login
+        if (isLogin != null && isLogin) {
+          Get.offNamed(AppRoutes.DASHBOARD);
+        } else {
+          // is not login
+          Get.offNamed(AppRoutes.LOGIN);
+        }
+      }
     });
 
     super.onInit();
