@@ -44,7 +44,6 @@ class AppRoutes {
   static const String EDIT_INFO = '/edit_info';
 
   //customer
-  static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V1_HOME = '/v1_home';
   static const String V1_PRODUCT = '/v1_product';
   static const String V1_NEWS = '/v1_news';
@@ -54,7 +53,8 @@ class AppRoutes {
   static const String V1_BILL_DETAIL = '/v1_bill_detail';
   static const String V1_PAYMENT_METHOD = '/v1_payment_method';
 
-  //
+  // dashboard
+  static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V2_DASHBOARD = '/v2_dashboard';
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
