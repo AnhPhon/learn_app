@@ -27,33 +27,18 @@ class HomePage extends GetView<HomeController> {
       body: GetBuilder<HomeController>(
           init: HomeController(),
           builder: (HomeController controller) {
-            if (controller.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+            // if (controller.isLoading) {
+            //   return const Center(
+            //     child: CircularProgressIndicator(),
+            //   );
+            // }
 
             return Container(
               padding: EdgeInsets.zero,
               margin: EdgeInsets.zero,
               color: const Color(0xFFF5F5FA),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //avatar background user
-                    _avatarBackgroundUser(context),
-
-                    // Đội nhóm
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-                    _groupWidget(context,
-                        DeviceUtils.getScaledSize(context, 0.178), controller),
-
-                    // Danh mục
-                    SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
-                    _categoryWidget(context,
-                        DeviceUtils.getScaledSize(context, 0.178), controller)
-                  ],
-                ),
+              child: const SingleChildScrollView(
+                child: Text("hello"),
               ),
             );
           }),
