@@ -11,7 +11,7 @@ class V4AccountPage extends GetView<V4AccountController> {
           init: V4AccountController(),
           builder: (V4AccountController controller) {
             return const Center(
-              child: Text("Home Page"),
+              child: Text("Account Page"),
             );
           }),
     );

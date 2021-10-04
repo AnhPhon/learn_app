@@ -18,8 +18,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // usernameController.text = 'ytp3001';
-    // passwordController.text = 'password';
+    usernameController.text = '4';
+    passwordController.text = '';
     super.onInit();
   }
 
@@ -27,7 +27,16 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    Get.toNamed(AppRoutes.V4_DASHBOARD);
+    if (usernameController.text == '1') {
+      Get.toNamed(AppRoutes.V1_DASHBOARD);
+    } else if (usernameController.text == '2') {
+      Get.toNamed(AppRoutes.V2_DASHBOARD);
+    } else if (usernameController.text == '3') {
+      Get.toNamed(AppRoutes.V3_DASHBOARD);
+    } else if (usernameController.text == '4') {
+      Get.toNamed(AppRoutes.V4_DASHBOARD);
+    } else {}
+
     // // validate infomation username password
     // if (usernameController.text == '' || passwordController.text == '') {
     //   Get.snackbar(
