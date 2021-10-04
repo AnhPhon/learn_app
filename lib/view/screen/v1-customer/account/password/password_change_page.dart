@@ -11,7 +11,7 @@ class PasswordChangePage extends GetView<PasswordChangeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar().customAppBar(title: "Chỉnh sửa mật khẩu"),
+      appBar: AppBarWidget(title: "Chỉnh sửa mật khẩu"),
       body: SingleChildScrollView(
         child: GetBuilder<PasswordChangeController>(
           init: PasswordChangeController(),

@@ -1,5 +1,4 @@
 class Images {
-  static const String splash_logo = 'assets/images/logo_splash.png';
   static const String logo_image = 'assets/images/logo.png';
   static const String no_internet = 'assets/images/opps_internet.png';
   static const String no_data = 'assets/images/no_data.png';
@@ -19,8 +18,9 @@ class Images {
   static const String banner2 = 'assets/images/banner2.jpg';
   static const String banner3 = 'assets/images/banner3.jpeg';
   static const String register_success = 'assets/images/register_success.jpg';
-  static const String placeholder = 'assets/images/placeholder.jpg';
 
   // v4-employee
   static const String V4AvatarHome = 'assets/images/avatar.png';
+  static const String placeholder = 'assets/images/placeholder.jpg';
+  static const String toolbar_background = 'assets/images/appbar.png';
 }

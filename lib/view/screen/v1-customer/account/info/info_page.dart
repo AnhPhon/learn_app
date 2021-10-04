@@ -11,7 +11,7 @@ class EditInfoPage extends GetView<EditInfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar().customAppBar(title: "Chỉnh sửa thông tin cá nhận"),
+      appBar: AppBarWidget(title: "Chỉnh sửa thông tin cá nhân"),
       body: SingleChildScrollView(
           child: GetBuilder<EditInfoController>(
               init: EditInfoController(),

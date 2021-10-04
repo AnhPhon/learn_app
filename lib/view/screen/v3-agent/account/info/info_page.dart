@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/custom_appbar.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'info_controller.dart';
 
 class EditInfoPage extends GetView<EditInfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar().customAppBar(title: "Chỉnh sửa thông tin cá nhận"),
+      appBar: AppBarWidget(title: "Chỉnh sửa thông tin cá nhân"),
       body: SingleChildScrollView(
           child: GetBuilder<EditInfoController>(
               init: EditInfoController(),
