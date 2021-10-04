@@ -6,6 +6,10 @@ import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.d
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_binding.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 
@@ -40,6 +44,22 @@ class AppPages {
   GetPage(
     name: AppRoutes.V1OBLIGATIONS,
     page: () => RightsAndObligations(),
+  ),
+  ///
+  /// Thông báo
+  /// 
+  GetPage(
+    name: AppRoutes.V1NOTIFICATION,
+    page: () => V1NotificationPage(),
+    binding: V1NotificationBinding()
+  ),
+  //// 
+  /// Phản hồi dịch vụ thường xuyên click từ thông báo
+  ///
+  GetPage(
+    name: AppRoutes.V1ORDERFEEDBACKCONTRACTORS,
+    page: () => V1OrderFeedBackPage(),
+    binding: V1OrderFeedBackBinding()
   ),
 
     // builder

@@ -13,10 +13,10 @@ class DrawerController extends GetxController{
 
     menu1 = [
       Menu(title: 'Giới thiệu tóm tắt cơ chế hoạt động', onPress:()=> onPushName(AppRoutes.V1ABOUT)),
-      Menu(title: 'Quyền và nghĩa vụ của FSS', onPress: (){}),
-      Menu(title: 'Quy trình sử dụng vào giao dịch', onPress: (){}),
-      Menu(title: 'Điều khoản và chính sách', onPress: (){}),
-      Menu(title: 'Lợi ích khi tham gia FSS', onPress: (){}),
+      Menu(title: 'Quyền và nghĩa vụ của FSS', onPress: ()=> onPushName(AppRoutes.V1OBLIGATIONS)),
+      Menu(title: 'Quy trình sử dụng vào giao dịch', onPress: ()=> onPushName(AppRoutes.V1USAGEPROCEDURE)),
+      Menu(title: 'Điều khoản và chính sách', onPress: ()=> onPushName(AppRoutes.V1TERMANDPOLICY)),
+      Menu(title: 'Lợi ích khi tham gia FSS', onPress: ()=> onPushName(AppRoutes.V1BENEFITS)),
       Menu(title: 'Đánh giá', onPress: (){}),
       Menu(title: 'Đăng xuất', onPress: (){}),
     ];
