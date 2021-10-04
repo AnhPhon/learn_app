@@ -2,31 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/account/account_page.dart';
-import 'package:template/view/screen/home/home_page.dart';
-import 'package:template/view/screen/leaderboard/leaderboard_page.dart';
-import 'package:template/view/screen/news/news_page.dart';
+import 'package:template/view/screen/v1-customer/dashboard/dashboard_controller.dart';
+import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v1-customer/news/news_page.dart';
+import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/project/project_page.dart';
 
-import 'dashboard_controller.dart';
-
-class DashboardPage extends StatelessWidget {
+class V1DashboardPage extends StatelessWidget {
   ///
   /// build method (override)
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(
-      init: DashboardController(),
+    return GetBuilder<V1DashboardController>(
+      init: V1DashboardController(),
       builder: (controller) {
         return SafeArea(
           child: Scaffold(
             body: IndexedStack(
               index: controller.tabIndex,
               children: [
-                HomePage(),
-                LeaderBoardPage(),
-                NewsPage(),
-                AccountPage(),
+                V1HomePage(),
+                V1ProjectPage(),
+                V1NewsPage(),
+                V1ProfilePage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -43,8 +42,8 @@ class DashboardPage extends StatelessWidget {
                   label: 'Trang chủ',
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.chart_bar,
-                  label: 'Bảng xếp hạng',
+                  icon: CupertinoIcons.bag_fill,
+                  label: 'Dự án',
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.news,

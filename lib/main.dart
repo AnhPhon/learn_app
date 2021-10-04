@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      initialRoute: AppRoutes.DASHBOARD,
+      initialRoute: AppRoutes.V1_DASHBOARD,
       initialBinding: AppBinding(),
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
