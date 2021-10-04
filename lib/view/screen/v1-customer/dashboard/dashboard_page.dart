@@ -6,12 +6,7 @@ import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/v1-customer/entertainment/entertainment_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
-import 'package:template/view/screen/v1-customer/project/home_page.dart';
-import 'package:template/view/screen/v4-employee/account/account_page.dart';
-import 'package:template/view/screen/v4-employee/home/home_page.dart';
-import 'package:template/view/screen/v4-employee/news/news_page.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
-import 'package:template/view/screen/v4-employee/report/report_page.dart';
+import 'package:template/view/screen/v1-customer/project/project_page.dart';
 
 import 'dashboard_controller.dart';
 
@@ -21,8 +16,8 @@ class V1DashboardPage extends StatelessWidget {
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V4DashboardController>(
-      init: V4DashboardController(),
+    return GetBuilder<V1DashboardController>(
+      init: V1DashboardController(),
       builder: (controller) {
         return SafeArea(
           child: Scaffold(

@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'news_controller.dart';
+import 'package:template/view/screen/v2-builder/news/news_controller.dart';
 
-class V3NewsPage extends GetView<V3NewsController> {
+class V2NewsPage extends GetView<V2NewsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<V3NewsController>(
-        init: V3NewsController(),
-        builder: (V3NewsController controller) {
+      body: GetBuilder<V2NewsController>(
+        init: V2NewsController(),
+        builder: (V2NewsController controller) {
           return const Center(
             child: Text("Tin tức"),
           );

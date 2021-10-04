@@ -7,15 +7,15 @@ import 'package:template/utils/images.dart';
 
 import 'home_controller.dart';
 
-class V3HomePage extends GetView<V3HomeController> {
+class V2HomePage extends GetView<V2HomeController> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: GetBuilder<V3HomeController>(
-        init: V3HomeController(),
-        builder: (V3HomeController controller) {
+      body: GetBuilder<V2HomeController>(
+        init: V2HomeController(),
+        builder: (V2HomeController controller) {
           return Stack(
             children: [
               Container(

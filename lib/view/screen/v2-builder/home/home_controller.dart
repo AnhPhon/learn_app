@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
 
-class V3HomeController extends GetxController {
+class V2HomeController extends GetxController {
   String fullname = "KH, Nguyễn Văn A";
 }

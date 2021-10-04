@@ -3,9 +3,9 @@ import 'package:template/view/screen/v1-customer/account/account_controller.dart
 import 'package:template/view/screen/v1-customer/entertainment/entertainment_controller.dart';
 import 'package:template/view/screen/v1-customer/home/home_controller.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
-import 'package:template/view/screen/v1-customer/project/home_controller.dart';
+import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
-class V4DashboardBinding extends Bindings {
+class V1DashboardBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<V1HomeController>(() => V1HomeController());

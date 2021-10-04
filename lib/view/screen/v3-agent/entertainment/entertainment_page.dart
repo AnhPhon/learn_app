@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
-import 'package:template/view/screen/v3-agent/project/project_controller.dart';
 
-class V3ProjectPage extends GetView<V3ProjectController> {
+
+import 'entertainment_controller.dart';
+
+class V3EntertainmentPage extends GetView<V3EntertainmentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +16,7 @@ class V3ProjectPage extends GetView<V3ProjectController> {
         child: GestureDetector(
           onTap: (){
           },
-          child: const Text("Dự án")),
+          child: Text("Giải trí")),
       ),
     );
   }

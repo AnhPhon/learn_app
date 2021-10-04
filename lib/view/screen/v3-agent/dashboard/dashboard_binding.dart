@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
-import 'package:template/view/screen/v4-employee/account/account_controller.dart';
-import 'package:template/view/screen/v4-employee/home/home_controller.dart';
-import 'package:template/view/screen/v4-employee/news/news_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_controller.dart';
-import 'package:template/view/screen/v4-employee/report/report_controller.dart'; 
+import 'package:template/view/screen/v3-agent/account/account_controller.dart';
+import 'package:template/view/screen/v3-agent/entertainment/entertainment_controller.dart';
+import 'package:template/view/screen/v3-agent/home/home_controller.dart';
+import 'package:template/view/screen/v3-agent/news/news_controller.dart';
+import 'package:template/view/screen/v3-agent/project/project_controller.dart';
 
-class V4DashboardBinding extends Bindings {
+class V3DashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<V4HomeController>(() => V4HomeController());
-    Get.lazyPut<V4NotificationController>(() => V4NotificationController());
-    Get.lazyPut<V4NewsController>(() => V4NewsController());
-    Get.lazyPut<V4ReportController>(() => V4ReportController());
-    Get.lazyPut<V4AccountController>(() => V4AccountController());
+    Get.lazyPut<V3HomeController>(() => V3HomeController());
+    Get.lazyPut<V3ProjectController>(() => V3ProjectController());
+    Get.lazyPut<V3EntertainmentController>(() => V3EntertainmentController());
+    Get.lazyPut<V3NewsController>(() => V3NewsController());
+    Get.lazyPut<V3AccountController>(() => V3AccountController());
   }
 }
