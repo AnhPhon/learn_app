@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
-import 'package:template/view/screen/v4-employee/v4_dashboard/dashboard_binding.dart';
-import 'package:template/view/screen/v4-employee/v4_dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/about_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
+import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 
 import 'app_routes.dart';
 
