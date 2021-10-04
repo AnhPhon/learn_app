@@ -36,4 +36,8 @@ class V4HomeController extends GetxController {
       ]),
     }
   ];
+
+  double total = 10000000;
+  double revenue = 10000000; // thu
+  double expenditure = 10000000; // chi
 }

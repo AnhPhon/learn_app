@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
@@ -124,7 +125,7 @@ class V4HomePage extends GetView<V4HomeController> {
               Positioned(
                 top: 100,
                 child: Container(
-                  height: size.height,
+                  height: size.height - 180,
                   width: size.width,
                   margin: const EdgeInsets.only(),
                   padding:
@@ -137,29 +138,51 @@ class V4HomePage extends GetView<V4HomeController> {
                       topRight: Radius.circular(10),
                     ),
                   ),
-                  child: Container(
-                    width: size.width,
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        // notificate label
-                        _notificateLabel(),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: size.width,
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          // notificate label
+                          _notificateLabel(),
 
-                        const SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
-                        // time keeping
-                        _btnTimekeeping(),
+                          // time keeping
+                          _btnTimekeeping(),
 
-                        const SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
-                        // _followWorkProgressWidget
-                        _followWorkProgressWidget(),
+                          // _followWorkProgressWidget
+                          _followWorkProgressWidget(),
 
-                        const SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
-                        // _splitWidget
-                        _splitWidget(context)
-                      ],
+                          // _splitWidget
+                          _splitWidget(context),
+
+                          const SizedBox(height: 20),
+
+                          // _followWorkProgressWidget
+                          _revenueStatistic(context),
+
+                          const SizedBox(height: 20),
+
+                          // _splitWidget
+                          _splitWidget(context),
+
+                          const SizedBox(height: 20),
+
+                          // _followWorkProgressWidget
+                          _inputWarehouse(context),
+
+                          const SizedBox(height: 20),
+
+                          // _splitWidget
+                          _splitWidget(context)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -246,6 +269,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
               ),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 4,
               itemBuilder: (BuildContext ctx, index) {
                 return Container(
@@ -321,6 +345,243 @@ class V4HomePage extends GetView<V4HomeController> {
   }
 
   ///
+  ///_revenueStatistic
+  ///
+  Widget _revenueStatistic(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
+          ]),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Thông kê thu chi',
+                style: TextStyle(
+                    color: Color(Dimensions.COLOR_LABEL_DEFAULT),
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                    fontWeight: FontWeight.bold),
+              ),
+              const Spacer(),
+              Container(
+                alignment: Alignment.center,
+                width: size.width / 3,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                decoration: BoxDecoration(
+                  color: controller.total > 0
+                      ? ColorResources.THEME_DEFAULT
+                      : Colors.red,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                    )
+                  ],
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  "${(controller.total > 0 ? "+" : "-") + PriceConverter.convertPrice(
+                        context,
+                        controller.total,
+                      )} Đ",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              const Text(
+                'Tiền thu',
+                style: TextStyle(
+                  color: Color(Dimensions.COLOR_LABEL_DEFAULT),
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                "${PriceConverter.convertPrice(
+                  context,
+                  controller.revenue,
+                )} Đ",
+                style: const TextStyle(
+                  color: ColorResources.THEME_DEFAULT,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              const Text(
+                'Tiền chi',
+                style: TextStyle(
+                  color: Color(Dimensions.COLOR_LABEL_DEFAULT),
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                "${PriceConverter.convertPrice(
+                  context,
+                  controller.expenditure,
+                )} Đ",
+                style: const TextStyle(
+                  color: Colors.red,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: size.width / 3,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: const BoxDecoration(
+                  color: ColorResources.THEME_DEFAULT,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "Thêm thu",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                alignment: Alignment.center,
+                width: size.width / 3,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "Thêm chi",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// _inputWarehouse
+  ///
+  Widget _inputWarehouse(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
+          ]),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: const Text(
+              'Xuất nhập kho',
+              style: TextStyle(
+                color: Color(0xff2A3547),
+                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: size.width / 3,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: const BoxDecoration(
+                  color: ColorResources.THEME_DEFAULT,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "Thêm thu",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                alignment: Alignment.center,
+                width: size.width / 3,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  "Thêm chi",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  ///
   /// split widget
   ///
   Widget _splitWidget(BuildContext context) {
@@ -343,27 +604,24 @@ class V4HomePage extends GetView<V4HomeController> {
               width: square,
               height: square,
               decoration: const BoxDecoration(
-                color: Color(0xff4D4D4D),
-                borderRadius: BorderRadius.all(Radius.circular(square))
-              ),
+                  color: Color(0xff4D4D4D),
+                  borderRadius: BorderRadius.all(Radius.circular(square))),
             ),
             const SizedBox(width: 5),
             Container(
               width: square,
               height: square,
               decoration: const BoxDecoration(
-                color: Color(0xff4D4D4D),
-                borderRadius: BorderRadius.all(Radius.circular(square))
-              ),
+                  color: Color(0xff4D4D4D),
+                  borderRadius: BorderRadius.all(Radius.circular(square))),
             ),
             const SizedBox(width: 5),
             Container(
               width: square,
               height: square,
               decoration: const BoxDecoration(
-                color: Color(0xff4D4D4D),
-                borderRadius: BorderRadius.all(Radius.circular(square))
-              ),
+                  color: Color(0xff4D4D4D),
+                  borderRadius: BorderRadius.all(Radius.circular(square))),
             ),
           ],
         ),
