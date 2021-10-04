@@ -27,7 +27,18 @@ import 'app_routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppPages {
+  
   static List<GetPage> list = [
+    // custommer
+    
+
+    // builder
+
+    // agent
+
+    // employee
+
+
     GetPage(
       name: AppRoutes.SPLASH,
       page: () => SplashPage(),
