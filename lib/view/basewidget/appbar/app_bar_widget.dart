@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
     final String title;
@@ -26,16 +27,16 @@ class _CustomAppBarState extends State<AppBarWidget>{
     Widget build(BuildContext context) {
       return Container(
         color: ColorResources.APPBARCOLOR,
-        height: Scaffold.of(context).appBarMaxHeight,
+        height: MediaQuery.of(context).padding.top + kToolbarHeight,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Positioned(
-              top:-45,
+              top:-70,
               left: -25,
               child: Container(
-                height: 170,
-                width: 170,
+                height: DeviceUtils.getScaledSize(context,0.5),
+                width: DeviceUtils.getScaledSize(context,0.4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
@@ -50,11 +51,11 @@ class _CustomAppBarState extends State<AppBarWidget>{
               ),
             ),
             Positioned(
-              top:-60,
-              right: -40,
+              top:-90,
+              right: -35,
               child: Container(
-                height: 200,
-                width: 200,
+                height: DeviceUtils.getScaledSize(context,0.5),
+                width: DeviceUtils.getScaledSize(context,0.5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
