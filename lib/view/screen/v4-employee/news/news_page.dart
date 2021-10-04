@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'home_controller.dart';
+import 'news_controller.dart';
 
-class V4HomePage extends GetView<V4HomeController> {
+class V4NewsPage extends GetView<V4NewsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<V4HomeController>(
-          init: V4HomeController(),
-          builder: (V4HomeController controller) {
+      body: GetBuilder<V4NewsController>(
+          init: V4NewsController(),
+          builder: (V4NewsController controller) {
             return const Center(
-              child: Text("Home Page"),
+              child: Text("News Page"),
             );
           }),
     );
   }
-
 }

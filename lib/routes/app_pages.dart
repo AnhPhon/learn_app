@@ -22,22 +22,21 @@ import 'package:template/view/screen/news/news_detail/news_detail_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/register/information_user/information_user_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/v4-employee/v4_dashboard/dashboard_binding.dart';
+import 'package:template/view/screen/v4-employee/v4_dashboard/dashboard_page.dart';
 
 import 'app_routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppPages {
-  
   static List<GetPage> list = [
     // custommer
-    
 
     // builder
 
     // agent
 
     // employee
-
 
     GetPage(
       name: AppRoutes.SPLASH,
@@ -56,9 +55,39 @@ class AppPages {
       page: () => InformationUserPage(),
     ),
     GetPage(
-        name: AppRoutes.DASHBOARD,
-        page: () => DashboardPage(),
-        binding: DashboardBinding()),
+      name: AppRoutes.DASHBOARD,
+      page: () => DashboardPage(),
+      binding: DashboardBinding(),
+    ),
+
+    // v1
+    GetPage(
+      name: AppRoutes.V1_DASHBOARD,
+      page: () => DashboardPage(),
+      binding: DashboardBinding(),
+    ),
+    
+    // v2
+    GetPage(
+      name: AppRoutes.V2_DASHBOARD,
+      page: () => DashboardPage(),
+      binding: DashboardBinding(),
+    ),
+
+    // v3
+    GetPage(
+      name: AppRoutes.V3_DASHBOARD,
+      page: () => DashboardPage(),
+      binding: DashboardBinding(),
+    ),
+
+    // v4
+    GetPage(
+      name: AppRoutes.V4_DASHBOARD,
+      page: () => V4DashboardPage(),
+      binding: V4DashboardBinding(),
+    ),
+
     GetPage(
       name: AppRoutes.CATEGORIES,
       page: () => CategoriesPage(),

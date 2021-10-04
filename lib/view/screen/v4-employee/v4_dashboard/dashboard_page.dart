@@ -2,31 +2,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/account/account_page.dart';
-import 'package:template/view/screen/home/home_page.dart';
-import 'package:template/view/screen/leaderboard/leaderboard_page.dart';
-import 'package:template/view/screen/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/account/account_page.dart';
+import 'package:template/view/screen/v4-employee/home/home_page.dart';
+import 'package:template/view/screen/v4-employee/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
+import 'package:template/view/screen/v4-employee/report/report_page.dart';
 
 import 'dashboard_controller.dart';
 
-class DashboardPage extends StatelessWidget {
+class V4DashboardPage extends StatelessWidget {
   ///
   /// build method (override)
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(
-      init: DashboardController(),
+    return GetBuilder<V4DashboardController>(
+      init: V4DashboardController(),
       builder: (controller) {
         return SafeArea(
           child: Scaffold(
             body: IndexedStack(
               index: controller.tabIndex,
               children: [
-                HomePage(),
-                LeaderBoardPage(),
-                NewsPage(),
-                AccountPage(),
+                V4HomePage(),
+                V4NNotificationPage(),
+                V4NewsPage(),
+                V4ReportPage(),
+                V4AccountPage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -43,7 +45,7 @@ class DashboardPage extends StatelessWidget {
                   label: 'Trang chủ',
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.chart_bar,
+                  icon: CupertinoIcons.bell,
                   label: 'Thông báo',
                 ),
                 _bottomNavigationBarItem(
@@ -51,7 +53,7 @@ class DashboardPage extends StatelessWidget {
                   label: 'Tin tức',
                 ),
                 _bottomNavigationBarItem(
-                  icon: CupertinoIcons.person,
+                  icon: CupertinoIcons.pen,
                   label: 'Báo cáo',
                 ),
                 _bottomNavigationBarItem(
