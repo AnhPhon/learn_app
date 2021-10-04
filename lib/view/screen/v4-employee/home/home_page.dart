@@ -67,8 +67,11 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                   Positioned(
-                      top: 25,
-                      left: 15,
+                    top: 25,
+                    // left: 15,
+                    width: size.width,
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 15),
                       child: Row(
                         children: [
                           Container(
@@ -89,25 +92,6 @@ class V4HomePage extends GetView<V4HomeController> {
                               ),
                             ),
                           ),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.white,
-                          //     borderRadius: BorderRadius.circular(
-                          //         Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                          //   ),
-                          //   padding: const EdgeInsets.all(2),
-                          //   margin: const EdgeInsets.only(right: 10),
-                          //   child: ClipRRect(
-                          //     borderRadius: BorderRadius.circular(
-                          //         Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                          //     child: Image.asset(
-                          //       widget.image,
-                          //       width: 40,
-                          //       height: 40,
-                          //     ),
-                          //   ),
-                          // ), -----> For API
-
                           const Text(
                             "Hi, Phạm Dương!",
                             style: TextStyle(
@@ -115,9 +99,21 @@ class V4HomePage extends GetView<V4HomeController> {
                               fontWeight: FontWeight.bold,
                               fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                             ),
-                          )
+                          ),
+                          const Spacer(),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.all(5),
+                            child: const Icon(
+                              CupertinoIcons.bell_fill,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 10)
                         ],
-                      )),
+                      ),
+                    ),
+                  ),
                 ]),
               ),
 
