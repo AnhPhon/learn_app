@@ -7,6 +7,7 @@ import 'package:template/view/screen/v1-customer/drawer/about_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.dart';
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
+import 'package:template/view/screen/v1-customer/form_management/bill_detail/bill_detail_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
@@ -41,6 +42,7 @@ class AppPages {
       page: () => V1DashboardPage(),
       binding: V1DashboardBinding(),
     ),
+
     /// About
     GetPage(
       name: AppRoutes.V1ABOUT,
@@ -89,6 +91,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PRODUCT_RESPONSE,
       page: () => V1ProductResponsePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_BILL_DETAIL,
+      page: () => V1BillDetailPage(),
     ),
 
     ///

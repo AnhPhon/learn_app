@@ -43,7 +43,11 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
               colorRed: true,
             ),
             BtnCustom(
-                color: ColorResources.PRIMARY, text: "Tiếp tục", onTap: () {}),
+              color: ColorResources.PRIMARY,
+              text: "Tiếp tục",
+              onTap: () {},
+              width: double.infinity,
+            ),
           ],
         ),
       ),
