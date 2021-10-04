@@ -38,4 +38,10 @@ class AppRoutes {
 
   static const String PASSWORD_CHANGE = '/password_change';
   static const String EDIT_INFO = '/edit_info';
+
+  static const String V1_DASHBOARD = '/v1_dashboard';
+  static const String V2_DASHBOARD = '/v2_dashboard';
+  static const String V3_DASHBOARD = '/v3_dashboard';
+  static const String V4_DASHBOARD = '/v4_dashboard';
+  
 }
