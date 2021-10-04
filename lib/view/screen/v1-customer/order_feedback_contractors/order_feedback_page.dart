@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:template/utils/color_resources.dart';
@@ -89,19 +87,12 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
+                      color: ColorResources.GREY,
                       borderRadius: BorderRadius.circular(5)
                     ),
                     height: 120,
                     width: 120,
-                    child: index == 2 ? 
-                    Container(
-                      decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: ColorResources.GREY,
-                    ),
-                      child: Icon(Icons.add),
-                    )
-                    : ClipRRect(
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image.asset(
                         Images.admin_background, fit: BoxFit.cover,
@@ -123,7 +114,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   Widget content({required String title, required String value}){
     return Row(
       children: [
-        Text("$title", style: TextStyle(
+        Text(title, style: const TextStyle(
           fontWeight: FontWeight.bold,
         ),),
         Text(" $value"),
@@ -184,6 +175,21 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget button(BuildContext context, {required String title, required Color color}){
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: MaterialButton(
+        onPressed: (){},
+        minWidth: DeviceUtils.getScaledSize(context,0.4),
+        color: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5)
+        ),
+        child: Text(title,style: const TextStyle(color: ColorResources.WHITE),),
       ),
     );
   }
@@ -268,29 +274,8 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: MaterialButton(
-                          onPressed: (){},
-                          child: const Text("Huỷ", style: TextStyle(color: ColorResources.WHITE),),
-                          minWidth: DeviceUtils.getScaledSize(context,0.4),
-                          color: ColorResources.GREY,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)
-                          ),
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: MaterialButton(
-                          onPressed: (){},
-                          child: const Text("Đồng ý đơn giá",style: TextStyle(color: ColorResources.WHITE),),
-                          minWidth: DeviceUtils.getScaledSize(context,0.4),
-                          color: ColorResources.PRIMARYCOLOR,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)
-                          ),
-                        ),
-                      )
+                        button(context, title: "Huỷ ", color: ColorResources.GREY,),
+                        button(context,title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR)
                       ],
                     ),
                   ),
