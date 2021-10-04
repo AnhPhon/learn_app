@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
@@ -102,9 +103,14 @@ class V1HomePage extends GetView<V1HomeController> {
                           Container(
                             alignment: Alignment.centerRight,
                             padding: const EdgeInsets.all(5),
-                            child: const Icon(
-                              CupertinoIcons.bell_fill,
-                              color: Colors.white,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.V1NOTIFICATION);
+                              },
+                              child: const Icon(
+                                CupertinoIcons.bell_fill,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10)
