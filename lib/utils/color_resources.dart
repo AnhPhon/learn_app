@@ -139,6 +139,12 @@ class ColorResources {
   static const Color DEFAULT = Color(0xFF61A63C);
   static const Color PRIMARY = Color(0xff61A63C);
 
+  static const Color APPBARCOLOR = Color(0xff2196F3);
+  static const Color PRIMARYCOLOR = Color(0xff2196F3);
+  static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
+  static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
+  static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
+
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),
     100: Color(0x20192D6B),

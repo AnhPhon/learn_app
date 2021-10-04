@@ -22,22 +22,20 @@ import 'package:template/view/screen/news/news_detail/news_detail_page.dart';
 import 'package:template/view/screen/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/register/information_user/information_user_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/v4-employee/notifications/notifications_page.dart';
 
 import 'app_routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppPages {
-  
   static List<GetPage> list = [
     // custommer
-    
 
     // builder
 
     // agent
 
     // employee
-
 
     GetPage(
       name: AppRoutes.SPLASH,
@@ -126,6 +124,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.EDIT_INFO,
       page: () => EditInfoPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V4NOTIFICATION,
+      page: () => V4NotificationPage(),
     ),
   ];
 }

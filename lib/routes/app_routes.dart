@@ -26,4 +26,9 @@ class AppRoutes {
 
   static const String PASSWORD_CHANGE = '/password_change';
   static const String EDIT_INFO = '/edit_info';
+
+  ///
+  ///Page thông báo của nhân viên
+  ///
+  static const String V4NOTIFICATION = '/v4notification';
 }
