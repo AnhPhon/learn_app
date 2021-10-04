@@ -4,6 +4,12 @@ class AppRoutes {
   static const String DASHBOARD = '/dashboard';
   static const String HOME = "/home";
   static const String V1ABOUT = "/v1about";
+  static const String V1OBLIGATIONS = "/v1obligations";
+  static const String V1TERMANDPOLICY = "/v1termandpolicy";
+  static const String V1USAGEPROCEDURE = "/v1usageprocedure";
+  static const String V1BENEFITS = "/v1benefits";
+
+
 
 
 
