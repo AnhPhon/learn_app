@@ -143,11 +143,15 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BtnCustom(
-                    color: ColorResources.GREY, text: "Huỷ", onTap: () {}),
+                    color: ColorResources.GREY,
+                    text: "Huỷ",
+                    onTap: () {},
+                    width: DeviceUtils.getScaledWidth(context, 0.85) / 2),
                 BtnCustom(
                     color: ColorResources.PRIMARY,
                     text: "Đồng ý",
-                    onTap: () => controller.onAcceptClick()),
+                    onTap: () => controller.onAcceptClick(),
+                    width: DeviceUtils.getScaledWidth(context, 0.85) / 2),
               ],
             ),
           ],
