@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.izisoft.p05tapgo">
+    package="io.izisoft.p09fivesbs">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
    <application
-        android:label="YTP"
+        android:label="Five SBS"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
 

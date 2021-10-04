@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:402268459777:android:3d13dd642f09c978bf8100",
         "android_client_info": {
-          "package_name": "io.izisoft.p05tapgo"
+          "package_name": "io.izisoft.p09fivesbs"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "402268459777-en6osp5ccnqmd03p42rvapn5jcs3lh69.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "io.izisoft.p05tapgo"
+                "bundle_id": "io.izisoft.p09fivesbs"
               }
             }
           ]
@@ -94,7 +94,7 @@
               "client_id": "402268459777-en6osp5ccnqmd03p42rvapn5jcs3lh69.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "io.izisoft.p05tapgo"
+                "bundle_id": "io.izisoft.p09fivesbs"
               }
             }
           ]
