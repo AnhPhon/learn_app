@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 
 
@@ -12,7 +13,11 @@ class HomePage extends GetView<HomeController> {
     return Scaffold(
       drawer: DrawerWidget(),
       body: Center(
-        child: Text("Home"),
+        child: GestureDetector(
+          onTap: (){
+            Get.toNamed(AppRoutes.V1NOTIFICATION);
+          },
+          child: Text("Home")),
       ),
     );
   }

@@ -3,9 +3,9 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_controller.dart';
 
-class NotificationBinding extends Bindings{
+class V1NotificationBinding extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut<NotificationController>(() => NotificationController());
+    Get.lazyPut<V1NotificationController>(() => V1NotificationController());
   }
 }

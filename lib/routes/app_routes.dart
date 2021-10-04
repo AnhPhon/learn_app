@@ -8,6 +8,10 @@ class AppRoutes {
   static const String V1TERMANDPOLICY = "/v1termandpolicy";
   static const String V1USAGEPROCEDURE = "/v1usageprocedure";
   static const String V1BENEFITS = "/v1benefits";
+  static const String V1NOTIFICATION = "/v1notification";
+  // Phản hồi dịch vụ thường xuyên click từ thông báo
+  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
+
 
 
 
