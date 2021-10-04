@@ -52,6 +52,10 @@ class Dimensions {
   static const double AVATAR_SQUARE_SIZE_LARGE = 150;
   static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
 
+
+  // COLOR
+  static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
+
   Widget paddingDivider(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(

@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      initialRoute: AppRoutes.HOME,
+      initialRoute: AppRoutes.LOGIN,
       initialBinding: AppBinding(),
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
