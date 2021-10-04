@@ -2,6 +2,12 @@ class AppRoutes {
   static const String SPLASH = '/';
   static const String AUTH = '/auth';
   static const String DASHBOARD = '/dashboard';
+  static const String HOME = "/home";
+  static const String V1ABOUT = "/v1about";
+
+
+
+
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';
   static const String INFORMATION_USER = '/information_user';
