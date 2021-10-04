@@ -11,6 +11,8 @@ import 'package:template/view/screen/v1-customer/notifications/notification_bind
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_page.dart';
+import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 
@@ -48,7 +50,7 @@ class AppPages {
         name: AppRoutes.V1NOTIFICATION,
         page: () => V1NotificationPage(),
         binding: V1NotificationBinding()),
-    ////
+    ///
     /// Phản hồi dịch vụ thường xuyên click từ thông báo
     ///
     GetPage(
@@ -59,12 +61,19 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_DASHBOARD,
       page: () => V1DashboardPage(),
-      binding: V1OrderFeedBackBinding(),
     ),
 
     // builder
+    GetPage(
+      name: AppRoutes.V2_DASHBOARD,
+      page: () => V2DashboardPage(),
+    ),
 
     // agent
+    GetPage(
+      name: AppRoutes.V3_DASHBOARD,
+      page: () => V3DashboardPage(),
+    ),
 
     GetPage(
       name: AppRoutes.LOGIN,

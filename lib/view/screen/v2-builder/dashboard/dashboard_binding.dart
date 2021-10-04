@@ -5,7 +5,7 @@ import 'package:template/view/screen/v2-builder/home/home_controller.dart';
 import 'package:template/view/screen/v2-builder/news/news_controller.dart';
 import 'package:template/view/screen/v2-builder/project/home_controller.dart';
 
-class V4DashboardBinding extends Bindings {
+class V2DashboardBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<V2HomeController>(() => V2HomeController());
