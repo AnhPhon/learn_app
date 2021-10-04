@@ -11,5 +11,6 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<LeaderBoardController>(() => LeaderBoardController());
     Get.lazyPut<NewsController>(() => NewsController());
     Get.lazyPut<AccountController>(() => AccountController());
+    Get.lazyPut<AccountController>(() => AccountController());
   }
 }

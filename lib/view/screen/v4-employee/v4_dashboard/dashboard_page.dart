@@ -44,11 +44,15 @@ class DashboardPage extends StatelessWidget {
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.chart_bar,
-                  label: 'Bảng xếp hạng',
+                  label: 'Thông báo',
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.news,
                   label: 'Tin tức',
+                ),
+                _bottomNavigationBarItem(
+                  icon: CupertinoIcons.person,
+                  label: 'Báo cáo',
                 ),
                 _bottomNavigationBarItem(
                   icon: CupertinoIcons.person,
