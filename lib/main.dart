@@ -1,10 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:template/app_binding.dart';
 import 'package:template/localization/app_localization.dart';
 import 'package:template/routes/app_pages.dart';
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      initialRoute: AppRoutes.V4NOTIFICATION,
+      initialRoute: AppRoutes.LOGIN,
       initialBinding: AppBinding(),
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
@@ -59,12 +59,12 @@ class AuthRepository {
   ///
   /// get device token
   ///
-  Future<String> getDeviceToken() async {
-    final String _deviceToken =
-        FirebaseMessaging.instance.getToken().toString();
-    print('--------Device Token----------  $_deviceToken');
-    return _deviceToken;
-  }
+  // Future<String> getDeviceToken() async {
+  //   final String _deviceToken =
+  //       FirebaseMessaging.instance.getToken().toString();
+  //   print('--------Device Token----------  $_deviceToken');
+  //   return _deviceToken;
+  // }
 
   ///
   /// save User Token

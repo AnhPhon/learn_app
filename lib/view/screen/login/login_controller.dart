@@ -1,18 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
-import 'package:template/data/model/request/auth_request.dart';
-import 'package:template/di_container.dart';
-import 'package:template/provider/auth_provider.dart';
-import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class LoginController extends GetxController {
-  AuthProvider authProvider = GetIt.I.get<AuthProvider>();
-  UserProvider userProvider = GetIt.I.get<UserProvider>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -21,8 +13,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // usernameController.text = 'ytp3001';
-    // passwordController.text = 'password';
+    usernameController.text = '1';
+    passwordController.text = '';
     super.onInit();
   }
 
@@ -30,61 +22,71 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    // validate infomation username password
-    if (usernameController.text == '' || passwordController.text == '') {
-      Get.snackbar(
-        "Thông báo!", // title
-        'Vui lòng nhập đầy đủ thông tin', // message
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 3),
-      );
-    } else {
-      // login with info user input
-      final AuthRequest request = AuthRequest();
-      request.username = usernameController.text.toString();
-      request.password = passwordController.text.toString();
+    if (usernameController.text == '1') {
+      Get.toNamed(AppRoutes.V1_DASHBOARD);
+    } else if (usernameController.text == '2') {
+      Get.toNamed(AppRoutes.V2_DASHBOARD);
+    } else if (usernameController.text == '3') {
+      Get.toNamed(AppRoutes.V3_DASHBOARD);
+    } else if (usernameController.text == '4') {
+      Get.toNamed(AppRoutes.V4_DASHBOARD);
+    } else {}
 
-      authProvider.login(
-          request: request,
-          onSuccess: (auth) {
-            Get.snackbar(
-              "Thành công!", // title
-              'Đăng nhập thành công', // message
-              icon: const Icon(Icons.error_outline),
-              shouldIconPulse: true,
-              isDismissible: true,
-              duration: const Duration(seconds: 2),
-            );
+    // // validate infomation username password
+    // if (usernameController.text == '' || passwordController.text == '') {
+    //   Get.snackbar(
+    //     "Thông báo!", // title
+    //     'Vui lòng nhập đầy đủ thông tin', // message
+    //     icon: const Icon(Icons.error_outline),
+    //     shouldIconPulse: true,
+    //     isDismissible: true,
+    //     duration: const Duration(seconds: 3),
+    //   );
+    // } else {
+    //   // login with info user input
+    //   final AuthRequest request = AuthRequest();
+    //   request.username = usernameController.text.toString();
+    //   request.password = passwordController.text.toString();
 
-            isLoading = false;
-            auth = auth;
+    //   authProvider.login(
+    //       request: request,
+    //       onSuccess: (auth) {
+    //         Get.snackbar(
+    //           "Thành công!", // title
+    //           'Đăng nhập thành công', // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 2),
+    //         );
 
-            // save info token and info user
-            sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
-            sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
-            sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
-            sl.get<SharedPreferenceHelper>().saveIsLogin(true);
+    //         isLoading = false;
+    //         auth = auth;
 
-            update();
+    //         // save info token and info user
+    //         sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
+    //         sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
+    //         sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
+    //         sl.get<SharedPreferenceHelper>().saveIsLogin(true);
 
-            // go to dashboard
-            Get.toNamed(AppRoutes.DASHBOARD);
-          },
-          onError: (error) {
-            isLoading = false;
-            Get.snackbar(
-              "Hey i'm a Get SnackBar!", // title
-              error.toString(), // message
-              icon: const Icon(Icons.error_outline),
-              shouldIconPulse: true,
-              isDismissible: true,
-              duration: const Duration(seconds: 3),
-            );
-            print(error);
-            update();
-          });
-    }
+    //         update();
+
+    //         // go to dashboard
+    //         Get.toNamed(AppRoutes.DASHBOARD);
+    //       },
+    //       onError: (error) {
+    //         isLoading = false;
+    //         Get.snackbar(
+    //           "Hey i'm a Get SnackBar!", // title
+    //           error.toString(), // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 3),
+    //         );
+    //         print(error);
+    //         update();
+    //       });
+    // }
   }
 }
