@@ -184,7 +184,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           );
         },
@@ -270,73 +270,68 @@ class V4HomePage extends GetView<V4HomeController> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 4,
               itemBuilder: (BuildContext ctx, index) {
-                return GestureDetector(
-                  onTap: () {
-                    controller.onWorkProgressBtnClick(index);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      gradient: controller.contentGrid[index]["color"]
-                          as RadialGradient,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          controller.contentGrid[index]["title"].toString(),
-                          style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(1, 0),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, 1),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, -1),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(-1, 0),
-                              )
-                            ],
-                          ),
+                return Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    gradient: controller.contentGrid[index]["color"]
+                        as RadialGradient,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        controller.contentGrid[index]["title"].toString(),
+                        style: const TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(1, 0),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(0, 1),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(0, -1),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(-1, 0),
+                            )
+                          ],
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          controller.contentGrid[index]["quality"].toString(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(2, 0),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, -2),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(-2, 0),
-                              )
-                            ],
-                          ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        controller.contentGrid[index]["quality"].toString(),
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(2, 0),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(0, 2),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(0, -2),
+                            ),
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(-2, 0),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },

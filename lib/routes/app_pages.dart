@@ -25,6 +25,11 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:get/get.dart'; 
+// import 'package:template/view/screen/auth/auth_page.dart';
+// import 'package:template/view/screen/introduction/introduction_page.dart';
+import 'package:template/view/screen/login/login_page.dart';
+// import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
 
@@ -140,5 +145,10 @@ class AppPages {
       page: () => V4DashboardPage(),
       binding: V4DashboardBinding(),
     ),
+    
+    // GetPage(
+    //   name: AppRoutes.INTRO,
+    //   page: () => IntroductionPage(),
+    // ), 
   ];
 }

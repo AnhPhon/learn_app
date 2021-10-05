@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 
 class V4HomeController extends GetxController {
   List<Map<String, dynamic>> contentGrid = [
@@ -37,11 +36,6 @@ class V4HomeController extends GetxController {
       ]),
     }
   ];
-
-  ///on click to work progress
-  void onWorkProgressBtnClick(int index) {
-    Get.toNamed("${AppRoutes.V4_WORK_PROGRESS}?tabIndex=$index");
-  }
 
   double total = 10000000;
   double revenue = 10000000; // thu
