@@ -28,8 +28,8 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
                   // Tiêu tề nhóm công việc
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
 
-                  // Nhóm công việc
-                  workGroup(context),
+                  // // Nhóm công việc
+                  // workGroup(context),
           
           
                   // Nhập địa chỉ cụ thể
@@ -120,7 +120,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowEdit: true,
           controller: controller.worKTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "123 Hoàng Thị Loan",
+          holdplacer: "12-11-2021",
           label: "Thời gian bắt đầu",
           obligatory: true,
           typeInput: TextInputType.text,
@@ -131,9 +131,9 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowEdit: true,
           controller: controller.worKTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "123 Hoàng Thị Loan",
+          holdplacer: "22-11-2021",
           label: "Thời gian kết thúc",
-          obligatory: true,
+          obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,

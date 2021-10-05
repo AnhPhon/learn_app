@@ -17,8 +17,8 @@ class Label extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        left:Dimensions.PADDING_SIZE_SMALL,
-        right:Dimensions.PADDING_SIZE_SMALL,
+        left:Dimensions.PADDING_SIZE_DEFAULT,
+        right:Dimensions.PADDING_SIZE_DEFAULT,
         top:Dimensions.PADDING_SIZE_LARGE
       ),
       child: Container(

@@ -111,5 +111,4 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
     );
   }
 
-
 }

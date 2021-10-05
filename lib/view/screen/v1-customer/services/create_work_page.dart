@@ -8,7 +8,6 @@ import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
-import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_controller.dart';
@@ -82,7 +81,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             obligatory: true,
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
             child: Text("Tỉnh/Thành phố",style: TextStyle(
               fontSize: Dimensions.FONT_SIZE_LARGE,
               fontWeight: FontWeight.w500
@@ -195,7 +194,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
           _controller.onClickContinue(1);
         },
         title: "Tiếp tục",
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT
       ),
     );
   }

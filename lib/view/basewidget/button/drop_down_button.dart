@@ -25,8 +25,8 @@ class DropDownButton<T> extends StatelessWidget {
     return Container(
       width: width,
       padding: const EdgeInsets.only(
-        left: Dimensions.PADDING_SIZE_SMALL,
-        right: Dimensions.PADDING_SIZE_SMALL, 
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT, 
         top: Dimensions.PADDING_SIZE_LARGE
       ),
       child: Column(
