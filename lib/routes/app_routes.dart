@@ -17,6 +17,9 @@ class AppRoutes {
   static const String V1_GROUPORDERFEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDERINFORAMTION = "/v1_orderinfo";
+  // Tạo đơn công việc
+  static const String V1_CREATEWORK = "/v1_creatework";
+  static const String V1_G1CREATEWORK = "/v1_g1creatework";
   
 
 

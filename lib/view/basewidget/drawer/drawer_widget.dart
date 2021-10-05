@@ -12,6 +12,52 @@ import 'package:template/view/basewidget/drawer/drawer_controller.dart' as dr;
 class DrawerWidget extends GetView<dr.DrawerController> {
   const DrawerWidget({Key? key}) : super(key: key);
 
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<dr.DrawerController>(
+      init: dr.DrawerController(),
+      builder: (dr.DrawerController controller) {
+        return Container(
+          alignment: Alignment.topLeft,
+          height: DeviceUtils.getScaledHeight(context,1),
+          width: DeviceUtils.getScaledWidth(context,0.8),
+          decoration: const BoxDecoration(
+            color: ColorResources.WHITE
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //header
+                header(context),
+
+                // Menu 
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...menuList(context,controller.menu),
+                  ],
+                ),
+                const Divider(
+                  color: ColorResources.GREY,
+                ),
+                // Thông tin liên hệ
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...contact(context,controller.contact),
+                  ],
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   ///
   /// Menu
   ///
@@ -116,50 +162,7 @@ class DrawerWidget extends GetView<dr.DrawerController> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<dr.DrawerController>(
-      init: dr.DrawerController(),
-      builder: (dr.DrawerController controller) {
-        return Container(
-          alignment: Alignment.topLeft,
-          height: DeviceUtils.getScaledHeight(context,1),
-          width: DeviceUtils.getScaledWidth(context,0.8),
-          decoration: const BoxDecoration(
-            color: ColorResources.WHITE
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //header
-                header(context),
-
-                // Menu 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ...menuList(context,controller.menu1),
-                  ],
-                ),
-                const Divider(
-                  color: ColorResources.GREY,
-                ),
-                // Thông tin liên hệ
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ...contact(context,controller.menu2),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  
 }
 
 

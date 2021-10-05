@@ -33,6 +33,11 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_SMALL,
+        right: Dimensions.PADDING_SIZE_SMALL, 
+        top: Dimensions.PADDING_SIZE_LARGE
+      ),
       //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,
       child: Column(
@@ -86,8 +91,9 @@ class InputField extends StatelessWidget {
                 errorText: errorText,
                 isDense: true,
                 hintText: holdplacer,
-                hintStyle: const TextStyle(
-                  color: ColorResources.BLACK
+                hintStyle: TextStyle(
+                  color: ColorResources.BLACK.withOpacity(0.5),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
                 ),
                 fillColor:(allowEdit == false) ? const Color(0xffEBEAEA) : Colors.transparent,
                 suffixIcon: suffixIcon),

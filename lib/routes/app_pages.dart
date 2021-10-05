@@ -24,6 +24,9 @@ import 'package:template/view/screen/v1-customer/order_feedback_contractors/feed
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
@@ -140,6 +143,20 @@ class AppPages {
       name: AppRoutes.V1_ORDERINFORAMTION, 
       page: ()=> OrderInformationPage(),
       binding: OrderInformationBinding(),
+    ),
+
+    ///
+    ///Tạo đơn công việc 1- 6
+    ///
+    GetPage(
+      name: AppRoutes.V1_CREATEWORK, 
+      page: ()=> CreateWorkPage(),
+    ),
+    // Nhóm 1
+    GetPage(
+      name: AppRoutes.V1_G1CREATEWORK, 
+      page: ()=> V1G1CreateWorkPage(),
+      binding: V1G1CreateWorkBinding()
     ),
 
     GetPage(

@@ -14,8 +14,9 @@ class V1HomePage extends GetView<V1HomeController> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
+  
     return Scaffold(
+      
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
@@ -144,7 +145,13 @@ class V1HomePage extends GetView<V1HomeController> {
                       alignment: Alignment.center,
                       child: Column(
                         children: [
-                          
+                          Text("Tạo đơn công việc 1 2 5 6"),
+                          GestureDetector(
+                            onTap: (){
+                              controller.onClickCreateWork();
+                            },
+                            child: Text("Tạo đơn công việc 1"),
+                          ),
                         ],
                       ),
                     ),
