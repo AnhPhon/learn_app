@@ -25,49 +25,49 @@ class PasswordChangeController extends GetxController {
   ///
   void onBtnUpdateClick(BuildContext context) {
     sl.get<SharedPreferenceHelper>().userId.then((value) {
-      // kiểm tra mã giới thiệu đúng không
-      userProvider.find(
-          id: value!,
-          onSuccess: (userData) {
-            // print(userData.toJson());
-            // validate input user
-            final bool isValid = _checkValidateInput();
+      // // kiểm tra mã giới thiệu đúng không
+      // userProvider.find(
+      //     id: value!,
+      //     onSuccess: (userData) {
+      //       // print(userData.toJson());
+      //       // validate input user
+      //       final bool isValid = _checkValidateInput();
 
-            if (isValid) {
-              final Map<String, String> data = {
-                "id": userData.id!,
-                "password": textEditPasswordController.text,
-              };
-              userProvider.infoUpdate(
-                data: data,
-                onSuccess: (user) {
-                  // Thực hiện update
-                  Get.back();
-                  print("Password updated");
-                  showAnimatedDialog(
-                    context,
-                    const MyDialog(
-                      icon: Icons.check,
-                      title: "Hoàn tất",
-                      description: "Cập nhật hoàn tất",
-                    ),
-                    dismissible: false,
-                    isFlip: true,
-                  );
-                  EasyLoading.dismiss();
-                  update();
-                },
-                onError: (error) {
-                  print(error);
-                  update();
-                },
-              );
-            }
-          },
-          onError: (error) {
-            print(error);
-            update();
-          });
+      //       if (isValid) {
+      //         final Map<String, String> data = {
+      //           "id": userData.id!,
+      //           "password": textEditPasswordController.text,
+      //         };
+      //         userProvider.infoUpdate(
+      //           data: data,
+      //           onSuccess: (user) {
+      //             // Thực hiện update
+      //             Get.back();
+      //             print("Password updated");
+      //             showAnimatedDialog(
+      //               context,
+      //               const MyDialog(
+      //                 icon: Icons.check,
+      //                 title: "Hoàn tất",
+      //                 description: "Cập nhật hoàn tất",
+      //               ),
+      //               dismissible: false,
+      //               isFlip: true,
+      //             );
+      //             EasyLoading.dismiss();
+      //             update();
+      //           },
+      //           onError: (error) {
+      //             print(error);
+      //             update();
+      //           },
+      //         );
+      //       }
+      //     },
+      //     onError: (error) {
+      //       print(error);
+      //       update();
+      //     });
     });
   }
 

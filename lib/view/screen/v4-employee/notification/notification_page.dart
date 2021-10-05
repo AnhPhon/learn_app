@@ -19,7 +19,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
         title: 'Thông Báo',
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_LARGE,
           vertical: Dimensions.PADDING_SIZE_LARGE,
         ),
