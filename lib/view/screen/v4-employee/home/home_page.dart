@@ -184,11 +184,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                 ),
-<<<<<<< HEAD
               )
-=======
-              ),
->>>>>>> origin/feature/ui/51_employee_notifications_page
             ],
           );
         },
@@ -198,19 +194,6 @@ class V4HomePage extends GetView<V4HomeController> {
 
   ///
   /// _notificateLabel
-<<<<<<< HEAD
-  ///
-  Widget _notificateLabel() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: const Text(
-        'Chủ nhật, ngày 26 tháng 9 năm 2021. \nBạn chưa chấm công, vui lòng nhấn nút nhé!',
-        style: TextStyle(
-          color: Color(0xff2A3547),
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          fontWeight: FontWeight.bold,
-        ),
-=======
   ///
   Widget _notificateLabel() {
     return Container(
@@ -266,153 +249,6 @@ class V4HomePage extends GetView<V4HomeController> {
           ]),
       child: Column(
         children: [
-          const Text(
-            'Theo dõi tiến độ công việc',
-            style: TextStyle(
-                color: Color(Dimensions.COLOR_LABEL_DEFAULT),
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                fontWeight: FontWeight.bold),
-          ),
-          Container(
-            height: 250,
-            padding:
-                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 100,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 4,
-              itemBuilder: (BuildContext ctx, index) {
-                return GestureDetector(
-                  onTap: () {
-                    controller.onWorkProgressBtnClick(index);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      gradient: controller.contentGrid[index]["color"]
-                          as RadialGradient,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          controller.contentGrid[index]["title"].toString(),
-                          style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(1, 0),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, 1),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, -1),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(-1, 0),
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          controller.contentGrid[index]["quality"].toString(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(2, 0),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, 2),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(0, -2),
-                              ),
-                              Shadow(
-                                color: Colors.white,
-                                offset: Offset(-2, 0),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
->>>>>>> origin/feature/ui/51_employee_notifications_page
-      ),
-    );
-  }
-
-  ///
-<<<<<<< HEAD
-  /// button time keeping
-  ///
-  Widget _btnTimekeeping() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: 150,
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color(0xff2196F3),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: const Text(
-          'Chấm Công',
-          style: TextStyle(
-            fontSize: Dimensions.FONT_SIZE_DEFAULT,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-
-  ///
-  /// follow work progress
-  ///
-  Widget _followWorkProgressWidget() {
-=======
-  ///_revenueStatistic
-  ///
-  Widget _revenueStatistic(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
->>>>>>> origin/feature/ui/51_employee_notifications_page
-    return Container(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
-          ]),
-      child: Column(
-        children: [
-<<<<<<< HEAD
           const Text(
             'Theo dõi tiến độ công việc',
             style: TextStyle(
@@ -521,8 +357,6 @@ class V4HomePage extends GetView<V4HomeController> {
           ]),
       child: Column(
         children: [
-=======
->>>>>>> origin/feature/ui/51_employee_notifications_page
           Row(
             children: [
               const Text(
@@ -546,7 +380,6 @@ class V4HomePage extends GetView<V4HomeController> {
                       color: Colors.grey,
                       offset: Offset(0, 1),
                       blurRadius: 2,
-<<<<<<< HEAD
                     )
                   ],
                   borderRadius: const BorderRadius.all(
@@ -635,96 +468,6 @@ class V4HomePage extends GetView<V4HomeController> {
                 ),
               ),
               const Spacer(),
-=======
-                    )
-                  ],
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: Text(
-                  "${(controller.total > 0 ? "+" : "-") + PriceConverter.convertPrice(
-                        context,
-                        controller.total,
-                      )} Đ",
-                  style: const TextStyle(color: Colors.white),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Text(
-                'Tiền thu',
-                style: TextStyle(
-                  color: Color(Dimensions.COLOR_LABEL_DEFAULT),
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                "${PriceConverter.convertPrice(
-                  context,
-                  controller.revenue,
-                )} Đ",
-                style: const TextStyle(
-                  color: ColorResources.THEME_DEFAULT,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Text(
-                'Tiền chi',
-                style: TextStyle(
-                  color: Color(Dimensions.COLOR_LABEL_DEFAULT),
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                "${PriceConverter.convertPrice(
-                  context,
-                  controller.expenditure,
-                )} Đ",
-                style: const TextStyle(
-                  color: Colors.red,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: size.width / 3,
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  "Thêm thu",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              const Spacer(),
->>>>>>> origin/feature/ui/51_employee_notifications_page
               Container(
                 alignment: Alignment.center,
                 width: size.width / 3,
