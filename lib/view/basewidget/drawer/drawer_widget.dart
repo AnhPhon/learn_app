@@ -12,7 +12,9 @@ import 'package:template/view/basewidget/drawer/drawer_controller.dart' as dr;
 class DrawerWidget extends GetView<dr.DrawerController> {
   const DrawerWidget({Key? key}) : super(key: key);
 
+  ///
   /// Menu
+  ///
   List<Widget> menuList(BuildContext context, List<Menu> menu){
       final menuList = menu.map((item){
       return GestureDetector(
@@ -28,7 +30,9 @@ class DrawerWidget extends GetView<dr.DrawerController> {
       return menuList;
   }
 
+  /// 
   /// Thông tin liên hệ
+  /// 
   List<Widget> contact(BuildContext context, List<String> menu){
       final menuList = menu.map((item){
       return GestureDetector(
@@ -44,7 +48,9 @@ class DrawerWidget extends GetView<dr.DrawerController> {
       return menuList;
   }
 
-
+  /// 
+  /// Header
+  /// 
   Widget header(BuildContext context){
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

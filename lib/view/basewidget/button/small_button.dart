@@ -10,17 +10,17 @@ class SmallButton extends StatelessWidget {
     Key? key,
     required this.title,
     required this.color,
-    required this.onPress,
+    required this.onPressed,
   }) : super(key: key);
   final String title;
   final Color color;
-  final  Function onPress;
+  final  Function onPressed;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: MaterialButton(
-        onPressed: (){},
+        onPressed: ()=> onPressed(),
         minWidth: DeviceUtils.getScaledSize(context,0.4),
         color: color,
         shape: RoundedRectangleBorder(

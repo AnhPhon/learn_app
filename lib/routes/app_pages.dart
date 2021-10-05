@@ -14,8 +14,14 @@ import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/order_feedback_binding.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/bulletin/order_information_binding.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/bulletin/order_information_page.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_binding.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
@@ -108,6 +114,34 @@ class AppPages {
       page: () => V1OrderFeedBackPage(),
       binding: V1OrderFeedBackBinding(),
     ),
+
+    ///
+    /// Phản hồi đơn hàng nhóm 5 click từ thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V1_GROUPORDERFEEDBACK5,
+      page: () => const V1GroupOrderFeedBack5Page(),
+      binding: V1OrderFeedBackGroup5Binding(),
+    ),
+
+    ///
+    /// Phản hồi đơn hàng nhóm 6 click từ thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V1_GROUPORDERFEEDBACK6,
+      page: () => const V1GroupOrderFeedBack6Page(),
+      binding: V1OrderFeedBackGroup6Binding(),
+    ),
+
+    ///
+    /// Thông tin đơn hàng
+    ///
+    GetPage(
+      name: AppRoutes.V1_ORDERINFORAMTION, 
+      page: ()=> OrderInformationPage(),
+      binding: OrderInformationBinding(),
+    ),
+
     GetPage(
       name: AppRoutes.V1_DASHBOARD,
       page: () => V1DashboardPage(),

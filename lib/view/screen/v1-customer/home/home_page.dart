@@ -143,7 +143,9 @@ class V1HomePage extends GetView<V1HomeController> {
                       width: size.width,
                       alignment: Alignment.center,
                       child: Column(
-                        children: [],
+                        children: [
+                          
+                        ],
                       ),
                     ),
                   ),
