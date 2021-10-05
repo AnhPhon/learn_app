@@ -5,7 +5,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_controller.dart';
+import 'package:template/view/basewidget/button/small_button.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/order_feedback_controller.dart';
 
 class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   const V1OrderFeedBackPage({Key? key}) : super(key: key);
@@ -109,7 +110,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   }
 
   ///
-  /// Thuộc tính 
+  /// nội dung đơn hàng 
   ///
   Widget content({required String title, required String value}){
     return Row(
@@ -121,6 +122,10 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ],
     );
   }
+
+  ///
+  /// Danh sách vật liệu
+  ///
 
   Widget materialList(){
     return Padding(
@@ -179,20 +184,8 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
     );
   }
 
-  Widget button(BuildContext context, {required String title, required Color color}){
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: MaterialButton(
-        onPressed: (){},
-        minWidth: DeviceUtils.getScaledSize(context,0.4),
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
-        ),
-        child: Text(title,style: const TextStyle(color: ColorResources.WHITE),),
-      ),
-    );
-  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +193,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       builder: (V1OrderFeedBackController controller) {
         return Scaffold(
           backgroundColor: const Color(0xffF6F6F7),
-          appBar: AppBarWidget(title: "Phản hồi đơn hàng"),
+          appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
           body: Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
             child: ConstrainedBox(
@@ -274,8 +267,8 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        button(context, title: "Huỷ ", color: ColorResources.GREY,),
-                        button(context,title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR)
+                        SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPress: (){}),
+                        SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPress: (){}),
                       ],
                     ),
                   ),
