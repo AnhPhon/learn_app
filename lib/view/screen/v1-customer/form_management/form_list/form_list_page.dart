@@ -4,9 +4,9 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/form_management/form_management_controller.dart';
+import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_controller.dart';
 
-class V1FormManagementPage extends GetView<V1FormManagementController> {
+class V1FormListPage extends GetView<V1FormListController> {
   ///
   /// build
   ///
@@ -14,8 +14,8 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return GetBuilder<V1FormManagementController>(
-        init: V1FormManagementController(),
+    return GetBuilder<V1FormListController>(
+        init: V1FormListController(),
         builder: (controller) {
           return Scaffold(
             backgroundColor: const Color(0xFFF6F6F7),
@@ -26,8 +26,8 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                 tabBarWidget(context: context, controller: controller),
 
                 //item list
-                ...List.generate(
-                    5, (index) => _itemList(context, height, width)),
+                ...List.generate(5,
+                    (index) => _itemList(context, controller, height, width)),
               ],
             ),
           );
@@ -37,8 +37,7 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   ///
   /// selected tab
   ///
-  Widget onSelectedTab(
-      BuildContext context, V1FormManagementController controller,
+  Widget onSelectedTab(BuildContext context, V1FormListController controller,
       {required String title, required int index, required bool isRight}) {
     return GestureDetector(
       onTap: () {
@@ -82,7 +81,7 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   ///
   Widget tabBarWidget(
       {required BuildContext context,
-      required V1FormManagementController controller}) {
+      required V1FormListController controller}) {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -109,10 +108,11 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, double height, double width) {
+  Widget _itemList(BuildContext context, V1FormListController controller,
+      double height, double width) {
     return GestureDetector(
       onTap: () {
-        controller.onProductResponseClick();
+        controller.onJobDetailClick();
       },
       child: Container(
         margin: EdgeInsets.symmetric(

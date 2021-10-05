@@ -8,7 +8,9 @@ import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.d
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
 import 'package:template/view/screen/v1-customer/form_management/bill_detail/bill_detail_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
@@ -95,6 +97,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_BILL_DETAIL,
       page: () => V1BillDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_DETAIL,
+      page: () => V1JobDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_FORM_LIST,
+      page: () => V1FormListPage(),
     ),
 
     ///

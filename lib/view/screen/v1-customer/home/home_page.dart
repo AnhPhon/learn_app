@@ -142,9 +142,21 @@ class V1HomePage extends GetView<V1HomeController> {
                             onTap: () {
                               controller.onClickFormManagementPage();
                             },
-                            child: const Text("Quản lý đơn tạo",
-                                style: TextStyle(
-                                    color: ColorResources.LIGHT_SKY_BLUE)),
+                            child: const Text(
+                              "Quản lý đơn tạo",
+                              style: TextStyle(
+                                  color: ColorResources.LIGHT_SKY_BLUE),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.onClickFormList();
+                            },
+                            child: const Text(
+                              "Danh sách đơn tạo",
+                              style: TextStyle(
+                                  color: ColorResources.LIGHT_SKY_BLUE),
+                            ),
                           ),
                         ],
                       ),

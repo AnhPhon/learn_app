@@ -10,6 +10,27 @@ import 'package:template/view/screen/v1-customer/form_management/bill_detail/bil
 
 class V1BillDetailPage extends GetView<V1BillDetailController> {
   ///
+  ///build
+  ///
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<V1BillDetailController>(
+        init: V1BillDetailController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: AppBarWidget(title: controller.title),
+            body: Column(
+              children: [
+                //bill detail
+                _containerBill(context, controller),
+              ],
+            ),
+            bottomNavigationBar: _bottomSheet(context, controller),
+          );
+        });
+  }
+
+  ///
   ///note
   ///
   Widget _note(BuildContext context, V1BillDetailController controller) {
@@ -40,18 +61,21 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
       BuildContext context, V1BillDetailController controller) {
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.019)),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+      ),
       padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.025)),
+        vertical: DeviceUtils.getScaledHeight(context, 0.025),
+      ),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 10,
-              offset: const Offset(0, 2))
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          )
         ],
       ),
       child: Column(
@@ -68,7 +92,8 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
           //divider
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledWidth(context, 0.025)),
+              vertical: DeviceUtils.getScaledWidth(context, 0.025),
+            ),
             child: const Divider(color: Colors.grey),
           ),
 
@@ -86,16 +111,19 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
     return Container(
       height: DeviceUtils.getScaledHeight(context, 0.19),
       padding: EdgeInsets.only(
-          left: DeviceUtils.getScaledWidth(context, 0.038),
-          right: DeviceUtils.getScaledWidth(context, 0.038),
-          top: DeviceUtils.getScaledHeight(context, 0.035),
-          bottom: DeviceUtils.getScaledHeight(context, 0.026)),
+        left: DeviceUtils.getScaledWidth(context, 0.038),
+        right: DeviceUtils.getScaledWidth(context, 0.038),
+        top: DeviceUtils.getScaledHeight(context, 0.035),
+        bottom: DeviceUtils.getScaledHeight(context, 0.026),
+      ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
         boxShadow: [
-          BoxShadow(color: Colors.grey, blurRadius: 10, offset: Offset(0, -2))
+          BoxShadow(color: Colors.grey, blurRadius: 10, offset: Offset(0, -2)),
         ],
       ),
       child: DefaultTextStyle(
@@ -120,22 +148,5 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<V1BillDetailController>(
-        init: V1BillDetailController(),
-        builder: (controller) {
-          return Scaffold(
-            body: Column(
-              children: [
-                AppBarWidget(title: controller.title),
-                _containerBill(context, controller),
-              ],
-            ),
-            bottomNavigationBar: _bottomSheet(context, controller),
-          );
-        });
   }
 }

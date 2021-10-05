@@ -10,13 +10,8 @@ class AppRoutes {
   static const String V1BENEFITS = "/v1benefits";
   static const String V1NOTIFICATION = "/v1notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
-
-
-
-
-
-
+  static const String V1ORDERFEEDBACKCONTRACTORS =
+      "/v1orderfeedbackcontractors";
 
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';
@@ -52,6 +47,8 @@ class AppRoutes {
   static const String V1_PRODUCT_RESPONSE = '/v1_product_response';
   static const String V1_BILL_DETAIL = '/v1_bill_detail';
   static const String V1_PAYMENT_METHOD = '/v1_payment_method';
+  static const String V1_JOB_DETAIL = '/v1_job_detail';
+  static const String V1_FORM_LIST = '/v1_form_list';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
