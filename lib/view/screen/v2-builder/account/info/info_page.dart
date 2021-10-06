@@ -17,7 +17,7 @@ class EditInfoPage extends GetView<EditInfoController> {
           child: GetBuilder<EditInfoController>(
               init: EditInfoController(),
               builder: (EditInfoController controller) {
-                if(controller.isLoading) {
+                if (controller.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );

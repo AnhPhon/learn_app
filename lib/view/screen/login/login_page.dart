@@ -10,67 +10,6 @@ import 'package:template/utils/images.dart';
 import 'login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    return GetBuilder<LoginController>(
-        init: LoginController(),
-        builder: (LoginController value) {
-          return Scaffold(
-            backgroundColor: ColorResources.WHITE,
-            body: Stack(
-              children: [
-                // bottom
-                Stack(
-                  children: [
-                    _bottomWidget(width),
-                  ],
-                ),
-
-                SingleChildScrollView(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        // logo
-                        Image.asset(
-                          Images.logo_image,
-                          scale: 1.3,
-                        ),
-
-                        const SizedBox(
-                          height: 50,
-                        ),
-
-                        // username enter widget
-                        _usernameEnterWidget(context),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        //  password enter widget
-                        _passwordEnterWidget(context),
-                        const SizedBox(
-                          height: 50,
-                        ),
-
-                        //  login button widget
-                        _loginBtnWidget(context, "Đăng nhập", width),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-  
   ///
   /// _usernameEnterWidget
   ///
@@ -225,5 +164,65 @@ class LoginPage extends GetView<LoginController> {
         ],
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    return GetBuilder<LoginController>(
+        init: LoginController(),
+        builder: (LoginController value) {
+          return Scaffold(
+            backgroundColor: ColorResources.WHITE,
+            body: Stack(
+              children: [
+                // bottom
+                Stack(
+                  children: [
+                    _bottomWidget(width),
+                  ],
+                ),
+
+                SingleChildScrollView(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+
+                        // logo
+                        Image.asset(
+                          Images.logo_image,
+                          scale: 1.3,
+                        ),
+
+                        const SizedBox(
+                          height: 50,
+                        ),
+
+                        // username enter widget
+                        _usernameEnterWidget(context),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        //  password enter widget
+                        _passwordEnterWidget(context),
+                        const SizedBox(
+                          height: 50,
+                        ),
+
+                        //  login button widget
+                        _loginBtnWidget(context, "Đăng nhập", width),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

@@ -43,6 +43,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   timeago: ^3.1.0
   flutter_easyloading: ^3.0.3
+  flutter_html: ^2.1.4
 
 dev_dependencies:
   # flutter pub pub run dapackages:dapackages.dart ./pubspec.yaml

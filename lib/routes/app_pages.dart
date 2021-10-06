@@ -8,7 +8,9 @@ import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.d
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
 import 'package:template/view/screen/v1-customer/form_management/bill_detail/bill_detail_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
@@ -17,6 +19,8 @@ import 'package:template/view/screen/v1-customer/notifications/notification_bind
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
+import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
@@ -102,6 +106,22 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_BILL_DETAIL,
       page: () => V1BillDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_DETAIL,
+      page: () => V1JobDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_FORM_LIST,
+      page: () => V1FormListPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PRODUCT_DETAIL,
+      page: () => V1ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CART,
+      page: () => V1CartPage(),
     ),
 
     ///

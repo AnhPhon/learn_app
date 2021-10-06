@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V1FormManagementController extends GetxController {
-  String title = "Quản lý đơn tạo";
+class V1FormListController extends GetxController {
+  String title = "Danh sách đơn tạo";
 
   Map<String, String> titleTabBar = {
     "DPH": "Đã phản hồi",
@@ -19,9 +19,9 @@ class V1FormManagementController extends GetxController {
   }
 
   ///
-  /// go to Product Response
+  ///go to job detail
   ///
-  void onProductResponseClick() {
-    Get.toNamed(AppRoutes.V1_PRODUCT_RESPONSE);
+  void onJobDetailClick() {
+    Get.toNamed(AppRoutes.V1_JOB_DETAIL);
   }
 }

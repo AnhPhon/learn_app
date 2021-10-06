@@ -9,17 +9,92 @@ import 'package:template/view/screen/v1-customer/form_management/product_respons
 
 class V1ProductResponsePage extends GetView<V1ProductResponseController> {
   ///
+  ///build
+  ///
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<V1ProductResponseController>(
+        init: V1ProductResponseController(),
+        builder: (controller) {
+          return Scaffold(
+            backgroundColor: ColorResources.WHITE,
+            appBar: AppBarWidget(title: controller.title),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //title
+                  Container(
+                      alignment: Alignment.center,
+                      child: _textTitle(context,
+                          title: "Dịch vụ xây dựng toàn diện")),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: DeviceUtils.getScaledWidth(context, 0.025)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _textTitle(context,
+                            title: "Công việc: Thợ ốp lót công trình 5 sao"),
+
+                        //provider bill
+                        const Text(
+                          "Đơn giá phản hồi từ nhà cung cấp",
+                          style: TextStyle(
+                              fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                              fontWeight: FontWeight.bold),
+                        ),
+
+                        //container in bill
+                        _providerBill(
+                          context,
+                          name: "Xi măng",
+                          unit: "Tấn",
+                          quanlity: "5",
+                          specifications: "Kim đỉnh",
+                          price: "300.000 VND",
+                        ),
+                        _providerBill(
+                          context,
+                          name: "Xi măng",
+                          unit: "Tấn",
+                          quanlity: "5",
+                          specifications: "Kim đỉnh",
+                          price: "300.000 VND",
+                        ),
+
+                        SizedBox(
+                            height: DeviceUtils.getScaledHeight(context, 0.03)),
+
+                        //image bill
+                        _imageBill(context),
+
+                        SizedBox(
+                            height: DeviceUtils.getScaledHeight(context, 0.04)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            bottomNavigationBar: _bottomSheet(context, controller),
+          );
+        });
+  }
+
+  ///
   ///text title
   ///
   Widget _textTitle(BuildContext context, {required String title}) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.03)),
+        vertical: DeviceUtils.getScaledHeight(context, 0.03),
+      ),
       child: Text(
         title,
         style: const TextStyle(
-            fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-            fontWeight: FontWeight.bold),
+          fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -31,13 +106,16 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
       {required String name,
       required String unit,
       required String quanlity,
-      required String specifications}) {
+      required String specifications,
+      required String price}) {
     return Container(
       margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.015)),
+        vertical: DeviceUtils.getScaledHeight(context, 0.015),
+      ),
       padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.015),
-          horizontal: DeviceUtils.getScaledWidth(context, 0.055)),
+        vertical: DeviceUtils.getScaledHeight(context, 0.015),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.055),
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -60,6 +138,21 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
             Text("Số lượng: $quanlity"),
             SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
             Text("Đơn vị: $unit"),
+            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            RichText(
+              text: TextSpan(
+                  text: "Đơn giá: ",
+                  style: const TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                      color: ColorResources.BLACK),
+                  children: [
+                    TextSpan(
+                        text: price,
+                        style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                            color: ColorResources.RED)),
+                  ]),
+            ),
           ],
         ),
       ),
@@ -73,8 +166,9 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
     return Container(
       padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
       decoration: BoxDecoration(
-          border: Border.all(color: ColorResources.PRIMARY),
-          borderRadius: BorderRadius.circular(5)),
+        border: Border.all(color: ColorResources.PRIMARY),
+        borderRadius: BorderRadius.circular(5),
+      ),
       height: DeviceUtils.getScaledHeight(context, 0.158),
       child: ListView.builder(
           shrinkWrap: true,
@@ -105,29 +199,34 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
     return Container(
       height: DeviceUtils.getScaledHeight(context, 0.19),
       padding: EdgeInsets.only(
-          left: DeviceUtils.getScaledWidth(context, 0.038),
-          right: DeviceUtils.getScaledWidth(context, 0.038),
-          top: DeviceUtils.getScaledHeight(context, 0.035),
-          bottom: DeviceUtils.getScaledHeight(context, 0.026)),
+        left: DeviceUtils.getScaledWidth(context, 0.038),
+        right: DeviceUtils.getScaledWidth(context, 0.038),
+        top: DeviceUtils.getScaledHeight(context, 0.035),
+        bottom: DeviceUtils.getScaledHeight(context, 0.026),
+      ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
         boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 10, offset: Offset(0, -2))
         ],
       ),
       child: DefaultTextStyle(
         style: const TextStyle(
-            color: ColorResources.BLACK,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-            fontWeight: FontWeight.bold),
+          color: ColorResources.BLACK,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontWeight: FontWeight.bold,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledWidth(context, 0.025)),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -158,68 +257,5 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<V1ProductResponseController>(
-        init: V1ProductResponseController(),
-        builder: (controller) {
-          return Scaffold(
-            backgroundColor: ColorResources.WHITE,
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  AppBarWidget(title: controller.title),
-
-                  //title
-                  Container(
-                      alignment: Alignment.center,
-                      child: _textTitle(context,
-                          title: "Dịch vụ xây dựng toàn diện")),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: DeviceUtils.getScaledWidth(context, 0.025)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _textTitle(context,
-                            title: "Công việc: Thợ ốp lót công trình 5 sao"),
-
-                        //provider bill
-                        const Text(
-                          "Đơn giá phản hồi từ nhà cung cấp",
-                          style: TextStyle(
-                              fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        _providerBill(context,
-                            name: "Xi măng",
-                            unit: "Tấn",
-                            quanlity: "5",
-                            specifications: "Kim đỉnh"),
-                        _providerBill(context,
-                            name: "Xi măng",
-                            unit: "Tấn",
-                            quanlity: "5",
-                            specifications: "Kim đỉnh"),
-
-                        SizedBox(
-                            height: DeviceUtils.getScaledHeight(context, 0.03)),
-
-                        //image bill
-                        _imageBill(context),
-
-                        SizedBox(
-                            height: DeviceUtils.getScaledHeight(context, 0.04))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            bottomNavigationBar: _bottomSheet(context, controller),
-          );
-        });
   }
 }
