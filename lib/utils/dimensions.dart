@@ -53,6 +53,9 @@ class Dimensions {
   static const double AVATAR_SQUARE_SIZE_LARGE = 150;
   static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
 
+  // RADIUS
+  static const double HOME_BORDER_RADIUS = 30;
+
 
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;

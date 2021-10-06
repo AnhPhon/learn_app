@@ -126,14 +126,15 @@ class V4HomePage extends GetView<V4HomeController> {
                   height: size.height - 180,
                   width: size.width,
                   margin: const EdgeInsets.only(),
-                  padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                  padding: const EdgeInsets.all(
+                    Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
                   alignment: Alignment.centerLeft,
                   decoration: const BoxDecoration(
                     color: Color(0xffF6F6F7),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
+                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
                     ),
                   ),
                   child: SingleChildScrollView(
