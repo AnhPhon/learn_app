@@ -106,10 +106,12 @@ class V4HomePage extends GetView<V4HomeController> {
                           Container(
                             alignment: Alignment.centerRight,
                             padding: const EdgeInsets.all(5),
-                            child: const Icon(
-                              CupertinoIcons.bell_fill,
-                              color: Colors.white,
-                            ),
+                            child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  CupertinoIcons.bell_fill,
+                                  color: Colors.white,
+                                )),
                           ),
                           const SizedBox(width: 10)
                         ],

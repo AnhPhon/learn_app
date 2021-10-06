@@ -33,6 +33,8 @@ import 'package:get/get.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V4HomeController extends GetxController {
   List<Map<String, dynamic>> contentGrid = [
