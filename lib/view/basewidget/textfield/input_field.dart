@@ -95,7 +95,7 @@ class InputField extends StatelessWidget {
                   color: ColorResources.BLACK.withOpacity(0.5),
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                 ),
-                fillColor:(allowEdit == false) ? const Color(0xffEBEAEA) : Colors.transparent,
+                fillColor:(allowEdit == false) ? ColorResources.GREY : Colors.transparent,
                 suffixIcon: suffixIcon),
             ),
           ),

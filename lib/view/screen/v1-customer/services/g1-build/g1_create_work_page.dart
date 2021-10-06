@@ -28,23 +28,13 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
                   // Tiêu tề nhóm công việc
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
 
-                  // // Nhóm công việc
-                  // workGroup(context),
-          
-          
                   // Nhập địa chỉ cụ thể
                   form(context, controller),
                   
+                  material(context),
+
                   // Button
-                  Padding(
-                    padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                    child: LongButton(
-                      color: ColorResources.PRIMARYCOLOR,
-                      onPressed: (){},
-                      title: "Tiếp tục",
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                  ),
+                  button()
                 ],
               ),
             ),
@@ -54,31 +44,6 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
     );
   }
 
-  ///
-  /// Nhóm công việc
-  ///
-  Widget workGroup(BuildContext context){
-    return Column(
-      children: [
-         DropDownButton<String>(
-            data: const ["Xây nhà","Lót gạch men"],
-            obligatory: true,
-            onChanged: (value){},
-            value: "Xây nhà",
-            width: DeviceUtils.getScaledSize(context,1),
-            label: "Chọn nhóm công việc phù hợp",
-          ),
-          DropDownButton<String>(
-            data: const ["Xây nhà","Lót gạch men"],
-            obligatory: true,
-            onChanged: (value){},
-            value: "Xây nhà",
-            width: DeviceUtils.getScaledSize(context,1),
-            label: "Chọn công việc phù hợp",
-          ),
-      ],
-    );
-  }
 
 
   ///
@@ -105,7 +70,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         InputField(
           allowEdit: true,
           allowMultiline: true,
-          controller: controller.worKTitleController,
+          controller: controller.descController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Xây nhà lầu",
           hidden: false,
@@ -118,7 +83,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         TextFieldDate(
           isDate: true,
           allowEdit: true,
-          controller: controller.worKTitleController,
+          controller: controller.startTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
           label: "Thời gian bắt đầu",
@@ -129,7 +94,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
 
         TextFieldDate(
           allowEdit: true,
-          controller: controller.worKTitleController,
+          controller: controller.endTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
           label: "Thời gian kết thúc",
@@ -141,4 +106,81 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
       ],
     );
   }
+
+  ///
+  /// Nhóm công việc
+  ///
+  Widget material(BuildContext context){
+    return Column(
+      children: [
+         Row(
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+           children: [
+             DropDownButton<String>(
+                data: const ["Xây nhà","Lót gạch men"],
+                obligatory: true,
+                onChanged: (value){},
+                value: "Xây nhà",
+                width: DeviceUtils.getScaledSize(context,0.5),
+                label: "Vật liệu",
+              ),
+            DropDownButton<String>(
+              data: const ["Xây nhà","Lót gạch men"],
+              obligatory: true,
+              onChanged: (value){},
+              value: "Xây nhà",
+              width: DeviceUtils.getScaledSize(context,0.5),
+              label: "Quy cách",
+            ),
+           ],
+         ),
+         Row(
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+           children: [
+             DropDownButton<String>(
+                data: const ["Xây nhà","Lót gạch men"],
+                obligatory: true,
+                onChanged: (value){},
+                value: "Xây nhà",
+                width: DeviceUtils.getScaledSize(context,0.5),
+                label: "Vật liệu",
+                paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              ),
+            DropDownButton<String>(
+              data: const ["Xây nhà","Lót gạch men"],
+              obligatory: true,
+              onChanged: (value){},
+              value: "Xây nhà",
+              width: DeviceUtils.getScaledSize(context,0.5),
+              label: "Quy cách",
+              paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
+           ],
+         ),
+
+        LongButton(
+           title: 'Thêm vật liệu', 
+           color: ColorResources.PRIMARYCOLOR, 
+           onPressed: (){},
+           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+           vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        )
+      ],
+    );
+  }
+
+  Widget button(){
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      child: LongButton(
+        color: ColorResources.PRIMARYCOLOR,
+        onPressed: (){},
+        title: "Tiếp tục",
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+    );
+  }
+
+
 }
