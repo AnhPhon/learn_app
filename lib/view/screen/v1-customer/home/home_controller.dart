@@ -1,146 +1,129 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/banner_model.dart';
-import 'package:template/data/model/body/category_model.dart';
-import 'package:template/data/model/body/user_model.dart';
-import 'package:template/data/model/response/static_user_response.dart';
-import 'package:template/di_container.dart';
-import 'package:template/provider/banner_provider.dart';
-import 'package:template/provider/category_provider.dart';
-import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
-class HomeController extends GetxController {
-  UserProvider userProvider = GetIt.I.get<UserProvider>();
-  CategoryProvider categoryProvider = GetIt.I.get<CategoryProvider>();
-  BannerProvider bannerProvider = GetIt.I.get<BannerProvider>();
-
-  UserModel? userModel;
-  StaticUserResponse staticUserResponse = StaticUserResponse();
-
-  // banner
-  List<CategoryModel> categoriesList = [];
-  List<BannerModel> bannerList = [];
-
-  int categoryPages = 0;
-
-  bool isLoading = true;
-
-  @override
-  void onInit() {
-    super.onInit();
-
-    sl.get<SharedPreferenceHelper>().userId.then(
-      (userId) {
-
-        // load data user by id
-        getUserById(userId!);
-      },
-    );
-
-    // load data categories
-    getAllCategory();
-
-    // load data banner
-    getAllBanner();
-  }
-
+class V1HomeController extends GetxController {
   ///
-  /// lấy thông tin user
+  /// tới trang quản lý đơn tạo
   ///
-  void getUserById(String userId) {
-    // load data user by id
 
-    userProvider.find(
-      id: userId,
-      onSuccess: (data) {
-        userModel = data;
-        // load data revanue and statistical of team
-        userProvider.statisUser(
-          idUser: userId,
-          onSuccess: (data) {
-            staticUserResponse = data;
-            isLoading = false;
-            update();
-          },
-          onError: (error) {
-            print(error);
-          },
-        );
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
-  }
+  List<Map<String, dynamic>> contentGrid = [
+    {
+      "label": "Tạo đơn công việc",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffE7C550),
+          Color(0xffBE8542),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+    {
+      "label": "Báo giá VLXD",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xff97DBAE),
+          Color(0xff3FA963),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+    {
+      "label": "Dịch vụ thường xuyên",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffF1E1A6),
+          Color(0xffCEBB76),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+    {
+      "label": "Quản lý đơn tạo",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffDECFE5),
+          Color(0xffA27DBF),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+    {
+      "label": "Tạo đơn công việc",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffC3E5AE),
+          Color(0xff73AF4E),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+    {
+      "label": "Quản lý báo giá",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffE7C550),
+          Color(0xffBE8542),
+        ],
+      ),
+      "icon": Icons.add_circle,
+      "onTap": () {}
+    },
+  ];
 
-  ///
-  ///get all categ
-  ///
-  void getAllCategory() {
-    categoryProvider.all(onSuccess: (value) {
-      categoriesList = value;
-      update();
-    }, onError: (error) {
-      print(error);
-      update();
-    });
-  }
+  List<Map<String, dynamic>> threeFeatures = [
+    {
+      "label": "Ảnh sản phẩm mẫu",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffB4DDFD),
+          Color(0xffB4DDFD),
+        ],
+      ),
+      "icon": Icons.image,
+      "onTap": () {}
+    },
+    {
+      "label": "Quản lý công việc",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffB4DDFD),
+          Color(0xffB4DDFD),
+        ],
+      ),
+      "icon": Icons.image,
+      "onTap": () {}
+    },
+    {
+      "label": "Sản phẩm mẫu",
+      "gradient": const RadialGradient(
+        radius: 1,
+        colors: [
+          Color(0xffB4DDFD),
+          Color(0xffB4DDFD),
+        ],
+      ),
+      "icon": Icons.image,
+      "onTap": () {}
+    },
+  ];
 
-  ///
-  ///get all categ
-  ///
-  void getAllBanner() {
-    bannerProvider.all(onSuccess: (value) {
-      bannerList = value;
-      update();
-    }, onError: (error) {
-      print(error);
-      update();
-    });
-  }
-
-  ///
-  ///onCartClick
-  ///
-  void onCartClick() {
-    Get.toNamed(AppRoutes.CARTS);
-  }
-
-  ///
-  /// onRegisterIdClick
-  ///
-  void onRegisterIdClick() {
-    Get.toNamed(AppRoutes.INFORMATION_USER);
-  }
-
-  ///
-  /// onBtnCategoriesClick
-  ///
-  void onBtnCategoriesClick(int? index) {
-    Get.toNamed(
-        "${AppRoutes.CATEGORIES}?indexTab=$index&idCategory=${categoriesList[index!].id}")!;
-  }
-
-  ///
-  /// onProductVoucherClick
-  ///
-  void onProductVoucherClick() {
-    Get.toNamed(AppRoutes.KHOHANGTROGIA);
-  }
-
-  ///
-  /// onBtnKhoHangDieuKienClick
-  ///
-  void onBtnKhoHangDieuKienClick() {
-    Get.toNamed(AppRoutes.KHOHANGDIEUKIEN);
-  }
-
-  ///
-  /// onGroupClick
-  ///
-  void onGroupClick() {
-    Get.toNamed(AppRoutes.GROUP);
+  String fullname = "KH, Nguyễn Văn A";
+  void onClickFormManagementPage() {
+    Get.toNamed(AppRoutes.V1_FORM_MANAGEMENT);
   }
 }

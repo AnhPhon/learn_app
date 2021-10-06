@@ -7,6 +7,7 @@ class Dimensions {
   static const double FONT_SIZE_DEFAULT = 14.0;
   static const double FONT_SIZE_LARGE = 16.0;
   static const double FONT_SIZE_EXTRA_LARGE = 18.0;
+  static const double FONT_SIZE_EXTRA_SUPER_LARGE = 18.0;
   static const double FONT_SIZE_OVER_LARGE = 22.0;
 
   static const double PADDING_SIZE_EXTRA_SMALL = 5.0;
@@ -51,6 +52,13 @@ class Dimensions {
   static const double AVATAR_SQUARE_SIZE_DEFAULT = 100;
   static const double AVATAR_SQUARE_SIZE_LARGE = 150;
   static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
+
+  // RADIUS
+  static const double HOME_BORDER_RADIUS = 30;
+
+
+  // COLOR
+  static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
 
   Widget paddingDivider(BuildContext context) {
     return Padding(
