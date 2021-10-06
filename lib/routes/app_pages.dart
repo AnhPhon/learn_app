@@ -14,6 +14,7 @@ import 'package:template/view/screen/v1-customer/form_management/job_detail/job_
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
@@ -133,6 +134,11 @@ class AppPages {
       page: () => V1CartPage(),
     ),
 
+    GetPage(
+      name: AppRoutes.V1_NEWS_DETAIL,
+      page: () => V1NewsDetailPage(),
+    ),
+
     ///
     /// Thông báo
     ///
@@ -173,8 +179,8 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDERINFORAMTION, 
-      page: ()=> OrderInformationPage(),
+      name: AppRoutes.V1_ORDERINFORAMTION,
+      page: () => OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -182,15 +188,14 @@ class AppPages {
     ///Tạo đơn công việc 1- 6
     ///
     GetPage(
-      name: AppRoutes.V1_CREATEWORK, 
-      page: ()=> CreateWorkPage(),
+      name: AppRoutes.V1_CREATEWORK,
+      page: () => CreateWorkPage(),
     ),
     // Nhóm 1
     GetPage(
-      name: AppRoutes.V1_G1CREATEWORK, 
-      page: ()=> V1G1CreateWorkPage(),
-      binding: V1G1CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G1CREATEWORK,
+        page: () => V1G1CreateWorkPage(),
+        binding: V1G1CreateWorkBinding()),
 
     GetPage(
       name: AppRoutes.V1_DASHBOARD,
