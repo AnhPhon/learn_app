@@ -10,13 +10,8 @@ class AppRoutes {
   static const String V1BENEFITS = "/v1benefits";
   static const String V1NOTIFICATION = "/v1notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
-
-
-
-
-
-
+  static const String V1ORDERFEEDBACKCONTRACTORS =
+      "/v1orderfeedbackcontractors";
 
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';
