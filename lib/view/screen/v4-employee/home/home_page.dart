@@ -41,7 +41,7 @@ class V4HomePage extends GetView<V4HomeController> {
                           end: Alignment.bottomRight,
                           colors: [
                             ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
+                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
                           ],
                         ),
                       ),
@@ -60,7 +60,7 @@ class V4HomePage extends GetView<V4HomeController> {
                           end: Alignment.bottomRight,
                           colors: [
                             ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
+                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
                           ],
                         ),
                       ),
@@ -78,13 +78,15 @@ class V4HomePage extends GetView<V4HomeController> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
+                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                              ),
                             ),
                             padding: const EdgeInsets.all(2),
                             margin: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
+                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                              ),
                               child: Image.asset(
                                 Images.V4AvatarHome,
                                 width: 40,
@@ -160,7 +162,7 @@ class V4HomePage extends GetView<V4HomeController> {
 
                           const SizedBox(height: 20),
 
-                          // _followWorkProgressWidget
+                          // _revenueStatistic
                           _revenueStatistic(context),
 
                           const SizedBox(height: 20),
@@ -170,7 +172,7 @@ class V4HomePage extends GetView<V4HomeController> {
 
                           const SizedBox(height: 20),
 
-                          // _followWorkProgressWidget
+                          // _inputWarehouse
                           _inputWarehouse(context),
 
                           const SizedBox(height: 20),

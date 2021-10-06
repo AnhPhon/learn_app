@@ -6,7 +6,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 
 import 'home_controller.dart';
 
@@ -151,6 +150,14 @@ class V1HomePage extends GetView<V1HomeController> {
                               controller.onClickCreateWork();
                             },
                             child: Text("Tạo đơn công việc 1"),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.onClickFormManagementPage();
+                            },
+                            child: const Text("Quản lý đơn tạo",
+                                style: TextStyle(
+                                    color: ColorResources.LIGHT_SKY_BLUE)),
                           ),
                         ],
                       ),

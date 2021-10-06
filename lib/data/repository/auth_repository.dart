@@ -6,7 +6,7 @@ import 'package:template/data/datasource/remote/exception/api_error_handler.dart
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
-import 'package:template/data/model/body/user_model.dart';
+// import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
@@ -20,14 +20,14 @@ class AuthRepository {
   ///
   /// Insert user to database
   ///
-  Future<ApiResponse> registration(UserModel data) async {
-    try {
-      final response = await dioClient!.post('/users', data: data.toJson());
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
+  // Future<ApiResponse> registration(UserModel data) async {
+  //   try {
+  //     final response = await dioClient!.post('/users', data: data.toJson());
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
 
   ///
   /// Insert user to database
