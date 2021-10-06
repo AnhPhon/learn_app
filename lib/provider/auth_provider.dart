@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
-import 'package:template/data/model/body/user_model.dart';
+// import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/base/error_response.dart';
