@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -21,7 +23,8 @@ class V1NotificationPage extends GetView<V1NotificationController> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: (){
-                  controller.onClickItem();
+                  int radom = Random().nextInt(6);
+                  controller.onClickItem(radom);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

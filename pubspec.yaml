@@ -45,6 +45,7 @@ dependencies:
   flutter_easyloading: ^3.0.3
   flutter_html: ^2.1.4
 
+
 dev_dependencies:
   # flutter pub pub run dapackages:dapackages.dart ./pubspec.yaml
   dapackages: ^1.6.0
@@ -82,3 +83,13 @@ flutter:
         - asset: assets/fonts/roboto/Roboto-Regular.ttf
         - asset: assets/fonts/roboto/Roboto-Bold.ttf
           weight: 700
+    # - family: Nutito
+    #   fonts:
+    #     - asset: assets/fonts/nutito/Nutito-Regular.ttf
+    #       weight: 400
+    #     - asset: assets/fonts/nutito/Nutito-SemiBold.ttf
+    #       weight: 500
+    #     - asset: assets/fonts/nutito/Nutito-Bold.ttf
+    #       weight: 600
+    #     - asset: assets/fonts/nutito/Nutito-Black.ttf
+    #       weight: 800

@@ -7,7 +7,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 
 import 'home_controller.dart';
 
@@ -15,8 +14,9 @@ class V1HomePage extends GetView<V1HomeController> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
+  
     return Scaffold(
+      
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
@@ -145,6 +145,20 @@ class V1HomePage extends GetView<V1HomeController> {
                       width: size.width,
                       child: Column(
                         children: [
+                          Text("Tạo đơn công việc 1 2 5 6"),
+                          GestureDetector(
+                            onTap: (){
+                              controller.onClickCreateWork();
+                            },
+                            child: Text("Tạo đơn công việc 1"),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.onClickFormManagementPage();
+                            },
+                            child: const Text("Quản lý đơn tạo",
+                                style: TextStyle(
+                                    color: ColorResources.LIGHT_SKY_BLUE)),),
                           _categoryBoxWidget(),
                           _threeFeatureWidget(),
                           const SizedBox(height: 30),
