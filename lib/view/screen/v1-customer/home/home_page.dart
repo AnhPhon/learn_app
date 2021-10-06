@@ -158,6 +158,16 @@ class V1HomePage extends GetView<V1HomeController> {
                                   color: ColorResources.LIGHT_SKY_BLUE),
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.onMoreProductList();
+                            },
+                            child: const Text(
+                              "Sản phẩm",
+                              style: TextStyle(
+                                  color: ColorResources.LIGHT_SKY_BLUE),
+                            ),
+                          ),
                         ],
                       ),
                     ),

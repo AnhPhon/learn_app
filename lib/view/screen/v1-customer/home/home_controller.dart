@@ -17,4 +17,11 @@ class V1HomeController extends GetxController {
   void onClickFormList() {
     Get.toNamed(AppRoutes.V1_FORM_LIST);
   }
+
+  ///
+  /// go to Product Page
+  ///
+  void onMoreProductList() {
+    Get.toNamed(AppRoutes.V1_PRODUCT);
+  }
 }

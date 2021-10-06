@@ -49,6 +49,8 @@ class AppRoutes {
   static const String V1_PAYMENT_METHOD = '/v1_payment_method';
   static const String V1_JOB_DETAIL = '/v1_job_detail';
   static const String V1_FORM_LIST = '/v1_form_list';
+  static const String V1_PRODUCT_DETAIL = '/v1_product_detail';
+  static const String V1_CART = '/v1_cart';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';

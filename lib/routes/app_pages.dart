@@ -19,6 +19,8 @@ import 'package:template/view/screen/v1-customer/notifications/notification_bind
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
+import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
@@ -105,6 +107,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_FORM_LIST,
       page: () => V1FormListPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PRODUCT_DETAIL,
+      page: () => V1ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CART,
+      page: () => V1CartPage(),
     ),
 
     ///
