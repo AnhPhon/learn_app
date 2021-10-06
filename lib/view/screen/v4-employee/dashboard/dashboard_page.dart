@@ -25,7 +25,7 @@ class V4DashboardPage extends StatelessWidget {
               index: controller.tabIndex,
               children: [
                 V4HomePage(),
-                V4NNotificationPage(),
+                V4NotificationPage(),
                 V4NewsPage(),
                 V4ReportPage(),
                 V4AccountPage(),

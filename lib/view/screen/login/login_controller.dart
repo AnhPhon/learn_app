@@ -30,61 +30,127 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
+    if (usernameController.text == '1') {
+      Get.toNamed(AppRoutes.V1_DASHBOARD);
+    } else if (usernameController.text == '2') {
+      Get.toNamed(AppRoutes.V2_DASHBOARD);
+    } else if (usernameController.text == '3') {
+      Get.toNamed(AppRoutes.V3_DASHBOARD);
+    } else if (usernameController.text == '4') {
+      Get.toNamed(AppRoutes.V4_DASHBOARD);
+    } else {}
+
+    // // validate infomation username password
+    // if (usernameController.text == '' || passwordController.text == '') {
+    //   Get.snackbar(
+    //     "Thông báo!", // title
+    //     'Vui lòng nhập đầy đủ thông tin', // message
+    //     icon: const Icon(Icons.error_outline),
+    //     shouldIconPulse: true,
+    //     isDismissible: true,
+    //     duration: const Duration(seconds: 3),
+    //   );
+    // } else {
+    //   // login with info user input
+    //   final AuthRequest request = AuthRequest();
+    //   request.username = usernameController.text.toString();
+    //   request.password = passwordController.text.toString();
+
+    //   authProvider.login(
+    //       request: request,
+    //       onSuccess: (auth) {
+    //         Get.snackbar(
+    //           "Thành công!", // title
+    //           'Đăng nhập thành công', // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 2),
+    //         );
+
+    //         isLoading = false;
+    //         auth = auth;
+
+    //         // save info token and info user
+    //         sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
+    //         sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
+    //         sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
+    //         sl.get<SharedPreferenceHelper>().saveIsLogin(true);
+
+    //         update();
+
+    //         // go to dashboard
+    //         Get.toNamed(AppRoutes.DASHBOARD);
+    //       },
+    //       onError: (error) {
+    //         isLoading = false;
+    //         Get.snackbar(
+    //           "Hey i'm a Get SnackBar!", // title
+    //           error.toString(), // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 3),
+    //         );
+    //         print(error);
+    //         update();
+    //       });
+    // }
     // validate infomation username password
-    if (usernameController.text == '' || passwordController.text == '') {
-      Get.snackbar(
-        "Thông báo!", // title
-        'Vui lòng nhập đầy đủ thông tin', // message
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 3),
-      );
-    } else {
-      // // login with info user input
-      // final AuthRequest request = AuthRequest();
-      // request.username = usernameController.text.toString();
-      // request.password = passwordController.text.toString();
+    // if (usernameController.text == '' || passwordController.text == '') {
+    //   Get.snackbar(
+    //     "Thông báo!", // title
+    //     'Vui lòng nhập đầy đủ thông tin', // message
+    //     icon: const Icon(Icons.error_outline),
+    //     shouldIconPulse: true,
+    //     isDismissible: true,
+    //     duration: const Duration(seconds: 3),
+    //   );
+    // } else {
+    //   // // login with info user input
+    //   final AuthRequest request = AuthRequest();
+    //   request.username = usernameController.text.toString();
+    //   request.password = passwordController.text.toString();
 
-      // authProvider.login(
-      //     request: request,
-      //     onSuccess: (auth) {
-      //       Get.snackbar(
-      //         "Thành công!", // title
-      //         'Đăng nhập thành công', // message
-      //         icon: const Icon(Icons.error_outline),
-      //         shouldIconPulse: true,
-      //         isDismissible: true,
-      //         duration: const Duration(seconds: 2),
-      //       );
+    //   authProvider.login(
+    //       request: request,
+    //       onSuccess: (auth) {
+    //         Get.snackbar(
+    //           "Thành công!", // title
+    //           'Đăng nhập thành công', // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 2),
+    //         );
 
-      //       isLoading = false;
-      //       auth = auth;
+    //         isLoading = false;
+    //         auth = auth;
 
-      //       // save info token and info user
-      //       sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
-      //       sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
-      //       sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
-      //       sl.get<SharedPreferenceHelper>().saveIsLogin(true);
+    //         // save info token and info user
+    //         sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
+    //         sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
+    //         sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
+    //         sl.get<SharedPreferenceHelper>().saveIsLogin(true);
 
-      //       update();
+    //         update();
 
-      //       // go to dashboard
-      //       Get.toNamed(AppRoutes.DASHBOARD);
-      //     },
-      //     onError: (error) {
-      //       isLoading = false;
-      //       Get.snackbar(
-      //         "Hey i'm a Get SnackBar!", // title
-      //         error.toString(), // message
-      //         icon: const Icon(Icons.error_outline),
-      //         shouldIconPulse: true,
-      //         isDismissible: true,
-      //         duration: const Duration(seconds: 3),
-      //       );
-      //       print(error);
-      //       update();
-      //     });
-    }
+    //         // go to dashboard
+    //         Get.toNamed(AppRoutes.DASHBOARD);
+    //       },
+    //       onError: (error) {
+    //         isLoading = false;
+    //         Get.snackbar(
+    //           "Hey i'm a Get SnackBar!", // title
+    //           error.toString(), // message
+    //           icon: const Icon(Icons.error_outline),
+    //           shouldIconPulse: true,
+    //           isDismissible: true,
+    //           duration: const Duration(seconds: 3),
+    //         );
+    //         print(error);
+    //         update();
+    //       });
+    // }
   }
 }

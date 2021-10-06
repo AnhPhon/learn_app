@@ -41,7 +41,7 @@ class V4HomePage extends GetView<V4HomeController> {
                           end: Alignment.bottomRight,
                           colors: [
                             ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
+                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
                           ],
                         ),
                       ),
@@ -60,7 +60,7 @@ class V4HomePage extends GetView<V4HomeController> {
                           end: Alignment.bottomRight,
                           colors: [
                             ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
+                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
                           ],
                         ),
                       ),
@@ -78,13 +78,15 @@ class V4HomePage extends GetView<V4HomeController> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
+                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                              ),
                             ),
                             padding: const EdgeInsets.all(2),
                             margin: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
+                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                              ),
                               child: Image.asset(
                                 Images.V4AvatarHome,
                                 width: 40,
@@ -124,14 +126,15 @@ class V4HomePage extends GetView<V4HomeController> {
                   height: size.height - 180,
                   width: size.width,
                   margin: const EdgeInsets.only(),
-                  padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                  padding: const EdgeInsets.all(
+                    Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
                   alignment: Alignment.centerLeft,
                   decoration: const BoxDecoration(
                     color: Color(0xffF6F6F7),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
+                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
                     ),
                   ),
                   child: SingleChildScrollView(
@@ -160,7 +163,7 @@ class V4HomePage extends GetView<V4HomeController> {
 
                           const SizedBox(height: 20),
 
-                          // _followWorkProgressWidget
+                          // _revenueStatistic
                           _revenueStatistic(context),
 
                           const SizedBox(height: 20),
@@ -170,7 +173,7 @@ class V4HomePage extends GetView<V4HomeController> {
 
                           const SizedBox(height: 20),
 
-                          // _followWorkProgressWidget
+                          // _inputWarehouse
                           _inputWarehouse(context),
 
                           const SizedBox(height: 20),
