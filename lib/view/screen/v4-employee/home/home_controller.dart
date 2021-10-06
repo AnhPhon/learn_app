@@ -38,6 +38,13 @@ class V4HomeController extends GetxController {
     }
   ];
 
+  ///
+  /// click to timekeeping
+  ///
+  void onClickToWorkProgerss() {
+    Get.toNamed(AppRoutes.V4_TIMEKEEPING);
+  }
+
   double total = 10000000;
   double revenue = 10000000; // thu
   double expenditure = 10000000; // chi

@@ -217,7 +217,9 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   Widget _btnTimekeeping() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.onClickToWorkProgerss();
+      },
       child: Container(
         width: 150,
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
