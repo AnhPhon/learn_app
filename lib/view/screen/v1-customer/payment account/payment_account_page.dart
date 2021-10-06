@@ -11,8 +11,6 @@ import 'package:template/view/screen/v1-customer/payment%20account/payment_accou
 class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1PaymentAccountController>(
         init: V1PaymentAccountController(),
         builder: (controller) {
@@ -20,12 +18,12 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
             appBar: AppBarWidget(title: controller.title),
             body: Container(
               margin: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-                horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+                vertical: DeviceUtils.getScaledHeight(context, 0.019),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.038),
               ),
               padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 25 / height),
-                horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
+                vertical: DeviceUtils.getScaledHeight(context, 0.032),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.051),
               ),
               decoration: BoxDecoration(
                 boxShadow: [
@@ -44,7 +42,6 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     //title
                     _textTitle(
                       context,
-                      height,
                       title: "Quản lý tài khoản",
                     ),
 
@@ -72,7 +69,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //btn checkout
@@ -80,11 +77,11 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       onTap: () => controller.onCheckoutClick(),
                       color: ColorResources.PRIMARY,
                       text: "Đồng ý thanh toán",
-                      width: width / 1.5,
+                      width: DeviceUtils.getScaledWidth(context, .7),
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //note
@@ -95,7 +92,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //btn put money into an account
@@ -103,11 +100,11 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       onTap: () => controller.onRechargeClick(),
                       color: ColorResources.PRIMARY,
                       text: "Nạp tiền",
-                      width: width / 1.5,
+                      width: DeviceUtils.getScaledWidth(context, .7),
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //note
@@ -127,13 +124,12 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
   ///
   ///text title
   ///
-  Widget _textTitle(BuildContext context, double height,
-      {required String title}) {
+  Widget _textTitle(BuildContext context, {required String title}) {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 10 / height),
+          vertical: DeviceUtils.getScaledHeight(context, 0.013),
         ),
         child: Text(
           title,

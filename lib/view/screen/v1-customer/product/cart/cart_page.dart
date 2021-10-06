@@ -15,8 +15,6 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1CartController>(
         init: V1CartController(),
         builder: (controller) {
@@ -29,15 +27,14 @@ class V1CartPage extends GetView<V1CartController> {
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(
                       context,
-                      20 / height,
+                      0.026,
                     ),
                   ),
 
                   //title shipping detail
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal:
-                          DeviceUtils.getScaledHeight(context, 15 / height),
+                      horizontal: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
                     child: Text(
                       "Chi tiết về shipping",
@@ -46,19 +43,16 @@ class V1CartPage extends GetView<V1CartController> {
                   ),
 
                   //shipping detail
-                  _shipping(context, controller, height, width),
+                  _shipping(context, controller),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 10 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   //title order product detail
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: DeviceUtils.getScaledWidth(
-                        context,
-                        15 / width,
-                      ),
+                      horizontal: DeviceUtils.getScaledWidth(context, 0.038),
                     ),
                     child: Text(
                       "Chi tiết đơn hàng",
@@ -67,19 +61,18 @@ class V1CartPage extends GetView<V1CartController> {
                   ),
 
                   //order product detail
-                  _orderProductDetail(context, controller, height, width),
+                  _orderProductDetail(context, controller),
 
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(
                       context,
-                      20 / height,
+                      0.026,
                     ),
                   ),
                 ],
               ),
             ),
-            bottomNavigationBar:
-                _bottomPaymentBtn(context, controller, height, width),
+            bottomNavigationBar: _bottomPaymentBtn(context, controller),
           );
         });
   }
@@ -87,7 +80,7 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///shipping widget
   ///
-  Row _shippingWidget(BuildContext context, double height, double width,
+  Row _shippingWidget(BuildContext context,
       {Image? image,
       Icon? icon,
       required String text1,
@@ -98,15 +91,15 @@ class V1CartPage extends GetView<V1CartController> {
       children: [
         if (image != null)
           Container(
-              height: DeviceUtils.getScaledHeight(context, 25 / height),
-              width: DeviceUtils.getScaledWidth(context, 25 / width),
+              height: DeviceUtils.getScaledHeight(context, 0.032),
+              width: DeviceUtils.getScaledWidth(context, 0.063),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
               ),
               child: image)
         else
           icon!,
-        SizedBox(width: DeviceUtils.getScaledWidth(context, 10 / width)),
+        SizedBox(width: DeviceUtils.getScaledWidth(context, 0.025)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +132,7 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///row shipping component
   ///
-  Widget _rowShipping(BuildContext context, double height, double width,
+  Widget _rowShipping(BuildContext context,
       {required VoidCallback onTap, required Widget shippingWidget}) {
     return GestureDetector(
       onTap: onTap,
@@ -166,17 +159,15 @@ class V1CartPage extends GetView<V1CartController> {
   Widget _shipping(
     BuildContext context,
     V1CartController controller,
-    double height,
-    double width,
   ) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
       ),
       decoration: BoxDecoration(
         boxShadow: [
@@ -194,13 +185,9 @@ class V1CartPage extends GetView<V1CartController> {
           // shipping address
           _rowShipping(
             context,
-            height,
-            width,
             onTap: () => controller.onSelectShippingAddress(),
             shippingWidget: _shippingWidget(
               context,
-              height,
-              width,
               icon: const Icon(
                 Icons.location_on_outlined,
                 color: ColorResources.PRIMARY,
@@ -215,13 +202,9 @@ class V1CartPage extends GetView<V1CartController> {
           //partner shipping
           _rowShipping(
             context,
-            height,
-            width,
             onTap: () => controller.onSelectShippingMethod(),
             shippingWidget: _shippingWidget(
               context,
-              height,
-              width,
               image: Image.asset("assets/images/logo.png"),
               text1: "Dịch vụ shipping",
               text2: "Tên dịch vụ",
@@ -308,12 +291,10 @@ class V1CartPage extends GetView<V1CartController> {
   Widget _paymentDetail(
     BuildContext context,
     V1CartController controller,
-    double height,
-    double width,
   ) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 10 / height),
+        vertical: DeviceUtils.getScaledHeight(context, 0.013),
       ),
       child: Column(
         children: [
@@ -322,14 +303,14 @@ class V1CartPage extends GetView<V1CartController> {
             text2: "260.000 VND",
           ),
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 10 / height),
+            height: DeviceUtils.getScaledHeight(context, 0.013),
           ),
           rowText(
             text1: "Phí vận chuyển",
             text2: "Miễn phí",
           ),
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 10 / height),
+            height: DeviceUtils.getScaledHeight(context, 0.013),
           ),
           rowText(
             text1: "Tổng",
@@ -346,17 +327,15 @@ class V1CartPage extends GetView<V1CartController> {
   Widget _orderProductDetail(
     BuildContext context,
     V1CartController controller,
-    double height,
-    double width,
   ) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
       ),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
@@ -389,16 +368,15 @@ class V1CartPage extends GetView<V1CartController> {
                                   controller.imgProduct,
                                   fit: BoxFit.fill,
                                   width: DeviceUtils.getScaledWidth(
-                                      context, 60 / width),
+                                      context, 0.152),
                                   height: DeviceUtils.getScaledHeight(
-                                      context, 70 / height),
+                                      context, 0.092),
                                 ),
                               ),
                             ),
 
                             SizedBox(
-                              width: DeviceUtils.getScaledWidth(
-                                  context, 10 / width),
+                              width: DeviceUtils.getScaledWidth(context, 0.025),
                             ),
 
                             // name, price, quality
@@ -421,7 +399,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 5 / height),
+                                        context, 0.006),
                                   ),
 
                                   //price
@@ -444,7 +422,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 5 / height),
+                                        context, 0.006),
                                   ),
 
                                   // edit quality
@@ -452,7 +430,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 5 / height),
+                                        context, 0.006),
                                   ),
                                 ],
                               ),
@@ -461,12 +439,10 @@ class V1CartPage extends GetView<V1CartController> {
                             /// delete btn
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => controller.deleteProduct(
-                                    context, height, width),
+                                onTap: () => controller.deleteProduct(context),
                                 child: Container(
                                   padding: EdgeInsets.all(
-                                    DeviceUtils.getScaledSize(
-                                        context, 5 / width),
+                                    DeviceUtils.getScaledSize(context, 0.012),
                                   ),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
@@ -476,7 +452,7 @@ class V1CartPage extends GetView<V1CartController> {
                                   child: Icon(
                                     Icons.close_outlined,
                                     size: DeviceUtils.getScaledHeight(
-                                        context, 14 / height),
+                                        context, 0.018),
                                   ),
                                 ),
                               ),
@@ -494,7 +470,7 @@ class V1CartPage extends GetView<V1CartController> {
             }),
 
         //payment detail
-        _paymentDetail(context, controller, height, width),
+        _paymentDetail(context, controller),
       ]),
     );
   }
@@ -505,13 +481,11 @@ class V1CartPage extends GetView<V1CartController> {
   Widget _bottomPaymentBtn(
     BuildContext context,
     V1CartController controller,
-    double height,
-    double width,
   ) {
     return BtnCustom(
         onTap: () => controller.onCheckoutClick(),
         color: ColorResources.PRIMARY,
         text: "Thanh toán 260.000 VND",
-        width: width);
+        width: double.infinity);
   }
 }

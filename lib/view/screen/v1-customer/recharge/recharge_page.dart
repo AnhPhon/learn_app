@@ -12,8 +12,6 @@ import 'package:template/view/screen/v1-customer/recharge/recharge_controller.da
 class V1RechargePage extends GetView<V1RechargeController> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1RechargeController>(
         init: V1RechargeController(),
         builder: (controller) {
@@ -21,7 +19,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.038),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -29,18 +27,16 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     //title
                     _textTitle(
                       context,
-                      height,
                       title: "Hướng dẫn thực hiện thanh toán",
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 10 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.013),
                     ),
 
                     //title account management
                     _textTitle(
                       context,
-                      height,
                       title: "Quản lý tài khoản",
                     ),
 
@@ -53,8 +49,6 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
                     _row3Widget(
                       context,
-                      height,
-                      width,
                       text1: "Số tài khoản",
                       text2: "8000.111.68.68.68",
                       onTap: () {},
@@ -77,22 +71,22 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //content
-                    _content(context, height, width),
+                    _content(context),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 15 / height),
+                      height: DeviceUtils.getScaledHeight(context, 0.019),
                     ),
 
                     //title upload
-                    _textTitle(context, height,
+                    _textTitle(context,
                         title: "Tải hình ảnh hoá đơn giao dịch"),
 
                     //upload image
-                    _uploadImage(controller),
+                    _uploadImage(context, controller),
                   ],
                 ),
               ),
@@ -105,13 +99,12 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   ///text title
   ///
-  Widget _textTitle(BuildContext context, double height,
-      {required String title}) {
+  Widget _textTitle(BuildContext context, {required String title}) {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 10 / height),
+          vertical: DeviceUtils.getScaledHeight(context, 0.013),
         ),
         child: Text(
           title,
@@ -127,15 +120,15 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   ///row 3 widget
   ///
-  Widget _row3Widget(BuildContext context, double height, double width,
+  Widget _row3Widget(BuildContext context,
       {required String text1,
       required String text2,
       required Icon icon,
       required VoidCallback onTap}) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 8 / height)),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+          vertical: DeviceUtils.getScaledHeight(context, 0.01)),
       child: DefaultTextStyle(
         style: const TextStyle(
           fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -169,15 +162,15 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   ///content
   ///
-  Widget _content(BuildContext context, double height, double width) {
+  Widget _content(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 25 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.032),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
       ),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.GREY),
@@ -195,7 +188,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
           ),
 
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 10 / height),
+            height: DeviceUtils.getScaledHeight(context, 0.013),
           ),
 
           //content
@@ -210,7 +203,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                 ),
               ),
               SizedBox(
-                width: DeviceUtils.getScaledWidth(context, 10 / width),
+                width: DeviceUtils.getScaledWidth(context, 0.025),
               ),
               GestureDetector(
                 onTap: () {},
@@ -223,7 +216,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
           ),
 
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 10 / height),
+            height: DeviceUtils.getScaledHeight(context, 0.013),
           ),
 
           //note
@@ -244,7 +237,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   ///upload image
   ///
-  Widget _uploadImage(V1RechargeController controller) {
+  Widget _uploadImage(BuildContext context, V1RechargeController controller) {
     return GestureDetector(
       onTap: () => controller.pickImage(),
       child: Container(
@@ -255,8 +248,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
               )
             : Image.asset(
                 Images.add_image,
-                height: 70,
-                width: 100,
+                height: DeviceUtils.getScaledHeight(context, 0.092),
+                width: DeviceUtils.getScaledWidth(context, 0.25),
                 fit: BoxFit.fill,
                 color: ColorResources.PRIMARY,
               ),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/product_widget.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
@@ -14,8 +15,6 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1ProductController>(
         init: V1ProductController(),
         builder: (controller) {
@@ -25,13 +24,13 @@ class V1ProductPage extends GetView<V1ProductController> {
               children: [
                 //header
                 Container(
-                  height: DeviceUtils.getScaledHeight(context, 100 / height),
+                  height: DeviceUtils.getScaledHeight(context, 0.13),
                   color: ColorResources.WHITE,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //search bar
-                      _searchBar(context, controller, height, width),
+                      _searchBar(context, controller),
 
                       //category
                       GestureDetector(
@@ -42,10 +41,10 @@ class V1ProductPage extends GetView<V1ProductController> {
                             //title
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: DeviceUtils.getScaledWidth(
-                                    context, 15 / width),
-                                vertical: DeviceUtils.getScaledHeight(
-                                    context, 15 / height),
+                                horizontal:
+                                    DeviceUtils.getScaledWidth(context, 0.038),
+                                vertical:
+                                    DeviceUtils.getScaledHeight(context, 0.019),
                               ),
                               child: const Text(
                                 "Hạng mục",
@@ -59,13 +58,13 @@ class V1ProductPage extends GetView<V1ProductController> {
                             //icon
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: DeviceUtils.getScaledWidth(
-                                    context, 15 / width),
+                                horizontal:
+                                    DeviceUtils.getScaledWidth(context, 0.038),
                               ),
                               child: Icon(
                                 Icons.arrow_drop_down,
-                                size: DeviceUtils.getScaledHeight(
-                                    context, 30 / height),
+                                size:
+                                    DeviceUtils.getScaledHeight(context, 0.05),
                               ),
                             ),
                           ],
@@ -82,10 +81,9 @@ class V1ProductPage extends GetView<V1ProductController> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height:
-                              DeviceUtils.getScaledHeight(context, 15 / height),
+                          height: DeviceUtils.getScaledHeight(context, 0.019),
                         ),
-                        _productList(context, controller, width),
+                        _productList(context, controller),
                       ],
                     ),
                   ),
@@ -99,8 +97,7 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   ///search bar
   ///
-  Widget _searchBar(BuildContext context, V1ProductController controller,
-      double height, double width) {
+  Widget _searchBar(BuildContext context, V1ProductController controller) {
     return TextField(
       textInputAction: TextInputAction.done,
       textAlignVertical: TextAlignVertical.center,
@@ -113,8 +110,8 @@ class V1ProductPage extends GetView<V1ProductController> {
           size: Dimensions.ICON_SIZE_LARGE,
         ),
         contentPadding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 15 / height),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+          vertical: DeviceUtils.getScaledHeight(context, 0.019),
         ),
         focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ColorResources.PRIMARY, width: 2)),
@@ -132,12 +129,12 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   ///product list
   ///
-  Widget _productList(
-      BuildContext context, V1ProductController controller, double width) {
+  Widget _productList(BuildContext context, V1ProductController controller) {
     return Container(
       color: ColorResources.WHITE,
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      ),
       child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -151,7 +148,7 @@ class V1ProductPage extends GetView<V1ProductController> {
             return GestureDetector(
               onTap: () => controller.onProductDetailClick(),
               child: ProductWidget(
-                  imgUrl: "assets/images/news_template.png",
+                  imgUrl: Images.newsTemplate,
                   name: "Sản phẩm ${index + 1}",
                   price: "230.000 VND"),
             );

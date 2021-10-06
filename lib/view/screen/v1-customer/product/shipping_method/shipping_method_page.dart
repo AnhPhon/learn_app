@@ -12,8 +12,6 @@ import 'package:template/view/screen/v1-customer/product/shipping_method/shippin
 class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1ShippingMethodController>(
         init: V1ShippingMethodController(),
         builder: (controller) {
@@ -22,7 +20,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
             body: Column(
               children: [
                 //shipping method
-                _shippingMethod(context, controller, height, width),
+                _shippingMethod(context, controller),
 
                 const Spacer(),
               ],
@@ -35,7 +33,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
   ///
   ///shipping widget
   ///
-  Row _shippingWidget(BuildContext context, double height, double width,
+  Row _shippingWidget(BuildContext context,
       {Image? image,
       Icon? icon,
       required String text1,
@@ -46,8 +44,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
       children: [
         if (image != null)
           Container(
-              height: DeviceUtils.getScaledHeight(context, 25 / height),
-              width: DeviceUtils.getScaledWidth(context, 25 / width),
+              height: DeviceUtils.getScaledHeight(context, 0.032),
+              width: DeviceUtils.getScaledWidth(context, 0.063),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
               ),
@@ -55,7 +53,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
         else
           icon!,
         SizedBox(
-          width: DeviceUtils.getScaledWidth(context, 10 / width),
+          width: DeviceUtils.getScaledWidth(context, 0.025),
         ),
         Expanded(
           child: Column(
@@ -71,7 +69,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
               ),
 
               SizedBox(
-                height: DeviceUtils.getScaledHeight(context, 10 / height),
+                height: DeviceUtils.getScaledHeight(context, 0.013),
               ),
 
               //subtile
@@ -82,7 +80,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
               ),
 
               SizedBox(
-                height: DeviceUtils.getScaledHeight(context, 10 / height),
+                height: DeviceUtils.getScaledHeight(context, 0.013),
               ),
 
               //price
@@ -102,8 +100,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
   ///
   ///row shipping component
   ///
-  Widget _rowShipping(BuildContext context, double height, double width,
-      V1ShippingMethodController controller,
+  Widget _rowShipping(
+      BuildContext context, V1ShippingMethodController controller,
       {required Widget shippingWidget, required int indexRad}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +111,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
           child: shippingWidget,
         ),
         SizedBox(
-          width: DeviceUtils.getScaledWidth(context, 10 / width),
+          width: DeviceUtils.getScaledWidth(context, 0.025),
         ),
         Expanded(
           child: Radio(
@@ -133,17 +131,15 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
   Widget _shippingMethod(
     BuildContext context,
     V1ShippingMethodController controller,
-    double height,
-    double width,
   ) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 15 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 15 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 25 / height),
-        horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
+        vertical: DeviceUtils.getScaledHeight(context, 0.032),
+        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
       ),
       decoration: BoxDecoration(
         boxShadow: [
@@ -167,14 +163,10 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
                   children: [
                     _rowShipping(
                       context,
-                      height,
-                      width,
                       controller,
                       indexRad: index,
                       shippingWidget: _shippingWidget(
                         context,
-                        height,
-                        width,
                         image: Image.asset(Images.shipping_method),
                         text1: controller.shippingMethodNameList[index],
                         text2: controller.shippingMethodSubTileList[index],

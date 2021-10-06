@@ -11,8 +11,6 @@ import 'package:template/view/screen/v1-customer/product/shipping_address/shippi
 class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1ShippingAddressController>(
         init: V1ShippingAddressController(),
         builder: (controller) {
@@ -22,11 +20,11 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
             body: SingleChildScrollView(
                 child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
+                  horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
               child: Column(
                 children: [
                   //province
-                  _rowTitle(context, height, width, title: "Tỉnh thành phố"),
+                  _rowTitle(context, title: "Tỉnh thành phố"),
                   DropDownButton1(
                     hint: "Nhập tỉnh/thành phố",
                     value: controller.province,
@@ -35,7 +33,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   //district
-                  _rowTitle(context, height, width, title: "Quận huyện"),
+                  _rowTitle(context, title: "Quận huyện"),
                   DropDownButton1(
                     hint: "Nhập quận/huyện",
                     value: controller.district,
@@ -44,7 +42,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   //ward
-                  _rowTitle(context, height, width, title: "Phường xã"),
+                  _rowTitle(context, title: "Phường xã"),
                   DropDownButton1(
                     hint: "Nhập phường/xã",
                     value: controller.ward,
@@ -53,15 +51,17 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 10 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   //address
-                  _rowTitle(context, height, width,
-                      title: "Địa chỉ cụ thể nhận hàng"),
+                  _rowTitle(
+                    context,
+                    title: "Địa chỉ cụ thể nhận hàng",
+                  ),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 10 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   InputWidget(
@@ -70,7 +70,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 40 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.052),
                   ),
 
                   //btn
@@ -78,7 +78,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     onTap: () {},
                     color: ColorResources.PRIMARY,
                     text: "Cập nhật",
-                    width: width / 2,
+                    width: DeviceUtils.getScaledWidth(context, .5),
                   )
                 ],
               ),
@@ -90,13 +90,12 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
   ///
   ///row title
   ///
-  Widget _rowTitle(BuildContext context, double height, double width,
-      {required String title}) {
+  Widget _rowTitle(BuildContext context, {required String title}) {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
         padding: EdgeInsets.only(
-          top: DeviceUtils.getScaledHeight(context, 10 / height),
+          top: DeviceUtils.getScaledHeight(context, 0.013),
         ),
         child: RichText(
           text: TextSpan(

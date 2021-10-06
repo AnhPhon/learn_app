@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -13,8 +12,6 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,12 +23,12 @@ class ProductWidget extends StatelessWidget {
           child: Image.asset(
             imgUrl,
             fit: BoxFit.fill,
-            height: DeviceUtils.getScaledHeight(context, 150 / height),
+            height: DeviceUtils.getScaledHeight(context, 0.197),
           ),
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, 5 / height)),
+        SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
         SizedBox(
-          height: DeviceUtils.getScaledSize(context, 75 / height),
+          height: DeviceUtils.getScaledSize(context, 0.098),
           child: Text(
             name,
             maxLines: 2,

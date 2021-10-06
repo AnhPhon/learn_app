@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_controller.dart';
@@ -180,10 +181,10 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
-                  "assets/images/news_template.png",
+                  Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: 93,
-                  width: 100,
+                  height: DeviceUtils.getScaledHeight(context, 0.122),
+                  width: DeviceUtils.getScaledWidth(context, 0.254),
                 ),
               ),
             );

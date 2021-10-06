@@ -42,14 +42,14 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   ),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 10 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   //ProductSpecification
                   _productSpecification(context, controller, height, width),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 10 / height),
+                    height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   //more product
@@ -109,13 +109,13 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               name,
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 5 / height)),
+            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
             Text(price,
                 style: const TextStyle(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     color: ColorResources.RED,
                     fontWeight: FontWeight.w600)),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 5 / height)),
+            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
             Text(
               discount,
               style: TextStyle(
@@ -140,15 +140,15 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
           : DeviceUtils.getScaledHeight(context, 200 / height),
       color: ColorResources.WHITE,
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(
               left: DeviceUtils.getScaledWidth(context, 7 / width),
-              top: DeviceUtils.getScaledHeight(context, 10 / height),
-              bottom: DeviceUtils.getScaledHeight(context, 10 / height),
+              top: DeviceUtils.getScaledHeight(context, 0.013),
+              bottom: DeviceUtils.getScaledHeight(context, 0.013),
             ),
             child: const Text(
               "Thông tin sản phẩm",
@@ -211,7 +211,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
     return Container(
       color: ColorResources.WHITE,
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -219,8 +219,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
           Padding(
             padding: EdgeInsets.only(
               left: DeviceUtils.getScaledWidth(context, 7 / width),
-              top: DeviceUtils.getScaledHeight(context, 10 / height),
-              bottom: DeviceUtils.getScaledHeight(context, 10 / height),
+              top: DeviceUtils.getScaledHeight(context, 0.013),
+              bottom: DeviceUtils.getScaledHeight(context, 0.013),
             ),
             child: const Text(
               "Xem thêm",
@@ -247,7 +247,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                 return GestureDetector(
                   onTap: () {},
                   child: ProductWidget(
-                      imgUrl: "assets/images/news_template.png",
+                      imgUrl: Images.newsTemplate,
                       name: "Sản phẩm ${index + 1}",
                       price: "230.000 VND"),
                 );
@@ -289,10 +289,10 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               ///quanlity
               Positioned(
                 top: 0,
-                right: DeviceUtils.getScaledWidth(context, 15 / width),
+                right: DeviceUtils.getScaledWidth(context, 0.038),
                 child: Container(
-                  height: DeviceUtils.getScaledHeight(context, 15 / height),
-                  width: DeviceUtils.getScaledWidth(context, 15 / width),
+                  height: DeviceUtils.getScaledHeight(context, 0.019),
+                  width: DeviceUtils.getScaledWidth(context, 0.038),
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
@@ -321,8 +321,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
     return Container(
       height: DeviceUtils.getScaledHeight(context, 60 / height),
       padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 5 / height)),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+          vertical: DeviceUtils.getScaledHeight(context, 0.006)),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: const BorderRadius.only(

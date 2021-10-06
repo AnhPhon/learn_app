@@ -14,8 +14,6 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1PaymentMethodController>(
         init: V1PaymentMethodController(),
         builder: (controller) {
@@ -25,7 +23,7 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
               child: Column(
                 children: [
                   //rad payment method
-                  _radPaymentMethodList(controller, height, width),
+                  _radPaymentMethodList(controller),
                 ],
               ),
             ),
@@ -38,19 +36,18 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   ///
   ///radio list
   ///
-  Widget _radPaymentMethodList(
-      V1PaymentMethodController controller, double height, double width) {
+  Widget _radPaymentMethodList(V1PaymentMethodController controller) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: 2,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             margin: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-                vertical: DeviceUtils.getScaledHeight(context, 20 / height)),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+                vertical: DeviceUtils.getScaledHeight(context, 0.026)),
             padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 20 / height),
-                horizontal: DeviceUtils.getScaledWidth(context, 20 / width)),
+                vertical: DeviceUtils.getScaledHeight(context, 0.026),
+                horizontal: DeviceUtils.getScaledWidth(context, 0.051)),
             decoration: BoxDecoration(
               color: ColorResources.WHITE,
               borderRadius: BorderRadius.circular(5),
@@ -95,11 +92,11 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
                           .map((element) => Padding(
                                 padding: EdgeInsets.only(
                                   left: DeviceUtils.getScaledWidth(
-                                      context, 20 / width),
+                                      context, 0.051),
                                   top: DeviceUtils.getScaledHeight(
-                                      context, 5 / height),
+                                      context, 0.006),
                                   bottom: DeviceUtils.getScaledHeight(
-                                      context, 5 / height),
+                                      context, 0.006),
                                 ),
                                 child: Text(
                                   element,

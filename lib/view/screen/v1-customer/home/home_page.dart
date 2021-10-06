@@ -159,6 +159,14 @@ class V1HomePage extends GetView<V1HomeController> {
                                 style: TextStyle(
                                     color: ColorResources.LIGHT_SKY_BLUE)),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.onClickFormList();
+                            },
+                            child: const Text("Danh sách đơn tạo",
+                                style: TextStyle(
+                                    color: ColorResources.LIGHT_SKY_BLUE)),
+                          ),
                           _categoryBoxWidget(),
                           _threeFeatureWidget(),
                           const SizedBox(height: 30),

@@ -17,7 +17,6 @@ class BtnCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: onTap,
       child: DefaultTextStyle(
@@ -25,7 +24,7 @@ class BtnCustom extends StatelessWidget {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
         ),
         child: Container(
-          height: DeviceUtils.getScaledHeight(context, 50 / height),
+          height: DeviceUtils.getScaledHeight(context, 0.065),
           width: width,
           alignment: Alignment.center,
           decoration: BoxDecoration(

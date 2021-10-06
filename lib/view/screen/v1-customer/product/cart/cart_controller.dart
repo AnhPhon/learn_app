@@ -5,13 +5,14 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component_border.dart';
 
 class V1CartController extends GetxController {
   String title = "Giỏ hàng";
 
-  String imgProduct = "assets/images/news_template.png";
+  String imgProduct = Images.newsTemplate;
 
   int qualityProduct = 1;
 
@@ -59,16 +60,16 @@ class V1CartController extends GetxController {
   ///
   ///delete product
   ///
-  void deleteProduct(BuildContext context, double height, double width) {
+  void deleteProduct(BuildContext context) {
     Get.dialog(Center(
       child: Container(
-        height: DeviceUtils.getScaledHeight(context, 250 / height),
+        height: DeviceUtils.getScaledHeight(context, 0.329),
         margin: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 25 / width),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.063),
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 25 / height),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+          vertical: DeviceUtils.getScaledHeight(context, 0.032),
         ),
         decoration: BoxDecoration(
             color: ColorResources.WHITE,
@@ -84,7 +85,7 @@ class V1CartController extends GetxController {
               ),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 20 / height),
+              height: DeviceUtils.getScaledHeight(context, 0.026),
             ),
             const Flexible(
               child: Text(
@@ -95,7 +96,7 @@ class V1CartController extends GetxController {
               ),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 20 / height),
+              height: DeviceUtils.getScaledHeight(context, 0.026),
             ),
             Row(
               children: [
@@ -105,7 +106,7 @@ class V1CartController extends GetxController {
                   width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
                 ),
                 SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, 10 / width),
+                  width: DeviceUtils.getScaledWidth(context, 0.025),
                 ),
                 BtnCustom(
                   onTap: () => Get.back(),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_controller.dart';
 
@@ -12,8 +13,6 @@ class V1FormListPage extends GetView<V1FormListController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1FormListController>(
         init: V1FormListController(),
         builder: (controller) {
@@ -26,8 +25,7 @@ class V1FormListPage extends GetView<V1FormListController> {
                 tabBarWidget(context: context, controller: controller),
 
                 //item list
-                ...List.generate(5,
-                    (index) => _itemList(context, controller, height, width)),
+                ...List.generate(5, (index) => _itemList(context, controller)),
               ],
             ),
           );
@@ -108,17 +106,16 @@ class V1FormListPage extends GetView<V1FormListController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, V1FormListController controller,
-      double height, double width) {
+  Widget _itemList(BuildContext context, V1FormListController controller) {
     return GestureDetector(
       onTap: () {
         controller.onJobDetailClick();
       },
       child: Container(
         margin: EdgeInsets.symmetric(
-            horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-            vertical: DeviceUtils.getScaledHeight(context, 10 / height)),
-        height: DeviceUtils.getScaledHeight(context, 90 / height),
+            horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+            vertical: DeviceUtils.getScaledHeight(context, 0.013)),
+        height: DeviceUtils.getScaledHeight(context, 0.118),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: ColorResources.WHITE,
@@ -137,15 +134,15 @@ class V1FormListPage extends GetView<V1FormListController> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
-                  "assets/images/news_template.png",
+                  Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 90 / height),
-                  width: DeviceUtils.getScaledWidth(context, 10 / width),
+                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  width: DeviceUtils.getScaledWidth(context, 0.025),
                 ),
               ),
             ),
             SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 10 / width),
+              width: DeviceUtils.getScaledWidth(context, 0.025),
             ),
             Expanded(
               flex: 8,
@@ -171,12 +168,12 @@ class V1FormListPage extends GetView<V1FormListController> {
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, 10 / width),
+                        width: DeviceUtils.getScaledWidth(context, 0.025),
                       ),
                     ],
                   ),
                   SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, 5 / width),
+                    width: DeviceUtils.getScaledWidth(context, 0.015),
                   ),
                 ],
               ),

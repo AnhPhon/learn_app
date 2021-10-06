@@ -17,8 +17,6 @@ class InputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return TextField(
       textInputAction: TextInputAction.done,
       textAlignVertical: TextAlignVertical.center,
@@ -29,8 +27,8 @@ class InputWidget extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 15 / height),
+          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+          vertical: DeviceUtils.getScaledHeight(context, 0.019),
         ),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
