@@ -5,7 +5,7 @@ import 'package:template/routes/app_routes.dart';
 
 class V1HomeController extends GetxController {
   ///
-  /// tới trang quản lý đơn tạo
+  /// go to Form Management Page
   ///
 
   List<Map<String, dynamic>> contentGrid = [
@@ -128,10 +128,25 @@ class V1HomeController extends GetxController {
   }
 
   ///
+<<<<<<< HEAD
   /// Tới trang Tạo đơn công việc
   ///
   void onClickCreateWork(){
     Get.offAndToNamed(AppRoutes.V1_CREATEWORK);
   }
   
+=======
+  /// go to Form List Page
+  ///
+  void onClickFormList() {
+    Get.toNamed(AppRoutes.V1_FORM_LIST);
+  }
+
+  ///
+  /// go to Product Page
+  ///
+  void onMoreProductList() {
+    Get.toNamed(AppRoutes.V1_PRODUCT);
+  }
+>>>>>>> d2a57270e6cdef8b21b8c265e10155febfd0f4fb
 }

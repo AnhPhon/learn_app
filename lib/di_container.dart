@@ -1,11 +1,9 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:template/data/datasource/remote/dio/dio_client.dart'; 
-// import 'package:template/data/repository/auth_repo.dart'; 
+import 'package:template/data/datasource/remote/dio/dio_client.dart';
+// import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
-import 'package:template/provider/auth_provider.dart';
-import 'package:get_it/get_it.dart'; 
-import 'package:template/utils/firebase_service.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -26,12 +24,11 @@ Future<void> init() async {
 
   // Repository
   // sl.registerLazySingleton(() => RegionRepo());
-  // sl.registerLazySingleton(() => AuthRepository()); 
+  // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider
   // sl.registerFactory(() => RegionProvider());
   // sl.registerFactory(() => AuthProvider());
-  
 
   // Provider
   // sl.registerFactory(() => AuthProvider());

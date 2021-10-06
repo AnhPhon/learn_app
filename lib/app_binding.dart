@@ -9,7 +9,6 @@ import 'package:template/view/screen/v1-customer/profile/profile_controller.dart
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    
     Get.lazyPut<V1DashboardController>(() => V1DashboardController());
     Get.lazyPut<V1HomeController>(() => V1HomeController());
     Get.lazyPut<V1ProductController>(() => V1ProductController());

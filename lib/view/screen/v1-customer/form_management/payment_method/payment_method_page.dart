@@ -10,6 +10,117 @@ import 'package:template/view/screen/v1-customer/form_management/payment_method/
 
 class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   ///
+  ///build
+  ///
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return GetBuilder<V1PaymentMethodController>(
+        init: V1PaymentMethodController(),
+        builder: (controller) {
+          return Scaffold(
+            appBar: AppBarWidget(title: controller.title),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //rad payment method
+                  _radPaymentMethodList(controller, height, width),
+                ],
+              ),
+            ),
+            //bottom sheet
+            bottomNavigationBar: _bottomSheet(context, controller),
+          );
+        });
+  }
+
+  ///
+  ///radio list
+  ///
+  Widget _radPaymentMethodList(
+      V1PaymentMethodController controller, double height, double width) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
+                vertical: DeviceUtils.getScaledHeight(context, 20 / height)),
+            padding: EdgeInsets.symmetric(
+                vertical: DeviceUtils.getScaledHeight(context, 20 / height),
+                horizontal: DeviceUtils.getScaledWidth(context, 20 / width)),
+            decoration: BoxDecoration(
+              color: ColorResources.WHITE,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(.25),
+                    blurRadius: 4,
+                    offset: const Offset(0, 4))
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //rad btn
+                Expanded(
+                  child: Radio(
+                    value: index,
+                    groupValue: controller.paymentMethodIndex,
+                    activeColor: ColorResources.PRIMARY,
+                    onChanged: controller.setSelectedPaymentMethod,
+                  ),
+                ),
+
+                //title and subtitle
+                Expanded(
+                  flex: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //title
+                      Text(
+                        controller.paymentMethodTitle[index],
+                        style: const TextStyle(
+                          height: 1.5,
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      //subtitle
+                      ...controller.paymentMethodSubTitle[index]
+                          .map((element) => Padding(
+                                padding: EdgeInsets.only(
+                                  left: DeviceUtils.getScaledWidth(
+                                      context, 20 / width),
+                                  top: DeviceUtils.getScaledHeight(
+                                      context, 5 / height),
+                                  bottom: DeviceUtils.getScaledHeight(
+                                      context, 5 / height),
+                                ),
+                                child: Text(
+                                  element,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                    height: 1.5,
+                                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  ///
   ///bottom sheet
   ///
   Widget _bottomSheet(
@@ -52,22 +163,5 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-    return GetBuilder<V1PaymentMethodController>(
-        init: V1PaymentMethodController(),
-        builder: (controller) {
-          return Scaffold(
-            body: Column(
-              children: [
-                AppBarWidget(title: controller.title),
-              ],
-            ),
-            bottomNavigationBar: _bottomSheet(context, controller),
-          );
-        });
   }
 }

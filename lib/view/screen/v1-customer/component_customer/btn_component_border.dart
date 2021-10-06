@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class BtnCustom extends StatelessWidget {
+class BtnCustomBorder extends StatelessWidget {
   final VoidCallback onTap;
-  final Color color;
   final String text;
   final double width;
-  const BtnCustom(
-      {Key? key,
-      required this.onTap,
-      required this.color,
-      required this.text,
-      required this.width})
+  const BtnCustomBorder(
+      {Key? key, required this.onTap, required this.text, required this.width})
       : super(key: key);
 
   @override
@@ -31,10 +27,14 @@ class BtnCustom extends StatelessWidget {
               left: DeviceUtils.getScaledHeight(context, 10 / height)),
           alignment: Alignment.center,
           decoration: BoxDecoration(
+            border: Border.all(color: ColorResources.PRIMARY, width: 2),
             borderRadius: BorderRadius.circular(5),
-            color: color,
+            color: ColorResources.WHITE,
           ),
-          child: Text(text),
+          child: Text(
+            text,
+            style: const TextStyle(color: ColorResources.PRIMARY),
+          ),
         ),
       ),
     );

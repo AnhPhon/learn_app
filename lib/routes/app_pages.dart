@@ -8,7 +8,9 @@ import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.d
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
 import 'package:template/view/screen/v1-customer/form_management/bill_detail/bill_detail_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
@@ -23,6 +25,8 @@ import 'package:template/view/screen/v1-customer/order_feedback_contractors/feed
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
+import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
+import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
@@ -34,10 +38,12 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
@@ -109,6 +115,22 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_BILL_DETAIL,
       page: () => V1BillDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_DETAIL,
+      page: () => V1JobDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_FORM_LIST,
+      page: () => V1FormListPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PRODUCT_DETAIL,
+      page: () => V1ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CART,
+      page: () => V1CartPage(),
     ),
 
     ///
@@ -196,10 +218,10 @@ class AppPages {
       page: () => V4DashboardPage(),
       binding: V4DashboardBinding(),
     ),
-    
+
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
-    // ), 
+    // ),
   ];
 }
