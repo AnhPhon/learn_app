@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 const titilliumRegular = TextStyle(
@@ -33,3 +34,21 @@ const robotoBold = TextStyle(
   fontSize: Dimensions.FONT_SIZE_DEFAULT,
   fontWeight: FontWeight.w700,
 );
+
+var boxShadow =[
+      BoxShadow(
+        color: ColorResources.BLACK.withOpacity(0.3),
+        blurRadius: 5,
+        spreadRadius: 0.4
+      )
+    ];
+
+//  [
+//   BoxShadow(
+//     color: ColorResources.BLACK.withOpacity(0.1),
+//     blurRadius: 1,
+//     spreadRadius: 0.1
+//   )
+// ];
+
+const paddingSmall =  EdgeInsets.all(Dimensions.FONT_SIZE_SMALL);

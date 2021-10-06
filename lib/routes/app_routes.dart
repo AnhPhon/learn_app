@@ -3,23 +3,33 @@ class AppRoutes {
   static const String AUTH = '/auth';
   static const String DASHBOARD = '/dashboard';
   static const String HOME = "/home";
-  static const String V1ABOUT = "/v1about";
-  static const String V1OBLIGATIONS = "/v1obligations";
-  static const String V1TERMANDPOLICY = "/v1termandpolicy";
-  static const String V1USAGEPROCEDURE = "/v1usageprocedure";
-  static const String V1BENEFITS = "/v1benefits";
-  static const String V1NOTIFICATION = "/v1notification";
+  static const String V1_ABOUT = "/v1_about";
+  static const String V1_OBLIGATIONS = "/v1_obligations";
+  static const String V1_TERMAND_POLICY = "/v1_term_and_policy";
+  static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
+  static const String V1_BENEFITS = "/v1_benefits";
+  static const String V1_NOTIFICATION = "/v1_notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
+  static const String V1_ORDER_FEEDBACK_CONTRACTORS = "/v1orderfeedbackcontractors";
   // Phản hồi đơn hàng nhóm 5 
-  static const String V1_GROUPORDERFEEDBACK5 = "/v1_grouporderfeedback5";
+  static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
     // Phản hồi đơn hàng nhóm 6
-  static const String V1_GROUPORDERFEEDBACK6 = "/v1_grouporderfeedback6";
+  static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
-  static const String V1_ORDERINFORAMTION = "/v1_orderinfo";
+  static const String V1_ORDER_INFORAMTION = "/v1_orderinfo";
   // Tạo đơn công việc
-  static const String V1_CREATEWORK = "/v1_creatework";
-  static const String V1_G1CREATEWORK = "/v1_g1creatework";
+  static const String V1_CREATE_WORK = "/v1_create_work";
+  static const String V1_G1_CREATE_WORK = "/v1_g1_create_work";
+  static const String V1_G2_CREATE_WORK = "/v1_g2_create_work";
+  static const String V1_G3_CREATE_SERVICE = "/v1_g3_create_service";
+  static const String V1_G3_ORDER_QUOTE = "/v1_g3_order_quote";
+  static const String V1_G3_ORDER_DETAIL = "/v1_g3_order_detail";
+  // Xem lại đơn công viêc
+  static const String V1_G1_REVIEW = "/v1_g1_review";
+  // Thành công
+  static const String V1_SUCCESSFULLY = "/v1_successfully";
+  // Hình thức thanh toán
+  static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
   
 
 

@@ -10,26 +10,32 @@ class Label extends StatelessWidget {
     Key? key,
     required this.label,
     required this.obligatory,
+    this.paddingTitle = Dimensions.PADDING_SIZE_SMALL,
+    this.horizontalPadding = Dimensions.PADDING_SIZE_DEFAULT,
+    this.topPadding = Dimensions.PADDING_SIZE_LARGE,
   }) : super(key: key);
   final String label;
   final bool obligatory;
+  final double? paddingTitle;
+  final double? horizontalPadding;
+  final double? topPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left:Dimensions.PADDING_SIZE_DEFAULT,
-        right:Dimensions.PADDING_SIZE_DEFAULT,
-        top:Dimensions.PADDING_SIZE_LARGE
+      padding: EdgeInsets.only(
+        left: horizontalPadding!,
+        right: horizontalPadding!,
+        top:topPadding!
       ),
       child: Container(
-        padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
+        padding: EdgeInsets.only(bottom: paddingTitle!),
         alignment: Alignment.centerLeft,
         child: Wrap(
           children: [
             Text(
               label,
-              style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold,color: ColorResources.BLACK.withOpacity(0.7)),
+              style: const TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold,/*color: ColorResources.BLACK.withOpacity(0.7)*/),
             ),
             if (obligatory) const Text(
                     '*',

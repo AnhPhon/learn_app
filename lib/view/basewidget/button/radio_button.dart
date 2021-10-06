@@ -22,6 +22,7 @@ class RadioButton<T> extends StatelessWidget {
     return Row(
       children: [
         Radio<T>(
+          toggleable: true,
           value: value, 
           groupValue: groupValue, 
           onChanged: onChanged,

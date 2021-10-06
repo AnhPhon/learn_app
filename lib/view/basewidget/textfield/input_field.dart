@@ -19,6 +19,7 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       required this.fontSize});
   String label, holdplacer;
   TextEditingController controller;
@@ -27,16 +28,17 @@ class InputField extends StatelessWidget {
   double width, fontSize;
   double? height;
   Widget? suffixIcon;
+  final double? paddingTop;
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
+      padding: EdgeInsets.only(
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT, 
-        top: Dimensions.PADDING_SIZE_LARGE
+        top: paddingTop!
       ),
       //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,

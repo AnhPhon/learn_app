@@ -1,23 +1,31 @@
-
-
 import 'package:flutter/material.dart';
 
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/button/long_button.dart';
 
 class OrderBottomSheet extends StatelessWidget {
   const OrderBottomSheet({
     Key? key,
-    required this.children,
+    this.children = const [],
     required this.itemValue,
+    this.mainAxisAlignment,
+    this.height,
+    this.child,
+    this.title,
   }) : super(key: key);
-  final List<Widget> children;
+  final List<Widget>? children;
   final String itemValue;
+  final MainAxisAlignment? mainAxisAlignment;
+  final double? height;
+  final Widget? child;
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 150,
+        height: height ?? BOTTOMSHEET,
         padding: const EdgeInsets.symmetric(
           vertical: Dimensions.PADDING_SIZE_DEFAULT,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -31,7 +39,7 @@ class OrderBottomSheet extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 0),
+              offset: const Offset(0, -1),
               blurRadius: 10,
               spreadRadius: 0.1,
               color: ColorResources.BLACK.withOpacity(0.5)
@@ -49,8 +57,8 @@ class OrderBottomSheet extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Giá trị đơn hàng:"),
-                  Text("$itemValue VNĐ", style: const TextStyle(
+                  Text(title ?? "Giá trị đơn hàng:"),
+                  Text("$itemValue", style: const TextStyle(
                     color: ColorResources.RED
                   ),)
                 ],
@@ -59,12 +67,13 @@ class OrderBottomSheet extends StatelessWidget {
             Expanded(
               child: DefaultTextStyle(
                 style: const TextStyle(color: ColorResources.WHITE),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: child ??
+                Row(
+                  mainAxisAlignment: mainAxisAlignment ??MainAxisAlignment.spaceBetween,
                   children: [
-                    ...children
+                    ...children!
                   ],
-                ),
+                )
               ),
             )
           ],

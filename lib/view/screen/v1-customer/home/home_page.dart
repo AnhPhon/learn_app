@@ -106,7 +106,7 @@ class V1HomePage extends GetView<V1HomeController> {
                             padding: const EdgeInsets.all(5),
                             child: GestureDetector(
                               onTap: () {
-                                Get.toNamed(AppRoutes.V1NOTIFICATION);
+                                Get.toNamed(AppRoutes.V1_NOTIFICATION);
                               },
                               child: const Icon(
                                 CupertinoIcons.bell_fill,

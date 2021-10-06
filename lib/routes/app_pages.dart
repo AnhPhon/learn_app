@@ -30,20 +30,29 @@ import 'package:template/view/screen/v1-customer/product/product_detail/product_
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
-import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_binding.dart';
-import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_page.dart';
+import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
+import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/create/g1_create_work_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/create/g1_create_work_page.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/reviews/g1_review_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/reviews/g1_review_page.dart';
+import 'package:template/view/screen/v1-customer/services/g2-regular_service/create/g2_create_work_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g2-regular_service/create/g2_create_work_page.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/create/g3_create_service_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/create/g3_create_service_page.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_detail/g3_order_detail_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_detail/g3_order_detail_page.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_page.dart';
+import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
-import 'package:get/get.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
-import 'package:template/view/screen/login/login_page.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
@@ -65,24 +74,24 @@ class AppPages {
 
     /// About
     GetPage(
-      name: AppRoutes.V1ABOUT,
-      page: () => AboutPage(),
+      name: AppRoutes.V1_ABOUT,
+      page: () => const AboutPage(),
     ),
     GetPage(
-      name: AppRoutes.V1BENEFITS,
-      page: () => Benefits(),
+      name: AppRoutes.V1_BENEFITS,
+      page: () => const Benefits(),
     ),
     GetPage(
-      name: AppRoutes.V1TERMANDPOLICY,
-      page: () => TermsAndPolicy(),
+      name: AppRoutes.V1_TERMAND_POLICY,
+      page: () => const TermsAndPolicy(),
     ),
     GetPage(
-      name: AppRoutes.V1USAGEPROCEDURE,
-      page: () => UsageProcedure(),
+      name: AppRoutes.V1_USAGE_PROCEDURE,
+      page: () => const UsageProcedure(),
     ),
     GetPage(
-      name: AppRoutes.V1OBLIGATIONS,
-      page: () => RightsAndObligations(),
+      name: AppRoutes.V1_OBLIGATIONS,
+      page: () => const RightsAndObligations(),
     ),
     GetPage(
       name: AppRoutes.V1_PAYMENT_METHOD,
@@ -137,7 +146,7 @@ class AppPages {
     /// Thông báo
     ///
     GetPage(
-      name: AppRoutes.V1NOTIFICATION,
+      name: AppRoutes.V1_NOTIFICATION,
       page: () => V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
@@ -146,7 +155,7 @@ class AppPages {
     /// Phản hồi dịch vụ thường xuyên click từ thông báo
     ///
     GetPage(
-      name: AppRoutes.V1ORDERFEEDBACKCONTRACTORS,
+      name: AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,
       page: () => V1OrderFeedBackPage(),
       binding: V1OrderFeedBackBinding(),
     ),
@@ -155,7 +164,7 @@ class AppPages {
     /// Phản hồi đơn hàng nhóm 5 click từ thông báo
     ///
     GetPage(
-      name: AppRoutes.V1_GROUPORDERFEEDBACK5,
+      name: AppRoutes.V1_GROUP_ORDER_FEEDBACK5,
       page: () => const V1GroupOrderFeedBack5Page(),
       binding: V1OrderFeedBackGroup5Binding(),
     ),
@@ -164,7 +173,7 @@ class AppPages {
     /// Phản hồi đơn hàng nhóm 6 click từ thông báo
     ///
     GetPage(
-      name: AppRoutes.V1_GROUPORDERFEEDBACK6,
+      name: AppRoutes.V1_GROUP_ORDER_FEEDBACK6,
       page: () => const V1GroupOrderFeedBack6Page(),
       binding: V1OrderFeedBackGroup6Binding(),
     ),
@@ -173,7 +182,7 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDERINFORAMTION, 
+      name: AppRoutes.V1_ORDER_INFORAMTION, 
       page: ()=> OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
@@ -182,14 +191,56 @@ class AppPages {
     ///Tạo đơn công việc 1- 6
     ///
     GetPage(
-      name: AppRoutes.V1_CREATEWORK, 
+      name: AppRoutes.V1_CREATE_WORK, 
       page: ()=> CreateWorkPage(),
     ),
-    // Nhóm 1
+    // Nhóm 1 - tạo đơn
     GetPage(
-      name: AppRoutes.V1_G1CREATEWORK, 
+      name: AppRoutes.V1_G1_CREATE_WORK, 
       page: ()=> V1G1CreateWorkPage(),
       binding: V1G1CreateWorkBinding()
+    ),
+    // nhóm 1 - xem đơn (KH)
+    GetPage(
+      name: AppRoutes.V1_G1_REVIEW, 
+      page: ()=> V1G1ReviewPage(),
+      binding: V1G1ReviewBinding()
+    ),
+    // Nhóm 2 (KH)
+    GetPage(
+      name: AppRoutes.V1_G2_CREATE_WORK, 
+      page: ()=> V1G2CreateWorkPage(),
+      binding: V1G2CreateWorkBinding()
+    ),
+    // Nhóm 3 dịch vụ (KH)
+    GetPage(
+      name: AppRoutes.V1_G3_CREATE_SERVICE, 
+      page: ()=> V1G3CreateServicePage(),
+      binding: V1G3CreateServiceBinding()
+    ),
+    GetPage(
+      name: AppRoutes.V1_G3_ORDER_QUOTE, 
+      page: ()=> V1G3OrderQuotePage(),
+      binding: V1G3OrderQuoteBinding()
+    ),
+    // Chi tiêt đơn hàng nhóm 3
+    GetPage(
+      name: AppRoutes.V1_G3_ORDER_DETAIL, 
+      page: ()=> V1G3OrderDetailPage(),
+      binding: V1G3OrderDetailBinding()
+    ),
+
+    // Hình thức thanh toán 
+    GetPage(
+      name: AppRoutes.V1_FORMAL_PAYMENT, 
+      page: ()=> V1FormalPaymentPage(),
+      binding: V1FormalPaymentBinding()
+    ),
+
+    // Tạo thành công
+    GetPage(
+      name: AppRoutes.V1_SUCCESSFULLY, 
+      page: ()=> const SuccessfullyPage(),
     ),
 
     GetPage(

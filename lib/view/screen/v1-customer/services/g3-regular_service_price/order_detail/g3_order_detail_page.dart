@@ -1,0 +1,65 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:template/utils/app_constants.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
+import 'package:template/view/basewidget/button/long_button.dart';
+import 'package:template/view/basewidget/widgets/group_title.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/components/bill_widget.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/components/order_content.dart';
+import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_detail/g3_order_detail_controller.dart';
+import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
+
+class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
+  V1G3OrderDetailPage({Key? key}) : super(key: key);
+  final V1G3OrderDetailController _controller = Get.find<V1G3OrderDetailController>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBarWidget(title: "Chi tiết đơn hàng"),
+      body: Column(
+        children: const [
+          GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+
+          // Bảng thông tin đơn hàng
+           Padding(
+            padding: EdgeInsets.all(
+              Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: BillWidget(
+              isHasDeposit: false,
+              title: "Chi tiết đơn hàng",
+              orderContents: [
+              OrderContent(title:"Gội đầu tại nhà" , value:"300.000 đ/công", boldValue: true,),
+              OrderContent(title:"Số giờ làm việc/ngày" , value:"8.000 VNĐ", boldValue: true,),
+              OrderContent(title:"Số lượng" , value:"8 người", boldValue: true,),
+              OrderContent(title:"Số ngày làm việc dự kiến" , value:"10 giờ", boldValue: true,),
+              OrderContent(title:"Giá trị đơn hàng" , value:"300.000 đồng", boldValue: true,),
+              OrderContent(title:"Phí dịch vụ App" , value:"0 đồng", boldValue: true,),
+              OrderContent(title:"Khuyến mãi của App" , value:"5000 đồng", boldValue: true,),
+              OrderContent(title:"Tổng tiền đơn hàng" , value:"11.050.000 VNĐ", boldValue: true,),
+            ]),
+          ),
+          
+          // Khoản cách bottomSheet
+          SizedBox(height: BOTTOMSHEET,)
+        ],
+      ),
+      bottomSheet: OrderBottomSheet(
+        mainAxisAlignment: MainAxisAlignment.center, 
+        itemValue: "337.500 VNĐ",
+        child: Center(
+          child: LongButton(
+            color: ColorResources.PRIMARYCOLOR,
+            onPressed: ()=> _controller.onNextPage(),
+            title: "Tiếp tục",
+          ),
+        ),
+      ),
+    );
+  }
+
+}
