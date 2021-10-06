@@ -128,6 +128,14 @@ class V1HomeController extends GetxController {
   }
 
   ///
+<<<<<<< HEAD
+  /// Tới trang Tạo đơn công việc
+  ///
+  void onClickCreateWork(){
+    Get.offAndToNamed(AppRoutes.V1_CREATEWORK);
+  }
+  
+=======
   /// go to Form List Page
   ///
   void onClickFormList() {
@@ -140,4 +148,5 @@ class V1HomeController extends GetxController {
   void onMoreProductList() {
     Get.toNamed(AppRoutes.V1_PRODUCT);
   }
+>>>>>>> d2a57270e6cdef8b21b8c265e10155febfd0f4fb
 }

@@ -85,6 +85,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         widget.title,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: widget.centerTitle!
                             ? TextAlign.center
                             : TextAlign.left,
