@@ -5,13 +5,14 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/custom_appbar.dart';
 import 'password_change_controller.dart';
 
 class PasswordChangePage extends GetView<PasswordChangeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Chỉnh sửa mật khẩu"),
+      appBar: AppBarWidget(title: "Chỉnh sửa mật khẩu"),
       body: SingleChildScrollView(
         child: GetBuilder<PasswordChangeController>(
           init: PasswordChangeController(),

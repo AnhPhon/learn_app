@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/auth/auth_controller.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_controller.dart';
 import 'package:template/view/screen/v1-customer/home/home_controller.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_controller.dart';
-import 'package:template/view/screen/auth/auth_controller.dart';
 
 class AppBinding extends Bindings {
   @override

@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/di_container.dart';
 // import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class LoginController extends GetxController {
   // AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -19,8 +21,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    usernameController.text = '1';
-    passwordController.text = '';
+    // usernameController.text = 'ytp3001';
+    // passwordController.text = 'password';
     super.onInit();
   }
 
@@ -28,16 +30,6 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    if (usernameController.text == '1') {
-      Get.toNamed(AppRoutes.V1_DASHBOARD);
-    } else if (usernameController.text == '2') {
-      Get.toNamed(AppRoutes.V2_DASHBOARD);
-    } else if (usernameController.text == '3') {
-      Get.toNamed(AppRoutes.V3_DASHBOARD);
-    } else if (usernameController.text == '4') {
-      Get.toNamed(AppRoutes.V4_DASHBOARD);
-    } else {}
-
     // validate infomation username password
     if (usernameController.text == '' || passwordController.text == '') {
       Get.snackbar(

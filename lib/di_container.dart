@@ -1,26 +1,8 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
-import 'package:template/data/repository/banner_repository.dart';
-// import 'package:template/data/repository/auth_repo.dart';
-import 'package:template/data/repository/category_news_repository.dart';
-import 'package:template/data/repository/category_repository.dart';
-import 'package:template/data/repository/context_repository.dart';
-import 'package:template/data/repository/district_repository.dart';
-import 'package:template/data/repository/image_repository.dart';
-import 'package:template/data/repository/news_repository.dart';
-import 'package:template/data/repository/order_item_repository.dart';
-import 'package:template/data/repository/order_repository.dart';
-import 'package:template/data/repository/personal_honor_repository.dart';
-import 'package:template/data/repository/product_repository.dart';
-import 'package:template/data/repository/province_repository.dart';
-import 'package:template/data/repository/user_repository.dart';
-import 'package:template/data/datasource/remote/dio/dio_client.dart';
-// import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
-import 'package:template/provider/auth_provider.dart';
-import 'package:get_it/get_it.dart';
-import 'package:template/utils/firebase_service.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -41,19 +23,6 @@ Future<void> init() async {
 
   // Repository
   // sl.registerLazySingleton(() => RegionRepo());
-  sl.registerLazySingleton(() => CategoryRepository());
-  sl.registerLazySingleton(() => CategoryNewsRepository());
-  sl.registerLazySingleton(() => ProductRepository());
-  sl.registerLazySingleton(() => NewsRepository());
-  sl.registerLazySingleton(() => OrderItemRepository());
-  sl.registerLazySingleton(() => OrderRepository());
-  sl.registerLazySingleton(() => ProvinceRepository());
-  sl.registerLazySingleton(() => DistrictRepository());
-  sl.registerLazySingleton(() => UserRepository());
-  sl.registerLazySingleton(() => ImageUpdateRepository());
-  sl.registerLazySingleton(() => PersonalHonorRepository());
-  sl.registerLazySingleton(() => BannerRepository());
-  sl.registerLazySingleton(() => ContextRepository());
   // sl.registerLazySingleton(() => AuthRepository());
 
   // Provider
