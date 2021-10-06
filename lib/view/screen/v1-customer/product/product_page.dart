@@ -24,43 +24,71 @@ class V1ProductPage extends GetView<V1ProductController> {
             body: Column(
               children: [
                 //header
-                Expanded(
-                  child: Container(
-                    color: ColorResources.WHITE,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //search bar
-                        _searchBar(context, controller, height, width),
+                Container(
+                  height: DeviceUtils.getScaledHeight(context, 100 / height),
+                  color: ColorResources.WHITE,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //search bar
+                      _searchBar(context, controller, height, width),
 
-                        //category
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal:
-                                DeviceUtils.getScaledWidth(context, 15 / width),
-                            vertical: DeviceUtils.getScaledHeight(
-                                context, 15 / height),
-                          ),
-                          child: const Text(
-                            "Hạng mục",
-                            style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_LARGE,
-                                fontWeight: FontWeight.bold),
-                          ),
+                      //category
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //title
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: DeviceUtils.getScaledWidth(
+                                    context, 15 / width),
+                                vertical: DeviceUtils.getScaledHeight(
+                                    context, 15 / height),
+                              ),
+                              child: const Text(
+                                "Hạng mục",
+                                style: TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+
+                            //icon
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: DeviceUtils.getScaledWidth(
+                                    context, 15 / width),
+                              ),
+                              child: Icon(
+                                Icons.arrow_drop_down,
+                                size: DeviceUtils.getScaledHeight(
+                                    context, 30 / height),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-
-                SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, 15 / height),
                 ),
 
                 //product list
                 Expanded(
-                  flex: 5,
-                  child: _productList(context, controller, width),
+                  flex: 8,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height:
+                              DeviceUtils.getScaledHeight(context, 15 / height),
+                        ),
+                        _productList(context, controller, width),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -112,6 +140,7 @@ class V1ProductPage extends GetView<V1ProductController> {
           horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
       child: GridView.builder(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: .7,
             crossAxisSpacing: 20,

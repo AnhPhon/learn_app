@@ -14,9 +14,8 @@ class V1HomePage extends GetView<V1HomeController> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-  
+
     return Scaffold(
-      
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
@@ -147,7 +146,7 @@ class V1HomePage extends GetView<V1HomeController> {
                         children: [
                           Text("Tạo đơn công việc 1 2 5 6"),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               controller.onClickCreateWork();
                             },
                             child: Text("Tạo đơn công việc 1"),
@@ -158,13 +157,14 @@ class V1HomePage extends GetView<V1HomeController> {
                             },
                             child: const Text("Quản lý đơn tạo",
                                 style: TextStyle(
-                                    color: ColorResources.LIGHT_SKY_BLUE)),),
+                                    color: ColorResources.LIGHT_SKY_BLUE)),
+                          ),
                           _categoryBoxWidget(),
                           _threeFeatureWidget(),
                           const SizedBox(height: 30),
                           _fieldWidget(
                             "Sản phẩm",
-                            () {},
+                            () => controller.onMoreProductList(),
                             Container(
                               height: 400,
                               padding: const EdgeInsets.only(

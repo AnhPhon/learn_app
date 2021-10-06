@@ -20,15 +20,17 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
           return Scaffold(
             backgroundColor: const Color(0xFFF6F6F7),
             appBar: AppBarWidget(title: controller.title),
-            body: Column(
-              children: [
-                //tab
-                tabBarWidget(context: context, controller: controller),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //tab
+                  tabBarWidget(context: context, controller: controller),
 
-                //item list
-                ...List.generate(
-                    5, (index) => _itemList(context, height, width)),
-              ],
+                  //item list
+                  ...List.generate(
+                      5, (index) => _itemList(context, height, width)),
+                ],
+              ),
             ),
           );
         });

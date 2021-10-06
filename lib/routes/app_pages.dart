@@ -25,10 +25,15 @@ import 'package:template/view/screen/v1-customer/order_feedback_contractors/feed
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
+import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
+import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
+import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_page.dart';
@@ -132,6 +137,26 @@ class AppPages {
       name: AppRoutes.V1_CART,
       page: () => V1CartPage(),
     ),
+    GetPage(
+      name: AppRoutes.V1_SHIPPING_METHOD,
+      page: () => V1ShippingMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SHIPPING_ADDRESS,
+      page: () => V1ShippingAddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PAYMENT_ACCOUNT,
+      page: () => V1PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_RECHARGE,
+      page: () => V1RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PAYMENT_SUCCESS,
+      page: () => V1PaymentSuccessPage(),
+    ),
 
     ///
     /// Thông báo
@@ -173,8 +198,8 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDERINFORAMTION, 
-      page: ()=> OrderInformationPage(),
+      name: AppRoutes.V1_ORDERINFORAMTION,
+      page: () => OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -182,15 +207,14 @@ class AppPages {
     ///Tạo đơn công việc 1- 6
     ///
     GetPage(
-      name: AppRoutes.V1_CREATEWORK, 
-      page: ()=> CreateWorkPage(),
+      name: AppRoutes.V1_CREATEWORK,
+      page: () => CreateWorkPage(),
     ),
     // Nhóm 1
     GetPage(
-      name: AppRoutes.V1_G1CREATEWORK, 
-      page: ()=> V1G1CreateWorkPage(),
-      binding: V1G1CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G1CREATEWORK,
+        page: () => V1G1CreateWorkPage(),
+        binding: V1G1CreateWorkBinding()),
 
     GetPage(
       name: AppRoutes.V1_DASHBOARD,

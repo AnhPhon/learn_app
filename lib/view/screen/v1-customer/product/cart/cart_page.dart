@@ -6,6 +6,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_controller.dart';
 
 class V1CartPage extends GetView<V1CartController> {
@@ -136,6 +137,30 @@ class V1CartPage extends GetView<V1CartController> {
   }
 
   ///
+  ///row shipping component
+  ///
+  Widget _rowShipping(BuildContext context, double height, double width,
+      {required VoidCallback onTap, required Widget shippingWidget}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 9,
+            child: shippingWidget,
+          ),
+          const Expanded(
+            child: Icon(
+              Icons.arrow_forward_ios,
+              color: ColorResources.PRIMARY,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
   ///shipping
   ///
   Widget _shipping(
@@ -167,45 +192,41 @@ class V1CartPage extends GetView<V1CartController> {
       child: Column(
         children: [
           // shipping address
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 9,
-                  child: _shippingWidget(
-                    context,
-                    height,
-                    width,
-                    icon: const Icon(
-                      Icons.location_on_outlined,
-                      color: ColorResources.PRIMARY,
-                    ),
-                    text1: "Địa chỉ ship",
-                    text2: "183 Quách Thị Trang",
-                  ),
-                ),
-                const Expanded(
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: ColorResources.PRIMARY,
-                  ),
-                ),
-              ],
+          _rowShipping(
+            context,
+            height,
+            width,
+            onTap: () => controller.onSelectShippingAddress(),
+            shippingWidget: _shippingWidget(
+              context,
+              height,
+              width,
+              icon: const Icon(
+                Icons.location_on_outlined,
+                color: ColorResources.PRIMARY,
+              ),
+              text1: "Địa chỉ ship",
+              text2: "183 Quách Thị Trang",
             ),
           ),
 
           Dimensions().paddingDivider(context),
 
           //partner shipping
-          _shippingWidget(
+          _rowShipping(
             context,
             height,
             width,
-            image: Image.asset("assets/images/logo.png"),
-            text1: "Dịch vụ shipping",
-            text2: "Tên dịch vụ",
-            text3: "Cùng ngày 2h - 3h",
+            onTap: () => controller.onSelectShippingMethod(),
+            shippingWidget: _shippingWidget(
+              context,
+              height,
+              width,
+              image: Image.asset("assets/images/logo.png"),
+              text1: "Dịch vụ shipping",
+              text2: "Tên dịch vụ",
+              text3: "Cùng ngày 2h - 3h",
+            ),
           ),
         ],
       ),
@@ -487,38 +508,10 @@ class V1CartPage extends GetView<V1CartController> {
     double height,
     double width,
   ) {
-    return Container(
-      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 10 / width)),
-      height: DeviceUtils.getScaledHeight(context, 80 / height),
-      decoration: BoxDecoration(
-        color: ColorResources.WHITE,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2,
-            color: ColorResources.GREY.withOpacity(0.3),
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          /// button checkout
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: DeviceUtils.getScaledHeight(context, 40 / height),
-              decoration: BoxDecoration(
-                  color: ColorResources.PRIMARY,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Align(
-                  child: Text("Thanh toán 260.000 VND",
-                      style: Dimensions.fontSizeStyle16()
-                          .copyWith(color: ColorResources.WHITE))),
-            ),
-          ),
-        ],
-      ),
-    );
+    return BtnCustom(
+        onTap: () => controller.onCheckoutClick(),
+        color: ColorResources.PRIMARY,
+        text: "Thanh toán 260.000 VND",
+        width: width);
   }
 }

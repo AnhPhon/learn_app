@@ -7,8 +7,15 @@ class RowText extends StatelessWidget {
   final String text1;
   final String text2;
   final bool? colorRed;
+  final bool? notFontWeight;
+  final bool? notFontSize;
   const RowText(
-      {Key? key, required this.text1, required this.text2, this.colorRed})
+      {Key? key,
+      required this.text1,
+      required this.text2,
+      this.colorRed,
+      this.notFontWeight,
+      this.notFontSize})
       : super(key: key);
 
   @override
@@ -18,9 +25,11 @@ class RowText extends StatelessWidget {
           horizontal: DeviceUtils.getScaledWidth(context, 0.025),
           vertical: DeviceUtils.getScaledHeight(context, 0.01)),
       child: DefaultTextStyle(
-        style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+        style: TextStyle(
+            fontWeight: notFontWeight == true ? null : FontWeight.w600,
+            fontSize: notFontSize == true
+                ? Dimensions.FONT_SIZE_LARGE
+                : Dimensions.FONT_SIZE_EXTRA_LARGE,
             color: ColorResources.BLACK),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

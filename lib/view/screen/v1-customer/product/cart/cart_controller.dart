@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -35,6 +36,27 @@ class V1CartController extends GetxController {
   }
 
   ///
+  ///go to shipping method
+  ///
+  void onSelectShippingMethod() {
+    Get.toNamed(AppRoutes.V1_SHIPPING_METHOD);
+  }
+
+  ///
+  ///go to shipping address
+  ///
+  void onSelectShippingAddress() {
+    Get.toNamed(AppRoutes.V1_SHIPPING_ADDRESS);
+  }
+
+  ///
+  ///go to payment account page
+  ///
+  void onCheckoutClick() {
+    Get.toNamed(AppRoutes.V1_PAYMENT_ACCOUNT);
+  }
+
+  ///
   ///delete product
   ///
   void deleteProduct(BuildContext context, double height, double width) {
@@ -46,13 +68,13 @@ class V1CartController extends GetxController {
         ),
         padding: EdgeInsets.symmetric(
           horizontal: DeviceUtils.getScaledWidth(context, 20 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 20 / height),
+          vertical: DeviceUtils.getScaledHeight(context, 25 / height),
         ),
         decoration: BoxDecoration(
             color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(7)),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
               "Xác nhận",
@@ -81,6 +103,9 @@ class V1CartController extends GetxController {
                   onTap: () {},
                   text: "Đồng ý",
                   width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+                SizedBox(
+                  width: DeviceUtils.getScaledWidth(context, 10 / width),
                 ),
                 BtnCustom(
                   onTap: () => Get.back(),

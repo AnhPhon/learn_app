@@ -27,8 +27,6 @@ class BtnCustom extends StatelessWidget {
         child: Container(
           height: DeviceUtils.getScaledHeight(context, 50 / height),
           width: width,
-          margin: EdgeInsets.only(
-              left: DeviceUtils.getScaledHeight(context, 10 / height)),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
