@@ -10,9 +10,9 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
-import 'package:template/view/basewidget/widgets/bill_widget.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/components/bill_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
-import 'package:template/view/basewidget/widgets/order_content.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/components/order_content.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_controller.dart';
 

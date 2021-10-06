@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/widgets/order_content.dart';
+import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/components/order_content.dart';
 
 class BillWidget extends StatelessWidget {
   const BillWidget({
