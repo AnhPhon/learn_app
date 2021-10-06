@@ -9,7 +9,7 @@ class IntroductionController extends GetxController {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   @override
-  void onInit() {  
+  void onInit() {
     super.onInit();
   }
 

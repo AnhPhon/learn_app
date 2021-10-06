@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:template/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:template/provider/theme_provider.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class ColorResources {
   static Color getColombiaBlue(BuildContext context) {
     return Provider.of<ThemeProvider>(context).darkTheme
@@ -122,7 +123,7 @@ class ColorResources {
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   static const Color HARLEQUIN = Color(0xff3FCC01);
   static const Color CERISE = Color(0xffE2206B);
-  static const Color GREY = Color(0xffC4C4CF);
+  static const Color GREY = Color(0xff8c8c8c);
   static const Color RED = Color(0xFFD32F2F);
   static const Color YELLOW = Color(0xFFFFAA47);
   static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
@@ -137,7 +138,16 @@ class ColorResources {
   static const Color GREEN = Color(0xff23CB60);
 
   static const Color DEFAULT = Color(0xFF61A63C);
-  static const Color PRIMARY = Color(0xff61A63C);
+  static const Color PRIMARY = Color(0xFF2196F3);
+  static const Color APPBARCOLOR = Color(0xff2196F3);
+  static const Color PRIMARYCOLOR = Color(0xff2196F3);
+  static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
+  static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
+  static const Color BACKGROUND = Color(0xffF6F6F7);
+
+  static const Color THEME_DEFAULT = Color(0xff2196F3);
+
+  static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
 
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),

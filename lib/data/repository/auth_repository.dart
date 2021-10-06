@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
-import 'package:template/data/model/body/user_model.dart';
+// import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
@@ -20,14 +20,14 @@ class AuthRepository {
   ///
   /// Insert user to database
   ///
-  Future<ApiResponse> registration(UserModel data) async {
-    try {
-      final response = await dioClient!.post('/users', data: data.toJson());
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
+  // Future<ApiResponse> registration(UserModel data) async {
+  //   try {
+  //     final response = await dioClient!.post('/users', data: data.toJson());
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
 
   ///
   /// Insert user to database
@@ -59,12 +59,12 @@ class AuthRepository {
   ///
   /// get device token
   ///
-  Future<String> getDeviceToken() async {
-    final String _deviceToken =
-        FirebaseMessaging.instance.getToken().toString();
-    print('--------Device Token----------  $_deviceToken');
-    return _deviceToken;
-  }
+  // Future<String> getDeviceToken() async {
+  //   final String _deviceToken =
+  //       FirebaseMessaging.instance.getToken().toString();
+  //   print('--------Device Token----------  $_deviceToken');
+  //   return _deviceToken;
+  // }
 
   ///
   /// save User Token
