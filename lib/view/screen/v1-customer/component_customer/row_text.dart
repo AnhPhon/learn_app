@@ -21,9 +21,9 @@ class RowText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.01)),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: DefaultTextStyle(
         style: TextStyle(
             fontWeight: notFontWeight == true ? null : FontWeight.w600,
@@ -35,7 +35,9 @@ class RowText extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text1, textAlign: TextAlign.center),
-            SizedBox(height: DeviceUtils.getScaledWidth(context, 0.025)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .013),
+            ),
             Text(text2,
                 textAlign: TextAlign.center,
                 style: colorRed == true

@@ -38,7 +38,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       ),
 
                       SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, 0.013),
+                        height: DeviceUtils.getScaledHeight(context, .013),
                       ),
 
                       _richText(
@@ -47,7 +47,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         text2: "Thợ ốp công trình 5 sao của công trình",
                       ),
                       SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, 0.013),
+                        height: DeviceUtils.getScaledHeight(context, .013),
                       ),
 
                       _richText(
@@ -57,16 +57,15 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       ),
 
                       SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, 0.013),
+                        height: DeviceUtils.getScaledHeight(context, .013),
                       ),
 
                       // title job container
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal:
-                              DeviceUtils.getScaledWidth(context, 0.038),
+                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: const Text(
+                        child: Text(
                           "Bảng khối lượng công việc cần báo giá",
                           style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
@@ -91,12 +90,11 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _filePicker(context),
 
                       // title image container
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal:
-                              DeviceUtils.getScaledWidth(context, 0.038),
+                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: const Text(
+                        child: Text(
                           "Hình ảnh bảng khối lượng\n(Bảng in hoặc viết bằng tay nếu có)",
                           style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
@@ -108,16 +106,15 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _imageList(context),
 
                       SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, 0.019),
+                        height: DeviceUtils.getScaledHeight(context, .013),
                       ),
 
                       // title image container
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal:
-                              DeviceUtils.getScaledWidth(context, 0.038),
+                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: const Text(
+                        child: Text(
                           "Hình ảnh bản vẽ (nếu có)",
                           style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
@@ -129,12 +126,11 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _imageList(context),
 
                       //title note
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal:
-                              DeviceUtils.getScaledWidth(context, 0.038),
+                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: const Text(
+                        child: Text(
                           "Ghi chú",
                           style: TextStyle(
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
@@ -146,7 +142,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _note(context, controller),
 
                       SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, 0.026),
+                        height: DeviceUtils.getScaledHeight(context, .026),
                       ),
                     ],
                   ),
@@ -162,8 +158,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   ///
   Widget _textTitle(BuildContext context, {required String title}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.026),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       child: Text(
         title,
@@ -181,8 +177,9 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   Widget _richText(BuildContext context,
       {required String text1, required String text2}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: RichText(
         text: TextSpan(
             text: text1,
@@ -213,20 +210,21 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
     required String specifications,
   }) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_SMALL,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         color: ColorResources.WHITE,
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
+          BoxShadow(color: Colors.grey.withOpacity(.5), blurRadius: 10),
         ],
       ),
       child: DefaultTextStyle(
@@ -237,13 +235,21 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Tên vật liệu: $name"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .013),
+            ),
             Text("Quy cách: $specifications"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .013),
+            ),
             Text("Số lượng: $quanlity"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .013),
+            ),
             Text("Đơn vị: $unit"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .013),
+            ),
           ],
         ),
       ),
@@ -257,11 +263,11 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
+        vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -284,28 +290,30 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   Widget _imageList(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
-      margin: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.038),
-          vertical: DeviceUtils.getScaledHeight(context, 0.019)),
+      margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
+          vertical: Dimensions.MARGIN_SIZE_DEFAULT),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.PRIMARY),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
       ),
-      height: DeviceUtils.getScaledHeight(context, 0.14),
+      height: DeviceUtils.getScaledHeight(context, .14),
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemCount: 5,
           itemBuilder: (BuildContext context, index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(
+                  right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 0.122),
-                  width: DeviceUtils.getScaledWidth(context, 0.254),
+                  height: DeviceUtils.getScaledHeight(context, .122),
+                  width: DeviceUtils.getScaledWidth(context, .254),
                 ),
               ),
             );
@@ -318,20 +326,21 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   ///
   Widget _note(BuildContext context, V1JobDetailController controller) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_SMALL,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.039),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         color: ColorResources.WHITE,
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
+          BoxShadow(color: Colors.grey.withOpacity(.5), blurRadius: 10),
         ],
       ),
       child: Text(

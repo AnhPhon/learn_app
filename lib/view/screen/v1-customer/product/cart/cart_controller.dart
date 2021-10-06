@@ -63,17 +63,18 @@ class V1CartController extends GetxController {
   void deleteProduct(BuildContext context) {
     Get.dialog(Center(
       child: Container(
-        height: DeviceUtils.getScaledHeight(context, 0.329),
-        margin: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.063),
+        height: DeviceUtils.getScaledHeight(context, .329),
+        margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.051),
-          vertical: DeviceUtils.getScaledHeight(context, 0.032),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_LARGE,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
         ),
         decoration: BoxDecoration(
-            color: ColorResources.WHITE,
-            borderRadius: BorderRadius.circular(7)),
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -85,7 +86,7 @@ class V1CartController extends GetxController {
               ),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 0.026),
+              height: DeviceUtils.getScaledHeight(context, .026),
             ),
             const Flexible(
               child: Text(
@@ -96,7 +97,7 @@ class V1CartController extends GetxController {
               ),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 0.026),
+              height: DeviceUtils.getScaledHeight(context, .026),
             ),
             Row(
               children: [
@@ -106,7 +107,7 @@ class V1CartController extends GetxController {
                   width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
                 ),
                 SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, 0.025),
+                  width: DeviceUtils.getScaledWidth(context, .025),
                 ),
                 BtnCustom(
                   onTap: () => Get.back(),

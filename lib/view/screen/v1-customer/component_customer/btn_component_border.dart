@@ -20,14 +20,14 @@ class BtnCustomBorder extends StatelessWidget {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
         ),
         child: Container(
-          height: DeviceUtils.getScaledHeight(context, 0.065),
+          height: DeviceUtils.getScaledHeight(context, .065),
           width: width,
-          margin: EdgeInsets.only(
-              left: DeviceUtils.getScaledHeight(context, 0.013)),
+          margin: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(color: ColorResources.PRIMARY, width: 2),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: ColorResources.WHITE,
           ),
           child: Text(

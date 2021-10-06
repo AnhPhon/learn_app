@@ -16,8 +16,6 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1ProductDetailController>(
         init: V1ProductDetailController(),
         builder: (controller) {
@@ -29,13 +27,11 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //img product
-                  _imgProduct(context, controller, height),
+                  _imgProduct(context, controller),
 
                   //header product detail
                   _headerProductDetail(
                     context,
-                    height,
-                    width,
                     name: "Sản phẩm",
                     price: "230.000 VND",
                     discount: "460.000 VND",
@@ -46,19 +42,18 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   ),
 
                   //ProductSpecification
-                  _productSpecification(context, controller, height, width),
+                  _productSpecification(context, controller),
 
                   SizedBox(
                     height: DeviceUtils.getScaledHeight(context, 0.013),
                   ),
 
                   //more product
-                  _moreProduct(context, controller, height, width),
+                  _moreProduct(context, controller),
                 ],
               ),
             ),
-            bottomNavigationBar:
-                _bottomCart(context, controller, height, width),
+            bottomNavigationBar: _bottomCart(context, controller),
           );
         });
   }
@@ -66,8 +61,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   ///img product
   ///
-  Widget _imgProduct(BuildContext context, V1ProductDetailController controller,
-      double height) {
+  Widget _imgProduct(
+      BuildContext context, V1ProductDetailController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
@@ -80,7 +75,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
           );
         },
         options: CarouselOptions(
-          height: DeviceUtils.getScaledHeight(context, 270 / height),
+          height: DeviceUtils.getScaledHeight(context, .355),
           autoPlay: true,
           viewportFraction: 1,
         ),
@@ -91,11 +86,11 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   /// header product detail
   ///
-  Widget _headerProductDetail(BuildContext context, double height, double width,
+  Widget _headerProductDetail(BuildContext context,
       {required String name, required String price, required String discount}) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 15 / width)),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       color: ColorResources.WHITE,
       child: DefaultTextStyle(
         style: const TextStyle(
@@ -109,13 +104,17 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               name,
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .006),
+            ),
             Text(price,
                 style: const TextStyle(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     color: ColorResources.RED,
                     fontWeight: FontWeight.w600)),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .006),
+            ),
             Text(
               discount,
               style: TextStyle(
@@ -132,25 +131,25 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   ///Product Specification
   ///
-  Widget _productSpecification(BuildContext context,
-      V1ProductDetailController controller, double height, double width) {
+  Widget _productSpecification(
+      BuildContext context, V1ProductDetailController controller) {
     return Container(
       height: controller.isLoadingMore
           ? null
-          : DeviceUtils.getScaledHeight(context, 200 / height),
+          : DeviceUtils.getScaledHeight(context, .263),
       color: ColorResources.WHITE,
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
-              left: DeviceUtils.getScaledWidth(context, 7 / width),
-              top: DeviceUtils.getScaledHeight(context, 0.013),
-              bottom: DeviceUtils.getScaledHeight(context, 0.013),
+              left: Dimensions.PADDING_SIZE_SMALL + 2,
+              top: Dimensions.PADDING_SIZE_SMALL,
+              bottom: Dimensions.PADDING_SIZE_SMALL,
             ),
-            child: const Text(
+            child: Text(
               "Thông tin sản phẩm",
               style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -159,7 +158,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
           ),
           const Divider(color: Colors.grey),
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 17 / height),
+            height: DeviceUtils.getScaledHeight(context, .022),
           ),
 
           //infomation product
@@ -171,7 +170,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
             ),
 
           SizedBox(
-            height: DeviceUtils.getScaledSize(context, 17 / height),
+            height: DeviceUtils.getScaledSize(context, .022),
           ),
 
           // more / less
@@ -206,23 +205,23 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   ///more product
   ///
-  Widget _moreProduct(BuildContext context,
-      V1ProductDetailController controller, double height, double width) {
+  Widget _moreProduct(
+      BuildContext context, V1ProductDetailController controller) {
     return Container(
       color: ColorResources.WHITE,
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //title
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
-              left: DeviceUtils.getScaledWidth(context, 7 / width),
-              top: DeviceUtils.getScaledHeight(context, 0.013),
-              bottom: DeviceUtils.getScaledHeight(context, 0.013),
+              left: Dimensions.PADDING_SIZE_SMALL + 2,
+              top: Dimensions.PADDING_SIZE_SMALL,
+              bottom: Dimensions.PADDING_SIZE_SMALL,
             ),
-            child: const Text(
+            child: Text(
               "Xem thêm",
               style: TextStyle(
                   fontWeight: FontWeight.w600,
@@ -239,7 +238,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: .7,
-                crossAxisSpacing: 20,
+                crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
                 crossAxisCount: 2,
               ),
               itemCount: 10,
@@ -260,22 +259,22 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   ///icon cart
   ///
-  Expanded _iconCartCount(BuildContext context,
-      V1ProductDetailController controller, double height, double width) {
+  Expanded _iconCartCount(
+      BuildContext context, V1ProductDetailController controller) {
     return Expanded(
       flex: 2,
       child: GestureDetector(
         onTap: () => controller.onCartClick(),
         child: Padding(
           padding:
-              EdgeInsets.all(DeviceUtils.getScaledSize(context, 5 / width)),
+              const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL - 2),
 
           ///icon cart
           child: Stack(
             children: [
               Container(
-                padding: EdgeInsets.all(
-                    DeviceUtils.getScaledSize(context, 7 / width)),
+                padding:
+                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 decoration: const ShapeDecoration(
                     shape: CircleBorder(
                         side: BorderSide(
@@ -289,10 +288,10 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               ///quanlity
               Positioned(
                 top: 0,
-                right: DeviceUtils.getScaledWidth(context, 0.038),
+                right: Dimensions.PADDING_SIZE_LARGE,
                 child: Container(
-                  height: DeviceUtils.getScaledHeight(context, 0.019),
-                  width: DeviceUtils.getScaledWidth(context, 0.038),
+                  height: DeviceUtils.getScaledHeight(context, .019),
+                  width: DeviceUtils.getScaledWidth(context, .038),
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
@@ -316,17 +315,19 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   ///
   /// bottom cart
   ///
-  Widget _bottomCart(BuildContext context, V1ProductDetailController controller,
-      double height, double width) {
+  Widget _bottomCart(
+      BuildContext context, V1ProductDetailController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, 60 / height),
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.006)),
+      height: DeviceUtils.getScaledHeight(context, .08),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+          topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+        ),
         boxShadow: [
           BoxShadow(
               color: Colors.grey.shade300, blurRadius: 15, spreadRadius: 1)
@@ -335,7 +336,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
       child: Row(
         children: [
           //icon cart count
-          _iconCartCount(context, controller, height, width),
+          _iconCartCount(context, controller),
 
           // button add to cart
           Expanded(

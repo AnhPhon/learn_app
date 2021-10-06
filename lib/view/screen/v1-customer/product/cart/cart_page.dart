@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -25,20 +25,20 @@ class V1CartPage extends GetView<V1CartController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(
-                      context,
-                      0.026,
-                    ),
+                    height: DeviceUtils.getScaledHeight(context, 0.026),
                   ),
 
                   //title shipping detail
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: DeviceUtils.getScaledHeight(context, 0.019),
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: Text(
                       "Chi tiết về shipping",
-                      style: Dimensions.fontSizeStyle18w600(),
+                      style: TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
 
@@ -46,17 +46,20 @@ class V1CartPage extends GetView<V1CartController> {
                   _shipping(context, controller),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.013),
+                    height: DeviceUtils.getScaledHeight(context, .013),
                   ),
 
                   //title order product detail
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: Text(
                       "Chi tiết đơn hàng",
-                      style: Dimensions.fontSizeStyle18w600(),
+                      style: TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
 
@@ -64,10 +67,7 @@ class V1CartPage extends GetView<V1CartController> {
                   _orderProductDetail(context, controller),
 
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(
-                      context,
-                      0.026,
-                    ),
+                    height: DeviceUtils.getScaledHeight(context, .026),
                   ),
                 ],
               ),
@@ -80,48 +80,60 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///shipping widget
   ///
-  Row _shippingWidget(BuildContext context,
-      {Image? image,
-      Icon? icon,
-      required String text1,
-      required String text2,
-      String? text3}) {
+  Row _shippingWidget(
+    BuildContext context, {
+    Image? image,
+    Icon? icon,
+    required String text1,
+    required String text2,
+    String? text3,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (image != null)
           Container(
-              height: DeviceUtils.getScaledHeight(context, 0.032),
-              width: DeviceUtils.getScaledWidth(context, 0.063),
+              height: DeviceUtils.getScaledHeight(context, .032),
+              width: DeviceUtils.getScaledWidth(context, .063),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
               ),
               child: image)
         else
           icon!,
-        SizedBox(width: DeviceUtils.getScaledWidth(context, 0.025)),
+        SizedBox(
+          width: DeviceUtils.getScaledWidth(context, .025),
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 text1,
-                style: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE),
+                style: const TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
               ),
               Text(
                 text2,
                 maxLines: 1,
                 style: const TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_LARGE,
-                    fontWeight: FontWeight.w600),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontWeight: FontWeight.w600,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
               if (text3 == null)
                 const SizedBox.shrink()
               else
-                Text(text3.toString(),
-                    style: Dimensions.fontSizeStyle16()
-                        .copyWith(color: Colors.grey)),
+                Text(
+                  text3.toString(),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                  ),
+                ),
             ],
           ),
         ),
@@ -132,8 +144,11 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///row shipping component
   ///
-  Widget _rowShipping(BuildContext context,
-      {required VoidCallback onTap, required Widget shippingWidget}) {
+  Widget _rowShipping(
+    BuildContext context, {
+    required VoidCallback onTap,
+    required Widget shippingWidget,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Row(
@@ -161,24 +176,24 @@ class V1CartPage extends GetView<V1CartController> {
     V1CartController controller,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             blurRadius: 2,
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withOpacity(.3),
             spreadRadius: 2,
           ),
         ],
         color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
       ),
       child: Column(
         children: [
@@ -219,14 +234,19 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///icons quality
   ///
-  Widget _iconQuality(BuildContext context,
-      {VoidCallback? onTap, Icon? icon, String? text, Color? color}) {
+  Widget _iconQuality(
+    BuildContext context, {
+    VoidCallback? onTap,
+    Icon? icon,
+    String? text,
+    Color? color,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.01)),
-        height: DeviceUtils.getScaledSize(context, 0.064),
-        width: DeviceUtils.getScaledSize(context, 0.064),
+        margin: const EdgeInsets.all(Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+        height: DeviceUtils.getScaledSize(context, .064),
+        width: DeviceUtils.getScaledSize(context, .064),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: color ?? ColorResources.PRIMARY),
@@ -268,18 +288,26 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///row text info
   ///
-  Row rowText({required String text1, required String text2, Color? color}) {
+  Row rowText({
+    required String text1,
+    required String text2,
+    Color? color,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           text1,
-          style: Dimensions.fontSizeStyle16(),
+          style: const TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+          ),
         ),
         Text(
           text2,
-          style: Dimensions.fontSizeStyle16w600()
-              .copyWith(color: color ?? ColorResources.BLACK),
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            color: color ?? ColorResources.BLACK,
+          ),
         ),
       ],
     );
@@ -293,8 +321,8 @@ class V1CartPage extends GetView<V1CartController> {
     V1CartController controller,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.013),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       child: Column(
         children: [
@@ -303,14 +331,14 @@ class V1CartPage extends GetView<V1CartController> {
             text2: "260.000 VND",
           ),
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 0.013),
+            height: DeviceUtils.getScaledHeight(context, .013),
           ),
           rowText(
             text1: "Phí vận chuyển",
             text2: "Miễn phí",
           ),
           SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 0.013),
+            height: DeviceUtils.getScaledHeight(context, .013),
           ),
           rowText(
             text1: "Tổng",
@@ -329,21 +357,25 @@ class V1CartPage extends GetView<V1CartController> {
     V1CartController controller,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          blurRadius: 2,
-          color: Colors.grey.withOpacity(0.3),
-          spreadRadius: 2,
-        ),
-      ], color: ColorResources.WHITE, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            color: Colors.grey.withOpacity(.3),
+            spreadRadius: 2,
+          ),
+        ],
+        color: ColorResources.WHITE,
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+      ),
       child: Column(children: [
         ListView.builder(
             shrinkWrap: true,
@@ -363,20 +395,21 @@ class V1CartPage extends GetView<V1CartController> {
                             Expanded(
                               flex: 3,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(7),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.BORDER_RADIUS_SMALL),
                                 child: Image.asset(
                                   controller.imgProduct,
                                   fit: BoxFit.fill,
-                                  width: DeviceUtils.getScaledWidth(
-                                      context, 0.152),
+                                  width:
+                                      DeviceUtils.getScaledWidth(context, .152),
                                   height: DeviceUtils.getScaledHeight(
-                                      context, 0.092),
+                                      context, .092),
                                 ),
                               ),
                             ),
 
                             SizedBox(
-                              width: DeviceUtils.getScaledWidth(context, 0.025),
+                              width: DeviceUtils.getScaledWidth(context, .025),
                             ),
 
                             // name, price, quality
@@ -399,7 +432,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 0.006),
+                                        context, .006),
                                   ),
 
                                   //price
@@ -422,7 +455,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 0.006),
+                                        context, .006),
                                   ),
 
                                   // edit quality
@@ -430,7 +463,7 @@ class V1CartPage extends GetView<V1CartController> {
 
                                   SizedBox(
                                     height: DeviceUtils.getScaledHeight(
-                                        context, 0.006),
+                                        context, .006),
                                   ),
                                 ],
                               ),
@@ -441,18 +474,17 @@ class V1CartPage extends GetView<V1CartController> {
                               child: GestureDetector(
                                 onTap: () => controller.deleteProduct(context),
                                 child: Container(
-                                  padding: EdgeInsets.all(
-                                    DeviceUtils.getScaledSize(context, 0.012),
+                                  padding: const EdgeInsets.all(
+                                    Dimensions.PADDING_SIZE_EXTRA_SMALL,
                                   ),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: ColorResources.GREY.withOpacity(.2),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.close_outlined,
-                                    size: DeviceUtils.getScaledHeight(
-                                        context, 0.018),
+                                    size: Dimensions.ICON_SIZE_EXTRA_SMALL,
                                   ),
                                 ),
                               ),

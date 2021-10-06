@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -44,16 +43,17 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
       children: [
         if (image != null)
           Container(
-              height: DeviceUtils.getScaledHeight(context, 0.032),
-              width: DeviceUtils.getScaledWidth(context, 0.063),
+              height: DeviceUtils.getScaledHeight(context, .032),
+              width: DeviceUtils.getScaledWidth(context, .063),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
               ),
               child: image)
         else
           icon!,
         SizedBox(
-          width: DeviceUtils.getScaledWidth(context, 0.025),
+          width: DeviceUtils.getScaledWidth(context, .025),
         ),
         Expanded(
           child: Column(
@@ -76,20 +76,26 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
               Text(
                 text2,
                 textAlign: TextAlign.justify,
-                style: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE),
+                style: const TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
               ),
 
               SizedBox(
-                height: DeviceUtils.getScaledHeight(context, 0.013),
+                height: DeviceUtils.getScaledHeight(context, .013),
               ),
 
               //price
               if (text3 == null)
                 const SizedBox.shrink()
               else
-                Text(text3.toString(),
-                    style: Dimensions.fontSizeStyle16()
-                        .copyWith(color: Colors.red)),
+                Text(
+                  text3.toString(),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                  ),
+                ),
             ],
           ),
         ),
@@ -101,8 +107,11 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
   ///row shipping component
   ///
   Widget _rowShipping(
-      BuildContext context, V1ShippingMethodController controller,
-      {required Widget shippingWidget, required int indexRad}) {
+    BuildContext context,
+    V1ShippingMethodController controller, {
+    required Widget shippingWidget,
+    required int indexRad,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,7 +120,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
           child: shippingWidget,
         ),
         SizedBox(
-          width: DeviceUtils.getScaledWidth(context, 0.025),
+          width: DeviceUtils.getScaledWidth(context, .025),
         ),
         Expanded(
           child: Radio(
@@ -133,13 +142,13 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
     V1ShippingMethodController controller,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.032),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
       decoration: BoxDecoration(
         boxShadow: [

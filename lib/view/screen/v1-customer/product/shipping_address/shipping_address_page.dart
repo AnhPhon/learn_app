@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
@@ -19,8 +20,8 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
             backgroundColor: ColorResources.WHITE,
             body: SingleChildScrollView(
                 child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledWidth(context, 0.038)),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT),
               child: Column(
                 children: [
                   //province
@@ -94,8 +95,8 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
-        padding: EdgeInsets.only(
-          top: DeviceUtils.getScaledHeight(context, 0.013),
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_SMALL,
         ),
         child: RichText(
           text: TextSpan(

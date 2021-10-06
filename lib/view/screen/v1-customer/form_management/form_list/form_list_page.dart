@@ -44,16 +44,17 @@ class V1FormListPage extends GetView<V1FormListController> {
       child: Container(
         alignment: Alignment.center,
         height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble() / 2,
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble() / 2,
         decoration: BoxDecoration(
           borderRadius: isRight == false
               ? const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 )
               : const BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight:
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
           color: controller.currentIndex == index
               ? ColorResources.PRIMARY
@@ -83,11 +84,11 @@ class V1FormListPage extends GetView<V1FormListController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, 0.1),
+      height: DeviceUtils.getScaledHeight(context, .1),
       child: Container(
         alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, 0.07),
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
+        height: DeviceUtils.getScaledHeight(context, .07),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -112,16 +113,17 @@ class V1FormListPage extends GetView<V1FormListController> {
         controller.onJobDetailClick();
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-            vertical: DeviceUtils.getScaledHeight(context, 0.013)),
-        height: DeviceUtils.getScaledHeight(context, 0.118),
+        margin: const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_SMALL,
+            vertical: Dimensions.MARGIN_SIZE_SMALL),
+        height: DeviceUtils.getScaledHeight(context, .118),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withOpacity(.2),
                 blurRadius: 10,
                 offset: const Offset(0, 2)),
           ],
@@ -132,17 +134,18 @@ class V1FormListPage extends GetView<V1FormListController> {
             Expanded(
               flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
-                  width: DeviceUtils.getScaledWidth(context, 0.025),
+                  height: DeviceUtils.getScaledHeight(context, .118),
+                  width: Dimensions.PADDING_SIZE_SMALL,
                 ),
               ),
             ),
             SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 0.025),
+              width: DeviceUtils.getScaledWidth(context, .025),
             ),
             Expanded(
               flex: 8,
@@ -151,7 +154,8 @@ class V1FormListPage extends GetView<V1FormListController> {
                 children: [
                   const Flexible(
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(
+                          Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
                       child: Text(
                         "Thợ ốp lát: Công trình khách hàng 5 sao",
                         maxLines: 2,
@@ -168,12 +172,12 @@ class V1FormListPage extends GetView<V1FormListController> {
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, 0.025),
+                        width: DeviceUtils.getScaledWidth(context, .025),
                       ),
                     ],
                   ),
                   SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, 0.015),
+                    width: DeviceUtils.getScaledWidth(context, .015),
                   ),
                 ],
               ),

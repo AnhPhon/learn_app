@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
 
 class InputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -26,22 +26,25 @@ class InputWidget extends StatelessWidget {
         isDense: true,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.019),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide:
-                const BorderSide(color: ColorResources.PRIMARY, width: 2)),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderSide: const BorderSide(color: ColorResources.PRIMARY, width: 2),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide:
-                const BorderSide(color: ColorResources.PRIMARY, width: 2)),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderSide: const BorderSide(color: ColorResources.PRIMARY, width: 2),
+        ),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide:
-                const BorderSide(color: ColorResources.PRIMARY, width: 2)),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderSide: const BorderSide(color: ColorResources.PRIMARY, width: 2),
+        ),
         hintText: hintText,
         filled: true,
         fillColor: Colors.transparent,

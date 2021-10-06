@@ -17,13 +17,13 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Container(
-              margin: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 0.019),
-                horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+              margin: const EdgeInsets.symmetric(
+                vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+                horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
               ),
-              padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 0.032),
-                horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+              padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                horizontal: Dimensions.PADDING_SIZE_LARGE,
               ),
               decoration: BoxDecoration(
                 boxShadow: [
@@ -69,7 +69,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                      height: DeviceUtils.getScaledHeight(context, .019),
                     ),
 
                     //btn checkout
@@ -81,7 +81,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                      height: DeviceUtils.getScaledHeight(context, .019),
                     ),
 
                     //note
@@ -92,7 +92,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                      height: DeviceUtils.getScaledHeight(context, .019),
                     ),
 
                     //btn put money into an account
@@ -104,7 +104,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                      height: DeviceUtils.getScaledHeight(context, .019),
                     ),
 
                     //note
@@ -128,8 +128,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.013),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_SMALL,
         ),
         child: Text(
           title,

@@ -18,17 +18,19 @@ class ProductWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.all(
-            Radius.circular(7),
+            Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
           ),
           child: Image.asset(
             imgUrl,
             fit: BoxFit.fill,
-            height: DeviceUtils.getScaledHeight(context, 0.197),
+            height: DeviceUtils.getScaledHeight(context, .197),
           ),
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, 0.006)),
         SizedBox(
-          height: DeviceUtils.getScaledSize(context, 0.098),
+          height: DeviceUtils.getScaledHeight(context, .006),
+        ),
+        SizedBox(
+          height: DeviceUtils.getScaledSize(context, .098),
           child: Text(
             name,
             maxLines: 2,

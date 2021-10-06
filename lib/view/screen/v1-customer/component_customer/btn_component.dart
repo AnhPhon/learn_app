@@ -24,11 +24,12 @@ class BtnCustom extends StatelessWidget {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
         ),
         child: Container(
-          height: DeviceUtils.getScaledHeight(context, 0.065),
+          height: DeviceUtils.getScaledHeight(context, .065),
           width: width,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: color,
           ),
           child: Text(text),

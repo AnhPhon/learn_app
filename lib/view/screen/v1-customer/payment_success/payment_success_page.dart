@@ -20,7 +20,7 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.026),
+                    height: DeviceUtils.getScaledHeight(context, .026),
                   ),
                   //image
                   _image(),
@@ -53,25 +53,25 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
         fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Column(
           children: [
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 0.032),
+              height: DeviceUtils.getScaledHeight(context, .032),
             ),
             const Text(
               "Bạn đã chuyển tiền cọc và tiền phí thành công!",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 0.019),
+              height: DeviceUtils.getScaledHeight(context, .019),
             ),
             const Text(
                 "Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!"),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, 0.019),
+              height: DeviceUtils.getScaledHeight(context, .019),
             ),
             const Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
           ],

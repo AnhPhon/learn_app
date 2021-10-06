@@ -18,8 +18,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -30,8 +30,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
                       title: "Hướng dẫn thực hiện thanh toán",
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.013),
+                    const SizedBox(
+                      height: Dimensions.PADDING_SIZE_SMALL,
                     ),
 
                     //title account management
@@ -70,15 +70,15 @@ class V1RechargePage extends GetView<V1RechargeController> {
                       notFontSize: true,
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                    const SizedBox(
+                      height: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
 
                     //content
                     _content(context),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, 0.019),
+                    const SizedBox(
+                      height: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
 
                     //title upload
@@ -103,8 +103,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledHeight(context, 0.013),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_SMALL,
         ),
         child: Text(
           title,
@@ -126,9 +126,9 @@ class V1RechargePage extends GetView<V1RechargeController> {
       required Icon icon,
       required VoidCallback onTap}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.01)),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: DefaultTextStyle(
         style: const TextStyle(
           fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -147,8 +147,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
                   text2,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, 0.025),
+                const SizedBox(
+                  width: Dimensions.PADDING_SIZE_SMALL,
                 ),
                 GestureDetector(onTap: onTap, child: icon),
               ],
@@ -164,13 +164,13 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   Widget _content(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.038),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.032),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.051),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.GREY),
@@ -187,8 +187,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
             ),
           ),
 
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 0.013),
+          const SizedBox(
+            height: Dimensions.PADDING_SIZE_SMALL,
           ),
 
           //content
@@ -202,8 +202,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                 ),
               ),
-              SizedBox(
-                width: DeviceUtils.getScaledWidth(context, 0.025),
+              const SizedBox(
+                width: Dimensions.PADDING_SIZE_SMALL,
               ),
               GestureDetector(
                 onTap: () {},
@@ -215,8 +215,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
             ],
           ),
 
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 0.013),
+          const SizedBox(
+            height: Dimensions.PADDING_SIZE_SMALL,
           ),
 
           //note
@@ -248,8 +248,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
               )
             : Image.asset(
                 Images.add_image,
-                height: DeviceUtils.getScaledHeight(context, 0.092),
-                width: DeviceUtils.getScaledWidth(context, 0.25),
+                height: DeviceUtils.getScaledHeight(context, .092),
+                width: DeviceUtils.getScaledWidth(context, .25),
                 fit: BoxFit.fill,
                 color: ColorResources.PRIMARY,
               ),

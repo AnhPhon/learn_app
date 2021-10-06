@@ -42,15 +42,16 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
         itemCount: 2,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-                vertical: DeviceUtils.getScaledHeight(context, 0.026)),
-            padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 0.026),
-                horizontal: DeviceUtils.getScaledWidth(context, 0.051)),
+            margin: const EdgeInsets.symmetric(
+                horizontal: Dimensions.MARGIN_SIZE_SMALL,
+                vertical: Dimensions.MARGIN_SIZE_SMALL),
+            padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.PADDING_SIZE_SMALL,
+                horizontal: Dimensions.PADDING_SIZE_LARGE),
             decoration: BoxDecoration(
               color: ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
               boxShadow: [
                 BoxShadow(
                     color: Colors.black.withOpacity(.25),
@@ -90,13 +91,10 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
                       //subtitle
                       ...controller.paymentMethodSubTitle[index]
                           .map((element) => Padding(
-                                padding: EdgeInsets.only(
-                                  left: DeviceUtils.getScaledWidth(
-                                      context, 0.051),
-                                  top: DeviceUtils.getScaledHeight(
-                                      context, 0.006),
-                                  bottom: DeviceUtils.getScaledHeight(
-                                      context, 0.006),
+                                padding: const EdgeInsets.only(
+                                  left: Dimensions.PADDING_SIZE_LARGE,
+                                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                                 ),
                                 child: Text(
                                   element,
@@ -123,16 +121,19 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   Widget _bottomSheet(
       BuildContext context, V1PaymentMethodController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.19),
-      padding: EdgeInsets.only(
-          left: DeviceUtils.getScaledWidth(context, 0.038),
-          right: DeviceUtils.getScaledWidth(context, 0.038),
-          top: DeviceUtils.getScaledHeight(context, 0.035),
-          bottom: DeviceUtils.getScaledHeight(context, 0.026)),
+      height: DeviceUtils.getScaledHeight(context, .19),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        bottom: Dimensions.PADDING_SIZE_SMALL,
+      ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+          topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+        ),
         boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 4, offset: Offset(0, -2))
         ],

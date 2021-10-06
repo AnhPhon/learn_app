@@ -47,16 +47,17 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
       child: Container(
         alignment: Alignment.center,
         height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble() / 2,
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble() / 2,
         decoration: BoxDecoration(
           borderRadius: isRight == false
               ? const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 )
               : const BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight:
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
           color: controller.currentIndex == index
               ? ColorResources.PRIMARY
@@ -86,11 +87,11 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, 0.1),
+      height: DeviceUtils.getScaledHeight(context, .1),
       child: Container(
         alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, 0.07),
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
+        height: DeviceUtils.getScaledHeight(context, .07),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -115,12 +116,13 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
         controller.onProductResponseClick();
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-            vertical: DeviceUtils.getScaledHeight(context, 0.013)),
-        height: DeviceUtils.getScaledHeight(context, 0.118),
+        margin: const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_SMALL,
+            vertical: Dimensions.MARGIN_SIZE_SMALL),
+        height: DeviceUtils.getScaledHeight(context, .118),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
@@ -140,12 +142,12 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                   Images.newsTemplate,
                   fit: BoxFit.fill,
                   height: DeviceUtils.getScaledHeight(context, 0.118),
-                  width: DeviceUtils.getScaledWidth(context, 0.025),
+                  width: Dimensions.PADDING_SIZE_SMALL,
                 ),
               ),
             ),
             SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 0.025),
+              width: DeviceUtils.getScaledHeight(context, .013),
             ),
             Expanded(
               flex: 8,
@@ -171,12 +173,12 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, 0.025),
+                        width: DeviceUtils.getScaledWidth(context, .025),
                       ),
                     ],
                   ),
                   SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, 0.015),
+                    width: DeviceUtils.getScaledWidth(context, .015),
                   ),
                 ],
               ),
