@@ -13,7 +13,7 @@ class NewsBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 352,
-      height: 64,
+      height: 80,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -32,7 +32,7 @@ class NewsBox extends StatelessWidget {
         children: <Widget>[
           Container(
             width: 80,
-            height: 59.534881591796875,
+            height: 60,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(7),
@@ -41,8 +41,9 @@ class NewsBox extends StatelessWidget {
                 bottomRight: Radius.circular(7),
               ),
               image: DecorationImage(
-                  image: AssetImage('assets/images/news1.png'),
-                  fit: BoxFit.fitWidth),
+                image: AssetImage('assets/images/news1.png'),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Container(
@@ -65,6 +66,7 @@ class NewsBox extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Spacer(),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -73,7 +75,7 @@ class NewsBox extends StatelessWidget {
                     style: const TextStyle(
                       color: Color.fromRGBO(0, 0, 0, 0.6200000047683716),
                       fontFamily: 'Nunito',
-                      fontSize: 13,
+                      fontSize: 15,
                       letterSpacing: -0.30000001192092896,
                       fontWeight: FontWeight.normal,
                       height: 1,
