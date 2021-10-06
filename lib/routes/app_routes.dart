@@ -10,22 +10,17 @@ class AppRoutes {
   static const String V1BENEFITS = "/v1benefits";
   static const String V1NOTIFICATION = "/v1notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
-  // Phản hồi đơn hàng nhóm 5 
+  static const String V1ORDERFEEDBACKCONTRACTORS =
+      "/v1orderfeedbackcontractors";
+  // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUPORDERFEEDBACK5 = "/v1_grouporderfeedback5";
-    // Phản hồi đơn hàng nhóm 6
+  // Phản hồi đơn hàng nhóm 6
   static const String V1_GROUPORDERFEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDERINFORAMTION = "/v1_orderinfo";
   // Tạo đơn công việc
   static const String V1_CREATEWORK = "/v1_creatework";
   static const String V1_G1CREATEWORK = "/v1_g1creatework";
-  
-
-
-
-
-
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -73,4 +68,7 @@ class AppRoutes {
   static const String V2_DASHBOARD = '/v2_dashboard';
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
+
+  //employeee
+  static const String V4_WORKPROGRESS = '/v4_workprogress';
 }

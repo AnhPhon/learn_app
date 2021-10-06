@@ -38,6 +38,13 @@ class V4HomeController extends GetxController {
     }
   ];
 
+  ///
+  /// click to work progress page
+  ///
+  void onClickToWorkProgerss(int index) {
+    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
+  }
+
   double total = 10000000;
   double revenue = 10000000; // thu
   double expenditure = 10000000; // chi
