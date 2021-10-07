@@ -84,13 +84,13 @@ flutter:
         - asset: assets/fonts/roboto/Roboto-Regular.ttf
         - asset: assets/fonts/roboto/Roboto-Bold.ttf
           weight: 700
-    # - family: Nutito
-    #   fonts:
-    #     - asset: assets/fonts/nutito/Nutito-Regular.ttf
-    #       weight: 400
-    #     - asset: assets/fonts/nutito/Nutito-SemiBold.ttf
-    #       weight: 500
-    #     - asset: assets/fonts/nutito/Nutito-Bold.ttf
-    #       weight: 600
-    #     - asset: assets/fonts/nutito/Nutito-Black.ttf
-    #       weight: 800
+    - family: Nutito
+      fonts:
+        - asset: assets/fonts/nutito/Nutito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/nutito/Nutito-SemiBold.ttf
+          weight: 500
+        - asset: assets/fonts/nutito/Nutito-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/nutito/Nutito-Black.ttf
+          weight: 800

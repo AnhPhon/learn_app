@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/candicate_binding.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/candicate_page.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candicate_profile/candicate_profile_binding.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candicate_profile/candicate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/Benefits.dart';
@@ -338,6 +342,19 @@ class AppPages {
       name: AppRoutes.V1_G7_PRICE_LIST, 
       page: ()=> V1G7PriceListPage(),
       binding: V1G7PriceListBinding()
+    ),
+    // Trang chính tuyển dung ứng viên
+    GetPage(
+      name: AppRoutes.V1_CANDICATE, 
+      page: ()=> V1CandicatePage(),
+      binding: V1CandicateBinding()
+    ),
+    // Xem thông tin của hồ sơ
+    // Trang chính tuyển dung ứng viên
+    GetPage(
+      name: AppRoutes.V1_CANDICATE_PROFILE, 
+      page: ()=> V1CandicateProfilePage(),
+      binding: V1CandicateProfileBinding()
     ),
 
 
