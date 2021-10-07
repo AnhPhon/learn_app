@@ -16,11 +16,11 @@ class ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Container(
         decoration: BoxDecoration(
           color: ColorResources.GREY,
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         height: 120,
         width: 120,

@@ -33,7 +33,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
               const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
 
               // Form nhập dữ 
-              form(context, controller),
+              form(context, _controller),
               
               // Button tiếp tục
               nextButton(controller: _controller)
@@ -68,9 +68,9 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
           child: Column(
             children: [
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
             ],
           ),
         ),

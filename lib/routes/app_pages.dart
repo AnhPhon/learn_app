@@ -54,6 +54,12 @@ import 'package:template/view/screen/v1-customer/services/g5-car_rental/g5_creat
 import 'package:template/view/screen/v1-customer/services/g5-car_rental/g5_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_page.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/create/g7_recruitment_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/create/g7_recruitment_page.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_list_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_list_page.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
@@ -273,6 +279,28 @@ class AppPages {
       page: ()=> V1G6CreateServicePage(),
       binding: V1G6CreateServiceBinding()
     ),
+
+    // Tạo tin tuyển dụng
+    GetPage(
+      name: AppRoutes.V1_G7_RECRUITMENT, 
+      page: ()=> V1G7RecruitmentPage(),
+      binding: V1G7RecruitmentBinding()
+    ),
+
+    // Xem lại tin tuyển dụng
+    GetPage(
+      name: AppRoutes.V1_G7_REVIEW, 
+      page: ()=> V1G7ReviewPage(),
+      binding: V1G7ReviewBinding()
+    ),
+    // Bảng giá đăng tin
+    GetPage(
+      name: AppRoutes.V1_G7_PRICE_LIST, 
+      page: ()=> V1G7PriceListPage(),
+      binding: V1G7PriceListBinding()
+    ),
+
+
 
     // Hình thức thanh toán 
     GetPage(

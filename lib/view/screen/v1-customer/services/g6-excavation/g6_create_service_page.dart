@@ -8,6 +8,7 @@ import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
+import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
@@ -32,7 +33,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
               const GroupTitle(title: "Dịch vụ xe đào, cầu nặng , máy khác"),
 
               // Form nhập dữ 
-              form(context, controller),
+              form(context, _controller),
               
               // Button tiếp tục
               nextButton(controller: _controller)
@@ -70,16 +71,12 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           padding: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_DEFAULT,
           ),
-          child: Material(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)
-            ),
-            child: Container(
+          child: BoxShadowWidget(
+            child: SizedBox(
               height: 200,
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return CheckBoxCustom(title: "Thông số kỹ thuật", onChanged: (bool? val) {  },);
+                  return CheckBoxCustom(title: "Thông số kỹ thuật", onChanged: (bool? val) {  },status: false,);
                 },
                 itemCount: 10,
               ),
@@ -93,9 +90,9 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
           child: Column(
             children: [
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
             ],
           ),
         ),
@@ -118,7 +115,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
         TextFieldDate(
           isDate: true,
           allowEdit: true,
-          controller: controller.startWorkController,
+          controller: controller.startTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày làm việc",
@@ -131,7 +128,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
         TextFieldDate(
           isDate: true,
           allowEdit: true,
-          controller: controller.startWorkController,
+          controller: controller.endTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày kết thúc dự kiến",
@@ -145,7 +142,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.receivingWidthController,
+          controller: controller.distanceController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Thanh Khê - Đà Nẵng",
           hidden: false,

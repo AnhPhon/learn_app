@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template/helper/currency_covert.dart';
-
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -31,20 +31,13 @@ class OrderBottomSheet extends StatelessWidget {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         width: DeviceUtils.getScaledWidth(context, 1),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: ColorResources.WHITE,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(25), 
-            topRight: Radius.circular(25),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(Dimensions.BORDER_RADIUS_BIG), 
+            topRight: Radius.circular(Dimensions.BORDER_RADIUS_BIG),
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, -1),
-              blurRadius: 10,
-              spreadRadius: 0.1,
-              color: ColorResources.BLACK.withOpacity(0.5)
-            ),
-          ]
+          boxShadow: boxShadowMedium
         ),
         child: Column(
           children: [

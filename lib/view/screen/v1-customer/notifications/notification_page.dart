@@ -27,22 +27,22 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  height: 150,
+                  height: 140,
                   color: index % 2 == 0 ?  ColorResources.PRIMARYCOLOR.withOpacity(0.3) : ColorResources.WHITE,
                   child: Column(
                     children: [
                       RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                           text: "Đã có một thông báo phản hồi từ",
                           style: TextStyle(
                             fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            color: ColorResources.BLACK,
+                            color: ColorResources.BLACK.withOpacity(0.8),
                           ),
-                          children: [
+                          children: const [
                             TextSpan(
                               text: " Thợ ốp lát: công trình khách 5",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold
+                                fontWeight: FontWeight.bold,
                               )
                             ),
                             TextSpan(

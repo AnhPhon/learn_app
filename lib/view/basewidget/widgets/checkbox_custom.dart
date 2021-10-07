@@ -7,16 +7,22 @@ class CheckBoxCustom extends StatelessWidget {
   CheckBoxCustom({
     Key? key,
     required this.title,
+    required this.status,
     required this.onChanged,
   }) : super(key: key);
   final String title;
-  bool? status = false;
+  final bool status;
   final Function(bool? val) onChanged;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Checkbox(value: status, onChanged: onChanged),
+        Checkbox(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
+          ),
+          value: status, onChanged: onChanged
+        ),
         Text(title, style: const TextStyle(
           fontSize: Dimensions.FONT_SIZE_LARGE
         ),)

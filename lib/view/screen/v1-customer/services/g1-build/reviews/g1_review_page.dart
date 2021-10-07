@@ -13,6 +13,7 @@ import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
+import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
@@ -153,25 +154,20 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
 
   Widget note(){
     return Column(
-      children: [
-        const Label(
+      children: const [
+        Label(
           label: "Ghi chú",
           obligatory: false,
           paddingTitle: 0
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_DEFAULT,
             vertical: Dimensions.PADDING_SIZE_DEFAULT
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-              boxShadow: boxShadow
-            ),
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: const Text("Đối với dự án có khối lượng lớn, gửi bản vẽ qua email baogia5sao@gmail.com; chúng tôi sẽ có đội ngũ đến khảo sát và báo giá."
+          child: BoxShadowWidget(
+            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+            child: Text("Đối với dự án có khối lượng lớn, gửi bản vẽ qua email baogia5sao@gmail.com; chúng tôi sẽ có đội ngũ đến khảo sát và báo giá."
             "Hoặc khách hàng yêu cầu chúng tôi sẽ đến khảo sát báo giá trực tiếp ", style: TextStyle(
               fontSize: Dimensions.FONT_SIZE_LARGE
             ),),

@@ -13,12 +13,14 @@ class Label extends StatelessWidget {
     this.paddingTitle = Dimensions.PADDING_SIZE_SMALL,
     this.horizontalPadding = Dimensions.PADDING_SIZE_DEFAULT,
     this.topPadding = Dimensions.PADDING_SIZE_LARGE,
+    this.style,
   }) : super(key: key);
   final String label;
   final bool obligatory;
   final double? paddingTitle;
   final double? horizontalPadding;
   final double? topPadding;
+  final TextStyle? style;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,7 +36,7 @@ class Label extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
+              style: style ?? const TextStyle(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold,/*color: ColorResources.BLACK.withOpacity(0.7)*/),
             ),
             if (obligatory) const Text(

@@ -22,7 +22,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +30,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
                 const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
       
                 // Nhập địa chỉ cụ thể
-                form(context, controller),
+                form(context, _controller),
                 
                 // Button tiếp tục
                 nextButton(controller: _controller)
@@ -93,9 +93,9 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
           child: Column(
             children: [
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: true,),
             ],
           ),
         ),

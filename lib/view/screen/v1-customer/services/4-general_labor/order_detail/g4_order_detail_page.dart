@@ -9,7 +9,6 @@ import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_controller.dart';
 import 'package:template/view/screen/v1-customer/services/components/order_content_string_value.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';

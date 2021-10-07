@@ -35,8 +35,13 @@ class AppRoutes {
   static const String V1_G5_CREATE_SERVICE = "/v1_g5_create_service";
   // Tạo đơn dịch vụ và công việc nhóm 6
   static const String V1_G6_CREATE_SERVICE = "/v1_g6_create_service";
+  // Tạo tin tuyển dụng 
+  static const String V1_G7_RECRUITMENT = '/v1_g7_reccuitment';
+  static const String V1_G7_REVIEW = '/v1_g7_review';
   // Xem lại đơn công viêc
   static const String V1_G1_REVIEW = "/v1_g1_review";
+  // Bảng giá đăng tin
+  static const String V1_G7_PRICE_LIST = "/v1_g7_price_list";
   // Thành công
   static const String V1_SUCCESSFULLY = "/v1_successfully";
   // Hình thức thanh toán

@@ -144,6 +144,7 @@ class ColorResources {
   static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
   static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
   static const Color BACKGROUND = Color(0xffF6F6F7);
+  static const Color LIGHT_BLACK = Color(0xffA2A2A2);
 
   static const Color THEME_DEFAULT = Color(0xff2196F3);
 

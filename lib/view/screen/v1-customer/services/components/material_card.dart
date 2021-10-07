@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
 class MaterialCard extends StatelessWidget {
@@ -26,12 +27,7 @@ class MaterialCard extends StatelessWidget {
         right: rightPading!,
         top: topPading!,
       ),
-      child: Material(
-        type: MaterialType.card,
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
-        ),
+      child: BoxShadowWidget(
         child: Container(
           padding: paddingSmall,
           child: Column(

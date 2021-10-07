@@ -10,18 +10,20 @@ class TextHighlight extends StatelessWidget {
   final String content;
   final double? fontSize;
   final TextStyle? style;
+  final TextStyle? titleStyle;
   const TextHighlight({
     Key? key,
     required this.title,
     required this.content,
     this.fontSize = Dimensions.FONT_SIZE_EXTRA_LARGE,
     this.style,
+    this.titleStyle,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: TextStyle(
+        style: titleStyle ?? TextStyle(
           color: ColorResources.BLACK,
           fontWeight: FontWeight.bold,
           fontSize: fontSize

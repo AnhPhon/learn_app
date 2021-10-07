@@ -8,6 +8,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
+import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_controller.dart';
@@ -27,12 +28,9 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         return Scaffold(
           backgroundColor: const Color(0xffF6F6F7),
           appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
-          body: Container(
+          body: SizedBox(
             //padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: DeviceUtils.getScaledHeight(context, 1)
-            ),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,9 +42,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                   // list Hình ảnh
                   image(context),
                   // List vật liệu
-                  Expanded(
-                    child: materialList()
-                  ),
+                  materialList(context),
                   // Khoản cách bottom sheet
                   const SizedBox(height:150),
                 ],
@@ -138,7 +134,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(){
+  Widget materialList(BuildContext context){
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
       child: Column(
@@ -150,48 +146,40 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Material(
-                    elevation: 4,
-                    type: MaterialType.card,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
-                    ),
-                    child: SizedBox(
-                      height: 160,
-                      child: Padding(
-                        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                        child: DefaultTextStyle(
-                          style: const TextStyle(
-                            color: ColorResources.BLACK,
-                            fontSize: Dimensions.PADDING_SIZE_DEFAULT
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
-                              TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
-                              TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
-                              TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
-                                color: ColorResources.RED,
-                                fontSize: Dimensions.FONT_SIZE_LARGE
-                              ),),
-                            ],
-                          ),
+          Column(
+            children: [
+              ...List.generate(10, (index) => Padding(
+                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                child: BoxShadowWidget(
+                  child: SizedBox(
+                    height: 160,
+                    width: DeviceUtils.getScaledWidth(context, 1),
+                    child: Padding(
+                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          color: ColorResources.BLACK,
+                          fontSize: Dimensions.PADDING_SIZE_DEFAULT
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
+                            TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
+                            TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
+                            TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
+                              color: ColorResources.RED,
+                              fontSize: Dimensions.FONT_SIZE_LARGE
+                            ),),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              ))
+            ],
           )
         ],
       ),

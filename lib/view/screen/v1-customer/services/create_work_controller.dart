@@ -47,6 +47,9 @@ class CreateWorkController extends GetxController{
     }else if(group == 6){
       // Tạo đơn công viẹc và dịch nhóm 5
       Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE);
+    }else if(group == 7){
+      // Tạo đơn công viẹc và dịch nhóm 5
+      Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
     }
   }
 

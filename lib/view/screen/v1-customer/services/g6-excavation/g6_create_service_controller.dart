@@ -9,13 +9,10 @@ import 'package:template/routes/app_routes.dart';
 class V1G6CreateServiceController extends GetxController{
   final workTitleController = TextEditingController();
   final amountController = TextEditingController();
-  final startWorkController = TextEditingController();
-  final estimatedPickUpLocation = TextEditingController();
-  final estimatedDeliveryLocation = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
   final distanceController = TextEditingController();
   final workDescController = TextEditingController();
-  final returnWidthController = TextEditingController();
-  final receivingWidthController = TextEditingController();
 
   ///
   /// Nhấn tiếp tục 

@@ -35,20 +35,28 @@ const robotoBold = TextStyle(
   fontWeight: FontWeight.w700,
 );
 
-var boxShadow =[
-      BoxShadow(
-        color: ColorResources.BLACK.withOpacity(0.3),
-        blurRadius: 5,
-        spreadRadius: 0.4
-      )
-    ];
-
-//  [
-//   BoxShadow(
-//     color: ColorResources.BLACK.withOpacity(0.1),
-//     blurRadius: 1,
-//     spreadRadius: 0.1
-//   )
-// ];
+const boxShadow =[
+  BoxShadow(
+    color: ColorResources.LIGHT_BLACK,
+    blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
+    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM
+  )
+];
+const boxShadowMedium = [
+  BoxShadow(
+    //offset: Offset(0, -1),
+    blurRadius: Dimensions.BLUR_RADIUS_MEDIUM,
+    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+    color: ColorResources.LIGHT_BLACK
+  ),
+];
+const boxShadowDeep = [
+  BoxShadow(
+    //offset: Offset(0, -1),
+    blurRadius: Dimensions.BLUR_RADIUS_DEEP,
+    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM_DEEP,
+    color: ColorResources.LIGHT_BLACK
+  ),
+];
 
 const paddingSmall =  EdgeInsets.all(Dimensions.FONT_SIZE_SMALL);
