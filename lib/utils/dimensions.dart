@@ -69,7 +69,6 @@ class Dimensions {
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;
 
-
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
 

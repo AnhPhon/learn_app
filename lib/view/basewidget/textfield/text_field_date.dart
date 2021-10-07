@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -23,7 +21,7 @@ class TextFieldDate extends StatelessWidget {
   final TextEditingController controller;
   final bool allowEdit, isDate;
   final TextInputType typeInput;
-  final double width,fontSize;
+  final double width, fontSize;
   final bool obligatory;
   final bool? area;
   final double? paddingTop;
@@ -40,27 +38,31 @@ class TextFieldDate extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(label != null)
-          Container(
-            padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-            alignment: Alignment.centerLeft,
-            child: Wrap(
-              children: [
-                Text(
-                  label!,
-                  style: TextStyle(
-                      fontSize: fontSize, fontWeight: FontWeight.bold),
-                ),
-                if (obligatory) Text(
-                        '*',
-                        style: TextStyle(
-                            fontSize: fontSize,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ) else Container()
-              ],
+          if (label != null)
+            Container(
+              padding: const EdgeInsets.only(
+                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: [
+                  Text(
+                    label!,
+                    style: TextStyle(
+                        fontSize: fontSize, fontWeight: FontWeight.bold),
+                  ),
+                  if (obligatory)
+                    Text(
+                      '*',
+                      style: TextStyle(
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
+                    )
+                  else
+                    Container()
+                ],
+              ),
             ),
-          ),
           TextField(
             textInputAction: TextInputAction.done,
             keyboardType: isDate ? null : typeInput,
@@ -81,10 +83,12 @@ class TextFieldDate extends StatelessWidget {
                     });
                   }
                 : null,
-                cursorColor: ColorResources.PRIMARYCOLOR,
+            cursorColor: ColorResources.PRIMARYCOLOR,
             decoration: InputDecoration(
-              isDense: true,
-              contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
@@ -102,7 +106,9 @@ class TextFieldDate extends StatelessWidget {
                 ),
                 hintText: holdplacer,
                 filled: true,
-                fillColor:(allowEdit == false) ? ColorResources.GREY : Colors.transparent,
+                fillColor: (allowEdit == false)
+                    ? ColorResources.GREY
+                    : Colors.transparent,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -32,6 +31,7 @@ class InputField extends StatelessWidget {
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
+  bool? boldHinText;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,22 +51,26 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize,// * 2.1, 
-                      fontWeight: FontWeight.bold, 
+                      fontSize: fontSize, // * 2.1,
+                      fontWeight: FontWeight.bold,
                       color: ColorResources.BLACK.withOpacity(0.7)),
                 ),
-                if (obligatory) Text(
-                        '*',
-                        style: TextStyle(
-                            fontSize: fontSize,// * 2.1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ) else Container()
+                if (obligatory)
+                  Text(
+                    '*',
+                    style: TextStyle(
+                        fontSize: fontSize, // * 2.1,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  )
+                else
+                  Container()
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            padding:
+                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,

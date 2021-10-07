@@ -14,6 +14,7 @@ import 'package:template/view/screen/v1-customer/form_management/job_detail/job_
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
@@ -25,9 +26,13 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
+import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
+import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
+import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
@@ -35,6 +40,7 @@ import 'package:template/view/screen/v1-customer/services/4-general_labor/order_
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_page.dart';
+import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
@@ -70,6 +76,15 @@ import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
+import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
+
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 
 import 'app_routes.dart';
 
@@ -156,6 +171,31 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_CART,
       page: () => V1CartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SHIPPING_METHOD,
+      page: () => V1ShippingMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SHIPPING_ADDRESS,
+      page: () => V1ShippingAddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PAYMENT_ACCOUNT,
+      page: () => V1PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_RECHARGE,
+      page: () => V1RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PAYMENT_SUCCESS,
+      page: () => V1PaymentSuccessPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V1_NEWS_DETAIL,
+      page: () => V1NewsDetailPage(),
     ),
 
     ///
@@ -341,7 +381,28 @@ class AppPages {
       page: () => V4DashboardPage(),
       binding: V4DashboardBinding(),
     ),
+    //v4 - work progress
+    GetPage(
+      name: AppRoutes.V4_WORKPROGRESS,
+      page: () => V4WorkProgressPage(),
+      binding: V4WorkProgressBinding(),
+    ),
 
+    GetPage(
+      name: AppRoutes.V4_TIMEKEEPING,
+      page: () => V4TimekeepingPage(),
+      binding: V4TimekeepingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_REPORT_TIMEKEEPING,
+      page: () => V4ReportTimekeepingPage(),
+      binding: V4ReportTimekeepingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_REVENUE_EXPENDITURE,
+      page: () => V4RevenueExpenditurePage(),
+      binding: V4RevenueExpenditureBinding(),
+    ),
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),

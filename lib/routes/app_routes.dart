@@ -93,10 +93,24 @@ class AppRoutes {
   static const String V1_FORM_LIST = '/v1_form_list';
   static const String V1_PRODUCT_DETAIL = '/v1_product_detail';
   static const String V1_CART = '/v1_cart';
+  static const String V1_SHIPPING_METHOD = '/v1_shipping_method';
+  static const String V1_SHIPPING_ADDRESS = '/v1_shipping_address';
+  static const String V1_PAYMENT_ACCOUNT = '/v1_payment_account';
+  static const String V1_RECHARGE = '/v1_recharge';
+  static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
+
+  static const String V1_NEWS_DETAIL = '/v1_news_detail';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V2_DASHBOARD = '/v2_dashboard';
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
+
+  //employeee
+  static const String V4_WORKPROGRESS = '/v4_workprogress';
+
+  static const String V4_TIMEKEEPING = '/v4_timekeeping';
+  static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
+  static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 }

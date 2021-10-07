@@ -3,17 +3,17 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownButton<T> extends StatelessWidget {
-  DropDownButton({
-    Key? key,
-    this.hint = "",
-    required this.onChanged,
-    required this.data,
-    required this.width,
-    required this.value,
-    this.label,
-    required this.obligatory,
-    this.paddingTop = Dimensions.PADDING_SIZE_LARGE
-  }) : super(key: key);
+  DropDownButton(
+      {Key? key,
+      this.hint = "",
+      required this.onChanged,
+      required this.data,
+      required this.width,
+      required this.value,
+      this.label,
+      required this.obligatory,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE})
+      : super(key: key);
   final String? hint;
   final double width;
   final Function(T? value) onChanged;
@@ -27,30 +27,35 @@ class DropDownButton<T> extends StatelessWidget {
     return Container(
       width: width,
       padding: EdgeInsets.only(
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT, 
-        top: paddingTop!
-      ),
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          top: paddingTop!),
       child: Column(
         children: [
-          if(label != null)
+          if (label != null)
             Container(
-              padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              padding: const EdgeInsets.only(
+                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
               alignment: Alignment.centerLeft,
               child: Wrap(
                 children: [
                   Text(
                     label!,
                     style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold,color: ColorResources.BLACK.withOpacity(0.7)),
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        fontWeight: FontWeight.bold,
+                        color: ColorResources.BLACK.withOpacity(0.7)),
                   ),
-                  if (obligatory) const Text(
-                          '*',
-                          style: TextStyle(
-                              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red),
-                        ) else Container()
+                  if (obligatory)
+                    const Text(
+                      '*',
+                      style: TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
+                    )
+                  else
+                    Container()
                 ],
               ),
             ),
@@ -90,8 +95,8 @@ class DropDownButton<T> extends StatelessWidget {
                     items: data.map((e) => DropdownMenuItem<T>(value: e,child: Text(e.toString()))).toList(),
                   ),
                 ));
-              },
-            ),
+            },
+          ),
         ],
       ),
     );
