@@ -69,7 +69,9 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
-  //employee
+  //employeee
+  static const String V4_WORKPROGRESS = '/v4_workprogress';
+
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
 }

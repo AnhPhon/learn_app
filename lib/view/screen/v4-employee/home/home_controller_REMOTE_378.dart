@@ -49,12 +49,6 @@ class V4HomeController extends GetxController {
   ];
 
   ///
-  /// click to work progress page
-  ///
-  void onClickToWorkProgress(int index) {
-    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
-  }
-
   /// click to timekeeping
   ///
   void onClickToTimeKeeping() {
@@ -71,7 +65,6 @@ class V4HomeController extends GetxController {
   ///
   /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
   ///
-  // ignore: unused_element
   void onClick() {
     // ignore: prefer_final_locals
     double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
