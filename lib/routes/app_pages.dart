@@ -44,6 +44,10 @@ import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
@@ -173,8 +177,8 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDERINFORAMTION, 
-      page: ()=> OrderInformationPage(),
+      name: AppRoutes.V1_ORDERINFORAMTION,
+      page: () => OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -182,15 +186,14 @@ class AppPages {
     ///Tạo đơn công việc 1- 6
     ///
     GetPage(
-      name: AppRoutes.V1_CREATEWORK, 
-      page: ()=> CreateWorkPage(),
+      name: AppRoutes.V1_CREATEWORK,
+      page: () => CreateWorkPage(),
     ),
     // Nhóm 1
     GetPage(
-      name: AppRoutes.V1_G1CREATEWORK, 
-      page: ()=> V1G1CreateWorkPage(),
-      binding: V1G1CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G1CREATEWORK,
+        page: () => V1G1CreateWorkPage(),
+        binding: V1G1CreateWorkBinding()),
 
     GetPage(
       name: AppRoutes.V1_DASHBOARD,
@@ -218,7 +221,16 @@ class AppPages {
       page: () => V4DashboardPage(),
       binding: V4DashboardBinding(),
     ),
-
+    GetPage(
+      name: AppRoutes.V4_TIMEKEEPING,
+      page: () => V4TimekeepingPage(),
+      binding: V4TimekeepingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_REPORT_TIMEKEEPING,
+      page: () => V4ReportTimekeepingPage(),
+      binding: V4ReportTimekeepingBinding(),
+    )
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
