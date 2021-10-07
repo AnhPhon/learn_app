@@ -56,8 +56,8 @@ class V1NewsPage extends GetView<V1NewsController> {
         ),
         child: Row(
           children: [
-            SizedBox(
-              width: DeviceUtils.getScaledWidth(context, .017),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Expanded(
               flex: 4,
@@ -73,8 +73,8 @@ class V1NewsPage extends GetView<V1NewsController> {
                 ),
               ),
             ),
-            SizedBox(
-              width: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Expanded(
               flex: 8,
@@ -109,18 +109,18 @@ class V1NewsPage extends GetView<V1NewsController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "7:00 20/09/2021",
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, .025),
+                        width: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, .015),
+                  const SizedBox(
+                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                   ),
                 ],
               ),

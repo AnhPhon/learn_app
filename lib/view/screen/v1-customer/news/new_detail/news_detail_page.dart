@@ -61,25 +61,25 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Row(
-        children: [
-          const Spacer(),
+        children: const [
+          Spacer(),
           //view
-          const Icon(
+          Icon(
             Icons.remove_red_eye_sharp,
             color: ColorResources.PRIMARYCOLOR,
           ),
-          const Text("21.32k"),
+          Text("21.32k"),
 
           SizedBox(
-            width: DeviceUtils.getScaledWidth(context, .025),
+            width: Dimensions.MARGIN_SIZE_SMALL,
           ),
 
           //reacion
-          const Icon(
+          Icon(
             Icons.favorite_border_outlined,
             color: ColorResources.RED,
           ),
-          const Text("600"),
+          Text("600"),
         ],
       ),
     );
