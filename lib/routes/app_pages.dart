@@ -44,6 +44,8 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
@@ -264,7 +266,12 @@ class AppPages {
       name: AppRoutes.V4_REPORT_TIMEKEEPING,
       page: () => V4ReportTimekeepingPage(),
       binding: V4ReportTimekeepingBinding(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.V4_EXPORT_IMPROT,
+      page: () => V4ExportImportPage(),
+      binding: V4ExportImportBinding(),
+    ),
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
