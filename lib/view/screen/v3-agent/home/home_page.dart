@@ -72,12 +72,12 @@ class V3HomePage extends GetView<V3HomeController> {
                     // left: 15,
                     width: size.width,
                     child: Container(
-                      padding: const EdgeInsets.only(left: 15),
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT),
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(2),
-                            margin: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                            margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   Dimensions.BORDER_RADIUS_EXTRA_LARGE),
@@ -96,13 +96,13 @@ class V3HomePage extends GetView<V3HomeController> {
                           const Spacer(),
                           Container(
                             alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             child: const Icon(
                               CupertinoIcons.bell_fill,
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(width: 10)
+                          const SizedBox(width: Dimensions.MARGIN_SIZE_SMALL)
                         ],
                       ),
                     ),
@@ -133,11 +133,11 @@ class V3HomePage extends GetView<V3HomeController> {
                       alignment: Alignment.center,
                       child: Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                           // need update widget
                           _needUpdateWidget(),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                           // feature widget
                           _featuresWidget(),
@@ -188,7 +188,7 @@ class V3HomePage extends GetView<V3HomeController> {
                                   index,
                                 ) {
                                   return Padding(
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                                     child: KhoSanPham(
                                       tenSanPham: "Kệ son nồi",
                                       maSanPham: "BN001",
@@ -213,12 +213,15 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// need update widget
+  ///
   Widget _needUpdateWidget() {
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
       child: Row(
         children: [
@@ -237,7 +240,7 @@ class V3HomePage extends GetView<V3HomeController> {
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
               child: const Text(
                 "Cập nhật",
                 style: TextStyle(color: Colors.white),
@@ -249,6 +252,9 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// feature widget
+  ///
   Widget _featuresWidget() {
     return SizedBox(
       height: 150,
@@ -283,7 +289,7 @@ class V3HomePage extends GetView<V3HomeController> {
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = 16;
     return Container(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
         children: [
           Row(
