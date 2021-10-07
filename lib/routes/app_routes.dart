@@ -3,24 +3,50 @@ class AppRoutes {
   static const String AUTH = '/auth';
   static const String DASHBOARD = '/dashboard';
   static const String HOME = "/home";
-  static const String V1ABOUT = "/v1about";
-  static const String V1OBLIGATIONS = "/v1obligations";
-  static const String V1TERMANDPOLICY = "/v1termandpolicy";
-  static const String V1USAGEPROCEDURE = "/v1usageprocedure";
-  static const String V1BENEFITS = "/v1benefits";
-  static const String V1NOTIFICATION = "/v1notification";
+  static const String V1_ABOUT = "/v1_about";
+  static const String V1_OBLIGATIONS = "/v1_obligations";
+  static const String V1_TERM_AND_POLICY = "/v1_term_and_policy";
+  static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
+  static const String V1_BENEFITS = "/v1_benefits";
+  static const String V1_NOTIFICATION = "/v1_notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS =
+  static const String V1_ORDER_FEEDBACK_CONTRACTORS =
       "/v1orderfeedbackcontractors";
   // Phản hồi đơn hàng nhóm 5
-  static const String V1_GROUPORDERFEEDBACK5 = "/v1_grouporderfeedback5";
+  static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
   // Phản hồi đơn hàng nhóm 6
-  static const String V1_GROUPORDERFEEDBACK6 = "/v1_grouporderfeedback6";
+  static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
-  static const String V1_ORDERINFORAMTION = "/v1_orderinfo";
-  // Tạo đơn công việc
-  static const String V1_CREATEWORK = "/v1_creatework";
-  static const String V1_G1CREATEWORK = "/v1_g1creatework";
+  static const String V1_ORDER_INFORAMTION = "/v1_orderinfo";
+  // Tạo đơn công việc (Chung)
+  static const String V1_CREATE_WORK = "/v1_create_work";
+  // Tạo đơn công việc nhóm 1
+  static const String V1_G1_CREATE_WORK = "/v1_g1_create_work";
+  // Tạo đơn công việc nhóm 2
+  static const String V1_G2_CREATE_WORK = "/v1_g2_create_work";
+  // Tạo đơn dịch vụ nhóm 3
+  static const String V1_G3_CREATE_SERVICE = "/v1_g3_create_service";
+  static const String V1_G3_ORDER_QUOTE = "/v1_g3_order_quote";
+  static const String V1_G3_ORDER_DETAIL = "/v1_g3_order_detail";
+  // Tạo đơn dịch vụ nhóm 4
+  static const String V1_G4_CREATE_SERVICE = "/v1_g4_create_service";
+  static const String V1_G4_ORDER_QUOTE = "/v1_g4_order_quote";
+  static const String V1_G4_ORDER_DETAIL = "/v1_g4_order_detail";
+  // Tạo đơn dịch vụ và công việc nhóm 5
+  static const String V1_G5_CREATE_SERVICE = "/v1_g5_create_service";
+  // Tạo đơn dịch vụ và công việc nhóm 6
+  static const String V1_G6_CREATE_SERVICE = "/v1_g6_create_service";
+  // Tạo tin tuyển dụng
+  static const String V1_G7_RECRUITMENT = '/v1_g7_reccuitment';
+  static const String V1_G7_REVIEW = '/v1_g7_review';
+  // Xem lại đơn công viêc
+  static const String V1_G1_REVIEW = "/v1_g1_review";
+  // Bảng giá đăng tin
+  static const String V1_G7_PRICE_LIST = "/v1_g7_price_list";
+  // Thành công
+  static const String V1_SUCCESSFULLY = "/v1_successfully";
+  // Hình thức thanh toán
+  static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -82,4 +108,5 @@ class AppRoutes {
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
+  static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 }

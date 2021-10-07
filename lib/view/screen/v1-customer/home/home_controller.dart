@@ -130,10 +130,10 @@ class V1HomeController extends GetxController {
   ///
   /// Tới trang Tạo đơn công việc
   ///
-  void onClickCreateWork() {
-    Get.offAndToNamed(AppRoutes.V1_CREATEWORK);
+  void onClickCreateWork(){
+    Get.toNamed(AppRoutes.V1_CREATE_WORK);
   }
-
+  
   /// go to Form List Page
   ///
   void onClickFormList() {

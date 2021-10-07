@@ -17,12 +17,14 @@ class LongButton extends StatelessWidget {
     required this.onPressed,
     this.vertical = 0.0,
     this.horizontal = 0.0,
+    this.minWidth
   }) : super(key: key);
   final String title;
   final Color color;
   final  Function onPressed;
   final double? vertical;
   final double? horizontal;
+  final double? minWidth;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,13 +34,13 @@ class LongButton extends StatelessWidget {
       ),
       child: MaterialButton(
         onPressed: ()=> onPressed(),
-        minWidth: DeviceUtils.getScaledSize(context,1),
+        minWidth: minWidth ?? DeviceUtils.getScaledSize(context,1),
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           child: Text(title,style: const TextStyle(
             color: ColorResources.WHITE,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
