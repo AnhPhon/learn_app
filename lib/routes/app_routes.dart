@@ -68,6 +68,8 @@ class AppRoutes {
   static const String V1_RECHARGE = '/v1_recharge';
   static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
 
+  static const String V1_NEWS_DETAIL = '/v1_news_detail';
+
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V2_DASHBOARD = '/v2_dashboard';

@@ -14,6 +14,7 @@ import 'package:template/view/screen/v1-customer/form_management/job_detail/job_
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
+import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
@@ -156,6 +157,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PAYMENT_SUCCESS,
       page: () => V1PaymentSuccessPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V1_NEWS_DETAIL,
+      page: () => V1NewsDetailPage(),
     ),
 
     ///
