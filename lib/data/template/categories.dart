@@ -81,7 +81,7 @@ class CategoryWidget extends GetView {
                 )
               ],
             ),
-            Container(padding: const EdgeInsets.all(15), child: content),
+            Container(padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT), child: content),
           ],
         ));
   }

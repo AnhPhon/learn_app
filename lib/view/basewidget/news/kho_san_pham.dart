@@ -50,7 +50,7 @@ class KhoSanPham extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
             width: 270,
             child: Column(
               children: [

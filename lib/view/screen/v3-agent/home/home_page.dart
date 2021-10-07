@@ -139,7 +139,7 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return const Padding(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: NewsBox(
                 title: "Tin nóng tóm tắt tổng hợp",
                 describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
@@ -168,7 +168,7 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
                 tenSanPham: "Kệ son nồi",
                 maSanPham: "BN001",

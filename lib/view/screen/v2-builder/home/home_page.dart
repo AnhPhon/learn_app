@@ -179,7 +179,7 @@ class V2HomePage extends GetView<V2HomeController> {
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = 16;
     return Container(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
         children: [
           Row(
@@ -308,7 +308,7 @@ class V2HomePage extends GetView<V2HomeController> {
               index,
             ) {
               return const Padding(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: NewsBox(
                   title: "Tin nóng tóm tắt tổng hợp",
                   describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",

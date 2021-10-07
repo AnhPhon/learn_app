@@ -110,7 +110,7 @@ class V1HomePage extends GetView<V1HomeController> {
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = 16;
     return Padding(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
         children: [
           Row(
@@ -156,7 +156,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   Widget _product() {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: _fieldWidget(
         "Sản phẩm",
         () {},
@@ -206,10 +206,11 @@ class V1HomePage extends GetView<V1HomeController> {
               height: 110,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(11),
-                  topRight: Radius.circular(11),
-                  bottomLeft: Radius.circular(11),
-                  bottomRight: Radius.circular(11),
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight:
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
                 boxShadow: const [
                   BoxShadow(
@@ -235,9 +236,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color.fromRGBO(42, 53, 71, 1),
-                  fontFamily: 'Nunito',
                   fontSize: 18,
-                  letterSpacing: -0.30000001192092896,
                   fontWeight: FontWeight.bold,
                   height: 1,
                   shadows: [
@@ -269,7 +268,7 @@ class V1HomePage extends GetView<V1HomeController> {
 
   Widget _productWidget() {
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Sản phẩm",
         onTap: () {},
@@ -322,7 +321,7 @@ class V1HomePage extends GetView<V1HomeController> {
             index,
           ) {
             return const Padding(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: NewsBox(
                 title: "Tin nóng tóm tắt tổng hợp",
                 describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",

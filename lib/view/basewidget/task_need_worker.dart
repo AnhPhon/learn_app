@@ -65,10 +65,8 @@ class TaskNeedWorker extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                      fontFamily: 'Nunito',
-                      fontSize: 16,
-                      letterSpacing: -0.30000001192092896,
-                      fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                       height: 1,
                     ),
                   ),
@@ -83,8 +81,7 @@ class TaskNeedWorker extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontFamily: 'Nunito',
-                          fontSize: 15,
+                                                    fontSize: 15,
                           letterSpacing: -0.3,
                           fontWeight: FontWeight.normal,
                           height: 1,
