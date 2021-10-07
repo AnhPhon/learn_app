@@ -69,6 +69,12 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
+<<<<<<< HEAD
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
+=======
+  //employee
+  static const String V4_TIMEKEEPING = '/v4_timekeeping';
+  static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
+>>>>>>> origin/develop
 }
