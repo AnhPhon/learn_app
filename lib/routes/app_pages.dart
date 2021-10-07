@@ -38,22 +38,13 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
-import 'package:get/get.dart';
-// import 'package:template/view/screen/auth/auth_page.dart';
-// import 'package:template/view/screen/introduction/introduction_page.dart';
-import 'package:template/view/screen/login/login_page.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
-import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
-<<<<<<< HEAD
+
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
-=======
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
->>>>>>> origin/develop
-// import 'package:template/view/screen/splash/splash_page.dart';
 
 import 'app_routes.dart';
 
@@ -226,15 +217,13 @@ class AppPages {
       page: () => V4DashboardPage(),
       binding: V4DashboardBinding(),
     ),
-<<<<<<< HEAD
     //v4 - work progress
     GetPage(
       name: AppRoutes.V4_WORKPROGRESS,
       page: () => V4WorkProgressPage(),
       binding: V4WorkProgressBinding(),
-    )
+    ),
 
-=======
     GetPage(
       name: AppRoutes.V4_TIMEKEEPING,
       page: () => V4TimekeepingPage(),
@@ -245,7 +234,6 @@ class AppPages {
       page: () => V4ReportTimekeepingPage(),
       binding: V4ReportTimekeepingBinding(),
     )
->>>>>>> origin/develop
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
