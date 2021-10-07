@@ -18,8 +18,8 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
-      required this.fontSize,
-      this.boldHinText});
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      required this.fontSize});
   String label, holdplacer;
   TextEditingController controller;
   bool allowEdit, allowMultiline, hidden, obligatory;
@@ -27,6 +27,7 @@ class InputField extends StatelessWidget {
   double width, fontSize;
   double? height;
   Widget? suffixIcon;
+  final double? paddingTop;
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
@@ -34,10 +35,11 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: Dimensions.PADDING_SIZE_LARGE),
+      padding: EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT, 
+        top: paddingTop!
+      ),
       //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,
       child: Column(
@@ -79,35 +81,31 @@ class InputField extends StatelessWidget {
               obscureText: hidden,
               onChanged: onChanged,
               decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL,
-                      vertical: Dimensions.PADDING_SIZE_DEFAULT),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                  enabledBorder: const OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                  disabledBorder: const OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                  errorText: errorText,
-                  isDense: true,
-                  hintText: holdplacer,
-                  hintStyle: TextStyle(
-                    color: boldHinText == true
-                        ? ColorResources.BLACK
-                        : ColorResources.BLACK.withOpacity(0.5),
-                    fontSize: Dimensions.FONT_SIZE_LARGE,
-                    fontWeight: boldHinText == true ? FontWeight.w600 : null,
-                  ),
-                  fillColor: (allowEdit == false)
-                      ? ColorResources.GREY
-                      : Colors.transparent,
-                  suffixIcon: suffixIcon),
+                contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                ),
+                disabledBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                ),
+                errorText: errorText,
+                isDense: true,
+                hintText: holdplacer,
+                hintStyle: TextStyle(
+                  color: ColorResources.BLACK.withOpacity(0.5),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
+                fillColor:(allowEdit == false) ? ColorResources.GREY : Colors.transparent,
+                suffixIcon: suffixIcon),
             ),
           ),
         ],

@@ -62,40 +62,39 @@ class DropDownButton<T> extends StatelessWidget {
           FormField(
             builder: (field) {
               return InputDecorator(
-                  decoration: InputDecoration(
-                    //isDense: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                decoration: InputDecoration(
+                  //isDense: true,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                    disabledBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorResources.PRIMARYCOLOR)),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_SMALL - 3,
-                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    focusedBorder:  OutlineInputBorder(
+                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    ),
+                    enabledBorder:  OutlineInputBorder(
+                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    ),
+                    disabledBorder:  OutlineInputBorder(
+                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    ),
+                  contentPadding: const EdgeInsets.symmetric(vertical:Dimensions.PADDING_SIZE_SMALL-3,horizontal:Dimensions.PADDING_SIZE_SMALL ),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<T>(
+                    hint: Text(hint!),
+                    value: value,
+                    style: const TextStyle(
+                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
+                      color: ColorResources.BLACK
+                    ),
+                    isDense: true,
+                    isExpanded: true,
+                    onChanged: onChanged,
+                    items: data.map((e) => DropdownMenuItem<T>(value: e,child: Text(e.toString()))).toList(),
                   ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<T>(
-                      hint: Text(hint!),
-                      value: value,
-                      style: const TextStyle(
-                          fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                          color: ColorResources.BLACK),
-                      isDense: true,
-                      isExpanded: true,
-                      onChanged: onChanged,
-                      items: data
-                          .map((e) => DropdownMenuItem<T>(
-                              value: e, child: Text(e.toString())))
-                          .toList(),
-                    ),
-                  ));
+                ));
             },
           ),
         ],
