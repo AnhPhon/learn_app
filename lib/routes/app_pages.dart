@@ -1,5 +1,13 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
+import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/Benefits.dart';
@@ -28,7 +36,6 @@ import 'package:template/view/screen/v1-customer/order_feedback_contractors/feed
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
-import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/g1_create_work_page.dart';
@@ -132,6 +139,34 @@ class AppPages {
       name: AppRoutes.V1_CART,
       page: () => V1CartPage(),
     ),
+    GetPage(
+      name: AppRoutes.V1_TAX,
+      page: () => V1TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_MANAGEMENT,
+      page: () => V1JobManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_HELP,
+      page: () => V1HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CONTRACT,
+      page: () => V1ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_POINT_BASED,
+      page: () => V1PointBasedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_WALLET,
+      page: () => V1WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INTRODUCE,
+      page: () => V1IntroducePage(),
+    ),
 
     ///
     /// Thông báo
@@ -173,8 +208,8 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDERINFORAMTION, 
-      page: ()=> OrderInformationPage(),
+      name: AppRoutes.V1_ORDERINFORAMTION,
+      page: () => OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -182,15 +217,14 @@ class AppPages {
     ///Tạo đơn công việc 1- 6
     ///
     GetPage(
-      name: AppRoutes.V1_CREATEWORK, 
-      page: ()=> CreateWorkPage(),
+      name: AppRoutes.V1_CREATEWORK,
+      page: () => CreateWorkPage(),
     ),
     // Nhóm 1
     GetPage(
-      name: AppRoutes.V1_G1CREATEWORK, 
-      page: ()=> V1G1CreateWorkPage(),
-      binding: V1G1CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G1CREATEWORK,
+        page: () => V1G1CreateWorkPage(),
+        binding: V1G1CreateWorkBinding()),
 
     GetPage(
       name: AppRoutes.V1_DASHBOARD,

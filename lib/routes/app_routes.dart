@@ -10,22 +10,17 @@ class AppRoutes {
   static const String V1BENEFITS = "/v1benefits";
   static const String V1NOTIFICATION = "/v1notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
-  // Phản hồi đơn hàng nhóm 5 
+  static const String V1ORDERFEEDBACKCONTRACTORS =
+      "/v1orderfeedbackcontractors";
+  // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUPORDERFEEDBACK5 = "/v1_grouporderfeedback5";
-    // Phản hồi đơn hàng nhóm 6
+  // Phản hồi đơn hàng nhóm 6
   static const String V1_GROUPORDERFEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDERINFORAMTION = "/v1_orderinfo";
   // Tạo đơn công việc
   static const String V1_CREATEWORK = "/v1_creatework";
   static const String V1_G1CREATEWORK = "/v1_g1creatework";
-  
-
-
-
-
-
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -58,7 +53,7 @@ class AppRoutes {
   static const String V1_HOME = '/v1_home';
   static const String V1_PRODUCT = '/v1_product';
   static const String V1_NEWS = '/v1_news';
-  static const String V1_PROFILE = '/v1_news';
+  static const String V1_PROFILE = '/v1_profile';
   static const String V1_FORM_MANAGEMENT = '/v1_form_management';
   static const String V1_PRODUCT_RESPONSE = '/v1_product_response';
   static const String V1_BILL_DETAIL = '/v1_bill_detail';
@@ -67,6 +62,21 @@ class AppRoutes {
   static const String V1_FORM_LIST = '/v1_form_list';
   static const String V1_PRODUCT_DETAIL = '/v1_product_detail';
   static const String V1_CART = '/v1_cart';
+  static const String V1_PERSONAL_INFORMATION = '/v1_personal_information';
+  static const String V1_POINT_BASED = '/v1_point_based';
+  static const String V1_WALLET = '/v1_wallet';
+  static const String V1_RULES = '/v1_rules';
+  static const String V1_REVIEW = '/v1_review';
+  static const String V1_HISTORY = '/v1_history';
+  static const String V1_HELP = '/v1_help';
+  static const String V1_JOB_MANAGEMENT = '/v1_job_management';
+  static const String V1_INTRODUCE = '/v1_introduce';
+  static const String V1_MAIL = '/v1_mail';
+  static const String V1_IMAGE_UPDATE = '/v1_image_update';
+  static const String V1_CONTRACT = '/v1_contract';
+  static const String V1_ACCIDENT_INSURANCE = '/v1_accident_insurance';
+  static const String V1_OTHER_INSURANCE = '/v1_other_insurance';
+  static const String V1_TAX = '/v1_tax';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
