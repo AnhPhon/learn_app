@@ -33,12 +33,12 @@ class BoxImage extends StatelessWidget {
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3,
+            itemCount: 3, //images.length + 1
             itemBuilder: (context, index) {
               if(isAddImage!){
-                if(index == 2){
+                if(index == 2){ // == images.length
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                     child: Container(
                       decoration: BoxDecoration(
                         color: ColorResources.PRIMARYCOLOR.withOpacity(0.3),
@@ -50,7 +50,7 @@ class BoxImage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         child: IconButton(onPressed: onPress, icon: const Icon(
                           Icons.add,
-                          size: 30,
+                          size: Dimensions.ICON_SIZE_LARGE,
                           color: ColorResources.BLACK,
                         )
                       ),

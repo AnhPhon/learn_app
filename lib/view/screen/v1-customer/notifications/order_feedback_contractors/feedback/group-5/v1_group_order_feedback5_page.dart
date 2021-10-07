@@ -43,12 +43,12 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
               child: BillWidget(
                 orderContents: [
-                OrderContent(title:"Giá trị đơn hàng" , value:"100.000.000 VNĐ"),
-                OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:"8.000 VNĐ"),
-                OrderContent(title:"Phí dịch vụ app" , value:"0 VNĐ"),
-                OrderContent(title:"Khuyến mãi của App" , value:"50.000 VNĐ"),
-                OrderContent(title:"Tổng tiền đơn hàng" , value:"11.050.000 VNĐ")
-              ], deposit: "100.000.000"),
+                OrderContent(title:"Giá trị đơn hàng" , value:100000000, boldValue: true,),
+                OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:8000, boldValue: true,),
+                OrderContent(title:"Phí dịch vụ app" , value:0, boldValue: true,),
+                OrderContent(title:"Khuyến mãi của App" , value:50000, boldValue: true,),
+                OrderContent(title:"Tổng tiền đơn hàng" , value:11050000, boldValue: true,)
+              ], deposit: 100000000),
             ),
             // Khoản cách bottomSheet
             SizedBox(height: 150,)
@@ -56,7 +56,7 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
         ),
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: "100.000.000",
+        itemValue: 100000000,
         children: [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){})

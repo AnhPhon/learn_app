@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 
 class BillWidget extends StatelessWidget {
   const BillWidget({
@@ -14,8 +14,8 @@ class BillWidget extends StatelessWidget {
     this.title,
     this.isHasDeposit = true,
   }) : super(key: key);
-  final List<OrderContent> orderContents;
-  final String? deposit;
+  final List<Widget> orderContents;
+  final double? deposit;
   final double? height;
   final String? title;
   final bool? isHasDeposit;
@@ -74,7 +74,7 @@ class BillWidget extends StatelessWidget {
                 ),),
               ),
               if(deposit != null && isHasDeposit!)
-              Text("$deposit VNĐ", style: const TextStyle(
+              Text("${CurrencyConverter.currencyConverterVND(deposit!)} VNĐ", style: const TextStyle(
                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                 color: ColorResources.RED,
                 fontWeight: FontWeight.bold,

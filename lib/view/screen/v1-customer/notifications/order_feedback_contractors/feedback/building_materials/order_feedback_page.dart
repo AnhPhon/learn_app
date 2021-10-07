@@ -54,7 +54,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             ),
           ),
           bottomSheet: OrderBottomSheet(
-            itemValue: "100.000.000 VNĐ",
+            itemValue: 100000000,
             children: [
               SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
               SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){

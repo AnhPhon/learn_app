@@ -2,10 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -35,7 +33,7 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
         ],
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: "11.000.000 VNĐ",
+        itemValue: 11000000,
         title: "Cần thanh toán",
         child: Center(
           child: LongButton(

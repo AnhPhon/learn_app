@@ -15,14 +15,14 @@ class DotWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 3,
+        top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
         right: Dimensions.MARGIN_SIZE_SMALL,
       ),
       height: height,
       width: width,
       decoration: BoxDecoration(
         color: ColorResources.PRIMARYCOLOR,
-        borderRadius: BorderRadius.circular(100)
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_LARGE)
       ),
     );
   }

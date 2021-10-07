@@ -25,11 +25,11 @@ class OrderInformationPage extends GetView<OrderInformationController> {
             children: const [
               // Thông tin đơn hàng
               BillWidget(orderContents: [
-                OrderContent(title:"Giá trị đơn hàng" , value:"100.000.000 VNĐ", boldValue: true,),
-                  OrderContent(title:"Khuyến mãi của App" , value:"50.000 VNĐ", boldValue: true,),
-                  OrderContent(title:"Phí dịch vụ app" , value:"0 VNĐ", boldValue: true,),
-                  OrderContent(title:"Tổng tiền đơn hàng" , value:"11.050.000 VNĐ", boldValue: true,)
-              ],deposit: "1.000.000",),
+                OrderContent(title:"Giá trị đơn hàng" , value:100000000, boldValue: true,),
+                  OrderContent(title:"Khuyến mãi của App" , value:50000, boldValue: true,),
+                  OrderContent(title:"Phí dịch vụ app" , value:0, boldValue: true,),
+                  OrderContent(title:"Tổng tiền đơn hàng" , value:11050000, boldValue: true,)
+              ],deposit: 1000000,),
               // Khoảng cách bottom sheet
               SizedBox(
                 height: BOTTOMSHEET,
@@ -39,7 +39,7 @@ class OrderInformationPage extends GetView<OrderInformationController> {
         ),
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: "100.000.000",
+        itemValue: 100000000,
         child: Center(child: LongButton(title: "Đồng ý đơn giá",onPressed: (){
           _controller.onNextPage();
         },color: ColorResources.PRIMARYCOLOR,)),

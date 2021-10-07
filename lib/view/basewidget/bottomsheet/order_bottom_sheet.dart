@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:template/helper/currency_covert.dart';
 
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/button/long_button.dart';
 
 class OrderBottomSheet extends StatelessWidget {
   const OrderBottomSheet({
@@ -17,7 +17,7 @@ class OrderBottomSheet extends StatelessWidget {
     this.title,
   }) : super(key: key);
   final List<Widget>? children;
-  final String itemValue;
+  final double itemValue;
   final MainAxisAlignment? mainAxisAlignment;
   final double? height;
   final Widget? child;
@@ -58,7 +58,7 @@ class OrderBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(title ?? "Giá trị đơn hàng:"),
-                  Text("$itemValue", style: const TextStyle(
+                  Text("${CurrencyConverter.currencyConverterVND(itemValue)} VNĐ", style: const TextStyle(
                     color: ColorResources.RED
                   ),)
                 ],
