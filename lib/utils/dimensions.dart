@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:template/utils/device_utils.dart';
 
@@ -58,6 +59,25 @@ class Dimensions {
 
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
+
+  // CARD
+  static const int TEXT_TITLE_COLOR = 0XFF474747;
+  static const int TEXT_NORMAL_COLOR = 0XFF5A5757;
+
+  static TextStyle textTitleStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_TITLE_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+      fontWeight: FontWeight.bold
+    );
+  }
+
+  static TextStyle textNormalStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_COLOR),
+      fontSize: FONT_SIZE_DEFAULT,
+    );
+  }
 
   Widget paddingDivider(BuildContext context) {
     return Padding(

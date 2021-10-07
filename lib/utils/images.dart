@@ -26,4 +26,6 @@ class Images {
   static const String V4AvatarHome = 'assets/images/avatar.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String toolbar_background = 'assets/images/appbar.png';
+
+  static const String location_example = 'https://statics.vinpearl.com/du-lich-Da-Nang-mua-nao-dep-hinh-anh1.jpg';
 }
