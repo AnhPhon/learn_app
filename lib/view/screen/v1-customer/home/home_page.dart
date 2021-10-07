@@ -19,7 +19,7 @@ class V1HomePage extends GetView<V1HomeController> {
     return Scaffold(
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
-        builder: (V1HomeController controller) {
+        builder: (controller) {
           return HomeWidget(
             fullname: controller.fullname,
             content: Column(

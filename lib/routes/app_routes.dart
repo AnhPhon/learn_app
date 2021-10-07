@@ -74,6 +74,12 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
+  // agent
+  static const String V3_QUOTE_LIST = '/v3_quote_list';
+  static const String V3_QUOTE_CHECK = '/v3_quote_check';
+  static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
+  static const String V3_QUOTE_REQUEST = '/v3_quote_request';
+
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
 

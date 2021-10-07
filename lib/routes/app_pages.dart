@@ -41,6 +41,10 @@ import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
+import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
+import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 
@@ -234,6 +238,26 @@ class AppPages {
       name: AppRoutes.V3_DASHBOARD,
       page: () => V3DashboardPage(),
       binding: V3DashboardBinding(),
+    ),
+    // v3 - quote list
+    GetPage(
+      name: AppRoutes.V3_QUOTE_LIST,
+      page: () => V3QuoteListPage(),
+    ),
+    // v3 - quote check
+    GetPage(
+      name: AppRoutes.V3_QUOTE_CHECK,
+      page: () => V3QuoteCheckPage(),
+    ),
+    // v3 - quote request
+    GetPage(
+      name: AppRoutes.V3_QUOTE_REQUEST,
+      page: () => V3QuoteRequestPage(),
+    ),
+    // v3 - quote response
+    GetPage(
+      name: AppRoutes.V3_QUOTE_RESPONSE,
+      page: () => V3QuoteResponsePage(),
     ),
 
     // v4 - employee

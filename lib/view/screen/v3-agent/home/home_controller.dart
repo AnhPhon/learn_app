@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V3HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
@@ -39,7 +40,9 @@ class V3HomeController extends GetxController {
           Color(0xff79B4B8),
           Color(0xff79B4B8),
         ]),
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V3_QUOTE_LIST);
+        }
       },
     ];
   }
