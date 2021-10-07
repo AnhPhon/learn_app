@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 
@@ -6,11 +7,13 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool? centerTitle;
   final List<Widget>? action;
+  final bool? leading;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
+    this.leading = true,
   }) : super(key: key);
 
   @override
@@ -68,6 +71,12 @@ class _CustomAppBarState extends State<AppBarWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                if(widget.leading!)
+                Builder(builder: (context) {
+                    return IconButton(onPressed: (){
+                      Navigator.of(context).pop();
+                    }, icon: const Icon(Icons.arrow_back_ios, color: ColorResources.WHITE,));
+                },),
                 Expanded(
                   child: Container(
                       padding: const EdgeInsets.all(10),
@@ -85,6 +94,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.action!.isNotEmpty)
                   ...widget.action!.map((e) => e).toList()
                 else
+                  if(widget.leading!)
                   const SizedBox(
                     width: 30,
                   )

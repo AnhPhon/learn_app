@@ -44,6 +44,7 @@ class Dimensions {
   static const double BORDER_RADIUS_EXTRA_SMALL = 5.0;
   static const double BORDER_RADIUS_SMALL = 7.0;
   static const double BORDER_RADIUS_DEFAULT = 10.0;
+  static const double BORDER_RADIUS_BIG = 25;
   static const double BORDER_RADIUS_LARGE = 30.0;
   static const double BORDER_RADIUS_EXTRA_LARGE = 50.0;
 
@@ -53,6 +54,18 @@ class Dimensions {
   static const double AVATAR_SQUARE_SIZE_DEFAULT = 100;
   static const double AVATAR_SQUARE_SIZE_LARGE = 150;
   static const double AVATAR_SQUARE_SIZE_EXTRA_LARGE = 200;
+  //BLUR RADIUS
+  static const double BLUR_RADIUS_LIGHT = 5;
+  static const double BLUR_RADIUS_MEDIUM = 10;
+  static const double BLUR_RADIUS_DEEP = 15;
+  //spread Radius
+  static const double SPREAD_RADIUS_LIGHT = 0.2;
+  static const double SPREAD_RADIUS_MEDIUM = 0.4;
+  static const double SPREAD_RADIUS_DEEP = 0.6;
+  static const double SPREAD_RADIUS_MEDIUM_DEEP = 1;
+  static const double SPREAD_RADIUS_VERY_DEEP = 2;
+
+
 
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;

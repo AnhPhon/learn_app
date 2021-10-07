@@ -13,7 +13,7 @@ class V2ProjectPage extends GetView<V2ProjectController> {
       body: Center(
         child: GestureDetector(
           onTap: (){
-            Get.toNamed(AppRoutes.V1NOTIFICATION);
+            Get.toNamed(AppRoutes.V1_NOTIFICATION);
           },
           child: const Text("Dự án")),
       ),
