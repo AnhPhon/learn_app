@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_list/form_list_controller.dart';
 
@@ -12,8 +13,6 @@ class V1FormListPage extends GetView<V1FormListController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1FormListController>(
         init: V1FormListController(),
         builder: (controller) {
@@ -26,8 +25,7 @@ class V1FormListPage extends GetView<V1FormListController> {
                 tabBarWidget(context: context, controller: controller),
 
                 //item list
-                ...List.generate(5,
-                    (index) => _itemList(context, controller, height, width)),
+                ...List.generate(5, (index) => _itemList(context, controller)),
               ],
             ),
           );
@@ -46,16 +44,17 @@ class V1FormListPage extends GetView<V1FormListController> {
       child: Container(
         alignment: Alignment.center,
         height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble() / 2,
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble() / 2,
         decoration: BoxDecoration(
           borderRadius: isRight == false
               ? const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 )
               : const BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight:
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
           color: controller.currentIndex == index
               ? ColorResources.PRIMARY
@@ -85,11 +84,11 @@ class V1FormListPage extends GetView<V1FormListController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, 0.1),
+      height: DeviceUtils.getScaledHeight(context, .1),
       child: Container(
         alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, 0.07),
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
+        height: DeviceUtils.getScaledHeight(context, .07),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -108,23 +107,23 @@ class V1FormListPage extends GetView<V1FormListController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, V1FormListController controller,
-      double height, double width) {
+  Widget _itemList(BuildContext context, V1FormListController controller) {
     return GestureDetector(
       onTap: () {
         controller.onJobDetailClick();
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-            vertical: DeviceUtils.getScaledHeight(context, 10 / height)),
-        height: DeviceUtils.getScaledHeight(context, 90 / height),
+        margin: const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_SMALL,
+            vertical: Dimensions.MARGIN_SIZE_SMALL),
+        height: DeviceUtils.getScaledHeight(context, .118),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withOpacity(.2),
                 blurRadius: 10,
                 offset: const Offset(0, 2)),
           ],
@@ -135,17 +134,18 @@ class V1FormListPage extends GetView<V1FormListController> {
             Expanded(
               flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 child: Image.asset(
-                  "assets/images/news_template.png",
+                  Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 90 / height),
-                  width: DeviceUtils.getScaledWidth(context, 10 / width),
+                  height: DeviceUtils.getScaledHeight(context, .118),
+                  width: Dimensions.PADDING_SIZE_SMALL,
                 ),
               ),
             ),
-            SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 10 / width),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Expanded(
               flex: 8,
@@ -154,7 +154,8 @@ class V1FormListPage extends GetView<V1FormListController> {
                 children: [
                   const Flexible(
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(
+                          Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
                       child: Text(
                         "Thợ ốp lát: Công trình khách hàng 5 sao",
                         maxLines: 2,
@@ -165,18 +166,18 @@ class V1FormListPage extends GetView<V1FormListController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "7:00 20/09/2021",
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, 10 / width),
+                        width: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, 5 / width),
+                  const SizedBox(
+                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                   ),
                 ],
               ),

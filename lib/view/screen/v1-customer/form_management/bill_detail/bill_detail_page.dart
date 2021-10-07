@@ -35,7 +35,7 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
   ///
   Widget _note(BuildContext context, V1BillDetailController controller) {
     return Padding(
-        padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         child: RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
@@ -60,19 +60,20 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
   Widget _containerBill(
       BuildContext context, V1BillDetailController controller) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-        vertical: DeviceUtils.getScaledHeight(context, 0.019),
+      margin: const EdgeInsets.symmetric(
+        horizontal: Dimensions.MARGIN_SIZE_SMALL,
+        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.025),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(.25),
             blurRadius: 10,
             offset: const Offset(0, 2),
           )
@@ -90,11 +91,11 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
               colorRed: true),
 
           //divider
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(
-              vertical: DeviceUtils.getScaledWidth(context, 0.025),
+              vertical: Dimensions.PADDING_SIZE_SMALL,
             ),
-            child: const Divider(color: Colors.grey),
+            child: Divider(color: Colors.grey),
           ),
 
           //note
@@ -109,18 +110,18 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
   ///
   Widget _bottomSheet(BuildContext context, V1BillDetailController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.19),
-      padding: EdgeInsets.only(
-        left: DeviceUtils.getScaledWidth(context, 0.038),
-        right: DeviceUtils.getScaledWidth(context, 0.038),
-        top: DeviceUtils.getScaledHeight(context, 0.035),
-        bottom: DeviceUtils.getScaledHeight(context, 0.026),
+      height: DeviceUtils.getScaledHeight(context, .19),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        bottom: Dimensions.PADDING_SIZE_LARGE,
       ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25),
-          topRight: Radius.circular(25),
+          topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+          topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
         ),
         boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 10, offset: Offset(0, -2)),

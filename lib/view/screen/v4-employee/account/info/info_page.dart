@@ -11,7 +11,7 @@ class EditInfoPage extends GetView<EditInfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Chỉnh sửa thông tin cá nhân"),
+      appBar: const AppBarWidget(title: "Chỉnh sửa thông tin cá nhân"),
       body: SingleChildScrollView(
           child: GetBuilder<EditInfoController>(
               init: EditInfoController(),
@@ -68,8 +68,8 @@ class EditInfoPage extends GetView<EditInfoController> {
   Widget _normalInputWidget(BuildContext context, String? label,
       TextEditingController controllers, TextInputType extInputType) {
     return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.025)),
+      margin:
+          const EdgeInsets.symmetric(vertical: Dimensions.MARGIN_SIZE_SMALL),
       child: TextField(
         textInputAction: TextInputAction.next,
         textAlignVertical: TextAlignVertical.center,
@@ -78,20 +78,25 @@ class EditInfoPage extends GetView<EditInfoController> {
         cursorColor: ColorResources.PRIMARY,
         decoration: InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: DeviceUtils.getScaledSize(context, 0.025),
-              vertical: DeviceUtils.getScaledSize(context, 0.038)),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_SMALL,
+            vertical: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.PRIMARY)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           hintText: label,
           filled: true,
@@ -107,8 +112,8 @@ class EditInfoPage extends GetView<EditInfoController> {
   Widget _addressInputWidget(BuildContext context, String? label,
       TextEditingController controllers, TextInputType extInputType) {
     return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: DeviceUtils.getScaledSize(context, 0.025)),
+      margin:
+          const EdgeInsets.symmetric(vertical: Dimensions.MARGIN_SIZE_SMALL),
       child: TextField(
         textInputAction: TextInputAction.done,
         textAlignVertical: TextAlignVertical.center,
@@ -117,20 +122,25 @@ class EditInfoPage extends GetView<EditInfoController> {
         cursorColor: ColorResources.PRIMARY,
         decoration: InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: DeviceUtils.getScaledSize(context, 0.025),
-              vertical: DeviceUtils.getScaledSize(context, 0.038)),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_SMALL,
+            vertical: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.PRIMARY)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           hintText: label,
           filled: true,
@@ -145,9 +155,10 @@ class EditInfoPage extends GetView<EditInfoController> {
   ///
   Widget _uploadAvatar(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledSize(context, 0.05),
-          vertical: DeviceUtils.getScaledSize(context, 0.03)),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_LARGE,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Column(
         children: [
           Row(
@@ -167,11 +178,13 @@ class EditInfoPage extends GetView<EditInfoController> {
           GestureDetector(
             onTap: () => controller.onAvatarPicker(),
             child: Container(
-              height: DeviceUtils.getScaledSize(context, 0.382),
-              width: DeviceUtils.getScaledSize(context, 0.509),
+              height: DeviceUtils.getScaledSize(context, .382),
+              width: DeviceUtils.getScaledSize(context, .509),
               padding: EdgeInsets.symmetric(
-                  horizontal: DeviceUtils.getScaledSize(
-                      context, controller.avatarFile != null ? 0 : 0.101)),
+                horizontal: controller.avatarFile != null
+                    ? 0
+                    : Dimensions.PADDING_SIZE_LARGE * 2,
+              ),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -206,14 +219,16 @@ class EditInfoPage extends GetView<EditInfoController> {
     return GestureDetector(
       onTap: () => controller.onBtnUpdateClick(context),
       child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: DeviceUtils.getScaledSize(context, 0.035)),
-        padding: EdgeInsets.symmetric(
-            vertical: DeviceUtils.getScaledSize(context, 0.035),
-            horizontal: DeviceUtils.getScaledSize(context, 0.03)),
+        margin: const EdgeInsets.symmetric(
+            vertical: Dimensions.MARGIN_SIZE_DEFAULT),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT + 5),
           gradient: const LinearGradient(
             colors: [
               Color(0xFF61A63C),
@@ -224,7 +239,8 @@ class EditInfoPage extends GetView<EditInfoController> {
         ),
         child: const Text(
           "Cập nhật",
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(
+              color: Colors.white, fontSize: Dimensions.ICON_SIZE_SMALL),
         ),
       ),
     );
