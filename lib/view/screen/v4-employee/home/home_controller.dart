@@ -38,6 +38,8 @@ class V4HomeController extends GetxController {
     }
   ];
 
+  String fullname = "Phạm Dương";
+
   double total = 10000000;
   double revenue = 10000000; // thu
   double expenditure = 10000000; // chi

@@ -16,11 +16,13 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(.5),
-            blurRadius: Dimensions.BORDER_RADIUS_DEFAULT,
+            blurRadius: 10,
+            offset: const Offset(0, -10)
           )
         ],
         borderRadius: const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))
