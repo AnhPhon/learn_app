@@ -213,6 +213,9 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// need update widget
+  ///
   Widget _needUpdateWidget() {
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -249,6 +252,9 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// features widget
+  ///
   Widget _featuresWidget() {
     return SizedBox(
       height: 150,

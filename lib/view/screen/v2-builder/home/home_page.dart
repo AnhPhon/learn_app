@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/button/button_category.dart';
 
 import 'home_controller.dart';
 
@@ -121,21 +122,32 @@ class V2HomePage extends GetView<V2HomeController> {
                   width: size.width,
                   margin: const EdgeInsets.only(),
                   padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                  alignment: Alignment.centerLeft,
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                   decoration: const BoxDecoration(
                     color: Color(0xffF6F6F7),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
+                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
                     ),
                   ),
                   child: SingleChildScrollView(
                     child: Container(
                       width: size.width,
-                      alignment: Alignment.center,
+                      alignment: Alignment.topLeft,
                       child: Column(
-                        children: [],
+                        children: [
+                          const SizedBox(height: 10),
+
+                          // need update widget
+                          _needUpdateWidget(),
+                          const SizedBox(height: 10),
+
+                          // category box widget
+                          _categoryBoxWidget(),
+
+                          // box
+                          _box()
+                        ],
                       ),
                     ),
                   ),
@@ -144,6 +156,118 @@ class V2HomePage extends GetView<V2HomeController> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  ///
+  /// need update widget
+  ///
+  Widget _needUpdateWidget() {
+    return Container(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
+      child: Row(
+        children: [
+          const Text(
+            'Bạn cần hoàn thiện hồ sơ',
+            style: TextStyle(
+              color: Color(0xff4D4D4D),
+              fontWeight: FontWeight.bold,
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+            ),
+          ),
+          const Icon(CupertinoIcons.bell, color: Color(0xff4D4D4D)),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: 100,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              decoration: const BoxDecoration(
+                color: Color(0xff2196F3),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: const Text(
+                "Cập nhật",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// category box widget
+  ///
+  Widget _categoryBoxWidget() {
+    return SizedBox(
+      height: 130,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisExtent: 100,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.contentGrid!.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return GestureDetector(
+            onTap: controller.contentGrid![index]["onTap"] as Function(),
+            child: BtnCategory(
+              label: controller.contentGrid![index]["label"].toString(),
+              gradient:
+                  controller.contentGrid![index]["gradient"] as RadialGradient,
+              icon: controller.contentGrid![index]["icon"] as IconData,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  ///
+  /// box
+  ///
+  Widget _box() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          decoration: const BoxDecoration(
+            color: Color(0xff2196F3),
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+          ),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.work,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+              Text(
+                'Kết quả báo giá',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
