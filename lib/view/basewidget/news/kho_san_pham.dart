@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class KhoSanPham extends StatelessWidget {
   final String tenSanPham;
@@ -16,7 +18,6 @@ class KhoSanPham extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 352,
       height: 80,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -43,7 +44,7 @@ class KhoSanPham extends StatelessWidget {
                 bottomRight: Radius.circular(7),
               ),
               image: DecorationImage(
-                image: AssetImage('assets/images/news1.png'),
+                image: AssetImage(Images.V4NewsExample),
                 fit: BoxFit.fill,
               ),
             ),
@@ -60,9 +61,7 @@ class KhoSanPham extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                      fontFamily: 'Nunito',
-                      fontSize: 16,
-                      letterSpacing: -0.30000001192092896,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
@@ -78,9 +77,7 @@ class KhoSanPham extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontFamily: 'Nunito',
-                          fontSize: 15,
-                          letterSpacing: -0.30000001192092896,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.normal,
                           height: 1,
                         ),
@@ -91,9 +88,7 @@ class KhoSanPham extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Colors.red,
-                          fontFamily: 'Nunito',
-                          fontSize: 15,
-                          letterSpacing: -0.30000001192092896,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.normal,
                           height: 1,
                         ),
@@ -111,9 +106,7 @@ class KhoSanPham extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontFamily: 'Nunito',
-                          fontSize: 15,
-                          letterSpacing: -0.30000001192092896,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.normal,
                           height: 1,
                         ),
@@ -124,9 +117,7 @@ class KhoSanPham extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontFamily: 'Nunito',
-                          fontSize: 15,
-                          letterSpacing: -0.30000001192092896,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.normal,
                           height: 1,
                         ),

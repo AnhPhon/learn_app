@@ -46,7 +46,7 @@ class V1HomePage extends GetView<V1HomeController> {
   /// category box widget
   ///
   Widget _categoryBoxWidget() {
-    return Container(
+    return SizedBox(
       height: 240,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -147,6 +147,44 @@ class V1HomePage extends GetView<V1HomeController> {
           ),
           widget
         ],
+      ),
+    );
+  }
+
+  ///
+  /// product
+  ///
+  Widget _product() {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: _fieldWidget(
+        "Sản phẩm",
+        () {},
+        Container(
+          height: 400,
+          padding: const EdgeInsets.only(
+            top: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisExtent: 120,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 9,
+            itemBuilder: (BuildContext ctx, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: _imageWidget(
+                  controller.productList![index]["title"].toString(),
+                  controller.productList![index]["image"].toString(),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

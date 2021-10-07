@@ -57,7 +57,7 @@ class V3HomePage extends GetView<V3HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
       child: Row(
         children: [
@@ -76,7 +76,7 @@ class V3HomePage extends GetView<V3HomeController> {
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
               child: const Text(
                 "Cập nhật",
                 style: TextStyle(color: Colors.white),
