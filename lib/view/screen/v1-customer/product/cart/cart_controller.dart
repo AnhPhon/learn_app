@@ -85,8 +85,8 @@ class V1CartController extends GetxController {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .026),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
             ),
             const Flexible(
               child: Text(
@@ -96,8 +96,8 @@ class V1CartController extends GetxController {
                     TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE),
               ),
             ),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .026),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
             ),
             Row(
               children: [
@@ -106,8 +106,8 @@ class V1CartController extends GetxController {
                   text: "Đồng ý",
                   width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
                 ),
-                SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, .025),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
                 ),
                 BtnCustom(
                   onTap: () => Get.back(),

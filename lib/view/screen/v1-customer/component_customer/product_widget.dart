@@ -26,8 +26,8 @@ class ProductWidget extends StatelessWidget {
             height: DeviceUtils.getScaledHeight(context, .197),
           ),
         ),
-        SizedBox(
-          height: DeviceUtils.getScaledHeight(context, .006),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
         ),
         SizedBox(
           height: DeviceUtils.getScaledSize(context, .098),

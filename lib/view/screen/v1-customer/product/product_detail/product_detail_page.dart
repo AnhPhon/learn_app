@@ -37,15 +37,15 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                     discount: "460.000 VND",
                   ),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.013),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
 
                   //ProductSpecification
                   _productSpecification(context, controller),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.013),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
 
                   //more product
@@ -104,16 +104,16 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               name,
               textAlign: TextAlign.justify,
             ),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .006),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Text(price,
                 style: const TextStyle(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     color: ColorResources.RED,
                     fontWeight: FontWeight.w600)),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .006),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Text(
               discount,
@@ -157,8 +157,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
             ),
           ),
           const Divider(color: Colors.grey),
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(context, .022),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
           ),
 
           //infomation product
@@ -169,8 +169,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
               child: Text(controller.productSpecification),
             ),
 
-          SizedBox(
-            height: DeviceUtils.getScaledSize(context, .022),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
           ),
 
           // more / less

@@ -76,8 +76,8 @@ class V1ProductPage extends GetView<V1ProductController> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: DeviceUtils.getScaledHeight(context, .019),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_DEFAULT,
                         ),
                         _productList(context, controller),
                       ],

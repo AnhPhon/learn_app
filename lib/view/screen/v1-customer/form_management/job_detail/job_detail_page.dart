@@ -37,8 +37,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         text2: "Thợ ốp lát công trình 5 sao",
                       ),
 
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .013),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
                       ),
 
                       _richText(
@@ -46,8 +46,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         text1: "Mô tả công việc: ",
                         text2: "Thợ ốp công trình 5 sao của công trình",
                       ),
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .013),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
                       ),
 
                       _richText(
@@ -56,8 +56,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         text2: "12-09-2021 đến 10-11-2021",
                       ),
 
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .013),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_DEFAULT,
                       ),
 
                       // title job container
@@ -89,6 +89,10 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       //file picker
                       _filePicker(context),
 
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_DEFAULT,
+                      ),
+
                       // title image container
                       const Padding(
                         padding: EdgeInsets.symmetric(
@@ -105,8 +109,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       //image list
                       _imageList(context),
 
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .013),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
                       ),
 
                       // title image container
@@ -141,8 +145,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       //note
                       _note(context, controller),
 
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .026),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_LARGE,
                       ),
                     ],
                   ),
@@ -235,21 +239,13 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Tên vật liệu: $name"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
-            ),
+            const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
             Text("Quy cách: $specifications"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
-            ),
+            const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
             Text("Số lượng: $quanlity"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
-            ),
+            const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
             Text("Đơn vị: $unit"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
-            ),
+            const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
           ],
         ),
       ),
@@ -262,11 +258,11 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   Widget _filePicker(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_SMALL,
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       width: double.infinity,

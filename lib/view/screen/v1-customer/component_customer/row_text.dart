@@ -35,8 +35,8 @@ class RowText extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text1, textAlign: TextAlign.center),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Text(text2,
                 textAlign: TextAlign.center,

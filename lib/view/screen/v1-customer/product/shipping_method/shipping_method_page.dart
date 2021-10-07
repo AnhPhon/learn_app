@@ -52,8 +52,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
               child: image)
         else
           icon!,
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .025),
+        const SizedBox(
+          width: Dimensions.MARGIN_SIZE_SMALL,
         ),
         Expanded(
           child: Column(
@@ -68,8 +68,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
                 ),
               ),
 
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(context, 0.013),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_SMALL,
               ),
 
               //subtile
@@ -81,8 +81,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
                 ),
               ),
 
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(context, .013),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_SMALL,
               ),
 
               //price
@@ -119,8 +119,8 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
           flex: 9,
           child: shippingWidget,
         ),
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .025),
+        const SizedBox(
+          width: Dimensions.MARGIN_SIZE_SMALL,
         ),
         Expanded(
           child: Radio(

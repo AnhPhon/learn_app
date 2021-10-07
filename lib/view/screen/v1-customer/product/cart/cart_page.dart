@@ -24,8 +24,8 @@ class V1CartPage extends GetView<V1CartController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.026),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
                   ),
 
                   //title shipping detail
@@ -45,8 +45,8 @@ class V1CartPage extends GetView<V1CartController> {
                   //shipping detail
                   _shipping(context, controller),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, .013),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
 
                   //title order product detail
@@ -66,8 +66,8 @@ class V1CartPage extends GetView<V1CartController> {
                   //order product detail
                   _orderProductDetail(context, controller),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, .026),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
                   ),
                 ],
               ),
@@ -102,8 +102,8 @@ class V1CartPage extends GetView<V1CartController> {
               child: image)
         else
           icon!,
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .025),
+        const SizedBox(
+          width: Dimensions.MARGIN_SIZE_SMALL,
         ),
         Expanded(
           child: Column(
@@ -330,15 +330,15 @@ class V1CartPage extends GetView<V1CartController> {
             text1: "Giá trị",
             text2: "260.000 VND",
           ),
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(context, .013),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
           rowText(
             text1: "Phí vận chuyển",
             text2: "Miễn phí",
           ),
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(context, .013),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
           rowText(
             text1: "Tổng",
@@ -408,8 +408,8 @@ class V1CartPage extends GetView<V1CartController> {
                               ),
                             ),
 
-                            SizedBox(
-                              width: DeviceUtils.getScaledWidth(context, .025),
+                            const SizedBox(
+                              width: Dimensions.MARGIN_SIZE_SMALL,
                             ),
 
                             // name, price, quality
@@ -430,9 +430,8 @@ class V1CartPage extends GetView<V1CartController> {
                                     ),
                                   ),
 
-                                  SizedBox(
-                                    height: DeviceUtils.getScaledHeight(
-                                        context, .006),
+                                  const SizedBox(
+                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                                   ),
 
                                   //price
@@ -453,17 +452,15 @@ class V1CartPage extends GetView<V1CartController> {
                                     ],
                                   ),
 
-                                  SizedBox(
-                                    height: DeviceUtils.getScaledHeight(
-                                        context, .006),
+                                  const SizedBox(
+                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                                   ),
 
                                   // edit quality
                                   _editQuanlity(context),
 
-                                  SizedBox(
-                                    height: DeviceUtils.getScaledHeight(
-                                        context, .006),
+                                  const SizedBox(
+                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                                   ),
                                 ],
                               ),

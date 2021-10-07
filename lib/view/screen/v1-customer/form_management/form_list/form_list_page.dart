@@ -144,8 +144,8 @@ class V1FormListPage extends GetView<V1FormListController> {
                 ),
               ),
             ),
-            SizedBox(
-              width: DeviceUtils.getScaledWidth(context, .025),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Expanded(
               flex: 8,
@@ -166,18 +166,18 @@ class V1FormListPage extends GetView<V1FormListController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "7:00 20/09/2021",
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, .025),
+                        width: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, .015),
+                  const SizedBox(
+                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                   ),
                 ],
               ),

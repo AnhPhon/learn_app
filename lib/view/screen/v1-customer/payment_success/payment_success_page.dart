@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -19,8 +18,8 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, .026),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
                   ),
                   //image
                   _image(),
@@ -57,23 +56,22 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Column(
-          children: [
+          children: const [
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .032),
+              height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
             ),
-            const Text(
+            Text(
               "Bạn đã chuyển tiền cọc và tiền phí thành công!",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .019),
+              height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
-            const Text(
-                "Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!"),
+            Text("Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!"),
             SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .019),
+              height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
-            const Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
+            Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
           ],
         ),
       ),

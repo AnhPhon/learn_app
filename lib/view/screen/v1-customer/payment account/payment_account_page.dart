@@ -68,8 +68,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       colorRed: true,
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, .019),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //btn checkout
@@ -80,8 +80,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       width: DeviceUtils.getScaledWidth(context, .7),
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, .019),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //note
@@ -91,8 +91,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       style: TextStyle(color: ColorResources.RED),
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, .019),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //btn put money into an account
@@ -103,8 +103,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                       width: DeviceUtils.getScaledWidth(context, .7),
                     ),
 
-                    SizedBox(
-                      height: DeviceUtils.getScaledHeight(context, .019),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //note

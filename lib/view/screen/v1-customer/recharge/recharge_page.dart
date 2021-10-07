@@ -31,7 +31,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
 
                     const SizedBox(
-                      height: Dimensions.PADDING_SIZE_SMALL,
+                      height: Dimensions.MARGIN_SIZE_SMALL,
                     ),
 
                     //title account management
@@ -71,14 +71,14 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
 
                     const SizedBox(
-                      height: Dimensions.PADDING_SIZE_DEFAULT,
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //content
                     _content(context),
 
                     const SizedBox(
-                      height: Dimensions.PADDING_SIZE_DEFAULT,
+                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //title upload
@@ -148,7 +148,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
-                  width: Dimensions.PADDING_SIZE_SMALL,
+                  width: Dimensions.MARGIN_SIZE_SMALL,
                 ),
                 GestureDetector(onTap: onTap, child: icon),
               ],
@@ -188,7 +188,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
           ),
 
           const SizedBox(
-            height: Dimensions.PADDING_SIZE_SMALL,
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
 
           //content
@@ -203,7 +203,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                 ),
               ),
               const SizedBox(
-                width: Dimensions.PADDING_SIZE_SMALL,
+                width: Dimensions.MARGIN_SIZE_SMALL,
               ),
               GestureDetector(
                 onTap: () {},
@@ -216,7 +216,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
           ),
 
           const SizedBox(
-            height: Dimensions.PADDING_SIZE_SMALL,
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
 
           //note

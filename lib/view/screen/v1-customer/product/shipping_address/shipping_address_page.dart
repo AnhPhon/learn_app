@@ -51,8 +51,8 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     data: controller.wardList,
                   ),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.013),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
 
                   //address
@@ -61,8 +61,8 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     title: "Địa chỉ cụ thể nhận hàng",
                   ),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.013),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
 
                   InputWidget(
@@ -70,8 +70,8 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     hintText: "Nhập địa chỉ cụ thể",
                   ),
 
-                  SizedBox(
-                    height: DeviceUtils.getScaledHeight(context, 0.052),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE * 2,
                   ),
 
                   //btn

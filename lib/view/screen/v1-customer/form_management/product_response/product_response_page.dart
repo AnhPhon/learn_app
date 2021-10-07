@@ -63,15 +63,15 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
                           price: "300.000 VND",
                         ),
 
-                        SizedBox(
-                          height: DeviceUtils.getScaledHeight(context, .03),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_LARGE,
                         ),
 
                         //image bill
                         _imageBill(context),
 
-                        SizedBox(
-                          height: DeviceUtils.getScaledHeight(context, .04),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
                         ),
                       ],
                     ),
@@ -139,20 +139,20 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Tên vật liệu: $name"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Text("Quy cách: $specifications"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Text("Số lượng: $quanlity"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Text("Đơn vị: $unit"),
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .013),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             RichText(
               text: TextSpan(
