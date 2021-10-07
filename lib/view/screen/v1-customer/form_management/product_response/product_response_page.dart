@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_controller.dart';
@@ -28,8 +29,8 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
                       child: _textTitle(context,
                           title: "Dịch vụ xây dựng toàn diện")),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: DeviceUtils.getScaledWidth(context, 0.025)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -62,14 +63,16 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
                           price: "300.000 VND",
                         ),
 
-                        SizedBox(
-                            height: DeviceUtils.getScaledHeight(context, 0.03)),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_LARGE,
+                        ),
 
                         //image bill
                         _imageBill(context),
 
-                        SizedBox(
-                            height: DeviceUtils.getScaledHeight(context, 0.04)),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                        ),
                       ],
                     ),
                   ),
@@ -86,8 +89,8 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
   ///
   Widget _textTitle(BuildContext context, {required String title}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.03),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
       ),
       child: Text(
         title,
@@ -109,19 +112,23 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
       required String specifications,
       required String price}) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.015),
+      margin: const EdgeInsets.symmetric(
+        vertical: Dimensions.MARGIN_SIZE_SMALL,
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledHeight(context, 0.015),
-        horizontal: DeviceUtils.getScaledWidth(context, 0.055),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.MARGIN_SIZE_LARGE,
       ),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         color: ColorResources.WHITE,
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 10,
+          ),
         ],
       ),
       child: DefaultTextStyle(
@@ -132,13 +139,21 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Tên vật liệu: $name"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             Text("Quy cách: $specifications"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             Text("Số lượng: $quanlity"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             Text("Đơn vị: $unit"),
-            SizedBox(height: DeviceUtils.getScaledHeight(context, 0.013)),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             RichText(
               text: TextSpan(
                   text: "Đơn giá: ",
@@ -164,26 +179,28 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
   ///
   Widget _imageBill(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.PRIMARY),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
       ),
-      height: DeviceUtils.getScaledHeight(context, 0.158),
+      height: DeviceUtils.getScaledHeight(context, .158),
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemCount: 5,
           itemBuilder: (BuildContext context, index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(
+                  right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 child: Image.asset(
-                  "assets/images/news_template.png",
+                  Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: 93,
-                  width: 100,
+                  height: DeviceUtils.getScaledHeight(context, .122),
+                  width: DeviceUtils.getScaledWidth(context, .254),
                 ),
               ),
             );
@@ -197,18 +214,18 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
   Widget _bottomSheet(
       BuildContext context, V1ProductResponseController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.19),
-      padding: EdgeInsets.only(
-        left: DeviceUtils.getScaledWidth(context, 0.038),
-        right: DeviceUtils.getScaledWidth(context, 0.038),
-        top: DeviceUtils.getScaledHeight(context, 0.035),
-        bottom: DeviceUtils.getScaledHeight(context, 0.026),
+      height: DeviceUtils.getScaledHeight(context, .19),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        bottom: Dimensions.PADDING_SIZE_SMALL,
       ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25),
-          topRight: Radius.circular(25),
+          topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+          topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
         ),
         boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 10, offset: Offset(0, -2))
@@ -224,8 +241,8 @@ class V1ProductResponsePage extends GetView<V1ProductResponseController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 0.025),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_SMALL,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

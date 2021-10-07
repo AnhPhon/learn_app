@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_controller.dart';
 
@@ -12,23 +13,22 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1FormManagementController>(
         init: V1FormManagementController(),
         builder: (controller) {
           return Scaffold(
             backgroundColor: const Color(0xFFF6F6F7),
             appBar: AppBarWidget(title: controller.title),
-            body: Column(
-              children: [
-                //tab
-                tabBarWidget(context: context, controller: controller),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //tab
+                  tabBarWidget(context: context, controller: controller),
 
-                //item list
-                ...List.generate(
-                    5, (index) => _itemList(context, height, width)),
-              ],
+                  //item list
+                  ...List.generate(5, (index) => _itemList(context)),
+                ],
+              ),
             ),
           );
         });
@@ -47,16 +47,17 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
       child: Container(
         alignment: Alignment.center,
         height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble() / 2,
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble() / 2,
         decoration: BoxDecoration(
           borderRadius: isRight == false
               ? const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 )
               : const BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight:
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
           color: controller.currentIndex == index
               ? ColorResources.PRIMARY
@@ -86,11 +87,11 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, 0.1),
+      height: DeviceUtils.getScaledHeight(context, .1),
       child: Container(
         alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, 0.07),
+        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
+        height: DeviceUtils.getScaledHeight(context, .07),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -109,18 +110,19 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, double height, double width) {
+  Widget _itemList(BuildContext context) {
     return GestureDetector(
       onTap: () {
         controller.onProductResponseClick();
       },
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-            vertical: DeviceUtils.getScaledHeight(context, 10 / height)),
-        height: DeviceUtils.getScaledHeight(context, 90 / height),
+        margin: const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_SMALL,
+            vertical: Dimensions.MARGIN_SIZE_SMALL),
+        height: DeviceUtils.getScaledHeight(context, .118),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
@@ -137,15 +139,15 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
-                  "assets/images/news_template.png",
+                  Images.newsTemplate,
                   fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 90 / height),
-                  width: DeviceUtils.getScaledWidth(context, 10 / width),
+                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  width: Dimensions.PADDING_SIZE_SMALL,
                 ),
               ),
             ),
-            SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 10 / width),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Expanded(
               flex: 8,
@@ -165,19 +167,17 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "7:00 20/09/2021",
                         style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
                       ),
                       SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, 10 / width),
+                        width: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: DeviceUtils.getScaledWidth(context, 5 / width),
-                  ),
+                  const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                 ],
               ),
             ),
