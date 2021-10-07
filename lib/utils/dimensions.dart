@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 
 class Dimensions {
@@ -76,6 +77,7 @@ class Dimensions {
   // CARD
   static const int TEXT_TITLE_COLOR = 0XFF474747;
   static const int TEXT_NORMAL_COLOR = 0XFF5A5757;
+  static const int TEXT_NORMAL_GREY_COLOR = 0XFF8B8B8B;
 
   static TextStyle textTitleStyleCard() {
     return const TextStyle(
@@ -91,6 +93,35 @@ class Dimensions {
       fontSize: FONT_SIZE_DEFAULT,
     );
   }
+
+  static TextStyle textNormalGreyStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_GREY_COLOR),
+      fontSize: FONT_SIZE_DEFAULT,
+    );
+  }
+
+  static TextStyle textTitleStyle() {
+    return const TextStyle(
+      color: Color(TEXT_TITLE_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
+  static TextStyle textNormalStyle() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
+  static TextStyle textInputNormalStyle() {
+    return const TextStyle(
+      color: ColorResources.RED,
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
 
   Widget paddingDivider(BuildContext context) {
     return Padding(
