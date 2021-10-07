@@ -54,12 +54,12 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         child: Container(
           decoration: BoxDecoration(
             boxShadow: boxShadow,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: ColorResources.WHITE,
           ),
           child: Column(

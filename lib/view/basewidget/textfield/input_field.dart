@@ -79,16 +79,19 @@ class InputField extends StatelessWidget {
               decoration: InputDecoration(
                 contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                disabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                disabledBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 errorText: errorText,
                 isDense: true,

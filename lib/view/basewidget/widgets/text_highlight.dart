@@ -9,11 +9,13 @@ class TextHighlight extends StatelessWidget {
   final String title;
   final String content;
   final double? fontSize;
+  final TextStyle? style;
   const TextHighlight({
     Key? key,
     required this.title,
     required this.content,
     this.fontSize = Dimensions.FONT_SIZE_EXTRA_LARGE,
+    this.style,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class TextHighlight extends StatelessWidget {
         children: [
           TextSpan(
             text: content,
-            style: TextStyle(
+            style: style ?? TextStyle(
               fontWeight: FontWeight.normal,
               fontSize: fontSize
             ),

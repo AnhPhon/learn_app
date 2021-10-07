@@ -6,20 +6,20 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
-import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_controller.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
-class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
-  V1G3OrderQuotePage({Key? key}) : super(key: key);
-  final V1G3OrderQuoteController _controller = Get.find<V1G3OrderQuoteController>();
+class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
+  V1G4OrderQuotePage({Key? key}) : super(key: key);
+  final V1G4OrderQuoteController _controller = Get.find<V1G4OrderQuoteController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Báo giá đơn hàng"),
+      appBar: const AppBarWidget(title: "Báo giá đơn hàng"),
       body: Column(
         children: [
           // Tiêu tề nhóm công việc
-          const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+          const GroupTitle(title: "Dịch vụ lao động thủ công"),
           // Bảng giá từng loại
           servicesList()
         ],
@@ -76,7 +76,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
 
   Widget item({required int index}){
     return GetBuilder(
-      builder: (V1G3OrderQuoteController controller) {
+      builder: (V1G4OrderQuoteController controller) {
         return Material(
           elevation: 4,
           shape: RoundedRectangleBorder(
@@ -85,7 +85,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           child: Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
             decoration: BoxDecoration(
-              color: controller.currentSelected == index ? ColorResources.PRIMARYCOLOR.withOpacity(0.5) :  ColorResources.WHITE,
+              color: controller.currentSelected == index ? ColorResources.PRIMARYCOLOR.withOpacity(0.3) :  ColorResources.WHITE,
               borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             ),
             height: 60,
@@ -93,7 +93,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Text("Dịch vụ nail", style: TextStyle(
+                const Text("Công nhật dọn nhà", style: TextStyle(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold
                 ),),

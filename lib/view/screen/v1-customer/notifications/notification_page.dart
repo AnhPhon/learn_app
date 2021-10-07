@@ -19,12 +19,11 @@ class V1NotificationPage extends GetView<V1NotificationController> {
         return Scaffold(
           appBar: const AppBarWidget(title: "Thông báo"),
           body: ListView.builder(
-            itemCount: 10,
+            itemCount: 6,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: (){
-                  int radom = Random().nextInt(6);
-                  controller.onClickItem(radom);
+                  controller.onClickItem(index);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

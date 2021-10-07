@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/building_materials/order_feedback_controller.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_controller.dart';
 
 class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   V1OrderFeedBackPage({Key? key}) : super(key: key);
@@ -163,9 +161,9 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                     elevation: 4,
                     type: MaterialType.card,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)
+                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
                     ),
-                    child: Container(
+                    child: SizedBox(
                       height: 160,
                       child: Padding(
                         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -179,9 +177,12 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
                               TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
-                              TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
-                              TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" ,fontSize: Dimensions.FONT_SIZE_LARGE),
                               TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
+                              TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
+                              TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
+                                color: ColorResources.RED,
+                                fontSize: Dimensions.FONT_SIZE_LARGE
+                              ),),
                             ],
                           ),
                         ),

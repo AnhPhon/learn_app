@@ -11,12 +11,12 @@ import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
-import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/create/g3_create_service_controller.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
-class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
+class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
 
-  final V1G3CreateServiceController _controller = Get.find<V1G3CreateServiceController>();
+  final V1G4CreateServiceController _controller = Get.find<V1G4CreateServiceController>();
 
 
   @override
@@ -27,7 +27,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         child: Column(
           children: [
             // Tiêu tề nhóm công việc
-                const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+                const GroupTitle(title: "Dịch vụ lao động phổ thông"),
       
                 // Nhập địa chỉ cụ thể
                 form(context, controller),
@@ -43,7 +43,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
   ///
   /// form tiêu đề công việc và mô tả công việc , Thời gian
   ///
-  Widget form(BuildContext context,V1G3CreateServiceController controller ){
+  Widget form(BuildContext context,V1G4CreateServiceController controller ){
     return Column(
       children: [
         InputField(
@@ -119,7 +119,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
           label: "Ngày kết thúc",
-          obligatory: false,
+          obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
@@ -162,7 +162,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
   /// Nút tiếp tục
   ///
 
-  Widget nextButton({required V1G3CreateServiceController controller}){
+  Widget nextButton({required V1G4CreateServiceController controller}){
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(

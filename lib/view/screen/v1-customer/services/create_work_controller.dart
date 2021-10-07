@@ -12,6 +12,8 @@ class CreateWorkController extends GetxController{
   @override
   void onInit() {
     super.onInit();
+    // Nếu dich vụ thì chỉ có nhóm 3, 4, 5, 6, 7
+    // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6 
     workGroupList = [1,2,3,4,5,6,7];
   }
 
@@ -36,6 +38,15 @@ class CreateWorkController extends GetxController{
     }else if( group == 3){
       // Tạo đơn dịch vụ có gía
       Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE);
+    }else if(group == 4){
+      // Tạo đơn dich vụ có giá nhóm 4
+      Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE);
+    }else if(group == 5){
+      // Tạo đơn công viẹc và dịch nhóm 5
+      Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE);
+    }else if(group == 6){
+      // Tạo đơn công viẹc và dịch nhóm 5
+      Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE);
     }
   }
 

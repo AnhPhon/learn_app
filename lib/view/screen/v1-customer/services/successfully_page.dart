@@ -15,7 +15,7 @@ class SuccessfullyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title:"Tạo đơn thành công"),
+      appBar: const AppBarWidget(title:"Tạo đơn thành công",leading: false,),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_DEFAULT

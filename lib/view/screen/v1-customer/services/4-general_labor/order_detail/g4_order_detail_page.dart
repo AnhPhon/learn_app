@@ -10,19 +10,19 @@ import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
-import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_detail/g3_order_detail_controller.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
-class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
-  V1G3OrderDetailPage({Key? key}) : super(key: key);
-  final V1G3OrderDetailController _controller = Get.find<V1G3OrderDetailController>();
+class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
+  V1G4OrderDetailPage({Key? key}) : super(key: key);
+  final V1G4OrderDetailController _controller = Get.find<V1G4OrderDetailController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Chi tiết đơn hàng"),
+      appBar: const AppBarWidget(title: "Chi tiết đơn hàng"),
       body: Column(
         children: const [
-          GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+          GroupTitle(title: "Dịch vụ lao động thủ công"),
 
           // Bảng thông tin đơn hàng
            Padding(

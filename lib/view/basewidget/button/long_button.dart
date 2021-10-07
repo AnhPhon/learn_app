@@ -37,10 +37,10 @@ class LongButton extends StatelessWidget {
         minWidth: minWidth ?? DeviceUtils.getScaledSize(context,1),
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           child: Text(title,style: const TextStyle(
             color: ColorResources.WHITE,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE

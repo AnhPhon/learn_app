@@ -277,7 +277,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           child: Container(
             decoration: BoxDecoration(
               color: ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
               boxShadow: boxShadow
             ),
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),

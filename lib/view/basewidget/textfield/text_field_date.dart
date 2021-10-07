@@ -86,26 +86,29 @@ class TextFieldDate extends StatelessWidget {
               isDense: true,
               contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                focusedBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                enabledBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                disabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                disabledBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 hintText: holdplacer,
                 filled: true,
                 fillColor:(allowEdit == false) ? ColorResources.GREY : Colors.transparent,
                 suffixIconConstraints: const BoxConstraints(
-                  maxHeight: Dimensions.PADDING_SIZE_SMALL * 2,
+                  maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),
                 suffixIcon: (isDate == true) ? const Padding(
                   padding:  EdgeInsets.only(right: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                  child:  Icon(Icons.date_range, size: 18, color: ColorResources.PRIMARYCOLOR,),
+                  child:  Icon(Icons.date_range, size: Dimensions.ICON_SIZE_SMALL, color: ColorResources.PRIMARYCOLOR,),
                 ) : null),
           ),
         ],

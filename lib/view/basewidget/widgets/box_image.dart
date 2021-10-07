@@ -28,7 +28,7 @@ class BoxImage extends StatelessWidget {
           height: 120,
           decoration: BoxDecoration(
             color: ColorResources.GREY.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             border: Border.all(color: ColorResources.PRIMARYCOLOR)
           ),
           child: ListView.builder(
@@ -42,12 +42,12 @@ class BoxImage extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: ColorResources.PRIMARYCOLOR.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(5)
+                        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
                       ),
                       height: 120,
                       width: 120,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         child: IconButton(onPressed: onPress, icon: const Icon(
                           Icons.add,
                           size: 30,

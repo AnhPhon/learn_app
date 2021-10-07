@@ -27,7 +27,7 @@ class SmallButton extends StatelessWidget {
         minWidth: DeviceUtils.getScaledSize(context,0.4),
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         child: Text(title,style: const TextStyle(
           color: ColorResources.WHITE,

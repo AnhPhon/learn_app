@@ -1,7 +1,7 @@
 
 
 import 'package:get/get.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_controller.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_controller.dart';
 
 class V1OrderFeedBackGroup6Binding extends Bindings{
   @override

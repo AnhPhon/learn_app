@@ -5,7 +5,7 @@ class AppRoutes {
   static const String HOME = "/home";
   static const String V1_ABOUT = "/v1_about";
   static const String V1_OBLIGATIONS = "/v1_obligations";
-  static const String V1_TERMAND_POLICY = "/v1_term_and_policy";
+  static const String V1_TERM_AND_POLICY = "/v1_term_and_policy";
   static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
@@ -17,13 +17,24 @@ class AppRoutes {
   static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDER_INFORAMTION = "/v1_orderinfo";
-  // Tạo đơn công việc
+  // Tạo đơn công việc (Chung)
   static const String V1_CREATE_WORK = "/v1_create_work";
+  // Tạo đơn công việc nhóm 1
   static const String V1_G1_CREATE_WORK = "/v1_g1_create_work";
+  // Tạo đơn công việc nhóm 2
   static const String V1_G2_CREATE_WORK = "/v1_g2_create_work";
+  // Tạo đơn dịch vụ nhóm 3
   static const String V1_G3_CREATE_SERVICE = "/v1_g3_create_service";
   static const String V1_G3_ORDER_QUOTE = "/v1_g3_order_quote";
   static const String V1_G3_ORDER_DETAIL = "/v1_g3_order_detail";
+  // Tạo đơn dịch vụ nhóm 4
+  static const String V1_G4_CREATE_SERVICE = "/v1_g4_create_service";
+  static const String V1_G4_ORDER_QUOTE = "/v1_g4_order_quote";
+  static const String V1_G4_ORDER_DETAIL = "/v1_g4_order_detail";
+  // Tạo đơn dịch vụ và công việc nhóm 5
+  static const String V1_G5_CREATE_SERVICE = "/v1_g5_create_service";
+  // Tạo đơn dịch vụ và công việc nhóm 6
+  static const String V1_G6_CREATE_SERVICE = "/v1_g6_create_service";
   // Xem lại đơn công viêc
   static const String V1_G1_REVIEW = "/v1_g1_review";
   // Thành công

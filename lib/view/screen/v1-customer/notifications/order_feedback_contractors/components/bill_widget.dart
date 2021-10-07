@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/components/order_content.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 
 class BillWidget extends StatelessWidget {
   const BillWidget({
@@ -25,14 +25,14 @@ class BillWidget extends StatelessWidget {
       type: MaterialType.card,
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
       ),
       child: Container(
         height: height ?? DeviceUtils.getScaledHeight(context, 0.6),
         width:  DeviceUtils.getScaledHeight(context,1),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           //boxShadow: boxShadow
         ),
         child: SingleChildScrollView(

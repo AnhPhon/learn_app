@@ -17,18 +17,24 @@ import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/bulletin/order_information_binding.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/bulletin/order_information_page.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_binding.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
-import 'package:template/view/screen/v1-customer/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_page.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_binding.dart';
+import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
@@ -44,6 +50,10 @@ import 'package:template/view/screen/v1-customer/services/g3-regular_service_pri
 import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_detail/g3_order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_page.dart';
+import 'package:template/view/screen/v1-customer/services/g5-car_rental/g5_create_service_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g5-car_rental/g5_create_service_page.dart';
+import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_binding.dart';
+import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
@@ -82,7 +92,7 @@ class AppPages {
       page: () => const Benefits(),
     ),
     GetPage(
-      name: AppRoutes.V1_TERMAND_POLICY,
+      name: AppRoutes.V1_TERM_AND_POLICY,
       page: () => const TermsAndPolicy(),
     ),
     GetPage(
@@ -188,36 +198,37 @@ class AppPages {
     ),
 
     ///
-    ///Tạo đơn công việc 1- 6
+    ///Tạo đơn công việc 1- 6 (Trang chung)
     ///
     GetPage(
       name: AppRoutes.V1_CREATE_WORK, 
       page: ()=> CreateWorkPage(),
     ),
-    // Nhóm 1 - tạo đơn
+    //tạo đơn công việc Nhóm 1 - tạo đơn
     GetPage(
       name: AppRoutes.V1_G1_CREATE_WORK, 
       page: ()=> V1G1CreateWorkPage(),
       binding: V1G1CreateWorkBinding()
     ),
-    // nhóm 1 - xem đơn (KH)
+    // Tạo đơn công việc nhóm 1 - xem đơn (KH)
     GetPage(
       name: AppRoutes.V1_G1_REVIEW, 
       page: ()=> V1G1ReviewPage(),
       binding: V1G1ReviewBinding()
     ),
-    // Nhóm 2 (KH)
+    // Tạo đơn công việc Nhóm 2 (KH)
     GetPage(
       name: AppRoutes.V1_G2_CREATE_WORK, 
       page: ()=> V1G2CreateWorkPage(),
       binding: V1G2CreateWorkBinding()
     ),
-    // Nhóm 3 dịch vụ (KH)
+    // Tạo đơn dịch vụ Nhóm 3 (KH)
     GetPage(
       name: AppRoutes.V1_G3_CREATE_SERVICE, 
       page: ()=> V1G3CreateServicePage(),
       binding: V1G3CreateServiceBinding()
     ),
+    // Báo giá đơn hàng nhóm 3
     GetPage(
       name: AppRoutes.V1_G3_ORDER_QUOTE, 
       page: ()=> V1G3OrderQuotePage(),
@@ -228,6 +239,39 @@ class AppPages {
       name: AppRoutes.V1_G3_ORDER_DETAIL, 
       page: ()=> V1G3OrderDetailPage(),
       binding: V1G3OrderDetailBinding()
+    ),
+
+    // Tạo đơn dich vụ nhóm 4
+    GetPage(
+      name: AppRoutes.V1_G4_CREATE_SERVICE, 
+      page: ()=> V1G4CreateServicePage(),
+      binding: V1G4CreateServiceBinding()
+    ),
+    // Báo giá đơn hàng nhóm 4
+    GetPage(
+      name: AppRoutes.V1_G4_ORDER_QUOTE, 
+      page: ()=> V1G4OrderQuotePage(),
+      binding: V1G4OrderQuoteBinding()
+    ),
+    // Chi tiêt đơn hàng nhóm 4
+    GetPage(
+      name: AppRoutes.V1_G4_ORDER_DETAIL, 
+      page: ()=> V1G4OrderDetailPage(),
+      binding: V1G4OrderDetailBinding()
+    ),
+
+    // Tạo đơn dich vụ và công việc nhóm 5
+    GetPage(
+      name: AppRoutes.V1_G5_CREATE_SERVICE, 
+      page: ()=> V1G5CreateServicePage(),
+      binding: V1G5CreateServiceBinding()
+    ),
+
+    // Tạo đơn dich vụ và công việc nhóm 6
+    GetPage(
+      name: AppRoutes.V1_G6_CREATE_SERVICE, 
+      page: ()=> V1G6CreateServicePage(),
+      binding: V1G6CreateServiceBinding()
     ),
 
     // Hình thức thanh toán 

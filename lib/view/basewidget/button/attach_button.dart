@@ -36,7 +36,7 @@ class AttachButton extends StatelessWidget {
         minWidth: DeviceUtils.getScaledSize(context,1),
         color: color,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
         ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
