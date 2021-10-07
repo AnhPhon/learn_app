@@ -89,6 +89,7 @@ class V4HomeController extends GetxController {
       return onClickToReportTimeKeeping();
     }
   }
+  String fullname = "Phạm Dương";
 
   double total = 10000000;
   double revenue = 10000000; // thu

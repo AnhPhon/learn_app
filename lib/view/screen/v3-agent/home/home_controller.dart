@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class V3HomeController extends GetxController {
-  String fullname = "KH, Nguyễn Văn A";
+  String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
 
   @override

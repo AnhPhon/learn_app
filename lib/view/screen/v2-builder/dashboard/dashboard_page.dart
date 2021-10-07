@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/v1-customer/account/account_page.dart';
-import 'package:template/view/screen/v1-customer/entertainment/entertainment_page.dart';
-import 'package:template/view/screen/v1-customer/home/home_page.dart';
-import 'package:template/view/screen/v1-customer/news/news_page.dart';
-import 'package:template/view/screen/v1-customer/project/project_page.dart';
+import 'package:template/view/screen/v2-builder/account/account_page.dart';
+import 'package:template/view/screen/v2-builder/entertainment/entertainment_page.dart';
+import 'package:template/view/screen/v2-builder/home/home_page.dart';
+import 'package:template/view/screen/v2-builder/news/news_page.dart';
+import 'package:template/view/screen/v2-builder/project/home_page.dart';
 
 import 'dashboard_controller.dart';
 
@@ -24,11 +24,11 @@ class V2DashboardPage extends StatelessWidget {
             body: IndexedStack(
               index: controller.tabIndex,
               children: [
-                V1HomePage(),
-                V1ProjectPage(),
-                V1EntertainmentPage(),
-                V1NewsPage(),
-                V1AccountPage(),
+                V2HomePage(),
+                V2ProjectPage(),
+                V2EntertainmentPage(),
+                V2NewsPage(),
+                V2AccountPage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/field_widget.dart';
+import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/news.dart';
 
 import 'home_controller.dart';
@@ -21,203 +20,22 @@ class V1HomePage extends GetView<V1HomeController> {
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
-          return Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                ),
-                child: Stack(children: [
-                  Positioned(
-                    top: -20,
-                    left: -50,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -80,
-                    right: -20,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 25,
-                    // left: 15,
-                    width: size.width,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                              child: Image.asset(
-                                Images.V4AvatarHome,
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            controller.fullname,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.V1NOTIFICATION);
-                              },
-                              child: const Icon(
-                                CupertinoIcons.bell_fill,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10)
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
+          return HomeWidget(
+            fullname: controller.fullname,
+            content: Column(
+              children: [
+                // _categoryBoxWidget
+                _categoryBoxWidget(),
 
-              // white
-              Positioned(
-                top: 100,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  height: size.height - 180,
-                  width: size.width,
-                  margin: const EdgeInsets.only(),
-                  padding: const EdgeInsets.all(
-                    Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6F6F7),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      width: size.width,
-                      child: Column(
-                        children: [
-                          // _categoryBoxWidget
-                          _categoryBoxWidget(),
+                // _threeFeatureWidget
+                _threeFeatureWidget(),
 
-                          // _threeFeatureWidget
-                          _threeFeatureWidget(),
+                // product
+                _productWidget(),
 
-                          // product
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: _fieldWidget(
-                              "Sản phẩm",
-                              () {},
-                              Container(
-                                height: 400,
-                                padding: const EdgeInsets.only(
-                                  top: Dimensions.PADDING_SIZE_DEFAULT,
-                                ),
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisExtent: 120,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                  ),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: 9,
-                                  itemBuilder: (BuildContext ctx, index) {
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: _imageWidget(
-                                        controller.productList![index]["title"].toString(),
-                                        controller.productList![index]["image"].toString(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          _fieldWidget(
-                            "Tin tức",
-                            () {},
-                            Container(
-                              height: 180,
-                              padding: const EdgeInsets.only(
-                                top: Dimensions.PADDING_SIZE_DEFAULT,
-                              ),
-                              child: ListView.builder(
-                                itemCount: 2,
-                                itemBuilder: (
-                                  BuildContext ctx,
-                                  index,
-                                ) {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: NewsBox(
-                                      title: "Tin nóng tóm tắt tổng hợp",
-                                      describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
+                _newsWidget()
+              ],
+            ),
           );
         },
       ),
@@ -407,6 +225,73 @@ class V1HomePage extends GetView<V1HomeController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _productWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: FieldWidget(
+        title: "Sản phẩm",
+        onTap: () {},
+        widget: Container(
+          height: 400,
+          padding: const EdgeInsets.only(
+            top: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisExtent: 120,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 9,
+            itemBuilder: (BuildContext ctx, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: _imageWidget(
+                  controller.productList![index]["title"].toString(),
+                  controller.productList![index]["image"].toString(),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {},
+      widget: Container(
+        height: 230,
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 2,
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return const Padding(
+              padding: EdgeInsets.all(5),
+              child: NewsBox(
+                title: "Tin nóng tóm tắt tổng hợp",
+                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+              ),
+            );
+          },
+        ),
       ),
     );
   }
