@@ -8,8 +8,9 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/home/home_widget.dart';
 import 'home_controller.dart';
 
 class V4HomePage extends GetView<V4HomeController> {
@@ -21,174 +22,45 @@ class V4HomePage extends GetView<V4HomeController> {
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
         builder: (V4HomeController controller) {
-          return Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                ),
-                child: Stack(children: [
-                  Positioned(
-                    top: -20,
-                    left: -25,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -80,
-                    right: -20,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 25,
-                    // left: 15,
-                    width: size.width,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                Dimensions.BORDER_RADIUS_EXTRA_LARGE,
-                              ),
-                              child: Image.asset(
-                                Images.V4AvatarHome,
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                          ),
-                          const Text(
-                            "Hi, Phạm Dương!",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5),
-                            child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  CupertinoIcons.bell_fill,
-                                  color: Colors.white,
-                                )),
-                          ),
-                          const SizedBox(width: 10)
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
+          return HomeWidget(
+            fullname: "Hi, ${controller.fullname}!",
+            content: Column(
+              children: [
+                // notificate label
+                _notificateLabel(),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-              // white
-              Positioned(
-                top: 100,
-                child: Container(
-                  height: size.height - 180,
-                  width: size.width,
-                  margin: const EdgeInsets.only(),
-                  padding: const EdgeInsets.all(
-                    Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
-                  alignment: Alignment.centerLeft,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6F6F7),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: size.width,
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          // notificate label
-                          _notificateLabel(),
+                // time keeping
+                _btnTimekeeping(),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          const SizedBox(height: 20),
+                // _followWorkProgressWidget
+                _followWorkProgressWidget(),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          // time keeping
-                          _btnTimekeeping(),
+                // _splitWidget
+                _splitWidget(context),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          const SizedBox(height: 20),
+                // _revenueStatistic
+                _revenueStatistic(context),
 
-                          // _followWorkProgressWidget
-                          _followWorkProgressWidget(),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          const SizedBox(height: 20),
+                // _splitWidget
+                _splitWidget(context),
 
-                          // _splitWidget
-                          _splitWidget(context),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          const SizedBox(height: 20),
+                // _inputWarehouse
+                _inputWarehouse(context),
 
-                          // _revenueStatistic
-                          _revenueStatistic(context),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                          const SizedBox(height: 20),
-
-                          // _splitWidget
-                          _splitWidget(context),
-
-                          const SizedBox(height: 20),
-
-                          // _inputWarehouse
-                          _inputWarehouse(context),
-
-                          const SizedBox(height: 20),
-
-                          // _splitWidget
-                          _splitWidget(context)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
+                // _splitWidget
+                _splitWidget(context)
+              ],
+            ),
           );
         },
       ),
@@ -276,15 +148,16 @@ class V4HomePage extends GetView<V4HomeController> {
                 return Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    gradient: controller.contentGrid[index]["color"]
+                    gradient: controller.contentGrid![index]["color"]
                         as RadialGradient,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.MARGIN_SIZE_DEFAULT),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        controller.contentGrid[index]["title"].toString(),
+                        controller.contentGrid![index]["title"].toString(),
                         style: const TextStyle(
                           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                           fontWeight: FontWeight.bold,
@@ -308,9 +181,9 @@ class V4HomePage extends GetView<V4HomeController> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
                       Text(
-                        controller.contentGrid[index]["quality"].toString(),
+                        controller.contentGrid![index]["quality"].toString(),
                         style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -349,7 +222,6 @@ class V4HomePage extends GetView<V4HomeController> {
   ///_revenueStatistic
   ///
   Widget _revenueStatistic(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
@@ -372,10 +244,10 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               Container(
                 alignment: Alignment.center,
-                width: size.width / 3,
+                width: DeviceUtils.getScaledWidth(context, .33333),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 decoration: BoxDecoration(
-                  color: controller.total > 0
+                  color: controller.total! > 0
                       ? ColorResources.THEME_DEFAULT
                       : Colors.red,
                   boxShadow: const [
@@ -386,20 +258,20 @@ class V4HomePage extends GetView<V4HomeController> {
                     )
                   ],
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                   ),
                 ),
                 child: Text(
-                  "${(controller.total > 0 ? "+" : "-") + PriceConverter.convertPrice(
+                  "${(controller.total! > 0 ? "+" : "-") + PriceConverter.convertPrice(
                         context,
-                        controller.total,
+                        controller.total!,
                       )} Đ",
                   style: const TextStyle(color: Colors.white),
                 ),
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
               const Text(
@@ -414,7 +286,7 @@ class V4HomePage extends GetView<V4HomeController> {
               Text(
                 "${PriceConverter.convertPrice(
                   context,
-                  controller.revenue,
+                  controller.revenue!,
                 )} Đ",
                 style: const TextStyle(
                   color: ColorResources.THEME_DEFAULT,
@@ -422,7 +294,7 @@ class V4HomePage extends GetView<V4HomeController> {
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
               const Text(
@@ -437,7 +309,7 @@ class V4HomePage extends GetView<V4HomeController> {
               Text(
                 "${PriceConverter.convertPrice(
                   context,
-                  controller.expenditure,
+                  controller.expenditure!,
                 )} Đ",
                 style: const TextStyle(
                   color: Colors.red,
@@ -445,12 +317,12 @@ class V4HomePage extends GetView<V4HomeController> {
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
               Container(
                 alignment: Alignment.center,
-                width: size.width / 3,
+                width: DeviceUtils.getScaledWidth(context, .33333),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 decoration: const BoxDecoration(
                   color: ColorResources.THEME_DEFAULT,
@@ -462,7 +334,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     )
                   ],
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
                   ),
                 ),
                 child: const Text(
@@ -473,7 +345,7 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               Container(
                 alignment: Alignment.center,
-                width: size.width / 3,
+                width: DeviceUtils.getScaledWidth(context, .33333),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 decoration: const BoxDecoration(
                   color: Colors.red,
@@ -526,7 +398,7 @@ class V4HomePage extends GetView<V4HomeController> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
               Container(
@@ -543,7 +415,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     )
                   ],
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
                   ),
                 ),
                 child: const Text(
@@ -566,7 +438,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     )
                   ],
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
                   ),
                 ),
                 child: const Text(
@@ -576,7 +448,7 @@ class V4HomePage extends GetView<V4HomeController> {
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
         ],
       ),
     );
