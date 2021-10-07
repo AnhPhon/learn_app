@@ -218,7 +218,7 @@ class V4HomePage extends GetView<V4HomeController> {
   Widget _btnTimekeeping() {
     return GestureDetector(
       onTap: () {
-        controller.onClickToWorkProgerss();
+        controller.onClick();
       },
       child: Container(
         width: 150,
@@ -228,12 +228,14 @@ class V4HomePage extends GetView<V4HomeController> {
           color: const Color(0xff2196F3),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: const Text(
-          'Chấm Công',
-          style: TextStyle(
-            fontSize: Dimensions.FONT_SIZE_DEFAULT,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        child: Center(
+          child: Text(
+            controller.isvalid ? "Chấm công" : "Báo cáo",
+            style: const TextStyle(
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

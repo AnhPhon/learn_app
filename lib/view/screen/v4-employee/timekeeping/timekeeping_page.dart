@@ -49,12 +49,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   Container(
                     height: DeviceUtils.getScaledHeight(context, .3),
                   ),
-                  LongButton(
-                    color: ColorResources.APPBARCOLOR,
-                    onPressed: () {},
-                    title: 'Chấm công',
-                    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
+                  _btnTimekeeping(),
                 ],
               ),
             );
@@ -139,5 +134,17 @@ Widget _district(BuildContext context) {
     onChanged: (value) {},
     value: 'Hải Châu',
     width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Button chấm công
+///
+Widget _btnTimekeeping() {
+  return LongButton(
+    color: ColorResources.APPBARCOLOR,
+    onPressed: () {},
+    title: 'Chấm công',
+    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );
 }

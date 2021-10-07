@@ -44,6 +44,8 @@ import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
@@ -223,6 +225,11 @@ class AppPages {
       name: AppRoutes.V4_TIMEKEEPING,
       page: () => V4TimekeepingPage(),
       binding: V4TimekeepingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_REPORT_TIMEKEEPING,
+      page: () => V4ReportTimekeepingPage(),
+      binding: V4ReportTimekeepingBinding(),
     )
     // GetPage(
     //   name: AppRoutes.INTRO,
