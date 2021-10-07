@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
+
+class TaskNeedWorker extends StatelessWidget {
+  final String nhanTask;
+  final String tenTask;
+  final String maTask;
+  final String trangThai;
+
+  const TaskNeedWorker({
+    required this.nhanTask,
+    required this.tenTask,
+    required this.maTask,
+    required this.trangThai,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    const double height = 90;
+    return Container(
+      width: 352,
+      height: height,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff000000).withOpacity(.2),
+            blurRadius: 5,
+          )
+        ],
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      margin: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(right: 5),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: height,
+            height: height,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(7),
+                bottomRight: Radius.circular(7),
+                bottomLeft: Radius.circular(7),
+                topLeft: Radius.circular(7),
+              ),
+              image: DecorationImage(
+                image: AssetImage('assets/images/news1.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+            width: 230,
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "$nhanTask: $tenTask",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(42, 53, 71, 1),
+                      fontFamily: 'Nunito',
+                      fontSize: 16,
+                      letterSpacing: -0.30000001192092896,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Dự án: $maTask",
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                          fontFamily: 'Nunito',
+                          fontSize: 15,
+                          letterSpacing: -0.3,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.person_search,
+                            color: Color(0xff8E8A8A),
+                          ),
+                          Text(
+                            trangThai,
+                            style: const TextStyle(
+                              color: Color(0xff8E8A8A),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

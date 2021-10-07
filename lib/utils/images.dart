@@ -34,4 +34,7 @@ class Images {
   static const String V4AvatarHome = 'assets/images/avatar.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String toolbar_background = 'assets/images/appbar.png';
+
+  // product card 
+  static const String example = 'https://media3.scdn.vn/img3/2019/8_15/7n83gB.jpg';
 }

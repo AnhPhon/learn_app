@@ -8,6 +8,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/news/news.dart';
 
 import 'home_controller.dart';
@@ -153,64 +154,9 @@ class V1HomePage extends GetView<V1HomeController> {
                           _threeFeatureWidget(),
 
                           // product
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: _fieldWidget(
-                              "Sản phẩm",
-                              () {},
-                              Container(
-                                height: 400,
-                                padding: const EdgeInsets.only(
-                                  top: Dimensions.PADDING_SIZE_DEFAULT,
-                                ),
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisExtent: 120,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                  ),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: 9,
-                                  itemBuilder: (BuildContext ctx, index) {
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: _imageWidget(
-                                        controller.productList![index]["title"].toString(),
-                                        controller.productList![index]["image"].toString(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          _fieldWidget(
-                            "Tin tức",
-                            () {},
-                            Container(
-                              height: 180,
-                              padding: const EdgeInsets.only(
-                                top: Dimensions.PADDING_SIZE_DEFAULT,
-                              ),
-                              child: ListView.builder(
-                                itemCount: 2,
-                                itemBuilder: (
-                                  BuildContext ctx,
-                                  index,
-                                ) {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: NewsBox(
-                                      title: "Tin nóng tóm tắt tổng hợp",
-                                      describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          )
+                          _productWidget(),
+
+                          _newsWidget()
                         ],
                       ),
                     ),
@@ -407,6 +353,73 @@ class V1HomePage extends GetView<V1HomeController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _productWidget() {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: FieldWidget(
+        title: "Sản phẩm",
+        onTap: () {},
+        widget: Container(
+          height: 400,
+          padding: const EdgeInsets.only(
+            top: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisExtent: 120,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 9,
+            itemBuilder: (BuildContext ctx, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: _imageWidget(
+                  controller.productList![index]["title"].toString(),
+                  controller.productList![index]["image"].toString(),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {},
+      widget: Container(
+        height: 230,
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 2,
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return const Padding(
+              padding: EdgeInsets.all(5),
+              child: NewsBox(
+                title: "Tin nóng tóm tắt tổng hợp",
+                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+              ),
+            );
+          },
+        ),
       ),
     );
   }

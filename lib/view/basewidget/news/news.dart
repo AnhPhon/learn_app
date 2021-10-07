@@ -12,7 +12,7 @@ class NewsBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 352,
+      width: 350,
       height: 80,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -48,7 +48,7 @@ class NewsBox extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(10),
-            width: 270,
+            width: 240,
             child: Column(
               children: [
                 Container(
@@ -85,27 +85,6 @@ class NewsBox extends StatelessWidget {
               ],
             ),
           ),
-          // Positioned(
-          //   top: 32.74418640136719,
-          //   left: 84,
-          //   child: ,
-          // ),
-          // const Positioned(
-          //   top: 34.23255920410156,
-          //   left: 283,
-          //   child: Text(
-          //     '20/09/2021 ',
-          //     textAlign: TextAlign.right,
-          //     style: TextStyle(
-          //       color: Color.fromRGBO(97, 97, 97, 1),
-          //       fontFamily: 'Nunito',
-          //       fontSize: 11,
-          //       letterSpacing: -0.30000001192092896,
-          //       fontWeight: FontWeight.normal,
-          //       height: 1,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
