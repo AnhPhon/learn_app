@@ -33,6 +33,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                   Container(
                     height: DeviceUtils.getScaledHeight(context, .08),
                     color: ColorResources.WHITE,
+
                     // ignore: prefer_const_constructors
                     child: TabBar(
                       labelPadding: const EdgeInsets.symmetric(
@@ -50,14 +51,18 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                         ],
                       ),
                       unselectedLabelColor: ColorResources.UNSELECT_TABBAR,
+
                       // ignore: prefer_const_literals_to_create_immutables
                       tabs: [
                         //tab MỚI TẠO
                         const Text('Mới tạo'),
+
                         //tab ĐANG LÀM
                         const Text('Đang làm'),
+
                         //tab HOÀN THÀNH
                         const Text('Hoàn thành'),
+
                         // tab CHẬM TRỄ
                         const Text('Chậm trễ'),
                       ],
@@ -109,7 +114,8 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               width: DeviceUtils.getScaledWidth(context, 1),
               height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 color: ColorResources.WHITE,
                 boxShadow: [
                   BoxShadow(
@@ -141,6 +147,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_SMALL,
                           ),
+
                           //phụ đề tiến độ công việc mới tạo
                           Text(
                             controller.uiWorkProgress![index]["subtitle"]
@@ -150,6 +157,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           //chi tiết tiến độ công việc
                           Text(
                             controller.uiWorkProgress![index]["description"]
@@ -159,6 +167,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
                           Padding(
                             padding: const EdgeInsets.only(
@@ -187,6 +196,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     ],
                                   ),
                                 ),
+
                                 //thời gian kết thúc
                                 RichText(
                                   text: TextSpan(
@@ -251,7 +261,8 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               width: DeviceUtils.getScaledWidth(context, 1),
               height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 color: ColorResources.WHITE,
                 boxShadow: [
                   BoxShadow(
@@ -283,6 +294,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_SMALL,
                           ),
+
                           //phụ đề tiến độ công việc mới tạo
                           Text(
                             controller.uiWorkProgress![index]["subtitle"]
@@ -292,6 +304,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           //chi tiết tiến độ công việc
                           Text(
                             controller.uiWorkProgress![index]["description"]
@@ -301,6 +314,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
                           Padding(
                             padding: const EdgeInsets.only(
@@ -329,6 +343,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     ],
                                   ),
                                 ),
+
                                 //thời gian kết thúc
                                 RichText(
                                   text: TextSpan(
@@ -393,7 +408,8 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               width: DeviceUtils.getScaledWidth(context, 1),
               height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 color: ColorResources.WHITE,
                 boxShadow: [
                   BoxShadow(
@@ -425,6 +441,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_SMALL,
                           ),
+
                           //phụ đề tiến độ công việc mới tạo
                           Text(
                             controller.uiWorkProgress![index]["subtitle"]
@@ -434,6 +451,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           //chi tiết tiến độ công việc
                           Text(
                             controller.uiWorkProgress![index]["description"]
@@ -443,6 +461,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
                           Padding(
                             padding: const EdgeInsets.only(
@@ -486,6 +505,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     ],
                                   ),
                                 ),
+
                                 //thời gian kết thúc
                                 RichText(
                                   text: TextSpan(
@@ -550,7 +570,8 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               width: DeviceUtils.getScaledWidth(context, 1),
               height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 color: ColorResources.WHITE,
                 boxShadow: [
                   BoxShadow(
@@ -582,6 +603,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_SMALL,
                           ),
+
                           //phụ đề tiến độ công việc mới tạo
                           Text(
                             controller.uiWorkProgress![index]["subtitle"]
@@ -591,6 +613,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           //chi tiết tiến độ công việc
                           Text(
                             controller.uiWorkProgress![index]["description"]
@@ -600,6 +623,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
+
                           // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
                           Padding(
                             padding: const EdgeInsets.only(
@@ -628,6 +652,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     ],
                                   ),
                                 ),
+
                                 //thời gian kết thúc
                                 RichText(
                                   text: TextSpan(
@@ -680,13 +705,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///Line Wiget
   ///
   Widget _lineWidget(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     const double square = 4;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size.width / 2 - 3 * 15,
+          width: DeviceUtils.getScaledWidth(context, 0.4),
           height: square - 2,
           decoration: const BoxDecoration(
             color: Color(0xff4D4D4D),
@@ -722,7 +746,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
         ),
         const SizedBox(width: 5),
         Container(
-          width: size.width / 2 - 3 * 15,
+          width: DeviceUtils.getScaledWidth(context, 0.4),
           height: square - 2,
           decoration: const BoxDecoration(
             color: Color(0xff4D4D4D),

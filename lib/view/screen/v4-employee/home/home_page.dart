@@ -275,7 +275,7 @@ class V4HomePage extends GetView<V4HomeController> {
               itemBuilder: (BuildContext ctx, index) {
                 return GestureDetector(
                   onTap: () {
-                    controller.onClickToWorkProgerss(index);
+                    controller.onClickToWorkProgress(index);
                   },
                   child: Container(
                     alignment: Alignment.center,

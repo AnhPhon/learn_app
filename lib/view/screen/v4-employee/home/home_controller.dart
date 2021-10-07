@@ -41,7 +41,7 @@ class V4HomeController extends GetxController {
   ///
   /// click to work progress page
   ///
-  void onClickToWorkProgerss(int index) {
+  void onClickToWorkProgress(int index) {
     Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
   }
 
