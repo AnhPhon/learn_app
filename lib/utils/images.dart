@@ -22,6 +22,17 @@ class Images {
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
 
+  // v1-customer
+  static const String V1Product1Home = 'assets/images/product1.png';
+  static const String V1Product2Home = 'assets/images/product2.png';
+  static const String V1Product3Home = 'assets/images/product3.png';
+  static const String V1Product4Home = 'assets/images/product4.png';
+  static const String V1Product5Home = 'assets/images/product5.png';
+  static const String V1Product6Home = 'assets/images/product6.png';
+  static const String V1Product7Home = 'assets/images/product7.png';
+  static const String V1Product8Home = 'assets/images/product8.png';
+  static const String V1Product9Home = 'assets/images/product9.png';
+
   // v4-employee
   static const String V4AvatarHome = 'assets/images/avatar.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
