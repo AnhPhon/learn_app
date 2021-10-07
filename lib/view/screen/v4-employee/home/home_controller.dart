@@ -90,6 +90,20 @@ class V4HomeController extends GetxController {
     }
   }
 
+  ///
+  /// click to Revenue page
+  ///
+  void onClickRevenue() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
+  }
+
+  ///
+  /// click to Expenditure page
+  ///
+  void onClickExpenditure() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  }
+
   double total = 10000000;
   double revenue = 10000000; // thu
   double expenditure = 10000000; // chi

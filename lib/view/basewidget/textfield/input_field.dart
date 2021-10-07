@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -19,7 +18,8 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
-      required this.fontSize});
+      required this.fontSize,
+      this.boldHinText});
   String label, holdplacer;
   TextEditingController controller;
   bool allowEdit, allowMultiline, hidden, obligatory;
@@ -30,14 +30,14 @@ class InputField extends StatelessWidget {
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
+  bool? boldHinText;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT, 
-        top: Dimensions.PADDING_SIZE_LARGE
-      ),
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          top: Dimensions.PADDING_SIZE_LARGE),
       //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,
       child: Column(
@@ -49,22 +49,26 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize,// * 2.1, 
-                      fontWeight: FontWeight.bold, 
+                      fontSize: fontSize, // * 2.1,
+                      fontWeight: FontWeight.bold,
                       color: ColorResources.BLACK.withOpacity(0.7)),
                 ),
-                if (obligatory) Text(
-                        '*',
-                        style: TextStyle(
-                            fontSize: fontSize,// * 2.1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ) else Container()
+                if (obligatory)
+                  Text(
+                    '*',
+                    style: TextStyle(
+                        fontSize: fontSize, // * 2.1,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  )
+                else
+                  Container()
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            padding:
+                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
@@ -75,28 +79,35 @@ class InputField extends StatelessWidget {
               obscureText: hidden,
               onChanged: onChanged,
               decoration: InputDecoration(
-                contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
-                ),
-                disabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
-                ),
-                errorText: errorText,
-                isDense: true,
-                hintText: holdplacer,
-                hintStyle: TextStyle(
-                  color: ColorResources.BLACK.withOpacity(0.5),
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                ),
-                fillColor:(allowEdit == false) ? ColorResources.GREY : Colors.transparent,
-                suffixIcon: suffixIcon),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_SMALL,
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
+                  enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
+                  disabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorResources.PRIMARYCOLOR)),
+                  errorText: errorText,
+                  isDense: true,
+                  hintText: holdplacer,
+                  hintStyle: TextStyle(
+                    color: boldHinText == true
+                        ? ColorResources.BLACK
+                        : ColorResources.BLACK.withOpacity(0.5),
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                    fontWeight: boldHinText == true ? FontWeight.w600 : null,
+                  ),
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.GREY
+                      : Colors.transparent,
+                  suffixIcon: suffixIcon),
             ),
           ),
         ],
