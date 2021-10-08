@@ -22,6 +22,7 @@ class Images {
   static const String shipping_method = 'assets/images/shipping_method.png';
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
+  static const String qr_code = 'assets/images/qr_code.png';
 
   // v4-employee
   static const String V4AvatarHome = 'assets/images/avatar.png';
