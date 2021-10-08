@@ -42,10 +42,10 @@ class TaskNeedWorker extends StatelessWidget {
             height: height,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(7),
-                bottomRight: Radius.circular(7),
-                bottomLeft: Radius.circular(7),
-                topLeft: Radius.circular(7),
+                topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
                 image: AssetImage('assets/images/news1.png'),
