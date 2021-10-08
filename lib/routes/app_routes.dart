@@ -10,10 +10,11 @@ class AppRoutes {
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1_ORDER_FEEDBACK_CONTRACTORS = "/v1orderfeedbackcontractors";
-  // Phản hồi đơn hàng nhóm 5 
+  static const String V1_ORDER_FEEDBACK_CONTRACTORS =
+      "/v1orderfeedbackcontractors";
+  // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
-    // Phản hồi đơn hàng nhóm 6
+  // Phản hồi đơn hàng nhóm 6
   static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDER_INFORAMTION = "/v1_orderinfo";
@@ -35,7 +36,7 @@ class AppRoutes {
   static const String V1_G5_CREATE_SERVICE = "/v1_g5_create_service";
   // Tạo đơn dịch vụ và công việc nhóm 6
   static const String V1_G6_CREATE_SERVICE = "/v1_g6_create_service";
-  // Tạo tin tuyển dụng 
+  // Tạo tin tuyển dụng
   static const String V1_G7_RECRUITMENT = '/v1_g7_reccuitment';
   static const String V1_G7_REVIEW = '/v1_g7_review';
   // Trang chính của tuyển dụng ứng viên
@@ -50,12 +51,6 @@ class AppRoutes {
   static const String V1_SUCCESSFULLY = "/v1_successfully";
   // Hình thức thanh toán
   static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
-  
-
-
-
-
-
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -88,7 +83,7 @@ class AppRoutes {
   static const String V1_HOME = '/v1_home';
   static const String V1_PRODUCT = '/v1_product';
   static const String V1_NEWS = '/v1_news';
-  static const String V1_PROFILE = '/v1_news';
+  static const String V1_PROFILE = '/v1_profile';
   static const String V1_FORM_MANAGEMENT = '/v1_form_management';
   static const String V1_PRODUCT_RESPONSE = '/v1_product_response';
   static const String V1_BILL_DETAIL = '/v1_bill_detail';
@@ -97,11 +92,29 @@ class AppRoutes {
   static const String V1_FORM_LIST = '/v1_form_list';
   static const String V1_PRODUCT_DETAIL = '/v1_product_detail';
   static const String V1_CART = '/v1_cart';
+  static const String V1_PERSONAL_INFORMATION = '/v1_personal_information';
+  static const String V1_POINT_BASED = '/v1_point_based';
+  static const String V1_WALLET = '/v1_wallet';
+  static const String V1_RULES = '/v1_rules';
+  static const String V1_REVIEW = '/v1_review';
+  static const String V1_HISTORY = '/v1_history';
+  static const String V1_HELP = '/v1_help';
+  static const String V1_JOB_MANAGEMENT = '/v1_job_management';
+  static const String V1_INTRODUCE = '/v1_introduce';
+  static const String V1_MAIL = '/v1_mail';
+  static const String V1_IMAGE_UPDATE = '/v1_image_update';
+  static const String V1_CONTRACT = '/v1_contract';
+  static const String V1_ACCIDENT_INSURANCE = '/v1_accident_insurance';
+  static const String V1_OTHER_INSURANCE = '/v1_other_insurance';
+  static const String V1_TAX = '/v1_tax';
   static const String V1_SHIPPING_METHOD = '/v1_shipping_method';
   static const String V1_SHIPPING_ADDRESS = '/v1_shipping_address';
   static const String V1_PAYMENT_ACCOUNT = '/v1_payment_account';
   static const String V1_RECHARGE = '/v1_recharge';
   static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
+  static const String V1_INURANCE_REGISTER = '/v1_insurance_register';
+  static const String V1_YOUR_INSURANCE = '/v1_your_insurance';
+  static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
 
@@ -116,6 +129,7 @@ class AppRoutes {
 
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
+  static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 
   // Builder
@@ -135,4 +149,6 @@ class AppRoutes {
   // Xem trước hồ sơ đánh bằng văn bản
   static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
 
+  static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
+  static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
 }

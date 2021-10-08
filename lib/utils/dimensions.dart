@@ -80,6 +80,9 @@ class Dimensions {
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
 
+  // SIZE BOX BOTTOM NAV
+  static const double SIZE_BOX_BOTTOM_NAV = 150;
+
   Widget paddingDivider(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -89,6 +92,34 @@ class Dimensions {
         thickness: 1,
         color: Colors.grey,
       ),
+    );
+  }
+
+  static TextStyle textTitleStyleCard() {
+    return const TextStyle(
+      color: Color(0xFF2A3547),
+      fontSize: FONT_SIZE_EXTRA_LARGE
+    );
+  }
+
+  static TextStyle textNormalStyleCard() {
+    return const TextStyle(
+      color: Color(0xFF8B8B8B),
+      fontSize: FONT_SIZE_EXTRA_LARGE
+    );
+  }
+
+  static TextStyle textTitleStyle() {
+    return const TextStyle(
+      color: Color(0xFF2A3547),
+      fontSize: FONT_SIZE_DEFAULT
+    );
+  }
+
+  static TextStyle textNormalStyle() {
+    return const TextStyle(
+      color: Color(0xFF8B8B8B),
+      fontSize: FONT_SIZE_DEFAULT
     );
   }
 
@@ -125,11 +156,11 @@ class Dimensions {
   }
 
   static TextStyle fontSizeStyle16w600() {
-    return const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle14w600() {
-    return const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle12w600() {

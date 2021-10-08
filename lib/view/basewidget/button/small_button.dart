@@ -20,7 +20,7 @@ class SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
       child: MaterialButton(
         height: height ?? 45,
         onPressed: ()=> onPressed(),
