@@ -11,6 +11,8 @@ const String login_uri = 'auth/login';
 // TOPIC Firebase
 const String TOPIC = 'TOPIC';
 
+const double BOTTOMSHEET = 150;
+
 const String LANG_KEY = 'lang';
 const String COUNTRY_CODE = 'country_code';
 const String LANGUAGE_CODE = 'language_code';

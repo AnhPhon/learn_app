@@ -89,7 +89,9 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   Widget _btnTimekeeping() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.onClick();
+      },
       child: Container(
         width: 150,
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
@@ -98,12 +100,14 @@ class V4HomePage extends GetView<V4HomeController> {
           color: const Color(0xff2196F3),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: const Text(
-          'Chấm Công',
-          style: TextStyle(
-            fontSize: Dimensions.FONT_SIZE_DEFAULT,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        child: Center(
+          child: Text(
+            controller.isvalid ? "Chấm công" : "Báo cáo",
+            style: const TextStyle(
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -145,69 +149,73 @@ class V4HomePage extends GetView<V4HomeController> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 4,
               itemBuilder: (BuildContext ctx, index) {
-                return Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    gradient: controller.contentGrid![index]["color"]
-                        as RadialGradient,
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.MARGIN_SIZE_DEFAULT),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        controller.contentGrid![index]["title"].toString(),
-                        style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(1, 0),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(0, 1),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(0, -1),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(-1, 0),
-                            )
-                          ],
+                return GestureDetector(
+                  onTap: () {
+                    controller.onClickToWorkProgress(index);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: controller.contentGrid![index]["color"]
+                          as RadialGradient,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          controller.contentGrid![index]["title"].toString(),
+                          style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(1, 0),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(0, 1),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(0, -1),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(-1, 0),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                      Text(
-                        controller.contentGrid![index]["quality"].toString(),
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(2, 0),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(0, 2),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(0, -2),
-                            ),
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(-2, 0),
-                            )
-                          ],
+                        const SizedBox(height: 10),
+                        Text(
+                          controller.contentGrid![index]["quality"].toString(),
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(2, 0),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(0, 2),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(0, -2),
+                              ),
+                              Shadow(
+                                color: Colors.white,
+                                offset: Offset(-2, 0),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -320,49 +328,59 @@ class V4HomePage extends GetView<V4HomeController> {
           const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .33333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickRevenue();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: DeviceUtils.getScaledWidth(context, .333333333),
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: ColorResources.THEME_DEFAULT,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Thêm thu",
-                  style: TextStyle(color: Colors.white),
+                  child: const Text(
+                    "Thêm thu",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .33333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickExpenditure();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: DeviceUtils.getScaledWidth(context, .333333333),
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Thêm chi",
-                  style: TextStyle(color: Colors.white),
+                  child: const Text(
+                    "Thêm chi",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               )
             ],
@@ -403,7 +421,7 @@ class V4HomePage extends GetView<V4HomeController> {
             children: [
               Container(
                 alignment: Alignment.center,
-                width: size.width / 3,
+                width: DeviceUtils.getScaledWidth(context, .333333333),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 decoration: const BoxDecoration(
                   color: ColorResources.THEME_DEFAULT,
@@ -426,7 +444,7 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               Container(
                 alignment: Alignment.center,
-                width: size.width / 3,
+                width: DeviceUtils.getScaledWidth(context, .333333333),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 decoration: const BoxDecoration(
                   color: Colors.red,

@@ -27,11 +27,11 @@ class V3HomePage extends GetView<V3HomeController> {
             fullname: "ĐL, ${controller.fullname}!",
             content: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // need update widget
                 _needUpdateWidget(),
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // feature widget
                 _featuresWidget(),

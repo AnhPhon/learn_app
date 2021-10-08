@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -13,25 +12,25 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.all(
-            Radius.circular(7),
+            Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
           ),
           child: Image.asset(
             imgUrl,
             fit: BoxFit.fill,
-            height: DeviceUtils.getScaledHeight(context, 150 / height),
+            height: DeviceUtils.getScaledHeight(context, .197),
           ),
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, 5 / height)),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
         SizedBox(
-          height: DeviceUtils.getScaledSize(context, 75 / height),
+          height: DeviceUtils.getScaledSize(context, .098),
           child: Text(
             name,
             maxLines: 2,

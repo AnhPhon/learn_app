@@ -27,11 +27,11 @@ class V2HomePage extends GetView<V2HomeController> {
             fullname: "KH, ${controller.fullname}!",
             content: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // need update widget
                 _needUpdateWidget(),
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // category box widget
                 _categoryBoxWidget(),

@@ -15,7 +15,7 @@ class V1EntertainmentPage extends GetView<V1EntertainmentController> {
       body: Center(
         child: GestureDetector(
           onTap: (){
-            Get.toNamed(AppRoutes.V1NOTIFICATION);
+            Get.toNamed(AppRoutes.V1_NOTIFICATION);
           },
           child: Text("Giải trí")),
       ),

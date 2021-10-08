@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/product_widget.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
@@ -14,8 +15,6 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1ProductController>(
         init: V1ProductController(),
         builder: (controller) {
@@ -24,43 +23,66 @@ class V1ProductPage extends GetView<V1ProductController> {
             body: Column(
               children: [
                 //header
-                Expanded(
-                  child: Container(
-                    color: ColorResources.WHITE,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //search bar
-                        _searchBar(context, controller, height, width),
+                Container(
+                  height: DeviceUtils.getScaledHeight(context, 0.13),
+                  color: ColorResources.WHITE,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //search bar
+                      _searchBar(context, controller),
 
-                        //category
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal:
-                                DeviceUtils.getScaledWidth(context, 15 / width),
-                            vertical: DeviceUtils.getScaledHeight(
-                                context, 15 / height),
-                          ),
-                          child: const Text(
-                            "Hạng mục",
-                            style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_LARGE,
-                                fontWeight: FontWeight.bold),
-                          ),
+                      //category
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            //title
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                                vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                              ),
+                              child: Text(
+                                "Hạng mục",
+                                style: TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+
+                            //icon
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                              ),
+                              child: Icon(
+                                Icons.arrow_drop_down,
+                                size: Dimensions.ICON_SIZE_EXTRA_LARGE,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-
-                SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, 15 / height),
                 ),
 
                 //product list
                 Expanded(
-                  flex: 5,
-                  child: _productList(context, controller, width),
+                  flex: 8,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_DEFAULT,
+                        ),
+                        _productList(context, controller),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -71,29 +93,31 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   ///search bar
   ///
-  Widget _searchBar(BuildContext context, V1ProductController controller,
-      double height, double width) {
+  Widget _searchBar(BuildContext context, V1ProductController controller) {
     return TextField(
       textInputAction: TextInputAction.done,
       textAlignVertical: TextAlignVertical.center,
       controller: controller.searchController,
       cursorColor: ColorResources.PRIMARY,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         isDense: true,
-        prefixIcon: const Icon(
+        prefixIcon: Icon(
           Icons.search,
           size: Dimensions.ICON_SIZE_LARGE,
         ),
         contentPadding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-          vertical: DeviceUtils.getScaledHeight(context, 15 / height),
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_DEFAULT,
         ),
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: ColorResources.PRIMARY, width: 2)),
-        enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: ColorResources.GREY, width: 2)),
-        disabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: ColorResources.GREY, width: 2)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorResources.PRIMARY, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorResources.GREY, width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorResources.GREY, width: 2),
+        ),
         hintText: "Tìm kiếm",
         filled: true,
         fillColor: Colors.transparent,
@@ -104,17 +128,18 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   ///product list
   ///
-  Widget _productList(
-      BuildContext context, V1ProductController controller, double width) {
+  Widget _productList(BuildContext context, V1ProductController controller) {
     return Container(
       color: ColorResources.WHITE,
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 15 / width)),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: GridView.builder(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: .7,
-            crossAxisSpacing: 20,
+            crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
             crossAxisCount: 2,
           ),
           itemCount: 17,
@@ -122,7 +147,7 @@ class V1ProductPage extends GetView<V1ProductController> {
             return GestureDetector(
               onTap: () => controller.onProductDetailClick(),
               child: ProductWidget(
-                  imgUrl: "assets/images/news_template.png",
+                  imgUrl: Images.newsTemplate,
                   name: "Sản phẩm ${index + 1}",
                   price: "230.000 VND"),
             );

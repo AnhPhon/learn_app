@@ -144,11 +144,12 @@ class ColorResources {
   static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
   static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
   static const Color BACKGROUND = Color(0xffF6F6F7);
+  static const Color LIGHT_BLACK = Color(0xffA2A2A2);
 
   static const Color THEME_DEFAULT = Color(0xff2196F3);
 
   static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
-
+  static const Color UNSELECT_TABBAR = Color(0xff848485);
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),
     100: Color(0x20192D6B),

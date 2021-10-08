@@ -49,7 +49,7 @@ class DrawerWidget extends GetView<dr.DrawerController> {
                     ...contact(context,controller.contact),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
               ],
             ),
           ),

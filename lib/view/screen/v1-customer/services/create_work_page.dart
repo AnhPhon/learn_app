@@ -25,7 +25,11 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Nhóm công việc
-              workGroup(context),
+              GetBuilder(
+                builder: (CreateWorkController controller) {
+                  return workGroup(context, controller: controller);
+                },
+              ),
       
               // Địa điểm làm việc
               workLocation(context),
@@ -46,14 +50,14 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   ///
   /// Nhóm công việc
   ///
-  Widget workGroup(BuildContext context){
+  Widget workGroup(BuildContext context, {required CreateWorkController controller}){
     return Column(
       children: [
-         DropDownButton<String>(
-            data: const ["Xây nhà","Lót gạch men"],
+          DropDownButton<int>(
+            data: controller.workGroupList,
             obligatory: true,
-            onChanged: (value){},
-            value: "Xây nhà",
+            onChanged: (value) => controller.onChangedGroup(value!),
+            value: controller.group,
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn nhóm công việc phù hợp",
           ),
@@ -191,7 +195,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: (){
-          _controller.onClickContinue(1);
+          _controller.onClickContinue();
         },
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT
