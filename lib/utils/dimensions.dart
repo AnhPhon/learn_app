@@ -87,6 +87,34 @@ class Dimensions {
     );
   }
 
+  static TextStyle textTitleStyleCard() {
+    return const TextStyle(
+      color: Color(0xFF2A3547),
+      fontSize: FONT_SIZE_EXTRA_LARGE
+    );
+  }
+
+  static TextStyle textNormalStyleCard() {
+    return const TextStyle(
+      color: Color(0xFF8B8B8B),
+      fontSize: FONT_SIZE_EXTRA_LARGE
+    );
+  }
+
+  static TextStyle textTitleStyle() {
+    return const TextStyle(
+      color: Color(0xFF2A3547),
+      fontSize: FONT_SIZE_DEFAULT
+    );
+  }
+
+  static TextStyle textNormalStyle() {
+    return const TextStyle(
+      color: Color(0xFF8B8B8B),
+      fontSize: FONT_SIZE_DEFAULT
+    );
+  }
+
   static TextStyle fontSizeStyle20() {
     return const TextStyle(fontSize: 20);
   }
@@ -120,11 +148,11 @@ class Dimensions {
   }
 
   static TextStyle fontSizeStyle16w600() {
-    return const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle14w600() {
-    return const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle12w600() {

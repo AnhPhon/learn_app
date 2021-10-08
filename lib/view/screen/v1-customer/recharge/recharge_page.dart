@@ -175,7 +175,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.GREY),
         color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
       ),
       child: Column(
         children: [

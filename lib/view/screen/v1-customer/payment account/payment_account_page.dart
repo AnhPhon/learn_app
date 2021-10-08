@@ -34,7 +34,7 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                   ),
                 ],
                 color: ColorResources.WHITE,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               ),
               child: SingleChildScrollView(
                 child: Column(
