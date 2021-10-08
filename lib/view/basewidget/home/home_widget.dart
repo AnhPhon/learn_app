@@ -62,18 +62,17 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 25,
-              // left: 15,
+              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
               width: size.width,
               child: Container(
-                padding: const EdgeInsets.only(left: 15),
+                padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT),
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () {},
                       child: Container(
-                        padding: const EdgeInsets.all(2),
-                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
                         child: const Icon(Icons.menu, color: Colors.white),
                       ),
                     ),
@@ -99,7 +98,7 @@ class HomeWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10)
+                    const SizedBox(width: Dimensions.MARGIN_SIZE_SMALL)
                   ],
                 ),
               ),
