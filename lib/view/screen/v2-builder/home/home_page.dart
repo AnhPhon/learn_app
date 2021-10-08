@@ -142,7 +142,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget _box() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: GestureDetector(
         onTap: () {},
         child: Container(

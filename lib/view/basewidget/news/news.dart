@@ -36,10 +36,10 @@ class NewsBox extends StatelessWidget {
             height: 60,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(7),
-                topRight: Radius.circular(7),
-                bottomLeft: Radius.circular(7),
-                bottomRight: Radius.circular(7),
+                topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
                 image: AssetImage('assets/images/news1.png'),
