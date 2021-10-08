@@ -77,7 +77,7 @@ class V2HomePage extends GetView<V2HomeController> {
               style: TextStyle(
                 color: Color(0xff4D4D4D),
                 fontWeight: FontWeight.bold,
-                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontSize: Dimensions.FONT_SIZE_SMALL,
               ),
             ),
             const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
