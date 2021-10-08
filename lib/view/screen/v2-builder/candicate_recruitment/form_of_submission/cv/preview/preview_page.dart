@@ -13,7 +13,7 @@ import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/components/candicate_card.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/candicate_card.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/preview_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 

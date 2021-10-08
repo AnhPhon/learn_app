@@ -21,15 +21,9 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController>{
               appBar: SearchAppBarWidget(title: "Tin tuyển dụng", 
                 searchController: controller.searchController,
                 action: [
-                  GestureDetector(
-                    onTap:(){
-                      controller.onClickHistory();
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(right: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      child: Icon(Icons.history, color: ColorResources.WHITE,size: Dimensions.ICON_SIZE_DEFAULT,),
-                    ),
-                  )
+                  IconButton(icon: const Icon(Icons.history), color: ColorResources.WHITE,onPressed: (){
+                    controller.onClickHistory();
+                  },)
                 ],
               ),
               body: appbar.isSearch ? filterProfile(context, controller: controller) : recruitment(context, controller: controller)

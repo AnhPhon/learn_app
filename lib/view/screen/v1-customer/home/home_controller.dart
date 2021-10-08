@@ -69,7 +69,7 @@ class V1HomeController extends GetxController {
       ),
       "icon": Icons.add_circle,
       "onTap": () {
-        Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+        
       }
     },
     {
@@ -156,7 +156,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+        }
       },
       {
         "label": "Quản lý báo giá",
@@ -168,7 +170,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V1_CANDICATE);
+        }
       },
     ];
 
