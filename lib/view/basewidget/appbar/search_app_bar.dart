@@ -147,30 +147,27 @@ class _CustomAppBarState extends State<SearchAppBarWidget> {
             ),
           ),
           // Nút tìm kiếm
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GetBuilder(
-                      builder: (AppBarController controller) {
-                        if(controller.isSearch){
-                          return const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,);
-                        }
-                        return IconButton(onPressed: (){
+
+          GetBuilder(
+            builder: (AppBarController controller) {
+              return Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                        if (controller.isSearch) const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,) else IconButton(onPressed: (){
                           _controller.onChangedStatus();
-                        }, icon: const Icon(Icons.search, size: Dimensions.ICON_SIZE_DEFAULT,color: ColorResources.WHITE,));
-                      },
-                    ),
-                    if (widget.action!.isNotEmpty)
-                    ...widget.action!.map((e) => e).toList()
-                  ],
+                        }, icon: const Icon(Icons.search, size: Dimensions.ICON_SIZE_DEFAULT,color: ColorResources.WHITE,)),
+                      if (widget.action!.isNotEmpty)
+                      if (controller.isSearch) const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,) else
+                      if (widget.action!.isNotEmpty)
+                      ...widget.action!.map((e) => e).toList()
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),
