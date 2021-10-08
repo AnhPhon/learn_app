@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -40,12 +42,7 @@ class V4ReportPage extends GetView<V4ReportController> {
           }),
 
       //floating Action Button Thêm báo cáo
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
+      floatingActionButton: _floatingActionButtonReport(controller),
     );
   }
 
@@ -236,6 +233,52 @@ Widget _lineWidget(BuildContext context) {
           color: Color(0xff4D4D4D),
         ),
       )
+    ],
+  );
+}
+
+///
+///floating Action Button Thêm báo cáo
+///
+Widget _floatingActionButtonReport(V4ReportController controller) {
+  return SpeedDial(
+    icon: Icons.add,
+    activeIcon: Icons.close_outlined,
+    activeBackgroundColor: ColorResources.RED,
+    backgroundColor: ColorResources.PRIMARY,
+    iconTheme: const IconThemeData(
+      color: ColorResources.WHITE,
+      size: Dimensions.ICON_SIZE_EXTRA_LARGE,
+    ),
+    children: [
+      SpeedDialChild(
+        child: const Icon(
+          Icons.add,
+          color: ColorResources.WHITE,
+          size: Dimensions.ICON_SIZE_LARGE,
+        ),
+        label: "Thêm báo cáo theo yêu cầu",
+        backgroundColor: ColorResources.YELLOW,
+        onTap: () {
+          //đi đến trang báo cáo theo yêu cầu
+          controller.onClickToReportOnRequest();
+        },
+        labelStyle: Dimensions.fontSizeStyle18w600(),
+      ),
+      SpeedDialChild(
+        child: const Icon(
+          Icons.add,
+          color: ColorResources.WHITE,
+          size: Dimensions.ICON_SIZE_LARGE,
+        ),
+        backgroundColor: ColorResources.PRIMARY,
+        label: "Thêm báo cáo hằng ngày",
+        onTap: () {
+          // kiểm tra có trong thời gian cho phép báo cáo hay không
+          controller.managerReportTimer();
+        },
+        labelStyle: Dimensions.fontSizeStyle18w600(),
+      ),
     ],
   );
 }
