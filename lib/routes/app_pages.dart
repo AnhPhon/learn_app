@@ -90,6 +90,10 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
 import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
@@ -475,7 +479,18 @@ class AppPages {
       name: AppRoutes.V4_REVENUE_EXPENDITURE,
       page: () => V4RevenueExpenditurePage(),
       binding: V4RevenueExpenditureBinding(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.V4_ADD_DAILY_REPORT,
+      page: () => V4AddDailyReportPage(),
+      binding: V4AddDailyReportBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_ADD_REPORT_ON_REQUEST,
+      page: () => V4AddReportOnRequestPage(),
+      binding: V4AddReportOnRequestBinding(),
+    ),
+
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
