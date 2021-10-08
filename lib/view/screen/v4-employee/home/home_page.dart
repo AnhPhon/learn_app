@@ -436,10 +436,6 @@ class V4HomePage extends GetView<V4HomeController> {
                     Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
                   ),
                 ),
-                child: const Text(
-                  "Thêm thu",
-                  style: TextStyle(color: Colors.white),
-                ),
               ),
               const Spacer(),
               Container(
@@ -458,10 +454,6 @@ class V4HomePage extends GetView<V4HomeController> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
                   ),
-                ),
-                child: const Text(
-                  "Thêm chi",
-                  style: TextStyle(color: Colors.white),
                 ),
               )
             ],

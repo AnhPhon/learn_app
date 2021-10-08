@@ -26,7 +26,12 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                   Row(
                     children: [
                       //chọn thời gian thêm thu/chi
-                      _timeRevenueExpenditure(controller, context),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        child: _timeRevenueExpenditure(controller, context),
+                      ),
 
                       //thu hoặc chi
                       if (controller.isRevenue == true)
