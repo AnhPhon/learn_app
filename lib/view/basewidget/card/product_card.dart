@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(

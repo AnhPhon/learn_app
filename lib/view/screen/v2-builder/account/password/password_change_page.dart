@@ -92,13 +92,13 @@ class PasswordChangePage extends GetView<PasswordChangeController> {
             borderRadius: BorderRadius.circular(5),
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.PRIMARY)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               borderSide: const BorderSide(color: ColorResources.GREY)),
           hintText: label,
           filled: true,

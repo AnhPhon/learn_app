@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
+import 'package:template/utils/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -31,10 +32,10 @@ class CustomButton extends StatelessWidget {
                     ColorResources.PRIMARY,
                     ColorResources.PRIMARY,
                   ]),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
         child: Text(buttonText,
             style: titilliumSemiBold.copyWith(
-              fontSize: 16,
+              fontSize: Dimensions.FONT_SIZE_LARGE,
               color: Theme.of(context).accentColor,
             )),
       ),

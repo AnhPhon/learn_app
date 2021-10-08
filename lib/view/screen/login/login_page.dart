@@ -28,13 +28,13 @@ class LoginPage extends GetView<LoginController> {
           borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Tài khoản",
         filled: true,
@@ -74,13 +74,13 @@ class LoginPage extends GetView<LoginController> {
           borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Mật khẩu",
         filled: true,

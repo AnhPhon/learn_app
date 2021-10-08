@@ -122,7 +122,7 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -234,7 +234,7 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -346,7 +346,7 @@ class V4HomePage extends GetView<V4HomeController> {
                       )
                     ],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                     ),
                   ),
                   child: const Text(
@@ -374,7 +374,7 @@ class V4HomePage extends GetView<V4HomeController> {
                       )
                     ],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                     ),
                   ),
                   child: const Text(
@@ -399,7 +399,7 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),

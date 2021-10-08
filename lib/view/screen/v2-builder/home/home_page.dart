@@ -91,7 +91,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                   ),
                 ),
                 child: const Text(
@@ -177,7 +177,7 @@ class V2HomePage extends GetView<V2HomeController> {
   /// field widget
   ///
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
-    const double _fontSize = 16;
+    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class NewsBox extends StatelessWidget {
   final String title;
@@ -24,11 +25,11 @@ class NewsBox extends StatelessWidget {
           )
         ],
         borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
         ),
       ),
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.only(left: 5, right: 5),
+      margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+      padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_EXTRA_SMALL, right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
@@ -42,7 +43,7 @@ class NewsBox extends StatelessWidget {
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage('assets/images/news1.png'),
+                image: AssetImage(Images.V4NewsExample),
                 fit: BoxFit.fill,
               ),
             ),
@@ -59,7 +60,7 @@ class NewsBox extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                      fontSize: 16,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
@@ -72,8 +73,8 @@ class NewsBox extends StatelessWidget {
                     describe,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 0.6200000047683716),
-                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                      color: Color.fromRGBO(0, 0, 0, 0.62),
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
                       fontWeight: FontWeight.normal,
                       height: 1,
                     ),
