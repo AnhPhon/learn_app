@@ -92,6 +92,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   ) {
     return LabelContent(
       title: "Bảng báo giá",
+      isRequired: false,
       content: ContentWhiteBox(infoCard: infoCard),
     );
   }
@@ -102,6 +103,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   Widget _hinhAnhKhoiLuong() {
     return LabelContent(
       title: "Hình ảnh báo giá",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(
@@ -145,6 +147,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   Widget _fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(
@@ -190,6 +193,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
     const double width = 170;
     return LabelContent(
       title: "Thời gian giao hàng",
+      isRequired: false,
       content: Column(
         children: [
           Row(
@@ -270,6 +274,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   Widget _baoGiaCoHieuLuc(BuildContext context) {
     return LabelContent(
       title: "Báo giá có hiệu thực đến hết ngày",
+      isRequired: false,
       content: TextField(
         focusNode: AlwaysDisabledFocusNode(),
         controller: controller.datetimeController,

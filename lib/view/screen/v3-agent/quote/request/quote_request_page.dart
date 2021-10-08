@@ -95,6 +95,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   Widget _diaDiemNhan() {
     return LabelContent(
       title: "Địa điểm nhận",
+      isRequired: false,
       content: Column(
         children: [
           // Tỉnh/TP:
@@ -149,6 +150,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   Widget _diaChiCuThe(BuildContext context, String value) {
     return LabelContent(
       title: "Địa chỉ cụ thể (số nhà, tên đường)",
+      isRequired: false,
       content: Container(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -168,6 +170,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   ) {
     return LabelContent(
       title: "Thời gian nhận dự kiến",
+      isRequired: false,
       content: Column(
         children: [
           SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
@@ -194,6 +197,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   ) {
     return LabelContent(
       title: "Thời gian nhận dự kiến",
+      isRequired: false,
       content: Container(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -222,6 +226,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   Widget _hinhAnhKhoiLuong() {
     return LabelContent(
       title: "Hình ảnh khối lượng",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(
@@ -265,6 +270,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   Widget _fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(

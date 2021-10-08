@@ -70,8 +70,8 @@ class Dimensions {
   static const double SCALE_EXTRA_SMALL = .005;
   static const double SCALE_SMALL = .01;
   static const double SCALE_DEFAULT = .02;
-  static const double SCALE_LARSE = .03;
-  static const double SCALE_EXTRA_LARSE = .04;
+  static const double SCALE_LARGE = .03;
+  static const double SCALE_EXTRA_LARGE = .04;
 
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;

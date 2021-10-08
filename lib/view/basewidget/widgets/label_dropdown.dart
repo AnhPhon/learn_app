@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -10,6 +11,7 @@ class LabelDropdown extends StatelessWidget {
   String currentSelectvalue;
   List<String> currencies;
   TextEditingController controller;
+  Function(String?) onChanged;
 
   LabelDropdown({
     required this.label,
@@ -18,6 +20,7 @@ class LabelDropdown extends StatelessWidget {
     required this.isRequire,
     required this.currentSelectvalue,
     required this.currencies,
+    required this.onChanged,
   });
 
   @override
@@ -28,10 +31,19 @@ class LabelDropdown extends StatelessWidget {
           children: [
             Text(label, style: Dimensions.textTitleStyleCard()),
             if (isRequire == true)
-              Text("*", style: Dimensions.textTitleStyleCard())
+              const Text(
+                "*",
+                style: TextStyle(
+                  color: ColorResources.RED,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
           ],
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+        SizedBox(
+            height:
+                DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
         FormField<String>(
           builder: (FormFieldState<String> state) {
             return InputDecorator(
@@ -49,7 +61,7 @@ class LabelDropdown extends StatelessWidget {
                 child: DropdownButton<String>(
                   value: currentSelectvalue,
                   isDense: true,
-                  onChanged: (value) {},
+                  onChanged: onChanged,
                   items: currencies.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

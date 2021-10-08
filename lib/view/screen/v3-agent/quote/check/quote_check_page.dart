@@ -87,6 +87,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   ) {
     return LabelContent(
       title: "Bảng báo giá",
+      isRequired: false,
       content: ContentWhiteBox(infoCard: infoCard),
     );
   }
@@ -97,6 +98,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   Widget _hinhAnhKhoiLuong() {
     return LabelContent(
       title: "Hình ảnh báo giá",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(
@@ -140,6 +142,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   Widget _fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
+      isRequired: false,
       content: Container(
         height: 115,
         decoration: BoxDecoration(
@@ -185,6 +188,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
     const double width = 170;
     return LabelContent(
       title: "Thời gian giao hàng",
+      isRequired: false,
       content: Column(
         children: [
           Row(
