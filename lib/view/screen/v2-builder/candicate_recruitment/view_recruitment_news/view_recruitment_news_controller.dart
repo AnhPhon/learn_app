@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/components/dialog_content.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';
 
 class V2ViewRecruitmentNewsController extends GetxController{
   final searchController = TextEditingController();
