@@ -38,6 +38,7 @@ import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/project/project_detail/project_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
@@ -202,6 +203,11 @@ class AppPages {
       page: () => V1NewsDetailPage(),
     ),
 
+    GetPage(
+      name: AppRoutes.V1_PROJECT_DETAIL,
+      page: () => V1ProjectDetailPage(),
+    ),
+
     ///
     /// Thông báo
     ///
@@ -242,8 +248,8 @@ class AppPages {
     /// Thông tin đơn hàng
     ///
     GetPage(
-      name: AppRoutes.V1_ORDER_INFORAMTION, 
-      page: ()=> OrderInformationPage(),
+      name: AppRoutes.V1_ORDER_INFORAMTION,
+      page: () => OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -251,125 +257,106 @@ class AppPages {
     ///Tạo đơn công việc 1- 6 (Trang chung)
     ///
     GetPage(
-      name: AppRoutes.V1_CREATE_WORK, 
-      page: ()=> CreateWorkPage(),
+      name: AppRoutes.V1_CREATE_WORK,
+      page: () => CreateWorkPage(),
     ),
     //tạo đơn công việc Nhóm 1 - tạo đơn
     GetPage(
-      name: AppRoutes.V1_G1_CREATE_WORK, 
-      page: ()=> V1G1CreateWorkPage(),
-      binding: V1G1CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G1_CREATE_WORK,
+        page: () => V1G1CreateWorkPage(),
+        binding: V1G1CreateWorkBinding()),
     // Tạo đơn công việc nhóm 1 - xem đơn (KH)
     GetPage(
-      name: AppRoutes.V1_G1_REVIEW, 
-      page: ()=> V1G1ReviewPage(),
-      binding: V1G1ReviewBinding()
-    ),
+        name: AppRoutes.V1_G1_REVIEW,
+        page: () => V1G1ReviewPage(),
+        binding: V1G1ReviewBinding()),
     // Tạo đơn công việc Nhóm 2 (KH)
     GetPage(
-      name: AppRoutes.V1_G2_CREATE_WORK, 
-      page: ()=> V1G2CreateWorkPage(),
-      binding: V1G2CreateWorkBinding()
-    ),
+        name: AppRoutes.V1_G2_CREATE_WORK,
+        page: () => V1G2CreateWorkPage(),
+        binding: V1G2CreateWorkBinding()),
     // Tạo đơn dịch vụ Nhóm 3 (KH)
     GetPage(
-      name: AppRoutes.V1_G3_CREATE_SERVICE, 
-      page: ()=> V1G3CreateServicePage(),
-      binding: V1G3CreateServiceBinding()
-    ),
+        name: AppRoutes.V1_G3_CREATE_SERVICE,
+        page: () => V1G3CreateServicePage(),
+        binding: V1G3CreateServiceBinding()),
     // Báo giá đơn hàng nhóm 3
     GetPage(
-      name: AppRoutes.V1_G3_ORDER_QUOTE, 
-      page: ()=> V1G3OrderQuotePage(),
-      binding: V1G3OrderQuoteBinding()
-    ),
+        name: AppRoutes.V1_G3_ORDER_QUOTE,
+        page: () => V1G3OrderQuotePage(),
+        binding: V1G3OrderQuoteBinding()),
     // Chi tiêt đơn hàng nhóm 3
     GetPage(
-      name: AppRoutes.V1_G3_ORDER_DETAIL, 
-      page: ()=> V1G3OrderDetailPage(),
-      binding: V1G3OrderDetailBinding()
-    ),
+        name: AppRoutes.V1_G3_ORDER_DETAIL,
+        page: () => V1G3OrderDetailPage(),
+        binding: V1G3OrderDetailBinding()),
 
     // Tạo đơn dich vụ nhóm 4
     GetPage(
-      name: AppRoutes.V1_G4_CREATE_SERVICE, 
-      page: ()=> V1G4CreateServicePage(),
-      binding: V1G4CreateServiceBinding()
-    ),
+        name: AppRoutes.V1_G4_CREATE_SERVICE,
+        page: () => V1G4CreateServicePage(),
+        binding: V1G4CreateServiceBinding()),
     // Báo giá đơn hàng nhóm 4
     GetPage(
-      name: AppRoutes.V1_G4_ORDER_QUOTE, 
-      page: ()=> V1G4OrderQuotePage(),
-      binding: V1G4OrderQuoteBinding()
-    ),
+        name: AppRoutes.V1_G4_ORDER_QUOTE,
+        page: () => V1G4OrderQuotePage(),
+        binding: V1G4OrderQuoteBinding()),
     // Chi tiêt đơn hàng nhóm 4
     GetPage(
-      name: AppRoutes.V1_G4_ORDER_DETAIL, 
-      page: ()=> V1G4OrderDetailPage(),
-      binding: V1G4OrderDetailBinding()
-    ),
+        name: AppRoutes.V1_G4_ORDER_DETAIL,
+        page: () => V1G4OrderDetailPage(),
+        binding: V1G4OrderDetailBinding()),
 
     // Tạo đơn dich vụ và công việc nhóm 5
     GetPage(
-      name: AppRoutes.V1_G5_CREATE_SERVICE, 
-      page: ()=> V1G5CreateServicePage(),
-      binding: V1G5CreateServiceBinding()
-    ),
+        name: AppRoutes.V1_G5_CREATE_SERVICE,
+        page: () => V1G5CreateServicePage(),
+        binding: V1G5CreateServiceBinding()),
 
     // Tạo đơn dich vụ và công việc nhóm 6
     GetPage(
-      name: AppRoutes.V1_G6_CREATE_SERVICE, 
-      page: ()=> V1G6CreateServicePage(),
-      binding: V1G6CreateServiceBinding()
-    ),
+        name: AppRoutes.V1_G6_CREATE_SERVICE,
+        page: () => V1G6CreateServicePage(),
+        binding: V1G6CreateServiceBinding()),
 
     // Tạo tin tuyển dụng
     GetPage(
-      name: AppRoutes.V1_G7_RECRUITMENT, 
-      page: ()=> V1G7RecruitmentPage(),
-      binding: V1G7RecruitmentBinding()
-    ),
+        name: AppRoutes.V1_G7_RECRUITMENT,
+        page: () => V1G7RecruitmentPage(),
+        binding: V1G7RecruitmentBinding()),
 
     // Xem lại tin tuyển dụng
     GetPage(
-      name: AppRoutes.V1_G7_REVIEW, 
-      page: ()=> V1G7ReviewPage(),
-      binding: V1G7ReviewBinding()
-    ),
+        name: AppRoutes.V1_G7_REVIEW,
+        page: () => V1G7ReviewPage(),
+        binding: V1G7ReviewBinding()),
     // Bảng giá đăng tin
     GetPage(
-      name: AppRoutes.V1_G7_PRICE_LIST, 
-      page: ()=> V1G7PriceListPage(),
-      binding: V1G7PriceListBinding()
-    ),
+        name: AppRoutes.V1_G7_PRICE_LIST,
+        page: () => V1G7PriceListPage(),
+        binding: V1G7PriceListBinding()),
     // Trang chính tuyển dung ứng viên
     GetPage(
-      name: AppRoutes.V1_CANDICATE, 
-      page: ()=> V1CandidatePage(),
-      binding: V1CandidateBinding()
-    ),
+        name: AppRoutes.V1_CANDICATE,
+        page: () => V1CandidatePage(),
+        binding: V1CandidateBinding()),
     // Xem thông tin của hồ sơ
     // Trang chính tuyển dung ứng viên
     GetPage(
-      name: AppRoutes.V1_CANDICATE_PROFILE, 
-      page: ()=> V1CandidateProfilePage(),
-      binding: V1CandidateProfileBinding()
-    ),
+        name: AppRoutes.V1_CANDICATE_PROFILE,
+        page: () => V1CandidateProfilePage(),
+        binding: V1CandidateProfileBinding()),
 
-
-
-    // Hình thức thanh toán 
+    // Hình thức thanh toán
     GetPage(
-      name: AppRoutes.V1_FORMAL_PAYMENT, 
-      page: ()=> V1FormalPaymentPage(),
-      binding: V1FormalPaymentBinding()
-    ),
+        name: AppRoutes.V1_FORMAL_PAYMENT,
+        page: () => V1FormalPaymentPage(),
+        binding: V1FormalPaymentBinding()),
 
     // Tạo thành công
     GetPage(
-      name: AppRoutes.V1_SUCCESSFULLY, 
-      page: ()=> const SuccessfullyPage(),
+      name: AppRoutes.V1_SUCCESSFULLY,
+      page: () => const SuccessfullyPage(),
     ),
 
     GetPage(
