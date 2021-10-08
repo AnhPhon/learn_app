@@ -230,7 +230,7 @@ class V2HomePage extends GetView<V2HomeController> {
         onTap: () {},
         title: "Công việc đang cần người",
         widget: SizedBox(
-          height: 210,
+          height: 220,
           child: ListView.builder(
             itemCount: 2,
             physics: const NeverScrollableScrollPhysics(),

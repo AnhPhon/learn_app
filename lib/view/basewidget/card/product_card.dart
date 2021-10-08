@@ -30,7 +30,6 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            // height: 160,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -40,7 +39,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Container(
-            height: 80,
+            height: 85,
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
             decoration: const BoxDecoration(
