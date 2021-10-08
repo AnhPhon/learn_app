@@ -395,13 +395,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
-<<<<<<< HEAD
     GetPage(
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
-=======
->>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
