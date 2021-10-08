@@ -14,8 +14,6 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   ///
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return GetBuilder<V1PaymentMethodController>(
         init: V1PaymentMethodController(),
         builder: (controller) {
@@ -25,7 +23,7 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
               child: Column(
                 children: [
                   //rad payment method
-                  _radPaymentMethodList(controller, height, width),
+                  _radPaymentMethodList(controller),
                 ],
               ),
             ),
@@ -38,22 +36,22 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   ///
   ///radio list
   ///
-  Widget _radPaymentMethodList(
-      V1PaymentMethodController controller, double height, double width) {
+  Widget _radPaymentMethodList(V1PaymentMethodController controller) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: 2,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: DeviceUtils.getScaledWidth(context, 10 / width),
-                vertical: DeviceUtils.getScaledHeight(context, 20 / height)),
-            padding: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledHeight(context, 20 / height),
-                horizontal: DeviceUtils.getScaledWidth(context, 20 / width)),
+            margin: const EdgeInsets.symmetric(
+                horizontal: Dimensions.MARGIN_SIZE_SMALL,
+                vertical: Dimensions.MARGIN_SIZE_SMALL),
+            padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.PADDING_SIZE_SMALL,
+                horizontal: Dimensions.PADDING_SIZE_LARGE),
             decoration: BoxDecoration(
               color: ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
               boxShadow: [
                 BoxShadow(
                     color: Colors.black.withOpacity(.25),
@@ -93,13 +91,10 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
                       //subtitle
                       ...controller.paymentMethodSubTitle[index]
                           .map((element) => Padding(
-                                padding: EdgeInsets.only(
-                                  left: DeviceUtils.getScaledWidth(
-                                      context, 20 / width),
-                                  top: DeviceUtils.getScaledHeight(
-                                      context, 5 / height),
-                                  bottom: DeviceUtils.getScaledHeight(
-                                      context, 5 / height),
+                                padding: const EdgeInsets.only(
+                                  left: Dimensions.PADDING_SIZE_LARGE,
+                                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                                 ),
                                 child: Text(
                                   element,
@@ -126,16 +121,19 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
   Widget _bottomSheet(
       BuildContext context, V1PaymentMethodController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.19),
-      padding: EdgeInsets.only(
-          left: DeviceUtils.getScaledWidth(context, 0.038),
-          right: DeviceUtils.getScaledWidth(context, 0.038),
-          top: DeviceUtils.getScaledHeight(context, 0.035),
-          bottom: DeviceUtils.getScaledHeight(context, 0.026)),
+      height: DeviceUtils.getScaledHeight(context, .19),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        bottom: Dimensions.PADDING_SIZE_SMALL,
+      ),
       decoration: const BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+          topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+          topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE - 5),
+        ),
         boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 4, offset: Offset(0, -2))
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
@@ -52,5 +53,69 @@ class V4HomeController extends GetxController {
     total = 10000000;
     revenue = 10000000;
     expenditure = 10000000;
+  }
+  //khai báo thời gian báo cáo
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
+
+  //khai báo thời gian chấm công
+  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+
+  //khai báo thay đổi text chấm công và báo cáo
+  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+
+  ///
+  /// click to work progress page
+  ///
+  void onClickToWorkProgress(int index) {
+    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
+  }
+
+  /// click to timekeeping
+  ///
+  void onClickToTimeKeeping() {
+    Get.toNamed(AppRoutes.V4_TIMEKEEPING);
+  }
+
+  ///
+  ///click to report timekeeping
+  ///
+  void onClickToReportTimeKeeping() {
+    Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING);
+  }
+
+  ///
+  /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
+  ///
+  // ignore: unused_element
+  void onClick() {
+    // ignore: prefer_final_locals
+    double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
+        (reportTimekeeping.minute.toDouble() / 60);
+    // ignore: prefer_final_locals
+    double _timekeeping =
+        timekeeping.hour.toDouble() + (timekeeping.minute.toDouble() / 60);
+    // ignore: prefer_final_locals
+    double _timeNow = TimeOfDay.now().hour.toDouble() +
+        (TimeOfDay.now().minute.toDouble() / 60);
+
+    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
+      return onClickToTimeKeeping();
+    } else {
+      return onClickToReportTimeKeeping();
+    }
+  }
+
+  ///
+  /// click to Revenue page
+  ///
+  void onClickRevenue() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
+  }
+
+  ///
+  /// click to Expenditure page
+  ///
+  void onClickExpenditure() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
   }
 }

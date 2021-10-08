@@ -7,26 +7,37 @@ class RowText extends StatelessWidget {
   final String text1;
   final String text2;
   final bool? colorRed;
+  final bool? notFontWeight;
+  final bool? notFontSize;
   const RowText(
-      {Key? key, required this.text1, required this.text2, this.colorRed})
+      {Key? key,
+      required this.text1,
+      required this.text2,
+      this.colorRed,
+      this.notFontWeight,
+      this.notFontSize})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: DeviceUtils.getScaledWidth(context, 0.025),
-          vertical: DeviceUtils.getScaledHeight(context, 0.01)),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_SMALL,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: DefaultTextStyle(
-        style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+        style: TextStyle(
+            fontWeight: notFontWeight == true ? null : FontWeight.w600,
+            fontSize: notFontSize == true
+                ? Dimensions.FONT_SIZE_LARGE
+                : Dimensions.FONT_SIZE_EXTRA_LARGE,
             color: ColorResources.BLACK),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text1, textAlign: TextAlign.center),
-            SizedBox(height: DeviceUtils.getScaledWidth(context, 0.025)),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             Text(text2,
                 textAlign: TextAlign.center,
                 style: colorRed == true
