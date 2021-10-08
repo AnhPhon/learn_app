@@ -91,7 +91,7 @@ class HomeWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.V1NOTIFICATION);
+                          Get.toNamed(AppRoutes.V1_NOTIFICATION);
                         },
                         child: const Icon(
                           CupertinoIcons.bell_fill,
