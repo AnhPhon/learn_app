@@ -636,6 +636,15 @@ class AppPages {
 
 
 
+    // Quản lý tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
+      page: () => V2RecruitmentPage(),
+      binding: V2RecruitmentBinding(),
+    ),
+
+
+
     // agent
     GetPage(
       name: AppRoutes.V3_DASHBOARD,

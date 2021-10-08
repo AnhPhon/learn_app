@@ -217,4 +217,6 @@ class AppRoutes {
   // Xem trước hồ sơ đánh bằng văn bản
   static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
 
+  // Builder
+  // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
 }
