@@ -7,6 +7,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 import 'package:template/view/screen/v4-employee/account/account_controller.dart';
+import 'package:template/view/screen/v4-employee/account/component/card_profile.dart';
 
 class V4AccountPage extends GetView<V4AccountController> {
   @override
@@ -134,6 +135,45 @@ class V4AccountPage extends GetView<V4AccountController> {
                               Text(
                                 controller.email,
                                 style: Dimensions.fontSizeStyle16(),
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                              ),
+
+                              //Thông tin cá nhân
+                              CardProfile(
+                                icon: const Icon(
+                                  Icons.account_circle_outlined,
+                                  color: ColorResources.BLACK,
+                                ),
+                                press: () {
+                                  controller.onClickToInformation();
+                                },
+                                title: 'Thông tin cá nhân',
+                              ),
+
+                              //Bảng lương
+                              CardProfile(
+                                icon: const Icon(
+                                  Icons.paid_outlined,
+                                  color: ColorResources.BLACK,
+                                ),
+                                press: () {
+                                  controller.onClickToSalarypage();
+                                },
+                                title: 'Bảng lương',
+                              ),
+
+                              //Vi phạm quy chế công ty
+                              CardProfile(
+                                icon: const Icon(
+                                  Icons.gavel_outlined,
+                                  color: ColorResources.BLACK,
+                                ),
+                                press: () {
+                                  controller.onClickToRulesPage();
+                                },
+                                title: 'Quy phạm quy chế công ty',
                               ),
                             ],
                           )

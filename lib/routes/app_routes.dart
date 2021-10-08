@@ -133,4 +133,7 @@ class AppRoutes {
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
+  static const String V4_RULES = '/v4_rules';
+  static const String V4_SALARY = '/v4_salary';
+  static const String V4_INFO = '/v4_info';
 }
