@@ -67,6 +67,8 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
@@ -367,6 +369,15 @@ class AppPages {
       page: () => V2DashboardPage(),
       binding: V2DashboardBinding(),
     ),
+
+    // Quản lý tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
+      page: () => V2RecruitmentPage(),
+      binding: V2RecruitmentBinding(),
+    ),
+
+
 
     // agent
     GetPage(

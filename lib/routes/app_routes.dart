@@ -113,4 +113,7 @@ class AppRoutes {
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+
+  // Builder
+  static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
 }

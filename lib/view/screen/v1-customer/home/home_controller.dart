@@ -79,7 +79,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+      }
     },
   ];
 

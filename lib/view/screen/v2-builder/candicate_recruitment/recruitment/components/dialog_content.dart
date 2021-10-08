@@ -5,7 +5,7 @@ import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/candicate_controller.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_controller.dart';
 
 class DialogContent extends StatelessWidget {
   const DialogContent({Key? key}) : super(key: key);
@@ -21,8 +21,8 @@ class DialogContent extends StatelessWidget {
               children: [
                 // Lọc mức lương
                 GetBuilder(
-                  init: V1CandicateController(),
-                  builder: (V1CandicateController controller) {
+                  init: V2RecruitmentController(),
+                  builder: (V2RecruitmentController controller) {
                     return Column(
                       children: [
                         Padding(
