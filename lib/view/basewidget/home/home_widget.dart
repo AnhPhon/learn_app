@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
@@ -13,8 +14,6 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Stack(
       children: [
         Container(
@@ -63,7 +62,7 @@ class HomeWidget extends StatelessWidget {
             ),
             Positioned(
               top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-              width: size.width,
+              width: DeviceUtils.getScaledWidth(context, 1),
               child: Container(
                 padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT),
                 child: Row(
@@ -111,8 +110,8 @@ class HomeWidget extends StatelessWidget {
           top: 100,
           child: Container(
             alignment: Alignment.topLeft,
-            height: size.height - 180,
-            width: size.width,
+            height: DeviceUtils.getScaledHeight(context, 1) - 180,
+            width: DeviceUtils.getScaledWidth(context, 1),
             margin: const EdgeInsets.only(),
             padding: const EdgeInsets.all(
               Dimensions.PADDING_SIZE_DEFAULT,
@@ -126,7 +125,7 @@ class HomeWidget extends StatelessWidget {
             ),
             child: SingleChildScrollView(
               child: SizedBox(
-                width: size.width,
+                width: DeviceUtils.getScaledWidth(context, 1),
                 child: content,
               ),
             ),
