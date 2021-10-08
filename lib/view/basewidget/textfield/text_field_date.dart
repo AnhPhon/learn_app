@@ -14,8 +14,7 @@ class TextFieldDate extends StatelessWidget {
       required this.obligatory,
       this.area = false,
       required this.fontSize,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE
-  });
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
   final String holdplacer;
   final String? label;
   final TextEditingController controller;
@@ -30,10 +29,9 @@ class TextFieldDate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT, 
-        top: paddingTop!
-      ),
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          top: paddingTop!),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,19 +88,26 @@ class TextFieldDate extends StatelessWidget {
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
                     vertical: Dimensions.PADDING_SIZE_DEFAULT),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder:  OutlineInputBorder(
-                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                enabledBorder:  OutlineInputBorder(
-                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                disabledBorder:  OutlineInputBorder(
-                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                disabledBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 hintText: holdplacer,
                 filled: true,
@@ -112,10 +117,17 @@ class TextFieldDate extends StatelessWidget {
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),
-                suffixIcon: (isDate == true) ? const Padding(
-                  padding:  EdgeInsets.only(right: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                  child:  Icon(Icons.date_range, size: Dimensions.ICON_SIZE_SMALL, color: ColorResources.PRIMARYCOLOR,),
-                ) : null),
+                suffixIcon: (isDate == true)
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                            right: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                        child: Icon(
+                          Icons.date_range,
+                          size: Dimensions.ICON_SIZE_SMALL,
+                          color: ColorResources.PRIMARYCOLOR,
+                        ),
+                      )
+                    : null),
           ),
         ],
       ),
