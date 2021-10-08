@@ -214,7 +214,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
     List<List<String>> onList,
   ) {
     return SizedBox(
-      height: 120,
+      height: 100,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -245,37 +245,40 @@ class V1Request1Page extends GetView<V1Request1Controller> {
     Function(dynamic) onChanged,
     List<String> contentList,
   ) {
-    return FormField<String>(
-      builder: (FormFieldState<String> state) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            labelStyle: Dimensions.textNormalStyle(),
-            errorStyle: const TextStyle(
-              color: Colors.redAccent,
-              fontSize: Dimensions.FONT_SIZE_DEFAULT,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                Dimensions.BORDER_RADIUS_SMALL,
+    return Container(
+      height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+      child: FormField<String>(
+        builder: (FormFieldState<String> state) {
+          return InputDecorator(
+            decoration: InputDecoration(
+              labelStyle: Dimensions.textNormalStyle(),
+              errorStyle: const TextStyle(
+                color: Colors.redAccent,
+                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_SMALL,
+                ),
               ),
             ),
-          ),
-          isEmpty: label == '',
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: label,
-              isDense: true,
-              onChanged: onChanged,
-              items: contentList.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            isEmpty: label == '',
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: label,
+                isDense: true,
+                onChanged: onChanged,
+                items: contentList.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -318,20 +321,22 @@ class V1Request1Page extends GetView<V1Request1Controller> {
     return LabelContent(
       title: label,
       isRequired: false,
-      content: TextField(
-        focusNode: AlwaysDisabledFocusNode(),
-        controller: dateController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: '12/09/2021',
+      content: SizedBox(
+        child: TextField(
+          focusNode: AlwaysDisabledFocusNode(),
+          controller: dateController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: '12/09/2021',
+          ),
+          onTap: () {
+            controller.dateFromPicker(
+              context,
+              DateTime(2021),
+              DateTime(2021, 12, 31),
+            );
+          },
         ),
-        onTap: () {
-          controller.dateFromPicker(
-            context,
-            DateTime(2021),
-            DateTime(2021, 12, 31),
-          );
-        },
       ),
     );
   }

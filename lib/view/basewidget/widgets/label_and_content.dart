@@ -17,6 +17,7 @@ class LabelContent extends StatelessWidget {
         // địa điểm nhận
         Container(
           alignment: Alignment.centerLeft,
+          height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
           child: Row(
             children: [
               Text(title, style: Dimensions.textTitleStyleCard()),
@@ -34,7 +35,7 @@ class LabelContent extends StatelessWidget {
         ),
         SizedBox(
           height:
-              DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT),
+              DeviceUtils.getScaledHeight(context, Dimensions.SCALE_SMALL),
         ),
         // content
         content,

@@ -6,9 +6,11 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
+import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/basewidget/widgets/label_dropdown.dart';
 import 'package:template/view/basewidget/widgets/label_textarea.dart';
+import 'package:template/view/basewidget/widgets/three_image_box.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_controller.dart';
 
 class V1Request2Page extends GetView<V1Request2Controller> {
@@ -268,39 +270,13 @@ class V1Request2Page extends GetView<V1Request2Controller> {
     return LabelContent(
       title: "Hình ảnh bảng khối lượng",
       isRequired: false,
-      content: Container(
-        height: 115,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: ColorResources.THEME_DEFAULT),
-          borderRadius: const BorderRadius.all(
-              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-        ),
-        child: GridView.builder(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisExtent: 90,
-            crossAxisSpacing: 10,
-          ),
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (BuildContext ctx, index) {
-            return GestureDetector(
-              onTap: () {},
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.example,
-                  image: Images.location_example,
-                  height: 90,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            );
-          },
-        ),
+      content: ThreeImageBox(
+        images: const [
+          Images.location_example,
+          Images.location_example,
+          Images.location_example,
+        ],
+        allowPicker: false,
       ),
     );
   }
@@ -314,20 +290,7 @@ class V1Request2Page extends GetView<V1Request2Controller> {
       child: LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
-        content: Container(
-          width: DeviceUtils.getScaledWidth(context, 1),
-          height: 50,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
-              ),
-              boxShadow: [
-                BoxShadow(blurRadius: 4, color: Colors.grey.withOpacity(.5))
-              ]),
-          child: Text("Thêm file", style: Dimensions.textTitleStyleCard()),
-        ),
+        content: FileUploadWidget(label: "Thêm file"),
       ),
     );
   }
