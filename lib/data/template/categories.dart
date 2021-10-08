@@ -41,7 +41,7 @@ class CategoryWidget extends GetView {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 10),
+                  margin: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
                   width: width * .60,
                   child: Text(
                     label,
@@ -81,7 +81,7 @@ class CategoryWidget extends GetView {
                 )
               ],
             ),
-            Container(padding: const EdgeInsets.all(15), child: content),
+            Container(padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT), child: content),
           ],
         ));
   }

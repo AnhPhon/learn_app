@@ -267,7 +267,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
       ),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         color: ColorResources.WHITE,
         boxShadow: [
           BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
@@ -304,7 +304,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
               padding: const EdgeInsets.only(
                   right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
