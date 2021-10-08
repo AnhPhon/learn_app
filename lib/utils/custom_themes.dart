@@ -59,4 +59,32 @@ const boxShadowDeep = [
   ),
 ];
 
+const boxShadowText = [
+    BoxShadow(
+      blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
+      color: ColorResources.WHITE,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+      offset: Offset(-1,1)
+    ),
+    BoxShadow(
+      blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
+      color: ColorResources.WHITE,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+      offset: Offset(1,-1)
+    ),
+    BoxShadow(
+      blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
+      color: ColorResources.WHITE,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+      offset: Offset(1,1)
+    ),
+    BoxShadow(
+      blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
+      color: ColorResources.WHITE,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+      offset: Offset(-1,-1)
+    )
+];
+
+
 const paddingSmall =  EdgeInsets.all(Dimensions.FONT_SIZE_SMALL);
