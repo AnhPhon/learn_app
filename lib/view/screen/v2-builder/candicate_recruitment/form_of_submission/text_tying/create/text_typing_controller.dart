@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/components/dialog_content.dart';
 
 class V2TextTypingController extends GetxController{
   // Tiêu đề
@@ -36,6 +35,14 @@ class V2TextTypingController extends GetxController{
   final emailController = TextEditingController();
   // email
   final amountController = TextEditingController();
+
+
+  ///
+  /// Nhân vào xem trước hồ sơ
+  ///
+  void onClickPreviewButton(){
+    Get.toNamed(AppRoutes.V2_PREVIEW_PROFILE);
+  }
 
 
 

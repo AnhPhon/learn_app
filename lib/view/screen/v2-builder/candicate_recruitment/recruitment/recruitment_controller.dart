@@ -43,6 +43,13 @@ class V2RecruitmentController extends GetxController{
     Get.toNamed(AppRoutes.V2_VIEW_RECRUITMENT_NEWS);
   }
 
+  ///
+  /// Nhấn vào icon lịch sử trên appbar
+  ///
+  void onClickHistory(){
+    Get.toNamed(AppRoutes.V2_HISTORY_RECRUITMENT_NEWS);
+  }
+
   /// 
   ///  Hiẻn thị bộ lọc
   /// 

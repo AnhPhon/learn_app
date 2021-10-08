@@ -122,6 +122,8 @@ class AppRoutes {
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
   // Xem tin tuyển dụng
   static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
+  //Xem lịch sử tin đã ứng tuyển và đã lưu
+  static const String V2_HISTORY_RECRUITMENT_NEWS = '/v2_history_recruitment_news';
   // Hình thức ứng tuyển
   static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
   // Đánh văn bản
@@ -130,5 +132,7 @@ class AppRoutes {
   static const String V2_CV = '/v2_cv';
   // Xem trước hồ sơ nộp bằng CV
   static const String V2_PREVIEW = '/v2_preview';
+  // Xem trước hồ sơ đánh bằng văn bản
+  static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
 
 }

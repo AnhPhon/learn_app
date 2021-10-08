@@ -3,13 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
-import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
@@ -17,7 +15,9 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/components/custom_file_button.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/text_typing_controller.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/components/add_info_button_widget.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/components/choose_ability.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V2TextTypingPage extends GetView<V2TextTypingController>{
@@ -30,7 +30,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         child: Column(
           children: [
             form(context, _controller),
-            button(),
+            priviewButton(),
             const SizedBox(
               height: Dimensions.SIZE_LARGE,
             )
@@ -149,6 +149,26 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
 
         aualificationsAndQualifications(context),
 
+        requiredCandidate(context),
+
+        experience(context),
+
+        // Cum ngoại ngữ
+        language(context),
+        computerScience(context),
+
+        otherInformation(context)
+
+      ],
+    );
+  }
+
+  ///
+  /// yêu cầu về lương kinh nghiêm chức vụ
+  ///
+  Widget requiredCandidate(BuildContext context){
+    return Column(
+      children: [
         const Label(label: "Chọn chức vụ, kinh nghiệm, mức lương", obligatory: false),
         // Chức vụ hiện tại *
         DropDownButton<String>(
@@ -216,16 +236,13 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
           label: "Ngành nghề mong muốn ứng tuyển",
           hint: "Chọn ngành nghề",
         ),
-
-        experience(context),
-
-        // Cum ngoại ngữ
-        language(context)
       ],
     );
   }
 
-
+  ///
+  /// Bằng cấp
+  ///
   Widget aualificationsAndQualifications(BuildContext context){
     return Column(
       children: [
@@ -300,13 +317,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
           child: BoxImage(images: [], isAddImage: true,),
         ),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-            vertical: Dimensions.PADDING_SIZE_SMALL
-          ),
-          child: LongButton(title: "Thêm bằng cấp mới", color: ColorResources.PRIMARYCOLOR, onPressed: (){}),
-        ),
+        AddInfoButton(title: "Thêm bằng cấp mới", onPress: (){}),
 
         // List thêm
         Padding(
@@ -335,7 +346,9 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
     );
   }
 
-
+  ///
+  /// Kinh nghiệm
+  /// 
   Widget experience(BuildContext context){
     return Column(
       children: [
@@ -445,44 +458,51 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Thành tích đạt được",
+          holdplacer: "Kết quả / thành tích đạt được",
           hidden: false,
-          label: "Thành tích đạt được",
+          label: "Kết quả / thành tích đạt được",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
+         AddInfoButton(title: "Thêm kê khai kinh nghiệm", onPress: (){}),
+
+
         // List thêm
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-            vertical: Dimensions.PADDING_SIZE_SMALL
-          ),
-          child: BoxShadowWidget(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            child: SizedBox(
-              width: DeviceUtils.getScaledWidth(context,1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  const TextHighlight(title: "Chức vụ hiện tại: ", content: "Giám đốc",),
-                  contentPrivew(title:"Chức vụ mong muốn: ",content: "Chủ tịch"),
-                  contentPrivew(title:"Năm kinh nghiệm: ",content: "100 năm"),
-                  contentPrivew(title:"Mức lương đề xuất: ",content: "200000 USD"),
-                  contentPrivew(title:"Nơi làm việc: ",content: "Nhà"),
-                  contentPrivew(title:"Ngành nghề mong muốn ứng tuyển: ",content: "Phụ hồ"),
-                  contentPrivew(title:"Kê khai kinh nghiệm (kê khai rõ - cơ hội tuyển dụng lớn)",content: "",),
-                  contentPrivew(title:"Thời gian: ",content: "12-12-1991 - 12-12-2-2021"),
-                  contentPrivew(title:"Đơn vị: ",content: "Không biết"),
-                  contentPrivew(title:"Chức vụ: ",content: "Chủ tịch"),
-                  contentPrivew(title:"Mức lương: ",content: "1000 USD"),
-                  contentPrivew(title:"Công việc phụ trách: ",content: "Không biết"),
-                  contentPrivew(title:"Kết quả / thành tích đạt được: ",content: "VIP PRO"),
-                ],
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_SMALL
+              ),
+              child: BoxShadowWidget(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: SizedBox(
+                  width: DeviceUtils.getScaledWidth(context,1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      const TextHighlight(title: "Chức vụ hiện tại: ", content: "Giám đốc",),
+                      contentPrivew(title:"Chức vụ mong muốn: ",content: "Chủ tịch"),
+                      contentPrivew(title:"Năm kinh nghiệm: ",content: "100 năm"),
+                      contentPrivew(title:"Mức lương đề xuất: ",content: "200000 USD"),
+                      contentPrivew(title:"Nơi làm việc: ",content: "Nhà"),
+                      contentPrivew(title:"Ngành nghề mong muốn ứng tuyển: ",content: "Phụ hồ"),
+                      contentPrivew(title:"Kê khai kinh nghiệm (kê khai rõ - cơ hội tuyển dụng lớn)",content: "",),
+                      contentPrivew(title:"Thời gian: ",content: "12-12-1991 - 12-12-2-2021"),
+                      contentPrivew(title:"Đơn vị: ",content: "Không biết"),
+                      contentPrivew(title:"Chức vụ: ",content: "Chủ tịch"),
+                      contentPrivew(title:"Mức lương: ",content: "1000 USD"),
+                      contentPrivew(title:"Công việc phụ trách: ",content: "Không biết"),
+                      contentPrivew(title:"Kết quả / thành tích đạt được: ",content: "VIP PRO"),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
 
         const Label(label: "Ảnh hồ sơ xin việc (nếu có)", obligatory: false),
@@ -515,12 +535,14 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
     );
   }
 
-
+  ///
+  /// Ngôn ngữ
+  ///
   Widget language(BuildContext context){
     return Column(
       children: [
         //Ngoại ngữ *
-        const Label(label: "Ngoại ngữ", obligatory: false),
+        const Label(label: "Ngoại ngữ", obligatory: true),
         // Chọn ngoại ngữ
         DropDownButton<String>(
           paddingTop: 0,
@@ -575,58 +597,149 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
               RadioButton(title: "", onChanged: (val){}, value: 4, groupValue: 1)
             ]),
           ],
-        )
+        ),
+        // List thêm
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_SMALL
+              ),
+              child: BoxShadowWidget(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: SizedBox(
+                  width: DeviceUtils.getScaledWidth(context,1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      const TextHighlight(title: "Ngôn ngữ: ", content: "Tiếng anh",),
+                      contentPrivew(title:"Trình độ: ",content: "B1"),
+                      contentPrivew(title:"Nghe: ",content: "Khá"),
+                      contentPrivew(title:"Nói: ",content: "Khá"),
+                      contentPrivew(title:"Đọc: ",content: "Giỏi"),
+                      contentPrivew(title:"Viết: ",content: "Khá"),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  ///
+  ///Tin học
+  ///
+  Widget computerScience(BuildContext context){
+    return Column(
+      children: [
+        //Tin học
+        const Label(label: "Tin học", obligatory: true),
+        Table(
+          defaultColumnWidth: FixedColumnWidth(DeviceUtils.getScaledWidth(context, 1)/5),
+          children: [
+            chooseAbility(context,title: "",ability:[
+              "Giỏi","Khá","Trung",'Yếu'
+            ]),
+            chooseAbility(context,title: "Work",ability:[
+              RadioButton(title: "", onChanged: (val){}, value: 1, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 2, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 3, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 4, groupValue: 1)
+            ]),
+            chooseAbility(context,title: "Excel",ability:[
+              RadioButton(title: "", onChanged: (val){}, value: 1, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 2, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 3, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 4, groupValue: 1)
+            ]),
+            chooseAbility(context,title: "Internet",ability:[
+              RadioButton(title: "", onChanged: (val){}, value: 1, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 2, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 3, groupValue: 1),
+              RadioButton(title: "", onChanged: (val){}, value: 4, groupValue: 1)
+            ]),
+          ],
+        ),
+      ],
+    );
+;  }
+
+  Widget otherInformation(BuildContext context){
+    return Column(
+      children: [
+        // Phần mềm hỗ trợ công việc từng ngành
+        InputField(
+          allowEdit: false,
+          allowMultiline: false,
+          controller: controller.titleController,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          holdplacer: "Phần mềm hỗ trợ công việc từng ngành",
+          hidden: false,
+          label: "Phần mềm hỗ trợ công việc từng ngành",
+          obligatory: true,
+          typeInput: TextInputType.text,
+          width: DeviceUtils.getScaledWidth(context,1),
+        ),
+
+        // Sở thích thể hiện trình độ / khả năng tư duy
+        InputField(
+          allowEdit: false,
+          allowMultiline: false,
+          controller: controller.titleController,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          holdplacer: "Sở thích thể hiện trình độ / khả năng tư duy",
+          hidden: false,
+          label: "Sở thích thể hiện trình độ / khả năng tư duy",
+          obligatory: true,
+          typeInput: TextInputType.text,
+          width: DeviceUtils.getScaledWidth(context,1),
+        ),
+
+        // Sở thích thể hiện kỹ năng
+        InputField(
+          allowEdit: false,
+          allowMultiline: false,
+          controller: controller.titleController,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          holdplacer: "Sở thích thể hiện kỹ năng",
+          hidden: false,
+          label: "Sở thích thể hiện kỹ năng",
+          obligatory: true,
+          typeInput: TextInputType.text,
+          width: DeviceUtils.getScaledWidth(context,1),
+        ),
+
+        // Sở thích thể hiện tích cách
+        InputField(
+          allowEdit: false,
+          allowMultiline: false,
+          controller: controller.titleController,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          holdplacer: "Sở thích thể hiện tích cách",
+          hidden: false,
+          label: "Sở thích thể hiện tích cách",
+          obligatory: true,
+          typeInput: TextInputType.text,
+          width: DeviceUtils.getScaledWidth(context,1),
+        ),
       ],
     );
   }
 
-  TableRow chooseAbility(BuildContext context,{required String title,required List<Object> ability}){
-      return TableRow(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            child: Align(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(title, textAlign: TextAlign.center,style: const TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                  ),),
-                ],
-              ),
-            ),
-          ),
-          ...ability.map((e) => Align(
-            child: e is Widget ? e : Padding(
-              padding: const EdgeInsets.only(
-                right: Dimensions.FONT_SIZE_EXTRA_LARGE * 2,
-                top: Dimensions.FONT_SIZE_EXTRA_SMALL
-              ),
-              child: Text(e as String, textAlign: TextAlign.left, style: const TextStyle(
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-              ),),
-            ),
-          ),)
-        ]
-      );
-    }
-
   
 
-  ///
+    ///
     /// Button
     ///
-    Widget button(){
+    Widget priviewButton(){
       return Padding(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SmallButton(title: "Lưu", color: ColorResources.PRIMARYCOLOR, onPressed: (){}),
-            SmallButton(title: "Ứng tuyển", color: ColorResources.RED, onPressed: (){
-            }),
-          ],
-        ),
+        child: LongButton(title: "Xem trước hồ sơ", color: ColorResources.PRIMARYCOLOR, onPressed: (){
+          _controller.onClickPreviewButton();
+        })
       );
     }
 }
