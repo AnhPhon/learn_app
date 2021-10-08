@@ -29,28 +29,28 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                 children: [
                   // tiêu đề báo giá
                   _textWidget("Tiêu đề báo giá", controller.tieuDeBaoGia),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
                   _bangBaoGia(context, controller.infoCard),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian giao hàng
                   _thoiGianGiaoHang(context, "09h30", "10h30", "12-09-2021"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // tien do giao hang
                   _tienDoGiaoHang(context, "Giao cấp",
                       "${PriceConverter.convertPrice(context, 50000)} VNĐ"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // Hinh Anh Khoi Luong
                   _hinhAnhKhoiLuong(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // feature
                   _giatriDonHang(context),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
                 ],
               ),
             ),
@@ -234,7 +234,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
               )
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
           Column(
             children: [
               Container(
@@ -254,7 +254,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
               ),
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
           Column(
             children: [
               Container(

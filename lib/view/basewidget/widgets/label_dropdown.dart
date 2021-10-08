@@ -31,7 +31,7 @@ class LabelDropdown extends StatelessWidget {
               Text("*", style: Dimensions.textTitleStyleCard())
           ],
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+        SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
         FormField<String>(
           builder: (FormFieldState<String> state) {
             return InputDecorator(

@@ -29,15 +29,15 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                 children: [
                   // tiêu đề báo giá
                   _textWidget("Tiêu đề báo giá", controller.tieuDeBaoGia),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // Chọn loại công trình
                   _textWidget("Chọn loại công trình", controller.loaiCongTrinh),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // địa điểm nhận
                   _diaDiemNhan(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // dia chi cu the
                   _diaChiCuThe(
@@ -45,23 +45,23 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                       (controller.isCheck == true)
                           ? controller.diaChiCuThe
                           : "***"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian dự kiến
                   _thoiGianDuKien(context, controller.infoCard),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // noi dung yeu cau
                   _noiDungYeuCau(context, controller.noiDungYeuCau),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // Hinh Anh Khoi Luong
                   _hinhAnhKhoiLuong(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // feature
                   _featureWidget(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
                 ],
               ),
             ),
@@ -170,7 +170,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
       title: "Thời gian nhận dự kiến",
       content: Column(
         children: [
-          SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
           Row(
             children: [
               Text("Từ ${controller.from}"),
@@ -178,7 +178,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
               Text("Đến ${controller.to}"),
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
           ContentWhiteBox(infoCard: infoCard)
         ],
       ),

@@ -66,7 +66,12 @@ class Dimensions {
   static const double SPREAD_RADIUS_MEDIUM_DEEP = 1;
   static const double SPREAD_RADIUS_VERY_DEEP = 2;
 
-
+  // SCALE
+  static const double SCALE_EXTRA_SMALL = .005;
+  static const double SCALE_SMALL = .01;
+  static const double SCALE_DEFAULT = .02;
+  static const double SCALE_LARSE = .03;
+  static const double SCALE_EXTRA_LARSE = .04;
 
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;
