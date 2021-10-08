@@ -651,6 +651,11 @@ class AppPages {
       page: () => V2ViewRecruitmentNewsPage(),
       binding: V2ViewRecruitmentNewsBinding(),
     ),
+    // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
+      page: () => V2HistoryRectuitmentNewsPage(),
+    ),
 
 
 
@@ -714,6 +719,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
     ),
     // Xem trươc đánh văn bản
     GetPage(
