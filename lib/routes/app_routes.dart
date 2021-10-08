@@ -82,6 +82,9 @@ class AppRoutes {
   static const String V1_PAYMENT_ACCOUNT = '/v1_payment_account';
   static const String V1_RECHARGE = '/v1_recharge';
   static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
+  static const String V1_INURANCE_REGISTER = '/v1_insurance_register';
+  static const String V1_YOUR_INSURANCE = '/v1_your_insurance';
+  static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';

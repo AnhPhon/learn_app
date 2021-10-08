@@ -59,6 +59,9 @@ class Dimensions {
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
 
+  // SIZE BOX BOTTOM NAV
+  static const double SIZE_BOX_BOTTOM_NAV = 150;
+
   Widget paddingDivider(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(

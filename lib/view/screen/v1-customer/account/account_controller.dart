@@ -33,6 +33,13 @@ class V1AccountController extends GetxController {
   }
 
   ///
+  ///go to rules page
+  ///
+  void onRulesPageClick() {
+    Get.toNamed(AppRoutes.V1_RULES);
+  }
+
+  ///
   ///go to intoduce page
   ///
   void onIntroducePageClick() {

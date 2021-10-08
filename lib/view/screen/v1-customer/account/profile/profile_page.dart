@@ -28,14 +28,14 @@ class V1ProfilePage extends GetView<V1ProfileController> {
                   _items(
                     icon: const Icon(Icons.monetization_on_outlined),
                     text: "Bảo hiểm tai nạn",
-                    onTap: () {},
+                    onTap: () => controller.onAccidentInsurancePageClick(),
                   ),
 
                   //other insurance
                   _items(
                     icon: const Icon(Icons.account_balance_wallet_outlined),
                     text: "Bảo hiểm khác",
-                    onTap: () {},
+                    onTap: () => controller.onOtherInsurancePageClick(),
                   ),
 
                   //tax

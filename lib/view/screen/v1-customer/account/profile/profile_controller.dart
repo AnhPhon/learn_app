@@ -12,6 +12,20 @@ class V1ProfileController extends GetxController {
   }
 
   ///
+  ///go to accident insurance page
+  ///
+  void onAccidentInsurancePageClick() {
+    Get.toNamed(AppRoutes.V1_ACCIDENT_INSURANCE);
+  }
+
+  ///
+  ///go to other insurance page
+  ///
+  void onOtherInsurancePageClick() {
+    Get.toNamed(AppRoutes.V1_OTHER_INSURANCE);
+  }
+
+  ///
   ///go to tax page
   ///
   void onTaxPageClick() {

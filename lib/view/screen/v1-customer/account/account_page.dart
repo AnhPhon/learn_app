@@ -74,7 +74,7 @@ class V1AccountPage extends GetView<V1AccountController> {
                         _items(
                           icon: const Icon(Icons.gavel_outlined),
                           text: "Điều khoản và chính sách",
-                          onTap: () {},
+                          onTap: () => controller.onRulesPageClick(),
                         ),
 
                         // Review
@@ -85,11 +85,11 @@ class V1AccountPage extends GetView<V1AccountController> {
                         ),
 
                         // history
-                        _items(
-                          icon: const Icon(Icons.history),
-                          text: "Lịch sử",
-                          onTap: () {},
-                        ),
+                        // _items(
+                        //   icon: const Icon(Icons.history),
+                        //   text: "Lịch sử",
+                        //   onTap: () {},
+                        // ),
 
                         // support
                         _items(
@@ -120,10 +120,14 @@ class V1AccountPage extends GetView<V1AccountController> {
                         ),
 
                         // image update
-                        _items(
-                          icon: const Icon(Icons.image),
-                          text: "Cập nhật hình ảnh",
-                          onTap: () {},
+                        // _items(
+                        //   icon: const Icon(Icons.image),
+                        //   text: "Cập nhật hình ảnh",
+                        //   onTap: () {},
+                        // ),
+
+                        const SizedBox(
+                          height: Dimensions.SIZE_BOX_BOTTOM_NAV,
                         ),
                       ],
                     ),

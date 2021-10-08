@@ -4,9 +4,15 @@ import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
@@ -73,28 +79,6 @@ class AppPages {
       name: AppRoutes.V1_DASHBOARD,
       page: () => V1DashboardPage(),
       binding: V1DashboardBinding(),
-    ),
-
-    /// About
-    GetPage(
-      name: AppRoutes.V1ABOUT,
-      page: () => AboutPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V1BENEFITS,
-      page: () => Benefits(),
-    ),
-    GetPage(
-      name: AppRoutes.V1TERMANDPOLICY,
-      page: () => TermsAndPolicy(),
-    ),
-    GetPage(
-      name: AppRoutes.V1USAGEPROCEDURE,
-      page: () => UsageProcedure(),
-    ),
-    GetPage(
-      name: AppRoutes.V1OBLIGATIONS,
-      page: () => RightsAndObligations(),
     ),
     GetPage(
       name: AppRoutes.V1_PAYMENT_METHOD,
@@ -191,6 +175,52 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PAYMENT_SUCCESS,
       page: () => V1PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_ACCIDENT_INSURANCE,
+      page: () => V1AccidentInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_OTHER_INSURANCE,
+      page: () => V1OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INURANCE_REGISTER,
+      page: () => V1InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_YOUR_INSURANCE,
+      page: () => V1YourInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INSURANCE_DETAIL,
+      page: () => V1InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_RULES,
+      page: () => V1RulesPage(),
+    ),
+
+    /// About
+    GetPage(
+      name: AppRoutes.V1ABOUT,
+      page: () => AboutPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1BENEFITS,
+      page: () => Benefits(),
+    ),
+    GetPage(
+      name: AppRoutes.V1TERMANDPOLICY,
+      page: () => TermsAndPolicy(),
+    ),
+    GetPage(
+      name: AppRoutes.V1USAGEPROCEDURE,
+      page: () => UsageProcedure(),
+    ),
+    GetPage(
+      name: AppRoutes.V1OBLIGATIONS,
+      page: () => RightsAndObligations(),
     ),
 
     ///
