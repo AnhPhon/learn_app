@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class NewsBox extends StatelessWidget {
   final String title;
@@ -42,7 +43,7 @@ class NewsBox extends StatelessWidget {
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage('assets/images/news1.png'),
+                image: AssetImage(Images.V4NewsExample),
                 fit: BoxFit.fill,
               ),
             ),
