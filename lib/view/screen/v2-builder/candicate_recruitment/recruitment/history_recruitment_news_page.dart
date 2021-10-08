@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/view/basewidget/appbar/app_bar_controller.dart';
 import 'package:template/view/basewidget/appbar/search_app_bar.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/components/recruiment_news_card.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/recruiment_news_card.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_controller.dart';
 
 class V2HistoryRectuitmentNewsPage extends GetView<V2HistoryRecruitmentNewsController>{

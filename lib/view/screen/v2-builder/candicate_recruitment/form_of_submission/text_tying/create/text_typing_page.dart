@@ -14,9 +14,9 @@ import 'package:template/view/basewidget/widgets/box_image.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/components/custom_file_button.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/components/add_info_button_widget.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/components/choose_ability.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/add_info_button_widget.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/choose_ability.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/custom_file_button.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
