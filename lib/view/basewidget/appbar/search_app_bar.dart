@@ -21,13 +21,14 @@ class SearchAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
+  @override
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _CustomAppBarState extends State<SearchAppBarWidget> {
-
+  
   final AppBarController _controller = Get.put(AppBarController());
 
   @override
@@ -73,7 +74,7 @@ class _CustomAppBarState extends State<SearchAppBarWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -125,23 +126,50 @@ class _CustomAppBarState extends State<SearchAppBarWidget> {
                     }
                   }
                 ),
-                
-                // Nút tìm kiếm
-                GetBuilder(
-                  builder: (AppBarController controller) {
-                    if(controller.isSearch){
-                      return const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,);
-                    }
-                    return IconButton(onPressed: (){
-                      _controller.onChangedStatus();
-                    }, icon: const Icon(Icons.search, size: Dimensions.ICON_SIZE_DEFAULT,color: ColorResources.WHITE,));
-                  },
-                ),
 
-                /// Action
-                if (widget.action!.isNotEmpty)
-                  ...widget.action!.map((e) => e).toList()
+                const SizedBox(width: Dimensions.ICON_SIZE_LARGE,)
+                
+                // // Nút tìm kiếm
+                // GetBuilder(
+                //   builder: (AppBarController controller) {
+                //     if(controller.isSearch){
+                //       return const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,);
+                //     }
+                //     return IconButton(onPressed: (){
+                //       _controller.onChangedStatus();
+                //     }, icon: const Icon(Icons.search, size: Dimensions.ICON_SIZE_DEFAULT,color: ColorResources.WHITE,));
+                //   },
+                // ),
+
+                // if (widget.action!.isNotEmpty)
+                //   ...widget.action!.map((e) => e).toList()
               ],
+            ),
+          ),
+          // Nút tìm kiếm
+          Positioned.fill(
+            child: Padding(
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GetBuilder(
+                      builder: (AppBarController controller) {
+                        if(controller.isSearch){
+                          return const SizedBox(width: Dimensions.ICON_SIZE_DEFAULT,);
+                        }
+                        return IconButton(onPressed: (){
+                          _controller.onChangedStatus();
+                        }, icon: const Icon(Icons.search, size: Dimensions.ICON_SIZE_DEFAULT,color: ColorResources.WHITE,));
+                      },
+                    ),
+                    if (widget.action!.isNotEmpty)
+                    ...widget.action!.map((e) => e).toList()
+                  ],
+                ),
+              ),
             ),
           ),
         ],

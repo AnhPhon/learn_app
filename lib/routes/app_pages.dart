@@ -95,6 +95,9 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
@@ -654,6 +657,13 @@ class AppPages {
       page: () => V3QuoteListPage(),
     ),
     // v3 - quote check
+    // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
+      page: () => V2HistoryRectuitmentNewsPage(),
+    ),
+
+    // Chọn hình thức ứng tuyển
     GetPage(
       name: AppRoutes.V3_QUOTE_CHECK,
       page: () => V3QuoteCheckPage(),
@@ -695,6 +705,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
     ),
 
     GetPage(
