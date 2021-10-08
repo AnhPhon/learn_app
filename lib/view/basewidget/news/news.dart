@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
 
 class NewsBox extends StatelessWidget {
   final String title;
@@ -47,7 +48,7 @@ class NewsBox extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
             width: 240,
             child: Column(
               children: [
@@ -58,9 +59,7 @@ class NewsBox extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                      fontFamily: 'Nunito',
                       fontSize: 16,
-                      letterSpacing: -0.30000001192092896,
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
@@ -74,9 +73,7 @@ class NewsBox extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(0, 0, 0, 0.6200000047683716),
-                      fontFamily: 'Nunito',
                       fontSize: 15,
-                      letterSpacing: -0.30000001192092896,
                       fontWeight: FontWeight.normal,
                       height: 1,
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
 
 class FieldWidget extends StatelessWidget {
 
@@ -17,7 +18,7 @@ class FieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const double _fontSize = 16;
     return Container(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
         children: [
           Row(

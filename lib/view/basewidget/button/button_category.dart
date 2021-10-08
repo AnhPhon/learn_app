@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
+import 'package:template/utils/dimensions.dart';
 
 class BtnCategory extends StatelessWidget {
   Gradient gradient;
@@ -16,9 +17,9 @@ class BtnCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -34,7 +35,7 @@ class BtnCategory extends StatelessWidget {
             icon,
             color: Colors.white,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
           Text(
             label,
             style: const TextStyle(

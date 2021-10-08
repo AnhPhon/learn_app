@@ -89,7 +89,7 @@ class HomeWidget extends StatelessWidget {
                     const Spacer(),
                     Container(
                       alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoutes.V1_NOTIFICATION);

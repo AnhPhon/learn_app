@@ -27,11 +27,11 @@ class V3HomePage extends GetView<V3HomeController> {
             fullname: "ĐL, ${controller.fullname}!",
             content: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // need update widget
                 _needUpdateWidget(),
-                const SizedBox(height: 10),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                 // feature widget
                 _featuresWidget(),
@@ -57,7 +57,7 @@ class V3HomePage extends GetView<V3HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
       child: Row(
         children: [
@@ -76,7 +76,7 @@ class V3HomePage extends GetView<V3HomeController> {
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
               child: const Text(
                 "Cập nhật",
                 style: TextStyle(color: Colors.white),
@@ -139,7 +139,7 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return const Padding(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: NewsBox(
                 title: "Tin nóng tóm tắt tổng hợp",
                 describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
@@ -168,7 +168,7 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
                 tenSanPham: "Kệ son nồi",
                 maSanPham: "BN001",
