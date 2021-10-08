@@ -187,7 +187,7 @@ class EditInfoPage extends GetView<EditInfoController> {
               ),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 border: controller.avatarFile != null
                     ? null
                     : Border.all(width: 2, color: Colors.grey),

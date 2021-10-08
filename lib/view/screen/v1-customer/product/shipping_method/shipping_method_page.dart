@@ -159,7 +159,7 @@ class V1ShippingMethodPage extends GetView<V1ShippingMethodController> {
           ),
         ],
         color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
       ),
       child: Column(
         children: [

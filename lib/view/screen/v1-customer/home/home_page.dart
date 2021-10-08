@@ -14,13 +14,10 @@ import 'home_controller.dart';
 class V1HomePage extends GetView<V1HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
-<<<<<<< HEAD
           return HomeWidget(
             fullname: controller.fullname,
             content: Column(
@@ -37,212 +34,6 @@ class V1HomePage extends GetView<V1HomeController> {
                 _newsWidget()
               ],
             ),
-=======
-          return Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                ),
-                child: Stack(children: [
-                  Positioned(
-                    top: -20,
-                    left: -50,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -80,
-                    right: -20,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 25,
-                    // left: 15,
-                    width: size.width,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                              child: Image.asset(
-                                Images.V4AvatarHome,
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            controller.fullname,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.V1_NOTIFICATION);
-                              },
-                              child: const Icon(
-                                CupertinoIcons.bell_fill,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10)
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-
-              // white
-              Positioned(
-                top: 100,
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  height: size.height - 180,
-                  width: size.width,
-                  margin: const EdgeInsets.only(),
-                  padding: const EdgeInsets.all(
-                    Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6F6F7),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                      topRight: Radius.circular(Dimensions.HOME_BORDER_RADIUS),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      width: size.width,
-                      child: Column(
-                        children: [
-                          Text("Tạo đơn công việc 1 2 5 6"),
-                          GestureDetector(
-                            onTap: () {
-                              controller.onClickCreateWork();
-                            },
-                            child: Text("Tạo đơn công việc 1"),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.onClickFormManagementPage();
-                            },
-                            child: const Text("Quản lý đơn tạo",
-                                style: TextStyle(
-                                    color: ColorResources.LIGHT_SKY_BLUE)),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.onClickFormList();
-                            },
-                            child: const Text("Danh sách đơn tạo",
-                                style: TextStyle(
-                                    color: ColorResources.LIGHT_SKY_BLUE)),
-                          ),
-                          _categoryBoxWidget(),
-                          _threeFeatureWidget(),
-                          const SizedBox(height: 30),
-                          _fieldWidget(
-                            "Sản phẩm",
-                            () => controller.onMoreProductList(),
-                            Container(
-                              height: 400,
-                              padding: const EdgeInsets.only(
-                                  top: Dimensions.PADDING_SIZE_DEFAULT),
-                              child: GridView.builder(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  mainAxisExtent: 120,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                ),
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 9,
-                                itemBuilder: (BuildContext ctx, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: _imageWidget(),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          _fieldWidget(
-                            "Tin tức",
-                            () {},
-                            Container(
-                              height: 400,
-                              padding: const EdgeInsets.only(
-                                top: Dimensions.PADDING_SIZE_DEFAULT,
-                              ),
-                              child: ListView.builder(
-                                itemCount: 2,
-                                itemBuilder: (
-                                  BuildContext ctx,
-                                  index,
-                                ) {
-                                  return _newsWidget();
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
->>>>>>> origin/develop
           );
         },
       ),
@@ -315,7 +106,7 @@ class V1HomePage extends GetView<V1HomeController> {
   /// field widget
   ///
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
-    const double _fontSize = 16;
+    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Padding(
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
@@ -443,7 +234,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color.fromRGBO(42, 53, 71, 1),
-                  fontSize: 18,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold,
                   height: 1,
                   shadows: [

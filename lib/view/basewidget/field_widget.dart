@@ -16,7 +16,7 @@ class FieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double _fontSize = 16;
+    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
