@@ -149,7 +149,7 @@ class V2HomePage extends GetView<V2HomeController> {
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           decoration: const BoxDecoration(
             color: Color(0xff2196F3),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
           ),
           child: Row(
             children: const [

@@ -98,7 +98,7 @@ class V4HomePage extends GetView<V4HomeController> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: const Color(0xff2196F3),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         child: Center(
           child: Text(

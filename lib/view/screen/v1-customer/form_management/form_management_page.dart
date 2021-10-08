@@ -137,7 +137,7 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
             Expanded(
               flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
