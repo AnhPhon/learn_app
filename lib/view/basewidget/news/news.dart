@@ -28,8 +28,8 @@ class NewsBox extends StatelessWidget {
           Radius.circular(10),
         ),
       ),
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.only(left: 5, right: 5),
+      margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+      padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_EXTRA_SMALL, right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
@@ -73,7 +73,7 @@ class NewsBox extends StatelessWidget {
                     describe,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 0.6200000047683716),
+                      color: Color.fromRGBO(0, 0, 0, 0.62),
                       fontSize: 15,
                       fontWeight: FontWeight.normal,
                       height: 1,
