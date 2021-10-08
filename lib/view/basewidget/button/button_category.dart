@@ -39,7 +39,7 @@ class BtnCategory extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: Dimensions.FONT_SIZE_DEFAULT,
               fontWeight: FontWeight.bold,
               shadows: [
                 Shadow(
