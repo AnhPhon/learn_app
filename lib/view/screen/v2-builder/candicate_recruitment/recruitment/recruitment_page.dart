@@ -18,7 +18,20 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController>{
         return GetBuilder(
           builder: (V2RecruitmentController controller) {
             return Scaffold(
-              appBar: SearchAppBarWidget(title: "Tin tuyển dụng", searchController: controller.searchController),
+              appBar: SearchAppBarWidget(title: "Tin tuyển dụng", 
+                searchController: controller.searchController,
+                action: [
+                  GestureDetector(
+                    onTap:(){
+                      controller.onClickHistory();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      child: Icon(Icons.history, color: ColorResources.WHITE,size: Dimensions.ICON_SIZE_DEFAULT,),
+                    ),
+                  )
+                ],
+              ),
               body: appbar.isSearch ? filterProfile(context, controller: controller) : recruitment(context, controller: controller)
             );
           },
