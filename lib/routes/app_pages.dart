@@ -90,6 +90,8 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
@@ -393,6 +395,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+    GetPage(
+        name: AppRoutes.V1_G7_PRICE_LIST,
+        page: () => V1G7PriceListPage(),
+        binding: V1G7PriceListBinding()),
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
@@ -461,10 +467,15 @@ class AppPages {
       binding: V4ReportTimekeepingBinding(),
     ),
     GetPage(
+      name: AppRoutes.V4_EXPORT_IMPROT,
+      page: () => V4ExportImportPage(),
+      binding: V4ExportImportBinding(),
+    ),
+    GetPage(
       name: AppRoutes.V4_REVENUE_EXPENDITURE,
       page: () => V4RevenueExpenditurePage(),
       binding: V4RevenueExpenditureBinding(),
-    ),
+    )
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
