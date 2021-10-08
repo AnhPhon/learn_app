@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -57,7 +55,12 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController>{
           child: ListView.builder(
             itemCount: controller.currentIndex == 1 ? 3 : controller.currentIndex == 2 ? 5 : 7,
             itemBuilder: (context, index) {
-              return V2RecruimentNewsCard(index: index,);
+              return GestureDetector(
+                onTap: () {
+                  controller.onClickRecruitmentNews();
+                },
+                child: V2RecruimentNewsCard(index: index,)
+              );
             },
           ),
         )

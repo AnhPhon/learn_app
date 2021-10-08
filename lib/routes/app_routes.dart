@@ -116,4 +116,6 @@ class AppRoutes {
 
   // Builder
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+  // Xem tin tuyển dụng
+  static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
 }

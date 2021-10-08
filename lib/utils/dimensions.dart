@@ -69,6 +69,12 @@ class Dimensions {
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;
 
+  // SIZE
+  static const double SIZE_EXTRA_SMALL = 10.0;
+  static const double SIZE_SMALL = 20.0;
+  static const double SIZE_LARGE = 30;
+  static const double SIZE_EXTRA_LAEGE = 40;
+
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
 

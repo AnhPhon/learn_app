@@ -69,6 +69,8 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
@@ -375,6 +377,13 @@ class AppPages {
       name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
       page: () => V2RecruitmentPage(),
       binding: V2RecruitmentBinding(),
+    ),
+
+    // Xem tin tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_VIEW_RECRUITMENT_NEWS,
+      page: () => V2ViewRecruitmentNewsPage(),
+      binding: V2ViewRecruitmentNewsBinding(),
     ),
 
 
