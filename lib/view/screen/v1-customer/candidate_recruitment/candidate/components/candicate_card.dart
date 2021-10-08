@@ -8,8 +8,8 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
-class CandicateCard extends StatelessWidget {
-  const CandicateCard({
+class CandidateCard extends StatelessWidget {
+  const CandidateCard({
     Key? key,
     this.showEmailAndPass = true,
   }) : super(key: key);

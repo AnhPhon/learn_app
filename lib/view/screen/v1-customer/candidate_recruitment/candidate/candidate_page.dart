@@ -7,23 +7,23 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button_icon.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/candicate_controller.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/components/candicate_card.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/components/recruiment_news_card.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_controller.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/candicate_card.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/recruiment_news_card.dart';
 
-class V1CandicatePage extends GetView<V1CandicateController> {
+class V1CandidatePage extends GetView<V1CandidateController> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Tuyển dụng ứng viên"),
       body: GetBuilder(
-        builder: (V1CandicateController controller) {
+        builder: (V1CandidateController controller) {
           return controller.currentIndex == 0 ?  news(context) : listOfCandidates(context, controller: controller);
         },
       ),
       floatingActionButton: GetBuilder(
-        builder: (V1CandicateController controller) {
+        builder: (V1CandidateController controller) {
           return controller.currentIndex == 0 ? FloatingActionButton(
             onPressed: controller.onClickFloatButton,
             tooltip: "Tạo đơn dịch vụ",
@@ -64,7 +64,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
   ///
   /// Danh sách ứng tuyển
   ///
-  Widget listOfCandidates(BuildContext context, { required V1CandicateController controller}){
+  Widget listOfCandidates(BuildContext context, { required V1CandidateController controller}){
     return SingleChildScrollView(
       child: SizedBox(
           child: SingleChildScrollView(
@@ -85,7 +85,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
                         onTap: (){
                           controller.onClickProfile();
                         },
-                        child: const CandicateCard(showEmailAndPass: false,)
+                        child: const CandidateCard(showEmailAndPass: false,)
                       );
                     },
                   ),
@@ -132,7 +132,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
     ///
     /// Thanh chọn tab
     ///
-    Widget tabBarWidget({required BuildContext context , required V1CandicateController controller}){
+    Widget tabBarWidget({required BuildContext context , required V1CandidateController controller}){
       return Padding(
         padding: const EdgeInsets.only(
           top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -143,7 +143,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
           alignment: Alignment.center,
           width: DeviceUtils.getScaledWidth(context, 1).roundToDouble(),
           height: 60,
-          child: GetBuilder<V1CandicateController>(
+          child: GetBuilder<V1CandidateController>(
             builder: (controller) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +159,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
     }
     
 
-    Widget search(BuildContext context, {required V1CandicateController controller}){
+    Widget search(BuildContext context, {required V1CandidateController controller}){
       return Padding(
         padding: const EdgeInsets.all(
           Dimensions.PADDING_SIZE_DEFAULT,
@@ -202,7 +202,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
     ///
     ///Bộ lọc
     ///
-    Widget filter(BuildContext context, {required V1CandicateController controller}){
+    Widget filter(BuildContext context, {required V1CandidateController controller}){
       return Container(
         padding: const EdgeInsets.only(
           top: Dimensions.PADDING_SIZE_EXTRA_SMALL,

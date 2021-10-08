@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 
-class V1CandicateProfileController extends GetxController{
+class V1CandidateProfileController extends GetxController{
     // Trạng thái hồ sơ data ảo
     bool statusProfile = false;
 

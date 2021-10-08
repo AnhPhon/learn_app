@@ -8,13 +8,13 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candicate/components/candicate_card.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candicate_profile/candicate_profile_controller.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/candicate_card.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
-class V1CandicateProfilePage extends GetView<V1CandicateProfileController> {
+class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
 
-  final V1CandicateProfileController _controller = Get.find<V1CandicateProfileController>();
+  final V1CandidateProfileController _controller = Get.find<V1CandidateProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class V1CandicateProfilePage extends GetView<V1CandicateProfileController> {
           children: [
             // Thông tin người 
             GetBuilder(
-              builder: (V1CandicateProfileController controller) {
-                return CandicateCard(showEmailAndPass: controller.statusProfile,);
+              builder: (V1CandidateProfileController controller) {
+                return CandidateCard(showEmailAndPass: controller.statusProfile,);
               },
             ),
             // Nội dung hồ sơ
@@ -41,7 +41,7 @@ class V1CandicateProfilePage extends GetView<V1CandicateProfileController> {
   ///Nội dung hồ sơ
   ///
 
-  Widget content(BuildContext context, {required V1CandicateProfileController controller }) {
+  Widget content(BuildContext context, {required V1CandidateProfileController controller }) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT
@@ -109,7 +109,7 @@ class V1CandicateProfilePage extends GetView<V1CandicateProfileController> {
           ),
           const Label(label: "File hồ sơ xin việc (nếu có)",obligatory: false,horizontalPadding: 0,),
           GetBuilder(
-            builder: (V1CandicateProfileController controller) {
+            builder: (V1CandidateProfileController controller) {
               if(controller.statusProfile){
                 return fileCv();
               }
