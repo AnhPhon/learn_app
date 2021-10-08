@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/components/dialog_content.dart';
+import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/dialog_content.dart';
 
-class V2ViewRecruitmentNewsController extends GetxController{
+class V1CandidateController extends GetxController{
   final searchController = TextEditingController();
-  bool isSearch = false;
   int currentIndex = 0;
   // Value slider 
   double salary = 0;
@@ -28,10 +28,17 @@ class V2ViewRecruitmentNewsController extends GetxController{
     update();
   }
 
-  /// Thay đổi trạng thái tìm kiếm
-  void onChangedStatus(){
-    isSearch = !isSearch;
-    update();
+  ///
+  /// Onlick đến đơn tạo tuyển ứng viên
+  ///
+  void onClickFloatButton(){
+    Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
+  }
+  ///
+  /// Onlick đến xem thông tin hồ sơ ưng tuyển
+  ///
+  void onClickProfile(){
+    Get.toNamed(AppRoutes.V1_CANDICATE_PROFILE);
   }
 
   /// 
@@ -46,14 +53,5 @@ class V2ViewRecruitmentNewsController extends GetxController{
       }, child: const Text("Tìm kiếm"))
     );
   }
-
-  ///
-  /// Nhán vào nút ứng tuyển
-  ///
-  void onClickRecuitmentButton(){
-    Get.toNamed(AppRoutes.V2_FORM_OF_SUBMITSSION);
-  }
-
-
 
 }

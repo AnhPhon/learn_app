@@ -38,6 +38,10 @@ class AppRoutes {
   // Tạo tin tuyển dụng 
   static const String V1_G7_RECRUITMENT = '/v1_g7_reccuitment';
   static const String V1_G7_REVIEW = '/v1_g7_review';
+  // Trang chính của tuyển dụng ứng viên
+  static const String V1_CANDICATE = '/v1_candicate';
+  // Xem thông tin hồ sơ
+  static const String V1_CANDICATE_PROFILE = '/v1_candicate_profile';
   // Xem lại đơn công viêc
   static const String V1_G1_REVIEW = "/v1_g1_review";
   // Bảng giá đăng tin
@@ -118,4 +122,13 @@ class AppRoutes {
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
   // Xem tin tuyển dụng
   static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
+  // Hình thức ứng tuyển
+  static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
+  // Đánh văn bản
+  static const String V2_TEXT_TYING = '/v2_text_tying';
+  // Nộp cv
+  static const String V2_CV = '/v2_cv';
+  // Xem trước hồ sơ nộp bằng CV
+  static const String V2_PREVIEW = '/v2_preview';
+
 }
