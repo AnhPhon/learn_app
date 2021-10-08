@@ -188,7 +188,7 @@ class V4HomePage extends GetView<V4HomeController> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                         Text(
                           controller.contentGrid![index]["quality"].toString(),
                           style: const TextStyle(

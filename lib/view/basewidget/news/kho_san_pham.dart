@@ -40,8 +40,8 @@ class KhoSanPham extends StatelessWidget {
             height: 80,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(7),
-                bottomRight: Radius.circular(7),
+                topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
                 image: AssetImage(Images.V4NewsExample),
