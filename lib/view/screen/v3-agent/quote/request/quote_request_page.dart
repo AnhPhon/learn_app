@@ -8,6 +8,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
+import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_controller.dart';
 
@@ -29,15 +30,21 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                 children: [
                   // tiêu đề báo giá
                   _textWidget("Tiêu đề báo giá", controller.tieuDeBaoGia),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // Chọn loại công trình
                   _textWidget("Chọn loại công trình", controller.loaiCongTrinh),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // địa điểm nhận
                   _diaDiemNhan(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // dia chi cu the
                   _diaChiCuThe(
@@ -45,23 +52,39 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                       (controller.isCheck == true)
                           ? controller.diaChiCuThe
                           : "***"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian dự kiến
                   _thoiGianDuKien(context, controller.infoCard),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // noi dung yeu cau
                   _noiDungYeuCau(context, controller.noiDungYeuCau),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // Hinh Anh Khoi Luong
                   _hinhAnhKhoiLuong(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
+
+                  // file upload
+                  _fileUpload(context),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // feature
                   _featureWidget(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
                 ],
               ),
             ),
@@ -173,7 +196,9 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
       isRequired: false,
       content: Column(
         children: [
-          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+          SizedBox(
+              height: DeviceUtils.getScaledHeight(
+                  context, Dimensions.SCALE_DEFAULT)),
           Row(
             children: [
               Text("Từ ${controller.from}"),
@@ -181,7 +206,9 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
               Text("Đến ${controller.to}"),
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+          SizedBox(
+              height: DeviceUtils.getScaledHeight(
+                  context, Dimensions.SCALE_DEFAULT)),
           ContentWhiteBox(infoCard: infoCard)
         ],
       ),
@@ -304,6 +331,20 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  ///
+  /// file upload
+  ///
+  Widget _fileUpload(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: LabelContent(
+        title: "Đính kèm file excel hoặc khác:",
+        isRequired: false,
+        content: FileUploadWidget(label: "Thêm file"),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
+import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_controller.dart';
 
@@ -29,28 +30,46 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                 children: [
                   // tiêu đề báo giá
                   _textWidget("Tiêu đề báo giá", controller.tieuDeBaoGia),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
                   _bangBaoGia(context, controller.infoCard),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian giao hàng
                   _thoiGianGiaoHang(context, "09h30", "10h30", "12-09-2021"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // tien do giao hang
                   _tienDoGiaoHang(context, "Giao cấp",
                       "${PriceConverter.convertPrice(context, 50000)} VNĐ"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
+
+                  // file upload
+                  _fileUpload(context),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // Hinh Anh Khoi Luong
                   _hinhAnhKhoiLuong(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // feature
                   _giatriDonHang(context),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
                 ],
               ),
             ),
@@ -238,7 +257,9 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
               )
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+          SizedBox(
+              height: DeviceUtils.getScaledHeight(
+                  context, Dimensions.SCALE_DEFAULT)),
           Column(
             children: [
               Container(
@@ -258,7 +279,9 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
               ),
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+          SizedBox(
+              height: DeviceUtils.getScaledHeight(
+                  context, Dimensions.SCALE_DEFAULT)),
           Column(
             children: [
               Container(
@@ -413,6 +436,20 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  ///
+  /// file upload
+  ///
+  Widget _fileUpload(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: LabelContent(
+        title: "File báo giá:",
+        isRequired: false,
+        content: FileUploadWidget(label: "bao_gia.doc"),
       ),
     );
   }

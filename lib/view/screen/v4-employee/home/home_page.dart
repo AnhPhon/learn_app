@@ -437,7 +437,7 @@ class V4HomePage extends GetView<V4HomeController> {
                       )
                     ],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(Dimensions.MARGIN_SIZE_SMALL),
                     ),
                   ),
                   child: const Text(
@@ -465,7 +465,7 @@ class V4HomePage extends GetView<V4HomeController> {
                       )
                     ],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(Dimensions.MARGIN_SIZE_SMALL),
                     ),
                   ),
                   child: const Text(

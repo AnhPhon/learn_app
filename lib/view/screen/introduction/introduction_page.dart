@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/introduction/introduction_controller.dart';
 
 class IntroductionPage extends GetView<IntroductionController> {
@@ -78,9 +79,9 @@ class IntroductionPage extends GetView<IntroductionController> {
                     fontWeight: FontWeight.w600,
                     color: ColorResources.PRIMARY)),
             curve: Curves.fastLinearToSlowEaseIn,
-            controlsMargin: const EdgeInsets.all(16),
+            controlsMargin: const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT+1),
             controlsPadding: kIsWeb
-                ? const EdgeInsets.all(12.0)
+                ? const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT-3)
                 : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
             dotsDecorator: const DotsDecorator(
               size: Size(10.0, 10.0),

@@ -89,8 +89,8 @@ class _CustomAppBarState extends State<HomeAppBar> {
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_LARGE),
                   ),
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.all(Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                  margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_LARGE),

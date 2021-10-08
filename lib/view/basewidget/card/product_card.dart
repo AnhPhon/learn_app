@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
           BoxShadow(
             color: Colors.grey.withOpacity(.5),
             blurRadius: 10,
-            offset: const Offset(0, -10)
+            offset: const Offset(0, -Dimensions.MARGIN_SIZE_SMALL)
           )
         ],
         borderRadius: const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))

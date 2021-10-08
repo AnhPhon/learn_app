@@ -33,15 +33,20 @@ class CategoryWidget extends GetView {
     final double width = MediaQuery.of(context).size.width;
     return Container(
         color: Colors.white,
-        padding:
-            const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_LARGE,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
+          bottom: Dimensions.PADDING_SIZE_LARGE,
+        ),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
+                  margin:
+                      const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
                   width: width * .60,
                   child: Text(
                     label,
@@ -81,7 +86,9 @@ class CategoryWidget extends GetView {
                 )
               ],
             ),
-            Container(padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT), child: content),
+            Container(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                child: content),
           ],
         ));
   }
