@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -19,6 +18,7 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       required this.fontSize});
   String label, holdplacer;
   TextEditingController controller;
@@ -27,16 +27,17 @@ class InputField extends StatelessWidget {
   double width, fontSize;
   double? height;
   Widget? suffixIcon;
+  final double? paddingTop;
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
+      padding: EdgeInsets.only(
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT, 
-        top: Dimensions.PADDING_SIZE_LARGE
+        top: paddingTop!
       ),
       //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,
@@ -49,22 +50,26 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize,// * 2.1, 
-                      fontWeight: FontWeight.bold, 
+                      fontSize: fontSize, // * 2.1,
+                      fontWeight: FontWeight.bold,
                       color: ColorResources.BLACK.withOpacity(0.7)),
                 ),
-                if (obligatory) Text(
-                        '*',
-                        style: TextStyle(
-                            fontSize: fontSize,// * 2.1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ) else Container()
+                if (obligatory)
+                  Text(
+                    '*',
+                    style: TextStyle(
+                        fontSize: fontSize, // * 2.1,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  )
+                else
+                  Container()
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            padding:
+                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
@@ -77,16 +82,19 @@ class InputField extends StatelessWidget {
               decoration: InputDecoration(
                 contentPadding:const EdgeInsets.symmetric(horizontal:Dimensions.PADDING_SIZE_SMALL, vertical:Dimensions.PADDING_SIZE_DEFAULT ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                disabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorResources.PRIMARYCOLOR)
+                disabledBorder:  OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 errorText: errorText,
                 isDense: true,

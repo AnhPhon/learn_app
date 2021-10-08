@@ -79,7 +79,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_CANDICATE);
+      }
     },
   ];
 
@@ -106,7 +108,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.image,
-      "onTap": () {}
+      "onTap": () {
+        
+      }
     },
     {
       "label": "Sản phẩm mẫu",
@@ -130,10 +134,10 @@ class V1HomeController extends GetxController {
   ///
   /// Tới trang Tạo đơn công việc
   ///
-  void onClickCreateWork() {
-    Get.offAndToNamed(AppRoutes.V1_CREATEWORK);
+  void onClickCreateWork(){
+    Get.toNamed(AppRoutes.V1_CREATE_WORK);
   }
-
+  
   /// go to Form List Page
   ///
   void onClickFormList() {
