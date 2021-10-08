@@ -31,8 +31,8 @@ class KhoSanPham extends StatelessWidget {
           Radius.circular(10),
         ),
       ),
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+      padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
