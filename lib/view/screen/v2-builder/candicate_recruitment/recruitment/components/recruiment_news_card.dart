@@ -5,8 +5,8 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 
-class RecruimentNewsCard extends StatelessWidget {
-  const RecruimentNewsCard({ Key? key, required this.index }) : super(key: key);
+class V2RecruimentNewsCard extends StatelessWidget {
+  const V2RecruimentNewsCard({ Key? key, required this.index }) : super(key: key);
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -72,15 +72,28 @@ class RecruimentNewsCard extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text("Lương thoã thuận"),
-                                  if (index % 2 == 0) 
-                                  const Text("Tin chưa duyệt", overflow: TextOverflow.ellipsis,style: TextStyle(
-                                    color: ColorResources.RED
-                                  ),) 
-                                  else 
-                                  const Text("Tin đã duyệt", overflow: TextOverflow.ellipsis,style: TextStyle(
-                                    color: ColorResources.GREEN,
-                                  ),)
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.monetization_on, size: Dimensions.ICON_SIZE_DEFAULT),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                        child: Text("thoã thuận"),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.access_time_rounded, 
+                                        size: Dimensions.ICON_SIZE_DEFAULT,
+                                        color: ColorResources.BLACK
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                        child: Text("hành chính", overflow: TextOverflow.ellipsis,),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
