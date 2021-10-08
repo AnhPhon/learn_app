@@ -175,11 +175,11 @@ class Dimensions {
   }
 
   static TextStyle fontSizeStyle16w600() {
-    return const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle14w600() {
-    return const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle12w600() {

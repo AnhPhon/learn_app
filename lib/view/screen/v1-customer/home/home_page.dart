@@ -14,8 +14,6 @@ import 'home_controller.dart';
 class V1HomePage extends GetView<V1HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
@@ -108,7 +106,7 @@ class V1HomePage extends GetView<V1HomeController> {
   /// field widget
   ///
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
-    const double _fontSize = 16;
+    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Padding(
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
@@ -236,7 +234,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color.fromRGBO(42, 53, 71, 1),
-                  fontSize: 18,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold,
                   height: 1,
                   shadows: [

@@ -22,6 +22,7 @@ class Images {
   static const String shipping_method = 'assets/images/shipping_method.png';
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
+  static const String qr_code = 'assets/images/qr_code.png';
 
   // v1-customer
   static const String V1Product1Home = 'assets/images/product1.png';
@@ -33,7 +34,6 @@ class Images {
   static const String V1Product7Home = 'assets/images/product7.png';
   static const String V1Product8Home = 'assets/images/product8.png';
   static const String V1Product9Home = 'assets/images/product9.png';
-  static const String qr_code = 'assets/images/qr_code.png';
 
   // v4-employee
   static const String V4NewsExample = 'assets/images/news1.png'; 

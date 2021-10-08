@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class TaskNeedWorker extends StatelessWidget {
   final String nhanTask;
@@ -16,7 +17,6 @@ class TaskNeedWorker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     const double height = 90;
     return Container(
       width: 352,
@@ -30,11 +30,11 @@ class TaskNeedWorker extends StatelessWidget {
           )
         ],
         borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
         ),
       ),
-      margin: const EdgeInsets.only(top: 15),
-      padding: const EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
@@ -48,7 +48,7 @@ class TaskNeedWorker extends StatelessWidget {
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage('assets/images/news1.png'),
+                image: AssetImage(Images.V4NewsExample),
                 fit: BoxFit.fill,
               ),
             ),
@@ -65,8 +65,8 @@ class TaskNeedWorker extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.bold,
                       height: 1,
                     ),
                   ),
@@ -81,7 +81,7 @@ class TaskNeedWorker extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                                                    fontSize: 15,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           letterSpacing: -0.3,
                           fontWeight: FontWeight.normal,
                           height: 1,
