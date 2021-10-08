@@ -143,4 +143,6 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+  static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
+  static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
 }
