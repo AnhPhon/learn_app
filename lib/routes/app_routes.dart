@@ -177,6 +177,7 @@ class AppRoutes {
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 
+<<<<<<< HEAD
   //builder
   static const String V2_PAYMENT_ACCOUNT = '/v2_payment_account';
   static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
@@ -200,4 +201,8 @@ class AppRoutes {
   static const String V4_RULES = '/v4_rules';
   static const String V4_SALARY = '/v4_salary';
   static const String V4_INFO = '/v4_info';
+=======
+  // Builder
+  static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+>>>>>>> 0db499d (create recruitment builder)
 }
