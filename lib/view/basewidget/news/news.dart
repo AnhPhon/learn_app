@@ -25,7 +25,7 @@ class NewsBox extends StatelessWidget {
           )
         ],
         borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
         ),
       ),
       margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),

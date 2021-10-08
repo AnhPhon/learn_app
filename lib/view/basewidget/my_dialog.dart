@@ -18,7 +18,7 @@ class MyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
       child: Padding(
         padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.05)),
         child: Stack(clipBehavior: Clip.none, children: [

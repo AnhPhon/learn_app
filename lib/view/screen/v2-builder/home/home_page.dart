@@ -91,7 +91,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                   ),
                 ),
                 child: const Text(

@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
                     ColorResources.PRIMARY,
                     ColorResources.PRIMARY,
                   ]),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
         child: Text(buttonText,
             style: titilliumSemiBold.copyWith(
               fontSize: 16,

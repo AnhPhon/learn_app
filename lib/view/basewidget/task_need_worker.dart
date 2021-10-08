@@ -30,11 +30,11 @@ class TaskNeedWorker extends StatelessWidget {
           )
         ],
         borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
         ),
       ),
-      margin: const EdgeInsets.only(top: 15),
-      padding: const EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
