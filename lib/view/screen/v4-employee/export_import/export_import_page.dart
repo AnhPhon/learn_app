@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
+import 'package:template/utils/color_resources.dart';
+
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/screen/v4-employee/export_import/component/add_remove_count.dart';
+
+import 'package:template/view/screen/v4-employee/export_import/component/drop_dow_button_horizontal.dart';
 import 'package:template/view/screen/v4-employee/export_import/export_import_controller.dart';
 
 class V4ExportImportPage extends GetView<V4ExportImportControleer> {
@@ -16,6 +23,11 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       body: GetBuilder(
           init: V4ExportImportControleer(),
           builder: (V4ExportImportControleer controller) {
+            // if (controller.isLoading) {
+            //   return const Center(
+            //     child: CircularProgressIndicator(),
+            //   );
+            // }
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -23,7 +35,12 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // chọn ngày xuất nhập kho
-                      _timeExportImport(controller, context),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        child: _timeExportImport(controller, context),
+                      ),
 
                       //Chọn xuất hoặc nhập kho theo trang chủ
                       if (controller.isExport == true)
@@ -32,20 +49,33 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                         _import(controller, context),
                     ],
                   ),
+
                   // Tên dự án/kho chính sẽ được truyền vào
                   _project(controller, context),
-                  InputField(
-                    allowEdit: true,
-                    allowMultiline: false,
-                    controller: controller.suppliesController,
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                    hidden: false,
-                    holdplacer: 'Da Nang Ciy',
-                    label: 'Địa chỉ',
-                    obligatory: true,
-                    typeInput: TextInputType.text,
-                    width: DeviceUtils.getScaledWidth(context, 1),
-                  )
+
+                  //Tên vật tư/thiết bị
+                  _supplies(controller, context),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Số lượng
+                      _quantity(controller, context),
+
+                      //đơn vị
+                      _unit(context),
+                    ],
+                  ),
+
+                  //Nội dung khác(nếu có)
+                  _ortherContent(controller, context),
+
+                  Container(
+                    height: DeviceUtils.getScaledHeight(context, 0.07),
+                  ),
+
+                  // Button thêm
+                  _btnAdd(),
                 ],
               ),
             );
@@ -54,7 +84,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   }
 
   ///
-  /// Chọn thời gian xuất nhập kho
+  /// Chọn ngày xuất nhập kho
   ///
   Widget _timeExportImport(
       V4ExportImportControleer controller, BuildContext context) {
@@ -77,7 +107,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _exprot(V4ExportImportControleer controller, BuildContext context) {
     return InputField(
-      //boldHinText: true,
+      boldHinText: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.exportController,
@@ -96,7 +126,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _import(V4ExportImportControleer controller, BuildContext context) {
     return InputField(
-      // boldHinText: true,
+      boldHinText: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.importController,
@@ -113,7 +143,6 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   ///Tên dự án/kho chính sẽ được truyền vào
   ///
-
   Widget _project(V4ExportImportControleer controller, BuildContext context) {
     return InputField(
       allowEdit: false,
@@ -128,4 +157,77 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
+}
+
+///
+///Tên vật tư/thiết bị
+///
+Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
+  return DropDownButtonHorizontal<String>(
+    value: 'Xi măng',
+    data: const ['Xi măng', 'Gạch'],
+    label: 'Tên vật tư/thiết bị',
+    onChanged: (value) {},
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Số lượng
+///
+Widget _quantity(V4ExportImportControleer controller, BuildContext context) {
+  return AddAndRemoveCount(
+    controller: controller.countController,
+    allowEdit: true,
+    label: 'Số lượng',
+    typeInput: TextInputType.number,
+    width: DeviceUtils.getScaledWidth(context, 0.25),
+  );
+}
+
+///
+/// Đơn vị
+///
+Widget _unit(BuildContext context) {
+  return DropDownButton<String>(
+    label: 'Đơn vị:',
+    data: const ['Tấn', "Tạ", "Yến"],
+    obligatory: true,
+    onChanged: (value) {},
+    value: 'Tấn',
+    width: DeviceUtils.getScaledWidth(context, 0.4),
+  );
+}
+
+///
+/// Nội dung khác ( nếu có)
+///
+Widget _ortherContent(
+    V4ExportImportControleer controller, BuildContext context) {
+  return InputField(
+    // ignore: avoid_redundant_argument_values
+    line: 5,
+    allowEdit: true,
+    allowMultiline: true,
+    controller: controller.contentController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: 'Nhập nội dung khác',
+    label: 'Nội dung khác(nếu có)',
+    obligatory: false,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 1),
+  );
+}
+
+///
+/// Button Thêm
+///
+Widget _btnAdd() {
+  return LongButton(
+    color: ColorResources.APPBARCOLOR,
+    onPressed: () {},
+    title: 'Thêm',
+    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+  );
 }

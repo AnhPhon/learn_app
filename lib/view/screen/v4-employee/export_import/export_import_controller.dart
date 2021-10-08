@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class V4ExportImportControleer extends GetxController {
 //khi báo isLoading
   bool isLoading = true;
+
   //khai báo isExport
   bool isExport = true;
 
@@ -11,7 +12,8 @@ class V4ExportImportControleer extends GetxController {
   final exportController = TextEditingController();
   final importController = TextEditingController();
   final projectController = TextEditingController();
-  final suppliesController = TextEditingController();
+  final countController = TextEditingController();
+  final contentController = TextEditingController();
 
   @override
   void onInit() {
