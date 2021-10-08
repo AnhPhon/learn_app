@@ -85,7 +85,7 @@ class V1CandicatePage extends GetView<V1CandicateController> {
                         onTap: (){
                           controller.onClickProfile();
                         },
-                        child: const CandicateCard()
+                        child: const CandicateCard(showEmailAndPass: false,)
                       );
                     },
                   ),
@@ -209,11 +209,11 @@ class V1CandicatePage extends GetView<V1CandicateController> {
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              //mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
                   onTap: (){
