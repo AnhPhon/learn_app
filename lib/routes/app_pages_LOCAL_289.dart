@@ -1,9 +1,5 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_binding.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/Benefits.dart';
@@ -331,21 +327,6 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
-    GetPage(
-        name: AppRoutes.V1_G7_PRICE_LIST,
-        page: () => V1G7PriceListPage(),
-        binding: V1G7PriceListBinding()),
-    // Trang chính tuyển dung ứng viên
-    GetPage(
-        name: AppRoutes.V1_CANDICATE,
-        page: () => V1CandidatePage(),
-        binding: V1CandidateBinding()),
-    // Xem thông tin của hồ sơ
-    // Trang chính tuyển dung ứng viên
-    GetPage(
-        name: AppRoutes.V1_CANDICATE_PROFILE,
-        page: () => V1CandidateProfilePage(),
-        binding: V1CandidateProfileBinding()),
 
     // Hình thức thanh toán
     GetPage(

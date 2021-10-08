@@ -29,7 +29,8 @@ class DropDownButton<T> extends StatelessWidget {
       padding: EdgeInsets.only(
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
+          top: paddingTop ?? 0
+        ),
       child: Column(
         children: [
           if (label != null)
