@@ -137,7 +137,9 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
             Expanded(
               flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                ),
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
@@ -156,7 +158,7 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                 children: [
                   const Flexible(
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                       child: Text(
                         "Thợ ốp lát: Công trình khách hàng 5 sao",
                         maxLines: 2,

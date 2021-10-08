@@ -1,5 +1,19 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
+import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_binding.dart';
@@ -37,14 +51,13 @@ import 'package:template/view/screen/v1-customer/product/product_detail/product_
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
-import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_page.dart';
-import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
@@ -81,6 +94,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_daily_rep
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
@@ -181,6 +196,34 @@ class AppPages {
       page: () => V1CartPage(),
     ),
     GetPage(
+      name: AppRoutes.V1_TAX,
+      page: () => V1TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_MANAGEMENT,
+      page: () => V1JobManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_HELP,
+      page: () => V1HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CONTRACT,
+      page: () => V1ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_POINT_BASED,
+      page: () => V1PointBasedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_WALLET,
+      page: () => V1WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INTRODUCE,
+      page: () => V1IntroducePage(),
+    ),
+    GetPage(
       name: AppRoutes.V1_SHIPPING_METHOD,
       page: () => V1ShippingMethodPage(),
     ),
@@ -200,7 +243,30 @@ class AppPages {
       name: AppRoutes.V1_PAYMENT_SUCCESS,
       page: () => V1PaymentSuccessPage(),
     ),
-
+    GetPage(
+      name: AppRoutes.V1_ACCIDENT_INSURANCE,
+      page: () => V1AccidentInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_OTHER_INSURANCE,
+      page: () => V1OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INURANCE_REGISTER,
+      page: () => V1InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_YOUR_INSURANCE,
+      page: () => V1YourInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INSURANCE_DETAIL,
+      page: () => V1InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_RULES,
+      page: () => V1RulesPage(),
+    ),
     GetPage(
       name: AppRoutes.V1_NEWS_DETAIL,
       page: () => V1NewsDetailPage(),
@@ -333,6 +399,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+    GetPage(
+        name: AppRoutes.V1_G7_PRICE_LIST,
+        page: () => V1G7PriceListPage(),
+        binding: V1G7PriceListBinding()),
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
@@ -401,6 +471,11 @@ class AppPages {
       binding: V4ReportTimekeepingBinding(),
     ),
     GetPage(
+      name: AppRoutes.V4_EXPORT_IMPROT,
+      page: () => V4ExportImportPage(),
+      binding: V4ExportImportBinding(),
+    ),
+    GetPage(
       name: AppRoutes.V4_REVENUE_EXPENDITURE,
       page: () => V4RevenueExpenditurePage(),
       binding: V4RevenueExpenditureBinding(),
@@ -415,6 +490,7 @@ class AppPages {
       page: () => V4AddReportOnRequestPage(),
       binding: V4AddReportOnRequestBinding(),
     ),
+
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
