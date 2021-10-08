@@ -9,6 +9,10 @@ class DateConverter {
     return DateFormat('dd MMM yyyy').format(dateTime);
   }
 
+  static String estimatedDateOnly(DateTime dateTime) {
+    return DateFormat('dd/MM/yyyy').format(dateTime);
+  }
+
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }

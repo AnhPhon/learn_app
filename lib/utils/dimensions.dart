@@ -127,6 +127,8 @@ class Dimensions {
     );
   }
 
+  // SIZE BOX BOTTOM NAV
+  static const double SIZE_BOX_BOTTOM_NAV = 150;
 
   Widget paddingDivider(BuildContext context) {
     return Padding(

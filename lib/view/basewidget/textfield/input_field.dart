@@ -3,25 +3,24 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class InputField extends StatelessWidget {
-  InputField({
-    required this.label,
-    required this.holdplacer,
-    required this.controller,
-    required this.allowEdit,
-    required this.allowMultiline,
-    this.suffixIcon,
-    this.onChanged,
-    this.errorText,
-    required this.typeInput,
-    required this.width,
-    this.height = 50,
-    required this.hidden,
-    required this.obligatory,
-    this.line = 5,
-    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
-    required this.fontSize,
-    this.boldHinText,
-  });
+  InputField(
+      {required this.label,
+      required this.holdplacer,
+      required this.controller,
+      required this.allowEdit,
+      required this.allowMultiline,
+      this.suffixIcon,
+      this.onChanged,
+      this.boldHinText,
+      this.errorText,
+      required this.typeInput,
+      required this.width,
+      this.height = 50,
+      required this.hidden,
+      required this.obligatory,
+      this.line = 5,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      required this.fontSize});
   String label, holdplacer;
   TextEditingController controller;
   bool allowEdit, allowMultiline, hidden, obligatory;
@@ -111,8 +110,11 @@ class InputField extends StatelessWidget {
                   isDense: true,
                   hintText: holdplacer,
                   hintStyle: TextStyle(
-                    color: ColorResources.BLACK.withOpacity(0.5),
+                    color: boldHinText == true
+                        ? ColorResources.BLACK
+                        : ColorResources.BLACK.withOpacity(0.5),
                     fontSize: Dimensions.FONT_SIZE_LARGE,
+                    fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
                   fillColor: (allowEdit == false)
                       ? ColorResources.GREY

@@ -419,49 +419,59 @@ class V4HomePage extends GetView<V4HomeController> {
           const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .333333333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickToExprot();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: size.width / 3,
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: ColorResources.THEME_DEFAULT,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Thêm thu",
-                  style: TextStyle(color: Colors.white),
+                  child: const Text(
+                    "Thêm thu",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .333333333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickToImport();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: size.width / 3,
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  "Thêm chi",
-                  style: TextStyle(color: Colors.white),
+                  child: const Text(
+                    "Thêm chi",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               )
             ],

@@ -105,6 +105,19 @@ class V4HomeController extends GetxController {
     }
   }
   ///
+  ///click to export page
+  ///
+  void onClickToExprot() {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true");
+  }
+
+  ///
+  ///click to import page
+  ///
+  void onClickToImport() {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase");
+  }
+
   /// click to Revenue page
   ///
   void onClickRevenue() {

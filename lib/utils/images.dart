@@ -33,6 +33,7 @@ class Images {
   static const String V1Product7Home = 'assets/images/product7.png';
   static const String V1Product8Home = 'assets/images/product8.png';
   static const String V1Product9Home = 'assets/images/product9.png';
+  static const String qr_code = 'assets/images/qr_code.png';
 
   // v4-employee
   static const String V4NewsExample = 'assets/images/news1.png'; 
