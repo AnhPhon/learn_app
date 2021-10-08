@@ -31,7 +31,6 @@ class InputField extends StatelessWidget {
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
-  bool? boldHinText;
   @override
   Widget build(BuildContext context) {
     return Container(
