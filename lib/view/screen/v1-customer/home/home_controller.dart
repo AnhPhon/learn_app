@@ -41,7 +41,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V1_QUOTE_REQUEST_1);
+        }
       },
       {
         "label": "Dịch vụ thường xuyên",

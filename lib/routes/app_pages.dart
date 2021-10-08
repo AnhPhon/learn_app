@@ -36,16 +36,16 @@ import 'package:template/view/screen/v1-customer/product/shipping_method/shippin
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
 import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
+import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
-import 'package:template/view/screen/v1-customer/quote/response/x_page.dart';
+import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_page.dart';
-import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
@@ -82,18 +82,17 @@ import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.d
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
-
-import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
-import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
 
 import 'app_routes.dart';
 
