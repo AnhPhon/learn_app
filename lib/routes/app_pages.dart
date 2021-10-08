@@ -34,6 +34,11 @@ import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
+import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
+import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
+import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
+import 'package:template/view/screen/v1-customer/quote/response/x_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
@@ -201,6 +206,31 @@ class AppPages {
       name: AppRoutes.V1_NEWS_DETAIL,
       page: () => V1NewsDetailPage(),
     ),
+
+    ///
+    /// v1 customer quote
+    ///
+    GetPage(
+      name: AppRoutes.V1_QUOTE_REQUEST_1,
+      page: () => V1Request1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_REQUEST_2,
+      page: () => V1Request2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_CHECK,
+      page: () => V1CheckPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_DONE,
+      page: () => V1DonePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_RESPONSE,
+      page: () => V1ResponsePage(),
+    ),
+    
 
     ///
     /// Thông báo
