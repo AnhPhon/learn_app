@@ -38,6 +38,10 @@ class AppRoutes {
   // Tạo tin tuyển dụng 
   static const String V1_G7_RECRUITMENT = '/v1_g7_reccuitment';
   static const String V1_G7_REVIEW = '/v1_g7_review';
+  // Trang chính của tuyển dụng ứng viên
+  static const String V1_CANDICATE = '/v1_candicate';
+  // Xem thông tin hồ sơ
+  static const String V1_CANDICATE_PROFILE = '/v1_candicate_profile';
   // Xem lại đơn công viêc
   static const String V1_G1_REVIEW = "/v1_g1_review";
   // Bảng giá đăng tin
