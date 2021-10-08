@@ -115,24 +115,25 @@ class V4AccountPage extends GetView<V4AccountController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              // ignore: prefer_const_constructors
-                              Container(
-                                width: DeviceUtils.getScaledWidth(context, 0.3),
-                                height:
-                                    DeviceUtils.getScaledHeight(context, 0.1),
-                                color: Colors.blue,
-                                child: CircleAvatar(
-                                  radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE,
-                                  backgroundColor: ColorResources.WHITE,
-                                  child: const CircleAvatar(
-                                    radius:
-                                        Dimensions.BORDER_RADIUS_EXTRA_LARGE -
-                                            2,
-                                    backgroundImage: AssetImage(
-                                      Images.V4AvatarHome,
-                                    ),
-                                  ),
-                                ),
+                              // Custom Avatar
+                              _avatar(context),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              // Tên tài khoản
+                              Text(
+                                controller.title,
+                                style: Dimensions.fontSizeStyle18w600(),
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              ),
+
+                              //Tên email
+                              Text(
+                                controller.email,
+                                style: Dimensions.fontSizeStyle16(),
                               ),
                             ],
                           )
@@ -144,6 +145,62 @@ class V4AccountPage extends GetView<V4AccountController> {
               ],
             );
           }),
+    );
+  }
+
+  ///
+  /// Custom Avatar
+  ///
+  Widget _avatar(BuildContext context) {
+    // ignore: sized_box_for_whitespace
+    return Container(
+      width: DeviceUtils.getScaledWidth(context, 0.3),
+      height: DeviceUtils.getScaledHeight(context, 0.14),
+      child: Stack(
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: CircleAvatar(
+              radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+              backgroundColor: ColorResources.WHITE,
+              child: CircleAvatar(
+                radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
+                backgroundImage: AssetImage(
+                  Images.V4AvatarHome,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            child: Container(
+              width: DeviceUtils.getScaledWidth(context, 0.1),
+              height: DeviceUtils.getScaledWidth(context, 0.1),
+              decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      // ignore: prefer_const_constructors
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                      color: ColorResources.BLACK.withAlpha(20),
+                    )
+                  ]),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.add_a_photo_outlined,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
