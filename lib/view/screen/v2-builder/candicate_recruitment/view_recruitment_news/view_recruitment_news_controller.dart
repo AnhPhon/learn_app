@@ -2,10 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/components/dialog_content.dart';
 
-class V2RecruitmentController extends GetxController{
+class V2ViewRecruitmentNewsController extends GetxController{
   final searchController = TextEditingController();
   bool isSearch = false;
   int currentIndex = 0;
@@ -28,19 +27,11 @@ class V2RecruitmentController extends GetxController{
     update();
   }
 
-  ///
-  /// Thay đồi trạng thái là tìm kiếm 
-  ///
+
   void onChangedStatus(){
     isSearch = !isSearch;
+    print("Change");
     update();
-  }
-
-  ///
-  /// Nhấn vào tin tuyển dụng thì xem thông tin của tin
-  ///
-  void onClickRecruitmentNews(){
-    Get.toNamed(AppRoutes.V2_VIEW_RECRUITMENT_NEWS);
   }
 
   /// 
