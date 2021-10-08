@@ -234,7 +234,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color.fromRGBO(42, 53, 71, 1),
-                  fontSize: 18,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold,
                   height: 1,
                   shadows: [

@@ -60,7 +60,7 @@ class NewsBox extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
-                      fontSize: 16,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
                       fontWeight: FontWeight.bold,
                       height: 1,
                     ),
