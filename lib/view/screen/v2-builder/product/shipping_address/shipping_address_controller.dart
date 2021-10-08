@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class V3ShippingAddressController extends GetxController {
+class V2ShippingAddressController extends GetxController {
   final addressController = TextEditingController();
 
   String title = "Địa điểm nhận hàng";

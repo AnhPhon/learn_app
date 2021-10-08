@@ -113,15 +113,15 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 
-  //agent
-  static const String V3_PAYMENT_ACCOUNT = '/v3_payment_account';
-  static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
-  static const String V3_PRODUCT = '/v3_product';
-  static const String V3_CART = '/v3_cart';
-  static const String V3_PRODUCT_DETAIL = '/v3_product_detail';
-  static const String V3_SHIPPING_METHOD = '/v3_shipping_method';
-  static const String V3_SHIPPING_ADDRESS = '/v3_shipping_address';
-  static const String V3_RECHARGE = '/v3_recharge';
-  static const String V3_PAYMENT_METHOD = '/v3_payment_method';
-  static const String V3_BILL_DETAIL_IS_BUY = '/v3_bill_detail_is_buy';
+  //builder
+  static const String V2_PAYMENT_ACCOUNT = '/v2_payment_account';
+  static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
+  static const String V2_PRODUCT = '/v2_product';
+  static const String V2_CART = '/v2_cart';
+  static const String V2_PRODUCT_DETAIL = '/v2_product_detail';
+  static const String V2_SHIPPING_METHOD = '/v2_shipping_method';
+  static const String V2_SHIPPING_ADDRESS = '/v2_shipping_address';
+  static const String V2_RECHARGE = '/v2_recharge';
+  static const String V2_PAYMENT_METHOD = '/v2_payment_method';
+  static const String V2_BILL_DETAIL_IS_BUY = '/v2_bill_detail_is_buy';
 }

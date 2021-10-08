@@ -5,14 +5,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
-import 'package:template/view/screen/v3-agent/bill_detail_is_buy/bill_detail_is_buy_controller.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
+import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
 
-class V3BillDetailIsBuyPage extends GetView<V3BillDetailIsBuyController> {
+class V2BillDetailIsBuyPage extends GetView<V2BillDetailIsBuyController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3BillDetailIsBuyController>(
-        init: V3BillDetailIsBuyController(),
+    return GetBuilder<V2BillDetailIsBuyController>(
+        init: V2BillDetailIsBuyController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -130,7 +130,7 @@ class V3BillDetailIsBuyPage extends GetView<V3BillDetailIsBuyController> {
   ///btn bottom
   ///
   Widget _btnBottom(
-      BuildContext context, V3BillDetailIsBuyController controller) {
+      BuildContext context, V2BillDetailIsBuyController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_LARGE),
       child: Row(

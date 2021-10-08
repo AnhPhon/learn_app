@@ -5,15 +5,15 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_agent/input_widget.dart';
-import 'package:template/view/screen/v3-agent/product/shipping_address/shipping_address_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/input_widget.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_controller.dart';
 
-class V3ShippingAddressPage extends GetView<V3ShippingAddressController> {
+class V2ShippingAddressPage extends GetView<V2ShippingAddressController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3ShippingAddressController>(
-        init: V3ShippingAddressController(),
+    return GetBuilder<V2ShippingAddressController>(
+        init: V2ShippingAddressController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),

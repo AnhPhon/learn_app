@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class V3ShippingMethodController extends GetxController {
+class V2ShippingMethodController extends GetxController {
   String title = "Phương thức giao hàng";
 
   int shippingMethodIndex = 0;

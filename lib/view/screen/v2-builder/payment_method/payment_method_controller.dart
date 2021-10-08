@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V3PaymentMethodController extends GetxController {
+class V2PaymentMethodController extends GetxController {
   String title = "Hình thức thanh toán";
 
   List<String> paymentMethodTitle = [
@@ -53,6 +53,6 @@ class V3PaymentMethodController extends GetxController {
   ///on continue click
   ///
   void onContinueClick() {
-    Get.toNamed(AppRoutes.V3_PAYMENT_ACCOUNT);
+    Get.toNamed(AppRoutes.V2_PAYMENT_ACCOUNT);
   }
 }

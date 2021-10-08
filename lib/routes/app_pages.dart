@@ -71,20 +71,20 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
+import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v3-agent/bill_detail_is_buy/bill_detail_is_buy_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
+import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/v2-builder/product/cart/cart_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_detail/product_detail_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
+import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v3-agent/payment%20account/payment_account_page.dart';
-import 'package:template/view/screen/v3-agent/payment_method/payment_method_page.dart';
-import 'package:template/view/screen/v3-agent/payment_success/payment_success_page.dart';
-import 'package:template/view/screen/v3-agent/product/cart/cart_page.dart';
-import 'package:template/view/screen/v3-agent/product/product_detail/product_detail_page.dart';
-import 'package:template/view/screen/v3-agent/product/product_page.dart';
-import 'package:template/view/screen/v3-agent/product/shipping_address/shipping_address_page.dart';
-import 'package:template/view/screen/v3-agent/product/shipping_method/shipping_method_page.dart';
-import 'package:template/view/screen/v3-agent/recharge/recharge_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
@@ -210,6 +210,48 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_NEWS_DETAIL,
       page: () => V1NewsDetailPage(),
+    ),
+
+    //builder
+    GetPage(
+      name: AppRoutes.V2_PRODUCT_DETAIL,
+      page: () => V2ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_CART,
+      page: () => V2CartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_METHOD,
+      page: () => V2ShippingMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_ADDRESS,
+      page: () => V2ShippingAddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ACCOUNT,
+      page: () => V2PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PRODUCT,
+      page: () => V2ProductPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_SUCCESS,
+      page: () => V2PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_RECHARGE,
+      page: () => V2RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_METHOD,
+      page: () => V2PaymentMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_BILL_DETAIL_IS_BUY,
+      page: () => V2BillDetailIsBuyPage(),
     ),
 
     ///
@@ -381,46 +423,6 @@ class AppPages {
       name: AppRoutes.V3_DASHBOARD,
       page: () => V3DashboardPage(),
       binding: V3DashboardBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_PRODUCT_DETAIL,
-      page: () => V3ProductDetailPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_CART,
-      page: () => V3CartPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_SHIPPING_METHOD,
-      page: () => V3ShippingMethodPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_SHIPPING_ADDRESS,
-      page: () => V3ShippingAddressPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_PAYMENT_ACCOUNT,
-      page: () => V3PaymentAccountPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_PRODUCT,
-      page: () => V3ProductPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_PAYMENT_SUCCESS,
-      page: () => V3PaymentSuccessPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_RECHARGE,
-      page: () => V3RechargePage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_PAYMENT_METHOD,
-      page: () => V3PaymentMethodPage(),
-    ),
-    GetPage(
-      name: AppRoutes.V3_BILL_DETAIL_IS_BUY,
-      page: () => V3BillDetailIsBuyPage(),
     ),
 
     // v4 - employee

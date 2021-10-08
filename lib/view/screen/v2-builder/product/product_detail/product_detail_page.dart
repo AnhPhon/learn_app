@@ -6,18 +6,18 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_agent/product_widget.dart';
-import 'package:template/view/screen/v3-agent/product/product_detail/product_detail_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/product_widget.dart';
+import 'package:template/view/screen/v2-builder/product/product_detail/product_detail_controller.dart';
 
-class V3ProductDetailPage extends GetView<V3ProductDetailController> {
+class V2ProductDetailPage extends GetView<V2ProductDetailController> {
   ///
   ///build
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3ProductDetailController>(
-        init: V3ProductDetailController(),
+    return GetBuilder<V2ProductDetailController>(
+        init: V2ProductDetailController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -62,7 +62,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   ///img product
   ///
   Widget _imgProduct(
-      BuildContext context, V3ProductDetailController controller) {
+      BuildContext context, V2ProductDetailController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
@@ -132,7 +132,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   ///Product Specification
   ///
   Widget _productSpecification(
-      BuildContext context, V3ProductDetailController controller) {
+      BuildContext context, V2ProductDetailController controller) {
     return Container(
       height: controller.isLoadingMore
           ? null
@@ -206,7 +206,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   ///more product
   ///
   Widget _moreProduct(
-      BuildContext context, V3ProductDetailController controller) {
+      BuildContext context, V2ProductDetailController controller) {
     return Container(
       color: ColorResources.WHITE,
       padding: const EdgeInsets.symmetric(
@@ -260,7 +260,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   ///icon cart
   ///
   Expanded _iconCartCount(
-      BuildContext context, V3ProductDetailController controller) {
+      BuildContext context, V2ProductDetailController controller) {
     return Expanded(
       flex: 2,
       child: GestureDetector(
@@ -316,7 +316,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   /// bottom cart
   ///
   Widget _bottomCart(
-      BuildContext context, V3ProductDetailController controller) {
+      BuildContext context, V2ProductDetailController controller) {
     return Container(
       height: DeviceUtils.getScaledHeight(context, .08),
       padding: const EdgeInsets.symmetric(

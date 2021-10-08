@@ -135,7 +135,15 @@ class V2HomePage extends GetView<V2HomeController> {
                       width: size.width,
                       alignment: Alignment.center,
                       child: Column(
-                        children: [],
+                        children: [
+                          GestureDetector(
+                              onTap: () => controller.onProductPageClick(),
+                              child: Text(
+                                "San pham",
+                                style: Dimensions.fontSizeStyle16w600()
+                                    .copyWith(color: ColorResources.PRIMARY),
+                              ))
+                        ],
                       ),
                     ),
                   ),

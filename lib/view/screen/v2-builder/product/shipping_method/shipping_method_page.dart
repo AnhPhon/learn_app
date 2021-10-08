@@ -5,14 +5,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/product/shipping_method/shipping_method_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_controller.dart';
 
-class V3ShippingMethodPage extends GetView<V3ShippingMethodController> {
+class V2ShippingMethodPage extends GetView<V2ShippingMethodController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3ShippingMethodController>(
-        init: V3ShippingMethodController(),
+    return GetBuilder<V2ShippingMethodController>(
+        init: V2ShippingMethodController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -108,7 +108,7 @@ class V3ShippingMethodPage extends GetView<V3ShippingMethodController> {
   ///
   Widget _rowShipping(
     BuildContext context,
-    V3ShippingMethodController controller, {
+    V2ShippingMethodController controller, {
     required Widget shippingWidget,
     required int indexRad,
   }) {
@@ -139,7 +139,7 @@ class V3ShippingMethodPage extends GetView<V3ShippingMethodController> {
   ///
   Widget _shippingMethod(
     BuildContext context,
-    V3ShippingMethodController controller,
+    V2ShippingMethodController controller,
   ) {
     return Container(
       margin: const EdgeInsets.symmetric(

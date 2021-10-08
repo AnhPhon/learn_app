@@ -6,17 +6,17 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/product_widget.dart';
-import 'package:template/view/screen/v3-agent/product/product_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/product_widget.dart';
+import 'package:template/view/screen/v2-builder/product/product_controller.dart';
 
-class V3ProductPage extends GetView<V3ProductController> {
+class V2ProductPage extends GetView<V2ProductController> {
   ///
   ///build
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3ProductController>(
-        init: V3ProductController(),
+    return GetBuilder<V2ProductController>(
+        init: V2ProductController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -93,7 +93,7 @@ class V3ProductPage extends GetView<V3ProductController> {
   ///
   ///search bar
   ///
-  Widget _searchBar(BuildContext context, V3ProductController controller) {
+  Widget _searchBar(BuildContext context, V2ProductController controller) {
     return TextField(
       textInputAction: TextInputAction.done,
       textAlignVertical: TextAlignVertical.center,
@@ -128,7 +128,7 @@ class V3ProductPage extends GetView<V3ProductController> {
   ///
   ///product list
   ///
-  Widget _productList(BuildContext context, V3ProductController controller) {
+  Widget _productList(BuildContext context, V2ProductController controller) {
     return Container(
       color: ColorResources.WHITE,
       padding: const EdgeInsets.symmetric(

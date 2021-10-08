@@ -135,15 +135,7 @@ class V3HomePage extends GetView<V3HomeController> {
                       width: size.width,
                       alignment: Alignment.center,
                       child: Column(
-                        children: [
-                          GestureDetector(
-                              onTap: () => controller.onProductPageClick(),
-                              child: Text(
-                                "San pham",
-                                style: Dimensions.fontSizeStyle16w600()
-                                    .copyWith(color: ColorResources.PRIMARY),
-                              ))
-                        ],
+                        children: [],
                       ),
                     ),
                   ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V3RechargeController extends GetxController {
+class V2RechargeController extends GetxController {
   File? image;
 
   String title = "Thông tin thanh toán";
@@ -28,6 +28,6 @@ class V3RechargeController extends GetxController {
   ///on checkout click
   ///
   void onCheckoutClick() {
-    Get.toNamed(AppRoutes.V3_PAYMENT_SUCCESS);
+    Get.toNamed(AppRoutes.V2_PAYMENT_SUCCESS);
   }
 }

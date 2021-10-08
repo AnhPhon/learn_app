@@ -6,17 +6,17 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/product/cart/cart_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/product/cart/cart_controller.dart';
 
-class V3CartPage extends GetView<V3CartController> {
+class V2CartPage extends GetView<V2CartController> {
   ///
   ///build
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3CartController>(
-        init: V3CartController(),
+    return GetBuilder<V2CartController>(
+        init: V2CartController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -173,7 +173,7 @@ class V3CartPage extends GetView<V3CartController> {
   ///
   Widget _shipping(
     BuildContext context,
-    V3CartController controller,
+    V2CartController controller,
   ) {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -318,7 +318,7 @@ class V3CartPage extends GetView<V3CartController> {
   ///
   Widget _paymentDetail(
     BuildContext context,
-    V3CartController controller,
+    V2CartController controller,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -354,7 +354,7 @@ class V3CartPage extends GetView<V3CartController> {
   ///
   Widget _orderProductDetail(
     BuildContext context,
-    V3CartController controller,
+    V2CartController controller,
   ) {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -509,7 +509,7 @@ class V3CartPage extends GetView<V3CartController> {
   ///
   Widget _bottomPaymentBtn(
     BuildContext context,
-    V3CartController controller,
+    V2CartController controller,
   ) {
     return BtnCustom(
         onTap: () => controller.onBillDetailClick(),

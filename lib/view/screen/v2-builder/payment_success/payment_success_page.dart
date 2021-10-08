@@ -4,14 +4,14 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/payment_success/payment_success_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/payment_success/payment_success_controller.dart';
 
-class V3PaymentSuccessPage extends GetView<V3PaymentSuccessController> {
+class V2PaymentSuccessPage extends GetView<V2PaymentSuccessController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3PaymentSuccessController>(
-        init: V3PaymentSuccessController(),
+    return GetBuilder<V2PaymentSuccessController>(
+        init: V2PaymentSuccessController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -81,7 +81,7 @@ class V3PaymentSuccessPage extends GetView<V3PaymentSuccessController> {
   ///
   ///btn bottomsheet
   ///
-  Widget _btnBottomSheet(V3PaymentSuccessController controller) {
+  Widget _btnBottomSheet(V2PaymentSuccessController controller) {
     return BtnCustom(
       onTap: () => controller.onCompleteClick(),
       color: ColorResources.PRIMARY,

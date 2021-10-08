@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/images.dart';
 
-class V3ProductDetailController extends GetxController {
+class V2ProductDetailController extends GetxController {
   String title = "Chi tiết sản phẩm";
 
   String imgProduct = Images.newsTemplate;
@@ -32,6 +32,6 @@ class V3ProductDetailController extends GetxController {
   ///go to cart page
   ///
   void onCartClick() {
-    Get.toNamed(AppRoutes.V3_CART);
+    Get.toNamed(AppRoutes.V2_CART);
   }
 }

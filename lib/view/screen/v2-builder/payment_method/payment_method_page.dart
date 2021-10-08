@@ -4,18 +4,18 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_agent/row_text.dart';
-import 'package:template/view/screen/v3-agent/payment_method/payment_method_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/row_text.dart';
+import 'package:template/view/screen/v2-builder/payment_method/payment_method_controller.dart';
 
-class V3PaymentMethodPage extends GetView<V3PaymentMethodController> {
+class V2PaymentMethodPage extends GetView<V2PaymentMethodController> {
   ///
   ///build
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3PaymentMethodController>(
-        init: V3PaymentMethodController(),
+    return GetBuilder<V2PaymentMethodController>(
+        init: V2PaymentMethodController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -36,7 +36,7 @@ class V3PaymentMethodPage extends GetView<V3PaymentMethodController> {
   ///
   ///radio list
   ///
-  Widget _radPaymentMethodList(V3PaymentMethodController controller) {
+  Widget _radPaymentMethodList(V2PaymentMethodController controller) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: 2,
@@ -136,7 +136,7 @@ class V3PaymentMethodPage extends GetView<V3PaymentMethodController> {
   ///bottom sheet
   ///
   Widget _bottomSheet(
-      BuildContext context, V3PaymentMethodController controller) {
+      BuildContext context, V2PaymentMethodController controller) {
     return Container(
       height: DeviceUtils.getScaledHeight(context, .19),
       padding: const EdgeInsets.only(

@@ -5,15 +5,15 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_agent/row_text.dart';
-import 'package:template/view/screen/v3-agent/recharge/recharge_controller.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/row_text.dart';
+import 'package:template/view/screen/v2-builder/recharge/recharge_controller.dart';
 
-class V3RechargePage extends GetView<V3RechargeController> {
+class V2RechargePage extends GetView<V2RechargeController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3RechargeController>(
-        init: V3RechargeController(),
+    return GetBuilder<V2RechargeController>(
+        init: V2RechargeController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -237,7 +237,7 @@ class V3RechargePage extends GetView<V3RechargeController> {
   ///
   ///upload image
   ///
-  Widget _uploadImage(BuildContext context, V3RechargeController controller) {
+  Widget _uploadImage(BuildContext context, V2RechargeController controller) {
     return GestureDetector(
       onTap: () => controller.pickImage(),
       child: Container(
@@ -260,7 +260,7 @@ class V3RechargePage extends GetView<V3RechargeController> {
   ///
   ///btn bottomsheet
   ///
-  Widget _btnBottomSheet(V3RechargeController controller) {
+  Widget _btnBottomSheet(V2RechargeController controller) {
     return BtnCustom(
       onTap: () => controller.onCheckoutClick(),
       color: ColorResources.PRIMARY,

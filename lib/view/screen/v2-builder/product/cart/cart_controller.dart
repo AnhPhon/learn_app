@@ -6,10 +6,10 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component_border.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component_border.dart';
 
-class V3CartController extends GetxController {
+class V2CartController extends GetxController {
   String title = "Giỏ hàng";
 
   String imgProduct = Images.newsTemplate;
@@ -40,21 +40,21 @@ class V3CartController extends GetxController {
   ///go to shipping method
   ///
   void onSelectShippingMethod() {
-    Get.toNamed(AppRoutes.V3_SHIPPING_METHOD);
+    Get.toNamed(AppRoutes.V2_SHIPPING_METHOD);
   }
 
   ///
   ///go to shipping address
   ///
   void onSelectShippingAddress() {
-    Get.toNamed(AppRoutes.V3_SHIPPING_ADDRESS);
+    Get.toNamed(AppRoutes.V2_SHIPPING_ADDRESS);
   }
 
   ///
   ///go to biill detail page
   ///
   void onBillDetailClick() {
-    Get.toNamed(AppRoutes.V3_BILL_DETAIL_IS_BUY);
+    Get.toNamed(AppRoutes.V2_BILL_DETAIL_IS_BUY);
   }
 
   ///
