@@ -95,6 +95,12 @@ import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
 import 'package:template/view/screen/v3-agent/store/store_page.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
+import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
+import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
+import 'package:template/view/screen/v4-employee/account/rules/rules_binding.dart';
+import 'package:template/view/screen/v4-employee/account/rules/rules_page.dart';
+import 'package:template/view/screen/v4-employee/account/salary/salary_binding.dart';
+import 'package:template/view/screen/v4-employee/account/salary/salary_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
@@ -525,7 +531,21 @@ class AppPages {
       page: () => V4AddReportOnRequestPage(),
       binding: V4AddReportOnRequestBinding(),
     ),
-
+    GetPage(
+      name: AppRoutes.V4_RULES,
+      page: () => V4RulesPage(),
+      binding: V4RulesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_SALARY,
+      page: () => V4SalaryPage(),
+      binding: V4SalaryBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_INFO,
+      page: () => V4InfoPage(),
+      binding: V4InfoBinding(),
+    ),
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
