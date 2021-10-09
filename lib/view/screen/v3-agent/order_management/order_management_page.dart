@@ -4,6 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/screen/v3-agent/component_agent/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_controller.dart';
 
@@ -92,22 +93,14 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //status order
-          Container(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            decoration: BoxDecoration(
-                color: status == "0"
-                    ? Colors.white
-                    : controller.statusBackgroundColor[status],
-                borderRadius: BorderRadius.circular(16)),
-            child: Text(
-              controller.statusLabel[status].toString(),
-              style: TextStyle(
-                color: status == "0"
-                    ? Colors.white
-                    : controller.statusColor[status],
-              ),
-            ),
+          //change order product
+          DropDownMapButton(
+            onChanged: (val) {},
+            data: controller.statusLabel,
+            width: .4,
+            value: status,
+            fillColor: controller.statusBackgroundColor[status],
+            colorText: controller.statusColor[status],
           ),
           const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           //product info

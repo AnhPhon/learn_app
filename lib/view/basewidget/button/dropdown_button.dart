@@ -9,12 +9,14 @@ class DropDownButton1 extends StatelessWidget {
     required this.onChanged,
     required this.data,
     this.value,
+    this.isColorFieldWhite = false,
   });
 
   final String hint;
   final Function(String? i) onChanged;
   final List<String> data;
   final String? value;
+  final bool? isColorFieldWhite;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,13 +26,19 @@ class DropDownButton1 extends StatelessWidget {
           builder: (field) {
             return InputDecorator(
               decoration: InputDecoration(
+                filled: true,
+                fillColor: (isColorFieldWhite == true)
+                    ? ColorResources.WHITE
+                    : Colors.transparent,
                 isDense: true,
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
                 disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
                 contentPadding: EdgeInsets.symmetric(
@@ -39,7 +47,8 @@ class DropDownButton1 extends StatelessWidget {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
               ),

@@ -18,16 +18,16 @@ class V3OrderManagementController extends GetxController {
     "1": const Color(0xff007D3A),
     "2": const Color(0xff0D5BB5),
     "3": const Color(0xffCC8100),
-    "4": const Color(0xffBF1D28),
-    "5": const Color(0xffA6A6B0),
+    "4": const Color(0xffA6A6B0),
+    "5": const Color(0xffBF1D28),
   };
 
   Map<String, Color> statusBackgroundColor = {
     "1": const Color(0x1f007D3A),
     "2": const Color(0x1f0D5BB5),
     "3": const Color(0x1fCC8100),
-    "4": const Color(0x1fBF1D28),
-    "5": const Color(0x1fA6A6B0),
+    "4": const Color(0x1fA6A6B0),
+    "5": const Color(0x1fBF1D28),
   };
 
   String urlImage =
