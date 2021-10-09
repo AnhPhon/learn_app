@@ -23,12 +23,6 @@ class V4InfoPage extends GetView<V4InfoController> {
           child: GetBuilder<V4InfoController>(
               init: V4InfoController(),
               builder: (V4InfoController controller) {
-                // if (controller.isLoading) {
-                //   return const Center(
-                //     child: CircularProgressIndicator(),
-                //   );
-                // }
-
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +41,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                           ),
 
                           //Giới tính
-                          _sex(context),
+                          _sex(controller, context),
                         ],
                       ),
                       Row(
@@ -169,7 +163,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       controller: controller.nameController,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
-      holdplacer: 'IZI Software',
+      holdplacer: controller.fullname,
       label: 'Họ và tên',
       obligatory: true,
       typeInput: TextInputType.text,
@@ -188,7 +182,7 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
     allowEdit: true,
     controller: controller.birthdayController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: "12-11-2021",
+    holdplacer: controller.birthday,
     label: "Ngày",
     obligatory: true,
     typeInput: TextInputType.text,
@@ -199,7 +193,7 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
 ///
 /// Giới tính
 ///
-Widget _sex(BuildContext context) {
+Widget _sex(V4InfoController controller, BuildContext context) {
   return DropDownButton<String>(
     label: 'Giới tính',
     data: const ["Nam", "Nữ"],
@@ -220,7 +214,7 @@ Widget _identityCard(V4InfoController controller, BuildContext context) {
     controller: controller.indentityCardController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: '12345679',
+    holdplacer: controller.indentityCard,
     label: 'Số CMND/Căn cước',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -238,7 +232,7 @@ Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
     allowEdit: true,
     controller: controller.dateIndentityController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: "12-11-2021",
+    holdplacer: controller.dateIndentityCard,
     label: "Ngày cấp",
     obligatory: true,
     typeInput: TextInputType.text,
@@ -257,7 +251,7 @@ Widget _addresssIndentityCard(
     controller: controller.addressIndentityController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: 'Đà nẵng',
+    holdplacer: controller.addresssIndentityCard,
     label: 'Nơi cấp',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -275,7 +269,7 @@ Widget _phoneNumber(V4InfoController controller, BuildContext context) {
     controller: controller.phoneNumberController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: '12345679',
+    holdplacer: controller.phoneNumber,
     label: 'Số điện thoại',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -293,7 +287,7 @@ Widget _email(V4InfoController controller, BuildContext context) {
     controller: controller.emailController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: '12345679',
+    holdplacer: controller.email,
     label: 'Email(nếu có)',
     obligatory: false,
     typeInput: TextInputType.text,
@@ -311,7 +305,7 @@ Widget _addresss(V4InfoController controller, BuildContext context) {
     controller: controller.addressController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: 'Đà nẵng',
+    holdplacer: controller.addresss,
     label: 'Địa chỉ thường trú hiện tại',
     obligatory: true,
     typeInput: TextInputType.text,

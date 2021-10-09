@@ -16,11 +16,6 @@ class V4AccountPage extends GetView<V4AccountController> {
       body: GetBuilder<V4AccountController>(
           init: V4AccountController(),
           builder: (V4AccountController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
             return Stack(
               children: [
                 Container(

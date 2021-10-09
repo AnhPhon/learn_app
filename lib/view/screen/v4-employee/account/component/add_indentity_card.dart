@@ -28,12 +28,6 @@ class AddIndentityCard extends StatelessWidget {
             offset: const Offset(0, 2),
           ),
         ],
-        // image: const DecorationImage(
-        //   image: AssetImage(
-        //     Images.logo_image,
-        //   ),
-        //   fit: BoxFit.cover,
-        // ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

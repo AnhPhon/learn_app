@@ -14,11 +14,6 @@ class V4RulesPage extends GetView {
       body: GetBuilder<V4RulesController>(
           init: V4RulesController(),
           builder: (V4RulesController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
             return const Center(
               child: Text('Cung cấp nội dung sau'),
             );
