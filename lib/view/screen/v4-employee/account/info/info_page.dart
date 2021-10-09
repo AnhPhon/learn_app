@@ -41,7 +41,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                           ),
 
                           //Giới tính
-                          _sex(controller, context),
+                          _sex(context),
                         ],
                       ),
                       Row(
@@ -163,7 +163,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       controller: controller.nameController,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
-      holdplacer: controller.fullname,
+      holdplacer: "Ngô Trần Anh Phôn",
       label: 'Họ và tên',
       obligatory: true,
       typeInput: TextInputType.text,
@@ -182,7 +182,7 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
     allowEdit: true,
     controller: controller.birthdayController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: controller.birthday,
+    holdplacer: "1999-10-09",
     label: "Ngày",
     obligatory: true,
     typeInput: TextInputType.text,
@@ -193,7 +193,7 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
 ///
 /// Giới tính
 ///
-Widget _sex(V4InfoController controller, BuildContext context) {
+Widget _sex(BuildContext context) {
   return DropDownButton<String>(
     label: 'Giới tính',
     data: const ["Nam", "Nữ"],
@@ -214,7 +214,7 @@ Widget _identityCard(V4InfoController controller, BuildContext context) {
     controller: controller.indentityCardController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: controller.indentityCard,
+    holdplacer: "191998122",
     label: 'Số CMND/Căn cước',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -232,7 +232,7 @@ Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
     allowEdit: true,
     controller: controller.dateIndentityController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: controller.dateIndentityCard,
+    holdplacer: "2018-02-09",
     label: "Ngày cấp",
     obligatory: true,
     typeInput: TextInputType.text,
@@ -251,7 +251,7 @@ Widget _addresssIndentityCard(
     controller: controller.addressIndentityController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: controller.addresssIndentityCard,
+    holdplacer: "Thừa Thiên Huế",
     label: 'Nơi cấp',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -269,7 +269,7 @@ Widget _phoneNumber(V4InfoController controller, BuildContext context) {
     controller: controller.phoneNumberController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: controller.phoneNumber,
+    holdplacer: "0899461113",
     label: 'Số điện thoại',
     obligatory: true,
     typeInput: TextInputType.text,
@@ -287,7 +287,7 @@ Widget _email(V4InfoController controller, BuildContext context) {
     controller: controller.emailController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: controller.email,
+    holdplacer: "ngotrananhphon.flutter.dev@gmail.com",
     label: 'Email(nếu có)',
     obligatory: false,
     typeInput: TextInputType.text,
@@ -305,7 +305,7 @@ Widget _addresss(V4InfoController controller, BuildContext context) {
     controller: controller.addressController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
-    holdplacer: controller.addresss,
+    holdplacer: "Hòa Thọ Đông, Cẩm Lệ, Đà Nẵng",
     label: 'Địa chỉ thường trú hiện tại',
     obligatory: true,
     typeInput: TextInputType.text,
