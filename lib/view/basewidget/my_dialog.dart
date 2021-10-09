@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/custom_button.dart';
 
 class MyDialog extends StatelessWidget {
@@ -18,7 +19,7 @@ class MyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
       child: Padding(
         padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.05)),
         child: Stack(clipBehavior: Clip.none, children: [

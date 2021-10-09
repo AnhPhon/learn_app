@@ -34,7 +34,7 @@ class NoInternetOrDataScreen extends StatelessWidget {
             if (isNoInternet) Container(
               height: 45,
               margin: const EdgeInsets.symmetric(horizontal: 40),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: ColorResources.getYellow(context)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL), color: ColorResources.getYellow(context)),
               child: TextButton(
                 onPressed: () async {
                   if(await Connectivity().checkConnectivity() != ConnectivityResult.none) {

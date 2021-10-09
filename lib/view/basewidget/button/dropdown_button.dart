@@ -26,11 +26,11 @@ class DropDownButton1 extends StatelessWidget {
               decoration: InputDecoration(
                 isDense: true,
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
                 disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
                 contentPadding: EdgeInsets.symmetric(
@@ -39,7 +39,7 @@ class DropDownButton1 extends StatelessWidget {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                     borderSide:
                         const BorderSide(color: ColorResources.PRIMARY)),
               ),
