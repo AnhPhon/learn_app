@@ -10,7 +10,7 @@ class V4InfoController extends GetxController {
   bool isLoading = true;
 
   //khai báo holdplacer
-  String fullname = "IZI Software";
+  String fullname = "Ngô Trần Anh Phôn";
   String birthday = "2021-10-09";
   String indentityCard = "123456";
   String dateIndentityCard = "2021-10-09";
