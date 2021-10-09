@@ -11,12 +11,12 @@ class V4InfoController extends GetxController {
 
   //khai báo holdplacer
   String fullname = "Ngô Trần Anh Phôn";
-  String birthday = "2021-10-09";
+  String birthday = "1999-10-09";
   String indentityCard = "123456";
   String dateIndentityCard = "2021-10-09";
   String addresssIndentityCard = "Đà Nẵng";
   String phoneNumber = "01234567";
-  String email = "IZISoftware";
+  String email = "IZISoftware@gmail.com";
   String addresss = "Hòa Thọ Đông, Cẩm Lệ, Đà Nẵng";
 
   //khai báo TextEditingController
