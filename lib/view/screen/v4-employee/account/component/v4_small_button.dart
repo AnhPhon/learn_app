@@ -3,8 +3,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class SmallButton extends StatelessWidget {
-  const SmallButton({
+class V4SmallButton extends StatelessWidget {
+  const V4SmallButton({
     Key? key,
     required this.title,
     required this.color,
@@ -22,7 +22,7 @@ class SmallButton extends StatelessWidget {
       child: MaterialButton(
         height: height ?? 45,
         onPressed: () => onPressed(),
-        minWidth: DeviceUtils.getScaledSize(context, 0.4),
+        minWidth: DeviceUtils.getScaledSize(context, 0.3),
         color: color,
         shape: RoundedRectangleBorder(
             borderRadius:
