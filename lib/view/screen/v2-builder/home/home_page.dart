@@ -247,7 +247,7 @@ class V2HomePage extends GetView<V2HomeController> {
   }
 
   ///
-  ///
+  /// _sanPhamWidget
   ///
   Widget _sanPhamWidget(BuildContext context) {
     return Padding(
