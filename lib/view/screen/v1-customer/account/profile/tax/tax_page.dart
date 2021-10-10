@@ -28,6 +28,7 @@ class V1TaxPage extends GetView<V1TaxController> {
 
                   //input
                   InputWidget(
+                    width: double.infinity,
                     textEditingController: controller.taxController,
                     hintText: "Nhập mã số thuế",
                   ),

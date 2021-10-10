@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
 
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -64,7 +65,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -82,7 +83,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 ),
                 Expanded(
                   child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                       child: Text(
                         widget.title,
                         overflow: TextOverflow.ellipsis,

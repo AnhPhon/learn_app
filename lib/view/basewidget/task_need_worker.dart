@@ -17,7 +17,7 @@ class TaskNeedWorker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double height = 90;
+    const double height = 100;
     return Container(
       width: 352,
       height: height,
@@ -81,7 +81,7 @@ class TaskNeedWorker extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                          fontSize: Dimensions.FONT_SIZE_SMALL,
                           letterSpacing: -0.3,
                           fontWeight: FontWeight.normal,
                           height: 1,

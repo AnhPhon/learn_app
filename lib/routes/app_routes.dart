@@ -118,11 +118,23 @@ class AppRoutes {
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
 
+  static const String V1_QUOTE_REQUEST_1 = '/v1_quote_request_1';
+  static const String V1_QUOTE_REQUEST_2 = '/v1_quote_request_2';
+  static const String V1_QUOTE_CHECK = '/v1_quote_check';
+  static const String V1_QUOTE_DONE = '/v1_quote_done';
+  static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V2_DASHBOARD = '/v2_dashboard';
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
+
+  // agent
+  static const String V3_QUOTE_LIST = '/v3_quote_list';
+  static const String V3_QUOTE_CHECK = '/v3_quote_check';
+  static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
+  static const String V3_QUOTE_REQUEST = '/v3_quote_request';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -131,6 +143,16 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+  static const String V3_STORE = '/v3_store';
+  static const String V3_PRODUCT_MANAGEMENT = '/v3_product_management';
+  static const String V3_ORDER_MANAGEMENT = '/v3_order_management';
+  static const String V3_WAREHOUSE = '/v3_warehouse';
+  static const String V3_REVENUE = '/v3_revenue';
+  static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
+  static const String V3_PRODUCT_ADD = '/v3_product_add';
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
+  static const String V4_RULES = '/v4_rules';
+  static const String V4_SALARY = '/v4_salary';
+  static const String V4_INFO = '/v4_info';
 }

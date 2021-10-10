@@ -16,8 +16,6 @@ import 'home_controller.dart';
 class V4HomePage extends GetView<V4HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
@@ -272,7 +270,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 child: Text(
                   "${(controller.total! > 0 ? "+" : "-") + PriceConverter.convertPrice(
                         context,
-                        controller.total!,
+                        controller.total!.toDouble(),
                       )} Đ",
                   style: const TextStyle(color: Colors.white),
                 ),
@@ -394,7 +392,6 @@ class V4HomePage extends GetView<V4HomeController> {
   /// _inputWarehouse
   ///
   Widget _inputWarehouse(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
@@ -419,40 +416,58 @@ class V4HomePage extends GetView<V4HomeController> {
           const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
           Row(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .333333333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickToExprot();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: DeviceUtils.getScaledWidth(context, 1) / 3,
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: ColorResources.THEME_DEFAULT,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.MARGIN_SIZE_SMALL),
+                    ),
+                  ),
+                  child: const Text(
+                    "Thêm thu",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
               const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .333333333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
+              GestureDetector(
+                onTap: () {
+                  controller.onClickToImport();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: DeviceUtils.getScaledWidth(context, 1) / 3,
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.MARGIN_SIZE_SMALL),
+                    ),
+                  ),
+                  child: const Text(
+                    "Thêm chi",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               )
@@ -468,13 +483,12 @@ class V4HomePage extends GetView<V4HomeController> {
   /// split widget
   ///
   Widget _splitWidget(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     const double square = 4.0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size.width / 2 - 3 * 15,
+          width: DeviceUtils.getScaledWidth(context, 1) / 2 - 3 * 15,
           height: square,
           decoration: const BoxDecoration(
             color: Color(0xff4D4D4D),
@@ -510,7 +524,7 @@ class V4HomePage extends GetView<V4HomeController> {
         ),
         const SizedBox(width: 5),
         Container(
-          width: size.width / 2 - 3 * 15,
+          width: DeviceUtils.getScaledWidth(context, 1) / 2 - 3 * 15,
           height: square,
           decoration: const BoxDecoration(
             color: Color(0xff4D4D4D),
