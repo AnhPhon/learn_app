@@ -71,30 +71,24 @@ class _CustomAppBarState extends State<AppBarWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                if(widget.leading!)
-                Builder(builder: (context) {
-                    return IconButton(onPressed: (){
-                      Navigator.of(context).pop();
-                    }, icon: const Icon(Icons.arrow_back_ios, color: ColorResources.WHITE,));
-                },),
-                Expanded(
-                  child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        widget.title,
-                        textAlign: widget.centerTitle!
-                            ? TextAlign.center
-                            : TextAlign.left,
-                        style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
-                            color: ColorResources.WHITE),
-                      )),
-                ),
+                if (widget.leading!)
+                  Expanded(
+                    child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          widget.title,
+                          textAlign: widget.centerTitle!
+                              ? TextAlign.center
+                              : TextAlign.left,
+                          style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: ColorResources.WHITE),
+                        )),
+                  ),
                 if (widget.action!.isNotEmpty)
                   ...widget.action!.map((e) => e).toList()
-                else
-                  if(widget.leading!)
+                else if (widget.leading!)
                   const SizedBox(
                     width: 30,
                   )
