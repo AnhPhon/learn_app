@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
@@ -30,7 +31,6 @@ class CategoryWidget extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Container(
         color: Colors.white,
         padding: const EdgeInsets.only(
@@ -47,7 +47,7 @@ class CategoryWidget extends GetView {
                 Container(
                   margin:
                       const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
-                  width: width * .60,
+                  width: DeviceUtils.getScaledSize(context, .6),
                   child: Text(
                     label,
                     style: TextStyle(
