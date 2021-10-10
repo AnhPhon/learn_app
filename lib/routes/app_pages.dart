@@ -88,6 +88,13 @@ import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
+import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
+import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
+import 'package:template/view/screen/v3-agent/store/store_page.dart';
+import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
+import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
 import 'package:template/view/screen/v4-employee/account/rules/rules_binding.dart';
@@ -451,6 +458,34 @@ class AppPages {
       name: AppRoutes.V3_DASHBOARD,
       page: () => V3DashboardPage(),
       binding: V3DashboardBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_STORE,
+      page: () => V3StorePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_MANAGEMENT,
+      page: () => V3ProductManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ORDER_MANAGEMENT,
+      page: () => V3OrderManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_WAREHOUSE,
+      page: () => V3WarehousePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_REVENUE,
+      page: () => V3RevenuePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_STORE_INFOMATION,
+      page: () => V3StoreInfomationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_ADD,
+      page: () => V3ProductAddPage(),
     ),
 
     // v4 - employee

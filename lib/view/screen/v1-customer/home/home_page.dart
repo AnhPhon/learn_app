@@ -29,7 +29,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 _threeFeatureWidget(),
 
                 // product
-                _productWidget(),
+                _productWidget(controller),
 
                 _newsWidget()
               ],
@@ -264,12 +264,12 @@ class V1HomePage extends GetView<V1HomeController> {
     );
   }
 
-  Widget _productWidget() {
+  Widget _productWidget(V1HomeController controller) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Sản phẩm",
-        onTap: () {},
+        onTap: () => controller.onMoreProductList(),
         widget: Container(
           height: 400,
           padding: const EdgeInsets.only(

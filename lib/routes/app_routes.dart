@@ -131,6 +131,13 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+  static const String V3_STORE = '/v3_store';
+  static const String V3_PRODUCT_MANAGEMENT = '/v3_product_management';
+  static const String V3_ORDER_MANAGEMENT = '/v3_order_management';
+  static const String V3_WAREHOUSE = '/v3_warehouse';
+  static const String V3_REVENUE = '/v3_revenue';
+  static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
+  static const String V3_PRODUCT_ADD = '/v3_product_add';
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
   static const String V4_RULES = '/v4_rules';
