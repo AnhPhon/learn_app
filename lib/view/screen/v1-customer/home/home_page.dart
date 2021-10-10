@@ -269,7 +269,7 @@ class V1HomePage extends GetView<V1HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Sản phẩm",
-        onTap: () {},
+        onTap: () => controller.onMoreProductList(),
         widget: Container(
           height: 400,
           padding: const EdgeInsets.only(

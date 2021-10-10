@@ -11,6 +11,8 @@ class V1PointBasedController extends GetxController {
     "Đơn đang xử lý",
     "Đơn đã hoàn thành",
   ];
+  String urlImage =
+      "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg";
 
   int currentIndex = 0;
 

@@ -86,6 +86,19 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/after_quotation_g2/after_quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/quotation_g2/quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/shorthanded_group2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group3/shorthanded_group3_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group4/shorthanded_group4_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56/quotation_g56_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
@@ -444,6 +457,58 @@ class AppPages {
       name: AppRoutes.V2_DASHBOARD,
       page: () => V2DashboardPage(),
       binding: V2DashboardBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED,
+      page: () => V2ShorthandedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP1,
+      page: () => V2ShorthandedGroup1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP2,
+      page: () => V2ShorthandedGroup2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP3,
+      page: () => V2ShorthandedGroup3Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP4,
+      page: () => V2ShorthandedGroup4Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP5,
+      page: () => V2ShorthandedGroup5Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP6,
+      page: () => V2ShorthandedGroup6Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP1,
+      page: () => V2QuotationG1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP2,
+      page: () => V2QuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_AFTER_QUOTATION_GROUP2,
+      page: () => V2AfterQuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP56,
+      page: () => V2QuotationG56Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WINNING_BID,
+      page: () => V2WinningBidPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ORDER,
+      page: () => V2PaymentOrderPage(),
     ),
 
     // agent

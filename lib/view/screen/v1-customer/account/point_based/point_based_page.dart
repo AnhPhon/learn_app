@@ -72,8 +72,9 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
                   //item list
                   ItemListWidget(
                     onTap: () {},
+                    urlImage: controller.urlImage,
                     title: "Biệt thự 170 Nguyễn Đình Thi",
-                    icon: const Icon(Icons.monetization_on_outlined),
+                    icon1: const Icon(Icons.monetization_on_outlined),
                     rowText1: "2.000.000 vnđ",
                     colorRowText1: ColorResources.RED,
                     isStart: true,
@@ -129,13 +130,11 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
           title,
           style: Dimensions.fontSizeStyle16w600(),
         ),
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .4),
-          child: InputWidget(
-            textEditingController: textController,
-            hintText: hintText,
-            isDate: true,
-          ),
+        InputWidget(
+          width: .4,
+          textEditingController: textController,
+          hintText: hintText,
+          isDate: true,
         ),
       ],
     );

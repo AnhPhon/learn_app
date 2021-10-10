@@ -40,7 +40,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 _box(),
 
                 // need people widget
-                _needPeopleWidget(),
+                _needPeopleWidget(controller),
 
                 // san pham widget
                 _sanPhamWidget(context),
@@ -149,7 +149,8 @@ class V2HomePage extends GetView<V2HomeController> {
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           decoration: const BoxDecoration(
             color: Color(0xff2196F3),
-            borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+            borderRadius: BorderRadius.all(
+                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
           ),
           child: Row(
             children: const [
@@ -223,11 +224,11 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// need people widget
   ///
-  Widget _needPeopleWidget() {
+  Widget _needPeopleWidget(V2HomeController controller) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
-        onTap: () {},
+        onTap: () => controller.onShortHandedPageClick(),
         title: "Công việc đang cần người",
         widget: SizedBox(
           height: 210,
