@@ -155,4 +155,7 @@ class AppRoutes {
   static const String V4_RULES = '/v4_rules';
   static const String V4_SALARY = '/v4_salary';
   static const String V4_INFO = '/v4_info';
+
+  //builder
+  static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
 }

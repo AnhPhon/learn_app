@@ -91,6 +91,8 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
@@ -316,7 +318,6 @@ class AppPages {
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
     ),
-    
 
     ///
     /// Thông báo
@@ -603,5 +604,12 @@ class AppPages {
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
     // ),
+
+    //builder
+    GetPage(
+      name: AppRoutes.V2_WORKFLOW_MANAGEMENT,
+      page: () => V2WorkflowManagementPage(),
+      binding: V2WorkflowManagementBinding(),
+    ),
   ];
 }
