@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
 
 class TextWhiteBorder extends StatelessWidget {
   String text;
@@ -10,7 +11,7 @@ class TextWhiteBorder extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-        fontSize: 15,
+        fontSize: Dimensions.FONT_SIZE_DEFAULT,
         fontWeight: FontWeight.bold,
         shadows: [
           Shadow(

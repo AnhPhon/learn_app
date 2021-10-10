@@ -32,7 +32,10 @@ class V1CheckController extends GetxController {
     ];
   }
 
-  void xacNhan() {
+  ///
+  /// xác nhận 
+  ///
+  void onxacNhanClick() {
     Get.toNamed(AppRoutes.V1_QUOTE_DONE);
   }
 }

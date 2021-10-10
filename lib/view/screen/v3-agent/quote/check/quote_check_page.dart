@@ -15,8 +15,6 @@ import 'package:template/view/screen/v3-agent/quote/check/quote_check_controller
 class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
       body: GetBuilder<V3QuoteCheckController>(
@@ -35,7 +33,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
-                  _bangBaoGia(context, controller.infoCard),
+                  _bangBaoGia(context, controller.infoCard!),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -410,21 +408,21 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                 crossAxisSpacing: 30,
               ),
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.features.length,
+              itemCount: controller.features!.length,
               itemBuilder: (BuildContext ctx, index) {
                 return GestureDetector(
-                  onTap: controller.features[index]["onTap"] as Function(),
+                  onTap: controller.features![index]["onTap"] as Function(),
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: controller.features[index]['color'] as Color,
+                        color: controller.features![index]['color'] as Color,
                         borderRadius: const BorderRadius.all(
                             Radius.circular(Dimensions.BORDER_RADIUS_SMALL)),
                         boxShadow: const [
                           BoxShadow(blurRadius: 3, offset: Offset(0, 2))
                         ]),
                     child: Text(
-                      controller.features[index]['title'] as String,
+                      controller.features![index]['title'] as String,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

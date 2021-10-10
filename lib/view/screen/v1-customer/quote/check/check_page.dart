@@ -31,7 +31,7 @@ class V1CheckPage extends GetView<V1CheckController> {
                     "Tiêu đề báo giá",
                     "Cần báo giá vật liệu, xi măng, cát, đá",
                   ),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   //text
                   _textField(
@@ -39,7 +39,7 @@ class V1CheckPage extends GetView<V1CheckController> {
                     "Công trình",
                     "Biệt thự",
                   ),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   //text
                   _textField(
@@ -47,7 +47,7 @@ class V1CheckPage extends GetView<V1CheckController> {
                     "Địa điểm nhận",
                     "Thanh Khê Tây - Đà Nẵng",
                   ),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   //text
                   _textField(
@@ -55,7 +55,7 @@ class V1CheckPage extends GetView<V1CheckController> {
                     "Thời gian nhận dự kiến:",
                     "Từ 10/09/2021\tĐến 10/12/2021",
                   ),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   //text
                   _textField(
@@ -63,7 +63,7 @@ class V1CheckPage extends GetView<V1CheckController> {
                     "Nội dung yêu cầu",
                     "Nội dung yêu cầu theo màng hình KH12",
                   ),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // bang khoi luong
                   LabelContent(
@@ -84,17 +84,17 @@ class V1CheckPage extends GetView<V1CheckController> {
                     isRequired: false,
                   ),
 
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // hinh anh khoi luong
                   _hinhAnhKhoiLuong(),
 
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // file upload
                   _fileUpload(context),
 
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // bottom
                   Row(
@@ -113,10 +113,11 @@ class V1CheckPage extends GetView<V1CheckController> {
                     ],
                   ),
 
-                  _whiteSpace(),
-                  _whiteSpace(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                  _twoBtn(context)
+                  // button update and accept
+                  _buttonUpdateAndAccept(context)
                 ],
               ),
             ),
@@ -145,13 +146,6 @@ class V1CheckPage extends GetView<V1CheckController> {
         ],
       ),
     );
-  }
-
-  ///
-  /// white space
-  ///
-  Widget _whiteSpace() {
-    return const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL);
   }
 
   ///
@@ -189,9 +183,9 @@ class V1CheckPage extends GetView<V1CheckController> {
   ///
   /// two feature
   ///
-  Widget _twoBtn(BuildContext context) {
+  Widget _buttonUpdateAndAccept(BuildContext context) {
     final List<String> labels = ["Chỉnh sửa", "Xác nhận"];
-    final List<Function()> onTapList = [() {}, controller.xacNhan];
+    final List<Function()> onTapList = [() {}, controller.onxacNhanClick];
     final List<Color> colors = [const Color(0xFFB0BAC1), ColorResources.THEME_DEFAULT];
     return SizedBox(
       height: 100,

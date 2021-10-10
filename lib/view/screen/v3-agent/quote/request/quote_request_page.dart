@@ -15,8 +15,6 @@ import 'package:template/view/screen/v3-agent/quote/request/quote_request_contro
 class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
       body: GetBuilder<V3QuoteRequestController>(
@@ -57,13 +55,13 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian dự kiến
-                  _thoiGianDuKien(context, controller.infoCard),
+                  _thoiGianDuKien(context, controller.infoCard!),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // noi dung yeu cau
-                  _noiDungYeuCau(context, controller.noiDungYeuCau),
+                  _noiDungYeuCau(context, controller.noiDungYeuCau!),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -363,21 +361,21 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
           crossAxisSpacing: 30,
         ),
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: controller.features.length,
+        itemCount: controller.features!.length,
         itemBuilder: (BuildContext ctx, index) {
           return GestureDetector(
-            onTap: controller.features[index]["onTap"] as Function(),
+            onTap: controller.features![index]["onTap"] as Function(),
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: controller.features[index]['color'] as Color,
+                  color: controller.features![index]['color'] as Color,
                   borderRadius: const BorderRadius.all(
                       Radius.circular(Dimensions.BORDER_RADIUS_SMALL)),
                   boxShadow: const [
                     BoxShadow(blurRadius: 3, offset: Offset(0, 2))
                   ]),
               child: Text(
-                controller.features[index]['title'] as String,
+                controller.features![index]['title'] as String,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

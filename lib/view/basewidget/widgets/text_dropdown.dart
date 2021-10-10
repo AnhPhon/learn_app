@@ -39,7 +39,7 @@ class TextDropdown extends StatelessWidget {
                   labelStyle: Dimensions.textNormalStyleCard(),
                   errorStyle: const TextStyle(
                     color: Colors.redAccent,
-                    fontSize: 16.0,
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
                   ),
                   hintText: labelText,
                   border: OutlineInputBorder(

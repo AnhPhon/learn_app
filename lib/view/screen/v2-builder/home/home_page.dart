@@ -17,8 +17,6 @@ import 'home_controller.dart';
 class V2HomePage extends GetView<V2HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
@@ -164,7 +162,7 @@ class V2HomePage extends GetView<V2HomeController> {
               ),
               Text(
                 'Kết quả báo giá',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
               )
             ],
           ),

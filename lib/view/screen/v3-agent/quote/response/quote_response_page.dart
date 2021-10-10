@@ -15,8 +15,6 @@ import 'package:template/view/screen/v3-agent/quote/response/quote_response_cont
 class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
       body: GetBuilder<V3QuoteResponseController>(
@@ -33,7 +31,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
                   SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
-                  _bangBaoGia(context, controller.infoCard),
+                  _bangBaoGia(context, controller.infoCard!),
                   SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian giao hàng

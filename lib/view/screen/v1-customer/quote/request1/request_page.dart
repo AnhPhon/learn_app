@@ -43,7 +43,8 @@ class V1Request1Page extends GetView<V1Request1Controller> {
                     height: DeviceUtils.getScaledHeight(
                         context, Dimensions.SCALE_DEFAULT),
                   ),
-
+                  
+                  // địa điểm nhận
                   _inputWidget(
                     "Địa điểm nhận",
                     controller.tieuDeBaoGiaController!,
@@ -54,6 +55,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
                         context, Dimensions.SCALE_DEFAULT),
                   ),
 
+                  // Thời gian nhận dự kiến
                   LabelContent(
                     title: "Thời gian nhận dự kiến",
                     content: _thoiGianDuKien(context),
@@ -65,6 +67,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
                         context, Dimensions.SCALE_DEFAULT),
                   ),
 
+                  // Tiếp tục
                   _nextBtn(context)
                 ],
               ),

@@ -15,12 +15,17 @@ class IntroductionPage extends GetView<IntroductionController> {
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 19.0);
+    const bodyStyle = TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE);
 
     const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
-      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      descriptionPadding: EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT + 1,
+        0.0,
+        Dimensions.PADDING_SIZE_DEFAULT + 1,
+        Dimensions.PADDING_SIZE_DEFAULT + 1,
+      ),
       pageColor: Colors.white,
       imagePadding: EdgeInsets.zero,
     );
@@ -79,17 +84,23 @@ class IntroductionPage extends GetView<IntroductionController> {
                     fontWeight: FontWeight.w600,
                     color: ColorResources.PRIMARY)),
             curve: Curves.fastLinearToSlowEaseIn,
-            controlsMargin: const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT+1),
+            controlsMargin:
+                const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT + 1),
             controlsPadding: kIsWeb
-                ? const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT-3)
-                : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                ? const EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT - 3)
+                : const EdgeInsets.fromLTRB(
+                    Dimensions.PADDING_SIZE_EXTRA_SMALL + 3.0,
+                    Dimensions.PADDING_SIZE_EXTRA_SMALL - 1.0,
+                    Dimensions.PADDING_SIZE_EXTRA_SMALL + 3.0,
+                    Dimensions.PADDING_SIZE_EXTRA_SMALL - 1.0,
+                  ),
             dotsDecorator: const DotsDecorator(
-              size: Size(10.0, 10.0),
+              size: Size(Dimensions.PADDING_SIZE_SMALL, Dimensions.PADDING_SIZE_SMALL),
               color: ColorResources.PRIMARY,
-              activeSize: Size(22.0, 10.0),
+              activeSize: Size(Dimensions.PADDING_SIZE_LARGE + 2, Dimensions.PADDING_SIZE_SMALL),
               activeColor: ColorResources.PRIMARY,
               activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                borderRadius: BorderRadius.all(Radius.circular(Dimensions.PADDING_SIZE_EXTRA_LARGE)),
               ),
             ),
           );
