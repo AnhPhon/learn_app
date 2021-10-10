@@ -20,7 +20,7 @@ class V3HomeController extends GetxController {
           Color(0xff8CE3E9),
           Color(0xff8CE3E9),
         ]),
-        "onTap": () {}
+        "onTap": () => Get.toNamed(AppRoutes.V3_STORE),
       },
       {
         "icon": Icons.chat,

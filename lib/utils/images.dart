@@ -35,6 +35,15 @@ class Images {
   static const String V1Product8Home = 'assets/images/product8.png';
   static const String V1Product9Home = 'assets/images/product9.png';
 
+  static const String product_store = 'assets/images/alarm_store.png';
+  static const String infomation_store = 'assets/images/infomation_store.png';
+  static const String sale_performance =
+      'assets/images/sales_performance_store.png';
+  static const String product_management = 'assets/images/search_store.png';
+  static const String bill_management =
+      'assets/images/service_management_store.png';
+  static const String warehouse_store = 'assets/images/warehouse.png';
+
   // v4-employee
   static const String V4NewsExample = 'assets/images/news1.png'; 
   static const String V4AvatarHome = 'assets/images/avatar.png';
