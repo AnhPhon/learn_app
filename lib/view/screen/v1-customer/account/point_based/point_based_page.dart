@@ -129,13 +129,11 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
           title,
           style: Dimensions.fontSizeStyle16w600(),
         ),
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .4),
-          child: InputWidget(
-            textEditingController: textController,
-            hintText: hintText,
-            isDate: true,
-          ),
+        InputWidget(
+          width: .4,
+          textEditingController: textController,
+          hintText: hintText,
+          isDate: true,
         ),
       ],
     );

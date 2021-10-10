@@ -23,6 +23,7 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: InputWidget(
+                    width: double.infinity,
                     textEditingController: controller.searchController,
                     hintText: "Tìm kiếm",
                     prefixIcon: const Icon(

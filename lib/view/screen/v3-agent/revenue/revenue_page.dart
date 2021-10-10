@@ -19,26 +19,32 @@ class V3RevenuePage extends GetView<V3RevenueController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _titleInput(
-                          context,
-                          controller,
-                          title: "Từ ngày ",
-                          textController: controller.startController,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InputWidget(
+                        label: "Từ ngày ",
+                        width: .35,
+                        isDate: true,
+                        allowEdit: false,
+                        textEditingController: controller.startController,
+                        isColorFieldWhite: true,
+                        suffixIcon: const Icon(
+                          Icons.calendar_today,
                         ),
-                        _titleInput(
-                          context,
-                          controller,
-                          title: "Đến ngày ",
-                          textController: controller.endController,
+                      ),
+                      InputWidget(
+                        label: "Đến ngày ",
+                        width: .35,
+                        isDate: true,
+                        allowEdit: false,
+                        textEditingController: controller.endController,
+                        isColorFieldWhite: true,
+                        suffixIcon: const Icon(
+                          Icons.calendar_today,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
 
                   //chart
@@ -61,46 +67,6 @@ class V3RevenuePage extends GetView<V3RevenueController> {
             ),
           );
         });
-  }
-
-  ///
-  ///title and textfield
-  ///
-  Widget _titleInput(
-    BuildContext context,
-    V3RevenueController controller, {
-    required String title,
-    required TextEditingController textController,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Dimensions.fontSizeStyle16().copyWith(
-            color: ColorResources.BLACK,
-          ),
-        ),
-        const SizedBox(
-          height: Dimensions.MARGIN_SIZE_SMALL,
-        ),
-        SizedBox(
-          width: DeviceUtils.getScaledWidth(context, .4),
-          child: InputWidget(
-            isDate: true,
-            allowEdit: false,
-            textEditingController: textController,
-            isColorFieldWhite: true,
-            suffixIcon: const Icon(
-              Icons.calendar_today,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: Dimensions.MARGIN_SIZE_DEFAULT,
-        ),
-      ],
-    );
   }
 
   ///

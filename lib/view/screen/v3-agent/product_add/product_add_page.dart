@@ -6,8 +6,8 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
+import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_controller.dart';
 
 class V3ProductAddPage extends GetView<V3ProductAddController> {
@@ -36,16 +36,13 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: controller.textControllerList.length - 1,
                       itemBuilder: (BuildContext ctx, int index) {
-                        return Column(
-                          children: [
-                            _textTitle(context,
-                                title: controller.titleList[index]),
-                            InputWidget(
-                              textEditingController:
-                                  controller.textControllerList[index],
-                              isColorFieldWhite: true,
-                            ),
-                          ],
+                        return InputWidget(
+                          label: controller.titleList[index],
+                          obligatory: true,
+                          width: double.infinity,
+                          textEditingController:
+                              controller.textControllerList[index],
+                          isColorFieldWhite: true,
                         );
                       },
                     ),
@@ -54,32 +51,42 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     ),
 
                     //product category
-                    _titleDropDown(controller, title: "Danh mục sản phẩm"),
+                    DropDownButton1(
+                      label: "Danh mục sản phẩm",
+                      hint: " ",
+                      value: null,
+                      onChanged: (val) {},
+                      data: const ["dropdown"],
+                      isColorFieldWhite: true,
+                    ),
 
                     //stock
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Số lượng tồn kho",
-                          style: Dimensions.fontSizeStyle16().copyWith(
-                            color: ColorResources.BLACK,
-                          )),
-                    ),
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_DEFAULT,
-                    ),
                     InputWidget(
+                      label: "Số lượng tồn kho",
+                      width: double.infinity,
                       textEditingController: controller.textControllerList.last,
                       isColorFieldWhite: true,
                     ),
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_DEFAULT,
-                    ),
 
                     //product status
-                    _titleDropDown(controller, title: "Tình trạng sản phẩm"),
+                    DropDownButton1(
+                      label: "Tình trạng sản phẩm",
+                      hint: " ",
+                      value: null,
+                      onChanged: (val) {},
+                      data: const ["dropdown"],
+                      isColorFieldWhite: true,
+                    ),
 
                     //shipping method
-                    _titleDropDown(controller, title: "Hình thức vận chuyển"),
+                    DropDownButton1(
+                      label: "Hình thức vận chuyển",
+                      hint: " ",
+                      value: null,
+                      onChanged: (val) {},
+                      data: const ["dropdown"],
+                      isColorFieldWhite: true,
+                    ),
                   ],
                 ),
               ),

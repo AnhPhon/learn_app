@@ -9,8 +9,8 @@ import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
+import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
-import 'package:template/view/screen/v3-agent/component_agent/btn_component.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_controller.dart';
 
 class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
@@ -29,31 +29,40 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   ),
 
                   //name company
-                  _titleTextField(
-                    title: "Tên doanh nghiệp (hoặc tên cá nhân)",
-                    textController: controller.nameController,
-                    isRequired: true,
+                  InputWidget(
+                    width: double.infinity,
+                    label: "Tên doanh nghiệp (hoặc tên cá nhân)",
+                    obligatory: true,
+                    textEditingController: controller.nameController,
+                    isColorFieldWhite: true,
                   ),
 
                   //legal Representative
-                  _titleTextField(
-                    title: "Người đại diện pháp lý (chủ doanh nghiệp/cá nhân)",
-                    textController: controller.legalRepresentativeController,
-                    isRequired: true,
+                  InputWidget(
+                    width: double.infinity,
+                    label: "Người đại diện pháp lý (chủ doanh nghiệp/cá nhân)",
+                    obligatory: true,
+                    textEditingController:
+                        controller.legalRepresentativeController,
+                    isColorFieldWhite: true,
                   ),
 
                   //phone
-                  _titleTextField(
-                    title: "SĐT Zalo",
-                    textController: controller.phoneController,
-                    isRequired: true,
+                  InputWidget(
+                    width: double.infinity,
+                    label: "SĐT Zalo",
+                    obligatory: true,
+                    textEditingController: controller.phoneController,
+                    isColorFieldWhite: true,
                   ),
 
                   //email
-                  _titleTextField(
-                    title: "Email",
-                    textController: controller.emailController,
-                    isRequired: false,
+                  InputWidget(
+                    width: double.infinity,
+                    label: "Email",
+                    obligatory: true,
+                    textEditingController: controller.emailController,
+                    isColorFieldWhite: true,
                   ),
 
                   //store group
@@ -85,10 +94,12 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   _storeAddress(context),
 
                   //address
-                  _titleTextField(
-                    title: "Địa chỉ cụ thể(số nhà, tên đường)",
-                    textController: controller.addressController,
-                    isRequired: false,
+                  InputWidget(
+                    width: double.infinity,
+                    label: "Địa chỉ cụ thể(số nhà, tên đường)",
+                    obligatory: true,
+                    textEditingController: controller.addressController,
+                    isColorFieldWhite: true,
                   ),
 
                   //working hours in day
@@ -103,15 +114,20 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   ),
 
                   //accept work
-                  _titleDropDown(
-                    controller,
-                    title: "Chiều thứ 7 có làm việc không?",
-                    isRequired: false,
+                  DropDownButton1(
+                    label: "Chiều thứ 7 có làm việc không?",
+                    hint: "Chọn có hoặc không",
+                    value: controller.acceptWork,
+                    onChanged: controller.onSelectedAcceptWork,
+                    data: const ["Có", "Không"],
                   ),
-                  _titleDropDown(
-                    controller,
-                    title: "Chủ nhật có làm việc không?",
-                    isRequired: false,
+
+                  DropDownButton1(
+                    label: "Chủ nhật có làm việc không?",
+                    hint: "Chọn có hoặc không",
+                    value: controller.acceptWork,
+                    onChanged: controller.onSelectedAcceptWork,
+                    data: const ["Có", "Không"],
                   ),
 
                   //note
@@ -145,54 +161,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             bottomNavigationBar: _btnBottom(context, controller),
           );
         });
-  }
-
-  ///
-  ///title and textfield
-  ///
-  Widget _titleTextField(
-      {required String title,
-      required TextEditingController textController,
-      required bool isRequired}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-                text: TextSpan(
-              text: title,
-              style: Dimensions.fontSizeStyle16().copyWith(
-                color: ColorResources.BLACK,
-              ),
-              children: isRequired == true
-                  ? [
-                      const TextSpan(
-                        text: "*",
-                        style: TextStyle(
-                          color: ColorResources.RED,
-                        ),
-                      )
-                    ]
-                  : [],
-            )),
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          InputWidget(
-            textEditingController: textController,
-            isColorFieldWhite: true,
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
-          ),
-        ],
-      ),
-    );
   }
 
   ///
@@ -356,7 +324,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                 flex: 5,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  // crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       "Từ",
@@ -365,14 +333,12 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     const SizedBox(
                       width: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
-                    SizedBox(
-                      width: DeviceUtils.getScaledWidth(context, .3),
-                      child: InputWidget(
-                        textEditingController: controller.startController,
-                        isTime: true,
-                        allowEdit: false,
-                      ),
-                    )
+                    InputWidget(
+                      width: .25,
+                      textEditingController: controller.startController,
+                      isTime: true,
+                      allowEdit: false,
+                    ),
                   ],
                 ),
               ),
@@ -382,7 +348,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   flex: 5,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
                         "Đến",
@@ -391,64 +357,15 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       const SizedBox(
                         width: Dimensions.MARGIN_SIZE_DEFAULT,
                       ),
-                      SizedBox(
-                        width: DeviceUtils.getScaledWidth(context, .3),
-                        child: InputWidget(
-                          textEditingController: controller.endController,
-                          isTime: true,
-                          allowEdit: false,
-                        ),
-                      )
+                      InputWidget(
+                        width: .25,
+                        textEditingController: controller.endController,
+                        isTime: true,
+                        allowEdit: false,
+                      ),
                     ],
                   )),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  ///
-  ///title and textfield
-  ///
-  Widget _titleDropDown(V3StoreInfomationController controller,
-      {required String title, required bool isRequired}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-                text: TextSpan(
-              text: title,
-              style: Dimensions.fontSizeStyle16().copyWith(
-                color: ColorResources.BLACK,
-              ),
-              children: isRequired == true
-                  ? [
-                      const TextSpan(
-                        text: "*",
-                        style: TextStyle(
-                          color: ColorResources.RED,
-                        ),
-                      )
-                    ]
-                  : [],
-            )),
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          DropDownButton1(
-              hint: "Chọn có hoặc không",
-              value: controller.acceptWork,
-              onChanged: controller.onSelectedAcceptWork,
-              data: const ["Có", "Không"]),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
           ),
         ],
       ),
@@ -523,7 +440,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
           //warehouse address
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            // crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 "Địa chỉ cụ thể",
@@ -532,12 +449,10 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               const SizedBox(
                 width: Dimensions.MARGIN_SIZE_DEFAULT,
               ),
-              SizedBox(
-                width: DeviceUtils.getScaledWidth(context, .55),
-                child: InputWidget(
-                  textEditingController: controller.warehouseController,
-                ),
-              )
+              InputWidget(
+                width: .5,
+                textEditingController: controller.warehouseController,
+              ),
             ],
           ),
         ],
