@@ -118,11 +118,23 @@ class AppRoutes {
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
 
+  static const String V1_QUOTE_REQUEST_1 = '/v1_quote_request_1';
+  static const String V1_QUOTE_REQUEST_2 = '/v1_quote_request_2';
+  static const String V1_QUOTE_CHECK = '/v1_quote_check';
+  static const String V1_QUOTE_DONE = '/v1_quote_done';
+  static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
   static const String V2_DASHBOARD = '/v2_dashboard';
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
+
+  // agent
+  static const String V3_QUOTE_LIST = '/v3_quote_list';
+  static const String V3_QUOTE_CHECK = '/v3_quote_check';
+  static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
+  static const String V3_QUOTE_REQUEST = '/v3_quote_request';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';

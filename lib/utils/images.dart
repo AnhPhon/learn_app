@@ -50,6 +50,7 @@ class Images {
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String toolbar_background = 'assets/images/appbar.png';
 
+  static const String location_example = 'https://statics.vinpearl.com/du-lich-Da-Nang-mua-nao-dep-hinh-anh1.jpg';
   // product card 
   static const String example = 'https://media3.scdn.vn/img3/2019/8_15/7n83gB.jpg';
 }

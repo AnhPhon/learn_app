@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
@@ -30,19 +31,23 @@ class CategoryWidget extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Container(
         color: Colors.white,
-        padding:
-            const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_LARGE,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
+          bottom: Dimensions.PADDING_SIZE_LARGE,
+        ),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
-                  width: width * .60,
+                  margin:
+                      const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
+                  width: DeviceUtils.getScaledSize(context, .6),
                   child: Text(
                     label,
                     style: TextStyle(
@@ -81,7 +86,9 @@ class CategoryWidget extends GetView {
                 )
               ],
             ),
-            Container(padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT), child: content),
+            Container(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                child: content),
           ],
         ));
   }

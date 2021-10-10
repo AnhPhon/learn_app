@@ -17,8 +17,6 @@ import 'home_controller.dart';
 class V3HomePage extends GetView<V3HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),

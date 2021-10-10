@@ -17,8 +17,6 @@ import 'home_controller.dart';
 class V2HomePage extends GetView<V2HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
@@ -77,7 +75,7 @@ class V2HomePage extends GetView<V2HomeController> {
               style: TextStyle(
                 color: Color(0xff4D4D4D),
                 fontWeight: FontWeight.bold,
-                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontSize: Dimensions.FONT_SIZE_SMALL,
               ),
             ),
             const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
@@ -164,7 +162,7 @@ class V2HomePage extends GetView<V2HomeController> {
               ),
               Text(
                 'Kết quả báo giá',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
               )
             ],
           ),
@@ -230,7 +228,7 @@ class V2HomePage extends GetView<V2HomeController> {
         onTap: () {},
         title: "Công việc đang cần người",
         widget: SizedBox(
-          height: 210,
+          height: 220,
           child: ListView.builder(
             itemCount: 2,
             physics: const NeverScrollableScrollPhysics(),
@@ -249,7 +247,7 @@ class V2HomePage extends GetView<V2HomeController> {
   }
 
   ///
-  ///
+  /// _sanPhamWidget
   ///
   Widget _sanPhamWidget(BuildContext context) {
     return Padding(

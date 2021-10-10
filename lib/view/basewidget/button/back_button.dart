@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/dimensions.dart';
 
 class BackButton extends StatelessWidget {
   final Color color;
@@ -11,7 +12,7 @@ class BackButton extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).pop();
       },
-      icon: Icon(Icons.arrow_back_ios, color: color, size: 16),
+      icon: Icon(Icons.arrow_back_ios, color: color, size: Dimensions.FONT_SIZE_LARGE),
     );
   }
 }
