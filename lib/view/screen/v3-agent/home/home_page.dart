@@ -17,8 +17,6 @@ import 'home_controller.dart';
 class V3HomePage extends GetView<V3HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),
@@ -57,7 +55,8 @@ class V3HomePage extends GetView<V3HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
       child: Row(
         children: [
@@ -76,7 +75,8 @@ class V3HomePage extends GetView<V3HomeController> {
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               decoration: const BoxDecoration(
                   color: Color(0xff2196F3),
-                  borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
               child: const Text(
                 "Cập nhật",
                 style: TextStyle(color: Colors.white),
@@ -168,7 +168,8 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return Padding(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              padding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
                 tenSanPham: "Kệ son nồi",
                 maSanPham: "BN001",

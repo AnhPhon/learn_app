@@ -168,7 +168,6 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return GetBuilder<LoginController>(
         init: LoginController(),
         builder: (LoginController value) {
@@ -179,7 +178,7 @@ class LoginPage extends GetView<LoginController> {
                 // bottom
                 Stack(
                   children: [
-                    _bottomWidget(width),
+                    _bottomWidget(DeviceUtils.getScaledWidth(context, 1)),
                   ],
                 ),
 
@@ -215,7 +214,7 @@ class LoginPage extends GetView<LoginController> {
                         ),
 
                         //  login button widget
-                        _loginBtnWidget(context, "Đăng nhập", width),
+                        _loginBtnWidget(context, "Đăng nhập", DeviceUtils.getScaledWidth(context, 1)),
                       ],
                     ),
                   ),

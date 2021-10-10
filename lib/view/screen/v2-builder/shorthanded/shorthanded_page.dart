@@ -6,6 +6,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/drop_down_button_icon.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_controller.dart';
 
@@ -89,14 +90,14 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
             ),
           ),
         ),
-        DropDownButton<String>(
+        DropDownButton1<String>(
           value: " ",
           width: double.infinity,
           onChanged: (val) {},
           data: const [],
           hint: "Chọn nhóm công việc",
         ),
-        DropDownButton<String>(
+        DropDownButton1<String>(
           value: " ",
           width: double.infinity,
           onChanged: (val) {},
@@ -106,7 +107,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
         Row(
           children: [
             Expanded(
-              child: DropDownButton<String>(
+              child: DropDownButton1<String>(
                 value: " ",
                 width: double.infinity,
                 onChanged: (val) {},
@@ -115,7 +116,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
               ),
             ),
             Expanded(
-              child: DropDownButton<String>(
+              child: DropDownButton1<String>(
                 value: " ",
                 width: double.infinity,
                 onChanged: (val) {},
@@ -124,7 +125,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
               ),
             ),
             Expanded(
-              child: DropDownButton<String>(
+              child: DropDownButton1<String>(
                 value: " ",
                 width: double.infinity,
                 onChanged: (val) {},
