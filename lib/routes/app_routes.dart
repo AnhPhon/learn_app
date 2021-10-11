@@ -244,6 +244,8 @@ class AppRoutes {
   static const String V2_PREVIEW = '/v2_preview';
   // Xem trước hồ sơ đánh bằng văn bản
   static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
+  // đăng ký công việc
+  static const String V2_WORK_REGISTER = '/v2_work_register';
 
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 
 class V2ProjectController extends GetxController {
   String title = "Dự án";
