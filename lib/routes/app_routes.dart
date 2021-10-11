@@ -217,6 +217,26 @@ class AppRoutes {
   static const String V4_RULES = '/v4_rules';
   static const String V4_SALARY = '/v4_salary';
   static const String V4_INFO = '/v4_info';
+
+static const String V2_QUOTE_LIST = "/v2_quote_list";
+static const String V2_QUOTE_CHECK = "/v2_quote_check";
+static const String V2_QUOTE_REQUEST = "/v2_quote_request";
+static const String V2_QUOTE_RESPONSE = "/v2_quote_response";
+static const String V2_CONTRACT = "/v2_contract";
+static const String V2_ACCIDENT_INSURANCE = "/v2_accident_insurance";
+static const String V2_OTHER_INSURANCE = "/v2_other_insurance";
+static const String V2_TAX = "/v2_tax";
+static const String V2_INSURANCE_DETAIL = "/v2_insurance_detail";
+static const String V2_PROFILE = "/v2_profile";
+static const String V2_POINT_BASED = "/v2_point_based";
+static const String V2_WALLET = "/v2_wallet";
+static const String V2_RULES = "/v2_rules";
+static const String V2_INTRODUCE = "/v2_introduce";
+static const String V2_HELP = "/v2_help";
+static const String V2_JOB_MANAGEMENT = "/v2_job_management";
+static const String V2_INURANCE_REGISTER = "/v2_inurance_register";
+static const String V2_YOUR_INSURANCE = "/v2_your_insurance";
+static const String V2_REGISTER_AND_COMMIT = "/v2_register_and_commit";
   // Builder
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
