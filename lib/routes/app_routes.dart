@@ -195,6 +195,23 @@ class AppRoutes {
   static const String V3_REVENUE = '/v3_revenue';
   static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
   static const String V3_PRODUCT_ADD = '/v3_product_add';
+  // Builder
+  static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+  // Xem tin tuyển dụng
+  static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
+  //Xem lịch sử tin đã ứng tuyển và đã lưu
+  static const String V2_HISTORY_RECRUITMENT_NEWS = '/v2_history_recruitment_news';
+  // Hình thức ứng tuyển
+  static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
+  // Đánh văn bản
+  static const String V2_TEXT_TYING = '/v2_text_tying';
+  // Nộp cv
+  static const String V2_CV = '/v2_cv';
+  // Xem trước hồ sơ nộp bằng CV
+  static const String V2_PREVIEW = '/v2_preview';
+  // Xem trước hồ sơ đánh bằng văn bản
+  static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
+
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
   static const String V4_RULES = '/v4_rules';

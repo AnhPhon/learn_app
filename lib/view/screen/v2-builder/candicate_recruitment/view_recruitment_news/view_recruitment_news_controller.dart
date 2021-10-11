@@ -48,6 +48,12 @@ class V2ViewRecruitmentNewsController extends GetxController{
     );
   }
 
+  ///
+  /// Nhán vào nút ứng tuyển
+  ///
+  void onClickRecuitmentButton(){
+    Get.toNamed(AppRoutes.V2_FORM_OF_SUBMITSSION);
+  }
 
 
 

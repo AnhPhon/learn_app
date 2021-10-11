@@ -11,6 +11,7 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V2ViewRecruitmentNewsPage extends GetView<V2ViewRecruitmentNewsController>{
+  final _controller = Get.find<V2ViewRecruitmentNewsController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,6 +161,10 @@ class V2ViewRecruitmentNewsPage extends GetView<V2ViewRecruitmentNewsController>
           children: [
             SmallButton(title: "Lưu", color: ColorResources.GREY, onPressed: (){}),
             SmallButton(title: "Ứng tuyển", color: ColorResources.PRIMARYCOLOR, onPressed: (){}),
+            SmallButton(title: "Lưu", color: ColorResources.PRIMARYCOLOR, onPressed: (){}),
+            SmallButton(title: "Ứng tuyển", color: ColorResources.RED, onPressed: (){
+              _controller.onClickRecuitmentButton();
+            }),
           ],
         ),
       );
