@@ -24,9 +24,16 @@ class ThongTinNganHangModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tenNganHang'] = tenNganHang;
-    data['soTaiKhoan'] = soTaiKhoan;
-    data['tenChuTaiKhoan'] = tenChuTaiKhoan;
+    // check null tenNganHang
+    if (tenNganHang != null) data['tenNganHang'] = tenNganHang; 
+
+    // check null soTaiKhoan
+    if (soTaiKhoan != null) data['soTaiKhoan'] = soTaiKhoan; 
+
+    // check null tenChuTaiKhoan
+    if (tenChuTaiKhoan != null) data['tenChuTaiKhoan'] = tenChuTaiKhoan; 
+
+
     return data;
   }
 }

@@ -24,9 +24,16 @@ class DieuKhoanChinhSachModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['type'] = type;
-    data['tieuDe'] = tieuDe;
-    data['noiDung'] = noiDung;
+    // check null type
+    if (type != null) data['type'] = type; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

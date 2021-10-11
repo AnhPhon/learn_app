@@ -37,11 +37,22 @@ class DanhGiaDaiLyModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['taiKhoanDanhGia'] = taiKhoanDanhGia;
-    data['diemDanhGia'] = diemDanhGia;
-    data['tieuDe'] = tieuDe;
-    data['noiDung'] = noiDung;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null taiKhoanDanhGia
+    if (taiKhoanDanhGia != null) data['taiKhoanDanhGia'] = taiKhoanDanhGia; 
+
+    // check null diemDanhGia
+    if (diemDanhGia != null) data['diemDanhGia'] = diemDanhGia; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

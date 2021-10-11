@@ -46,14 +46,31 @@ class KeKhaiKinhNghiemModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['thoiGianBatDau'] = thoiGianBatDau;
-    data['thoiGianKetThuc'] = thoiGianKetThuc;
-    data['donVi'] = donVi;
-    data['chucVu'] = chucVu;
-    data['mucLuong'] = mucLuong;
-    data['congViecPhuTrach'] = congViecPhuTrach;
-    data['ketQua'] = ketQua;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null thoiGianBatDau
+    if (thoiGianBatDau != null) data['thoiGianBatDau'] = thoiGianBatDau; 
+
+    // check null thoiGianKetThuc
+    if (thoiGianKetThuc != null) data['thoiGianKetThuc'] = thoiGianKetThuc; 
+
+    // check null donVi
+    if (donVi != null) data['donVi'] = donVi; 
+
+    // check null chucVu
+    if (chucVu != null) data['chucVu'] = chucVu; 
+
+    // check null mucLuong
+    if (mucLuong != null) data['mucLuong'] = mucLuong; 
+
+    // check null congViecPhuTrach
+    if (congViecPhuTrach != null) data['congViecPhuTrach'] = congViecPhuTrach; 
+
+    // check null ketQua
+    if (ketQua != null) data['ketQua'] = ketQua; 
+
+
     return data;
   }
 }

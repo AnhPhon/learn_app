@@ -1,8 +1,8 @@
 import 'don_dich_vu_model.dart';
 import 'du_an_khach_hang_model.dart';
-import 'du_an_nhan_vien_model.dart';
 import 'tin_tuc_model.dart';
 import 'tuyen_dung_model.dart';
+import 'du_an_nhan_vien_model.dart';
 
 class ThongBaoModel {
   String? doiTuong;
@@ -77,15 +77,34 @@ class ThongBaoModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['doiTuong'] = doiTuong;
-    data['idDonDichVu'] = idDonDichVu;
-    data['idDuAnKhachHang'] = idDuAnKhachHang;
-    data['idTinTuc'] = idTinTuc;
-    data['idTuyenDung'] = idTuyenDung;
-    data['tieuDe'] = tieuDe;
-    data['noiDung'] = noiDung;
-    data['hinhDaiDien'] = hinhDaiDien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
+    // check null doiTuong
+    if (doiTuong != null) data['doiTuong'] = doiTuong; 
+
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
+    // check null idDuAnKhachHang
+    if (idDuAnKhachHang != null) data['idDuAnKhachHang'] = idDuAnKhachHang; 
+
+    // check null idTinTuc
+    if (idTinTuc != null) data['idTinTuc'] = idTinTuc; 
+
+    // check null idTuyenDung
+    if (idTuyenDung != null) data['idTuyenDung'] = idTuyenDung; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+    // check null hinhDaiDien
+    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+
     return data;
   }
 }

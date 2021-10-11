@@ -31,9 +31,16 @@ class DanhSachUngTuyenModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTuyenDung'] = idTuyenDung;
-    data['taiKhoanUngTuyen'] = taiKhoanUngTuyen;
-    data['daXem'] = daXem;
+    // check null idTuyenDung
+    if (idTuyenDung != null) data['idTuyenDung'] = idTuyenDung; 
+
+    // check null taiKhoanUngTuyen
+    if (taiKhoanUngTuyen != null) data['taiKhoanUngTuyen'] = taiKhoanUngTuyen; 
+
+    // check null daXem
+    if (daXem != null) data['daXem'] = daXem; 
+
+
     return data;
   }
 }

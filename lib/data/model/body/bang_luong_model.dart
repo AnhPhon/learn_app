@@ -28,8 +28,13 @@ class BangLuongModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['file'] = file;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null file
+    if (file != null) data['file'] = file; 
+
+
     return data;
   }
 }

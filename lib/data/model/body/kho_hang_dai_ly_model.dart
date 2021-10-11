@@ -1,8 +1,8 @@
-import 'phuong_xa_model.dart';
-import 'quan_huyen_model.dart';
-import 'san_pham_model.dart';
 import 'tai_khoan_model.dart';
 import 'tinh_tp_model.dart';
+import 'quan_huyen_model.dart';
+import 'phuong_xa_model.dart';
+import 'san_pham_model.dart';
 
 class KhoHangDaiLyModel {
   TaiKhoanModel? idTaiKhoan;
@@ -74,14 +74,31 @@ class KhoHangDaiLyModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['ten'] = ten;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaChi'] = diaChi;
-    data['idSanPham'] = idSanPham;
-    data['soluong'] = soluong;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null idSanPham
+    if (idSanPham != null) data['idSanPham'] = idSanPham; 
+
+    // check null soluong
+    if (soluong != null) data['soluong'] = soluong; 
+
+
     return data;
   }
 }

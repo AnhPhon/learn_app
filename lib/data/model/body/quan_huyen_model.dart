@@ -28,8 +28,13 @@ class QuanHuyenModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTinhTp'] = idTinhTp;
-    data['ten'] = ten;
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }

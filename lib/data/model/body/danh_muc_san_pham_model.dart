@@ -18,7 +18,10 @@ class DanhMucSanPhamModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['ten'] = ten;
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }

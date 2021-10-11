@@ -1,8 +1,8 @@
-import 'du_an_nhan_vien_model.dart';
 import 'nhan_vien_model.dart';
-import 'phuong_xa_model.dart';
-import 'quan_huyen_model.dart';
+import 'du_an_nhan_vien_model.dart';
 import 'tinh_tp_model.dart';
+import 'quan_huyen_model.dart';
+import 'phuong_xa_model.dart';
 
 class ChamCongModel {
   NhanVienModel? idNhanVien;
@@ -80,16 +80,37 @@ class ChamCongModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['thoiGianBatDau'] = thoiGianBatDau;
-    data['thoiGianKetThuc'] = thoiGianKetThuc;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaChi'] = diaChi;
-    data['noiDungBaoCao'] = noiDungBaoCao;
-    data['viTri'] = viTri;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null thoiGianBatDau
+    if (thoiGianBatDau != null) data['thoiGianBatDau'] = thoiGianBatDau; 
+
+    // check null thoiGianKetThuc
+    if (thoiGianKetThuc != null) data['thoiGianKetThuc'] = thoiGianKetThuc; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null noiDungBaoCao
+    if (noiDungBaoCao != null) data['noiDungBaoCao'] = noiDungBaoCao; 
+
+    // check null viTri
+    if (viTri != null) data['viTri'] = viTri; 
+
+
     return data;
   }
 }

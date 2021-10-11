@@ -18,7 +18,10 @@ class DonViCungCapModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tenDonVi'] = tenDonVi;
+    // check null tenDonVi
+    if (tenDonVi != null) data['tenDonVi'] = tenDonVi; 
+
+
     return data;
   }
 }

@@ -28,8 +28,13 @@ class KhoHangModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['tenKho'] = tenKho;
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null tenKho
+    if (tenKho != null) data['tenKho'] = tenKho; 
+
+
     return data;
   }
 }

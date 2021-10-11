@@ -31,9 +31,16 @@ class DangKyHopDongSBSModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['file'] = file;
-    data['trangThai'] = trangThai;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null file
+    if (file != null) data['file'] = file; 
+
+    // check null trangThai
+    if (trangThai != null) data['trangThai'] = trangThai; 
+
+
     return data;
   }
 }

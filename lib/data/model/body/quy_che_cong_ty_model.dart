@@ -24,9 +24,16 @@ class QuyCheCongTyModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tieuDe'] = tieuDe;
-    data['tomTat'] = tomTat;
-    data['noiDung'] = noiDung;
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null tomTat
+    if (tomTat != null) data['tomTat'] = tomTat; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

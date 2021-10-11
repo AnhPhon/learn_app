@@ -28,8 +28,13 @@ class LoaiVanChuyenModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['tieuDe'] = tieuDe;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+
     return data;
   }
 }

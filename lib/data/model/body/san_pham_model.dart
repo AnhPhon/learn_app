@@ -1,6 +1,6 @@
-import 'bang_gia_phi_van_chuyen_model.dart';
-import 'danh_muc_san_pham_model.dart';
 import 'tai_khoan_model.dart';
+import 'danh_muc_san_pham_model.dart';
+import 'bang_gia_phi_van_chuyen_model.dart';
 
 class SanPhamModel {
   TaiKhoanModel? idTaiKhoan;
@@ -72,18 +72,43 @@ class SanPhamModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['idDanhMucSanPham'] = idDanhMucSanPham;
-    data['ten'] = ten;
-    data['thuongHieu'] = thuongHieu;
-    data['moTa'] = moTa;
-    data['hinhAnhDaiDien'] = hinhAnhDaiDien;
-    data['hinhAnhSanPham'] = hinhAnhSanPham;
-    data['quyCach'] = quyCach;
-    data['gia'] = gia;
-    data['maSanPham'] = maSanPham;
-    data['kieuVanChuyen'] = kieuVanChuyen;
-    data['idBangGiaPhiVanChuyen'] = idBangGiaPhiVanChuyen;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null idDanhMucSanPham
+    if (idDanhMucSanPham != null) data['idDanhMucSanPham'] = idDanhMucSanPham; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+    // check null thuongHieu
+    if (thuongHieu != null) data['thuongHieu'] = thuongHieu; 
+
+    // check null moTa
+    if (moTa != null) data['moTa'] = moTa; 
+
+    // check null hinhAnhDaiDien
+    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien; 
+
+    // check null hinhAnhSanPham
+    if (hinhAnhSanPham != null) data['hinhAnhSanPham'] = hinhAnhSanPham; 
+
+    // check null quyCach
+    if (quyCach != null) data['quyCach'] = quyCach; 
+
+    // check null gia
+    if (gia != null) data['gia'] = gia; 
+
+    // check null maSanPham
+    if (maSanPham != null) data['maSanPham'] = maSanPham; 
+
+    // check null kieuVanChuyen
+    if (kieuVanChuyen != null) data['kieuVanChuyen'] = kieuVanChuyen; 
+
+    // check null idBangGiaPhiVanChuyen
+    if (idBangGiaPhiVanChuyen != null) data['idBangGiaPhiVanChuyen'] = idBangGiaPhiVanChuyen; 
+
+
     return data;
   }
 }

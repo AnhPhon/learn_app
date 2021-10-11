@@ -38,9 +38,16 @@ class BangGiaPhiVanChuyenModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idLoaiVanChuyen'] = idLoaiVanChuyen;
-    data['idSanPham'] = idSanPham;
-    data['soTien'] = soTien;
+    // check null idLoaiVanChuyen
+    if (idLoaiVanChuyen != null) data['idLoaiVanChuyen'] = idLoaiVanChuyen; 
+
+    // check null idSanPham
+    if (idSanPham != null) data['idSanPham'] = idSanPham; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+
     return data;
   }
 }

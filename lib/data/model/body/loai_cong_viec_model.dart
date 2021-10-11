@@ -28,8 +28,13 @@ class LoaiCongViecModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhomDichVu'] = idNhomDichVu;
-    data['tenCongViec'] = tenCongViec;
+    // check null idNhomDichVu
+    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu; 
+
+    // check null tenCongViec
+    if (tenCongViec != null) data['tenCongViec'] = tenCongViec; 
+
+
     return data;
   }
 }

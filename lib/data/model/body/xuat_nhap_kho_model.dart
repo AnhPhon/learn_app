@@ -1,8 +1,8 @@
-import 'don_vi_cung_cap_model.dart';
+import 'nhan_vien_model.dart';
 import 'du_an_nhan_vien_model.dart';
 import 'kho_hang_model.dart';
-import 'nhan_vien_model.dart';
 import 'vat_tu_model.dart';
+import 'don_vi_cung_cap_model.dart';
 
 class XuatNhapKhoModel {
   NhanVienModel? idNhanVien;
@@ -71,13 +71,28 @@ class XuatNhapKhoModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['idKhoHang'] = idKhoHang;
-    data['idVatTu'] = idVatTu;
-    data['idDonViCungCap'] = idDonViCungCap;
-    data['soLuong'] = soLuong;
-    data['ghiChu'] = ghiChu;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null idKhoHang
+    if (idKhoHang != null) data['idKhoHang'] = idKhoHang; 
+
+    // check null idVatTu
+    if (idVatTu != null) data['idVatTu'] = idVatTu; 
+
+    // check null idDonViCungCap
+    if (idDonViCungCap != null) data['idDonViCungCap'] = idDonViCungCap; 
+
+    // check null soLuong
+    if (soLuong != null) data['soLuong'] = soLuong; 
+
+    // check null ghiChu
+    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+
+
     return data;
   }
 }

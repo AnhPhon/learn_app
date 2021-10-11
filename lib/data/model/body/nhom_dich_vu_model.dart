@@ -18,7 +18,10 @@ class NhomDichVuModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tenDichVu'] = tenDichVu;
+    // check null tenDichVu
+    if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
+
+
     return data;
   }
 }

@@ -30,11 +30,22 @@ class ThongTinFSSModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['doiTuong'] = doiTuong;
-    data['gioiThieuTomTatCoCheHoatDong'] = gioiThieuTomTatCoCheHoatDong;
-    data['quyenNghiaVuFSS'] = quyenNghiaVuFSS;
-    data['quyTrinhSuDungGiaoDich'] = quyTrinhSuDungGiaoDich;
-    data['loiIchThamGiaFSS'] = loiIchThamGiaFSS;
+    // check null doiTuong
+    if (doiTuong != null) data['doiTuong'] = doiTuong; 
+
+    // check null gioiThieuTomTatCoCheHoatDong
+    if (gioiThieuTomTatCoCheHoatDong != null) data['gioiThieuTomTatCoCheHoatDong'] = gioiThieuTomTatCoCheHoatDong; 
+
+    // check null quyenNghiaVuFSS
+    if (quyenNghiaVuFSS != null) data['quyenNghiaVuFSS'] = quyenNghiaVuFSS; 
+
+    // check null quyTrinhSuDungGiaoDich
+    if (quyTrinhSuDungGiaoDich != null) data['quyTrinhSuDungGiaoDich'] = quyTrinhSuDungGiaoDich; 
+
+    // check null loiIchThamGiaFSS
+    if (loiIchThamGiaFSS != null) data['loiIchThamGiaFSS'] = loiIchThamGiaFSS; 
+
+
     return data;
   }
 }

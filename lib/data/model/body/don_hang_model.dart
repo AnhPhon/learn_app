@@ -1,9 +1,9 @@
-import 'hinh_thuc_thanh_toan_model.dart';
-import 'phuong_xa_model.dart';
-import 'quan_huyen_model.dart';
 import 'tai_khoan_model.dart';
 import 'tinh_tp_model.dart';
+import 'quan_huyen_model.dart';
+import 'phuong_xa_model.dart';
 import 'trang_thai_don_hang_model.dart';
+import 'hinh_thuc_thanh_toan_model.dart';
 
 class DonHangModel {
   TaiKhoanModel? idTaiKhoan;
@@ -96,19 +96,46 @@ class DonHangModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['taiKhoanMuaHang'] = taiKhoanMuaHang;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaChi'] = diaChi;
-    data['phiVanChuyen'] = phiVanChuyen;
-    data['khuyenMai'] = khuyenMai;
-    data['phiDichVu'] = phiDichVu;
-    data['soTien'] = soTien;
-    data['tongTien'] = tongTien;
-    data['idTrangThaiDonHang'] = idTrangThaiDonHang;
-    data['idHinhThucThanhToan'] = idHinhThucThanhToan;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null taiKhoanMuaHang
+    if (taiKhoanMuaHang != null) data['taiKhoanMuaHang'] = taiKhoanMuaHang; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null phiVanChuyen
+    if (phiVanChuyen != null) data['phiVanChuyen'] = phiVanChuyen; 
+
+    // check null khuyenMai
+    if (khuyenMai != null) data['khuyenMai'] = khuyenMai; 
+
+    // check null phiDichVu
+    if (phiDichVu != null) data['phiDichVu'] = phiDichVu; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+    // check null tongTien
+    if (tongTien != null) data['tongTien'] = tongTien; 
+
+    // check null idTrangThaiDonHang
+    if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+
+    // check null idHinhThucThanhToan
+    if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 
+
+
     return data;
   }
 }

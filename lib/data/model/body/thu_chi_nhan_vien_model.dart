@@ -37,11 +37,22 @@ class ThuChiNhanVienModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['loai'] = loai;
-    data['tieuDe'] = tieuDe;
-    data['soTien'] = soTien;
-    data['noiDung'] = noiDung;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null loai
+    if (loai != null) data['loai'] = loai; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

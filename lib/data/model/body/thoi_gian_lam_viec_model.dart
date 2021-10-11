@@ -18,7 +18,10 @@ class ThoiGianLamViecModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tieuDe'] = tieuDe;
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+
     return data;
   }
 }

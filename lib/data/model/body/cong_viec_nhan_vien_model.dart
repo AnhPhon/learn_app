@@ -1,5 +1,5 @@
-import 'du_an_nhan_vien_model.dart';
 import 'nhan_vien_model.dart';
+import 'du_an_nhan_vien_model.dart';
 
 class CongViecNhanVienModel {
   NhanVienModel? idNhanVien;
@@ -56,15 +56,34 @@ class CongViecNhanVienModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['trangThai'] = trangThai;
-    data['tieuDe'] = tieuDe;
-    data['tomTat'] = tomTat;
-    data['noiDung'] = noiDung;
-    data['ngayBatDau'] = ngayBatDau;
-    data['ngayKetThuc'] = ngayKetThuc;
-    data['ngayThucTe'] = ngayThucTe;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null trangThai
+    if (trangThai != null) data['trangThai'] = trangThai; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null tomTat
+    if (tomTat != null) data['tomTat'] = tomTat; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+    // check null ngayBatDau
+    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau; 
+
+    // check null ngayKetThuc
+    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc; 
+
+    // check null ngayThucTe
+    if (ngayThucTe != null) data['ngayThucTe'] = ngayThucTe; 
+
+
     return data;
   }
 }

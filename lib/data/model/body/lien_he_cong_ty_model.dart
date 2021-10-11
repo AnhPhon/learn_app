@@ -24,9 +24,16 @@ class LienHeCongTyModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['diaChi'] = diaChi;
-    data['email'] = email;
-    data['soDienThoai'] = soDienThoai;
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null email
+    if (email != null) data['email'] = email; 
+
+    // check null soDienThoai
+    if (soDienThoai != null) data['soDienThoai'] = soDienThoai; 
+
+
     return data;
   }
 }

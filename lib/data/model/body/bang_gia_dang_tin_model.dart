@@ -21,8 +21,13 @@ class BangGiaDangTinModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['tieuDe'] = tieuDe;
-    data['donGia'] = donGia;
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null donGia
+    if (donGia != null) data['donGia'] = donGia; 
+
+
     return data;
   }
 }

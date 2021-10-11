@@ -28,8 +28,13 @@ class PhuongXaModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['ten'] = ten;
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }

@@ -40,12 +40,25 @@ class DanhSachBaoGiaDonDichVuModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idDonDichVu'] = idDonDichVu;
-    data['taiKhoanBaoGia'] = taiKhoanBaoGia;
-    data['giaBao'] = giaBao;
-    data['ghiChu'] = ghiChu;
-    data['file'] = file;
-    data['daXem'] = daXem;
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
+    // check null taiKhoanBaoGia
+    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia; 
+
+    // check null giaBao
+    if (giaBao != null) data['giaBao'] = giaBao; 
+
+    // check null ghiChu
+    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+
+    // check null file
+    if (file != null) data['file'] = file; 
+
+    // check null daXem
+    if (daXem != null) data['daXem'] = daXem; 
+
+
     return data;
   }
 }

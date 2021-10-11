@@ -53,14 +53,31 @@ class DanhSachThoThauBaoGiaModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idDuAnKhachHang'] = idDuAnKhachHang;
-    data['taiKhoanBaoGia'] = taiKhoanBaoGia;
-    data['idTrangThaiBaoGia'] = idTrangThaiBaoGia;
-    data['thoiGianHoanThanh'] = thoiGianHoanThanh;
-    data['giaBao'] = giaBao;
-    data['ghiChu'] = ghiChu;
-    data['tienCoc'] = tienCoc;
-    data['daXem'] = daXem;
+    // check null idDuAnKhachHang
+    if (idDuAnKhachHang != null) data['idDuAnKhachHang'] = idDuAnKhachHang; 
+
+    // check null taiKhoanBaoGia
+    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia; 
+
+    // check null idTrangThaiBaoGia
+    if (idTrangThaiBaoGia != null) data['idTrangThaiBaoGia'] = idTrangThaiBaoGia; 
+
+    // check null thoiGianHoanThanh
+    if (thoiGianHoanThanh != null) data['thoiGianHoanThanh'] = thoiGianHoanThanh; 
+
+    // check null giaBao
+    if (giaBao != null) data['giaBao'] = giaBao; 
+
+    // check null ghiChu
+    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+
+    // check null tienCoc
+    if (tienCoc != null) data['tienCoc'] = tienCoc; 
+
+    // check null daXem
+    if (daXem != null) data['daXem'] = daXem; 
+
+
     return data;
   }
 }

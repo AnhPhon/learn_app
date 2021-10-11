@@ -1,6 +1,5 @@
-import 'du_an_nhan_vien_model.dart';
 import 'nhan_vien_model.dart';
-
+import 'du_an_nhan_vien_model.dart';
 
 class BaoCaoNhanVienModel {
   NhanVienModel? idNhanVien;
@@ -45,11 +44,22 @@ class BaoCaoNhanVienModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['loai'] = loai;
-    data['soTuan'] = soTuan;
-    data['noiDung'] = noiDung;
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null loai
+    if (loai != null) data['loai'] = loai; 
+
+    // check null soTuan
+    if (soTuan != null) data['soTuan'] = soTuan; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

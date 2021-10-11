@@ -1,5 +1,5 @@
-import 'don_dich_vu_model.dart';
 import 'tai_khoan_model.dart';
+import 'don_dich_vu_model.dart';
 import 'tuyen_dung_model.dart';
 
 class LichSuGiaoDichModel {
@@ -57,13 +57,28 @@ class LichSuGiaoDichModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['taiKhoanNhanDon'] = taiKhoanNhanDon;
-    data['idDonDichVu'] = idDonDichVu;
-    data['idTuyenDung'] = idTuyenDung;
-    data['soTien'] = soTien;
-    data['hinhAnhGiaoDich'] = hinhAnhGiaoDich;
-    data['trangThai'] = trangThai;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null taiKhoanNhanDon
+    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon; 
+
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
+    // check null idTuyenDung
+    if (idTuyenDung != null) data['idTuyenDung'] = idTuyenDung; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+    // check null hinhAnhGiaoDich
+    if (hinhAnhGiaoDich != null) data['hinhAnhGiaoDich'] = hinhAnhGiaoDich; 
+
+    // check null trangThai
+    if (trangThai != null) data['trangThai'] = trangThai; 
+
+
     return data;
   }
 }

@@ -1,8 +1,8 @@
-import 'hang_muc_xay_dung_model.dart';
-import 'phuong_xa_model.dart';
-import 'quan_huyen_model.dart';
 import 'tai_khoan_model.dart';
 import 'tinh_tp_model.dart';
+import 'quan_huyen_model.dart';
+import 'phuong_xa_model.dart';
+import 'hang_muc_xay_dung_model.dart';
 import 'trang_thai_du_an_model.dart';
 
 class DuAnKhachHangModel {
@@ -105,22 +105,55 @@ class DuAnKhachHangModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['ten'] = ten;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaDiem'] = diaDiem;
-    data['gioiThieu'] = gioiThieu;
-    data['giaDuyet'] = giaDuyet;
-    data['idHangMucXayDung'] = idHangMucXayDung;
-    data['ngayBatDau'] = ngayBatDau;
-    data['ngayKetThuc'] = ngayKetThuc;
-    data['thoiGianYeuCau'] = thoiGianYeuCau;
-    data['file'] = file;
-    data['hinhAnhDaiDien'] = hinhAnhDaiDien;
-    data['idTrangThaiDuAn'] = idTrangThaiDuAn;
-    data['taiKhoanTrungThau'] = taiKhoanTrungThau;
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaDiem
+    if (diaDiem != null) data['diaDiem'] = diaDiem; 
+
+    // check null gioiThieu
+    if (gioiThieu != null) data['gioiThieu'] = gioiThieu; 
+
+    // check null giaDuyet
+    if (giaDuyet != null) data['giaDuyet'] = giaDuyet; 
+
+    // check null idHangMucXayDung
+    if (idHangMucXayDung != null) data['idHangMucXayDung'] = idHangMucXayDung; 
+
+    // check null ngayBatDau
+    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau; 
+
+    // check null ngayKetThuc
+    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc; 
+
+    // check null thoiGianYeuCau
+    if (thoiGianYeuCau != null) data['thoiGianYeuCau'] = thoiGianYeuCau; 
+
+    // check null file
+    if (file != null) data['file'] = file; 
+
+    // check null hinhAnhDaiDien
+    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien; 
+
+    // check null idTrangThaiDuAn
+    if (idTrangThaiDuAn != null) data['idTrangThaiDuAn'] = idTrangThaiDuAn; 
+
+    // check null taiKhoanTrungThau
+    if (taiKhoanTrungThau != null) data['taiKhoanTrungThau'] = taiKhoanTrungThau; 
+
+
     return data;
   }
 }

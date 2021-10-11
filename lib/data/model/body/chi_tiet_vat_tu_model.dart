@@ -38,9 +38,16 @@ class ChiTietVatTuModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['idDonDichVu'] = idDonDichVu;
-    data['idVatTu'] = idVatTu;
-    data['soLuong'] = soLuong;
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
+    // check null idVatTu
+    if (idVatTu != null) data['idVatTu'] = idVatTu; 
+
+    // check null soLuong
+    if (soLuong != null) data['soLuong'] = soLuong; 
+
+
     return data;
   }
 }
