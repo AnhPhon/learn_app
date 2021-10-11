@@ -58,12 +58,12 @@ class V1HomePage extends GetView<V1HomeController> {
         itemCount: 6,
         itemBuilder: (BuildContext ctx, index) {
           return GestureDetector(
-            onTap: controller.contentGrid![index]["onTap"] as Function(),
+            onTap: controller.contentGrid[index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.contentGrid![index]["label"].toString(),
+              label: controller.contentGrid[index]["label"].toString(),
               gradient:
-                  controller.contentGrid![index]["gradient"] as RadialGradient,
-              icon: controller.contentGrid![index]["icon"] as IconData,
+                  controller.contentGrid[index]["gradient"] as RadialGradient,
+              icon: controller.contentGrid[index]["icon"] as IconData,
             ),
           );
         },

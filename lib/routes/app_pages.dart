@@ -40,10 +40,10 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_binding.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-5/v1_group_order_feedback5_page.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_binding.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/group-6/v1_group_order_feedback6_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g6-excavation/v1_group_order_feedback6_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g6-excavation/v1_group_order_feedback6_page.dart';
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
@@ -51,17 +51,13 @@ import 'package:template/view/screen/v1-customer/product/product_detail/product_
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
-<<<<<<< HEAD
-import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/project/project_detail/project_detail_page.dart';
-=======
 import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
 import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
 import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
->>>>>>> origin/develop
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
@@ -95,6 +91,20 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/preview_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/preview_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/form_of_submission_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -336,11 +346,10 @@ class AppPages {
       page: () => V1NewsDetailPage(),
     ),
 
-<<<<<<< HEAD
     GetPage(
       name: AppRoutes.V1_PROJECT_DETAIL,
       page: () => V1ProjectDetailPage(),
-=======
+    ),
     //builder
     GetPage(
       name: AppRoutes.V2_PRODUCT_DETAIL,
@@ -405,7 +414,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
->>>>>>> origin/develop
     ),
 
     ///
@@ -535,13 +543,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
-<<<<<<< HEAD
-=======
     GetPage(
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
->>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
@@ -631,6 +636,65 @@ class AppPages {
       page: () => V2PaymentOrderPage(),
     ),
 
+    // Quản lý tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
+      page: () => V2RecruitmentPage(),
+      binding: V2RecruitmentBinding(),
+    ),
+
+
+
+    // Quản lý tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
+      page: () => V2RecruitmentPage(),
+      binding: V2RecruitmentBinding(),
+    ),
+
+    // Xem tin tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_VIEW_RECRUITMENT_NEWS,
+      page: () => V2ViewRecruitmentNewsPage(),
+      binding: V2ViewRecruitmentNewsBinding(),
+    ),
+    // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
+      page: () => V2HistoryRectuitmentNewsPage(),
+    ),
+
+    // Chọn hình thức ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_FORM_OF_SUBMITSSION,
+      page: () => V2FormOfSubmitssionPage(),
+    ),
+    // Đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_TEXT_TYING,
+      page: () => V2TextTypingPage(),
+      binding: V2TextTypingBinding(),
+    ),
+    // Nộp cv
+    GetPage(
+      name: AppRoutes.V2_CV,
+      page: () => V2CvPage(),
+      binding: V2CvBinding(),
+    ),
+    // Xem trươc nộp cv
+    GetPage(
+      name: AppRoutes.V2_PREVIEW,
+      page: () => V2PreviewPage(),
+      binding: V2PreviewBinding(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
+    ),
+
+
     // agent
     GetPage(
       name: AppRoutes.V3_DASHBOARD,
@@ -643,6 +707,13 @@ class AppPages {
       page: () => V3QuoteListPage(),
     ),
     // v3 - quote check
+    // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
+      page: () => V2HistoryRectuitmentNewsPage(),
+    ),
+
+    // Chọn hình thức ứng tuyển
     GetPage(
       name: AppRoutes.V3_QUOTE_CHECK,
       page: () => V3QuoteCheckPage(),
@@ -684,6 +755,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
     ),
 
     GetPage(
