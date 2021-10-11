@@ -44,7 +44,7 @@ class NoInternetOrDataScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  child: Text(getTranslated('RETRY', context), style: titilliumSemiBold.copyWith(color: Theme.of(context).accentColor, fontSize: Dimensions.FONT_SIZE_LARGE)),
+                  child: Text(getTranslated('RETRY', context), style: titilliumSemiBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.FONT_SIZE_LARGE)),
                 ),
               ),
             ) else const SizedBox.shrink(),
