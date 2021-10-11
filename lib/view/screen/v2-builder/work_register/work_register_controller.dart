@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:template/data/model/v1/select_province_custom_model.dart';
 import 'package:template/routes/app_routes.dart';
+
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({required this.value, required this.onChanged});
+}
 
 class V2WorkRegisterController extends GetxController {
   String title = "Đăng ký việc";
