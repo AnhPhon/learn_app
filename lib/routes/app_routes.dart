@@ -173,6 +173,7 @@ class AppRoutes {
   static const String V2_QUOTATION_GROUP56 = '/v2_quotation_group56';
   static const String V2_WINNING_BID = '/v2_winning_bid';
   static const String V2_PAYMENT_ORDER = '/v2_payment_order';
+  static const String V2_FINISH_UPDATE = '/v2_finish_update';
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
   static const String V3_QUOTE_CHECK = '/v3_quote_check';

@@ -136,3 +136,13 @@ class V2WorkRegisterController extends GetxController {
     });
   }
 }
+
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({
+    required this.value,
+    required this.onChanged,
+  });
+}

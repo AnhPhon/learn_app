@@ -28,7 +28,7 @@ class V1Request1Controller extends GetxController {
 
     tieuDeBaoGiaController = TextEditingController();
     loaiCongTrinh = TextEditingController(text: firstSelect);
-    
+
     fromDate = TextEditingController();
     toDate = TextEditingController();
 
@@ -68,7 +68,8 @@ class V1Request1Controller extends GetxController {
   ///
   /// date from Picker
   ///
-  void dateFromPicker(BuildContext context, DateTime firstDate, DateTime lastDate) {
+  void dateFromPicker(
+      BuildContext context, DateTime firstDate, DateTime lastDate) {
     showDatePicker(
       context: context,
       initialDate: DateTime(2021, 10, 7),
@@ -87,7 +88,8 @@ class V1Request1Controller extends GetxController {
   ///
   /// date to Picker
   ///
-  void dateToPicker(BuildContext context, DateTime firstDate, DateTime lastDate) {
+  void dateToPicker(
+      BuildContext context, DateTime firstDate, DateTime lastDate) {
     showDatePicker(
       context: context,
       initialDate: DateTime(2021, 10, 7),
@@ -109,4 +111,14 @@ class V1Request1Controller extends GetxController {
   void nextPage() {
     Get.toNamed(AppRoutes.V1_QUOTE_REQUEST_2);
   }
+}
+
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({
+    required this.value,
+    required this.onChanged,
+  });
 }
