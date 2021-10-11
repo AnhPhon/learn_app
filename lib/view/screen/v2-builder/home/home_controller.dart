@@ -40,7 +40,7 @@ class V2HomeController extends GetxController {
         ),
         "icon": Icons.checklist_rtl_sharp,
         "onTap": () {
-          Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
+          onClickJobManagement();
         }
       },
       {
@@ -85,7 +85,7 @@ class V2HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickJobManagement() {
-    Get.toNamed(AppRoutes.V2_JOB_MANAGEMENT);
+    Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
   }
 
   ///

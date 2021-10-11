@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:template/routes/app_routes.dart';
 
+
 class V2WorkRegisterController extends GetxController {
   String title = "Đăng ký việc";
 

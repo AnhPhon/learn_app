@@ -4,6 +4,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:template/routes/app_routes.dart';
 
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({required this.value, required this.onChanged});
+}
+
 class V1Request1Controller extends GetxController {
   String title = "Yêu cầu báo giá vật liệu";
   TextEditingController? tieuDeBaoGiaController;
