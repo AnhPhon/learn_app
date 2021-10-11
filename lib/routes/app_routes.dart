@@ -149,6 +149,25 @@ class AppRoutes {
   static const String V3_QUOTE_CHECK = '/v3_quote_check';
   static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
   static const String V3_QUOTE_REQUEST = '/v3_quote_request';
+  static const String V3_CONTRACT = '/v3_contract';
+  static const String V3_REGISTER_AND_COMMIT = '/v3_register_and_commit';
+  static const String V3_ACCIDENT_INSURANCE = '/v3_accident_insurance';
+  static const String V3_OTHER_INSURANCE = '/v3_other_insurance';
+  static const String V3_TAX = '/v3_tax';
+  static const String V3_INSURANCE_DETAIL = '/v3_insurance_detail';
+  static const String V3_PAYMENT_ACCOUNT = '/v3_payment_account';
+  static const String V3_PROFILE = '/v3_profile';
+  static const String V3_POINT_BASED = '/v3_point_based';
+  static const String V3_WALLET = '/v3_wallet';
+  static const String V3_RULES = '/v3_rules';
+  static const String V3_INTRODUCE = '/v3_introduce';
+  static const String V3_HELP = '/v3_help';
+  static const String V3_JOB_MANAGEMENT = '/v3_job_management';
+  static const String V3_INURANCE_REGISTER = '/v3_inurance_register';
+  static const String V3_YOUR_INSURANCE = '/v3_your_insurance';
+  static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
+  static const String V3_RECHARGE = '/v3_recharge';
+  
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';

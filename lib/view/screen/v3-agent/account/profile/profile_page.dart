@@ -4,19 +4,26 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/account/profile/profile_controller.dart';
+import 'package:template/view/screen/v3-agent/account/profile/profile_controller.dart';
 
-class V1ProfilePage extends GetView<V1ProfileController> {
+class V3ProfilePage extends GetView<V3ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V1ProfileController>(
-        init: V1ProfileController(),
+    return GetBuilder<V3ProfileController>(
+        init: V3ProfileController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  // Đăng ký và cam kết thuế
+                  _items(
+                    icon: const Icon(Icons.collections_bookmark),
+                    text: "Đăng ký và cam kết thuế",
+                    onTap: controller.onRegisterAndCommitPageClick,
+                  ),
+
                   //contract
                   _items(
                     icon: const Icon(Icons.collections_bookmark),
@@ -36,6 +43,14 @@ class V1ProfilePage extends GetView<V1ProfileController> {
                     icon: const Icon(Icons.account_balance_wallet_outlined),
                     text: "Bảo hiểm khác",
                     onTap: () => controller.onOtherInsurancePageClick(),
+                  ),
+
+                  // Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc
+                  _items(
+                    icon: const Icon(Icons.collections_bookmark),
+                    text:
+                        "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
+                    onTap: () {},
                   ),
 
                   //tax
