@@ -163,7 +163,8 @@ class V2HomePage extends GetView<V2HomeController> {
               ),
               Text(
                 'Kết quả báo giá',
-                style: TextStyle(color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
+                style: TextStyle(
+                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
               )
             ],
           ),

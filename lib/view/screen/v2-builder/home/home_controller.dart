@@ -60,4 +60,11 @@ class V2HomeController extends GetxController {
   void onShortHandedPageClick() {
     Get.toNamed(AppRoutes.V2_SHORTHANDED);
   }
+
+  ///
+  ///go to product page
+  ///
+  void onProductPageClick() {
+    Get.toNamed(AppRoutes.V2_PRODUCT);
+  }
 }
