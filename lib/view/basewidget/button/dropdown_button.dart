@@ -3,7 +3,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class DropDownButton1 extends StatelessWidget {
+class DropDownButton1<T> extends StatelessWidget {
   const DropDownButton1({
     required this.hint,
     required this.onChanged,
@@ -13,15 +13,17 @@ class DropDownButton1 extends StatelessWidget {
     this.obligatory = false,
     this.label,
     this.labelBold = false,
+    required this.width,
   });
 
   final String hint;
-  final Function(String? i) onChanged;
-  final List<String> data;
-  final String? value;
+  final Function(T? i) onChanged;
+  final List<T> data;
+  final T? value;
   final bool? isColorFieldWhite;
   final bool? obligatory, labelBold;
   final String? label;
+  final double width;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,6 +59,7 @@ class DropDownButton1 extends StatelessWidget {
               ),
             ),
           Container(
+            width: DeviceUtils.getScaledWidth(context, width),
             margin: EdgeInsets.symmetric(
                 vertical: DeviceUtils.getScaledSize(context, .025)),
             child: FormField(
@@ -69,28 +72,37 @@ class DropDownButton1 extends StatelessWidget {
                         : Colors.transparent,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        borderSide:
-                            const BorderSide(color: ColorResources.PRIMARY)),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: const BorderSide(
+                        color: ColorResources.PRIMARY,
+                        width: 2,
+                      ),
+                    ),
                     disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        borderSide:
-                            const BorderSide(color: ColorResources.PRIMARY)),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: const BorderSide(
+                        color: ColorResources.PRIMARY,
+                        width: 2,
+                      ),
+                    ),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),
                         vertical: DeviceUtils.getScaledSize(context, 0.038)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        borderSide:
-                            const BorderSide(color: ColorResources.PRIMARY)),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: const BorderSide(
+                        color: ColorResources.PRIMARY,
+                        width: 2,
+                      ),
+                    ),
                   ),
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
+                    child: DropdownButton<T>(
                         hint: Text(hint),
                         value: value,
                         isDense: true,
@@ -99,17 +111,15 @@ class DropDownButton1 extends StatelessWidget {
                         // onChanged: onChanged,
                         onChanged: onChanged,
                         items: data
-                            .map<DropdownMenuItem<String>>(
-                                (String e) => DropdownMenuItem<String>(
-                                    value: e,
-                                    child: Text(
-                                      e,
-                                      style: const TextStyle(
-                                          fontSize:
-                                              Dimensions.PADDING_SIZE_DEFAULT,
-                                          color: ColorResources.BLACK),
-                                      overflow: TextOverflow.ellipsis,
-                                    )))
+                            .map((e) => DropdownMenuItem<T>(
+                                value: e,
+                                child: Text(
+                                  e.toString(),
+                                  style: const TextStyle(
+                                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
+                                      color: ColorResources.BLACK),
+                                  overflow: TextOverflow.ellipsis,
+                                )))
                             .toList()),
                   ),
                 );

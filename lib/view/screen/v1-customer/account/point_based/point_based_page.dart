@@ -72,8 +72,9 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
                   //item list
                   ItemListWidget(
                     onTap: () {},
+                    urlImage: controller.urlImage,
                     title: "Biệt thự 170 Nguyễn Đình Thi",
-                    icon: const Icon(Icons.monetization_on_outlined),
+                    icon1: const Icon(Icons.monetization_on_outlined),
                     rowText1: "2.000.000 vnđ",
                     colorRowText1: ColorResources.RED,
                     isStart: true,

@@ -130,6 +130,20 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
+  //builder
+  static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
+  static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
+  static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
+  static const String V2_SHORTHANDED_GROUP4 = '/v2_shorthanded_group4';
+  static const String V2_SHORTHANDED_GROUP5 = '/v2_shorthanded_group5';
+  static const String V2_SHORTHANDED_GROUP6 = '/v2_shorthanded_group6';
+  static const String V2_QUOTATION_GROUP1 = '/v2_quotation_group1';
+  static const String V2_QUOTATION_GROUP2 = '/v2_quotation_group2';
+  static const String V2_AFTER_QUOTATION_GROUP2 = '/v2_after_quotation_group2';
+  static const String V2_QUOTATION_GROUP56 = '/v2_quotation_group56';
+  static const String V2_WINNING_BID = '/v2_winning_bid';
+  static const String V2_PAYMENT_ORDER = '/v2_payment_order';
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
   static const String V3_QUOTE_CHECK = '/v3_quote_check';

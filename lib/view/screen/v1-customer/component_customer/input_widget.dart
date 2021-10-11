@@ -12,6 +12,7 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
+  final double? paddingTop;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
   final bool? isDate,
@@ -19,7 +20,9 @@ class InputWidget extends StatelessWidget {
       isColorFieldWhite,
       allowEdit,
       labelBold,
-      obligatory;
+      obligatory,
+      isPaddingLarge;
+
   const InputWidget({
     Key? key,
     required this.textEditingController,
@@ -34,44 +37,49 @@ class InputWidget extends StatelessWidget {
     this.labelBold = false,
     this.obligatory = false,
     required this.width,
+    this.paddingTop,
+    this.isPaddingLarge = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+      padding: EdgeInsets.only(
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+          top: paddingTop ?? 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                children: [
-                  Text(
-                    label.toString(),
-                    style: labelBold == true
-                        ? Dimensions.fontSizeStyle16w600().copyWith(
-                            color: ColorResources.BLACK,
-                          )
-                        : Dimensions.fontSizeStyle16().copyWith(
-                            color: ColorResources.BLACK,
-                          ),
-                  ),
-                  if (obligatory == true)
-                    const Text(
-                      "*",
-                      style: TextStyle(
-                        color: ColorResources.RED,
-                      ),
+            Wrap(
+              children: [
+                Text(
+                  label.toString(),
+                  style: labelBold == true
+                      ? Dimensions.fontSizeStyle16w600().copyWith(
+                          color: ColorResources.BLACK,
+                        )
+                      : Dimensions.fontSizeStyle16().copyWith(
+                          color: ColorResources.BLACK,
+                        ),
+                ),
+                if (obligatory == true)
+                  const Text(
+                    "*",
+                    style: TextStyle(
+                      color: ColorResources.RED,
                     ),
-                ],
-              ),
+                  ),
+              ],
+            ),
+          if (label != null)
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
             ),
           Container(
-            margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
+            margin: EdgeInsets.only(top: paddingTop ?? 0),
             width: DeviceUtils.getScaledWidth(context, width),
             child: GestureDetector(
               onTap: (isDate == true)
@@ -122,10 +130,15 @@ class InputWidget extends StatelessWidget {
                   isDense: true,
                   prefixIcon: prefixIcon,
                   suffixIcon: suffixIcon,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
+                  contentPadding: isPaddingLarge == true
+                      ? const EdgeInsets.only(
+                          bottom: Dimensions.PADDING_SIZE_EXTRA_LARGE * 4,
+                          top: Dimensions.PADDING_SIZE_SMALL,
+                        )
+                      : const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL,
+                          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
