@@ -14,6 +14,8 @@ class AppRoutes {
       "/v1orderfeedbackcontractors";
   // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
+  // Phản hồi đơn hàng nhóm 1
+  static const String V1_BUILD_ORDER_FEEDBACK = '/v1_build_order_feedback';
   // Phản hồi đơn hàng nhóm 6
   static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
