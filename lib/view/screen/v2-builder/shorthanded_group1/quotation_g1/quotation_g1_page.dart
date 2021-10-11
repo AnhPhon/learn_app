@@ -99,10 +99,6 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
 
                   BtnCustom(
                     onTap: () {},
-                    margin: const EdgeInsets.symmetric(
-                      vertical: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                      horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
-                    ),
                     color: ColorResources.PRIMARY,
                     text: "Gửi báo giá và chờ nhận kết quả",
                     width: double.infinity,
@@ -148,7 +144,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                     )
                   : InputWidget(
                       textEditingController: textController!,
-                      width: double.infinity,
+                      hintText: "",
                     ),
             ),
           ],
