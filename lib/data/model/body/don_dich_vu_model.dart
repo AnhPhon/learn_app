@@ -1,19 +1,31 @@
+import 'tai_khoan_model.dart';
+import 'nhom_dich_vu_model.dart';
+import 'trang_thai_don_hang_model.dart';
+import 'hinh_thuc_thanh_toan_model.dart';
+import 'trang_thai_thanh_toan_model.dart';
+import 'thoi_gian_lam_viec_model.dart';
+import 'tinh_tp_model.dart';
+import 'quan_huyen_model.dart';
+import 'phuong_xa_model.dart';
+import 'bang_gia_don_hang_model.dart';
+import 'thong_so_ky_thuat_model.dart';
+
 class DonDichVuModel {
-  String? idTaiKhoan;
-  String? idNhomDichVu;
+  TaiKhoanModel? idTaiKhoan;
+  NhomDichVuModel? idNhomDichVu;
   String? tieuDe;
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
   String? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
-  String? idTrangThaiDonHang;
-  String? idHinhThucThanhToan;
-  String? idTrangThaiThanhToan;
-  String? idThoiGianLamViec;
-  String? idTinhTp;
-  String? idQuanHuyen;
-  String? idPhuongXa;
+  TrangThaiDonHangModel? idTrangThaiDonHang;
+  HinhThucThanhToanModel? idHinhThucThanhToan;
+  TrangThaiThanhToanModel? idTrangThaiThanhToan;
+  ThoiGianLamViecModel? idThoiGianLamViec;
+  TinhTpModel? idTinhTp;
+  QuanHuyenModel? idQuanHuyen;
+  PhuongXaModel? idPhuongXa;
   String? giaTriKhachDeXuat;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
@@ -21,9 +33,9 @@ class DonDichVuModel {
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
-  String? idBangGiaDonHang;
+  BangGiaDonHangModel? idBangGiaDonHang;
   String? gioiTinh;
-  String? idThongSoKyThuat;
+  ThongSoKyThuatModel? idThongSoKyThuat;
   String? diaDiemBocHang;
   String? diaDiemTraHang;
   String? cuLyVanChuyen;
@@ -74,25 +86,81 @@ class DonDichVuModel {
       this.soTien,
       this.tongDon,
       this.taiKhoanNhanDon,
-      this.tienCoc
-      });
-
+      this.tienCoc});
+  
+  ///
+  /// From JSON
+  ///
   DonDichVuModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
-    idNhomDichVu = json['idNhomDichVu'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
+
+    // mapping idNhomDichVu                                                              
+    if (json['idNhomDichVu'] != null) {                                                  
+      idNhomDichVu = NhomDichVuModel.fromJson(json['idNhomDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idNhomDichVu = null;                                                               
+    }                                                                                  
     tieuDe = json['tieuDe'].toString();
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
-    idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
-    idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
-    idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-    idThoiGianLamViec = json['idThoiGianLamViec'].toString();
-    idTinhTp = json['idTinhTp'].toString();
-    idQuanHuyen = json['idQuanHuyen'].toString();
-    idPhuongXa = json['idPhuongXa'].toString();
+
+    // mapping idTrangThaiDonHang                                                              
+    if (json['idTrangThaiDonHang'] != null) {                                                  
+      idTrangThaiDonHang = TrangThaiDonHangModel.fromJson(json['idTrangThaiDonHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiDonHang = null;                                                               
+    }                                                                                  
+
+    // mapping idHinhThucThanhToan                                                              
+    if (json['idHinhThucThanhToan'] != null) {                                                  
+      idHinhThucThanhToan = HinhThucThanhToanModel.fromJson(json['idHinhThucThanhToan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idHinhThucThanhToan = null;                                                               
+    }                                                                                  
+
+    // mapping idTrangThaiThanhToan                                                              
+    if (json['idTrangThaiThanhToan'] != null) {                                                  
+      idTrangThaiThanhToan = TrangThaiThanhToanModel.fromJson(json['idTrangThaiThanhToan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiThanhToan = null;                                                               
+    }                                                                                  
+
+    // mapping idThoiGianLamViec                                                              
+    if (json['idThoiGianLamViec'] != null) {                                                  
+      idThoiGianLamViec = ThoiGianLamViecModel.fromJson(json['idThoiGianLamViec'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idThoiGianLamViec = null;                                                               
+    }                                                                                  
+
+    // mapping idTinhTp                                                              
+    if (json['idTinhTp'] != null) {                                                  
+      idTinhTp = TinhTpModel.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTinhTp = null;                                                               
+    }                                                                                  
+
+    // mapping idQuanHuyen                                                              
+    if (json['idQuanHuyen'] != null) {                                                  
+      idQuanHuyen = QuanHuyenModel.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idQuanHuyen = null;                                                               
+    }                                                                                  
+
+    // mapping idPhuongXa                                                              
+    if (json['idPhuongXa'] != null) {                                                  
+      idPhuongXa = PhuongXaModel.fromJson(json['idPhuongXa'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idPhuongXa = null;                                                               
+    }                                                                                  
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
@@ -100,9 +168,21 @@ class DonDichVuModel {
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
-    idBangGiaDonHang = json['idBangGiaDonHang'].toString();
+
+    // mapping idBangGiaDonHang                                                              
+    if (json['idBangGiaDonHang'] != null) {                                                  
+      idBangGiaDonHang = BangGiaDonHangModel.fromJson(json['idBangGiaDonHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idBangGiaDonHang = null;                                                               
+    }                                                                                  
     gioiTinh = json['gioiTinh'].toString();
-    idThongSoKyThuat = json['idThongSoKyThuat'].toString();
+
+    // mapping idThongSoKyThuat                                                              
+    if (json['idThongSoKyThuat'] != null) {                                                  
+      idThongSoKyThuat = ThongSoKyThuatModel.fromJson(json['idThongSoKyThuat'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idThongSoKyThuat = null;                                                               
+    }                                                                                  
     diaDiemBocHang = json['diaDiemBocHang'].toString();
     diaDiemTraHang = json['diaDiemTraHang'].toString();
     cuLyVanChuyen = json['cuLyVanChuyen'].toString();
@@ -115,8 +195,12 @@ class DonDichVuModel {
     tongDon = json['tongDon'].toString();
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

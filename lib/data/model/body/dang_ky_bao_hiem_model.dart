@@ -1,20 +1,34 @@
+import 'tai_khoan_model.dart';
+
 class DangKyBaoHiemModel {
-  String? idTaiKhoan;
+  TaiKhoanModel? idTaiKhoan;
   String? file;
   String? trangThai;
 
   DangKyBaoHiemModel({
       this.idTaiKhoan,
       this.file,
-      this.trangThai
-      });
-
+      this.trangThai});
+  
+  ///
+  /// From JSON
+  ///
   DangKyBaoHiemModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

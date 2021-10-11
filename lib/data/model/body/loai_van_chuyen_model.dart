@@ -1,17 +1,31 @@
+import 'tai_khoan_model.dart';
+
 class LoaiVanChuyenModel {
-  String? idTaiKhoan;
+  TaiKhoanModel? idTaiKhoan;
   String? tieuDe;
 
   LoaiVanChuyenModel({
       this.idTaiKhoan,
-      this.tieuDe
-      });
-
+      this.tieuDe});
+  
+  ///
+  /// From JSON
+  ///
   LoaiVanChuyenModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
     tieuDe = json['tieuDe'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

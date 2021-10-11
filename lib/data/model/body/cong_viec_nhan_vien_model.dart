@@ -1,6 +1,9 @@
+import 'nhan_vien_model.dart';
+import 'du_an_nhan_vien_model.dart';
+
 class CongViecNhanVienModel {
-  String? idNhanVien;
-  String? idDuAnNhanVien;
+  NhanVienModel? idNhanVien;
+  DuAnNhanVienModel? idDuAnNhanVien;
   String? trangThai;
   String? tieuDe;
   String? tomTat;
@@ -18,12 +21,26 @@ class CongViecNhanVienModel {
       this.noiDung,
       this.ngayBatDau,
       this.ngayKetThuc,
-      this.ngayThucTe
-      });
-
+      this.ngayThucTe});
+  
+  ///
+  /// From JSON
+  ///
   CongViecNhanVienModel.fromJson(Map<String, dynamic> json) {
-    idNhanVien = json['idNhanVien'].toString();
-    idDuAnNhanVien = json['idDuAnNhanVien'].toString();
+
+    // mapping idNhanVien                                                              
+    if (json['idNhanVien'] != null) {                                                  
+      idNhanVien = NhanVienModel.fromJson(json['idNhanVien'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idNhanVien = null;                                                               
+    }                                                                                  
+
+    // mapping idDuAnNhanVien                                                              
+    if (json['idDuAnNhanVien'] != null) {                                                  
+      idDuAnNhanVien = DuAnNhanVienModel.fromJson(json['idDuAnNhanVien'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDuAnNhanVien = null;                                                               
+    }                                                                                  
     trangThai = json['trangThai'].toString();
     tieuDe = json['tieuDe'].toString();
     tomTat = json['tomTat'].toString();
@@ -31,8 +48,12 @@ class CongViecNhanVienModel {
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     ngayThucTe = json['ngayThucTe'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idNhanVien'] = idNhanVien;

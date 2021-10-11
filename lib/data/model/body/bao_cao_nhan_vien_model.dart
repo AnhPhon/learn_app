@@ -1,6 +1,9 @@
+import 'nhan_vien_model.dart';
+import 'du_an_nhan_vien_model.dart';
+
 class BaoCaoNhanVienModel {
-  String? idNhanVien;
-  String? idDuAnNhanVien;
+  NhanVienModel? idNhanVien;
+  DuAnNhanVienModel? idDuAnNhanVien;
   String? loai;
   String? soTuan;
   String? noiDung;
@@ -10,17 +13,35 @@ class BaoCaoNhanVienModel {
       this.idDuAnNhanVien,
       this.loai,
       this.soTuan,
-      this.noiDung
-      });
-
+      this.noiDung});
+  
+  ///
+  /// From JSON
+  ///
   BaoCaoNhanVienModel.fromJson(Map<String, dynamic> json) {
-    idNhanVien = json['idNhanVien'].toString();
-    idDuAnNhanVien = json['idDuAnNhanVien'].toString();
+
+    // mapping idNhanVien                                                              
+    if (json['idNhanVien'] != null) {                                                  
+      idNhanVien = NhanVienModel.fromJson(json['idNhanVien'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idNhanVien = null;                                                               
+    }                                                                                  
+
+    // mapping idDuAnNhanVien                                                              
+    if (json['idDuAnNhanVien'] != null) {                                                  
+      idDuAnNhanVien = DuAnNhanVienModel.fromJson(json['idDuAnNhanVien'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDuAnNhanVien = null;                                                               
+    }                                                                                  
     loai = json['loai'].toString();
     soTuan = json['soTuan'].toString();
     noiDung = json['noiDung'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idNhanVien'] = idNhanVien;

@@ -1,3 +1,4 @@
+
 class QuyCheCongTyModel {
   String? tieuDe;
   String? tomTat;
@@ -6,15 +7,21 @@ class QuyCheCongTyModel {
   QuyCheCongTyModel({
       this.tieuDe,
       this.tomTat,
-      this.noiDung
-      });
-
+      this.noiDung});
+  
+  ///
+  /// From JSON
+  ///
   QuyCheCongTyModel.fromJson(Map<String, dynamic> json) {
     tieuDe = json['tieuDe'].toString();
     tomTat = json['tomTat'].toString();
     noiDung = json['noiDung'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['tieuDe'] = tieuDe;
