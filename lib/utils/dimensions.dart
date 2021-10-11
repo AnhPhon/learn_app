@@ -60,6 +60,8 @@ class Dimensions {
   static const double BLUR_RADIUS_MEDIUM = 10;
   static const double BLUR_RADIUS_DEEP = 15;
   //spread Radius
+  static const double SPREAD_RADIUS_ULTRA_LIGHT = 0.05;
+  static const double SPREAD_RADIUS_SUPER_LIGHT = 0.1;
   static const double SPREAD_RADIUS_LIGHT = 0.2;
   static const double SPREAD_RADIUS_MEDIUM = 0.4;
   static const double SPREAD_RADIUS_DEEP = 0.6;
