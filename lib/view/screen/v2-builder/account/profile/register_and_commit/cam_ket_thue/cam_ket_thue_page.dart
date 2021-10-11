@@ -6,13 +6,13 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/basewidget/widgets/three_image_box.dart';
-import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/cam_ket_thue/cam_ket_thue_controller.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/cam_ket_thue/cam_ket_thue_controller.dart';
 
-class V3CamketThuePage extends GetView<V3CamketThueController> {
+class V2CamketThuePage extends GetView<V2CamketThueController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3CamketThueController>(
-      init: V3CamketThueController(),
+    return GetBuilder<V2CamketThueController>(
+      init: V2CamketThueController(),
       builder: (controller) {
         return Scaffold(
           body: SingleChildScrollView(

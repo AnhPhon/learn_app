@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class V3ContractController extends GetxController {
+class V2ContractController extends GetxController {
   bool isChecked1 = false;
 
   bool isChecked2 = false;

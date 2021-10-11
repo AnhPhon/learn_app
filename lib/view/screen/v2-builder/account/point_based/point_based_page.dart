@@ -5,18 +5,18 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/point_based/point_based_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_customer/input_widget.dart';
-import 'package:template/view/screen/v3-agent/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v3-agent/component_customer/row_text.dart';
-import 'package:template/view/screen/v3-agent/component_customer/tab_bar_widget.dart';
+import 'package:template/view/screen/v2-builder/account/point_based/point_based_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_customer/input_widget.dart';
+import 'package:template/view/screen/v2-builder/component_customer/item_list_widget.dart';
+import 'package:template/view/screen/v2-builder/component_customer/row_text.dart';
+import 'package:template/view/screen/v2-builder/component_customer/tab_bar_widget.dart';
 
-class V3PointBasedPage extends GetView<V3PointBasedController> {
+class V2PointBasedPage extends GetView<V2PointBasedController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3PointBasedController>(
-        init: V3PointBasedController(),
+    return GetBuilder<V2PointBasedController>(
+        init: V2PointBasedController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -93,7 +93,7 @@ class V3PointBasedPage extends GetView<V3PointBasedController> {
   ///
   Widget _tabBarWidget(
       {required BuildContext context,
-      required V3PointBasedController controller}) {
+      required V2PointBasedController controller}) {
     return Container(
       alignment: Alignment.center,
       width: double.infinity,

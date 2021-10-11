@@ -4,15 +4,15 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/profile/insurance_register/insurance_register_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_customer/tab_bar_widget.dart';
+import 'package:template/view/screen/v2-builder/account/profile/insurance_register/insurance_register_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_customer/tab_bar_widget.dart';
 
-class V3InsuranceRegisterPage extends GetView<V3InsuranceRegisterController> {
+class V2InsuranceRegisterPage extends GetView<V2InsuranceRegisterController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3InsuranceRegisterController>(
-        init: V3InsuranceRegisterController(),
+    return GetBuilder<V2InsuranceRegisterController>(
+        init: V2InsuranceRegisterController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -45,7 +45,7 @@ class V3InsuranceRegisterPage extends GetView<V3InsuranceRegisterController> {
   ///
   Widget _tabBarWidget(
       {required BuildContext context,
-      required V3InsuranceRegisterController controller}) {
+      required V2InsuranceRegisterController controller}) {
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
@@ -83,7 +83,7 @@ class V3InsuranceRegisterPage extends GetView<V3InsuranceRegisterController> {
   ///
   ///fee List
   ///
-  Widget _radFeeList(V3InsuranceRegisterController controller) {
+  Widget _radFeeList(V2InsuranceRegisterController controller) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: controller.feeList.length,
@@ -103,7 +103,7 @@ class V3InsuranceRegisterPage extends GetView<V3InsuranceRegisterController> {
   ///
   ///btn bottom
   ///
-  Widget _btnBottom(V3InsuranceRegisterController controller) {
+  Widget _btnBottom(V2InsuranceRegisterController controller) {
     return BtnCustom(
       onTap: () => controller.onCheckoutClick(),
       color: ColorResources.PRIMARY,

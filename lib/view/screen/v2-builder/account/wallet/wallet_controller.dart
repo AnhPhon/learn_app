@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:template/view/screen/V3-agent/account/wallet/wallet_page.dart';
+import 'package:template/view/screen/v2-builder/account/wallet/wallet_page.dart';
 
-class V3WalletController extends GetxController {
+class V2WalletController extends GetxController {
   String title = "Ví của bạn";
 
   bool isShow = false;

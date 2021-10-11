@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class V3PointBasedController extends GetxController {
+class V2PointBasedController extends GetxController {
   final startController = TextEditingController();
   final endController = TextEditingController();
 

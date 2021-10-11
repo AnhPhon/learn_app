@@ -4,14 +4,14 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/profile/accident_insurance/accident_insurance_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/account/profile/accident_insurance/accident_insurance_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
 
-class V3AccidentInsurancePage extends GetView<V3AccidentInsuranceController> {
+class V2AccidentInsurancePage extends GetView<V2AccidentInsuranceController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3AccidentInsuranceController>(
-        init: V3AccidentInsuranceController(),
+    return GetBuilder<V2AccidentInsuranceController>(
+        init: V2AccidentInsuranceController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -39,7 +39,7 @@ class V3AccidentInsurancePage extends GetView<V3AccidentInsuranceController> {
   /// selected tab
   ///
   Widget _onSelectedTab(
-      BuildContext context, V3AccidentInsuranceController controller,
+      BuildContext context, V2AccidentInsuranceController controller,
       {required String title, required int index}) {
     return GestureDetector(
       onTap: () {
@@ -74,7 +74,7 @@ class V3AccidentInsurancePage extends GetView<V3AccidentInsuranceController> {
   ///
   Widget _tabBarWidget(
       {required BuildContext context,
-      required V3AccidentInsuranceController controller}) {
+      required V2AccidentInsuranceController controller}) {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -114,7 +114,7 @@ class V3AccidentInsurancePage extends GetView<V3AccidentInsuranceController> {
   ///btn bottom
   ///
   Widget _btnBottom(
-      BuildContext context, V3AccidentInsuranceController controller) {
+      BuildContext context, V2AccidentInsuranceController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

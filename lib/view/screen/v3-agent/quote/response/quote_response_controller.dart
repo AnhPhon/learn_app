@@ -82,6 +82,5 @@ class V3QuoteResponseController extends GetxController {
   /// on Continue Click
   ///
   void onContinueClick() {
-    Get.toNamed(AppRoutes.V3_QUOTE_CHECK);
   }
 }

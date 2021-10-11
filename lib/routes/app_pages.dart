@@ -90,6 +90,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
+<<<<<<< HEAD
 import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_page.dart';
@@ -129,23 +130,28 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56
 import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
+=======
+import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
+import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v2-builder/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/profile_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/register_and_commit_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v2-builder/account/rules/rules_page.dart';
+import 'package:template/view/screen/v2-builder/account/wallet/wallet_page.dart';
+import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
+import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
+>>>>>>> feature/ui/33_cap_nhat_hoan_thien_ho_so
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
-import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
-import 'package:template/view/screen/v3-agent/account/introduce/introduce_page.dart';
-import 'package:template/view/screen/v3-agent/account/point_based/point_based_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/contract/contract_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/insurance_detail/insurance_detail_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/insurance_register/insurance_register_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/other_insurance/other_insurance_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/profile_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/tax/tax_page.dart';
-import 'package:template/view/screen/v3-agent/account/profile/your_insurance/your_insurance_page.dart';
 import 'package:template/view/screen/v3-agent/account/rules/rules_page.dart';
-import 'package:template/view/screen/v3-agent/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v3-agent/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
@@ -543,10 +549,13 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+<<<<<<< HEAD
+=======
     GetPage(
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+>>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
@@ -703,7 +712,7 @@ class AppPages {
     ),
     // v3 - quote list
     GetPage(
-      name: AppRoutes.V3_QUOTE_LIST,
+      name: AppRoutes.V2_QUOTE_LIST,
       page: () => V3QuoteListPage(),
     ),
     // v3 - quote check
@@ -715,17 +724,17 @@ class AppPages {
 
     // Chọn hình thức ứng tuyển
     GetPage(
-      name: AppRoutes.V3_QUOTE_CHECK,
+      name: AppRoutes.V2_QUOTE_CHECK,
       page: () => V3QuoteCheckPage(),
     ),
     // v3 - quote request
     GetPage(
-      name: AppRoutes.V3_QUOTE_REQUEST,
+      name: AppRoutes.V2_QUOTE_REQUEST,
       page: () => V3QuoteRequestPage(),
     ),
     // v3 - quote response
     GetPage(
-      name: AppRoutes.V3_QUOTE_RESPONSE,
+      name: AppRoutes.V2_QUOTE_RESPONSE,
       page: () => V3QuoteResponsePage(),
     ),
     GetPage(
@@ -770,68 +779,68 @@ class AppPages {
     ),
 
     GetPage(
-      name: AppRoutes.V3_CONTRACT,
-      page: () => V3ContractPage(),
+      name: AppRoutes.V2_CONTRACT,
+      page: () => V2ContractPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_ACCIDENT_INSURANCE,
+      name: AppRoutes.V2_ACCIDENT_INSURANCE,
       page: () => V3AccountPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_OTHER_INSURANCE,
-      page: () => V3OtherInsurancePage(),
+      name: AppRoutes.V2_OTHER_INSURANCE,
+      page: () => V2OtherInsurancePage(),
     ),
     GetPage(
-      name: AppRoutes.V3_TAX,
-      page: () => V3TaxPage(),
+      name: AppRoutes.V2_TAX,
+      page: () => V2TaxPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_INSURANCE_DETAIL,
-      page: () => V3InsuranceDetailPage(),
+      name: AppRoutes.V2_INSURANCE_DETAIL,
+      page: () => V2InsuranceDetailPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_PAYMENT_ACCOUNT,
-      page: () => V3PaymentSuccessPage(),
+      name: AppRoutes.V2_PAYMENT_ACCOUNT,
+      page: () => V2PaymentSuccessPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_PROFILE,
-      page: () => V3ProfilePage(),
+      name: AppRoutes.V2_PROFILE,
+      page: () => V2ProfilePage(),
     ),
     GetPage(
-      name: AppRoutes.V3_POINT_BASED,
-      page: () => V3PointBasedPage(),
+      name: AppRoutes.V2_POINT_BASED,
+      page: () => V2PointBasedPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_WALLET,
-      page: () => V3WalletPage(),
+      name: AppRoutes.V2_WALLET,
+      page: () => V2WalletPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_RULES,
-      page: () => V3RulesPage(),
+      name: AppRoutes.V2_RULES,
+      page: () => V2RulesPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_INTRODUCE,
-      page: () => V3IntroducePage(),
+      name: AppRoutes.V2_INTRODUCE,
+      page: () => V2IntroducePage(),
     ),
     GetPage(
-      name: AppRoutes.V3_HELP,
-      page: () => V3HelpPage(),
+      name: AppRoutes.V2_HELP,
+      page: () => V2HelpPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_JOB_MANAGEMENT,
+      name: AppRoutes.V2_JOB_MANAGEMENT,
       page: () => V3ProductAddPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_INURANCE_REGISTER,
-      page: () => V3InsuranceRegisterPage(),
+      name: AppRoutes.V2_INURANCE_REGISTER,
+      page: () => V2InsuranceRegisterPage(),
     ),
     GetPage(
-      name: AppRoutes.V3_YOUR_INSURANCE,
-      page: () => V3YourInsurancePage(),
+      name: AppRoutes.V2_YOUR_INSURANCE,
+      page: () => V2YourInsurancePage(),
     ),
     GetPage(
-      name: AppRoutes.V3_REGISTER_AND_COMMIT,
-      page: () => V3RegisterAndCommitPage(),
+      name: AppRoutes.V2_REGISTER_AND_COMMIT,
+      page: () => V2RegisterAndCommitPage(),
     ),
 
     // v4 - employee

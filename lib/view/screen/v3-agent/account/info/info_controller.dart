@@ -4,6 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+<<<<<<< HEAD
+// import 'package:template/provider/upload_image_provider.dart';
+// import 'package:template/provider/user_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
+=======
+>>>>>>> origin/develop
 
 class EditInfoController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -23,6 +31,33 @@ class EditInfoController extends GetxController {
   File? avatarFile;
   String? avatarPath;
 
+<<<<<<< HEAD
+  @override
+  void onInit() {
+    // first load
+    // sl.get<SharedPreferenceHelper>().userId.then(
+    //   (value) {
+    //     // load user theo id
+    //     userProvider.find(
+    //       id: value!,
+    //       onSuccess: (userData) {
+    //         // assign data to TextEditController
+    //         textEditFullnameController.text = userData.fullname!;
+    //         textEditAddressController.text = userData.address!;
+    //         avatarPath = userData.avatar;
+
+    //         isLoading = false;
+    //         update();
+    //       },
+    //       onError: (error) {
+    //         print(error);
+    //       },
+    //     );
+    //   },
+    // );
+    super.onInit();
+  }
+=======
   // @override
   // void onInit() {
   //   // // first load
@@ -48,6 +83,7 @@ class EditInfoController extends GetxController {
   //   // );
   //   super.onInit();
   // }
+>>>>>>> origin/develop
 
   ///
   /// on avatar picker

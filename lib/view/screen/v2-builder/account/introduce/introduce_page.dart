@@ -6,13 +6,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/introduce/introduce_controller.dart';
+import 'package:template/view/screen/v2-builder/account/introduce/introduce_controller.dart';
 
-class V3IntroducePage extends GetView<V3IntroduceController> {
+class V2IntroducePage extends GetView<V2IntroduceController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3IntroduceController>(
-        init: V3IntroduceController(),
+    return GetBuilder<V2IntroduceController>(
+        init: V2IntroduceController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -259,7 +259,7 @@ class V3IntroducePage extends GetView<V3IntroduceController> {
   ///
   ///gif
   ///
-  Widget _gif(BuildContext context, V3IntroduceController controller) {
+  Widget _gif(BuildContext context, V2IntroduceController controller) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,

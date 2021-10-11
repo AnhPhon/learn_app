@@ -61,7 +61,6 @@ class V2HomeController extends GetxController {
   ///go to shorthanded page
   ///
   void onShortHandedPageClick() {
-    Get.toNamed(AppRoutes.V2_SHORTHANDED);
   }
 
   ///

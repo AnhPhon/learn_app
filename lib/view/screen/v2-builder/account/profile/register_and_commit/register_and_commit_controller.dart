@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class V3RegisterAndCommitController extends GetxController
+class V2RegisterAndCommitController extends GetxController
     with SingleGetTickerProviderMixin {
   bool isChecked1 = false;
 

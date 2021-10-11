@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class V3TaxController extends GetxController {
+class V2TaxController extends GetxController {
   File? image;
 
   final taxController = TextEditingController();
@@ -34,6 +34,6 @@ class V3TaxController extends GetxController {
   ///on click btn done
   ///
   void onBtnDoneClick() {
-    // Get.offNamed(AppRoutes.V3_PROFILE);
+    // Get.offNamed(AppRoutes.V2_PROFILE);
   }
 }

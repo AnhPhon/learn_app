@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class V3DangKyThueController extends GetxController
+class V2DangKyThueController extends GetxController
     with SingleGetTickerProviderMixin {
   bool isChecked1 = false;
 

@@ -38,9 +38,6 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                           onTap: () => controller.onShorthandedGroup(index),
                           title: controller.shorthandedGroupList[index]['label']
                               .toString(),
-                          urlImage: controller.shorthandedGroupList[index]
-                                  ['image']
-                              .toString(),
                           icon1: controller.shorthandedGroupList[index]['icon']
                               as Icon,
                           rowText1: controller.shorthandedGroupList[index]

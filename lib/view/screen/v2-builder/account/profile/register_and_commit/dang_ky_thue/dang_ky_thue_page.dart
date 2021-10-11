@@ -7,13 +7,13 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/basewidget/widgets/label_input.dart';
 import 'package:template/view/basewidget/widgets/three_image_box.dart';
-import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_controller.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_controller.dart';
 
-class V3DangKyThuePage extends GetView<V3DangKyThueController> {
+class V2DangKyThuePage extends GetView<V2DangKyThueController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3DangKyThueController>(
-      init: V3DangKyThueController(),
+    return GetBuilder<V2DangKyThueController>(
+      init: V2DangKyThueController(),
       builder: (controller) {
         return Scaffold(
           body: SingleChildScrollView(

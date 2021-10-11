@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V3AccidentInsuranceController extends GetxController {
+class V2AccidentInsuranceController extends GetxController {
   String title = "Bảo hiểm tai nạn";
 
   Map<String, String> titleTabBar = {
@@ -23,13 +23,13 @@ class V3AccidentInsuranceController extends GetxController {
   ///on register click
   ///
   void onRegisterClick() {
-    Get.toNamed(AppRoutes.V3_INURANCE_REGISTER);
+    Get.toNamed(AppRoutes.V2_INURANCE_REGISTER);
   }
 
   ///
   ///on your insurance click
   ///
   void onYourInsurancePageClick() {
-    Get.toNamed(AppRoutes.V3_YOUR_INSURANCE);
+    Get.toNamed(AppRoutes.V2_YOUR_INSURANCE);
   }
 }

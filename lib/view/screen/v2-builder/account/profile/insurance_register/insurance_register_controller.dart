@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V3InsuranceRegisterController extends GetxController {
+class V2InsuranceRegisterController extends GetxController {
   String title = "Đăng ký mua bảo hiểm";
 
   List titleTabBar = [
@@ -40,6 +40,6 @@ class V3InsuranceRegisterController extends GetxController {
   ///on checkout click
   ///
   void onCheckoutClick() {
-    Get.toNamed(AppRoutes.V3_PAYMENT_ACCOUNT);
+    Get.toNamed(AppRoutes.V2_PAYMENT_ACCOUNT);
   }
 }

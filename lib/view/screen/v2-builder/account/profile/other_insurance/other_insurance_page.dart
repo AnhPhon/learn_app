@@ -5,14 +5,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/profile/other_insurance/other_insurance_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/account/profile/other_insurance/other_insurance_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
 
-class V3OtherInsurancePage extends GetView<V3OtherInsuranceController> {
+class V2OtherInsurancePage extends GetView<V2OtherInsuranceController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3OtherInsuranceController>(
-        init: V3OtherInsuranceController(),
+    return GetBuilder<V2OtherInsuranceController>(
+        init: V2OtherInsuranceController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -63,7 +63,7 @@ class V3OtherInsurancePage extends GetView<V3OtherInsuranceController> {
   ///
   ///option insurance List
   ///
-  Widget _optionInsurance(V3OtherInsuranceController controller) {
+  Widget _optionInsurance(V2OtherInsuranceController controller) {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -84,7 +84,7 @@ class V3OtherInsurancePage extends GetView<V3OtherInsuranceController> {
   ///btn bottom
   ///
   Widget _btnBottom(
-      BuildContext context, V3OtherInsuranceController controller) {
+      BuildContext context, V2OtherInsuranceController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
       child: Row(

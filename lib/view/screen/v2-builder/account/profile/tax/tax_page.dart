@@ -5,15 +5,15 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/profile/tax/tax_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
-import 'package:template/view/screen/v3-agent/component_customer/input_widget.dart';
+import 'package:template/view/screen/v2-builder/account/profile/tax/tax_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_customer/input_widget.dart';
 
-class V3TaxPage extends GetView<V3TaxController> {
+class V2TaxPage extends GetView<V2TaxController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3TaxController>(
-        init: V3TaxController(),
+    return GetBuilder<V2TaxController>(
+        init: V2TaxController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
@@ -71,7 +71,7 @@ class V3TaxPage extends GetView<V3TaxController> {
   ///
   ///upload image
   ///
-  Widget _uploadImage(BuildContext context, V3TaxController controller) {
+  Widget _uploadImage(BuildContext context, V2TaxController controller) {
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class V3TaxPage extends GetView<V3TaxController> {
   ///
   ///btn bottom sheet
   ///
-  Widget _btnBottomSheet(V3TaxController controller) {
+  Widget _btnBottomSheet(V2TaxController controller) {
     return BtnCustom(
       onTap: () => controller.onBtnDoneClick(),
       color: ColorResources.PRIMARY,

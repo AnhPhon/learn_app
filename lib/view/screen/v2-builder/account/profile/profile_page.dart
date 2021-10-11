@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/profile/profile_controller.dart';
+import 'package:template/view/screen/v2-builder/account/profile/profile_controller.dart';
 
-class V3ProfilePage extends GetView<V3ProfileController> {
+class V2ProfilePage extends GetView<V2ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3ProfileController>(
-        init: V3ProfileController(),
+    return GetBuilder<V2ProfileController>(
+        init: V2ProfileController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),

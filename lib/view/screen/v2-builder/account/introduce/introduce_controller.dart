@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class V3IntroduceController extends GetxController {
+class V2IntroduceController extends GetxController {
   String title = "Giới thiệu FSS";
 
   String urlImage =

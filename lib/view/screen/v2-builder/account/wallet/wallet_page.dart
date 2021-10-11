@@ -4,14 +4,14 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v3-agent/account/wallet/wallet_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/my_clipper.dart';
+import 'package:template/view/screen/v2-builder/account/wallet/wallet_controller.dart';
+import 'package:template/view/screen/v2-builder/component_customer/my_clipper.dart';
 
-class V3WalletPage extends GetView<V3WalletController> {
+class V2WalletPage extends GetView<V2WalletController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V3WalletController>(
-        init: V3WalletController(),
+    return GetBuilder<V2WalletController>(
+        init: V2WalletController(),
         builder: (controller) {
           return Stack(
             children: [
@@ -265,7 +265,7 @@ class V3WalletPage extends GetView<V3WalletController> {
   ///
   ///history
   ///
-  Widget _history(BuildContext context, V3WalletController controller) {
+  Widget _history(BuildContext context, V2WalletController controller) {
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V3OtherInsuranceController extends GetxController {
+class V2OtherInsuranceController extends GetxController {
   String title = "Đăng lý tư vấn bảo hiểm khác";
 
   List optionInsuranceList = [
@@ -32,6 +32,6 @@ class V3OtherInsuranceController extends GetxController {
   ///on checkout click
   ///
   void onInsuranceDetailClick() {
-    Get.toNamed(AppRoutes.V3_INSURANCE_DETAIL);
+    Get.toNamed(AppRoutes.V2_INSURANCE_DETAIL);
   }
 }

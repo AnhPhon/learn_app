@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class V3RulesController extends GetxController {
+class V2RulesController extends GetxController {
   String title = "Điều khoản và chính sách";
 
   String titleCenter = "Điều khoản và chính sách";
