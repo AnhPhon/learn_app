@@ -4,11 +4,11 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/content_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/image_list_horizontal_add.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
+import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_builder/input_widget.dart';
+import 'package:template/view/screen/v2-builder/component_builder/row_text.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_controller.dart';
 
 class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
@@ -99,10 +99,6 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
 
                   BtnCustom(
                     onTap: () {},
-                    margin: const EdgeInsets.symmetric(
-                      vertical: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                      horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
-                    ),
                     color: ColorResources.PRIMARY,
                     text: "Gửi báo giá và chờ nhận kết quả",
                     width: double.infinity,
@@ -148,7 +144,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                     )
                   : InputWidget(
                       textEditingController: textController!,
-                      width: double.infinity,
+                      hintText: "",
                     ),
             ),
           ],

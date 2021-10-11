@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/tab_bar_widget.dart';
@@ -79,7 +80,7 @@ class V1ProjectPage extends GetView<V1ProjectController> {
                 itemCount: 10,
                 itemBuilder: (BuildContext ctx, int index) {
                   return ItemListWidget(
-                    urlImage: "",
+                    urlImage: Images.example,
                     onTap: () => controller.onProjectDetailClick(),
                     title: "Thợ ốp lát: Công trình khách hàng 5 sao",
                     icon1: const Icon(Icons.location_on),

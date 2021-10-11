@@ -570,6 +570,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+    GetPage(
+        name: AppRoutes.V1_G7_PRICE_LIST,
+        page: () => V1G7PriceListPage(),
+        binding: V1G7PriceListBinding()),
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,

@@ -24,7 +24,31 @@ class EditInfoController extends GetxController {
   // avatar file
   File? avatarFile;
   String? avatarPath;
+  @override
+  void onInit() {
+    // first load
+    // sl.get<SharedPreferenceHelper>().userId.then(
+    //   (value) {
+    //     // load user theo id
+    //     userProvider.find(
+    //       id: value!,
+    //       onSuccess: (userData) {
+    //         // assign data to TextEditController
+    //         textEditFullnameController.text = userData.fullname!;
+    //         textEditAddressController.text = userData.address!;
+    //         avatarPath = userData.avatar;
 
+    //         isLoading = false;
+    //         update();
+    //       },
+    //       onError: (error) {
+    //         print(error);
+    //       },
+    //     );
+    //   },
+    // );
+    super.onInit();
+  }
   // @override
   // void onInit() {
   //   // first load
@@ -50,7 +74,6 @@ class EditInfoController extends GetxController {
   //   // );
   //   super.onInit();
   // }
-
   ///
   /// on avatar picker
   ///
