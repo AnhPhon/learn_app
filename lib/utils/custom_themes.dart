@@ -38,8 +38,8 @@ const robotoBold = TextStyle(
 const boxShadow =[
   BoxShadow(
     color: ColorResources.LIGHT_BLACK,
-    blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
-    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM
+    blurRadius: Dimensions.BLUR_RADIUS_DEEP,
+    spreadRadius: Dimensions.SPREAD_RADIUS_ULTRA_LIGHT
   )
 ];
 const boxShadowMedium = [
