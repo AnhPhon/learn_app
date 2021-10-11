@@ -99,7 +99,6 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                         "Mô tả khối lượng công việc thực hiện (sơ bộ tham khảo) ",
                     content:
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-                    center: false,
                   ),
 
                   const SizedBox(
@@ -141,7 +140,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
   ///
   ///label and content
   ///
-  Widget _content({
+  Widget content({
     required String label,
     String? content,
     required bool center,

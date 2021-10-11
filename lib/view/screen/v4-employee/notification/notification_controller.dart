@@ -4,9 +4,9 @@ class V4NotificationController extends GetxController {
   // khai báo is loading
   bool isLoading = true;
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
 }

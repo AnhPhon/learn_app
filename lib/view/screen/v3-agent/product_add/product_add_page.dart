@@ -54,7 +54,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     DropDownButton1<String>(
                       label: "Danh mục sản phẩm",
                       hint: " ",
-                      value: null,
+                      value: "",
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
@@ -73,7 +73,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     DropDownButton1<String>(
                       label: "Tình trạng sản phẩm",
                       hint: " ",
-                      value: null,
+                      value: "dropdown",
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
@@ -84,7 +84,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     DropDownButton1<String>(
                       label: "Hình thức vận chuyển",
                       hint: " ",
-                      value: null,
+                      value: "dropdown",
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
@@ -188,7 +188,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
   ///
   ///title and textfield
   ///
-  Widget _titleDropDown(V3ProductAddController controller,
+  Widget titleDropDown(V3ProductAddController controller,
       {required String title}) {
     return Column(
       children: [
@@ -204,7 +204,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
         ),
         DropDownButton1<String>(
           hint: " ",
-          value: null,
+          value: "dropdown",
           onChanged: (val) {},
           data: const ["dropdown"],
           isColorFieldWhite: true,

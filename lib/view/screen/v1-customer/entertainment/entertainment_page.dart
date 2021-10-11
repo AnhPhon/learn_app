@@ -17,7 +17,7 @@ class V1EntertainmentPage extends GetView<V1EntertainmentController> {
           onTap: (){
             Get.toNamed(AppRoutes.V1_NOTIFICATION);
           },
-          child: Text("Giải trí")),
+          child: const Text("Giải trí")),
       ),
     );
   }

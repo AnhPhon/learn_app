@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownMapButton<T> extends StatelessWidget {
-  DropDownMapButton({
+  const DropDownMapButton({
     Key? key,
     this.hint = "",
     required this.onChanged,
@@ -21,10 +20,10 @@ class DropDownMapButton<T> extends StatelessWidget {
   final Color? colorText;
   final Function(T? value) onChanged;
   final Map<T, String> data;
-  T value;
+  final T value;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         // padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         width: DeviceUtils.getScaledWidth(context, width),
         child: FormField(

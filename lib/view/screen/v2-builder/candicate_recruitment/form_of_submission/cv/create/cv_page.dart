@@ -101,7 +101,7 @@ class V2CvPage extends GetView<V2CvController>{
         // hôn nhân
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data:const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Độc thân", 
           obligatory: true,
@@ -112,7 +112,7 @@ class V2CvPage extends GetView<V2CvController>{
         // Hình thức làm việc
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Bán thời gian", 
           obligatory: true,

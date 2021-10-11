@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
@@ -61,7 +60,7 @@ class V3QuoteRequestController extends GetxController {
         "onTap": () {
           Get.back();
         },
-        "color": const Color(0XFFB0BAC1)
+        "color": ColorResources.LIGHT_GREY //Color(0XFFB0BAC1)
       },
       {
         "title": "Đồng ý báo giá",

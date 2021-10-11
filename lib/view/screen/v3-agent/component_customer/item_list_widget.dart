@@ -127,6 +127,5 @@ class ItemListWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

@@ -156,7 +156,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   ///
   /// fileWidget
   ///
-  Widget _fileWidget() {
+  Widget fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
       isRequired: false,
@@ -374,7 +374,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
-              BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
+              const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(.5),
@@ -444,7 +444,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: LabelContent(
+      child: const LabelContent(
         title: "File báo giá:",
         isRequired: false,
         content: FileUploadWidget(label: "bao_gia.doc"),

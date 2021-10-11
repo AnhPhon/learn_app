@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 
 
@@ -16,7 +15,7 @@ class V3EntertainmentPage extends GetView<V3EntertainmentController> {
         child: GestureDetector(
           onTap: (){
           },
-          child: Text("Giải trí")),
+          child: const Text("Giải trí")),
       ),
     );
   }

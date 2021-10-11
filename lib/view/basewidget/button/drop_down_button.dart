@@ -3,7 +3,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownButton<T> extends StatelessWidget {
-  DropDownButton({
+  const DropDownButton({
     Key? key,
     this.hint = "",
     required this.onChanged,
@@ -23,7 +23,7 @@ class DropDownButton<T> extends StatelessWidget {
   final List<T> data;
   final double? paddingTop;
   final bool? isColorFieldWhite;
-  T value;
+  final T value;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,7 +62,7 @@ class DropDownButton<T> extends StatelessWidget {
               ),
             )
           else
-            SizedBox.shrink(),
+            const SizedBox.shrink(),
           FormField(
             builder: (field) {
               return InputDecorator(

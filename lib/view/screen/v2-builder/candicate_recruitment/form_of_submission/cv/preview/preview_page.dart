@@ -4,13 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/button/small_button.dart';
-import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/candicate_card.dart';
@@ -26,7 +21,7 @@ class V2PreviewPage extends GetView<V2PreviewController>{
       body: SingleChildScrollView(
         child: Column(
           children: [
-            V2CandidateCard(),
+            const V2CandidateCard(),
             content(context,_controller),
             button(),
             const SizedBox(
