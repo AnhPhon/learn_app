@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
-class ApiChecker {
+mixin ApiChecker {
   static void checkApi(BuildContext context, ApiResponse apiResponse) {
     if(apiResponse.error is! String && apiResponse.error.errors[0].message == 'Unauthorized.') {
       // Provider.of<AuthProvider>(context,listen: false).clearSharedData();

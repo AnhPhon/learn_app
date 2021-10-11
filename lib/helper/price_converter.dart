@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PriceConverter {
+mixin PriceConverter {
   static String convertPrice(BuildContext context, double price,
       {double? discount, String? discountType}) {
     double _price = price;
