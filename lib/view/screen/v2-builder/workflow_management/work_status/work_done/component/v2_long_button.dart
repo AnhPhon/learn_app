@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class LongButton extends StatelessWidget {
-  const LongButton(
+class V2LongButton extends StatelessWidget {
+  V2LongButton(
       {Key? key,
       required this.title,
       required this.color,
@@ -20,6 +19,7 @@ class LongButton extends StatelessWidget {
   final double? vertical;
   final double? horizontal;
   final double? minWidth;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,8 +39,9 @@ class LongButton extends StatelessWidget {
           child: Text(
             title,
             style: const TextStyle(
-                color: ColorResources.WHITE,
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+              color: ColorResources.WHITE,
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+            ),
           ),
         ),
       ),

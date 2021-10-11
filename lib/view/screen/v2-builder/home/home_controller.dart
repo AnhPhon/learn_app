@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
-
 class V2HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
 
@@ -26,9 +25,7 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {
-
-        }
+        "onTap": () {}
       },
       {
         "label": "Quản lý công việc",
@@ -41,6 +38,7 @@ class V2HomeController extends GetxController {
         ),
         "icon": Icons.checklist_rtl_sharp,
         "onTap": () {
+          onClickToWorkflowManagement();
           onClickJobManagement();
         }
       },
@@ -62,6 +60,12 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  ///Click to workflow management page
+  ///
+  void onClickToWorkflowManagement() {
+    Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
+  }
+
   ///go to shorthanded page
   ///
   void onShortHandedPageClick() {
@@ -78,29 +82,28 @@ class V2HomeController extends GetxController {
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickHotNews(){
+  void onClickHotNews() {
     Get.toNamed(AppRoutes.V2_NEWS);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickJobManagement(){
+  void onClickJobManagement() {
     Get.toNamed(AppRoutes.V2_JOB_MANAGEMENT);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickRecruitment(){
+  void onClickRecruitment() {
     Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickRegisterJob(){
+  void onClickRegisterJob() {
     // Đăng ký viẹc mới
   }
-
 }

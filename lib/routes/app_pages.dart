@@ -121,6 +121,16 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -651,8 +661,6 @@ class AppPages {
       binding: V2RecruitmentBinding(),
     ),
 
-
-
     // Quản lý tuyển dụng ứng viên
     GetPage(
       name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
@@ -701,7 +709,6 @@ class AppPages {
       page: () => V2PreviewProfilePage(),
       binding: V2PreviewProfileBinding(),
     ),
-
 
     // agent
     GetPage(
@@ -930,5 +937,32 @@ class AppPages {
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
     // ),
+
+    //builder
+    GetPage(
+      name: AppRoutes.V2_WORKFLOW_MANAGEMENT,
+      page: () => V2WorkflowManagementPage(),
+      binding: V2WorkflowManagementBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_DONE,
+      page: () => V2WorkDonePage(),
+      binding: V2WorkDoneBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_IN_PROGRESS,
+      page: () => V2WorkInProgressPage(),
+      binding: V2WorkInProgressBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_DETAIL_WORK_DONE,
+      page: () => V2DetailWorkDonePage(),
+      binding: V2DetailWorkDoneBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_DETAIL_WORK_IN_PROGRESS,
+      page: () => V2DetailWorkInProgresspage(),
+      binding: V2DetailWorkInProgressBinding(),
+    ),
   ];
 }
