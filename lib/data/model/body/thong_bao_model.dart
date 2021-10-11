@@ -1,13 +1,19 @@
+import 'don_dich_vu_model.dart';
+import 'du_an_khach_hang_model.dart';
+import 'du_an_nhan_vien_model.dart';
+import 'tin_tuc_model.dart';
+import 'tuyen_dung_model.dart';
+
 class ThongBaoModel {
   String? doiTuong;
-  String? idDonDichVu;
-  String? idDuAnKhachHang;
-  String? idTinTuc;
-  String? idTuyenDung;
+  DonDichVuModel? idDonDichVu;
+  DuAnKhachHangModel? idDuAnKhachHang;
+  TinTucModel? idTinTuc;
+  TuyenDungModel? idTuyenDung;
   String? tieuDe;
   String? noiDung;
   String? hinhDaiDien;
-  String? idDuAnNhanVien;
+  DuAnNhanVienModel? idDuAnNhanVien;
 
   ThongBaoModel({
       this.doiTuong,
@@ -18,21 +24,57 @@ class ThongBaoModel {
       this.tieuDe,
       this.noiDung,
       this.hinhDaiDien,
-      this.idDuAnNhanVien
-      });
-
+      this.idDuAnNhanVien});
+  
+  ///
+  /// From JSON
+  ///
   ThongBaoModel.fromJson(Map<String, dynamic> json) {
     doiTuong = json['doiTuong'].toString();
-    idDonDichVu = json['idDonDichVu'].toString();
-    idDuAnKhachHang = json['idDuAnKhachHang'].toString();
-    idTinTuc = json['idTinTuc'].toString();
-    idTuyenDung = json['idTuyenDung'].toString();
+
+    // mapping idDonDichVu                                                              
+    if (json['idDonDichVu'] != null) {                                                  
+      idDonDichVu = DonDichVuModel.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDonDichVu = null;                                                               
+    }                                                                                  
+
+    // mapping idDuAnKhachHang                                                              
+    if (json['idDuAnKhachHang'] != null) {                                                  
+      idDuAnKhachHang = DuAnKhachHangModel.fromJson(json['idDuAnKhachHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDuAnKhachHang = null;                                                               
+    }                                                                                  
+
+    // mapping idTinTuc                                                              
+    if (json['idTinTuc'] != null) {                                                  
+      idTinTuc = TinTucModel.fromJson(json['idTinTuc'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTinTuc = null;                                                               
+    }                                                                                  
+
+    // mapping idTuyenDung                                                              
+    if (json['idTuyenDung'] != null) {                                                  
+      idTuyenDung = TuyenDungModel.fromJson(json['idTuyenDung'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTuyenDung = null;                                                               
+    }                                                                                  
     tieuDe = json['tieuDe'].toString();
     noiDung = json['noiDung'].toString();
     hinhDaiDien = json['hinhDaiDien'].toString();
-    idDuAnNhanVien = json['idDuAnNhanVien'].toString();
+
+    // mapping idDuAnNhanVien                                                              
+    if (json['idDuAnNhanVien'] != null) {                                                  
+      idDuAnNhanVien = DuAnNhanVienModel.fromJson(json['idDuAnNhanVien'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDuAnNhanVien = null;                                                               
+    }                                                                                  
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['doiTuong'] = doiTuong;

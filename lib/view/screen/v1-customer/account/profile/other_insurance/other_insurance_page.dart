@@ -75,7 +75,7 @@ class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
             value: controller.isChecked![index],
             title: Text(controller.optionInsuranceList[index].toString()),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (value) => controller.setChecked(index, value),
+            onChanged: (value) => controller.setChecked(index:index, value: value),
           );
         });
   }

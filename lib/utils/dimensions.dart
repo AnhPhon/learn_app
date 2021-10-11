@@ -60,6 +60,8 @@ class Dimensions {
   static const double BLUR_RADIUS_MEDIUM = 10;
   static const double BLUR_RADIUS_DEEP = 15;
   //spread Radius
+  static const double SPREAD_RADIUS_ULTRA_LIGHT = 0.05;
+  static const double SPREAD_RADIUS_SUPER_LIGHT = 0.1;
   static const double SPREAD_RADIUS_LIGHT = 0.2;
   static const double SPREAD_RADIUS_MEDIUM = 0.4;
   static const double SPREAD_RADIUS_DEEP = 0.6;
@@ -75,6 +77,15 @@ class Dimensions {
 
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;
+
+  // SIZE
+  static const double SIZE_EXTRA_SMALL = 10.0;
+  static const double SIZE_SMALL = 20.0;
+  static const double SIZE_LARGE = 30;
+  static const double SIZE_EXTRA_LAEGE = 40;
+  static const double SIZE_EXTRA_LARGE = 40;
+  static const double SIZE_OVER_LARGE = 50;
+
 
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;

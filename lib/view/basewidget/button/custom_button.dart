@@ -4,7 +4,7 @@ import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String buttonText;
   const CustomButton({required this.onTap, required this.buttonText});
 
@@ -25,9 +25,7 @@ class CustomButton extends StatelessWidget {
                   blurRadius: 7,
                   offset: const Offset(0, 1)), // changes position of shadow
             ],
-            gradient: (onTap == null)
-                ? null
-                : const LinearGradient(colors: [
+            gradient: const LinearGradient(colors: [
                     ColorResources.PRIMARY,
                     ColorResources.PRIMARY,
                     ColorResources.PRIMARY,

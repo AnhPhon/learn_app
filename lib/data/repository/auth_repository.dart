@@ -1,11 +1,8 @@
-import 'package:dio/dio.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
-import 'package:template/utils/app_constants.dart' as app_constants;
 // import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';

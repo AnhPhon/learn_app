@@ -38,7 +38,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 _box(),
 
                 // need people widget
-                _needPeopleWidget(),
+                _needPeopleWidget(controller),
 
                 // san pham widget
                 _sanPhamWidget(context),
@@ -147,7 +147,8 @@ class V2HomePage extends GetView<V2HomeController> {
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           decoration: const BoxDecoration(
             color: Color(0xff2196F3),
-            borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+            borderRadius: BorderRadius.all(
+                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
           ),
           child: Row(
             children: const [
@@ -162,7 +163,8 @@ class V2HomePage extends GetView<V2HomeController> {
               ),
               Text(
                 'Kết quả báo giá',
-                style: TextStyle(color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
+                style: TextStyle(
+                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
               )
             ],
           ),
@@ -174,7 +176,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// field widget
   ///
-  Widget _fieldWidget(String title, Function() onTap, Widget widget) {
+  Widget fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -221,11 +223,11 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// need people widget
   ///
-  Widget _needPeopleWidget() {
+  Widget _needPeopleWidget(V2HomeController controller) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
-        onTap: () {},
+        onTap: () => controller.onShortHandedPageClick(),
         title: "Công việc đang cần người",
         widget: SizedBox(
           height: 220,
@@ -255,7 +257,7 @@ class V2HomePage extends GetView<V2HomeController> {
       child: FieldWidget(
         onTap: () {},
         title: "Sản phẩm",
-        widget: Container(
+        widget: SizedBox(
           height: 280,
           child: GridView.builder(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
@@ -292,7 +294,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget _newsWidget() {
     return Padding(
-      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Tin tức",
         onTap: () {},

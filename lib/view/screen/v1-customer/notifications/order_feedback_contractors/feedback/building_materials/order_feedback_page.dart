@@ -167,6 +167,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                           children: const [
                             TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
                             TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
+                            TextHighlight(title:"Khối lượng:" ,content:"20",fontSize: Dimensions.FONT_SIZE_LARGE ),
                             TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
                             TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
                               color: ColorResources.RED,

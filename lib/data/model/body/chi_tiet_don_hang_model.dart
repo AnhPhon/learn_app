@@ -1,20 +1,41 @@
+import 'don_hang_model.dart';
+import 'san_pham_model.dart';
+
 class ChiTietDonHangModel {
-  String? idDonHang;
-  String? idSanPham;
+  DonHangModel? idDonHang;
+  SanPhamModel? idSanPham;
   String? soLuong;
 
   ChiTietDonHangModel({
       this.idDonHang,
       this.idSanPham,
-      this.soLuong
-      });
-
+      this.soLuong});
+  
+  ///
+  /// From JSON
+  ///
   ChiTietDonHangModel.fromJson(Map<String, dynamic> json) {
-    idDonHang = json['idDonHang'].toString();
-    idSanPham = json['idSanPham'].toString();
+
+    // mapping idDonHang                                                              
+    if (json['idDonHang'] != null) {                                                  
+      idDonHang = DonHangModel.fromJson(json['idDonHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDonHang = null;                                                               
+    }                                                                                  
+
+    // mapping idSanPham                                                              
+    if (json['idSanPham'] != null) {                                                  
+      idSanPham = SanPhamModel.fromJson(json['idSanPham'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idSanPham = null;                                                               
+    }                                                                                  
     soLuong = json['soLuong'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idDonHang'] = idDonHang;

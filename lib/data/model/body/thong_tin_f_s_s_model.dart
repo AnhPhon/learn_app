@@ -1,3 +1,4 @@
+
 class ThongTinFSSModel {
   String? doiTuong;
   String? gioiThieuTomTatCoCheHoatDong;
@@ -10,17 +11,23 @@ class ThongTinFSSModel {
       this.gioiThieuTomTatCoCheHoatDong,
       this.quyenNghiaVuFSS,
       this.quyTrinhSuDungGiaoDich,
-      this.loiIchThamGiaFSS
-      });
-
+      this.loiIchThamGiaFSS});
+  
+  ///
+  /// From JSON
+  ///
   ThongTinFSSModel.fromJson(Map<String, dynamic> json) {
     doiTuong = json['doiTuong'].toString();
     gioiThieuTomTatCoCheHoatDong = json['gioiThieuTomTatCoCheHoatDong'].toString();
     quyenNghiaVuFSS = json['quyenNghiaVuFSS'].toString();
     quyTrinhSuDungGiaoDich = json['quyTrinhSuDungGiaoDich'].toString();
     loiIchThamGiaFSS = json['loiIchThamGiaFSS'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['doiTuong'] = doiTuong;

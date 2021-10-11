@@ -6,12 +6,14 @@ import 'package:template/utils/dimensions.dart';
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool? centerTitle;
+  final bool? isNotBack;
   final List<Widget>? action;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
+    this.isNotBack = false,
   }) : super(key: key);
 
   @override
@@ -69,18 +71,21 @@ class _CustomAppBarState extends State<AppBarWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Builder(
-                  builder: (context) {
-                    return IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: ColorResources.WHITE,
-                        ));
-                  },
-                ),
+                if (widget.isNotBack == true)
+                  const SizedBox.shrink()
+                else
+                  Builder(
+                    builder: (context) {
+                      return IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            color: ColorResources.WHITE,
+                          ));
+                    },
+                  ),
                 Expanded(
                   child: Container(
                       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

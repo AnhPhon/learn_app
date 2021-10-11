@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
 class ProductCard extends StatelessWidget {
-  String title;
-  String image;
-  String cost;
+  final String title;
+  final String image;
+  final String cost;
 
-  ProductCard({
+  const ProductCard({
     required this.title,
     required this.image,
     required this.cost,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(

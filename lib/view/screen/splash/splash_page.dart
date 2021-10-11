@@ -6,7 +6,7 @@ import 'package:template/utils/images.dart';
 import 'splash_controller.dart';
 
 class SplashPage extends GetView<SplashController> {
-  SplashController splashController = Get.put(SplashController());
+  final SplashController splashController = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {

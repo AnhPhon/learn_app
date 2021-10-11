@@ -1,5 +1,7 @@
+import 'tai_khoan_model.dart';
+
 class TinHocModel {
-  String? idTaiKhoan;
+  TaiKhoanModel? idTaiKhoan;
   String? word;
   String? excel;
   String? internet;
@@ -16,11 +18,19 @@ class TinHocModel {
       this.phanMemHoTro,
       this.soThichTrinhDo,
       this.soThichKyNang,
-      this.soTichTinhCach
-      });
-
+      this.soTichTinhCach});
+  
+  ///
+  /// From JSON
+  ///
   TinHocModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
     word = json['word'].toString();
     excel = json['excel'].toString();
     internet = json['internet'].toString();
@@ -28,8 +38,12 @@ class TinHocModel {
     soThichTrinhDo = json['soThichTrinhDo'].toString();
     soThichKyNang = json['soThichKyNang'].toString();
     soTichTinhCach = json['soTichTinhCach'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

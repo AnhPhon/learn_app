@@ -1,6 +1,8 @@
+import 'danh_muc_tin_tuc_model.dart';
+
 class TinTucModel {
   String? loai;
-  String? idDanhMucTinTuc;
+  DanhMucTinTucModel? idDanhMucTinTuc;
   String? tacGia;
   String? tieuDe;
   String? tomTat;
@@ -16,20 +18,32 @@ class TinTucModel {
       this.tomTat,
       this.noiDung,
       this.hinhAnh,
-      this.luotXem
-      });
-
+      this.luotXem});
+  
+  ///
+  /// From JSON
+  ///
   TinTucModel.fromJson(Map<String, dynamic> json) {
     loai = json['loai'].toString();
-    idDanhMucTinTuc = json['idDanhMucTinTuc'].toString();
+
+    // mapping idDanhMucTinTuc                                                              
+    if (json['idDanhMucTinTuc'] != null) {                                                  
+      idDanhMucTinTuc = DanhMucTinTucModel.fromJson(json['idDanhMucTinTuc'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDanhMucTinTuc = null;                                                               
+    }                                                                                  
     tacGia = json['tacGia'].toString();
     tieuDe = json['tieuDe'].toString();
     tomTat = json['tomTat'].toString();
     noiDung = json['noiDung'].toString();
     hinhAnh = json['hinhAnh'].toString();
     luotXem = json['luotXem'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['loai'] = loai;

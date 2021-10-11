@@ -141,8 +141,8 @@ class DioClient {
     CancelToken? cancelToken,
   }) async {
     try {
-      String fileName = file.path.split('/').last;
-      FormData formData = FormData.fromMap({
+      final String fileName = file.path.split('/').last;
+      final FormData formData = FormData.fromMap({
         "image": await MultipartFile.fromFile(file.path, filename: fileName),
       }); 
 

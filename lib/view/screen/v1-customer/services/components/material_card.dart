@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';

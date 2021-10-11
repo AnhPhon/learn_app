@@ -51,7 +51,9 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.pending_actions,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+        }
       },
     ];
   }
@@ -61,5 +63,18 @@ class V2HomeController extends GetxController {
   ///
   void onClickToWorkflowManagement() {
     Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
+  }
+
+  ///go to shorthanded page
+  ///
+  void onShortHandedPageClick() {
+    Get.toNamed(AppRoutes.V2_SHORTHANDED);
+  }
+
+  ///
+  ///go to product page
+  ///
+  void onProductPageClick() {
+    Get.toNamed(AppRoutes.V2_PRODUCT);
   }
 }

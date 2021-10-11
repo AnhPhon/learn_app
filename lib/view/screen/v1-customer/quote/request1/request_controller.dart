@@ -37,7 +37,7 @@ class V1Request1Controller extends GetxController {
     provinceData = [
       SelectProvinceCustomModel(
         value: "TP.HCM",
-        onChanged: onChange,
+        onChanged: (val)=> onChange,
       ),
       SelectProvinceCustomModel(
         value: "Hà Nội",
@@ -53,7 +53,7 @@ class V1Request1Controller extends GetxController {
   ///
   /// on change
   ///
-  onLoaiCongTrinhChange(String? value) {
+  void onLoaiCongTrinhChange(String? value) {
     loaiCongTrinh = TextEditingController(text: value);
     update();
   }
@@ -61,7 +61,7 @@ class V1Request1Controller extends GetxController {
   ///
   /// onChange
   ///
-  void onChange(value) {
+  void onChange(dynamic value) {
     selectIndex = value;
     update();
   }

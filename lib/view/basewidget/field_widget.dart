@@ -4,11 +4,11 @@ import 'package:template/utils/dimensions.dart';
 
 class FieldWidget extends StatelessWidget {
 
-  Widget widget;
-  Function() onTap;
-  String title;
+  final Widget widget;
+  final Function() onTap;
+  final String title;
 
-  FieldWidget({
+  const FieldWidget({
     required this.title,
     required this.onTap,
     required this.widget,

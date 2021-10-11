@@ -22,19 +22,20 @@ class InputField extends StatelessWidget {
       this.line = 5,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       required this.fontSize});
-  String label, holdplacer;
-  TextEditingController controller;
-  bool allowEdit, allowMultiline, hidden, obligatory;
-  TextInputType typeInput;
-  double width, fontSize;
-  double? height;
-  Widget? suffixIcon;
+  final String label, holdplacer;
+  final TextEditingController controller;
+  final bool allowEdit, allowMultiline, hidden, obligatory;
+  final TextInputType typeInput;
+  final double width, fontSize;
+  final double? height;
+  final Widget? suffixIcon;
   final double? paddingTop;
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
   bool? boldHinText;
   bool? showLabel;
+
   @override
   Widget build(BuildContext context) {
     return Container(

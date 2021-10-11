@@ -20,7 +20,7 @@ class BoxShadowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: elevation ?? 5,
+      // elevation: elevation ?? 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? Dimensions.BORDER_RADIUS_EXTRA_SMALL)
       ),
