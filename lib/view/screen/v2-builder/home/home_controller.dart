@@ -39,6 +39,7 @@ class V2HomeController extends GetxController {
         ),
         "icon": Icons.checklist_rtl_sharp,
         "onTap": () {
+          onClickToWorkflowManagement();
           onClickJobManagement();
         }
       },
@@ -60,6 +61,12 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  ///Click to workflow management page
+  ///
+  void onClickToWorkflowManagement() {
+    Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
+  }
+
   ///go to shorthanded page
   ///
   void onShortHandedPageClick() {}

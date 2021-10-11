@@ -34,8 +34,7 @@ class LabelContent extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height:
-              DeviceUtils.getScaledHeight(context, Dimensions.SCALE_SMALL),
+          height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_SMALL),
         ),
         // content
         content,
