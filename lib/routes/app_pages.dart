@@ -91,8 +91,23 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/account/account_page.dart';
+import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
+import 'package:template/view/screen/v3-agent/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v3-agent/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/profile_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/rules/rules_page.dart';
+import 'package:template/view/screen/v3-agent/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
@@ -539,6 +554,71 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V3_CONTRACT,
+      page: () => V3ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ACCIDENT_INSURANCE,
+      page: () => V3AccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_OTHER_INSURANCE,
+      page: () => V3OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TAX,
+      page: () => V3TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INSURANCE_DETAIL,
+      page: () => V3InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PAYMENT_ACCOUNT,
+      page: () => V3PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PROFILE,
+      page: () => V3ProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_POINT_BASED,
+      page: () => V3PointBasedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_WALLET,
+      page: () => V3WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_RULES,
+      page: () => V3RulesPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INTRODUCE,
+      page: () => V3IntroducePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_HELP,
+      page: () => V3HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_JOB_MANAGEMENT,
+      page: () => V3ProductAddPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INURANCE_REGISTER,
+      page: () => V3InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_YOUR_INSURANCE,
+      page: () => V3YourInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_REGISTER_AND_COMMIT,
+      page: () => V3RegisterAndCommitPage(),
     ),
 
     // v4 - employee
