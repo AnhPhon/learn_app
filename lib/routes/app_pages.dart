@@ -123,6 +123,7 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
@@ -984,6 +985,10 @@ class AppPages {
       name: AppRoutes.V2_DETAIL_WORK_IN_PROGRESS,
       page: () => V2DetailWorkInProgresspage(),
       binding: V2DetailWorkInProgressBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_FINISH_UPDATE,
+      page: () => V2FinishUpdatePage(),
     ),
   ];
 }

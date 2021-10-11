@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:template/data/model/v1/select_province_custom_model.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1Request1Controller extends GetxController {
@@ -29,7 +28,7 @@ class V1Request1Controller extends GetxController {
 
     tieuDeBaoGiaController = TextEditingController();
     loaiCongTrinh = TextEditingController(text: firstSelect);
-    
+
     fromDate = TextEditingController();
     toDate = TextEditingController();
 
@@ -37,7 +36,7 @@ class V1Request1Controller extends GetxController {
     provinceData = [
       SelectProvinceCustomModel(
         value: "TP.HCM",
-        onChanged: (val)=> onChange,
+        onChanged: (val) => onChange,
       ),
       SelectProvinceCustomModel(
         value: "Hà Nội",
@@ -69,7 +68,8 @@ class V1Request1Controller extends GetxController {
   ///
   /// date from Picker
   ///
-  void dateFromPicker(BuildContext context, DateTime firstDate, DateTime lastDate) {
+  void dateFromPicker(
+      BuildContext context, DateTime firstDate, DateTime lastDate) {
     showDatePicker(
       context: context,
       initialDate: DateTime(2021, 10, 7),
@@ -88,7 +88,8 @@ class V1Request1Controller extends GetxController {
   ///
   /// date to Picker
   ///
-  void dateToPicker(BuildContext context, DateTime firstDate, DateTime lastDate) {
+  void dateToPicker(
+      BuildContext context, DateTime firstDate, DateTime lastDate) {
     showDatePicker(
       context: context,
       initialDate: DateTime(2021, 10, 7),
@@ -110,4 +111,14 @@ class V1Request1Controller extends GetxController {
   void nextPage() {
     Get.toNamed(AppRoutes.V1_QUOTE_REQUEST_2);
   }
+}
+
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({
+    required this.value,
+    required this.onChanged,
+  });
 }
