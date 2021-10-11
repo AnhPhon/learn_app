@@ -202,8 +202,6 @@ class AppRoutes {
   static const String V4_INFO = '/v4_info';
   // Builder
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
-<<<<<<< HEAD
-=======
   // Xem tin tuyển dụng
   static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
   //Xem lịch sử tin đã ứng tuyển và đã lưu
@@ -219,5 +217,4 @@ class AppRoutes {
   // Xem trước hồ sơ đánh bằng văn bản
   static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
 
->>>>>>> fa1dbc5 (finish task)
 }
