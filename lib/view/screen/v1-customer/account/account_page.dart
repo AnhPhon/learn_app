@@ -216,7 +216,7 @@ class V1AccountPage extends GetView<V1AccountController> {
       {required Icon icon, required String text, required VoidCallback onTap}) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),,
       ),
       color: ColorResources.WHITE,
       // shadowColor: ColorResources.BLACK.withOpacity(.4),

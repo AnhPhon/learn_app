@@ -44,7 +44,7 @@ class V3RegisterAndCommitPage extends GetView<V3RegisterAndCommitController> {
                       ],
                     ),
                   ),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, .02)),
+                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
                   SingleChildScrollView(
                     child: SizedBox(
                       height: DeviceUtils.getScaledHeight(context, .8),
