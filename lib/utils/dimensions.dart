@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 
 class Dimensions {
@@ -64,13 +66,69 @@ class Dimensions {
   static const double SPREAD_RADIUS_MEDIUM_DEEP = 1;
   static const double SPREAD_RADIUS_VERY_DEEP = 2;
 
-
+  // SCALE
+  static const double SCALE_EXTRA_SMALL = .005;
+  static const double SCALE_SMALL = .01;
+  static const double SCALE_DEFAULT = .02;
+  static const double SCALE_LARGE = .03;
+  static const double SCALE_EXTRA_LARGE = .04;
 
   // RADIUS
   static const double HOME_BORDER_RADIUS = 30;
 
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
+
+  // CARD
+  static const int TEXT_TITLE_COLOR = 0XFF474747;
+  static const int TEXT_NORMAL_COLOR = 0XFF5A5757;
+  static const int TEXT_NORMAL_GREY_COLOR = 0XFF8B8B8B;
+
+  static TextStyle textTitleStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_TITLE_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+      fontWeight: FontWeight.bold
+    );
+  }
+
+  static TextStyle textNormalStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_COLOR),
+      fontSize: FONT_SIZE_DEFAULT,
+    );
+  }
+
+  static TextStyle textNormalGreyStyleCard() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_GREY_COLOR),
+      fontSize: FONT_SIZE_DEFAULT,
+    );
+  }
+
+  static TextStyle textTitleStyle() {
+    return const TextStyle(
+      color: Color(TEXT_TITLE_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
+  static TextStyle textNormalStyle() {
+    return const TextStyle(
+      color: Color(TEXT_NORMAL_COLOR),
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
+  static TextStyle textInputNormalStyle() {
+    return const TextStyle(
+      color: ColorResources.RED,
+      fontSize: FONT_SIZE_EXTRA_LARGE,
+    );
+  }
+
+  // SIZE BOX BOTTOM NAV
+  static const double SIZE_BOX_BOTTOM_NAV = 150;
 
   Widget paddingDivider(BuildContext context) {
     return Padding(
@@ -117,11 +175,11 @@ class Dimensions {
   }
 
   static TextStyle fontSizeStyle16w600() {
-    return const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle14w600() {
-    return const TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+    return const TextStyle(fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle12w600() {

@@ -25,8 +25,10 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
               child: Column(
                 children: [
                   //province
-                  _rowTitle(context, title: "Tỉnh thành phố"),
                   DropDownButton1(
+                    label: "Tỉnh thành phố",
+                    obligatory: true,
+                    labelBold: true,
                     hint: "Nhập tỉnh/thành phố",
                     value: controller.province,
                     onChanged: controller.setSelectedProvince,
@@ -34,8 +36,10 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   //district
-                  _rowTitle(context, title: "Quận huyện"),
                   DropDownButton1(
+                    label: "Quận huyện",
+                    obligatory: true,
+                    labelBold: true,
                     hint: "Nhập quận/huyện",
                     value: controller.district,
                     onChanged: controller.setSelectedDistrict,
@@ -43,29 +47,23 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   ),
 
                   //ward
-                  _rowTitle(context, title: "Phường xã"),
                   DropDownButton1(
+                    label: "Phường xã",
+                    obligatory: true,
+                    labelBold: true,
                     hint: "Nhập phường/xã",
                     value: controller.ward,
                     onChanged: controller.setSelectedWard,
                     data: controller.wardList,
                   ),
 
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_SMALL,
-                  ),
-
                   //address
-                  _rowTitle(
-                    context,
-                    title: "Địa chỉ cụ thể nhận hàng",
-                  ),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_SMALL,
-                  ),
 
                   InputWidget(
+                    width: double.infinity,
+                    label: "Địa chỉ cụ thể nhận hàng",
+                    obligatory: true,
+                    labelBold: true,
                     textEditingController: controller.addressController,
                     hintText: "Nhập địa chỉ cụ thể",
                   ),
