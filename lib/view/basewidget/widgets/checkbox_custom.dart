@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CheckBoxCustom extends StatelessWidget {
-  CheckBoxCustom({
+  const CheckBoxCustom({
     Key? key,
     required this.title,
     required this.status,

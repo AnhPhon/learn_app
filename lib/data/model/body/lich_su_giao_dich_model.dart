@@ -1,8 +1,12 @@
+import 'don_dich_vu_model.dart';
+import 'tai_khoan_model.dart';
+import 'tuyen_dung_model.dart';
+
 class LichSuGiaoDichModel {
-  String? idTaiKhoan;
+  TaiKhoanModel? idTaiKhoan;
   String? taiKhoanNhanDon;
-  String? idDonDichVu;
-  String? idTuyenDung;
+  DonDichVuModel? idDonDichVu;
+  TuyenDungModel? idTuyenDung;
   String? soTien;
   String? hinhAnhGiaoDich;
   String? trangThai;
@@ -14,19 +18,43 @@ class LichSuGiaoDichModel {
       this.idTuyenDung,
       this.soTien,
       this.hinhAnhGiaoDich,
-      this.trangThai
-      });
-
+      this.trangThai});
+  
+  ///
+  /// From JSON
+  ///
   LichSuGiaoDichModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
-    idDonDichVu = json['idDonDichVu'].toString();
-    idTuyenDung = json['idTuyenDung'].toString();
+
+    // mapping idDonDichVu                                                              
+    if (json['idDonDichVu'] != null) {                                                  
+      idDonDichVu = DonDichVuModel.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDonDichVu = null;                                                               
+    }                                                                                  
+
+    // mapping idTuyenDung                                                              
+    if (json['idTuyenDung'] != null) {                                                  
+      idTuyenDung = TuyenDungModel.fromJson(json['idTuyenDung'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTuyenDung = null;                                                               
+    }                                                                                  
     soTien = json['soTien'].toString();
     hinhAnhGiaoDich = json['hinhAnhGiaoDich'].toString();
     trangThai = json['trangThai'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

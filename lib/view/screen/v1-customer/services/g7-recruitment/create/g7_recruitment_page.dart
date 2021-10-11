@@ -125,7 +125,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         // Hình thức làm viêc
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Bán thời gian", 
           obligatory: true,
@@ -136,7 +136,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         // Trình độ học vấn
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Bán thời gian", 
           obligatory: true,
@@ -147,7 +147,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         // Chuyên ngành chính
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Công nghệ thông tin", 
           obligatory: true,
@@ -158,7 +158,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         // Số năm kinh nghiệm
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Công nghệ thông tin", 
           obligatory: true,
@@ -169,7 +169,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         //Mức lương ban đầu dự kiến *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Công nghệ thông tin", 
           obligatory: true,
@@ -180,7 +180,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         //Nơi làm việc
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Công nghệ thông tin", 
           obligatory: true,
@@ -191,7 +191,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController>{
         //Thời gian làm việc
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Công nghệ thông tin", 
           obligatory: true,

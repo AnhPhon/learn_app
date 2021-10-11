@@ -92,7 +92,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
   ///
   ///row title
   ///
-  Widget _rowTitle(BuildContext context, {required String title}) {
+  Widget rowTitle(BuildContext context, {required String title}) {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(

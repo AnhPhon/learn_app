@@ -73,7 +73,7 @@ class V1Request2Page extends GetView<V1Request2Controller> {
                   Column(
                     children: List.generate(2, (index) {
                       return Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
                         child: ContentWhiteBox(infoCard: controller.infoCard!),
@@ -267,11 +267,11 @@ class V1Request2Page extends GetView<V1Request2Controller> {
   /// hinh anh khoi luong
   ///
   Widget _hinhAnhKhoiLuong() {
-    return LabelContent(
+    return const LabelContent(
       title: "Hình ảnh bảng khối lượng",
       isRequired: false,
       content: ThreeImageBox(
-        images: const [
+        images: [
           Images.location_example,
           Images.location_example,
           Images.location_example,
@@ -287,7 +287,7 @@ class V1Request2Page extends GetView<V1Request2Controller> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: LabelContent(
+      child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
         content: FileUploadWidget(label: "Thêm file"),

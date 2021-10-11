@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class Label extends StatelessWidget {
@@ -14,6 +13,7 @@ class Label extends StatelessWidget {
     this.horizontalPadding = Dimensions.PADDING_SIZE_DEFAULT,
     this.topPadding = Dimensions.PADDING_SIZE_LARGE,
     this.style,
+    this.alignment,
   }) : super(key: key);
   final String label;
   final bool obligatory;
@@ -21,6 +21,7 @@ class Label extends StatelessWidget {
   final double? horizontalPadding;
   final double? topPadding;
   final TextStyle? style;
+  final AlignmentGeometry? alignment;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +32,7 @@ class Label extends StatelessWidget {
       ),
       child: Container(
         padding: EdgeInsets.only(bottom: paddingTitle!),
-        alignment: Alignment.centerLeft,
+        alignment: alignment ?? Alignment.centerLeft,
         child: Wrap(
           children: [
             Text(

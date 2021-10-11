@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/response/base/error_response.dart';
+import 'package:template/utils/color_resources.dart';
 
 class ApiErrorHandler {
   static dynamic getMessage(dynamic error) {
@@ -60,7 +61,7 @@ class ApiErrorHandler {
       "Hey i'm a Errors SnackBar!", // title
       errorDescription.toString(), // message
       icon: const Icon(Icons.error_outline),
-      backgroundColor: Color(0xffFFCDD2),
+      backgroundColor: ColorResources.PINK,
       shouldIconPulse: true,
       isDismissible: true,
       duration: const Duration(seconds: 3),

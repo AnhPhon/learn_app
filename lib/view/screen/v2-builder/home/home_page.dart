@@ -176,7 +176,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// field widget
   ///
-  Widget _fieldWidget(String title, Function() onTap, Widget widget) {
+  Widget fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -257,7 +257,7 @@ class V2HomePage extends GetView<V2HomeController> {
       child: FieldWidget(
         onTap: () {},
         title: "Sản phẩm",
-        widget: Container(
+        widget: SizedBox(
           height: 280,
           child: GridView.builder(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
@@ -294,7 +294,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget _newsWidget() {
     return Padding(
-      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Tin tức",
         onTap: () {},

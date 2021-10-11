@@ -73,7 +73,7 @@ class SharedPreferenceHelper {
     return _sharedPreference.getBool(Preferences.is_dark_mode) ?? false;
   }
 
-  Future<void> changeBrightnessToDark(bool value) {
+  Future<void> changeBrightnessToDark({required bool value}) {
     return _sharedPreference.setBool(Preferences.is_dark_mode, value);
   }
 
@@ -161,7 +161,7 @@ class SharedPreferenceHelper {
     return _sharedPreference.getBool(Preferences.isLogin);
   }
 
-  Future<bool> saveIsLogin(bool id) async {
+  Future<bool> saveIsLogin({required bool id}) async {
     return _sharedPreference.setBool(Preferences.isLogin, id);
   }
 
@@ -174,7 +174,7 @@ class SharedPreferenceHelper {
     return _sharedPreference.getBool(Preferences.isFirst);
   }
 
-  Future<bool> saveIsFirst(bool id) async {
+  Future<bool> saveIsFirst({required bool id}) async {
     return _sharedPreference.setBool(Preferences.isFirst, id);
   }
 

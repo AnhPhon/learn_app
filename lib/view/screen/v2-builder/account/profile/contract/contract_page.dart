@@ -80,7 +80,7 @@ class V2ContractPage extends GetView<V2ContractController> {
             title: const Text(
                 "Tôi đồng ý và hiểu rõ nội dung hợp đồng nguyên tắc số 0989539292"),
             value: controller.isChecked1,
-            onChanged: controller.setSeletedCheckBox1,
+            onChanged: (bool? val)=> controller.setSeletedCheckBox1(value: val),
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
@@ -91,7 +91,7 @@ class V2ContractPage extends GetView<V2ContractController> {
             title:
                 const Text("Tôi đồng ý giao kết hợp đồng thông qua appweb này"),
             value: controller.isChecked2,
-            onChanged: controller.setSeletedCheckBox2,
+            onChanged: (bool? val)=> controller.setSeletedCheckBox2(value: val),
             controlAffinity: ListTileControlAffinity.leading,
           ),
 

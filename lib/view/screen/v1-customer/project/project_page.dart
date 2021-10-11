@@ -80,7 +80,11 @@ class V1ProjectPage extends GetView<V1ProjectController> {
                 itemCount: 10,
                 itemBuilder: (BuildContext ctx, int index) {
                   return ItemListWidget(
+<<<<<<< HEAD
                     urlImage: Images.example,
+=======
+                    urlImage: "",
+>>>>>>> origin/develop
                     onTap: () => controller.onProjectDetailClick(),
                     title: "Thợ ốp lát: Công trình khách hàng 5 sao",
                     icon1: const Icon(Icons.location_on),

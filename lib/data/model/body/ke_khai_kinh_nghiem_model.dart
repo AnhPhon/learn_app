@@ -1,5 +1,7 @@
+import 'tai_khoan_model.dart';
+
 class KeKhaiKinhNghiemModel {
-  String? idTaiKhoan;
+  TaiKhoanModel? idTaiKhoan;
   String? thoiGianBatDau;
   String? thoiGianKetThuc;
   String? donVi;
@@ -16,11 +18,19 @@ class KeKhaiKinhNghiemModel {
       this.chucVu,
       this.mucLuong,
       this.congViecPhuTrach,
-      this.ketQua
-      });
-
+      this.ketQua});
+  
+  ///
+  /// From JSON
+  ///
   KeKhaiKinhNghiemModel.fromJson(Map<String, dynamic> json) {
-    idTaiKhoan = json['idTaiKhoan'].toString();
+
+    // mapping idTaiKhoan                                                              
+    if (json['idTaiKhoan'] != null) {                                                  
+      idTaiKhoan = TaiKhoanModel.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoan = null;                                                               
+    }                                                                                  
     thoiGianBatDau = json['thoiGianBatDau'].toString();
     thoiGianKetThuc = json['thoiGianKetThuc'].toString();
     donVi = json['donVi'].toString();
@@ -28,8 +38,12 @@ class KeKhaiKinhNghiemModel {
     mucLuong = json['mucLuong'].toString();
     congViecPhuTrach = json['congViecPhuTrach'].toString();
     ketQua = json['ketQua'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTaiKhoan'] = idTaiKhoan;

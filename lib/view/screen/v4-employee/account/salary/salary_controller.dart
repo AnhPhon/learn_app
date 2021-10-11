@@ -7,9 +7,9 @@ class V4SalaryController extends GetxController {
 
   final salaryController = TextEditingController();
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
 }

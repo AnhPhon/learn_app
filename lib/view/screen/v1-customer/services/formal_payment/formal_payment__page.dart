@@ -12,8 +12,8 @@ import 'package:template/view/screen/v1-customer/services/formal_payment/formal_
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
-  V1FormalPaymentPage({Key? key}) : super(key: key);
-  final V1FormalPaymentController _controller = Get.find<V1FormalPaymentController>();
+  const V1FormalPaymentPage({Key? key}) : super(key: key);
+  // final V1FormalPaymentController _controller = Get.find<V1FormalPaymentController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
             "Tự thanh toán sau cho Bên cung cấp dịch vụ 10.000.000 VNĐ (đã khấu trừ tiền cọc)",
           ] ,groupValue: 1),
           formalPaymentItem(title: "Ủy quyền",value:0,content:[
-            "Tự thanh toán sau cho \"Bên cung cấp dịch vụ\" 10.000.000 VNĐ (đã khấu trừ tiền cọc)",
+            'Tự thanh toán sau cho "Bên cung cấp dịch vụ" 10.000.000 VNĐ (đã khấu trừ tiền cọc)',
             "Ủy quyền thì bạn không phải cọc tiền dịch vụ",
             "FSS sẽ hoàn tiền chênh lệch nếu có"
           ] ,groupValue: 1),

@@ -5,12 +5,12 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class LabelInput extends StatelessWidget {
-  String label;
-  String labelText;
-  bool isRequire;
-  TextEditingController controller;
+  final String label;
+  final String labelText;
+  final bool isRequire;
+  final TextEditingController controller;
 
-  LabelInput(
+  const LabelInput(
       {required this.label,
       required this.labelText,
       required this.controller,
@@ -37,7 +37,7 @@ class LabelInput extends StatelessWidget {
         SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
         TextField(
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: labelText,
           ),
         )

@@ -23,7 +23,7 @@ class V2OtherInsuranceController extends GetxController {
   ///
   ///set checked
   ///
-  void setChecked(int? index, bool? value) {
+  void setChecked({int? index, bool? value}) {
     isChecked![index!] = value!;
     update();
   }

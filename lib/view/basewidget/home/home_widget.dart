@@ -5,12 +5,11 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 
 class HomeWidget extends StatelessWidget {
-  String fullname;
-  Widget content;
-  HomeWidget({required this.fullname, required this.content});
+  final String fullname;
+  final Widget content;
+  const HomeWidget({required this.fullname, required this.content});
 
   @override
   Widget build(BuildContext context) {

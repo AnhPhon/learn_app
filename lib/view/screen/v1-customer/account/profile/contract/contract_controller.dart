@@ -13,7 +13,7 @@ class V1ContractController extends GetxController {
   ///
   ///set selected checkBox
   ///
-  void setSeletedCheckBox1(bool? value) {
+  void setSeletedCheckBox1({bool? value}) {
     isChecked1 = value!;
     update();
   }
@@ -21,7 +21,7 @@ class V1ContractController extends GetxController {
   ///
   ///set selected checkBox
   ///
-  void setSeletedCheckBox2(bool? value) {
+  void setSeletedCheckBox2({bool? value}) {
     isChecked2 = value!;
     update();
   }

@@ -8,13 +8,8 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class IntroductionController extends GetxController {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void onIntroEnd(BuildContext context) {
-    sl.get<SharedPreferenceHelper>().saveIsFirst(true);
+    sl.get<SharedPreferenceHelper>().saveIsFirst(id:true);
     Get.toNamed(AppRoutes.LOGIN);
     update();
   }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
 
 void showAnimatedDialog(BuildContext context, Widget dialog,
     {bool isFlip = false, bool dismissible = true}) {
@@ -13,11 +13,10 @@ void showAnimatedDialog(BuildContext context, Widget dialog,
     transitionBuilder: (context, a1, a2, widget) {
       if (isFlip) {
         return Rotation3DTransition(
-          alignment: Alignment.center,
           turns: Tween<double>(begin: math.pi, end: 2.0 * math.pi).animate(
               CurvedAnimation(
                   parent: a1,
-                  curve: const Interval(0.0, 1.0, curve: Curves.linear))),
+                  curve: const Interval(0.0, 1.0,))),
           child: FadeTransition(
             opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
                 CurvedAnimation(
@@ -51,8 +50,7 @@ class Rotation3DTransition extends AnimatedWidget {
     required Animation<double> this.turns,
     this.alignment = Alignment.center,
     this.child,
-  })  : assert(turns != null),
-        super(key: key, listenable: turns);
+  })  : super(key: key, listenable: turns);
 
   @override
   Widget build(BuildContext context) {

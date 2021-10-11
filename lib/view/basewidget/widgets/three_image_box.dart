@@ -5,10 +5,10 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 class ThreeImageBox extends StatelessWidget {
-  bool allowPicker;
-  List<String> images;
+  final bool allowPicker;
+  final List<String> images;
 
-  ThreeImageBox({
+  const ThreeImageBox({
     required this.images,
     required this.allowPicker
   });

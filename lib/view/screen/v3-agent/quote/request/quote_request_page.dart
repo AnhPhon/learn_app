@@ -292,7 +292,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   ///
   /// fileWidget
   ///
-  Widget _fileWidget() {
+  Widget fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
       isRequired: false,
@@ -339,7 +339,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: LabelContent(
+      child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
         content: FileUploadWidget(label: "Thêm file"),

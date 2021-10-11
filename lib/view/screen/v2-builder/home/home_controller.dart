@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 
+
 class V2HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
 
@@ -49,7 +50,9 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.pending_actions,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+        }
       },
     ];
   }
