@@ -6,7 +6,7 @@ import 'package:template/view/screen/v2-builder/account/account_page.dart';
 import 'package:template/view/screen/v2-builder/entertainment/entertainment_page.dart';
 import 'package:template/view/screen/v2-builder/home/home_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
-import 'package:template/view/screen/v2-builder/project/home_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_page.dart';
 
 import 'dashboard_controller.dart';
 

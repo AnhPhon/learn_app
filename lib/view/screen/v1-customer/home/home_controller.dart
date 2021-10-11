@@ -78,7 +78,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+      }
     },
     {
       "label": "Tuyển dụng ứng viên",
@@ -212,7 +214,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.image,
-        "onTap": () {}
+        "onTap": () {
+          
+        }
       },
       {
         "label": "Sản phẩm\nmẫu",
@@ -299,5 +303,18 @@ class V1HomeController extends GetxController {
   ///
   void onClickCandicate(){
     Get.toNamed(AppRoutes.V1_CANDICATE);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews(){
+    Get.toNamed(AppRoutes.V1_NEWS);
+  }
+  ///
+  /// Quản lý công việc
+  ///
+  void onClickJobManagement(){
+    //Get.toNamed(AppRoutes.V1_JOB_MANAGEMENT);
   }
 }

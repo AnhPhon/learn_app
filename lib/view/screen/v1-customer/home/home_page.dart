@@ -33,7 +33,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 // product
                 _productWidget(controller),
 
-                _newsWidget()
+                _newsWidget(controller: controller)
               ],
             ),
           );
@@ -304,10 +304,12 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget() {
+  Widget _newsWidget({required V1HomeController controller}) {
     return FieldWidget(
       title: "Tin tức",
-      onTap: () {},
+      onTap: () {
+        controller.onClickHotNews();
+      },
       widget: Container(
         height: 230,
         padding: const EdgeInsets.only(
