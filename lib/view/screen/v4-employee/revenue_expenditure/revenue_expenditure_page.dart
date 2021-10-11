@@ -109,7 +109,6 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   Widget _expenditure(
       V4RevenueExpenditureController controller, BuildContext context) {
     return InputField(
-      boldHinText: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.expenditureController,
