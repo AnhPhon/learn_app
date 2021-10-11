@@ -20,7 +20,7 @@ import 'package:template/view/screen/v1-customer/candidate_recruitment/job_appli
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v1-customer/drawer/benefits.dart';
+import 'package:template/view/screen/v1-customer/drawer/benefits1.dart';
 import 'package:template/view/screen/v1-customer/drawer/about_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.dart';
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
