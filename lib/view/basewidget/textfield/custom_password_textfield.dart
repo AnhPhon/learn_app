@@ -35,7 +35,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
@@ -71,7 +71,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
             isDense: true,
             filled: true,
-            fillColor: Theme.of(context).accentColor,
+            fillColor: Theme.of(context).primaryColor ,
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor)),
             hintStyle:

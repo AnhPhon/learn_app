@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class ThemeProvider with ChangeNotifier {
   final SharedPreferences sharedPreferences;
