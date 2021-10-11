@@ -4,11 +4,10 @@ ThemeData darkTheme = ThemeData(
   fontFamily: 'TitilliumWeb',
   primaryColor: const Color(0xFF2196F3),
   brightness: Brightness.dark,
-  accentColor: const Color(0xFF252525),
   hintColor: const Color(0xFFc7c7c7),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
     TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
     TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
-  }),
+  }), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF252525)),
 );

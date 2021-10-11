@@ -5,7 +5,7 @@ class V1G1ReviewController extends GetxController{
   
 
   void onClickButton(){
-    Get.offAll(AppRoutes.V1_SUCCESSFULLY);
+    Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
   }
 
 }
