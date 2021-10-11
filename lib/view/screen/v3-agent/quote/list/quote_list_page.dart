@@ -34,7 +34,6 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                   locationName: "Đà Nẵng",
                   image: Images.location_example,
                   onTap: () {
-                    Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
                   },
                 );
               },
@@ -44,4 +43,7 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
       ),
     );
   }
+}
+
+class V3_QUOTE_REQUEST {
 }

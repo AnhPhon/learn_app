@@ -4,8 +4,9 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
 import 'package:template/view/screen/v2-builder/component_builder/row_text.dart';
+import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
+import 'package:template/view/screen/v2-builder/component_customer/row_text.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_controller.dart';
 
 class V2PaymentAccountPage extends GetView<V2PaymentAccountController> {
@@ -34,7 +35,7 @@ class V2PaymentAccountPage extends GetView<V2PaymentAccountController> {
                   ),
                 ],
                 color: ColorResources.WHITE,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               ),
               child: SingleChildScrollView(
                 child: Column(

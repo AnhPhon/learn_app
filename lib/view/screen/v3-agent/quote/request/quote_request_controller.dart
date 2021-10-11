@@ -66,7 +66,6 @@ class V3QuoteRequestController extends GetxController {
       {
         "title": "Đồng ý báo giá",
         "onTap": () {
-          Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
         },
         "color": ColorResources.THEME_DEFAULT
       },
