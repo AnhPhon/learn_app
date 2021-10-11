@@ -7,10 +7,7 @@ class BtnCustom extends StatelessWidget {
   final Color color;
   final String text;
   final double width;
-<<<<<<< HEAD
-=======
   final EdgeInsetsGeometry? margin;
->>>>>>> origin/develop
   final bool? isPadding;
   const BtnCustom(
       {Key? key,
@@ -18,12 +15,8 @@ class BtnCustom extends StatelessWidget {
       required this.color,
       required this.text,
       required this.width,
-<<<<<<< HEAD
-      this.isPadding})
-=======
       this.isPadding,
       this.margin})
->>>>>>> origin/develop
       : super(key: key);
 
   @override
@@ -35,10 +28,7 @@ class BtnCustom extends StatelessWidget {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
         ),
         child: Container(
-<<<<<<< HEAD
-=======
           margin: margin,
->>>>>>> origin/develop
           padding: isPadding == true
               ? const EdgeInsets.symmetric(
                   vertical: Dimensions.PADDING_SIZE_SMALL)

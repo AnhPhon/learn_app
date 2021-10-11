@@ -27,6 +27,7 @@ class V2ShippingAddressPage extends GetView<V2ShippingAddressController> {
                   //province
                   _rowTitle(context, title: "Tỉnh thành phố"),
                   DropDownButton1(
+                    width: DeviceUtils.getScaledWidth(context, 1),
                     hint: "Nhập tỉnh/thành phố",
                     value: controller.province,
                     onChanged: controller.setSelectedProvince,
@@ -36,6 +37,7 @@ class V2ShippingAddressPage extends GetView<V2ShippingAddressController> {
                   //district
                   _rowTitle(context, title: "Quận huyện"),
                   DropDownButton1(
+                    width: DeviceUtils.getScaledWidth(context, 1),
                     hint: "Nhập quận/huyện",
                     value: controller.district,
                     onChanged: controller.setSelectedDistrict,
@@ -45,6 +47,7 @@ class V2ShippingAddressPage extends GetView<V2ShippingAddressController> {
                   //ward
                   _rowTitle(context, title: "Phường xã"),
                   DropDownButton1(
+                    width: DeviceUtils.getScaledWidth(context, 1),
                     hint: "Nhập phường/xã",
                     value: controller.ward,
                     onChanged: controller.setSelectedWard,
