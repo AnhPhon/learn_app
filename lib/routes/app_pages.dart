@@ -1,5 +1,19 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
+import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_binding.dart';
@@ -37,15 +51,23 @@ import 'package:template/view/screen/v1-customer/product/product_detail/product_
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
+<<<<<<< HEAD
 import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/project/project_detail/project_detail_page.dart';
+=======
+import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
+import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
+import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
+import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
+import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
+import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
+>>>>>>> origin/develop
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_page.dart';
-import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment__page.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_binding.dart';
@@ -72,24 +94,84 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
+import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
+import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/v2-builder/product/cart/cart_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_detail/product_detail_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
+import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/after_quotation_g2/after_quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/quotation_g2/quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/shorthanded_group2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group3/shorthanded_group3_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group4/shorthanded_group4_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56/quotation_g56_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
+import 'package:template/view/screen/v3-agent/account/account_page.dart';
+import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
+import 'package:template/view/screen/v3-agent/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v3-agent/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/profile_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/rules/rules_page.dart';
+import 'package:template/view/screen/v3-agent/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
+import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
+import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
+import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
+import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
+import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
+import 'package:template/view/screen/v3-agent/store/store_page.dart';
+import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
+import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
+import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
+import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
+import 'package:template/view/screen/v4-employee/account/rules/rules_binding.dart';
+import 'package:template/view/screen/v4-employee/account/rules/rules_page.dart';
+import 'package:template/view/screen/v4-employee/account/salary/salary_binding.dart';
+import 'package:template/view/screen/v4-employee/account/salary/salary_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
+import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
-
-import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
-import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
 
 import 'app_routes.dart';
 
@@ -178,6 +260,34 @@ class AppPages {
       page: () => V1CartPage(),
     ),
     GetPage(
+      name: AppRoutes.V1_TAX,
+      page: () => V1TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_JOB_MANAGEMENT,
+      page: () => V1JobManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_HELP,
+      page: () => V1HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_CONTRACT,
+      page: () => V1ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_POINT_BASED,
+      page: () => V1PointBasedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_WALLET,
+      page: () => V1WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INTRODUCE,
+      page: () => V1IntroducePage(),
+    ),
+    GetPage(
       name: AppRoutes.V1_SHIPPING_METHOD,
       page: () => V1ShippingMethodPage(),
     ),
@@ -197,15 +307,105 @@ class AppPages {
       name: AppRoutes.V1_PAYMENT_SUCCESS,
       page: () => V1PaymentSuccessPage(),
     ),
-
+    GetPage(
+      name: AppRoutes.V1_ACCIDENT_INSURANCE,
+      page: () => V1AccidentInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_OTHER_INSURANCE,
+      page: () => V1OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INURANCE_REGISTER,
+      page: () => V1InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_YOUR_INSURANCE,
+      page: () => V1YourInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_INSURANCE_DETAIL,
+      page: () => V1InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_RULES,
+      page: () => V1RulesPage(),
+    ),
     GetPage(
       name: AppRoutes.V1_NEWS_DETAIL,
       page: () => V1NewsDetailPage(),
     ),
 
+<<<<<<< HEAD
     GetPage(
       name: AppRoutes.V1_PROJECT_DETAIL,
       page: () => V1ProjectDetailPage(),
+=======
+    //builder
+    GetPage(
+      name: AppRoutes.V2_PRODUCT_DETAIL,
+      page: () => V2ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_CART,
+      page: () => V2CartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_METHOD,
+      page: () => V2ShippingMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_ADDRESS,
+      page: () => V2ShippingAddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ACCOUNT,
+      page: () => V2PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PRODUCT,
+      page: () => V2ProductPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_SUCCESS,
+      page: () => V2PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_RECHARGE,
+      page: () => V2RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_METHOD,
+      page: () => V2PaymentMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_BILL_DETAIL_IS_BUY,
+      page: () => V2BillDetailIsBuyPage(),
+    ),
+
+    ///
+    /// v1 customer quote
+    ///
+    GetPage(
+      name: AppRoutes.V1_QUOTE_REQUEST_1,
+      page: () => V1Request1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_REQUEST_2,
+      page: () => V1Request2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_CHECK,
+      page: () => V1CheckPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_DONE,
+      page: () => V1DonePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_QUOTE_RESPONSE,
+      page: () => V1ResponsePage(),
+>>>>>>> origin/develop
     ),
 
     ///
@@ -335,6 +535,13 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+<<<<<<< HEAD
+=======
+    GetPage(
+        name: AppRoutes.V1_G7_PRICE_LIST,
+        page: () => V1G7PriceListPage(),
+        binding: V1G7PriceListBinding()),
+>>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
@@ -371,12 +578,177 @@ class AppPages {
       page: () => V2DashboardPage(),
       binding: V2DashboardBinding(),
     ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED,
+      page: () => V2ShorthandedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP1,
+      page: () => V2ShorthandedGroup1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP2,
+      page: () => V2ShorthandedGroup2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP3,
+      page: () => V2ShorthandedGroup3Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP4,
+      page: () => V2ShorthandedGroup4Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP5,
+      page: () => V2ShorthandedGroup5Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP6,
+      page: () => V2ShorthandedGroup6Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP1,
+      page: () => V2QuotationG1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP2,
+      page: () => V2QuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_AFTER_QUOTATION_GROUP2,
+      page: () => V2AfterQuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP56,
+      page: () => V2QuotationG56Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WINNING_BID,
+      page: () => V2WinningBidPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ORDER,
+      page: () => V2PaymentOrderPage(),
+    ),
 
     // agent
     GetPage(
       name: AppRoutes.V3_DASHBOARD,
       page: () => V3DashboardPage(),
       binding: V3DashboardBinding(),
+    ),
+    // v3 - quote list
+    GetPage(
+      name: AppRoutes.V3_QUOTE_LIST,
+      page: () => V3QuoteListPage(),
+    ),
+    // v3 - quote check
+    GetPage(
+      name: AppRoutes.V3_QUOTE_CHECK,
+      page: () => V3QuoteCheckPage(),
+    ),
+    // v3 - quote request
+    GetPage(
+      name: AppRoutes.V3_QUOTE_REQUEST,
+      page: () => V3QuoteRequestPage(),
+    ),
+    // v3 - quote response
+    GetPage(
+      name: AppRoutes.V3_QUOTE_RESPONSE,
+      page: () => V3QuoteResponsePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_STORE,
+      page: () => V3StorePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_MANAGEMENT,
+      page: () => V3ProductManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ORDER_MANAGEMENT,
+      page: () => V3OrderManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_WAREHOUSE,
+      page: () => V3WarehousePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_REVENUE,
+      page: () => V3RevenuePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_STORE_INFOMATION,
+      page: () => V3StoreInfomationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_ADD,
+      page: () => V3ProductAddPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V3_CONTRACT,
+      page: () => V3ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ACCIDENT_INSURANCE,
+      page: () => V3AccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_OTHER_INSURANCE,
+      page: () => V3OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TAX,
+      page: () => V3TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INSURANCE_DETAIL,
+      page: () => V3InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PAYMENT_ACCOUNT,
+      page: () => V3PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PROFILE,
+      page: () => V3ProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_POINT_BASED,
+      page: () => V3PointBasedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_WALLET,
+      page: () => V3WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_RULES,
+      page: () => V3RulesPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INTRODUCE,
+      page: () => V3IntroducePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_HELP,
+      page: () => V3HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_JOB_MANAGEMENT,
+      page: () => V3ProductAddPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INURANCE_REGISTER,
+      page: () => V3InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_YOUR_INSURANCE,
+      page: () => V3YourInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_REGISTER_AND_COMMIT,
+      page: () => V3RegisterAndCommitPage(),
     ),
 
     // v4 - employee
@@ -403,9 +775,39 @@ class AppPages {
       binding: V4ReportTimekeepingBinding(),
     ),
     GetPage(
+      name: AppRoutes.V4_EXPORT_IMPROT,
+      page: () => V4ExportImportPage(),
+      binding: V4ExportImportBinding(),
+    ),
+    GetPage(
       name: AppRoutes.V4_REVENUE_EXPENDITURE,
       page: () => V4RevenueExpenditurePage(),
       binding: V4RevenueExpenditureBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_ADD_DAILY_REPORT,
+      page: () => V4AddDailyReportPage(),
+      binding: V4AddDailyReportBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_ADD_REPORT_ON_REQUEST,
+      page: () => V4AddReportOnRequestPage(),
+      binding: V4AddReportOnRequestBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_RULES,
+      page: () => V4RulesPage(),
+      binding: V4RulesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_SALARY,
+      page: () => V4SalaryPage(),
+      binding: V4SalaryBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_INFO,
+      page: () => V4InfoPage(),
+      binding: V4InfoBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

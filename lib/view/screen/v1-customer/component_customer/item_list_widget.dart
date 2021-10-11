@@ -9,6 +9,10 @@ class ItemListWidget extends StatelessWidget {
   final String title;
   final String? rowText1;
   final String? rowText2;
+<<<<<<< HEAD
+=======
+  final String urlImage;
+>>>>>>> origin/develop
   final Color? colorRowText1;
   final Color? colorRowText2;
   final Icon? icon1;
@@ -27,6 +31,10 @@ class ItemListWidget extends StatelessWidget {
     this.isStart,
     this.icon1,
     this.icon2,
+<<<<<<< HEAD
+=======
+    required this.urlImage,
+>>>>>>> origin/develop
   }) : super(key: key);
 
   @override
@@ -58,10 +66,22 @@ class ItemListWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                 ),
+<<<<<<< HEAD
                 child: Image.asset(
                   Images.newsTemplate,
                   fit: BoxFit.fill,
                   height: DeviceUtils.getScaledHeight(context, 0.118),
+=======
+                child: FadeInImage.assetNetwork(
+                  placeholder: Images.placeholder,
+                  image: urlImage,
+                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                  imageErrorBuilder: (c, o, s) => Image.asset(
+                    Images.placeholder,
+                  ),
+>>>>>>> origin/develop
                 ),
               ),
             ),
@@ -97,6 +117,7 @@ class ItemListWidget extends StatelessWidget {
                               ? MainAxisAlignment.start
                               : MainAxisAlignment.end,
                       children: [
+<<<<<<< HEAD
                         if (icon1 != null) icon1!,
                         if (isSpaceBetween == false)
                           const SizedBox(width: Dimensions.MARGIN_SIZE_SMALL),
@@ -111,6 +132,25 @@ class ItemListWidget extends StatelessWidget {
                               ),
                             ),
                           ),
+=======
+                        Row(
+                          children: [
+                            if (icon1 != null) icon1!,
+                            if (isSpaceBetween == false)
+                              const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_SMALL),
+                            if (rowText1 != null)
+                              Text(
+                                rowText1!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                  color: colorRowText1,
+                                ),
+                              ),
+                          ],
+                        ),
+>>>>>>> origin/develop
                         if (icon2 != null) icon2!,
                         if (rowText2 != null)
                           Text(

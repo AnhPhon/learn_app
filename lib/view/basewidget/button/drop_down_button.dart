@@ -3,24 +3,26 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownButton<T> extends StatelessWidget {
-  DropDownButton(
-      {Key? key,
-      this.hint = "",
-      required this.onChanged,
-      required this.data,
-      required this.width,
-      required this.value,
-      this.label,
-      required this.obligatory,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE})
-      : super(key: key);
+  DropDownButton({
+    Key? key,
+    this.hint = "",
+    required this.onChanged,
+    required this.data,
+    required this.width,
+    required this.value,
+    this.label,
+    required this.obligatory,
+    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+    this.isColorFieldWhite = false,
+  }) : super(key: key);
   final String? hint;
   final double width;
   final Function(T? value) onChanged;
   final String? label;
-  final bool obligatory;
+  final bool? obligatory;
   final List<T> data;
   final double? paddingTop;
+  final bool? isColorFieldWhite;
   T value;
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,7 @@ class DropDownButton<T> extends StatelessWidget {
       padding: EdgeInsets.only(
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop ?? 0
-        ),
+          top: paddingTop ?? 0),
       child: Column(
         children: [
           if (label != null)
@@ -47,7 +48,7 @@ class DropDownButton<T> extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: ColorResources.BLACK.withOpacity(0.7)),
                   ),
-                  if (obligatory)
+                  if (obligatory == true)
                     const Text(
                       '*',
                       style: TextStyle(
@@ -59,43 +60,61 @@ class DropDownButton<T> extends StatelessWidget {
                     Container()
                 ],
               ),
-            ),
+            )
+          else
+            SizedBox.shrink(),
           FormField(
             builder: (field) {
               return InputDecorator(
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: isColorFieldWhite == true
+                      ? ColorResources.WHITE
+                      : Colors.transparent,
                   //isDense: true,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    ),
-                    focusedBorder:  OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    ),
-                    enabledBorder:  OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    ),
-                    disabledBorder:  OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                      borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    ),
-                  contentPadding: const EdgeInsets.symmetric(vertical:Dimensions.PADDING_SIZE_SMALL-3,horizontal:Dimensions.PADDING_SIZE_SMALL ),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: Dimensions.PADDING_SIZE_SMALL - 3,
+                      horizontal: Dimensions.PADDING_SIZE_SMALL),
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<T>(
                     hint: Text(hint!),
                     value: value,
                     style: const TextStyle(
-                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                      color: ColorResources.BLACK
-                    ),
+                        fontSize: Dimensions.PADDING_SIZE_DEFAULT,
+                        color: ColorResources.BLACK),
                     isDense: true,
                     isExpanded: true,
                     onChanged: onChanged,
-                    items: data.map((e) => DropdownMenuItem<T>(value: e,child: Text(e.toString()))).toList(),
+                    items: data
+                        .map((e) => DropdownMenuItem<T>(
+                            value: e, child: Text(e.toString())))
+                        .toList(),
                   ),
-                ));
+                ),
+              );
             },
           ),
         ],

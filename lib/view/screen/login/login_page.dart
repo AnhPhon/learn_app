@@ -25,16 +25,16 @@ class LoginPage extends GetView<LoginController> {
             horizontal: DeviceUtils.getScaledSize(context, 0.025),
             vertical: DeviceUtils.getScaledSize(context, 0.038)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Tài khoản",
         filled: true,
@@ -71,16 +71,16 @@ class LoginPage extends GetView<LoginController> {
             horizontal: DeviceUtils.getScaledSize(context, 0.025),
             vertical: DeviceUtils.getScaledSize(context, 0.038)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Mật khẩu",
         filled: true,
@@ -168,7 +168,6 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return GetBuilder<LoginController>(
         init: LoginController(),
         builder: (LoginController value) {
@@ -179,7 +178,7 @@ class LoginPage extends GetView<LoginController> {
                 // bottom
                 Stack(
                   children: [
-                    _bottomWidget(width),
+                    _bottomWidget(DeviceUtils.getScaledWidth(context, 1)),
                   ],
                 ),
 
@@ -215,7 +214,7 @@ class LoginPage extends GetView<LoginController> {
                         ),
 
                         //  login button widget
-                        _loginBtnWidget(context, "Đăng nhập", width),
+                        _loginBtnWidget(context, "Đăng nhập", DeviceUtils.getScaledWidth(context, 1)),
                       ],
                     ),
                   ),

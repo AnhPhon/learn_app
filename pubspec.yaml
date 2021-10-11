@@ -45,6 +45,8 @@ dependencies:
   flutter_easyloading: ^3.0.3
   flutter_html: ^2.1.4
   intl: ^0.17.0
+  flutter_speed_dial: ^3.0.5
+  syncfusion_flutter_charts: ^19.3.44+1
 
 
 dev_dependencies:

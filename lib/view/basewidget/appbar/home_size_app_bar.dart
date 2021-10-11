@@ -29,8 +29,6 @@ class _CustomAppBarState extends State<HomeAppBar> {
   Widget build(BuildContext context) {
     final String fullname = widget.fullname;
 
-    final double width = MediaQuery.of(context).size.width;
-
     return Container(
       color: ColorResources.APPBARCOLOR,
       height: DeviceUtils.getScaledHeight(context, 1),
@@ -76,7 +74,7 @@ class _CustomAppBarState extends State<HomeAppBar> {
             ),
           ),
           Container(
-            width: width,
+            width: DeviceUtils.getScaledWidth(context, 1),
             padding: const EdgeInsets.only(
                 // left: width / 2 - title.length/2*5,
                 ),
@@ -89,8 +87,8 @@ class _CustomAppBarState extends State<HomeAppBar> {
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_LARGE),
                   ),
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.all(Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                  margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_LARGE),
