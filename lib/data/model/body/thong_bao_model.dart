@@ -1,8 +1,8 @@
 import 'don_dich_vu_model.dart';
 import 'du_an_khach_hang_model.dart';
+import 'du_an_nhan_vien_model.dart';
 import 'tin_tuc_model.dart';
 import 'tuyen_dung_model.dart';
-import 'du_an_nhan_vien_model.dart';
 
 class ThongBaoModel {
   String? doiTuong;

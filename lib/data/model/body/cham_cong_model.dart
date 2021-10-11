@@ -1,8 +1,8 @@
-import 'nhan_vien_model.dart';
 import 'du_an_nhan_vien_model.dart';
-import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
+import 'nhan_vien_model.dart';
 import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'tinh_tp_model.dart';
 
 class ChamCongModel {
   NhanVienModel? idNhanVien;

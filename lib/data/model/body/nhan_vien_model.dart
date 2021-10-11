@@ -1,6 +1,6 @@
-import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
 import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'tinh_tp_model.dart';
 
 class NhanVienModel {
   TinhTpModel? idTinhTp;

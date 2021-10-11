@@ -1,8 +1,8 @@
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'san_pham_model.dart';
 import 'tai_khoan_model.dart';
 import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
-import 'phuong_xa_model.dart';
-import 'san_pham_model.dart';
 
 class KhoHangDaiLyModel {
   TaiKhoanModel? idTaiKhoan;

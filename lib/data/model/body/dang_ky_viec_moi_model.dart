@@ -1,13 +1,14 @@
-import 'tai_khoan_model.dart';
-import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
-import 'phuong_xa_model.dart';
-import 'loai_nhan_vien_model.dart';
 import 'bang_bang_cap_model.dart';
-import 'so_nam_kinh_nghiem_model.dart';
 import 'ke_khai_kinh_nghiem_model.dart';
+import 'loai_nhan_vien_model.dart';
 import 'ngoai_ngu_model.dart';
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'so_nam_kinh_nghiem_model.dart';
+import 'tai_khoan_model.dart';
 import 'tin_hoc_model.dart';
+import 'tinh_tp_model.dart';
+
 
 class DangKyViecMoiModel {
   TaiKhoanModel? idTaiKhoan;
