@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V2WorkflowManagementController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -64,5 +65,19 @@ class V2WorkflowManagementController extends GetxController
             "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
       },
     ];
+  }
+
+  ///
+  ///Click to Work done page
+  ///
+  void onClickToWorkDonePage() {
+    Get.toNamed(AppRoutes.V2_WORK_DONE);
+  }
+
+  ///
+  ///Click to Work in progress
+  ///
+  void onClickToWorkInProgressPage() {
+    Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS);
   }
 }

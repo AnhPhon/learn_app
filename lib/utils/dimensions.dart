@@ -86,10 +86,9 @@ class Dimensions {
 
   static TextStyle textTitleStyleCard() {
     return const TextStyle(
-      color: Color(TEXT_TITLE_COLOR),
-      fontSize: FONT_SIZE_EXTRA_LARGE,
-      fontWeight: FontWeight.bold
-    );
+        color: Color(TEXT_TITLE_COLOR),
+        fontSize: FONT_SIZE_EXTRA_LARGE,
+        fontWeight: FontWeight.bold);
   }
 
   static TextStyle textNormalStyleCard() {
@@ -175,11 +174,13 @@ class Dimensions {
   }
 
   static TextStyle fontSizeStyle16w600() {
-    return const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
+    return const TextStyle(
+        fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle14w600() {
-    return const TextStyle(fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
+    return const TextStyle(
+        fontSize: Dimensions.FONT_SIZE_DEFAULT, fontWeight: FontWeight.w600);
   }
 
   static TextStyle fontSizeStyle12w600() {

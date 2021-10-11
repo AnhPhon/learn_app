@@ -13,6 +13,7 @@ class InputField extends StatelessWidget {
       this.onChanged,
       this.boldHinText,
       this.errorText,
+      this.showLabel,
       required this.typeInput,
       required this.width,
       this.height = 50,
@@ -33,6 +34,7 @@ class InputField extends StatelessWidget {
   final int? line;
   final Function(String value)? onChanged;
   bool? boldHinText;
+  bool? showLabel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,30 +46,33 @@ class InputField extends StatelessWidget {
       width: width,
       child: Column(
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Wrap(
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                      fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
-                      color: ColorResources.BLACK.withOpacity(0.7)),
-                ),
-                if (obligatory)
+          if (showLabel == true)
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                children: [
                   Text(
-                    '*',
+                    label,
                     style: TextStyle(
                         fontSize: fontSize, // * 2.1,
                         fontWeight: FontWeight.bold,
-                        color: Colors.red),
-                  )
-                else
-                  Container()
-              ],
-            ),
-          ),
+                        color: ColorResources.BLACK.withOpacity(0.7)),
+                  ),
+                  if (obligatory)
+                    Text(
+                      '*',
+                      style: TextStyle(
+                          fontSize: fontSize, // * 2.1,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
+                    )
+                  else
+                    Container()
+                ],
+              ),
+            )
+          else
+            Container(),
           Container(
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),

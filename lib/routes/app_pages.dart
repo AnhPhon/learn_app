@@ -91,6 +91,10 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
@@ -610,6 +614,16 @@ class AppPages {
       name: AppRoutes.V2_WORKFLOW_MANAGEMENT,
       page: () => V2WorkflowManagementPage(),
       binding: V2WorkflowManagementBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_DONE,
+      page: () => V2WorkDonePage(),
+      binding: V2WorkDoneBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_IN_PROGRESS,
+      page: () => V2WorkInProgressPage(),
+      binding: V2WorkInProgressBinding(),
     ),
   ];
 }

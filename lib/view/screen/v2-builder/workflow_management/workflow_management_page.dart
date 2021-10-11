@@ -110,7 +110,9 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
       itemCount: controller.uiWorkflowManagement!.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            controller.onClickToWorkInProgressPage();
+          },
           child: Container(
             margin: const EdgeInsets.symmetric(
               vertical: Dimensions.PADDING_SIZE_SMALL,
@@ -304,7 +306,9 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
       itemCount: controller.uiWorkflowManagement!.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            controller.onClickToWorkDonePage();
+          },
           child: Container(
             margin: const EdgeInsets.symmetric(
               vertical: Dimensions.PADDING_SIZE_SMALL,
