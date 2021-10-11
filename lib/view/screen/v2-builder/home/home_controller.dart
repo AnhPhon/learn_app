@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 
-
 class V2HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
 
@@ -27,9 +26,7 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {
-
-        }
+        "onTap": () {}
       },
       {
         "label": "Quản lý công việc",
@@ -65,8 +62,7 @@ class V2HomeController extends GetxController {
   ///
   ///go to shorthanded page
   ///
-  void onShortHandedPageClick() {
-  }
+  void onShortHandedPageClick() {}
 
   ///
   ///go to product page
@@ -78,32 +74,32 @@ class V2HomeController extends GetxController {
   void onNeedUpdateClick() {
     Get.to(V2FinishUpdatePage());
   }
+
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickHotNews(){
+  void onClickHotNews() {
     Get.toNamed(AppRoutes.V2_NEWS);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickJobManagement(){
+  void onClickJobManagement() {
     Get.toNamed(AppRoutes.V2_JOB_MANAGEMENT);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickRecruitment(){
+  void onClickRecruitment() {
     Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
-  void onClickRegisterJob(){
+  void onClickRegisterJob() {
     // Đăng ký viẹc mới
   }
-
 }
