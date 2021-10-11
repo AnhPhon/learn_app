@@ -90,11 +90,20 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/preview_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/preview/preview_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/form_of_submission_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/create/text_typing_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_binding.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -629,6 +638,56 @@ class AppPages {
       binding: V2RecruitmentBinding(),
     ),
 
+
+
+    // Quản lý tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
+      page: () => V2RecruitmentPage(),
+      binding: V2RecruitmentBinding(),
+    ),
+
+    // Xem tin tuyển dụng ứng viên
+    GetPage(
+      name: AppRoutes.V2_VIEW_RECRUITMENT_NEWS,
+      page: () => V2ViewRecruitmentNewsPage(),
+      binding: V2ViewRecruitmentNewsBinding(),
+    ),
+    // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
+      page: () => V2HistoryRectuitmentNewsPage(),
+    ),
+
+    // Chọn hình thức ứng tuyển
+    GetPage(
+      name: AppRoutes.V2_FORM_OF_SUBMITSSION,
+      page: () => V2FormOfSubmitssionPage(),
+    ),
+    // Đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_TEXT_TYING,
+      page: () => V2TextTypingPage(),
+      binding: V2TextTypingBinding(),
+    ),
+    // Nộp cv
+    GetPage(
+      name: AppRoutes.V2_CV,
+      page: () => V2CvPage(),
+      binding: V2CvBinding(),
+    ),
+    // Xem trươc nộp cv
+    GetPage(
+      name: AppRoutes.V2_PREVIEW,
+      page: () => V2PreviewPage(),
+      binding: V2PreviewBinding(),
+    ),
+    // Xem trươc đánh văn bản
+    GetPage(
+      name: AppRoutes.V2_PREVIEW_PROFILE,
+      page: () => V2PreviewProfilePage(),
+      binding: V2PreviewProfileBinding(),
+    ),
 
 
     // agent
