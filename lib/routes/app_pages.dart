@@ -51,12 +51,17 @@ import 'package:template/view/screen/v1-customer/product/product_detail/product_
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_page.dart';
+<<<<<<< HEAD
+import 'package:template/view/screen/v1-customer/profile/profile_page.dart';
+import 'package:template/view/screen/v1-customer/project/project_detail/project_detail_page.dart';
+=======
 import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
 import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
 import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
+>>>>>>> origin/develop
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_detail/g4_order_detail_binding.dart';
@@ -331,6 +336,11 @@ class AppPages {
       page: () => V1NewsDetailPage(),
     ),
 
+<<<<<<< HEAD
+    GetPage(
+      name: AppRoutes.V1_PROJECT_DETAIL,
+      page: () => V1ProjectDetailPage(),
+=======
     //builder
     GetPage(
       name: AppRoutes.V2_PRODUCT_DETAIL,
@@ -395,6 +405,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
+>>>>>>> origin/develop
     ),
 
     ///
@@ -524,10 +535,13 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+<<<<<<< HEAD
+=======
     GetPage(
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
+>>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,
