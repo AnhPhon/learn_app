@@ -27,7 +27,9 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+
+        }
       },
       {
         "label": "Quản lý công việc",
@@ -39,7 +41,9 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.checklist_rtl_sharp,
-        "onTap": () {}
+        "onTap": () {
+          onClickJobManagement();
+        }
       },
       {
         "label": "Tin tuyển dụng",
@@ -52,7 +56,7 @@ class V2HomeController extends GetxController {
         ),
         "icon": Icons.pending_actions,
         "onTap": () {
-          Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+          onClickRecruitment();
         }
       },
     ];
@@ -74,4 +78,32 @@ class V2HomeController extends GetxController {
   void onNeedUpdateClick() {
     Get.to(V2FinishUpdatePage());
   }
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews(){
+    Get.toNamed(AppRoutes.V2_NEWS);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickJobManagement(){
+    Get.toNamed(AppRoutes.V2_JOB_MANAGEMENT);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickRecruitment(){
+    Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickRegisterJob(){
+    // Đăng ký viẹc mới
+  }
+
 }

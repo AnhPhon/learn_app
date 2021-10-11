@@ -20,7 +20,9 @@ class V3HomeController extends GetxController {
           Color(0xff8CE3E9),
           Color(0xff8CE3E9),
         ]),
-        "onTap": () => Get.toNamed(AppRoutes.V3_STORE),
+        "onTap": (){
+          onClickStore();
+        }
       },
       {
         "icon": Icons.chat,
@@ -30,7 +32,9 @@ class V3HomeController extends GetxController {
           Color(0xffC1E6EE),
           Color(0xffC1E6EE),
         ]),
-        "onTap": () {}
+        "onTap": () {
+          onClickQuoteReponse();
+        }
       },
       {
         "icon": Icons.request_page,
@@ -41,8 +45,39 @@ class V3HomeController extends GetxController {
           Color(0xff79B4B8),
         ]),
         "onTap": () {
+          onClickQuoteRequest();
         }
       },
     ];
+  }
+
+  void onClickNews(){
+    Get.toNamed(AppRoutes.V3_NEWS);
+  }
+
+  /// Tơi màn hình quản lý sản phẩm
+  /// 
+  /// 
+  void onClickWareHouse(){
+    Get.toNamed(AppRoutes.V3_WAREHOUSE);
+  }
+
+  /// 
+  /// yeu cầu báo giá
+  /// 
+  void onClickQuoteRequest(){
+    Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
+  }
+  /// 
+  /// Phản hòi báo giá
+  /// 
+  void onClickQuoteReponse(){
+    Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
+  }
+  /// 
+  /// Cửa hàng
+  ///
+  void onClickStore(){
+    Get.toNamed(AppRoutes.V3_STORE);
   }
 }

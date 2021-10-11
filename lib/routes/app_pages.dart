@@ -92,6 +92,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
 import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v2-builder/account/job_management/job_management_page.dart';
 import 'package:template/view/screen/v2-builder/account/point_based/point_based_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/contract/contract_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/insurance_detail/insurance_detail_page.dart';
@@ -120,6 +121,8 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
+import 'package:template/view/screen/v2-builder/news/news_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
 import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
@@ -129,6 +132,7 @@ import 'package:template/view/screen/v2-builder/product/product_detail/product_d
 import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_detail/project_detail_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
@@ -145,6 +149,8 @@ import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_g
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
+import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
@@ -166,6 +172,8 @@ import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dar
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
+import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_page.dart';
+import 'package:template/view/screen/v4-employee/news/news_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
@@ -634,6 +642,11 @@ class AppPages {
       name: AppRoutes.V2_PAYMENT_ORDER,
       page: () => V2PaymentOrderPage(),
     ),
+    // News
+    GetPage(
+      name: AppRoutes.V2_NEWS,
+      page: () => V2NewsPage(),
+    ),
 
     // Quản lý tuyển dụng ứng viên
     GetPage(
@@ -700,9 +713,18 @@ class AppPages {
       page: () => V3DashboardPage(),
       binding: V3DashboardBinding(),
     ),
+    // Tin tức
+    GetPage(
+      name: AppRoutes.V3_NEWS,
+      page: () => V3NewsPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_NEWS_DETAIL,
+      page: () => V3NewsDetailPage(),
+    ),
     // v3 - quote list
     GetPage(
-      name: AppRoutes.V2_QUOTE_LIST,
+      name: AppRoutes.V3_QUOTE_LIST,
       page: () => V3QuoteListPage(),
     ),
     // v3 - quote check
@@ -714,17 +736,17 @@ class AppPages {
 
     // Chọn hình thức ứng tuyển
     GetPage(
-      name: AppRoutes.V2_QUOTE_CHECK,
+      name: AppRoutes.V3_QUOTE_CHECK,
       page: () => V3QuoteCheckPage(),
     ),
     // v3 - quote request
     GetPage(
-      name: AppRoutes.V2_QUOTE_REQUEST,
+      name: AppRoutes.V3_QUOTE_REQUEST,
       page: () => V3QuoteRequestPage(),
     ),
     // v3 - quote response
     GetPage(
-      name: AppRoutes.V2_QUOTE_RESPONSE,
+      name: AppRoutes.V3_QUOTE_RESPONSE,
       page: () => V3QuoteResponsePage(),
     ),
     GetPage(
@@ -818,7 +840,16 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.V2_JOB_MANAGEMENT,
-      page: () => V3ProductAddPage(),
+      page: () => V2JobManagementPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_NEWS_DETAIL,
+      page: () => V2NewsDetailPage(),
+    ),
+    // Dự án
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DETAIL,
+      page: () => V2ProjectDetailPage(),
     ),
     GetPage(
       name: AppRoutes.V2_INURANCE_REGISTER,
@@ -890,6 +921,14 @@ class AppPages {
       name: AppRoutes.V4_INFO,
       page: () => V4InfoPage(),
       binding: V4InfoBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_NEWS_DETAIL,
+      page: () => V4NewsDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_NEWS,
+      page: () => V4NewsPage(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

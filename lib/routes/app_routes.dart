@@ -154,6 +154,8 @@ class AppRoutes {
   static const String V2_YOUR_INSURANCE = '/v2_your_insurance';
   static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
   static const String V2_RECHARGE = '/v2_recharge';
+  static const String V2_NEWS_DETAIL = '/v2_news_detail';
+  static const String V2_PROJECT_DETAIL  = '/v2_project_detail';
   
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -192,6 +194,8 @@ class AppRoutes {
   static const String V3_YOUR_INSURANCE = '/v3_your_insurance';
   static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
   static const String V3_RECHARGE = '/v3_recharge';
+  static const String V3_NEWS_DETAIL = '/v3_news_detail';
+  static const String V3_NEWS = '/v3_news';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -200,9 +204,14 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+  static const String V4_NEWS_DETAIL = '/v4_news_detail';
+  static const String V4_NEWS = '/v4_news';
+
 
   //builder
+
   static const String V2_PRODUCT = '/v2_product';
+  static const String V2_NEWS = '/v2_news';
   static const String V2_CART = '/v2_cart';
   static const String V2_PRODUCT_DETAIL = '/v2_product_detail';
   static const String V2_SHIPPING_METHOD = '/v2_shipping_method';

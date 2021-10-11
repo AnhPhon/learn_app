@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/card/product_card.dart';
+import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/news.dart';
@@ -18,6 +20,7 @@ class V2HomePage extends GetView<V2HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerWidget(),
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
         builder: (V2HomeController controller) {
@@ -44,7 +47,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 _sanPhamWidget(context),
 
                 // news
-                _newsWidget()
+                _newsWidget(controller:controller)
               ],
             ),
           );
@@ -255,7 +258,10 @@ class V2HomePage extends GetView<V2HomeController> {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
-        onTap: () {},
+        onTap: () {
+          //Sản phẩm
+          Get.toNamed(AppRoutes.V2_PRODUCT);
+        },
         title: "Sản phẩm",
         widget: SizedBox(
           height: 280,
@@ -292,12 +298,14 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget() {
+  Widget _newsWidget({required V2HomeController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Tin tức",
-        onTap: () {},
+        onTap: () {
+          controller.onClickHotNews();
+        },
         widget: SizedBox(
           height: 250,
           child: ListView.builder(

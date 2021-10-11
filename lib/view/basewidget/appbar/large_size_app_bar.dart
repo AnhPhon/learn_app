@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
 
 class LargeSizeAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -64,21 +63,21 @@ class _CustomAppBarState extends State<LargeSizeAppBar> {
                       ])),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: Dimensions.MARGIN_SIZE_DEFAULT * 2,
-              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CircleAvatar(
-                  radius: 30,
-                ),
-                Text("Name")
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     left: Dimensions.MARGIN_SIZE_DEFAULT * 2,
+          //     top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+          //   ),
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: const [
+          //       CircleAvatar(
+          //         radius: 30,
+          //       ),
+          //       Text("Name")
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

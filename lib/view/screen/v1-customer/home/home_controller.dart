@@ -22,7 +22,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_CREATE_WORK);
+      }
     },
     {
       "label": "Báo giá VLXD",
@@ -34,7 +36,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_CREATE_WORK);
+      }
     },
     {
       "label": "Dịch vụ thường xuyên",
@@ -46,7 +50,9 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_CREATE_WORK);
+      }
     },
     {
       "label": "Quản lý đơn tạo",
@@ -58,10 +64,12 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_FORM_MANAGEMENT);
+      }
     },
     {
-      "label": "Tạo đơn công việc",
+      "label": "Quản lý báo giá",
       "gradient": const RadialGradient(
         radius: 1,
         colors: [
@@ -70,10 +78,12 @@ class V1HomeController extends GetxController {
         ],
       ),
       "icon": Icons.add_circle,
-      "onTap": () {}
+      "onTap": () {
+        Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+      }
     },
     {
-      "label": "Quản lý báo giá",
+      "label": "Tuyển dụng ứng viên",
       "gradient": const RadialGradient(
         radius: 1,
         colors: [
@@ -83,7 +93,7 @@ class V1HomeController extends GetxController {
       ),
       "icon": Icons.add_circle,
       "onTap": () {
-        Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+        Get.toNamed(AppRoutes.V1_CANDICATE);
       }
     },
   ];
@@ -104,7 +114,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          onClickCreateWork();
+        }
       },
       {
         "label": "Báo giá\nVLXD",
@@ -130,7 +142,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          onClickCreateWork();
+        }
       },
       {
         "label": "Quản lý\nđơn tạo",
@@ -147,7 +161,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Tạo đơn\ncông việc",
+        "label": "Quản lý\nbáo giá",
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -157,11 +171,11 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.add_circle,
         "onTap": () {
-          Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+          
         }
       },
       {
-        "label": "Quản lý\nbáo giá",
+        "label": "Tuyển dụng\nứng viên",
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -171,7 +185,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.add_circle,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_CANDICATE);
+          onClickCandicate();
         }
       },
     ];
@@ -200,7 +214,9 @@ class V1HomeController extends GetxController {
           ],
         ),
         "icon": Icons.image,
-        "onTap": () {}
+        "onTap": () {
+          
+        }
       },
       {
         "label": "Sản phẩm\nmẫu",
@@ -280,5 +296,25 @@ class V1HomeController extends GetxController {
   ///
   void onMoreProductList() {
     Get.toNamed(AppRoutes.V1_PRODUCT);
+  }
+
+  ///
+  /// đến màn hình tuyển dung úng vieen
+  ///
+  void onClickCandicate(){
+    Get.toNamed(AppRoutes.V1_CANDICATE);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews(){
+    Get.toNamed(AppRoutes.V1_NEWS);
+  }
+  ///
+  /// Quản lý công việc
+  ///
+  void onClickJobManagement(){
+    //Get.toNamed(AppRoutes.V1_JOB_MANAGEMENT);
   }
 }
