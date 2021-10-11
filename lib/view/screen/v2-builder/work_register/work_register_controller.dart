@@ -4,6 +4,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:template/routes/app_routes.dart';
 
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({required this.value, required this.onChanged});
+}
+
 class V2WorkRegisterController extends GetxController {
   String title = "Đăng ký việc";
 
