@@ -40,6 +40,8 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feefback_binding.dart.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g6-excavation/v1_group_order_feedback6_binding.dart';
@@ -439,6 +441,14 @@ class AppPages {
       name: AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,
       page: () => V1OrderFeedBackPage(),
       binding: V1OrderFeedBackBinding(),
+    ),
+    ///
+    /// Phản hồi đơn hàng nhóm 1
+    ///
+    GetPage(
+      name: AppRoutes.V1_BUILD_ORDER_FEEDBACK,
+      page: () => V1BuildOrderFeedBackPage(),
+      binding: V1BuildOrderFeedBackBinding(),
     ),
 
     ///
