@@ -3,7 +3,7 @@ import 'package:template/view/screen/v2-builder/account/account_controller.dart'
 import 'package:template/view/screen/v2-builder/entertainment/entertainment_controller.dart';
 import 'package:template/view/screen/v2-builder/home/home_controller.dart';
 import 'package:template/view/screen/v2-builder/news/news_controller.dart';
-import 'package:template/view/screen/v2-builder/project/home_controller.dart';
+import 'package:template/view/screen/v2-builder/project/project_controller.dart';
 
 class V2DashboardBinding extends Bindings {
   @override

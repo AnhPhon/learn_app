@@ -15,6 +15,7 @@ class V3AccountPage extends GetView<V3AccountController> {
         init: V3AccountController(),
         builder: (V3AccountController controller) {
           return Scaffold(
+            backgroundColor: ColorResources.PRIMARYCOLOR,
             body: Stack(
               children: [
                 LargeSizeAppBar(title: controller.title),

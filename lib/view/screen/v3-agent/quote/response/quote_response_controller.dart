@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
 
 class V3QuoteResponseController extends GetxController {
   String tieuDeBaoGia = "Cần báo giá xi măng";
@@ -82,6 +81,5 @@ class V3QuoteResponseController extends GetxController {
   /// on Continue Click
   ///
   void onContinueClick() {
-    Get.toNamed(AppRoutes.V3_QUOTE_CHECK);
   }
 }
