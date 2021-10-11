@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:template/data/model/response/base/api_response.dart';
-import 'package:template/provider/auth_provider.dart'; 
-import 'package:provider/provider.dart';
 
 class ApiChecker {
   static void checkApi(BuildContext context, ApiResponse apiResponse) {

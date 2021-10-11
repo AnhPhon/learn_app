@@ -119,6 +119,7 @@ class ColorResources {
   }
 
   static const Color BLACK = Color(0xff000000);
+  static const Color BLACKGREY = Color(0xFF27272A);
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   static const Color HARLEQUIN = Color(0xff3FCC01);
@@ -145,8 +146,10 @@ class ColorResources {
   static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
   static const Color BACKGROUND = Color(0xffF6F6F7);
   static const Color LIGHT_BLACK = Color(0xffA2A2A2);
+  static const Color LIGHT_GREY = Color(0xffB0BAC1);
 
   static const Color THEME_DEFAULT = Color(0xff2196F3);
+  static const Color PINK = Color(0xffFFCDD2);
 
   static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
   static const Color UNSELECT_TABBAR = Color(0xff848485);

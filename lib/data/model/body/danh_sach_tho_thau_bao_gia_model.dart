@@ -1,7 +1,10 @@
+import 'du_an_khach_hang_model.dart';
+import 'trang_thai_bao_gia_model.dart';
+
 class DanhSachThoThauBaoGiaModel {
-  String? idDuAnKhachHang;
+  DuAnKhachHangModel? idDuAnKhachHang;
   String? taiKhoanBaoGia;
-  String? idTrangThaiBaoGia;
+  TrangThaiBaoGiaModel? idTrangThaiBaoGia;
   String? thoiGianHoanThanh;
   String? giaBao;
   String? ghiChu;
@@ -16,20 +19,38 @@ class DanhSachThoThauBaoGiaModel {
       this.giaBao,
       this.ghiChu,
       this.tienCoc,
-      this.daXem
-      });
-
+      this.daXem});
+  
+  ///
+  /// From JSON
+  ///
   DanhSachThoThauBaoGiaModel.fromJson(Map<String, dynamic> json) {
-    idDuAnKhachHang = json['idDuAnKhachHang'].toString();
+
+    // mapping idDuAnKhachHang                                                              
+    if (json['idDuAnKhachHang'] != null) {                                                  
+      idDuAnKhachHang = DuAnKhachHangModel.fromJson(json['idDuAnKhachHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDuAnKhachHang = null;                                                               
+    }                                                                                  
     taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
-    idTrangThaiBaoGia = json['idTrangThaiBaoGia'].toString();
+
+    // mapping idTrangThaiBaoGia                                                              
+    if (json['idTrangThaiBaoGia'] != null) {                                                  
+      idTrangThaiBaoGia = TrangThaiBaoGiaModel.fromJson(json['idTrangThaiBaoGia'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiBaoGia = null;                                                               
+    }                                                                                  
     thoiGianHoanThanh = json['thoiGianHoanThanh'].toString();
     giaBao = json['giaBao'].toString();
     ghiChu = json['ghiChu'].toString();
     tienCoc = json['tienCoc'].toString();
     daXem = json['daXem'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idDuAnKhachHang'] = idDuAnKhachHang;

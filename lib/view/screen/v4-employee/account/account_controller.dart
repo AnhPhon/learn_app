@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 import 'package:template/view/basewidget/textfield/custom_password_textfield.dart';
@@ -19,11 +18,11 @@ class V4AccountController extends GetxController {
   //Khai email
   String email = "IZISoftware@gmail.com";
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
 
   ///
   ///Click to personal information

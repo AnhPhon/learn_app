@@ -1,17 +1,31 @@
+import 'tinh_tp_model.dart';
+
 class QuanHuyenModel {
-  String? idTinhTp;
+  TinhTpModel? idTinhTp;
   String? ten;
 
   QuanHuyenModel({
       this.idTinhTp,
-      this.ten
-      });
-
+      this.ten});
+  
+  ///
+  /// From JSON
+  ///
   QuanHuyenModel.fromJson(Map<String, dynamic> json) {
-    idTinhTp = json['idTinhTp'].toString();
+
+    // mapping idTinhTp                                                              
+    if (json['idTinhTp'] != null) {                                                  
+      idTinhTp = TinhTpModel.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTinhTp = null;                                                               
+    }                                                                                  
     ten = json['ten'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTinhTp'] = idTinhTp;

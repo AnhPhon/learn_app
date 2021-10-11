@@ -117,6 +117,7 @@ class AppRoutes {
   static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
+  static const String V1_PROJECT_DETAIL = '/v1_project_detail';
 
   static const String V1_QUOTE_REQUEST_1 = '/v1_quote_request_1';
   static const String V1_QUOTE_REQUEST_2 = '/v1_quote_request_2';
@@ -154,6 +155,43 @@ class AppRoutes {
   static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
   static const String V2_RECHARGE = '/v2_recharge';
   
+  //builder
+  static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
+  static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
+  static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
+  static const String V2_SHORTHANDED_GROUP4 = '/v2_shorthanded_group4';
+  static const String V2_SHORTHANDED_GROUP5 = '/v2_shorthanded_group5';
+  static const String V2_SHORTHANDED_GROUP6 = '/v2_shorthanded_group6';
+  static const String V2_QUOTATION_GROUP1 = '/v2_quotation_group1';
+  static const String V2_QUOTATION_GROUP2 = '/v2_quotation_group2';
+  static const String V2_AFTER_QUOTATION_GROUP2 = '/v2_after_quotation_group2';
+  static const String V2_QUOTATION_GROUP56 = '/v2_quotation_group56';
+  static const String V2_WINNING_BID = '/v2_winning_bid';
+  static const String V2_PAYMENT_ORDER = '/v2_payment_order';
+  // agent
+  static const String V3_QUOTE_LIST = '/v3_quote_list';
+  static const String V3_QUOTE_CHECK = '/v3_quote_check';
+  static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
+  static const String V3_QUOTE_REQUEST = '/v3_quote_request';
+  static const String V3_CONTRACT = '/v3_contract';
+  static const String V3_REGISTER_AND_COMMIT = '/v3_register_and_commit';
+  static const String V3_ACCIDENT_INSURANCE = '/v3_accident_insurance';
+  static const String V3_OTHER_INSURANCE = '/v3_other_insurance';
+  static const String V3_TAX = '/v3_tax';
+  static const String V3_INSURANCE_DETAIL = '/v3_insurance_detail';
+  static const String V3_PAYMENT_ACCOUNT = '/v3_payment_account';
+  static const String V3_PROFILE = '/v3_profile';
+  static const String V3_POINT_BASED = '/v3_point_based';
+  static const String V3_WALLET = '/v3_wallet';
+  static const String V3_RULES = '/v3_rules';
+  static const String V3_INTRODUCE = '/v3_introduce';
+  static const String V3_HELP = '/v3_help';
+  static const String V3_JOB_MANAGEMENT = '/v3_job_management';
+  static const String V3_INURANCE_REGISTER = '/v3_inurance_register';
+  static const String V3_YOUR_INSURANCE = '/v3_your_insurance';
+  static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
+  static const String V3_RECHARGE = '/v3_recharge';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -162,6 +200,15 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+
+  //builder
+  static const String V2_PRODUCT = '/v2_product';
+  static const String V2_CART = '/v2_cart';
+  static const String V2_PRODUCT_DETAIL = '/v2_product_detail';
+  static const String V2_SHIPPING_METHOD = '/v2_shipping_method';
+  static const String V2_SHIPPING_ADDRESS = '/v2_shipping_address';
+  static const String V2_PAYMENT_METHOD = '/v2_payment_method';
+  static const String V2_BILL_DETAIL_IS_BUY = '/v2_bill_detail_is_buy';
   static const String V3_STORE = '/v3_store';
   static const String V3_PRODUCT_MANAGEMENT = '/v3_product_management';
   static const String V3_ORDER_MANAGEMENT = '/v3_order_management';
@@ -169,9 +216,29 @@ class AppRoutes {
   static const String V3_REVENUE = '/v3_revenue';
   static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
   static const String V3_PRODUCT_ADD = '/v3_product_add';
+  // Builder
+  static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+  // Xem tin tuyển dụng
+  static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
+  //Xem lịch sử tin đã ứng tuyển và đã lưu
+  static const String V2_HISTORY_RECRUITMENT_NEWS = '/v2_history_recruitment_news';
+  // Hình thức ứng tuyển
+  static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
+  // Đánh văn bản
+  static const String V2_TEXT_TYING = '/v2_text_tying';
+  // Nộp cv
+  static const String V2_CV = '/v2_cv';
+  // Xem trước hồ sơ nộp bằng CV
+  static const String V2_PREVIEW = '/v2_preview';
+  // Xem trước hồ sơ đánh bằng văn bản
+  static const String V2_PREVIEW_PROFILE = '/v2_preview_profile';
+
   static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
   static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
   static const String V4_RULES = '/v4_rules';
   static const String V4_SALARY = '/v4_salary';
   static const String V4_INFO = '/v4_info';
+  // Builder
+  // Builder
+  // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
 }

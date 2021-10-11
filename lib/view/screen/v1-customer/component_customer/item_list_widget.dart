@@ -9,9 +9,11 @@ class ItemListWidget extends StatelessWidget {
   final String title;
   final String? rowText1;
   final String? rowText2;
+  final String urlImage;
   final Color? colorRowText1;
   final Color? colorRowText2;
-  final Icon? icon;
+  final Icon? icon1;
+  final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
   const ItemListWidget({
@@ -19,12 +21,14 @@ class ItemListWidget extends StatelessWidget {
     required this.title,
     this.rowText1,
     this.rowText2,
-    this.icon,
     this.colorRowText1,
     this.colorRowText2,
     required this.onTap,
     this.isSpaceBetween = false,
     this.isStart,
+    this.icon1,
+    this.icon2,
+    required this.urlImage,
   }) : super(key: key);
 
   @override
@@ -56,10 +60,15 @@ class ItemListWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                 ),
-                child: Image.asset(
-                  Images.newsTemplate,
-                  fit: BoxFit.fill,
+                child: FadeInImage.assetNetwork(
+                  placeholder: Images.placeholder,
+                  image: urlImage,
                   height: DeviceUtils.getScaledHeight(context, 0.118),
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                  imageErrorBuilder: (c, o, s) => Image.asset(
+                    Images.placeholder,
+                  ),
                 ),
               ),
             ),
@@ -95,20 +104,24 @@ class ItemListWidget extends StatelessWidget {
                               ? MainAxisAlignment.start
                               : MainAxisAlignment.end,
                       children: [
-                        if (icon != null) icon!,
-                        if (isSpaceBetween == false)
-                          const SizedBox(width: Dimensions.MARGIN_SIZE_SMALL),
-                        if (rowText1 != null)
-                          Flexible(
-                            child: Text(
-                              rowText1!,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                color: colorRowText1,
+                        Row(
+                          children: [
+                            if (icon1 != null) icon1!,
+                            if (isSpaceBetween == false)
+                              const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_SMALL),
+                            if (rowText1 != null)
+                              Text(
+                                rowText1!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                  color: colorRowText1,
+                                ),
                               ),
-                            ),
-                          ),
+                          ],
+                        ),
+                        if (icon2 != null) icon2!,
                         if (rowText2 != null)
                           Text(
                             rowText2!,
@@ -127,6 +140,5 @@ class ItemListWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

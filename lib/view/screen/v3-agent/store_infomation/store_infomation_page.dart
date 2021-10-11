@@ -114,20 +114,22 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   ),
 
                   //accept work
-                  DropDownButton1(
+                  DropDownButton1<String>(
                     label: "Chiều thứ 7 có làm việc không?",
                     hint: "Chọn có hoặc không",
                     value: controller.acceptWork,
                     onChanged: controller.onSelectedAcceptWork,
                     data: const ["Có", "Không"],
+                    width: double.infinity,
                   ),
 
-                  DropDownButton1(
+                  DropDownButton1<String>(
                     label: "Chủ nhật có làm việc không?",
                     hint: "Chọn có hoặc không",
                     value: controller.acceptWork,
                     onChanged: controller.onSelectedAcceptWork,
                     data: const ["Có", "Không"],
+                    width: double.infinity,
                   ),
 
                   //note

@@ -33,6 +33,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     value: controller.province,
                     onChanged: controller.setSelectedProvince,
                     data: controller.provinceList,
+                    width: double.infinity,
                   ),
 
                   //district
@@ -44,6 +45,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     value: controller.district,
                     onChanged: controller.setSelectedDistrict,
                     data: controller.districtList,
+                    width: double.infinity,
                   ),
 
                   //ward
@@ -55,6 +57,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                     value: controller.ward,
                     onChanged: controller.setSelectedWard,
                     data: controller.wardList,
+                    width: double.infinity,
                   ),
 
                   //address
@@ -89,7 +92,7 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
   ///
   ///row title
   ///
-  Widget _rowTitle(BuildContext context, {required String title}) {
+  Widget rowTitle(BuildContext context, {required String title}) {
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(

@@ -4,10 +4,7 @@ import 'package:template/data/model/body/auth_model.dart';
 // import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
-import 'package:template/data/model/response/base/error_response.dart';
-import 'package:template/data/model/response/response_model.dart';
 import 'package:template/data/repository/auth_repository.dart';
-import 'package:template/helper/api_checker.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthRepository? authRepository = GetIt.I.get<AuthRepository>();

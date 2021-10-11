@@ -1,17 +1,31 @@
+import 'quan_huyen_model.dart';
+
 class PhuongXaModel {
-  String? idQuanHuyen;
+  QuanHuyenModel? idQuanHuyen;
   String? ten;
 
   PhuongXaModel({
       this.idQuanHuyen,
-      this.ten
-      });
-
+      this.ten});
+  
+  ///
+  /// From JSON
+  ///
   PhuongXaModel.fromJson(Map<String, dynamic> json) {
-    idQuanHuyen = json['idQuanHuyen'].toString();
+
+    // mapping idQuanHuyen                                                              
+    if (json['idQuanHuyen'] != null) {                                                  
+      idQuanHuyen = QuanHuyenModel.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idQuanHuyen = null;                                                               
+    }                                                                                  
     ten = json['ten'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idQuanHuyen'] = idQuanHuyen;

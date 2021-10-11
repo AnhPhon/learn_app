@@ -71,7 +71,7 @@ class _CustomAppBarState extends State<LargeSizeAppBar> {
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 CircleAvatar(
                   radius: 30,
                 ),

@@ -5,7 +5,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class CategoryWidget extends GetView {
-  CategoryWidget({
+  const CategoryWidget({
     required this.text,
     required this.label,
     required this.content,
@@ -14,20 +14,19 @@ class CategoryWidget extends GetView {
     this.onPressed,
   });
 
-  String text;
-  String label;
-  Widget content;
-  bool hasMore;
-  Icon? icon;
-  VoidCallback? onPressed;
+  final String text;
+  final String label;
+  final Widget content;
+  final bool hasMore;
+  final Icon? icon;
+  final VoidCallback? onPressed;
 
-  double labelFontSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
-  Color labelColor = const Color(0XFF27272A);
+  static const  double labelFontSize = Dimensions.FONT_SIZE_EXTRA_LARGE;
+  static const Color labelColor = ColorResources.BLACKGREY;
+  static const double moreFontSize = Dimensions.FONT_SIZE_LARGE;
+  static const Color moreColor = ColorResources.PRIMARY;
 
-  double moreFontSize = Dimensions.FONT_SIZE_LARGE;
-  Color moreColor = const Color(0XFF1A94FF);
-
-  double elementFontSize = Dimensions.FONT_SIZE_SMALL;
+  static const double elementFontSize = Dimensions.FONT_SIZE_SMALL;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class CategoryWidget extends GetView {
                   width: DeviceUtils.getScaledSize(context, .6),
                   child: Text(
                     label,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: labelFontSize,
                         fontWeight: FontWeight.bold,
                         color: labelColor),
@@ -71,7 +70,7 @@ class CategoryWidget extends GetView {
                             children: [
                               Text(
                                 text,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: moreFontSize,
                                     color: ColorResources.PRIMARY),
                               ),

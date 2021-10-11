@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
 class TextWhiteBorder extends StatelessWidget {
-  String text;
-  TextWhiteBorder({required this.text});
+  final String text;
+  const TextWhiteBorder({required this.text});
 
   @override
   Widget build(BuildContext context) {

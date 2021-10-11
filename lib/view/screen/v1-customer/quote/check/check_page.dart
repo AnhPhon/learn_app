@@ -152,11 +152,11 @@ class V1CheckPage extends GetView<V1CheckController> {
   /// hinh anh khoi luong
   ///
   Widget _hinhAnhKhoiLuong() {
-    return LabelContent(
+    return const LabelContent(
       title: "Hình ảnh bảng khối lượng",
       isRequired: false,
       content: ThreeImageBox(
-        images: const [
+        images: [
           Images.location_example,
           Images.location_example,
           Images.location_example,
@@ -172,7 +172,7 @@ class V1CheckPage extends GetView<V1CheckController> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: LabelContent(
+      child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
         content: FileUploadWidget(label: "Thêm file"),

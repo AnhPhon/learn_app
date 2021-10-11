@@ -9,9 +9,9 @@ class RadioButton<T> extends StatelessWidget {
   final String title;
   final Function(T? value) onChanged;
   final TextStyle? style;
-  T value;
-  T groupValue;
-  RadioButton({
+  final T value;
+  final T groupValue;
+  const RadioButton({
     Key? key,
     required this.title,
     required this.onChanged,

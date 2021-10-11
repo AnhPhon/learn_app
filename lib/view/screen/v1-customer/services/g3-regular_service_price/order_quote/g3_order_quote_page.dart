@@ -15,7 +15,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Báo giá đơn hàng"),
+      appBar: const AppBarWidget(title: "Báo giá đơn hàng"),
       body: Column(
         children: [
           // Tiêu tề nhóm công việc

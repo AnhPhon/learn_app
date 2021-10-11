@@ -22,7 +22,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -6,19 +6,18 @@ import 'auth_controller.dart';
 class AuthPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
-    AuthController _controller = Get.find();
+    // final AuthController _controller = Get.find();
 
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Obx(() => Text("Counter ${controller.counter.value}")),
-              RaisedButton(
-                child: Text("Increase"),
+              MaterialButton(
                 onPressed: () => controller.increaseCounter(),
+                child: const Text("Increase"),
               ),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownButtonIcon<T> extends StatelessWidget {
-  DropDownButtonIcon({
+  const DropDownButtonIcon({
     Key? key,
     this.hint,
     required this.width,
@@ -16,7 +16,8 @@ class DropDownButtonIcon<T> extends StatelessWidget {
     this.dropIcon,
     this.fillColor,
     this.filled,
-    this.style,
+    this.style, 
+    this.value,
   }) : super(key: key);
   final String? hint;
   final double width;
@@ -29,7 +30,7 @@ class DropDownButtonIcon<T> extends StatelessWidget {
   final Color? fillColor;
   final bool? filled;
   final TextStyle? style;
-  T? value;
+  final T? value;
 
   @override
   Widget build(BuildContext context) {

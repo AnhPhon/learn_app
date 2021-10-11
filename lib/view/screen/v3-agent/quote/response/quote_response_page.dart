@@ -142,7 +142,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   ///
   /// fileWidget
   ///
-  Widget _fileWidget() {
+  Widget fileWidget() {
     return LabelContent(
       title: "File excel hoặc khác",
       isRequired: false,
@@ -374,7 +374,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
-              BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
+              const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(.5),

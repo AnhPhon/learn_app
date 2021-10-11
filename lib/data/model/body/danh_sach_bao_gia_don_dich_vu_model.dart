@@ -1,5 +1,7 @@
+import 'don_dich_vu_model.dart';
+
 class DanhSachBaoGiaDonDichVuModel {
-  String? idDonDichVu;
+  DonDichVuModel? idDonDichVu;
   String? taiKhoanBaoGia;
   String? giaBao;
   String? ghiChu;
@@ -12,18 +14,30 @@ class DanhSachBaoGiaDonDichVuModel {
       this.giaBao,
       this.ghiChu,
       this.file,
-      this.daXem
-      });
-
+      this.daXem});
+  
+  ///
+  /// From JSON
+  ///
   DanhSachBaoGiaDonDichVuModel.fromJson(Map<String, dynamic> json) {
-    idDonDichVu = json['idDonDichVu'].toString();
+
+    // mapping idDonDichVu                                                              
+    if (json['idDonDichVu'] != null) {                                                  
+      idDonDichVu = DonDichVuModel.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDonDichVu = null;                                                               
+    }                                                                                  
     taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
     giaBao = json['giaBao'].toString();
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
     daXem = json['daXem'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idDonDichVu'] = idDonDichVu;

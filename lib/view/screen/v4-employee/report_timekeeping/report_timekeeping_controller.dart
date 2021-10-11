@@ -6,9 +6,9 @@ class V4ReportTimekeepingControllter extends GetxController {
   bool isLoading = true;
   final reportTimekeeping = TextEditingController();
   final reportContent = TextEditingController();
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  // }
 }

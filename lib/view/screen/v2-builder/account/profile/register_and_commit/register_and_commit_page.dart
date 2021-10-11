@@ -74,7 +74,7 @@ class V2RegisterAndCommitPage extends GetView<V2RegisterAndCommitController> {
   ///
   ///text title
   ///
-  Widget _table(BuildContext context, {required String title}) {
+  Widget table(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_LARGE + 2,
@@ -89,7 +89,7 @@ class V2RegisterAndCommitPage extends GetView<V2RegisterAndCommitController> {
   ///
   ///text title
   ///
-  Widget _textTitle(BuildContext context, {required String title}) {
+  Widget textTitle(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_LARGE + 2,

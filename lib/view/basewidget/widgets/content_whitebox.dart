@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
 class ContentWhiteBox extends StatelessWidget {
-  List<Map<String, dynamic>> infoCard;
-  TextEditingController? textController;
-  ContentWhiteBox({required this.infoCard, this.textController});
+  final List<Map<String, dynamic>> infoCard;
+  final TextEditingController? textController;
+  const ContentWhiteBox({required this.infoCard, this.textController});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,7 @@ class ContentWhiteBox extends StatelessWidget {
           infoCard.length,
           (index) {
             if (infoCard[index]["input"] == false || textController != null) {
-              textController = TextEditingController(
-                  text: infoCard[index]['value'] as String);
+              textController!.text = infoCard[index]['value'] as String;
             }
 
             return Container(

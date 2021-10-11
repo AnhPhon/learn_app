@@ -1,7 +1,11 @@
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'tinh_tp_model.dart';
+
 class NhanVienModel {
-  String? idTinhTp;
-  String? idQuanHuyen;
-  String? idPhuongXa;
+  TinhTpModel? idTinhTp;
+  QuanHuyenModel? idQuanHuyen;
+  PhuongXaModel? idPhuongXa;
   String? hoTen;
   String? soDienThoai;
   String? gioiTinh;
@@ -30,13 +34,33 @@ class NhanVienModel {
       this.anhMTCMND,
       this.anhMSCMND,
       this.matKhau,
-      this.tokenDevice
-      });
-
+      this.tokenDevice});
+  
+  ///
+  /// From JSON
+  ///
   NhanVienModel.fromJson(Map<String, dynamic> json) {
-    idTinhTp = json['idTinhTp'].toString();
-    idQuanHuyen = json['idQuanHuyen'].toString();
-    idPhuongXa = json['idPhuongXa'].toString();
+
+    // mapping idTinhTp                                                              
+    if (json['idTinhTp'] != null) {                                                  
+      idTinhTp = TinhTpModel.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTinhTp = null;                                                               
+    }                                                                                  
+
+    // mapping idQuanHuyen                                                              
+    if (json['idQuanHuyen'] != null) {                                                  
+      idQuanHuyen = QuanHuyenModel.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idQuanHuyen = null;                                                               
+    }                                                                                  
+
+    // mapping idPhuongXa                                                              
+    if (json['idPhuongXa'] != null) {                                                  
+      idPhuongXa = PhuongXaModel.fromJson(json['idPhuongXa'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idPhuongXa = null;                                                               
+    }                                                                                  
     hoTen = json['hoTen'].toString();
     soDienThoai = json['soDienThoai'].toString();
     gioiTinh = json['gioiTinh'].toString();
@@ -49,8 +73,12 @@ class NhanVienModel {
     anhMSCMND = json['anhMSCMND'].toString();
     matKhau = json['matKhau'].toString();
     tokenDevice = json['tokenDevice'].toString();
+
   }
 
+  ///
+  /// To JSON
+  ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idTinhTp'] = idTinhTp;

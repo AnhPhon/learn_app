@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
 class BtnCategory extends StatelessWidget {
-  Gradient gradient;
-  String label;
-  IconData icon;
+  final Gradient gradient;
+  final String label;
+  final IconData icon;
 
-  BtnCategory({
+  const BtnCategory({
     required this.gradient,
     required this.label,
     required this.icon,

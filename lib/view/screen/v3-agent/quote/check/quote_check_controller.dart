@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V3QuoteCheckController extends GetxController {
@@ -46,7 +44,7 @@ class V3QuoteCheckController extends GetxController {
     ];
 
     features = [
-      {"title": "Chỉnh sửa", "onTap": () {}, "color": const Color(0XFFB0BAC1)},
+      {"title": "Chỉnh sửa", "onTap": () {}, "color": ColorResources.LIGHT_GREY},
       {
         "title": "Xác nhận báo giá",
         "onTap": () {

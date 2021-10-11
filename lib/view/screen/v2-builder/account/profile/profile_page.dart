@@ -48,7 +48,8 @@ class V2ProfilePage extends GetView<V2ProfileController> {
                   // Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc
                   _items(
                     icon: const Icon(Icons.collections_bookmark),
-                    text: "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
+                    text:
+                        "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
                     onTap: () {},
                   ),
 
