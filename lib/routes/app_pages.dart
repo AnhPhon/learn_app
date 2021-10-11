@@ -129,6 +129,8 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56
 import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
+import 'package:template/view/screen/v2-builder/work_register/work_register_binding.dart';
+import 'package:template/view/screen/v2-builder/work_register/work_register_page.dart';
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
 import 'package:template/view/screen/v3-agent/account/introduce/introduce_page.dart';
@@ -643,8 +645,6 @@ class AppPages {
       binding: V2RecruitmentBinding(),
     ),
 
-
-
     // Quản lý tuyển dụng ứng viên
     GetPage(
       name: AppRoutes.V2_CANDIDATE_RECRUITMENT,
@@ -693,7 +693,6 @@ class AppPages {
       page: () => V2PreviewProfilePage(),
       binding: V2PreviewProfileBinding(),
     ),
-
 
     // agent
     GetPage(
@@ -767,6 +766,11 @@ class AppPages {
       name: AppRoutes.V2_PREVIEW_PROFILE,
       page: () => V2PreviewProfilePage(),
       binding: V2PreviewProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_REGISTER,
+      page: () => V2WorkRegisterPage(),
+      binding: V2WorkRegisterBinding(),
     ),
 
     GetPage(

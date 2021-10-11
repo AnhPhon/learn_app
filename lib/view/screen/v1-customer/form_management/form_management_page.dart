@@ -14,24 +14,25 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1FormManagementController>(
-        init: V1FormManagementController(),
-        builder: (controller) {
-          return Scaffold(
-            backgroundColor: const Color(0xFFF6F6F7),
-            appBar: AppBarWidget(title: controller.title),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //tab
-                  tabBarWidget(context: context, controller: controller),
+      init: V1FormManagementController(),
+      builder: (controller) {
+        return Scaffold(
+          backgroundColor: const Color(0xFFF6F6F7),
+          appBar: AppBarWidget(title: controller.title),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                //tab
+                tabBarWidget(context: context, controller: controller),
 
-                  //item list
-                  ...List.generate(5, (index) => _itemList(context)),
-                ],
-              ),
+                //item list
+                ...List.generate(5, (index) => _itemList(context)),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   ///

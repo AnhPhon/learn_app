@@ -26,7 +26,9 @@ class V2HomeController extends GetxController {
           ],
         ),
         "icon": Icons.add_circle,
-        "onTap": () {}
+        "onTap": () {
+          Get.toNamed(AppRoutes.V2_WORK_REGISTER);
+        }
       },
       {
         "label": "Quản lý công việc",
