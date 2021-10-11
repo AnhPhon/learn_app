@@ -1,6 +1,6 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -9,22 +9,24 @@ import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feedback_controller.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_controller.dart';
 
-class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
-  V1OrderFeedBackPage({Key? key}) : super(key: key);
+class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
+  V1BuildOrderFeedBackPage({Key? key}) : super(key: key);
 
   @override
-  final V1OrderFeedBackController controller = Get.find<V1OrderFeedBackController>();
+  final V1BuildOrderFeedBackController controller = Get.find<V1BuildOrderFeedBackController>();
 
   
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      builder: (V1OrderFeedBackController controller) {
+      builder: (V1BuildOrderFeedBackController controller) {
         return Scaffold(
           backgroundColor: const Color(0xffF6F6F7),
           appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
@@ -35,7 +37,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Tiêu đề của nhóm
-                  const GroupTitle(title: "Công việc DVTX khảo sát báo giá"),
+                  const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
                     
                   // Tiêu đề báo giá
                   header(),
@@ -79,15 +81,8 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         children: const [
           TextHighlight(
             title: "Tiêu đề:",
-            content: "Đập phá cải tạo sửa nhà cấp 4",
+            content: "Thợ ốp lót công trình 5 sao",
           ),
-          Padding(
-            padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: TextHighlight(
-            title: "Thông tin báo giá: ",
-            content: "Khách hàng cung cấp thông tin",
-              ),
-          )
         ],
       ),
     );
