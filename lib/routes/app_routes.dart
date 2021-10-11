@@ -117,6 +117,7 @@ class AppRoutes {
   static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
+  static const String V1_PROJECT_DETAIL = '/v1_project_detail';
 
   static const String V1_QUOTE_REQUEST_1 = '/v1_quote_request_1';
   static const String V1_QUOTE_REQUEST_2 = '/v1_quote_request_2';
