@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+// import 'package:template/provider/upload_image_provider.dart';
+// import 'package:template/provider/user_provider.dart';
 
 class PasswordChangeController extends GetxController {
   GetIt sl = GetIt.instance;
-
-  // final UserProvider userProvider = GetIt.I.get<UserProvider>();
-  // final ImageUpdateProvider imageProvider = GetIt.I.get<ImageUpdateProvider>();
   bool isLoading = false;
   // TextEditingController textEditOldPasswordController = TextEditingController();
   TextEditingController textEditPasswordController = TextEditingController();

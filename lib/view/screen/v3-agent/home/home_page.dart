@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
@@ -16,6 +17,7 @@ class V3HomePage extends GetView<V3HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerWidget(),
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),
         builder: (V3HomeController controller) {
@@ -33,10 +35,10 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                _newsWidget(),
+                _newsWidget(controller:controller),
 
                 // product widget
-                _productWidget()
+                _productWidget(controller: controller)
               ],
             ),
           );
@@ -120,10 +122,12 @@ class V3HomePage extends GetView<V3HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget() {
+  Widget _newsWidget({required V3HomeController controller}) {
     return FieldWidget(
       title: "Tin tức",
-      onTap: () {},
+      onTap: () {
+        controller.onClickNews();
+      },
       widget: Container(
         height: 220,
         padding: const EdgeInsets.only(
@@ -149,10 +153,12 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
-  Widget _productWidget() {
+  Widget _productWidget({required V3HomeController controller}) {
     return FieldWidget(
       title: "Kho sản phẩm",
-      onTap: () {},
+      onTap: () {
+        controller.onClickWareHouse();
+      },
       widget: Container(
         height: 220,
         padding: const EdgeInsets.only(

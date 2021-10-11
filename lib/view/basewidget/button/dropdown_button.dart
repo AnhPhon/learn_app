@@ -104,7 +104,7 @@ class DropDownButton1<T> extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
                         hint: Text(hint),
-                        value: value,
+                        value: null,
                         isDense: true,
                         isExpanded: true,
                         // value: getCutContent(value),

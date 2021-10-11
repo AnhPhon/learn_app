@@ -26,7 +26,7 @@ class ContentWhiteBox extends StatelessWidget {
         ],
       ),
       child: Column(
-        children: List.generate(
+        children: infoCard.isEmpty ? [] : List.generate(
           infoCard.length,
           (index) {
             if (infoCard[index]["input"] == false || textController != null) {
