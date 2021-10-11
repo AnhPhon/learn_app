@@ -7,7 +7,6 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/cam_ket_thue/cam_ket_thue_page.dart';
 import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_page.dart';
 import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_controller.dart';
-import 'package:template/view/screen/v3-agent/component_customer/btn_component.dart';
 
 class V3RegisterAndCommitPage extends GetView<V3RegisterAndCommitController> {
   @override
@@ -75,7 +74,7 @@ class V3RegisterAndCommitPage extends GetView<V3RegisterAndCommitController> {
   ///
   ///text title
   ///
-  Widget _table(BuildContext context, {required String title}) {
+  Widget table(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_LARGE + 2,
@@ -90,7 +89,7 @@ class V3RegisterAndCommitPage extends GetView<V3RegisterAndCommitController> {
   ///
   ///text title
   ///
-  Widget _textTitle(BuildContext context, {required String title}) {
+  Widget textTitle(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_LARGE + 2,

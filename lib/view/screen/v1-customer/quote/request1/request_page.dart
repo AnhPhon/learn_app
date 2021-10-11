@@ -248,7 +248,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
     Function(dynamic) onChanged,
     List<String> contentList,
   ) {
-    return Container(
+    return SizedBox(
       height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
       child: FormField<String>(
         builder: (FormFieldState<String> state) {
@@ -289,7 +289,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
   /// thoiGianDuKien
   ///
   Widget _thoiGianDuKien(BuildContext context) {
-    final List<String> labels = ["Từ", "Đến"];
+    // final List<String> labels = ["Từ", "Đến"];
     final List<Widget> contents = [
       _fromDateTimeWidget(context, "Từ", controller.fromDate!),
       _toDateTimeWidget(context, "Đến", controller.toDate!),

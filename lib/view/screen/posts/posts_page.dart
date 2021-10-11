@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'components/posts_list_item.dart';
 import 'posts_controller.dart';
 
 class PostsPage extends StatelessWidget {
@@ -9,9 +7,9 @@ class PostsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Posts"),
+        title: const Text("Posts"),
       ),
-      body: Container(
+      body: SizedBox(
         child: GetBuilder<PostsController>(
           init: PostsController(),
           builder: (controller) {

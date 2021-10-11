@@ -74,7 +74,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)
             ),
-            child: Container(
+            child: SizedBox(
               height: 200,
               child: ListView.builder(
                 itemBuilder: (context, index) {

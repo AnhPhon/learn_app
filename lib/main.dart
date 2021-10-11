@@ -13,7 +13,6 @@ import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
 import 'di_container.dart' as di;
-import 'notification/my_notification.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

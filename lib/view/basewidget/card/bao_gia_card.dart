@@ -4,20 +4,19 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/text/text_white_border.dart';
 
 class BaoGiaCard extends StatelessWidget {
-  String donHangName;
-  String donHangId;
-  String time;
-  String date;
-  String label;
-  String content;
-  String locationName;
-  String image;
-  Function() onTap;
+  final String donHangName;
+  final String donHangId;
+  final String time;
+  final String date;
+  final String label;
+  final String content;
+  final String locationName;
+  final String image;
+  final Function() onTap;
 
-  BaoGiaCard({
+  const BaoGiaCard({
     required this.donHangName,
     required this.donHangId,
     required this.time,
@@ -74,7 +73,7 @@ class BaoGiaCard extends StatelessWidget {
             Expanded(
               flex: 10,
               child: Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,

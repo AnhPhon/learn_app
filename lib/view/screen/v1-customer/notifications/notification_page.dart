@@ -1,6 +1,5 @@
 
 
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_controller.dart';
 
 class V1NotificationPage extends GetView<V1NotificationController> {
-  V1NotificationPage({Key? key}) : super(key: key);
+  const V1NotificationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

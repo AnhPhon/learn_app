@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -19,7 +18,6 @@ class V2FormOfSubmitssionPage extends GetView<V2FormOfSubmitssionController>{
         return Scaffold(
           appBar: const AppBarWidget(title: "Tin tuyển dụng"),
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Label(label: "Ứng viên nên tạo hồ sơ ở bước “Đăng ký việc” để có một bộ hồ sơ lưu trữ khi ứng tuyển", obligatory: false),
 

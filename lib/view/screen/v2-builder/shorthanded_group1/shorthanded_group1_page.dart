@@ -7,7 +7,6 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/content_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/image_list_horizontal.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_conroller.dart';
 
@@ -30,7 +29,6 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                   const ContentWidget(
                     label: "Tiêu đề công việc",
                     content: "Thợ ốp lát: công trình khách 5 sao",
-                    center: false,
                   ),
 
                   //job detail
@@ -38,28 +36,24 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                     label: "Mô tả công việc",
                     content:
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-                    center: false,
                   ),
 
                   //working address
                   const ContentWidget(
                     label: "Địa điểm làm việc: ",
                     content: "Quận Hải Châu",
-                    center: false,
                   ),
 
                   //start
                   const ContentWidget(
                     label: "Thời gian bắt đầu dự kiến: ",
                     content: "12/09/2022",
-                    center: false,
                   ),
 
                   //end
                   const ContentWidget(
                     label: "Thời gian kết thúc dự kiến: ",
                     content: "12/09/2022",
-                    center: false,
                   ),
 
                   //table label

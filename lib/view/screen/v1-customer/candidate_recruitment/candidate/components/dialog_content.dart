@@ -33,7 +33,7 @@ class DialogContent extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Mức lương"),
+                              const Text("Mức lương"),
                               Text("< ${CurrencyConverter.currencyConverterVND(controller.salary.toDouble())} VNĐ")
                             ],
                           ),

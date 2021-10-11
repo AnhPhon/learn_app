@@ -4,14 +4,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class TextDropdown extends StatelessWidget {
-  String label;
-  String labelText;
-  bool isRequire;
-  String currentSelectvalue;
-  List<String> currencies;
-  TextEditingController controller;
+  final String label;
+  final String labelText;
+  final bool isRequire;
+  final String currentSelectvalue;
+  final List<String> currencies;
+  final TextEditingController controller;
 
-  TextDropdown({
+  const TextDropdown({
     required this.label,
     required this.labelText,
     required this.controller,

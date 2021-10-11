@@ -23,7 +23,7 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
       appBar: const AppBarWidget(title: "Chi tiết đơn hàng"),
       body: Column(
         children: [
-          GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+          const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
 
           // Bảng thông tin đơn hàng
            Padding(
@@ -46,7 +46,7 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
           ),
           
           // Khoản cách bottomSheet
-          SizedBox(height: BOTTOMSHEET,)
+          const SizedBox(height: BOTTOMSHEET,)
         ],
       ),
       bottomSheet: OrderBottomSheet(

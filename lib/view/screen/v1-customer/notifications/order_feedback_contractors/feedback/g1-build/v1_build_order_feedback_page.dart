@@ -9,8 +9,6 @@ import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/widgets/box_image.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feedback_controller.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';

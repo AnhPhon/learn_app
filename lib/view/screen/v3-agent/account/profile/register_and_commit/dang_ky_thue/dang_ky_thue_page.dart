@@ -54,7 +54,7 @@ class V3DangKyThuePage extends GetView<V3DangKyThueController> {
   ///
   ///content
   ///
-  Widget _content() {
+  Widget content() {
     return Text(
       controller.content!,
       textAlign: TextAlign.justify,
@@ -66,10 +66,10 @@ class V3DangKyThuePage extends GetView<V3DangKyThueController> {
   /// three image widget
   ///
   Widget _threeImageWidget(BuildContext context) {
-    return LabelContent(
+    return const LabelContent(
       title: "Tải hình ảnh bản cứng (nếu có):",
       content: ThreeImageBox(
-        images: const [
+        images: [
           Images.location_example,
           Images.location_example,
           Images.location_example,

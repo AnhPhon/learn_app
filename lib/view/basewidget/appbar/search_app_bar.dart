@@ -12,7 +12,6 @@ class SearchAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? action;
   final TextEditingController searchController;
   const SearchAppBarWidget({
-    Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],

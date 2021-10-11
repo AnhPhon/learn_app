@@ -6,7 +6,6 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/candicate_card.dart';

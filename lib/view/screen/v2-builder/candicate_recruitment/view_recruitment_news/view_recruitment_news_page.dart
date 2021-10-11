@@ -15,7 +15,7 @@ class V2ViewRecruitmentNewsPage extends GetView<V2ViewRecruitmentNewsController>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Tin tuyển dụng"),
+      appBar:const AppBarWidget(title: "Tin tuyển dụng"),
       body: SingleChildScrollView(
         child: Column(
           children: [

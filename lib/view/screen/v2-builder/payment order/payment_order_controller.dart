@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 
 class V2PaymentOrderController extends GetxController {
   String title = "Thanh toán đơn hàng";

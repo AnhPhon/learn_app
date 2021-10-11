@@ -4,10 +4,10 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
 class LabelContent extends StatelessWidget {
-  String title;
-  Widget content;
-  bool isRequired;
-  LabelContent(
+  final String title;
+  final Widget content;
+  final bool isRequired;
+  const LabelContent(
       {required this.title, required this.content, required this.isRequired});
 
   @override

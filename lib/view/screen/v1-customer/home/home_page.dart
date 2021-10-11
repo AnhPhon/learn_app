@@ -108,7 +108,7 @@ class V1HomePage extends GetView<V1HomeController> {
   Widget _fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     return Padding(
-      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Column(
         children: [
           Row(
@@ -152,7 +152,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   /// product
   ///
-  Widget _product() {
+  Widget product() {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: _fieldWidget(

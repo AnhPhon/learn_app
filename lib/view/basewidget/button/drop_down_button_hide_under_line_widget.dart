@@ -12,8 +12,8 @@ class DropDownButtonHideUnderLineWidget<T> extends StatelessWidget {
   final double? width;
   final Function(T? value) onChanged;
   final List<T> data;
-  T? value;
-  DropDownButtonHideUnderLineWidget({
+  final T? value;
+  const DropDownButtonHideUnderLineWidget({
     Key? key,
     this.hint,
     this.width,

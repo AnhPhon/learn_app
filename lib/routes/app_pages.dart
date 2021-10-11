@@ -20,7 +20,7 @@ import 'package:template/view/screen/v1-customer/candidate_recruitment/job_appli
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v1-customer/drawer/Benefits.dart';
+import 'package:template/view/screen/v1-customer/drawer/benefits.dart';
 import 'package:template/view/screen/v1-customer/drawer/about_page.dart';
 import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.dart';
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
@@ -421,7 +421,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_NOTIFICATION,
-      page: () => V1NotificationPage(),
+      page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
 
@@ -476,7 +476,7 @@ class AppPages {
     // Tạo đơn công việc nhóm 1 - xem đơn (KH)
     GetPage(
         name: AppRoutes.V1_G1_REVIEW,
-        page: () => V1G1ReviewPage(),
+        page: () => const V1G1ReviewPage(),
         binding: V1G1ReviewBinding()),
     // Tạo đơn công việc Nhóm 2 (KH)
     GetPage(
@@ -562,7 +562,7 @@ class AppPages {
     // Hình thức thanh toán
     GetPage(
         name: AppRoutes.V1_FORMAL_PAYMENT,
-        page: () => V1FormalPaymentPage(),
+        page: () => const V1FormalPaymentPage(),
         binding: V1FormalPaymentBinding()),
 
     // Tạo thành công

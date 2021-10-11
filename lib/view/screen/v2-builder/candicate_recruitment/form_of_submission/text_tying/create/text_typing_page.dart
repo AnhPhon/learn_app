@@ -113,7 +113,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // hôn nhân
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Độc thân", 
           obligatory: true,
@@ -124,7 +124,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Hình thức làm việc
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data:const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Bán thời gian", 
           obligatory: true,
@@ -174,7 +174,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         DropDownButton<String>(
           paddingTop: 0,
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Chức vụ hiện tại", 
           obligatory: true,
@@ -185,7 +185,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Chức vụ mong muốn *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Chức vụ mong muốn", 
           obligatory: true,
@@ -196,7 +196,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Năm kinh nghiệm *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data:const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Năm kinh nghiệm", 
           obligatory: true,
@@ -207,7 +207,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
        // Mức lương đề xuất *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Mức lương đề xuất", 
           obligatory: true,
@@ -218,7 +218,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Nơi làm việc *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Nơi làm việc", 
           obligatory: true,
@@ -229,7 +229,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Ngành nghề mong muốn ứng tuyển *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Ngành nghề mong muốn ứng tuyển", 
           obligatory: true,
@@ -252,7 +252,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         DropDownButton<String>(
           paddingTop: 0,
           onChanged: (val){}, 
-          data: [], 
+          data:const [], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Mới học", 
           obligatory: true,
@@ -263,7 +263,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Chuyên môn *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Chuyên môn", 
           obligatory: true,
@@ -274,7 +274,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Tốt nghiệp lọai *
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Tốt nghiệp lọai", 
           obligatory: true,
@@ -428,7 +428,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
             // Đơn vị
             DropDownButton<String>(
               onChanged: (val){}, 
-              data: [], 
+              data: const[], 
               width: DeviceUtils.getScaledWidth(context,0.5),
               value: "US", 
               obligatory: false,
@@ -547,7 +547,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         DropDownButton<String>(
           paddingTop: 0,
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Chọn ngoại ngữ", 
           obligatory: true,
@@ -558,7 +558,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         // Trình độ
         DropDownButton<String>(
           onChanged: (val){}, 
-          data: [], 
+          data: const[], 
           width: DeviceUtils.getScaledWidth(context,1),
           value: "Trình độ", 
           obligatory: true,
@@ -665,7 +665,7 @@ class V2TextTypingPage extends GetView<V2TextTypingController>{
         ),
       ],
     );
-;  }
+  }
 
   Widget otherInformation(BuildContext context){
     return Column(
