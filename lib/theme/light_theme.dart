@@ -6,11 +6,10 @@ ThemeData lightTheme = ThemeData(
   primaryColor: const Color(0xFF2196F3),
   brightness: Brightness.light,
   scaffoldBackgroundColor: ColorResources.BACKGROUND,
-  accentColor: Colors.white,
   hintColor: const Color(0xFF9E9E9E),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
     TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
     TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
-  }),
+  }), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
 );

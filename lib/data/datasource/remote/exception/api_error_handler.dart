@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/data/model/response/base/error_response.dart';
 import 'package:template/utils/color_resources.dart';
 
-class ApiErrorHandler {
+mixin ApiErrorHandler {
   static dynamic getMessage(dynamic error) {
     dynamic errorDescription = '';
     if (error is Exception) {

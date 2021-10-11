@@ -4,6 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+<<<<<<< HEAD
 <<<<<<< HEAD:lib/view/screen/v2-builder/account/profile/register_and_commit/register_and_commit_page.dart
 import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/cam_ket_thue/cam_ket_thue_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_page.dart';
@@ -13,6 +14,11 @@ import 'package:template/view/screen/v3-agent/account/profile/register_and_commi
 import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_page.dart';
 import 'package:template/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_controller.dart';
 >>>>>>> origin/develop:lib/view/screen/v3-agent/account/profile/register_and_commit/register_and_commit_page.dart
+=======
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/cam_ket_thue/cam_ket_thue_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/dang_ky_thue/dang_ky_thue_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/register_and_commit_controller.dart';
+>>>>>>> feature/ui/33_cap_nhat_hoan_thien_ho_so
 
 class V2RegisterAndCommitPage extends GetView<V2RegisterAndCommitController> {
   @override

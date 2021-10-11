@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-<<<<<<< HEAD
-import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
-=======
-// import 'package:template/provider/upload_image_provider.dart';
-// import 'package:template/provider/user_provider.dart';
->>>>>>> origin/develop
-
 class PasswordChangeController extends GetxController {
   GetIt sl = GetIt.instance;
   bool isLoading = false;

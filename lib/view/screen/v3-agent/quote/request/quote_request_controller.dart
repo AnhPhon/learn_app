@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V3QuoteRequestController extends GetxController {

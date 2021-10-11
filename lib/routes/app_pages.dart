@@ -20,8 +20,8 @@ import 'package:template/view/screen/v1-customer/candidate_recruitment/job_appli
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v1-customer/drawer/benefits.dart';
 import 'package:template/view/screen/v1-customer/drawer/about_page.dart';
+import 'package:template/view/screen/v1-customer/drawer/benefits.dart';
 import 'package:template/view/screen/v1-customer/drawer/rights_and_obligations.dart';
 import 'package:template/view/screen/v1-customer/drawer/terms_and_policy.dart';
 import 'package:template/view/screen/v1-customer/drawer/usage_procedure.dart';
@@ -90,7 +90,19 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
-<<<<<<< HEAD
+import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
+import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
+import 'package:template/view/screen/v2-builder/account/point_based/point_based_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/profile_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/register_and_commit_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/tax/tax_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/your_insurance/your_insurance_page.dart';
+import 'package:template/view/screen/v2-builder/account/rules/rules_page.dart';
+import 'package:template/view/screen/v2-builder/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_page.dart';
@@ -109,6 +121,7 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
 import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v2-builder/product/cart/cart_page.dart';
@@ -117,7 +130,6 @@ import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
-import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_page.dart';
@@ -130,35 +142,16 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56
 import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
-=======
-import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
-import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
-import 'package:template/view/screen/v2-builder/account/point_based/point_based_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/contract/contract_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/insurance_detail/insurance_detail_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/insurance_register/insurance_register_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/other_insurance/other_insurance_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/profile_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/register_and_commit/register_and_commit_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/tax/tax_page.dart';
-import 'package:template/view/screen/v2-builder/account/profile/your_insurance/your_insurance_page.dart';
-import 'package:template/view/screen/v2-builder/account/rules/rules_page.dart';
-import 'package:template/view/screen/v2-builder/account/wallet/wallet_page.dart';
-import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
-import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
->>>>>>> feature/ui/33_cap_nhat_hoan_thien_ho_so
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
-import 'package:template/view/screen/v3-agent/account/rules/rules_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
+import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
+import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
-import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
-import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
-import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
 import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
 import 'package:template/view/screen/v3-agent/store/store_page.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
@@ -171,14 +164,14 @@ import 'package:template/view/screen/v4-employee/account/salary/salary_binding.d
 import 'package:template/view/screen/v4-employee/account/salary/salary_page.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v4-employee/dashboard/dashboard_page.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
-import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
+import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
-import 'package:template/view/screen/v4-employee/export_import/export_import_binding.dart';
-import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
+import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
 // import 'package:template/view/screen/introduction/introduction_page.dart';
 // import 'package:template/view/screen/splash/splash_page.dart';
@@ -549,13 +542,10 @@ class AppPages {
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
-<<<<<<< HEAD
-=======
     GetPage(
         name: AppRoutes.V1_G7_PRICE_LIST,
         page: () => V1G7PriceListPage(),
         binding: V1G7PriceListBinding()),
->>>>>>> origin/develop
     // Trang chính tuyển dung ứng viên
     GetPage(
         name: AppRoutes.V1_CANDICATE,

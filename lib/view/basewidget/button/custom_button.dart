@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
         child: Text(buttonText,
             style: titilliumSemiBold.copyWith(
               fontSize: Dimensions.FONT_SIZE_LARGE,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).primaryColor,
             )),
       ),
     );
