@@ -41,7 +41,6 @@ class V3HomeController extends GetxController {
           Color(0xff79B4B8),
         ]),
         "onTap": () {
-          Get.toNamed(AppRoutes.V3_QUOTE_LIST);
         }
       },
     ];
