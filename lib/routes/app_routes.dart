@@ -83,7 +83,7 @@ class AppRoutes {
   static const String V1_HOME = '/v1_home';
   static const String V1_PRODUCT = '/v1_product';
   static const String V1_NEWS = '/v1_news';
-  static const String V1_PROFILE = '/v1_news';
+  static const String V1_PROFILE = '/v1_profile';
   static const String V1_FORM_MANAGEMENT = '/v1_form_management';
   static const String V1_PRODUCT_RESPONSE = '/v1_product_response';
   static const String V1_BILL_DETAIL = '/v1_bill_detail';
@@ -92,13 +92,37 @@ class AppRoutes {
   static const String V1_FORM_LIST = '/v1_form_list';
   static const String V1_PRODUCT_DETAIL = '/v1_product_detail';
   static const String V1_CART = '/v1_cart';
+  static const String V1_PERSONAL_INFORMATION = '/v1_personal_information';
+  static const String V1_POINT_BASED = '/v1_point_based';
+  static const String V1_WALLET = '/v1_wallet';
+  static const String V1_RULES = '/v1_rules';
+  static const String V1_REVIEW = '/v1_review';
+  static const String V1_HISTORY = '/v1_history';
+  static const String V1_HELP = '/v1_help';
+  static const String V1_JOB_MANAGEMENT = '/v1_job_management';
+  static const String V1_INTRODUCE = '/v1_introduce';
+  static const String V1_MAIL = '/v1_mail';
+  static const String V1_IMAGE_UPDATE = '/v1_image_update';
+  static const String V1_CONTRACT = '/v1_contract';
+  static const String V1_ACCIDENT_INSURANCE = '/v1_accident_insurance';
+  static const String V1_OTHER_INSURANCE = '/v1_other_insurance';
+  static const String V1_TAX = '/v1_tax';
   static const String V1_SHIPPING_METHOD = '/v1_shipping_method';
   static const String V1_SHIPPING_ADDRESS = '/v1_shipping_address';
   static const String V1_PAYMENT_ACCOUNT = '/v1_payment_account';
   static const String V1_RECHARGE = '/v1_recharge';
   static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
+  static const String V1_INURANCE_REGISTER = '/v1_insurance_register';
+  static const String V1_YOUR_INSURANCE = '/v1_your_insurance';
+  static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
+
+  static const String V1_QUOTE_REQUEST_1 = '/v1_quote_request_1';
+  static const String V1_QUOTE_REQUEST_2 = '/v1_quote_request_2';
+  static const String V1_QUOTE_CHECK = '/v1_quote_check';
+  static const String V1_QUOTE_DONE = '/v1_quote_done';
+  static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -106,11 +130,50 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
+  //builder
+  static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
+  static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
+  static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
+  static const String V2_SHORTHANDED_GROUP4 = '/v2_shorthanded_group4';
+  static const String V2_SHORTHANDED_GROUP5 = '/v2_shorthanded_group5';
+  static const String V2_SHORTHANDED_GROUP6 = '/v2_shorthanded_group6';
+  static const String V2_QUOTATION_GROUP1 = '/v2_quotation_group1';
+  static const String V2_QUOTATION_GROUP2 = '/v2_quotation_group2';
+  static const String V2_AFTER_QUOTATION_GROUP2 = '/v2_after_quotation_group2';
+  static const String V2_QUOTATION_GROUP56 = '/v2_quotation_group56';
+  static const String V2_WINNING_BID = '/v2_winning_bid';
+  static const String V2_PAYMENT_ORDER = '/v2_payment_order';
+  // agent
+  static const String V3_QUOTE_LIST = '/v3_quote_list';
+  static const String V3_QUOTE_CHECK = '/v3_quote_check';
+  static const String V3_QUOTE_RESPONSE = '/v3_quote_response';
+  static const String V3_QUOTE_REQUEST = '/v3_quote_request';
+  static const String V3_CONTRACT = '/v3_contract';
+  static const String V3_REGISTER_AND_COMMIT = '/v3_register_and_commit';
+  static const String V3_ACCIDENT_INSURANCE = '/v3_accident_insurance';
+  static const String V3_OTHER_INSURANCE = '/v3_other_insurance';
+  static const String V3_TAX = '/v3_tax';
+  static const String V3_INSURANCE_DETAIL = '/v3_insurance_detail';
+  static const String V3_PAYMENT_ACCOUNT = '/v3_payment_account';
+  static const String V3_PROFILE = '/v3_profile';
+  static const String V3_POINT_BASED = '/v3_point_based';
+  static const String V3_WALLET = '/v3_wallet';
+  static const String V3_RULES = '/v3_rules';
+  static const String V3_INTRODUCE = '/v3_introduce';
+  static const String V3_HELP = '/v3_help';
+  static const String V3_JOB_MANAGEMENT = '/v3_job_management';
+  static const String V3_INURANCE_REGISTER = '/v3_inurance_register';
+  static const String V3_YOUR_INSURANCE = '/v3_your_insurance';
+  static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
+  static const String V3_RECHARGE = '/v3_recharge';
+
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
 
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
+  static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
 
   //builder
@@ -124,4 +187,16 @@ class AppRoutes {
   static const String V2_RECHARGE = '/v2_recharge';
   static const String V2_PAYMENT_METHOD = '/v2_payment_method';
   static const String V2_BILL_DETAIL_IS_BUY = '/v2_bill_detail_is_buy';
+  static const String V3_STORE = '/v3_store';
+  static const String V3_PRODUCT_MANAGEMENT = '/v3_product_management';
+  static const String V3_ORDER_MANAGEMENT = '/v3_order_management';
+  static const String V3_WAREHOUSE = '/v3_warehouse';
+  static const String V3_REVENUE = '/v3_revenue';
+  static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
+  static const String V3_PRODUCT_ADD = '/v3_product_add';
+  static const String V4_ADD_DAILY_REPORT = '/v4_add_daily_report';
+  static const String V4_ADD_REPORT_ON_REQUEST = '/v4_add_report_on_request';
+  static const String V4_RULES = '/v4_rules';
+  static const String V4_SALARY = '/v4_salary';
+  static const String V4_INFO = '/v4_info';
 }

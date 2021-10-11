@@ -1,157 +1,322 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/card/product_card.dart';
+import 'package:template/view/basewidget/field_widget.dart';
+import 'package:template/view/basewidget/home/home_widget.dart';
+import 'package:template/view/basewidget/news/news.dart';
+import 'package:template/view/basewidget/task_need_worker.dart';
 
 import 'home_controller.dart';
 
 class V2HomePage extends GetView<V2HomeController> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
         builder: (V2HomeController controller) {
-          return Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: ColorResources.THEME_DEFAULT,
-                ),
-                child: Stack(children: [
-                  Positioned(
-                    top: -20,
-                    left: -50,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -80,
-                    right: -20,
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            ColorResources.APPBARCIRCLECOLOR.withOpacity(0.4),
-                            ColorResources.APPBARCIRCLECOLOR2.withOpacity(0.0)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 25,
-                    // left: 15,
-                    width: size.width,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_LARGE),
-                              child: Image.asset(
-                                Images.V4AvatarHome,
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            controller.fullname,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            ),
-                          ),
-                          const Spacer(),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5),
-                            child: const Icon(
-                              CupertinoIcons.bell_fill,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(width: 10)
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
+          return HomeWidget(
+            fullname: "KH, ${controller.fullname}!",
+            content: Column(
+              children: [
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-              // white
-              Positioned(
-                top: 100,
-                child: Container(
-                  height: size.height - 180,
-                  width: size.width,
-                  margin: const EdgeInsets.only(),
-                  padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                  alignment: Alignment.centerLeft,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffF6F6F7),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
+                // need update widget
+                _needUpdateWidget(),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+
+                // category box widget
+                _categoryBoxWidget(),
+
+                // box
+                _box(),
+
+                // need people widget
+                _needPeopleWidget(controller),
+
+                // san pham widget
+                _sanPhamWidget(context),
+
+                // news
+                _newsWidget()
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  ///
+  /// need update widget
+  ///
+  Widget _needUpdateWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
+        child: Row(
+          children: [
+            const Text(
+              'Bạn cần hoàn thiện hồ sơ',
+              style: TextStyle(
+                color: Color(0xff4D4D4D),
+                fontWeight: FontWeight.bold,
+                fontSize: Dimensions.FONT_SIZE_SMALL,
+              ),
+            ),
+            const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: 100,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: const BoxDecoration(
+                  color: Color(0xff2196F3),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                   ),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: size.width,
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                              onTap: () => controller.onProductPageClick(),
-                              child: Text(
-                                "San pham",
-                                style: Dimensions.fontSizeStyle16w600()
-                                    .copyWith(color: ColorResources.PRIMARY),
-                              ))
-                        ],
+                ),
+                child: const Text(
+                  "Cập nhật",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// category box widget
+  ///
+  Widget _categoryBoxWidget() {
+    return SizedBox(
+      height: 130,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisExtent: 100,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.contentGrid!.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return GestureDetector(
+            onTap: controller.contentGrid![index]["onTap"] as Function(),
+            child: BtnCategory(
+              label: controller.contentGrid![index]["label"].toString(),
+              gradient:
+                  controller.contentGrid![index]["gradient"] as RadialGradient,
+              icon: controller.contentGrid![index]["icon"] as IconData,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  ///
+  /// box
+  ///
+  Widget _box() {
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          decoration: const BoxDecoration(
+            color: Color(0xff2196F3),
+            borderRadius: BorderRadius.all(
+                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+          ),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.work,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+              Text(
+                'Kết quả báo giá',
+                style: TextStyle(
+                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// field widget
+  ///
+  Widget _fieldWidget(String title, Function() onTap, Widget widget) {
+    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
+    return Container(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: _fontSize,
+                  color: Color(0xff040404),
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: onTap,
+                child: Row(
+                  children: const [
+                    Text(
+                      "Xem thêm",
+                      style: TextStyle(
+                        color: Color(0xff2196f3),
+                        fontSize: _fontSize,
                       ),
                     ),
-                  ),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Color(0xff2196f3),
+                      size: _fontSize,
+                    ),
+                  ],
                 ),
               )
             ],
-          );
-        },
+          ),
+          widget
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// need people widget
+  ///
+  Widget _needPeopleWidget(V2HomeController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      child: FieldWidget(
+        onTap: () => controller.onShortHandedPageClick(),
+        title: "Công việc đang cần người",
+        widget: SizedBox(
+          height: 220,
+          child: ListView.builder(
+            itemCount: 2,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext ctx, index) {
+              return const TaskNeedWorker(
+                nhanTask: "Thợ ốp lát",
+                tenTask: "Công trình khách 5 sao tại TP Đà Nẵng",
+                maTask: "DH123456",
+                trangThai: "Đang tuyển",
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// _sanPhamWidget
+  ///
+  Widget _sanPhamWidget(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      child: FieldWidget(
+        onTap: () {},
+        title: "Sản phẩm",
+        widget: Container(
+          height: 280,
+          child: GridView.builder(
+            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisExtent: 270,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 2,
+            itemBuilder: (BuildContext ctx, index) {
+              return Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  ),
+                ),
+                padding:
+                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: ProductCard(
+                  title: "Ke chữ thập màu vàng cho ...",
+                  image: Images.example,
+                  cost: PriceConverter.convertPrice(context, 100000),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    return Padding(
+      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      child: FieldWidget(
+        title: "Tin tức",
+        onTap: () {},
+        widget: SizedBox(
+          height: 250,
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 2,
+            itemBuilder: (
+              BuildContext ctx,
+              index,
+            ) {
+              return const Padding(
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: NewsBox(
+                  title: "Tin nóng tóm tắt tổng hợp",
+                  describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

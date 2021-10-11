@@ -19,20 +19,23 @@ class V1RulesPage extends GetView<V1RulesController> {
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_LARGE),
               child: Column(
                 children: [
-                  Image.asset("assets/images/device.png"),
+                  //title
                   Padding(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                      vertical: Dimensions.PADDING_SIZE_LARGE,
+                    ),
                     child: Text(
-                      "THIẾT BỊ",
-                      style: Dimensions.fontSizeStyle20w600(),
+                      controller.title,
+                      style: Dimensions.fontSizeStyle22w600(),
                     ),
                   ),
+
+                  //subtitle
                   Text(
-                    "Bất kỳ thiết bị, hệ thống hoặc tiện ích nào, do Công ty hoặc các nhà thầu phụ của Công ty cung cấp có thể được sử dụng trực tiếp hoặc gián tiếp trong việc cung cấp Dịch vụ, và không phải là đối tượng của một thỏa thuận riêng giữa các Bên theo đó quyền sở hữu được chuyển sang Khách hàng.",
-                    textAlign: TextAlign.center,
-                    style: Dimensions.fontSizeStyle16()
-                        .copyWith(color: ColorResources.GREY),
+                    controller.subTitle,
+                    textAlign: TextAlign.justify,
+                    style: Dimensions.fontSizeStyle16().copyWith(height: 1.5),
                   ),
                 ],
               ),

@@ -235,7 +235,7 @@
 //                           vertical: DeviceUtils.getScaledSize(context, 0.05)),
 //                       decoration: BoxDecoration(
 //                         color: ColorResources.WHITE,
-//                         borderRadius: BorderRadius.circular(10),
+//                         borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
 //                         boxShadow: [
 //                           BoxShadow(
 //                             blurRadius: 2,
@@ -275,7 +275,7 @@
 //                                 decoration: const BoxDecoration(
 //                                   color: Colors.amberAccent,
 //                                   borderRadius:
-//                                       BorderRadius.all(Radius.circular(10)),
+//                                       BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
 //                                   image: DecorationImage(
 //                                       image: AssetImage(
 //                                           "assets/images/Untitled.png"),

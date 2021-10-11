@@ -4,57 +4,148 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/drop_down_button.dart';
+
+import 'package:template/view/basewidget/button/long_button.dart';
+import 'package:template/view/basewidget/textfield/input_field.dart';
+import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/screen/v4-employee/account/component/add_indentity_card.dart';
 import 'info_controller.dart';
 
-class EditInfoPage extends GetView<EditInfoController> {
+class V4InfoPage extends GetView<V4InfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Chỉnh sửa thông tin cá nhân"),
+      appBar: const AppBarWidget(title: "Thông tin cá nhân"),
       body: SingleChildScrollView(
-          child: GetBuilder<EditInfoController>(
-              init: EditInfoController(),
-              builder: (EditInfoController controller) {
-                if (controller.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                return Container(
-                  color: Colors.white,
+          child: GetBuilder<V4InfoController>(
+              init: V4InfoController(),
+              builder: (V4InfoController controller) {
+                return SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //Họ và tên
+                      _name(controller, context),
+
+                      Row(
+                        children: [
+                          //Ngày sinh
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: Dimensions.PADDING_SIZE_DEFAULT,
+                            ),
+                            child: _birthday(controller, context),
+                          ),
+
+                          //Giới tính
+                          _sex(context),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          //CMND/Căn cước
+                          _identityCard(controller, context),
+
+                          // Ngày cấp
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: Dimensions.PADDING_SIZE_DEFAULT,
+                            ),
+                            child: _dateIndentityCard(controller, context),
+                          ),
+                        ],
+                      ),
+
+                      // nơi cấp CMND/Căn cước
+                      _addresssIndentityCard(controller, context),
+                      Row(
+                        children: [
+                          //Số điện thoại
+                          _phoneNumber(controller, context),
+
+                          // Email
+                          _email(controller, context),
+                        ],
+                      ),
+
+                      // địa chỉ thường trú hiện tại
+                      _addresss(controller, context),
+
+                      Row(
+                        children: [
+                          // Tinhr /Tp
+                          _city(context),
+
+                          //Quận/Huyện
+                          _district(context),
+                        ],
+                      ),
+
+                      //Phường/ xã
+                      _ward(context),
+
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: Dimensions.PADDING_SIZE_DEFAULT,
-                            right: Dimensions.PADDING_SIZE_DEFAULT),
-                        child: Column(
+                        padding: const EdgeInsets.all(
+                          Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        child: RichText(
+                          text: const TextSpan(
+                              style: TextStyle(
+                                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      'Hình ảnh mặt trước và mặt sau của CMND/Căn cước',
+                                  style: TextStyle(
+                                    color: ColorResources.BLACK,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '*',
+                                  style: TextStyle(
+                                    color: ColorResources.RED,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE * 1.5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            // Mã giới thiệu
-                            _normalInputWidget(
-                              context,
-                              "Họ và tên",
-                              controller.textEditFullnameController,
-                              TextInputType.text,
+                            //Thêm CMND/Căn cước mặt trước
+                            const AddIndentityCard(
+                              label: 'Mặt trước',
                             ),
 
-                            // Địa chỉ liên lạc
-                            _addressInputWidget(
-                              context,
-                              "Địa chỉ liên lạc",
-                              controller.textEditAddressController,
-                              TextInputType.text,
+                            //Thêm CMND/Căn cước mặt sau
+                            const AddIndentityCard(
+                              label: 'Mặt sau',
                             ),
-                            // avatar
-                            _uploadAvatar(context),
-
-                            // tiếp tục button
-                            _buttonUpdate(context),
                           ],
                         ),
-                      )
+                      ),
+
+                      Container(
+                        height: DeviceUtils.getScaledHeight(context, 0.05),
+                      ),
+
+                      //Button cập nhập
+                      _btnUpdate(),
+
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
                     ],
                   ),
                 );
@@ -63,186 +154,219 @@ class EditInfoPage extends GetView<EditInfoController> {
   }
 
   ///
-  /// input widget
+  /// Full name
   ///
-  Widget _normalInputWidget(BuildContext context, String? label,
-      TextEditingController controllers, TextInputType extInputType) {
-    return Container(
-      margin:
-          const EdgeInsets.symmetric(vertical: Dimensions.MARGIN_SIZE_SMALL),
-      child: TextField(
-        textInputAction: TextInputAction.next,
-        textAlignVertical: TextAlignVertical.center,
-        controller: controllers,
-        keyboardType: extInputType,
-        cursorColor: ColorResources.PRIMARY,
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_SMALL,
-            vertical: Dimensions.PADDING_SIZE_DEFAULT,
-          ),
-          border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          disabledBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          hintText: label,
-          filled: true,
-          fillColor: Colors.transparent,
-        ),
-      ),
+  Widget _name(V4InfoController controller, BuildContext context) {
+    return InputField(
+      allowEdit: false,
+      allowMultiline: false,
+      controller: controller.nameController,
+      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      hidden: false,
+      holdplacer: "Ngô Trần Anh Phôn",
+      label: 'Họ và tên',
+      obligatory: true,
+      typeInput: TextInputType.text,
+      width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
+}
 
-  ///
-  ///  address input widget
-  ///
-  Widget _addressInputWidget(BuildContext context, String? label,
-      TextEditingController controllers, TextInputType extInputType) {
-    return Container(
-      margin:
-          const EdgeInsets.symmetric(vertical: Dimensions.MARGIN_SIZE_SMALL),
-      child: TextField(
-        textInputAction: TextInputAction.done,
-        textAlignVertical: TextAlignVertical.center,
-        controller: controllers,
-        keyboardType: extInputType,
-        cursorColor: ColorResources.PRIMARY,
-        decoration: InputDecoration(
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_SMALL,
-            vertical: Dimensions.PADDING_SIZE_DEFAULT,
-          ),
-          border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          disabledBorder: OutlineInputBorder(
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              borderSide: const BorderSide(color: ColorResources.GREY)),
-          hintText: label,
-          filled: true,
-          fillColor: Colors.transparent,
-        ),
-      ),
-    );
-  }
+///
+///Birthday
+///
+Widget _birthday(V4InfoController controller, BuildContext context) {
+  return TextFieldDate(
+    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+    isDate: true,
+    allowEdit: true,
+    controller: controller.birthdayController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    holdplacer: "1999-10-09",
+    label: "Ngày",
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
 
-  ///
-  /// upload avatar
-  ///
-  Widget _uploadAvatar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_LARGE,
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "Tải lên avatar",
-                style: Dimensions.fontSizeStyle16w600()
-                    .copyWith(color: ColorResources.BLACK),
-              ),
-            ],
-          ),
+///
+/// Giới tính
+///
+Widget _sex(BuildContext context) {
+  return DropDownButton<String>(
+    label: 'Giới tính',
+    data: const ["Nam", "Nữ"],
+    obligatory: true,
+    onChanged: (value) {},
+    value: "Nam",
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
 
-          SizedBox(height: DeviceUtils.getScaledSize(context, 0.025)),
+///
+/// CMND
+///
+Widget _identityCard(V4InfoController controller, BuildContext context) {
+  return InputField(
+    allowEdit: false,
+    allowMultiline: false,
+    controller: controller.indentityCardController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: "191998122",
+    label: 'Số CMND/Căn cước',
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 0.52),
+  );
+}
 
-          // hình ảnh avatar
-          GestureDetector(
-            onTap: () => controller.onAvatarPicker(),
-            child: Container(
-              height: DeviceUtils.getScaledSize(context, .382),
-              width: DeviceUtils.getScaledSize(context, .509),
-              padding: EdgeInsets.symmetric(
-                horizontal: controller.avatarFile != null
-                    ? 0
-                    : Dimensions.PADDING_SIZE_LARGE * 2,
-              ),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: controller.avatarFile != null
-                    ? null
-                    : Border.all(width: 2, color: Colors.grey),
-              ),
-              child: controller.avatarFile != null
-                  ? Image.file(
-                      controller.avatarFile!,
-                      height: double.infinity,
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
-                    )
-                  : (controller.avatarPath != null)
-                      ? Image.network(
-                          controller.avatarPath!,
-                          fit: BoxFit.fitHeight,
-                        )
-                      : Container(),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+///
+///Ngày cấp
+///
+Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
+  return TextFieldDate(
+    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+    isDate: true,
+    allowEdit: true,
+    controller: controller.dateIndentityController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    holdplacer: "2018-02-09",
+    label: "Ngày cấp",
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 0.48),
+  );
+}
 
-  ///
-  /// button cập nhật
-  ///
-  Widget _buttonUpdate(BuildContext context) {
-    return GestureDetector(
-      onTap: () => controller.onBtnUpdateClick(context),
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-            vertical: Dimensions.MARGIN_SIZE_DEFAULT),
-        padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_DEFAULT,
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT + 5),
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF61A63C),
-              Color(0xFF61A63C),
-              Color(0xFF61A63C),
-            ],
-          ),
-        ),
-        child: const Text(
-          "Cập nhật",
-          style: TextStyle(
-              color: Colors.white, fontSize: Dimensions.ICON_SIZE_SMALL),
-        ),
-      ),
-    );
-  }
+///
+/// Nơi cấp CMND / Căn cước
+///
+Widget _addresssIndentityCard(
+    V4InfoController controller, BuildContext context) {
+  return InputField(
+    allowEdit: false,
+    allowMultiline: false,
+    controller: controller.addressIndentityController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: "Thừa Thiên Huế",
+    label: 'Nơi cấp',
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 1),
+  );
+}
+
+///
+/// Số điện thoại
+///
+Widget _phoneNumber(V4InfoController controller, BuildContext context) {
+  return InputField(
+    allowEdit: false,
+    allowMultiline: false,
+    controller: controller.phoneNumberController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: "0899461113",
+    label: 'Số điện thoại',
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Email
+///
+Widget _email(V4InfoController controller, BuildContext context) {
+  return InputField(
+    allowEdit: false,
+    allowMultiline: false,
+    controller: controller.emailController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: "ngotrananhphon.flutter.dev@gmail.com",
+    label: 'Email(nếu có)',
+    obligatory: false,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// địa chỉ thường trú hiện tại
+///
+Widget _addresss(V4InfoController controller, BuildContext context) {
+  return InputField(
+    allowEdit: false,
+    allowMultiline: false,
+    controller: controller.addressController,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    hidden: false,
+    holdplacer: "Hòa Thọ Đông, Cẩm Lệ, Đà Nẵng",
+    label: 'Địa chỉ thường trú hiện tại',
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 1),
+  );
+}
+
+///
+/// Tỉnh /TP
+///
+Widget _city(BuildContext context) {
+  return DropDownButton<String>(
+    label: 'Tỉnh/Tp',
+    data: const ["Đà Nẵng", "Huế"],
+    obligatory: true,
+    onChanged: (value) {},
+    value: "Đà Nẵng",
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Quận / Huyện
+///
+Widget _district(BuildContext context) {
+  return DropDownButton<String>(
+    label: 'Quận/Huyện',
+    data: const ["Cẩm Lệ", "Hải Châu"],
+    obligatory: true,
+    onChanged: (value) {},
+    value: "Cẩm Lệ",
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Phường / xã
+///
+Widget _ward(BuildContext context) {
+  return DropDownButton<String>(
+    label: 'Phường/Xã',
+    data: const ["Hòa Thọ Đông", "Thanh Khê"],
+    obligatory: true,
+    onChanged: (value) {},
+    value: "Hòa Thọ Đông",
+    width: DeviceUtils.getScaledWidth(context, 0.5),
+  );
+}
+
+///
+/// Button cập nhập
+///
+Widget _btnUpdate() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      horizontal: Dimensions.PADDING_SIZE_LARGE,
+    ),
+    child: LongButton(
+      color: ColorResources.PRIMARY,
+      onPressed: () {},
+      title: 'Cập nhập',
+    ),
+  );
 }

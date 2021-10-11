@@ -49,7 +49,7 @@ class V1CandidateController extends GetxController{
       title: "",
       content: const DialogContent(),
       cancel: ElevatedButton(onPressed: (){
-        Navigator.of(Get.context!).pop();
+        Get.back();
       }, child: const Text("Tìm kiếm"))
     );
   }
