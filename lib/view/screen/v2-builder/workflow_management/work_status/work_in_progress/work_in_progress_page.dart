@@ -6,6 +6,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/image_url.dart';
+// ignore: unused_import
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
@@ -21,7 +22,9 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
         title: "Việc đang làm",
         action: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.onClickToDetialWorkInProgressPage();
+            },
             icon: const Icon(
               Icons.read_more_outlined,
               color: ColorResources.WHITE,
@@ -101,13 +104,7 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
                       style: Dimensions.fontSizeStyle14(),
                     ),
                     const SizedBox(
-                      height: Dimensions.PADDING_SIZE_LARGE,
-                    ),
-
-                    //Tiêu đề ý kiến của thợ thầu
-                    Text(
-                      'Ý kiến thợ thầu',
-                      style: Dimensions.fontSizeStyle16w600(),
+                      height: Dimensions.PADDING_SIZE_SMALL,
                     ),
 
                     //Ý kiến của thợ thầu
@@ -255,15 +252,14 @@ Widget _statusWorkInProgress(BuildContext context) {
 Widget _contentOpinion(
     V2WorkInProgressController controller, BuildContext context) {
   return InputField(
-    showLabel: false,
     line: 4,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.rateBuilder,
-    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+    fontSize: Dimensions.FONT_SIZE_LARGE,
     hidden: false,
     holdplacer: 'Thầu/Thợ ý kiến tại đây',
-    label: '',
+    label: 'Ý kiến thầu thợ',
     obligatory: false,
     typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),

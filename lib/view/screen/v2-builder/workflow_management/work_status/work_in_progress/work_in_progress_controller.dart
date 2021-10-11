@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V2WorkInProgressController extends GetxController {
   //khai báo isLoading
@@ -21,5 +22,12 @@ class V2WorkInProgressController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+  }
+
+  ///
+  ///Click to Detail Work In progress page
+  ///
+  void onClickToDetialWorkInProgressPage() {
+    Get.toNamed(AppRoutes.V2_DETAIL_WORK_IN_PROGRESS);
   }
 }

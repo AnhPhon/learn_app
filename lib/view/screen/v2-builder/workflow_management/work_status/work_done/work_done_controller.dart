@@ -1,8 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:template/routes/app_routes.dart';
 
 class V2WorkDoneController extends GetxController {
 //Khai báo isLoading
   bool isLoading = true;
+
+  final paymentRequest = TextEditingController();
+  final customerReviews = TextEditingController();
+  final warrantyContents = TextEditingController();
 
   String job = "Thợ ốp lát";
   String title = "Công trình khách hàng 4 sao tại Đà Nẵng";
@@ -18,5 +25,12 @@ class V2WorkDoneController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+  }
+
+  ///
+  ///Click to Detail Work Done Page
+  ///
+  void onClickToDetailWorkDonePage() {
+    Get.toNamed(AppRoutes.V2_DETAIL_WORK_DONE);
   }
 }

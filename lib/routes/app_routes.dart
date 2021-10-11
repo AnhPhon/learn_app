@@ -223,6 +223,9 @@ class AppRoutes {
   static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
   static const String V2_WORK_DONE = '/v2_work_done';
   static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
+  static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
+  static const String V2_DETAIL_WORK_IN_PROGRESS =
+      '/v2_detail_work_in_progress';
   // Builder
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
