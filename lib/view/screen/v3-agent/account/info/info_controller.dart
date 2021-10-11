@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:template/provider/upload_image_provider.dart';
+// import 'package:template/provider/user_provider.dart';
 
 class EditInfoController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -25,7 +27,7 @@ class EditInfoController extends GetxController {
 
   // @override
   // void onInit() {
-  //   // // first load
+  //   // first load
   //   // sl.get<SharedPreferenceHelper>().userId.then(
   //   //   (value) {
   //   //     // load user theo id

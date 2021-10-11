@@ -76,7 +76,7 @@ class V1Request2Page extends GetView<V1Request2Controller> {
                         padding: const EdgeInsets.only(
                           top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: ContentWhiteBox(infoCard: controller.infoCard!),
+                        child: ContentWhiteBox(infoCard: controller.infoCard ?? []),
                       );
                     }),
                   ),

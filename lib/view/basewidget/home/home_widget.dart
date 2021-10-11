@@ -66,13 +66,19 @@ class HomeWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.all(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
-                        child: const Icon(Icons.menu, color: Colors.white),
-                      ),
+                    Builder(
+                      builder: (context) {
+                        return GestureDetector(
+                          onTap: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                            margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
+                            child: const Icon(Icons.menu, color: Colors.white),
+                          ),
+                        );
+                      },
                     ),
                     Text(
                       fullname,
