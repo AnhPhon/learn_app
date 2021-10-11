@@ -3,7 +3,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class InputField extends StatelessWidget {
-  const InputField(
+  InputField(
       {required this.label,
       required this.holdplacer,
       required this.controller,
@@ -32,7 +32,8 @@ class InputField extends StatelessWidget {
   final String? errorText;
   final int? line;
   final Function(String value)? onChanged;
-  final bool? boldHinText;
+  bool? boldHinText;
+
   @override
   Widget build(BuildContext context) {
     return Container(

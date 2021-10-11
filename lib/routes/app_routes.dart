@@ -14,6 +14,8 @@ class AppRoutes {
       "/v1orderfeedbackcontractors";
   // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
+  // Phản hồi đơn hàng nhóm 1
+  static const String V1_BUILD_ORDER_FEEDBACK = '/v1_build_order_feedback';
   // Phản hồi đơn hàng nhóm 6
   static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
@@ -230,7 +232,8 @@ class AppRoutes {
   // Xem tin tuyển dụng
   static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
   //Xem lịch sử tin đã ứng tuyển và đã lưu
-  static const String V2_HISTORY_RECRUITMENT_NEWS = '/v2_history_recruitment_news';
+  static const String V2_HISTORY_RECRUITMENT_NEWS =
+      '/v2_history_recruitment_news';
   // Hình thức ứng tuyển
   static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
   // Đánh văn bản
@@ -249,6 +252,14 @@ class AppRoutes {
   static const String V4_RULES = '/v4_rules';
   static const String V4_SALARY = '/v4_salary';
   static const String V4_INFO = '/v4_info';
+
+  //builder
+  static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
+  static const String V2_WORK_DONE = '/v2_work_done';
+  static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
+  static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
+  static const String V2_DETAIL_WORK_IN_PROGRESS =
+      '/v2_detail_work_in_progress';
   // Builder
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
