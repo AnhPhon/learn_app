@@ -81,7 +81,7 @@ class V2HomePage extends GetView<V2HomeController> {
             const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
             const Spacer(),
             GestureDetector(
-              onTap: () {},
+              onTap: controller.onNeedUpdateClick,
               child: Container(
                 width: 100,
                 alignment: Alignment.center,

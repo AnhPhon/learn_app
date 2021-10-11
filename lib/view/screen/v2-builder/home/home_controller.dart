@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 
 
 class V2HomeController extends GetxController {
@@ -68,5 +69,9 @@ class V2HomeController extends GetxController {
   ///
   void onProductPageClick() {
     Get.toNamed(AppRoutes.V2_PRODUCT);
+  }
+
+  void onNeedUpdateClick() {
+    Get.to(V2FinishUpdatePage());
   }
 }
