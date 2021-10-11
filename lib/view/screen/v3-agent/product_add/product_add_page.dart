@@ -51,13 +51,14 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     ),
 
                     //product category
-                    DropDownButton1(
+                    DropDownButton1<String>(
                       label: "Danh mục sản phẩm",
                       hint: " ",
                       value: null,
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
+                      width: double.infinity,
                     ),
 
                     //stock
@@ -69,23 +70,25 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     ),
 
                     //product status
-                    DropDownButton1(
+                    DropDownButton1<String>(
                       label: "Tình trạng sản phẩm",
                       hint: " ",
                       value: null,
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
+                      width: double.infinity,
                     ),
 
                     //shipping method
-                    DropDownButton1(
+                    DropDownButton1<String>(
                       label: "Hình thức vận chuyển",
                       hint: " ",
                       value: null,
                       onChanged: (val) {},
                       data: const ["dropdown"],
                       isColorFieldWhite: true,
+                      width: double.infinity,
                     ),
                   ],
                 ),
@@ -199,12 +202,13 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_SMALL,
         ),
-        DropDownButton1(
+        DropDownButton1<String>(
           hint: " ",
           value: null,
           onChanged: (val) {},
           data: const ["dropdown"],
           isColorFieldWhite: true,
+          width: double.infinity,
         ),
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_DEFAULT,

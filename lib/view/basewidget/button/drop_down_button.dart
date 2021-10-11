@@ -19,7 +19,7 @@ class DropDownButton<T> extends StatelessWidget {
   final double width;
   final Function(T? value) onChanged;
   final String? label;
-  final bool obligatory;
+  final bool? obligatory;
   final List<T> data;
   final double? paddingTop;
   final bool? isColorFieldWhite;
@@ -48,7 +48,7 @@ class DropDownButton<T> extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: ColorResources.BLACK.withOpacity(0.7)),
                   ),
-                  if (obligatory)
+                  if (obligatory == true)
                     const Text(
                       '*',
                       style: TextStyle(
@@ -60,7 +60,9 @@ class DropDownButton<T> extends StatelessWidget {
                     Container()
                 ],
               ),
-            ),
+            )
+          else
+            SizedBox.shrink(),
           FormField(
             builder: (field) {
               return InputDecorator(

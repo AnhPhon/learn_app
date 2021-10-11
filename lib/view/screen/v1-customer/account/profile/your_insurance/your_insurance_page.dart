@@ -15,6 +15,7 @@ class V1YourInsurancePage extends GetView<V1YourInsuranceController> {
             appBar: AppBarWidget(title: controller.title),
             body: ItemListWidget(
               onTap: () {},
+              urlImage: controller.urlImage,
               title: "Bảo hiểm ô tô bắt buộc",
               rowText1: "7.500.000 vnđ",
               colorRowText1: ColorResources.RED,

@@ -130,6 +130,20 @@ class AppRoutes {
   static const String V3_DASHBOARD = '/v3_dashboard';
   static const String V4_DASHBOARD = '/v4_dashboard';
 
+  //builder
+  static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
+  static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
+  static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
+  static const String V2_SHORTHANDED_GROUP4 = '/v2_shorthanded_group4';
+  static const String V2_SHORTHANDED_GROUP5 = '/v2_shorthanded_group5';
+  static const String V2_SHORTHANDED_GROUP6 = '/v2_shorthanded_group6';
+  static const String V2_QUOTATION_GROUP1 = '/v2_quotation_group1';
+  static const String V2_QUOTATION_GROUP2 = '/v2_quotation_group2';
+  static const String V2_AFTER_QUOTATION_GROUP2 = '/v2_after_quotation_group2';
+  static const String V2_QUOTATION_GROUP56 = '/v2_quotation_group56';
+  static const String V2_WINNING_BID = '/v2_winning_bid';
+  static const String V2_PAYMENT_ORDER = '/v2_payment_order';
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
   static const String V3_QUOTE_CHECK = '/v3_quote_check';
@@ -153,7 +167,6 @@ class AppRoutes {
   static const String V3_YOUR_INSURANCE = '/v3_your_insurance';
   static const String V3_PAYMENT_SUCCESS = '/v3_payment_success';
   static const String V3_RECHARGE = '/v3_recharge';
-  
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -162,6 +175,18 @@ class AppRoutes {
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
   static const String V4_EXPORT_IMPROT = '/v4_export_import';
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
+
+  //builder
+  static const String V2_PAYMENT_ACCOUNT = '/v2_payment_account';
+  static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
+  static const String V2_PRODUCT = '/v2_product';
+  static const String V2_CART = '/v2_cart';
+  static const String V2_PRODUCT_DETAIL = '/v2_product_detail';
+  static const String V2_SHIPPING_METHOD = '/v2_shipping_method';
+  static const String V2_SHIPPING_ADDRESS = '/v2_shipping_address';
+  static const String V2_RECHARGE = '/v2_recharge';
+  static const String V2_PAYMENT_METHOD = '/v2_payment_method';
+  static const String V2_BILL_DETAIL_IS_BUY = '/v2_bill_detail_is_buy';
   static const String V3_STORE = '/v3_store';
   static const String V3_PRODUCT_MANAGEMENT = '/v3_product_management';
   static const String V3_ORDER_MANAGEMENT = '/v3_order_management';

@@ -48,7 +48,8 @@ class V3ProfilePage extends GetView<V3ProfileController> {
                   // Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc
                   _items(
                     icon: const Icon(Icons.collections_bookmark),
-                    text: "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
+                    text:
+                        "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
                     onTap: () {},
                   ),
 
@@ -72,7 +73,7 @@ class V3ProfilePage extends GetView<V3ProfileController> {
       {required Icon icon, required String text, required VoidCallback onTap}) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),,
+        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
       ),
       color: ColorResources.WHITE,
       // shadowColor: ColorResources.BLACK.withOpacity(.4),

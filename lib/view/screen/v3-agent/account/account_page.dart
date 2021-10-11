@@ -223,7 +223,7 @@ class V3AccountPage extends GetView<V3AccountController> {
       {required Icon icon, required String text, required VoidCallback onTap}) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),,
+        borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
       ),
       color: ColorResources.WHITE,
       // shadowColor: ColorResources.BLACK.withOpacity(.4),

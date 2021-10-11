@@ -89,8 +89,31 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
+import 'package:template/view/screen/v2-builder/bill_detail_is_buy/bill_detail_is_buy_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
+import 'package:template/view/screen/v2-builder/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/v2-builder/product/cart/cart_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_detail/product_detail_page.dart';
+import 'package:template/view/screen/v2-builder/product/product_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
+import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
+import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
+import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/after_quotation_g2/after_quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/quotation_g2/quotation_g2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group2/shorthanded_group2_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group3/shorthanded_group3_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group4/shorthanded_group4_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56/quotation_g56_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
 import 'package:template/view/screen/v3-agent/account/introduce/introduce_page.dart';
@@ -308,6 +331,48 @@ class AppPages {
       page: () => V1NewsDetailPage(),
     ),
 
+    //builder
+    GetPage(
+      name: AppRoutes.V2_PRODUCT_DETAIL,
+      page: () => V2ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_CART,
+      page: () => V2CartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_METHOD,
+      page: () => V2ShippingMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHIPPING_ADDRESS,
+      page: () => V2ShippingAddressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ACCOUNT,
+      page: () => V2PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PRODUCT,
+      page: () => V2ProductPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_SUCCESS,
+      page: () => V2PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_RECHARGE,
+      page: () => V2RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_METHOD,
+      page: () => V2PaymentMethodPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_BILL_DETAIL_IS_BUY,
+      page: () => V2BillDetailIsBuyPage(),
+    ),
+
     ///
     /// v1 customer quote
     ///
@@ -331,7 +396,6 @@ class AppPages {
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
     ),
-    
 
     ///
     /// Thông báo
@@ -499,6 +563,58 @@ class AppPages {
       name: AppRoutes.V2_DASHBOARD,
       page: () => V2DashboardPage(),
       binding: V2DashboardBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED,
+      page: () => V2ShorthandedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP1,
+      page: () => V2ShorthandedGroup1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP2,
+      page: () => V2ShorthandedGroup2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP3,
+      page: () => V2ShorthandedGroup3Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP4,
+      page: () => V2ShorthandedGroup4Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP5,
+      page: () => V2ShorthandedGroup5Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_GROUP6,
+      page: () => V2ShorthandedGroup6Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP1,
+      page: () => V2QuotationG1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP2,
+      page: () => V2QuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_AFTER_QUOTATION_GROUP2,
+      page: () => V2AfterQuotationG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_QUOTATION_GROUP56,
+      page: () => V2QuotationG56Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WINNING_BID,
+      page: () => V2WinningBidPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PAYMENT_ORDER,
+      page: () => V2PaymentOrderPage(),
     ),
 
     // agent
