@@ -1,9 +1,9 @@
 import 'loai_tai_khoan_model.dart';
-import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
-import 'phuong_xa_model.dart';
-import 'nhom_cua_hang_model.dart';
 import 'mat_hang_dac_trung_model.dart';
+import 'nhom_cua_hang_model.dart';
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'tinh_tp_model.dart';
 
 class TaiKhoanModel {
   LoaiTaiKhoanModel? idLoaiTaiKhoan;

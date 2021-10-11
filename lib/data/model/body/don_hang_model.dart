@@ -1,9 +1,9 @@
+import 'hinh_thuc_thanh_toan_model.dart';
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
 import 'tai_khoan_model.dart';
 import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
-import 'phuong_xa_model.dart';
 import 'trang_thai_don_hang_model.dart';
-import 'hinh_thuc_thanh_toan_model.dart';
 
 class DonHangModel {
   TaiKhoanModel? idTaiKhoan;

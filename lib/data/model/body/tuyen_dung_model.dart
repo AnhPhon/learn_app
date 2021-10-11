@@ -1,17 +1,17 @@
-import 'tai_khoan_model.dart';
-import 'tinh_tp_model.dart';
-import 'quan_huyen_model.dart';
-import 'phuong_xa_model.dart';
-import 'hinh_thuc_lam_viec_model.dart';
-import 'trinh_do_hoc_van_model.dart';
-import 'chuyen_nganh_chinh_model.dart';
-import 'so_nam_kinh_nghiem_model.dart';
-import 'muc_luong_du_kien_model.dart';
-import 'thoi_gian_lam_viec_model.dart';
 import 'bang_gia_dang_tin_model.dart';
 import 'bang_gia_loc_ho_so_model.dart';
+import 'chuyen_nganh_chinh_model.dart';
+import 'hinh_thuc_lam_viec_model.dart';
 import 'hinh_thuc_thanh_toan_model.dart';
+import 'muc_luong_du_kien_model.dart';
+import 'phuong_xa_model.dart';
+import 'quan_huyen_model.dart';
+import 'so_nam_kinh_nghiem_model.dart';
+import 'tai_khoan_model.dart';
+import 'thoi_gian_lam_viec_model.dart';
+import 'tinh_tp_model.dart';
 import 'trang_thai_don_hang_model.dart';
+import 'trinh_do_hoc_van_model.dart';
 
 class TuyenDungModel {
   TaiKhoanModel? idTaiKhoan;

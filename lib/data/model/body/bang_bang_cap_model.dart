@@ -1,7 +1,7 @@
-import 'tai_khoan_model.dart';
-import 'trinh_do_model.dart';
 import 'chuyen_mon_model.dart';
 import 'loai_tot_nghiep_model.dart';
+import 'tai_khoan_model.dart';
+import 'trinh_do_model.dart';
 
 class BangBangCapModel {
   TaiKhoanModel? idTaiKhoan;
