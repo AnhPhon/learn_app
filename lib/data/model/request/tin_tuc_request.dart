@@ -8,6 +8,7 @@ class TinTucRequest {
   String? noiDung;
   String? hinhAnh;
   String? luotXem;
+
   TinTucRequest({
       this.id,
       this.loai,
@@ -39,15 +40,34 @@ class TinTucRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['loai'] = loai;
-    data['idDanhMucTinTuc'] = idDanhMucTinTuc;
-    data['tacGia'] = tacGia;
-    data['tieuDe'] = tieuDe;
-    data['tomTat'] = tomTat;
-    data['noiDung'] = noiDung;
-    data['hinhAnh'] = hinhAnh;
-    data['luotXem'] = luotXem;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null loai
+    if (loai != null) data['loai'] = loai; 
+
+    // check null idDanhMucTinTuc
+    if (idDanhMucTinTuc != null) data['idDanhMucTinTuc'] = idDanhMucTinTuc; 
+
+    // check null tacGia
+    if (tacGia != null) data['tacGia'] = tacGia; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null tomTat
+    if (tomTat != null) data['tomTat'] = tomTat; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+    // check null hinhAnh
+    if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
+
+    // check null luotXem
+    if (luotXem != null) data['luotXem'] = luotXem; 
+
+
     return data;
   }
 }

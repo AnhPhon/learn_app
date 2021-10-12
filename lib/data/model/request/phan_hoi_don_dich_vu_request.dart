@@ -10,6 +10,7 @@ class PhanHoiDonDichVuRequest {
   String? noiDungYeuCauBaoHanh;
   String? danhGiaBaoHanh;
   String? tinhTrangThanhToan;
+
   PhanHoiDonDichVuRequest({
       this.id,
       this.idDonDichVu,
@@ -45,17 +46,40 @@ class PhanHoiDonDichVuRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idDonDichVu'] = idDonDichVu;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['taiKhoanNhanDon'] = taiKhoanNhanDon;
-    data['yKienThoThau'] = yKienThoThau;
-    data['khachHangDanhGia'] = khachHangDanhGia;
-    data['yeuCauBaoHanh'] = yeuCauBaoHanh;
-    data['hinhAnhHuHai'] = hinhAnhHuHai;
-    data['noiDungYeuCauBaoHanh'] = noiDungYeuCauBaoHanh;
-    data['danhGiaBaoHanh'] = danhGiaBaoHanh;
-    data['tinhTrangThanhToan'] = tinhTrangThanhToan;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null taiKhoanNhanDon
+    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon; 
+
+    // check null yKienThoThau
+    if (yKienThoThau != null) data['yKienThoThau'] = yKienThoThau; 
+
+    // check null khachHangDanhGia
+    if (khachHangDanhGia != null) data['khachHangDanhGia'] = khachHangDanhGia; 
+
+    // check null yeuCauBaoHanh
+    if (yeuCauBaoHanh != null) data['yeuCauBaoHanh'] = yeuCauBaoHanh; 
+
+    // check null hinhAnhHuHai
+    if (hinhAnhHuHai != null) data['hinhAnhHuHai'] = hinhAnhHuHai; 
+
+    // check null noiDungYeuCauBaoHanh
+    if (noiDungYeuCauBaoHanh != null) data['noiDungYeuCauBaoHanh'] = noiDungYeuCauBaoHanh; 
+
+    // check null danhGiaBaoHanh
+    if (danhGiaBaoHanh != null) data['danhGiaBaoHanh'] = danhGiaBaoHanh; 
+
+    // check null tinhTrangThanhToan
+    if (tinhTrangThanhToan != null) data['tinhTrangThanhToan'] = tinhTrangThanhToan; 
+
+
     return data;
   }
 }

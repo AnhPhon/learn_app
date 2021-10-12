@@ -7,6 +7,7 @@ class XuatNhapKhoRequest {
   String? idDonViCungCap;
   String? soLuong;
   String? ghiChu;
+
   XuatNhapKhoRequest({
       this.id,
       this.idNhanVien,
@@ -36,14 +37,31 @@ class XuatNhapKhoRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['idKhoHang'] = idKhoHang;
-    data['idVatTu'] = idVatTu;
-    data['idDonViCungCap'] = idDonViCungCap;
-    data['soLuong'] = soLuong;
-    data['ghiChu'] = ghiChu;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null idKhoHang
+    if (idKhoHang != null) data['idKhoHang'] = idKhoHang; 
+
+    // check null idVatTu
+    if (idVatTu != null) data['idVatTu'] = idVatTu; 
+
+    // check null idDonViCungCap
+    if (idDonViCungCap != null) data['idDonViCungCap'] = idDonViCungCap; 
+
+    // check null soLuong
+    if (soLuong != null) data['soLuong'] = soLuong; 
+
+    // check null ghiChu
+    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+
+
     return data;
   }
 }

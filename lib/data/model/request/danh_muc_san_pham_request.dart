@@ -1,6 +1,7 @@
 class DanhMucSanPhamRequest {
   String? id;
   String? ten;
+
   DanhMucSanPhamRequest({
       this.id,
       this.ten});
@@ -18,8 +19,13 @@ class DanhMucSanPhamRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['ten'] = ten;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }

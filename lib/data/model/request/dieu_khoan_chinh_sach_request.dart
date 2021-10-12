@@ -3,6 +3,7 @@ class DieuKhoanChinhSachRequest {
   String? type;
   String? tieuDe;
   String? noiDung;
+
   DieuKhoanChinhSachRequest({
       this.id,
       this.type,
@@ -24,10 +25,19 @@ class DieuKhoanChinhSachRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['type'] = type;
-    data['tieuDe'] = tieuDe;
-    data['noiDung'] = noiDung;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null type
+    if (type != null) data['type'] = type; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

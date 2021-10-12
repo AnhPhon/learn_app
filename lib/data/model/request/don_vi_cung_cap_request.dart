@@ -1,6 +1,7 @@
 class DonViCungCapRequest {
   String? id;
   String? tenDonVi;
+
   DonViCungCapRequest({
       this.id,
       this.tenDonVi});
@@ -18,8 +19,13 @@ class DonViCungCapRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['tenDonVi'] = tenDonVi;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null tenDonVi
+    if (tenDonVi != null) data['tenDonVi'] = tenDonVi; 
+
+
     return data;
   }
 }

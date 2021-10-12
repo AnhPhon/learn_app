@@ -15,6 +15,7 @@ class NhanVienRequest {
   String? anhMSCMND;
   String? matKhau;
   String? tokenDevice;
+
   NhanVienRequest({
       this.id,
       this.idTinhTp,
@@ -60,22 +61,55 @@ class NhanVienRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['hoTen'] = hoTen;
-    data['soDienThoai'] = soDienThoai;
-    data['gioiTinh'] = gioiTinh;
-    data['cMND'] = cMND;
-    data['ngayCap'] = ngayCap;
-    data['noiCap'] = noiCap;
-    data['diaChi'] = diaChi;
-    data['hinhDaiDien'] = hinhDaiDien;
-    data['anhMTCMND'] = anhMTCMND;
-    data['anhMSCMND'] = anhMSCMND;
-    data['matKhau'] = matKhau;
-    data['tokenDevice'] = tokenDevice;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null hoTen
+    if (hoTen != null) data['hoTen'] = hoTen; 
+
+    // check null soDienThoai
+    if (soDienThoai != null) data['soDienThoai'] = soDienThoai; 
+
+    // check null gioiTinh
+    if (gioiTinh != null) data['gioiTinh'] = gioiTinh; 
+
+    // check null cMND
+    if (cMND != null) data['cMND'] = cMND; 
+
+    // check null ngayCap
+    if (ngayCap != null) data['ngayCap'] = ngayCap; 
+
+    // check null noiCap
+    if (noiCap != null) data['noiCap'] = noiCap; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null hinhDaiDien
+    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien; 
+
+    // check null anhMTCMND
+    if (anhMTCMND != null) data['anhMTCMND'] = anhMTCMND; 
+
+    // check null anhMSCMND
+    if (anhMSCMND != null) data['anhMSCMND'] = anhMSCMND; 
+
+    // check null matKhau
+    if (matKhau != null) data['matKhau'] = matKhau; 
+
+    // check null tokenDevice
+    if (tokenDevice != null) data['tokenDevice'] = tokenDevice; 
+
+
     return data;
   }
 }

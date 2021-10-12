@@ -2,6 +2,7 @@ class KhoHangRequest {
   String? id;
   String? idDuAnNhanVien;
   String? tenKho;
+
   KhoHangRequest({
       this.id,
       this.idDuAnNhanVien,
@@ -21,9 +22,16 @@ class KhoHangRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['tenKho'] = tenKho;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null tenKho
+    if (tenKho != null) data['tenKho'] = tenKho; 
+
+
     return data;
   }
 }

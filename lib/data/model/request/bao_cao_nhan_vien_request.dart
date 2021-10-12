@@ -5,6 +5,7 @@ class BaoCaoNhanVienRequest {
   String? loai;
   String? soTuan;
   String? noiDung;
+
   BaoCaoNhanVienRequest({
       this.id,
       this.idNhanVien,
@@ -30,12 +31,25 @@ class BaoCaoNhanVienRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['loai'] = loai;
-    data['soTuan'] = soTuan;
-    data['noiDung'] = noiDung;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null loai
+    if (loai != null) data['loai'] = loai; 
+
+    // check null soTuan
+    if (soTuan != null) data['soTuan'] = soTuan; 
+
+    // check null noiDung
+    if (noiDung != null) data['noiDung'] = noiDung; 
+
+
     return data;
   }
 }

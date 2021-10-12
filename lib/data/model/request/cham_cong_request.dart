@@ -10,6 +10,7 @@ class ChamCongRequest {
   String? diaChi;
   String? noiDungBaoCao;
   String? viTri;
+
   ChamCongRequest({
       this.id,
       this.idNhanVien,
@@ -45,17 +46,40 @@ class ChamCongRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idNhanVien'] = idNhanVien;
-    data['idDuAnNhanVien'] = idDuAnNhanVien;
-    data['thoiGianBatDau'] = thoiGianBatDau;
-    data['thoiGianKetThuc'] = thoiGianKetThuc;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaChi'] = diaChi;
-    data['noiDungBaoCao'] = noiDungBaoCao;
-    data['viTri'] = viTri;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idNhanVien
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+
+    // check null idDuAnNhanVien
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+
+    // check null thoiGianBatDau
+    if (thoiGianBatDau != null) data['thoiGianBatDau'] = thoiGianBatDau; 
+
+    // check null thoiGianKetThuc
+    if (thoiGianKetThuc != null) data['thoiGianKetThuc'] = thoiGianKetThuc; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null noiDungBaoCao
+    if (noiDungBaoCao != null) data['noiDungBaoCao'] = noiDungBaoCao; 
+
+    // check null viTri
+    if (viTri != null) data['viTri'] = viTri; 
+
+
     return data;
   }
 }

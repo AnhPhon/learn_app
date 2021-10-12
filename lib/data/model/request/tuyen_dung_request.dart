@@ -32,6 +32,7 @@ class TuyenDungRequest {
   String? khuyenMai;
   String? soTien;
   String? tongDon;
+
   TuyenDungRequest({
       this.id,
       this.idTaiKhoan,
@@ -111,39 +112,106 @@ class TuyenDungRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['tieuDe'] = tieuDe;
-    data['congTy'] = congTy;
-    data['diaChi'] = diaChi;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['gioiTinh'] = gioiTinh;
-    data['soLuong'] = soLuong;
-    data['idHinhThucLamViec'] = idHinhThucLamViec;
-    data['idTrinhDoHocVan'] = idTrinhDoHocVan;
-    data['idChuyenNganhChinh'] = idChuyenNganhChinh;
-    data['idSoNamKinhNghiem'] = idSoNamKinhNghiem;
-    data['idMucLuongDuKien'] = idMucLuongDuKien;
-    data['noiLamViec'] = noiLamViec;
-    data['idThoiGianLamViec'] = idThoiGianLamViec;
-    data['moTaCongViec'] = moTaCongViec;
-    data['yeuCauCongViec'] = yeuCauCongViec;
-    data['quyenLoi'] = quyenLoi;
-    data['uuTien'] = uuTien;
-    data['hanNopHoSo'] = hanNopHoSo;
-    data['hoTenLienHe'] = hoTenLienHe;
-    data['soDienThoaiLienHe'] = soDienThoaiLienHe;
-    data['diaChiLienHe'] = diaChiLienHe;
-    data['emailLienHe'] = emailLienHe;
-    data['idBangGiaDangTin'] = idBangGiaDangTin;
-    data['idBangGiaLocHoSo'] = idBangGiaLocHoSo;
-    data['idHinhThucThanhToan'] = idHinhThucThanhToan;
-    data['idTrangThaiDonHang'] = idTrangThaiDonHang;
-    data['khuyenMai'] = khuyenMai;
-    data['soTien'] = soTien;
-    data['tongDon'] = tongDon;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null congTy
+    if (congTy != null) data['congTy'] = congTy; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null gioiTinh
+    if (gioiTinh != null) data['gioiTinh'] = gioiTinh; 
+
+    // check null soLuong
+    if (soLuong != null) data['soLuong'] = soLuong; 
+
+    // check null idHinhThucLamViec
+    if (idHinhThucLamViec != null) data['idHinhThucLamViec'] = idHinhThucLamViec; 
+
+    // check null idTrinhDoHocVan
+    if (idTrinhDoHocVan != null) data['idTrinhDoHocVan'] = idTrinhDoHocVan; 
+
+    // check null idChuyenNganhChinh
+    if (idChuyenNganhChinh != null) data['idChuyenNganhChinh'] = idChuyenNganhChinh; 
+
+    // check null idSoNamKinhNghiem
+    if (idSoNamKinhNghiem != null) data['idSoNamKinhNghiem'] = idSoNamKinhNghiem; 
+
+    // check null idMucLuongDuKien
+    if (idMucLuongDuKien != null) data['idMucLuongDuKien'] = idMucLuongDuKien; 
+
+    // check null noiLamViec
+    if (noiLamViec != null) data['noiLamViec'] = noiLamViec; 
+
+    // check null idThoiGianLamViec
+    if (idThoiGianLamViec != null) data['idThoiGianLamViec'] = idThoiGianLamViec; 
+
+    // check null moTaCongViec
+    if (moTaCongViec != null) data['moTaCongViec'] = moTaCongViec; 
+
+    // check null yeuCauCongViec
+    if (yeuCauCongViec != null) data['yeuCauCongViec'] = yeuCauCongViec; 
+
+    // check null quyenLoi
+    if (quyenLoi != null) data['quyenLoi'] = quyenLoi; 
+
+    // check null uuTien
+    if (uuTien != null) data['uuTien'] = uuTien; 
+
+    // check null hanNopHoSo
+    if (hanNopHoSo != null) data['hanNopHoSo'] = hanNopHoSo; 
+
+    // check null hoTenLienHe
+    if (hoTenLienHe != null) data['hoTenLienHe'] = hoTenLienHe; 
+
+    // check null soDienThoaiLienHe
+    if (soDienThoaiLienHe != null) data['soDienThoaiLienHe'] = soDienThoaiLienHe; 
+
+    // check null diaChiLienHe
+    if (diaChiLienHe != null) data['diaChiLienHe'] = diaChiLienHe; 
+
+    // check null emailLienHe
+    if (emailLienHe != null) data['emailLienHe'] = emailLienHe; 
+
+    // check null idBangGiaDangTin
+    if (idBangGiaDangTin != null) data['idBangGiaDangTin'] = idBangGiaDangTin; 
+
+    // check null idBangGiaLocHoSo
+    if (idBangGiaLocHoSo != null) data['idBangGiaLocHoSo'] = idBangGiaLocHoSo; 
+
+    // check null idHinhThucThanhToan
+    if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 
+
+    // check null idTrangThaiDonHang
+    if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+
+    // check null khuyenMai
+    if (khuyenMai != null) data['khuyenMai'] = khuyenMai; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+    // check null tongDon
+    if (tongDon != null) data['tongDon'] = tongDon; 
+
+
     return data;
   }
 }

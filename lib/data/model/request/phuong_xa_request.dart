@@ -2,6 +2,7 @@ class PhuongXaRequest {
   String? id;
   String? idQuanHuyen;
   String? ten;
+
   PhuongXaRequest({
       this.id,
       this.idQuanHuyen,
@@ -21,9 +22,16 @@ class PhuongXaRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['ten'] = ten;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }
