@@ -80,4 +80,11 @@ class V3HomeController extends GetxController {
   void onClickStore(){
     Get.toNamed(AppRoutes.V3_STORE);
   }
+
+  ///
+  /// on Need Update Click
+  ///
+  void onNeedUpdateClick() {
+    Get.toNamed(AppRoutes.V3_FINISH_UPDATE);
+  }
 }

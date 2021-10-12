@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/mat_hang_dac_trung_model.dart';
+import 'package:template/data/model/request/mat_hang_dac_trung_request.dart';
+import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/mat_hang_dac_trung_repository.dart';
 
@@ -12,7 +13,7 @@ class MatHangDacTrungProvider {
   /// Get all matHangDacTrungs
   ///
   Future<void> all({
-    required Function(List<MatHangDacTrungModel> matHangDacTrungs) onSuccess,
+    required Function(List<MatHangDacTrungResponse> matHangDacTrungs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class MatHangDacTrungProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => MatHangDacTrungModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MatHangDacTrungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class MatHangDacTrungProvider {
   /// Insert matHangDacTrung to database
   ///
   Future<void> add({
-    required MatHangDacTrungModel data,
-    required Function(MatHangDacTrungModel matHangDacTrung) onSuccess,
+    required MatHangDacTrungRequest data,
+    required Function(MatHangDacTrungRequest matHangDacTrung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class MatHangDacTrungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MatHangDacTrungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MatHangDacTrungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class MatHangDacTrungProvider {
   /// Update matHangDacTrung to database
   ///
   Future<void> update({
-    required MatHangDacTrungModel data,
-    required Function(MatHangDacTrungModel matHangDacTrung) onSuccess,
+    required MatHangDacTrungRequest data,
+    required Function(MatHangDacTrungRequest matHangDacTrung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class MatHangDacTrungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MatHangDacTrungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MatHangDacTrungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class MatHangDacTrungProvider {
   ///
   Future<void> delete({
     required String id,
-    required MatHangDacTrungModel data,
-    required Function(MatHangDacTrungModel matHangDacTrung) onSuccess,
+    required Function(MatHangDacTrungRequest matHangDacTrung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MatHangDacTrungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MatHangDacTrungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class MatHangDacTrungProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<MatHangDacTrungModel> matHangDacTrungs) onSuccess,
+    required Function(List<MatHangDacTrungResponse> matHangDacTrungs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class MatHangDacTrungProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => MatHangDacTrungModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MatHangDacTrungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class MatHangDacTrungProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(MatHangDacTrungModel matHangDacTrung) onSuccess,
+    required Function(MatHangDacTrungResponse matHangDacTrung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class MatHangDacTrungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MatHangDacTrungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MatHangDacTrungResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

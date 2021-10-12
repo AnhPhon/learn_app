@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:template/routes/app_routes.dart';
 
+
 class V2WorkRegisterController extends GetxController {
   String title = "Đăng ký việc";
 
@@ -135,4 +136,14 @@ class V2WorkRegisterController extends GetxController {
       }
     });
   }
+}
+
+class SelectProvinceCustomModel {
+  String value;
+  Function(dynamic) onChanged;
+
+  SelectProvinceCustomModel({
+    required this.value,
+    required this.onChanged,
+  });
 }

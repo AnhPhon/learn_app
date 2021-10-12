@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/ke_khai_kinh_nghiem_model.dart';
+import 'package:template/data/model/request/ke_khai_kinh_nghiem_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class KeKhaiKinhNghiemRepository {
@@ -24,7 +24,7 @@ class KeKhaiKinhNghiemRepository {
   ///
   /// Insert ke-khai-kinh-nghiem to database
   ///
-  Future<ApiResponse> add(KeKhaiKinhNghiemModel data) async {
+  Future<ApiResponse> add(KeKhaiKinhNghiemRequest data) async {
     try {
       final response = await dioClient!.post('/ke-khai-kinh-nghiems', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class KeKhaiKinhNghiemRepository {
   ///
   /// Update ke-khai-kinh-nghiem to database
   ///
-  Future<ApiResponse> update(KeKhaiKinhNghiemModel data) async {
+  Future<ApiResponse> update(KeKhaiKinhNghiemRequest data) async {
     try {
       final response = await dioClient!.put('/ke-khai-kinh-nghiems', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class KeKhaiKinhNghiemRepository {
   ///
   /// Update ke-khai-kinh-nghiem to database
   ///
-  Future<ApiResponse> delete(String id, KeKhaiKinhNghiemModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/ke-khai-kinh-nghiems/$id', data: data.toJson());
+          await dioClient!.delete('/ke-khai-kinh-nghiems/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

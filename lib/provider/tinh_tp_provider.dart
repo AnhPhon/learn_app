@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/tinh_tp_model.dart';
+import 'package:template/data/model/request/tinh_tp_request.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/tinh_tp_repository.dart';
 
@@ -12,7 +13,7 @@ class TinhTpProvider {
   /// Get all tinhTps
   ///
   Future<void> all({
-    required Function(List<TinhTpModel> tinhTps) onSuccess,
+    required Function(List<TinhTpResponse> tinhTps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class TinhTpProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TinhTpModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TinhTpResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class TinhTpProvider {
   /// Insert tinhTp to database
   ///
   Future<void> add({
-    required TinhTpModel data,
-    required Function(TinhTpModel tinhTp) onSuccess,
+    required TinhTpRequest data,
+    required Function(TinhTpRequest tinhTp) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class TinhTpProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinhTpModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinhTpRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class TinhTpProvider {
   /// Update tinhTp to database
   ///
   Future<void> update({
-    required TinhTpModel data,
-    required Function(TinhTpModel tinhTp) onSuccess,
+    required TinhTpRequest data,
+    required Function(TinhTpRequest tinhTp) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class TinhTpProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinhTpModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinhTpRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class TinhTpProvider {
   ///
   Future<void> delete({
     required String id,
-    required TinhTpModel data,
-    required Function(TinhTpModel tinhTp) onSuccess,
+    required Function(TinhTpRequest tinhTp) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinhTpModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinhTpRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class TinhTpProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TinhTpModel> tinhTps) onSuccess,
+    required Function(List<TinhTpResponse> tinhTps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class TinhTpProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TinhTpModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TinhTpResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class TinhTpProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(TinhTpModel tinhTp) onSuccess,
+    required Function(TinhTpResponse tinhTp) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class TinhTpProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinhTpModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinhTpResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/hinh_thuc_lam_viec_model.dart';
+import 'package:template/data/model/request/hinh_thuc_lam_viec_request.dart';
+import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/hinh_thuc_lam_viec_repository.dart';
 
@@ -12,7 +13,7 @@ class HinhThucLamViecProvider {
   /// Get all hinhThucLamViecs
   ///
   Future<void> all({
-    required Function(List<HinhThucLamViecModel> hinhThucLamViecs) onSuccess,
+    required Function(List<HinhThucLamViecResponse> hinhThucLamViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class HinhThucLamViecProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => HinhThucLamViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => HinhThucLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class HinhThucLamViecProvider {
   /// Insert hinhThucLamViec to database
   ///
   Future<void> add({
-    required HinhThucLamViecModel data,
-    required Function(HinhThucLamViecModel hinhThucLamViec) onSuccess,
+    required HinhThucLamViecRequest data,
+    required Function(HinhThucLamViecRequest hinhThucLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class HinhThucLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class HinhThucLamViecProvider {
   /// Update hinhThucLamViec to database
   ///
   Future<void> update({
-    required HinhThucLamViecModel data,
-    required Function(HinhThucLamViecModel hinhThucLamViec) onSuccess,
+    required HinhThucLamViecRequest data,
+    required Function(HinhThucLamViecRequest hinhThucLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class HinhThucLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class HinhThucLamViecProvider {
   ///
   Future<void> delete({
     required String id,
-    required HinhThucLamViecModel data,
-    required Function(HinhThucLamViecModel hinhThucLamViec) onSuccess,
+    required Function(HinhThucLamViecRequest hinhThucLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class HinhThucLamViecProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<HinhThucLamViecModel> hinhThucLamViecs) onSuccess,
+    required Function(List<HinhThucLamViecResponse> hinhThucLamViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class HinhThucLamViecProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => HinhThucLamViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => HinhThucLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class HinhThucLamViecProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(HinhThucLamViecModel hinhThucLamViec) onSuccess,
+    required Function(HinhThucLamViecResponse hinhThucLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class HinhThucLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucLamViecResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

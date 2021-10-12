@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/thong_tin_ngan_hang_model.dart';
+import 'package:template/data/model/request/thong_tin_ngan_hang_request.dart';
+import 'package:template/data/model/response/thong_tin_ngan_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/thong_tin_ngan_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class ThongTinNganHangProvider {
   /// Get all thongTinNganHangs
   ///
   Future<void> all({
-    required Function(List<ThongTinNganHangModel> thongTinNganHangs) onSuccess,
+    required Function(List<ThongTinNganHangResponse> thongTinNganHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class ThongTinNganHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ThongTinNganHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThongTinNganHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class ThongTinNganHangProvider {
   /// Insert thongTinNganHang to database
   ///
   Future<void> add({
-    required ThongTinNganHangModel data,
-    required Function(ThongTinNganHangModel thongTinNganHang) onSuccess,
+    required ThongTinNganHangRequest data,
+    required Function(ThongTinNganHangRequest thongTinNganHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class ThongTinNganHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinNganHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinNganHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class ThongTinNganHangProvider {
   /// Update thongTinNganHang to database
   ///
   Future<void> update({
-    required ThongTinNganHangModel data,
-    required Function(ThongTinNganHangModel thongTinNganHang) onSuccess,
+    required ThongTinNganHangRequest data,
+    required Function(ThongTinNganHangRequest thongTinNganHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class ThongTinNganHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinNganHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinNganHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class ThongTinNganHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required ThongTinNganHangModel data,
-    required Function(ThongTinNganHangModel thongTinNganHang) onSuccess,
+    required Function(ThongTinNganHangRequest thongTinNganHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinNganHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinNganHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class ThongTinNganHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ThongTinNganHangModel> thongTinNganHangs) onSuccess,
+    required Function(List<ThongTinNganHangResponse> thongTinNganHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class ThongTinNganHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ThongTinNganHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThongTinNganHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class ThongTinNganHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(ThongTinNganHangModel thongTinNganHang) onSuccess,
+    required Function(ThongTinNganHangResponse thongTinNganHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class ThongTinNganHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinNganHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinNganHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

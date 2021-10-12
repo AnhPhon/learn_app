@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/hinh_thuc_lam_viec_model.dart';
+import 'package:template/data/model/request/hinh_thuc_lam_viec_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class HinhThucLamViecRepository {
@@ -24,7 +24,7 @@ class HinhThucLamViecRepository {
   ///
   /// Insert hinh-thuc-lam-viec to database
   ///
-  Future<ApiResponse> add(HinhThucLamViecModel data) async {
+  Future<ApiResponse> add(HinhThucLamViecRequest data) async {
     try {
       final response = await dioClient!.post('/hinh-thuc-lam-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class HinhThucLamViecRepository {
   ///
   /// Update hinh-thuc-lam-viec to database
   ///
-  Future<ApiResponse> update(HinhThucLamViecModel data) async {
+  Future<ApiResponse> update(HinhThucLamViecRequest data) async {
     try {
       final response = await dioClient!.put('/hinh-thuc-lam-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class HinhThucLamViecRepository {
   ///
   /// Update hinh-thuc-lam-viec to database
   ///
-  Future<ApiResponse> delete(String id, HinhThucLamViecModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/hinh-thuc-lam-viecs/$id', data: data.toJson());
+          await dioClient!.delete('/hinh-thuc-lam-viecs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -126,6 +126,7 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
@@ -166,6 +167,7 @@ import 'package:template/view/screen/v2-builder/work_register/work_register_page
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
@@ -191,6 +193,7 @@ import 'package:template/view/screen/v4-employee/export_import/export_import_bin
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v4-employee/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
@@ -811,6 +814,10 @@ class AppPages {
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
     ),
+    GetPage(
+      name: AppRoutes.V3_FINISH_UPDATE,
+      page: () => V3FinishUpdatePage(),
+    ),
     // Xem trươc đánh văn bản
     GetPage(
       name: AppRoutes.V2_PREVIEW_PROFILE,
@@ -969,6 +976,10 @@ class AppPages {
       name: AppRoutes.V4_NEWS,
       page: () => V4NewsPage(),
     ),
+    GetPage(
+      name: AppRoutes.V4_NOTIFICATION,
+      page: () => V4NotificationPage(),
+    ),
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
@@ -999,6 +1010,10 @@ class AppPages {
       name: AppRoutes.V2_DETAIL_WORK_IN_PROGRESS,
       page: () => V2DetailWorkInProgresspage(),
       binding: V2DetailWorkInProgressBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_FINISH_UPDATE,
+      page: () => V2FinishUpdatePage(),
     ),
   ];
 }

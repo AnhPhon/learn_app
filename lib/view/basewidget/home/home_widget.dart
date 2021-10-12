@@ -9,7 +9,9 @@ import 'package:template/utils/dimensions.dart';
 class HomeWidget extends StatelessWidget {
   final String fullname;
   final Widget content;
-  const HomeWidget({required this.fullname, required this.content});
+  String? notificationURL;
+  HomeWidget(
+      {required this.fullname, required this.content, this.notificationURL});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,10 @@ class HomeWidget extends StatelessWidget {
                                 Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                             margin: const EdgeInsets.only(
                                 right: Dimensions.MARGIN_SIZE_SMALL),
-                            child: const Icon(Icons.menu, color: Colors.white),
+                            child: Image.asset(
+                              "assets/images/avatar.png",
+                              width: DeviceUtils.getScaledWidth(context, .1),
+                            ),
                           ),
                         );
                       },
@@ -98,7 +103,11 @@ class HomeWidget extends StatelessWidget {
                           Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.V1_NOTIFICATION);
+                          if (notificationURL == null) {
+                            Get.toNamed(AppRoutes.V1_NOTIFICATION);
+                          } else {
+                            Get.toNamed(notificationURL!);
+                          }
                         },
                         child: const Icon(
                           CupertinoIcons.bell_fill,

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/tinh_tp_model.dart';
+import 'package:template/data/model/request/tinh_tp_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class TinhTpRepository {
@@ -24,7 +24,7 @@ class TinhTpRepository {
   ///
   /// Insert tinh-tp to database
   ///
-  Future<ApiResponse> add(TinhTpModel data) async {
+  Future<ApiResponse> add(TinhTpRequest data) async {
     try {
       final response = await dioClient!.post('/tinh-tps', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class TinhTpRepository {
   ///
   /// Update tinh-tp to database
   ///
-  Future<ApiResponse> update(TinhTpModel data) async {
+  Future<ApiResponse> update(TinhTpRequest data) async {
     try {
       final response = await dioClient!.put('/tinh-tps', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class TinhTpRepository {
   ///
   /// Update tinh-tp to database
   ///
-  Future<ApiResponse> delete(String id, TinhTpModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/tinh-tps/$id', data: data.toJson());
+          await dioClient!.delete('/tinh-tps/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

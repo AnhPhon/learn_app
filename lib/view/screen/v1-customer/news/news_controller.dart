@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/tin_tuc_model.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
@@ -9,7 +9,7 @@ class V1NewsController extends GetxController {
 
   String title = "Tin tức";
 
-  List<TinTucModel> tinTucModelList = [];
+  List<TinTucResponse> tinTucModelList = [];
 
   @override
   void onInit() {
