@@ -24,21 +24,21 @@ class DuAnNhanVienModel {
   DuAnNhanVienModel.fromJson(Map<String, dynamic> json) {
 
     // mapping idTinhTp                                                              
-    if (json['idTinhTp'] != null) {                                                  
+    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {                                                  
       idTinhTp = TinhTpModel.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
     } else {                                                                           
       idTinhTp = null;                                                               
     }                                                                                  
 
     // mapping idQuanHuyen                                                              
-    if (json['idQuanHuyen'] != null) {                                                  
+    if (json['idQuanHuyen'] != null && json['idTinhTp'].toString().length != 24) {                                                  
       idQuanHuyen = QuanHuyenModel.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
     } else {                                                                           
       idQuanHuyen = null;                                                               
     }                                                                                  
 
     // mapping idPhuongXa                                                              
-    if (json['idPhuongXa'] != null) {                                                  
+    if (json['idPhuongXa'] != null && json['idTinhTp'].toString().length != 24) {                                                  
       idPhuongXa = PhuongXaModel.fromJson(json['idPhuongXa'] as Map<String, dynamic>); 
     } else {                                                                           
       idPhuongXa = null;                                                               

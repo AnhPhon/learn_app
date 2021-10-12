@@ -14,7 +14,7 @@ class KhoHangModel {
   KhoHangModel.fromJson(Map<String, dynamic> json) {
 
     // mapping idDuAnNhanVien                                                              
-    if (json['idDuAnNhanVien'] != null) {                                                  
+    if (json['idDuAnNhanVien'] != null && json['idDuAnNhanVien'].toString().length != 24) {                                                  
       idDuAnNhanVien = DuAnNhanVienModel.fromJson(json['idDuAnNhanVien'] as Map<String, dynamic>); 
     } else {                                                                           
       idDuAnNhanVien = null;                                                               
