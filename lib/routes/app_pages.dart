@@ -164,6 +164,7 @@ import 'package:template/view/screen/v2-builder/work_register/work_register_page
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
+import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
@@ -796,6 +797,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_ADD,
       page: () => V3ProductAddPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_FINISH_UPDATE,
+      page: () => V3FinishUpdatePage(),
     ),
     // Xem trươc đánh văn bản
     GetPage(
