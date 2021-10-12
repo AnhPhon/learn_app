@@ -37,4 +37,9 @@ class LoaiCongViecModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return tenCongViec!;
+  }
 }

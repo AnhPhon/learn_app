@@ -24,4 +24,9 @@ class NhomDichVuModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+      return tenDichVu!;
+  }
 }

@@ -104,9 +104,10 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.action!.isNotEmpty)
                   ...widget.action!.map((e) => e).toList()
                 else
-                  const SizedBox(
-                    width: 30,
-                  )
+                widget.isNotBack == true ? const SizedBox.shrink() :
+                const SizedBox(
+                  width: 30,
+                )
               ],
             ),
           ),

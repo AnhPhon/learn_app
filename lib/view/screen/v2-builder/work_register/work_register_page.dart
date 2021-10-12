@@ -104,7 +104,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
           ),
           Column(
             children: List.generate(
-              controller.provinceData!.length,
+              5,
               (index) => Stack(
                 children: [
                   Checkbox(
@@ -122,7 +122,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                       top: Dimensions.MARGIN_SIZE_SMALL,
                     ),
                     child: LabelContent(
-                      title: controller.provinceData![index].value.toString(),
+                      title: "Title",//controller.provinceData![index].value.toString(),
                       content: _labelSelect(
                         context,
                         ["Quận/huyện", "Phường/xã"],

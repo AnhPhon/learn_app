@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/body/hang_muc_xay_dung_model.dart';
+import 'package:template/data/model/body/loai_cong_viec_model.dart';
+import 'package:template/data/model/body/nhom_dich_vu_model.dart';
+import 'package:template/data/model/body/phuong_xa_model.dart';
+import 'package:template/data/model/body/quan_huyen_model.dart';
+import 'package:template/data/model/body/tinh_tp_model.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -13,36 +19,40 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_controller.dart';
 
 class CreateWorkPage extends GetView<CreateWorkController>{
-  final CreateWorkController _controller = Get.put(CreateWorkController());
+  // final CreateWorkController _controller = Get.put(CreateWorkController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn công việc"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Nhóm công việc
-              GetBuilder(
-                builder: (CreateWorkController controller) {
-                  return workGroup(context, controller: controller);
-                },
+      appBar: const AppBarWidget(title: "Tạo đơn công việc",),
+      body: GetBuilder(
+        init: CreateWorkController(),
+        builder: (CreateWorkController controller) {
+          if(controller.isLoadingNhomDichVu ){
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Nhóm công việc
+                  workGroup(context, controller: controller),
+          
+                  // Địa điểm làm việc
+                  workLocation(context, controller: controller),
+          
+                  // Nhập địa chỉ cụ thể
+                  textField(context),
+                  
+                  // Button
+                  button(controller),
+                ],
               ),
-      
-              // Địa điểm làm việc
-              workLocation(context),
-      
-              // Nhập địa chỉ cụ thể
-              textField(context),
-              
-              // Button
-              button(),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        },
+      )
     );
   }
 
@@ -53,21 +63,33 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   Widget workGroup(BuildContext context, {required CreateWorkController controller}){
     return Column(
       children: [
-          DropDownButton<int>(
-            data: controller.workGroupList,
+          DropDownButton<NhomDichVuModel>(
+            data: controller.dichvu == null ? const [] : controller.nhomDichVuModelList,
             obligatory: true,
-            onChanged: (value) => controller.onChangedGroup(value!),
-            value: controller.group,
+            onChanged: (value) => controller.onChangedDichVu(value!),
+            value: controller.dichvu,
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn nhóm công việc phù hợp",
+            hint: "Chọn nhóm công việc",
           ),
-          DropDownButton<String>(
-            data: const ["Xây nhà","Lót gạch men"],
+          // if (controller.loaiCongViec == null || controller.loaiCongViecModelList.isEmpty) 
+          // DropDownButton<String>(
+          //   data: const [],
+          //   obligatory: true,
+          //   onChanged: (cal){},
+          //   value: "",
+          //   width: DeviceUtils.getScaledSize(context,1),
+          //   label: "Chọn công việc phù hợp",
+          //   hint: 'Chọn nhóm công việc',
+          // ) else 
+          DropDownButton<LoaiCongViecModel>(
+            data: controller.loaiCongViecModelList,
             obligatory: true,
-            onChanged: (value){},
-            value: "Xây nhà",
+            onChanged: (value)=> controller.onChangedLoaiCongViec(value!),
+            value: controller.loaiCongViec,
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn công việc phù hợp",
+            hint: 'Chọn nhóm công việc',
           ),
       ],
     );
@@ -76,7 +98,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   ///
   /// Địa điểm làm việc
   ///
-  Widget workLocation(BuildContext context){
+  Widget workLocation(BuildContext context, {required CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -101,24 +123,59 @@ class CreateWorkPage extends GetView<CreateWorkController>{
               children: [
                 onSelectedWorkLocation(
                   context,
-                  ward: ["Hoà Khánh","Thanh Khê"],
+                  ward: controller.phuongXaList,
                   city: "Hồ Chí Minh",
-                  district: ["Quận 9","Quận 8"],
-                  value: 0
+                  district: controller.quanHuyenList,
+                  value: 0,
+                  groupValue: controller.groupTinhTpValue,
+                  onChanged: (int? val)=> controller.onChangedGroup(val!),
+                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  phuong: controller.phuongXa,
+                  huyen: controller.quanHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
-                  ward: ["Hoà Khánh","Thanh Khê"],
+                  ward: controller.phuongXaList,
                   city: "Hà Nội",
-                  district: ["Quận 9","Quận 8"],
-                  value: 1
+                  district: controller.quanHuyenList,
+                  value: 1,
+                  groupValue: controller.groupTinhTpValue,
+                  onChanged: (int? val)=> controller.onChangedGroup(val!),
+                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  phuong: controller.phuongXa,
+                  huyen: controller.quanHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
-                  ward: ["Hoà Khánh","Thanh Khê"],
+                  ward: controller.phuongXaList,
                   city: "Đà Nẵng",
-                  district: ["Quận 9","Quận 8"],
-                  value: 2
+                  district: controller.quanHuyenList,
+                  value: 2,
+                  groupValue: controller.groupTinhTpValue,
+                  onChanged: (int? val)=> controller.onChangedGroup(val!),
+                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  phuong: controller.phuongXa,
+                  huyen: controller.quanHuyen
+                ),
+                onSelectedWorkLocation(
+                  context,
+                  ward: controller.phuongXaList,
+                  city: "Tỉnh thành khách",
+                  district: controller.quanHuyenList,
+                  value: 3,
+                  groupValue: controller.groupTinhTpValue,
+                  onChanged: (int? val)=> controller.onChangedGroup(val!),
+                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  phuong: controller.phuongXa,
+                  huyen: controller.quanHuyen,
+                  isRadio: false,
+                  tinh: controller.tinh,
+                  onChangedProvince: (TinhTpModel? val)=> controller.onChangedTinhThanh(val!),
+                  tinhList: controller.tinhTps
                 ),
               ],
             ),
@@ -131,37 +188,64 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   /// Radio button chon đia điểm làm việc
   ///
   Widget onSelectedWorkLocation(BuildContext context, {
-    required List<String> district,
+    required List<QuanHuyenModel> district,
     required String city,
-    required List<String> ward,
+    required List<PhuongXaModel> ward,
     required int value,
+    QuanHuyenModel? huyen,
+    PhuongXaModel? phuong,
+    required int groupValue,
+    required Function(int? val) onChanged,
+    required Function(QuanHuyenModel? val) onChangedHuyen,
+    required Function(PhuongXaModel? val) onChangedPhuong,
+    bool? isRadio = true,
+    List<TinhTpModel>? tinhList,
+    TinhTpModel? tinh,
+    Function(TinhTpModel? val)? onChangedProvince,
     }){
     return Column(
       children: [
-        RadioButton<int>(
+        if (isRadio!) RadioButton<int>(
           title: city,
           value: value,
-          groupValue: 1,
-          onChanged: (int? val){},
+          groupValue: groupValue,
+          onChanged: (int? val)=> onChanged(val),
+        ) else 
+        Row(
+          children: [
+            RadioButton<int>(
+              title: "",
+              value: value,
+              groupValue: groupValue,
+              onChanged: (int? val)=> onChanged(val),
+            ),
+            DropDownButtonHideUnderLineWidget<TinhTpModel>(
+              data: tinhList!,
+              onChanged: value == groupValue ?  (TinhTpModel? val)=> onChangedProvince!(val): null,
+              value: tinh,
+              hint: "Chọn tỉnh",
+              width: DeviceUtils.getScaledWidth(context, 0.83),
+            ),
+          ],
         ),
         Padding(
           padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_LARGE* 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              DropDownButtonHideUnderLineWidget<String>(
+              DropDownButtonHideUnderLineWidget<QuanHuyenModel>(
                 data: district,
-                onChanged: (val){},
-                value: "Quận 9",
+                onChanged: value == groupValue ?  (QuanHuyenModel? val)=> onChangedHuyen(val): null,
+                value: huyen,
                 hint: "Quận/Huyện",
-                width: DeviceUtils.getScaledWidth(context, 0.3),
+                width: DeviceUtils.getScaledWidth(context, 0.35),
               ),
-              DropDownButtonHideUnderLineWidget<String>(
+              DropDownButtonHideUnderLineWidget<PhuongXaModel>(
                 data: ward,
-                onChanged: (val){},
-                value: null,
+                onChanged: value == groupValue ?  (PhuongXaModel? val)=> onChangedPhuong(val) : null,
+                value: phuong,
                 hint: "Phường/xa",
-                width: DeviceUtils.getScaledWidth(context, 0.3),
+                width: DeviceUtils.getScaledWidth(context, 0.35),
               ),
             ],
           ),
@@ -189,13 +273,13 @@ class CreateWorkPage extends GetView<CreateWorkController>{
     );
   }
 
-  Widget button(){
+  Widget button(CreateWorkController controller){
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: (){
-          _controller.onClickContinue();
+          controller.onClickContinue();
         },
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT

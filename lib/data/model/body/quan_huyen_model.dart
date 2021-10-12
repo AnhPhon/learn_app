@@ -14,7 +14,7 @@ class QuanHuyenModel {
   QuanHuyenModel.fromJson(Map<String, dynamic> json) {
 
     // mapping idTinhTp                                                              
-    if (json['idTinhTp'] != null) {                                                  
+    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {                                                  
       idTinhTp = TinhTpModel.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
     } else {                                                                           
       idTinhTp = null;                                                               
@@ -37,4 +37,10 @@ class QuanHuyenModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten!;
+  }
+
 }

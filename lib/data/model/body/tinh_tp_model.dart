@@ -24,4 +24,9 @@ class TinhTpModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten!;
+  }
 }
