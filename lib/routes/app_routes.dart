@@ -210,6 +210,7 @@ class AppRoutes {
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
   static const String V4_NEWS_DETAIL = '/v4_news_detail';
   static const String V4_NEWS = '/v4_news';
+  static const String V4_NOTIFICATION = '/v4_notification';
 
 
   //builder

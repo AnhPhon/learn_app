@@ -190,6 +190,7 @@ import 'package:template/view/screen/v4-employee/export_import/export_import_bin
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v4-employee/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
@@ -959,6 +960,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V4_NEWS,
       page: () => V4NewsPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_NOTIFICATION,
+      page: () => V4NotificationPage(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

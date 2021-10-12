@@ -2,11 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
 
-class ContentWhiteBox extends StatelessWidget {
+class ContentWhiteBox extends StatefulWidget {
   final List<Map<String, dynamic>> infoCard;
   TextEditingController? textController;
   ContentWhiteBox({required this.infoCard, this.textController});
 
+  @override
+  State<ContentWhiteBox> createState() => _ContentWhiteBoxState();
+}
+
+class _ContentWhiteBoxState extends State<ContentWhiteBox> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -26,16 +31,16 @@ class ContentWhiteBox extends StatelessWidget {
         ],
       ),
       child: Column(
-        children: infoCard.isEmpty
+        children: widget.infoCard.isEmpty
             ? []
             : List.generate(
-                infoCard.length,
+                widget.infoCard.length,
                 (index) {
-                  if (infoCard[index] != null) {
-                    if (infoCard[index]["input"] == false ||
-                        textController != null) {
-                      textController = TextEditingController(
-                          text: infoCard[index]['value'] as String);
+                  if (widget.infoCard[index] != null) {
+                    if (widget.infoCard[index]["input"] == false ||
+                        widget.textController != null) {
+                      widget.textController = TextEditingController(
+                          text: widget.infoCard[index]['value'] as String);
                     }
 
                     return Container(
@@ -45,12 +50,12 @@ class ContentWhiteBox extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            "${infoCard[index]['label']}:",
+                            "${widget.infoCard[index]['label']}:",
                             style: Dimensions.textNormalStyle(),
                           ),
                           Text(
-                            "${infoCard[index]['value']}",
-                            style: (infoCard[index]['label']
+                            "${widget.infoCard[index]['value']}",
+                            style: (widget.infoCard[index]['label']
                                         .toString()
                                         .toLowerCase() ==
                                     "đơn giá")

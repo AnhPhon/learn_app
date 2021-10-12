@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -22,6 +23,7 @@ class V4HomePage extends GetView<V4HomeController> {
         builder: (V4HomeController controller) {
           return HomeWidget(
             fullname: "Hi, ${controller.fullname}!",
+            notificationURL: AppRoutes.V4_NOTIFICATION,
             content: Column(
               children: [
                 // notificate label
