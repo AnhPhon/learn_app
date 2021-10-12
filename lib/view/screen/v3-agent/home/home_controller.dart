@@ -66,7 +66,6 @@ class V3HomeController extends GetxController {
 
     // read Kho san Pham
     _readKhosanPham();
-
   }
 
   void onClickNews() {
@@ -84,14 +83,14 @@ class V3HomeController extends GetxController {
   /// yeu cầu báo giá
   ///
   void onClickQuoteRequest() {
-    Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
+    Get.toNamed(AppRoutes.V3_QUOTE_LIST);
   }
 
   ///
   /// Phản hòi báo giá
   ///
   void onClickQuoteReponse() {
-    Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
+    Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
   }
 
   ///
