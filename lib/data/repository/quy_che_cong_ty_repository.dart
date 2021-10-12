@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/quy_che_cong_ty_model.dart';
+import 'package:template/data/model/request/quy_che_cong_ty_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class QuyCheCongTyRepository {
@@ -24,7 +24,7 @@ class QuyCheCongTyRepository {
   ///
   /// Insert quy-che-cong-ty to database
   ///
-  Future<ApiResponse> add(QuyCheCongTyModel data) async {
+  Future<ApiResponse> add(QuyCheCongTyRequest data) async {
     try {
       final response = await dioClient!.post('/quy-che-cong-tys', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class QuyCheCongTyRepository {
   ///
   /// Update quy-che-cong-ty to database
   ///
-  Future<ApiResponse> update(QuyCheCongTyModel data) async {
+  Future<ApiResponse> update(QuyCheCongTyRequest data) async {
     try {
       final response = await dioClient!.put('/quy-che-cong-tys', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class QuyCheCongTyRepository {
   ///
   /// Update quy-che-cong-ty to database
   ///
-  Future<ApiResponse> delete(String id, QuyCheCongTyModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/quy-che-cong-tys/$id', data: data.toJson());
+          await dioClient!.delete('/quy-che-cong-tys/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

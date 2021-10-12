@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/cong_viec_nhan_vien_model.dart';
+import 'package:template/data/model/request/cong_viec_nhan_vien_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class CongViecNhanVienRepository {
@@ -24,7 +24,7 @@ class CongViecNhanVienRepository {
   ///
   /// Insert cong-viec-nhan-vien to database
   ///
-  Future<ApiResponse> add(CongViecNhanVienModel data) async {
+  Future<ApiResponse> add(CongViecNhanVienRequest data) async {
     try {
       final response = await dioClient!.post('/cong-viec-nhan-viens', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class CongViecNhanVienRepository {
   ///
   /// Update cong-viec-nhan-vien to database
   ///
-  Future<ApiResponse> update(CongViecNhanVienModel data) async {
+  Future<ApiResponse> update(CongViecNhanVienRequest data) async {
     try {
       final response = await dioClient!.put('/cong-viec-nhan-viens', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class CongViecNhanVienRepository {
   ///
   /// Update cong-viec-nhan-vien to database
   ///
-  Future<ApiResponse> delete(String id, CongViecNhanVienModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/cong-viec-nhan-viens/$id', data: data.toJson());
+          await dioClient!.delete('/cong-viec-nhan-viens/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

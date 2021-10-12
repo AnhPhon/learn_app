@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/trinh_do_model.dart';
+import 'package:template/data/model/request/trinh_do_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class TrinhDoRepository {
@@ -24,7 +24,7 @@ class TrinhDoRepository {
   ///
   /// Insert trinh-do to database
   ///
-  Future<ApiResponse> add(TrinhDoModel data) async {
+  Future<ApiResponse> add(TrinhDoRequest data) async {
     try {
       final response = await dioClient!.post('/trinh-dos', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class TrinhDoRepository {
   ///
   /// Update trinh-do to database
   ///
-  Future<ApiResponse> update(TrinhDoModel data) async {
+  Future<ApiResponse> update(TrinhDoRequest data) async {
     try {
       final response = await dioClient!.put('/trinh-dos', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class TrinhDoRepository {
   ///
   /// Update trinh-do to database
   ///
-  Future<ApiResponse> delete(String id, TrinhDoModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/trinh-dos/$id', data: data.toJson());
+          await dioClient!.delete('/trinh-dos/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

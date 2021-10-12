@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/dieu_khoan_chinh_sach_model.dart';
+import 'package:template/data/model/request/dieu_khoan_chinh_sach_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class DieuKhoanChinhSachRepository {
@@ -24,7 +24,7 @@ class DieuKhoanChinhSachRepository {
   ///
   /// Insert dieu-khoan-chinh-sach to database
   ///
-  Future<ApiResponse> add(DieuKhoanChinhSachModel data) async {
+  Future<ApiResponse> add(DieuKhoanChinhSachRequest data) async {
     try {
       final response = await dioClient!.post('/dieu-khoan-chinh-sachs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class DieuKhoanChinhSachRepository {
   ///
   /// Update dieu-khoan-chinh-sach to database
   ///
-  Future<ApiResponse> update(DieuKhoanChinhSachModel data) async {
+  Future<ApiResponse> update(DieuKhoanChinhSachRequest data) async {
     try {
       final response = await dioClient!.put('/dieu-khoan-chinh-sachs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class DieuKhoanChinhSachRepository {
   ///
   /// Update dieu-khoan-chinh-sach to database
   ///
-  Future<ApiResponse> delete(String id, DieuKhoanChinhSachModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/dieu-khoan-chinh-sachs/$id', data: data.toJson());
+          await dioClient!.delete('/dieu-khoan-chinh-sachs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

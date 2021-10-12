@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/kho_hang_model.dart';
+import 'package:template/data/model/request/kho_hang_request.dart';
+import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/kho_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class KhoHangProvider {
   /// Get all khoHangs
   ///
   Future<void> all({
-    required Function(List<KhoHangModel> khoHangs) onSuccess,
+    required Function(List<KhoHangResponse> khoHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class KhoHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => KhoHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => KhoHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class KhoHangProvider {
   /// Insert khoHang to database
   ///
   Future<void> add({
-    required KhoHangModel data,
-    required Function(KhoHangModel khoHang) onSuccess,
+    required KhoHangRequest data,
+    required Function(KhoHangRequest khoHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class KhoHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KhoHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(KhoHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class KhoHangProvider {
   /// Update khoHang to database
   ///
   Future<void> update({
-    required KhoHangModel data,
-    required Function(KhoHangModel khoHang) onSuccess,
+    required KhoHangRequest data,
+    required Function(KhoHangRequest khoHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class KhoHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KhoHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(KhoHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class KhoHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required KhoHangModel data,
-    required Function(KhoHangModel khoHang) onSuccess,
+    required Function(KhoHangRequest khoHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KhoHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(KhoHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class KhoHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<KhoHangModel> khoHangs) onSuccess,
+    required Function(List<KhoHangResponse> khoHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class KhoHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => KhoHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => KhoHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class KhoHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(KhoHangModel khoHang) onSuccess,
+    required Function(KhoHangResponse khoHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class KhoHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KhoHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(KhoHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

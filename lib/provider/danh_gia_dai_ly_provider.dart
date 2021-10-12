@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/danh_gia_dai_ly_model.dart';
+import 'package:template/data/model/request/danh_gia_dai_ly_request.dart';
+import 'package:template/data/model/response/danh_gia_dai_ly_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/danh_gia_dai_ly_repository.dart';
 
@@ -12,7 +13,7 @@ class DanhGiaDaiLyProvider {
   /// Get all danhGiaDaiLys
   ///
   Future<void> all({
-    required Function(List<DanhGiaDaiLyModel> danhGiaDaiLys) onSuccess,
+    required Function(List<DanhGiaDaiLyResponse> danhGiaDaiLys) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DanhGiaDaiLyProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DanhGiaDaiLyModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DanhGiaDaiLyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DanhGiaDaiLyProvider {
   /// Insert danhGiaDaiLy to database
   ///
   Future<void> add({
-    required DanhGiaDaiLyModel data,
-    required Function(DanhGiaDaiLyModel danhGiaDaiLy) onSuccess,
+    required DanhGiaDaiLyRequest data,
+    required Function(DanhGiaDaiLyRequest danhGiaDaiLy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DanhGiaDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhGiaDaiLyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DanhGiaDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DanhGiaDaiLyProvider {
   /// Update danhGiaDaiLy to database
   ///
   Future<void> update({
-    required DanhGiaDaiLyModel data,
-    required Function(DanhGiaDaiLyModel danhGiaDaiLy) onSuccess,
+    required DanhGiaDaiLyRequest data,
+    required Function(DanhGiaDaiLyRequest danhGiaDaiLy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DanhGiaDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhGiaDaiLyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DanhGiaDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DanhGiaDaiLyProvider {
   ///
   Future<void> delete({
     required String id,
-    required DanhGiaDaiLyModel data,
-    required Function(DanhGiaDaiLyModel danhGiaDaiLy) onSuccess,
+    required Function(DanhGiaDaiLyRequest danhGiaDaiLy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhGiaDaiLyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DanhGiaDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DanhGiaDaiLyProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DanhGiaDaiLyModel> danhGiaDaiLys) onSuccess,
+    required Function(List<DanhGiaDaiLyResponse> danhGiaDaiLys) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DanhGiaDaiLyProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DanhGiaDaiLyModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DanhGiaDaiLyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DanhGiaDaiLyProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DanhGiaDaiLyModel danhGiaDaiLy) onSuccess,
+    required Function(DanhGiaDaiLyResponse danhGiaDaiLy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DanhGiaDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhGiaDaiLyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DanhGiaDaiLyResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

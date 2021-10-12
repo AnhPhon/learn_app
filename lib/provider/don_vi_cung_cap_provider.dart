@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/don_vi_cung_cap_model.dart';
+import 'package:template/data/model/request/don_vi_cung_cap_request.dart';
+import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/don_vi_cung_cap_repository.dart';
 
@@ -12,7 +13,7 @@ class DonViCungCapProvider {
   /// Get all donViCungCaps
   ///
   Future<void> all({
-    required Function(List<DonViCungCapModel> donViCungCaps) onSuccess,
+    required Function(List<DonViCungCapResponse> donViCungCaps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DonViCungCapProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DonViCungCapModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DonViCungCapResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DonViCungCapProvider {
   /// Insert donViCungCap to database
   ///
   Future<void> add({
-    required DonViCungCapModel data,
-    required Function(DonViCungCapModel donViCungCap) onSuccess,
+    required DonViCungCapRequest data,
+    required Function(DonViCungCapRequest donViCungCap) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DonViCungCapProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonViCungCapModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonViCungCapRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DonViCungCapProvider {
   /// Update donViCungCap to database
   ///
   Future<void> update({
-    required DonViCungCapModel data,
-    required Function(DonViCungCapModel donViCungCap) onSuccess,
+    required DonViCungCapRequest data,
+    required Function(DonViCungCapRequest donViCungCap) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DonViCungCapProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonViCungCapModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonViCungCapRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DonViCungCapProvider {
   ///
   Future<void> delete({
     required String id,
-    required DonViCungCapModel data,
-    required Function(DonViCungCapModel donViCungCap) onSuccess,
+    required Function(DonViCungCapRequest donViCungCap) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonViCungCapModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonViCungCapRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DonViCungCapProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DonViCungCapModel> donViCungCaps) onSuccess,
+    required Function(List<DonViCungCapResponse> donViCungCaps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DonViCungCapProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DonViCungCapModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DonViCungCapResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DonViCungCapProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DonViCungCapModel donViCungCap) onSuccess,
+    required Function(DonViCungCapResponse donViCungCap) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DonViCungCapProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonViCungCapModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonViCungCapResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

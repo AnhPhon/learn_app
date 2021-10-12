@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/chuc_vu_model.dart';
+import 'package:template/data/model/request/chuc_vu_request.dart';
+import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/chuc_vu_repository.dart';
 
@@ -12,7 +13,7 @@ class ChucVuProvider {
   /// Get all chucVus
   ///
   Future<void> all({
-    required Function(List<ChucVuModel> chucVus) onSuccess,
+    required Function(List<ChucVuResponse> chucVus) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class ChucVuProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ChucVuModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ChucVuResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class ChucVuProvider {
   /// Insert chucVu to database
   ///
   Future<void> add({
-    required ChucVuModel data,
-    required Function(ChucVuModel chucVu) onSuccess,
+    required ChucVuRequest data,
+    required Function(ChucVuRequest chucVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class ChucVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChucVuModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChucVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class ChucVuProvider {
   /// Update chucVu to database
   ///
   Future<void> update({
-    required ChucVuModel data,
-    required Function(ChucVuModel chucVu) onSuccess,
+    required ChucVuRequest data,
+    required Function(ChucVuRequest chucVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class ChucVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChucVuModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChucVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class ChucVuProvider {
   ///
   Future<void> delete({
     required String id,
-    required ChucVuModel data,
-    required Function(ChucVuModel chucVu) onSuccess,
+    required Function(ChucVuRequest chucVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChucVuModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChucVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class ChucVuProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ChucVuModel> chucVus) onSuccess,
+    required Function(List<ChucVuResponse> chucVus) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class ChucVuProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ChucVuModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ChucVuResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class ChucVuProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(ChucVuModel chucVu) onSuccess,
+    required Function(ChucVuResponse chucVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class ChucVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChucVuModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChucVuResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

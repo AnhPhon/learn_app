@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/nhom_cua_hang_model.dart';
+import 'package:template/data/model/request/nhom_cua_hang_request.dart';
+import 'package:template/data/model/response/nhom_cua_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/nhom_cua_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class NhomCuaHangProvider {
   /// Get all nhomCuaHangs
   ///
   Future<void> all({
-    required Function(List<NhomCuaHangModel> nhomCuaHangs) onSuccess,
+    required Function(List<NhomCuaHangResponse> nhomCuaHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class NhomCuaHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => NhomCuaHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => NhomCuaHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class NhomCuaHangProvider {
   /// Insert nhomCuaHang to database
   ///
   Future<void> add({
-    required NhomCuaHangModel data,
-    required Function(NhomCuaHangModel nhomCuaHang) onSuccess,
+    required NhomCuaHangRequest data,
+    required Function(NhomCuaHangRequest nhomCuaHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class NhomCuaHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhomCuaHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(NhomCuaHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class NhomCuaHangProvider {
   /// Update nhomCuaHang to database
   ///
   Future<void> update({
-    required NhomCuaHangModel data,
-    required Function(NhomCuaHangModel nhomCuaHang) onSuccess,
+    required NhomCuaHangRequest data,
+    required Function(NhomCuaHangRequest nhomCuaHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class NhomCuaHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhomCuaHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(NhomCuaHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class NhomCuaHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required NhomCuaHangModel data,
-    required Function(NhomCuaHangModel nhomCuaHang) onSuccess,
+    required Function(NhomCuaHangRequest nhomCuaHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhomCuaHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(NhomCuaHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class NhomCuaHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<NhomCuaHangModel> nhomCuaHangs) onSuccess,
+    required Function(List<NhomCuaHangResponse> nhomCuaHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class NhomCuaHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => NhomCuaHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => NhomCuaHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class NhomCuaHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(NhomCuaHangModel nhomCuaHang) onSuccess,
+    required Function(NhomCuaHangResponse nhomCuaHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class NhomCuaHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhomCuaHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(NhomCuaHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

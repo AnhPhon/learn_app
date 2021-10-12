@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/ngoai_ngu_model.dart';
+import 'package:template/data/model/request/ngoai_ngu_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class NgoaiNguRepository {
@@ -24,7 +24,7 @@ class NgoaiNguRepository {
   ///
   /// Insert ngoai-ngu to database
   ///
-  Future<ApiResponse> add(NgoaiNguModel data) async {
+  Future<ApiResponse> add(NgoaiNguRequest data) async {
     try {
       final response = await dioClient!.post('/ngoai-ngus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class NgoaiNguRepository {
   ///
   /// Update ngoai-ngu to database
   ///
-  Future<ApiResponse> update(NgoaiNguModel data) async {
+  Future<ApiResponse> update(NgoaiNguRequest data) async {
     try {
       final response = await dioClient!.put('/ngoai-ngus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class NgoaiNguRepository {
   ///
   /// Update ngoai-ngu to database
   ///
-  Future<ApiResponse> delete(String id, NgoaiNguModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/ngoai-ngus/$id', data: data.toJson());
+          await dioClient!.delete('/ngoai-ngus/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

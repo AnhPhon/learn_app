@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/loai_cong_viec_model.dart';
+import 'package:template/data/model/request/loai_cong_viec_request.dart';
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/loai_cong_viec_repository.dart';
 
@@ -12,7 +13,7 @@ class LoaiCongViecProvider {
   /// Get all loaiCongViecs
   ///
   Future<void> all({
-    required Function(List<LoaiCongViecModel> loaiCongViecs) onSuccess,
+    required Function(List<LoaiCongViecResponse> loaiCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class LoaiCongViecProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => LoaiCongViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LoaiCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class LoaiCongViecProvider {
   /// Insert loaiCongViec to database
   ///
   Future<void> add({
-    required LoaiCongViecModel data,
-    required Function(LoaiCongViecModel loaiCongViec) onSuccess,
+    required LoaiCongViecRequest data,
+    required Function(LoaiCongViecRequest loaiCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class LoaiCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiCongViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class LoaiCongViecProvider {
   /// Update loaiCongViec to database
   ///
   Future<void> update({
-    required LoaiCongViecModel data,
-    required Function(LoaiCongViecModel loaiCongViec) onSuccess,
+    required LoaiCongViecRequest data,
+    required Function(LoaiCongViecRequest loaiCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class LoaiCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiCongViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class LoaiCongViecProvider {
   ///
   Future<void> delete({
     required String id,
-    required LoaiCongViecModel data,
-    required Function(LoaiCongViecModel loaiCongViec) onSuccess,
+    required Function(LoaiCongViecRequest loaiCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiCongViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class LoaiCongViecProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<LoaiCongViecModel> loaiCongViecs) onSuccess,
+    required Function(List<LoaiCongViecResponse> loaiCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class LoaiCongViecProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => LoaiCongViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LoaiCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class LoaiCongViecProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(LoaiCongViecModel loaiCongViec) onSuccess,
+    required Function(LoaiCongViecResponse loaiCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class LoaiCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiCongViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiCongViecResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
