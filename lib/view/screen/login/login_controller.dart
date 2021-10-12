@@ -15,12 +15,12 @@ class LoginController extends GetxController {
   AuthModel? auth;
   bool isLoading = true;
 
-  // @override
-  // void onInit() {
-  //   // usernameController.text = 'ytp3001';
-  //   // passwordController.text = 'password';
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    usernameController.text = '4';
+    passwordController.text = '';
+    super.onInit();
+  }
 
   ///
   /// on login click

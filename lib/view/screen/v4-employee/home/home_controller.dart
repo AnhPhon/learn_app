@@ -1,20 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/thu_chi_nhan_vien_model.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
-  List<Map<String, dynamic>>? contentGrid;
+  ThuChiNhanVienProvider thuChiNhanVienProvider =
+      GetIt.I.get<ThuChiNhanVienProvider>();
 
+  List<Map<String, dynamic>>? contentGrid;
   String fullname = "Phạm Dương";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
 
+  int moiTaoQuality = 0;
+  int dangLamQuality = 0;
+  int hoanThanhQuality = 0;
+  int chamTreQuality = 0;
+
+  String? userId = '615da85c9ecc24273f89a383';
+
+  bool isLoading = false;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    total = 0;
+    revenue = 0;
+    expenditure = 0;
+
     contentGrid = [
       {
         "title": "Mới tạo",
@@ -26,7 +47,7 @@ class V4HomeController extends GetxController {
       },
       {
         "title": "Đang làm",
-        "quality": "2",
+        "quality": 2,
         "color": const RadialGradient(colors: [
           Color(0xffC1E6EE),
           Color(0xff00B4D8),
@@ -34,7 +55,7 @@ class V4HomeController extends GetxController {
       },
       {
         "title": "Hoàn Thành",
-        "quality": "4",
+        "quality": 4,
         "color": const RadialGradient(colors: [
           Color(0xffC1E6EE),
           Color(0xff00A676),
@@ -42,7 +63,7 @@ class V4HomeController extends GetxController {
       },
       {
         "title": "Chậm trễ",
-        "quality": "1",
+        "quality": 1,
         "color": const RadialGradient(colors: [
           Color(0xffC1E6EE),
           Color(0xffD00000),
@@ -50,10 +71,9 @@ class V4HomeController extends GetxController {
       }
     ];
 
-    total = 10000000;
-    revenue = 10000000;
-    expenditure = 10000000;
+    // _readThuChiDataNhanVien();
   }
+
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
 
@@ -104,6 +124,7 @@ class V4HomeController extends GetxController {
       return onClickToReportTimeKeeping();
     }
   }
+
   ///
   ///click to export page
   ///
@@ -129,5 +150,44 @@ class V4HomeController extends GetxController {
   ///
   void onClickExpenditure() {
     Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  }
+
+  void _readThuChiDataNhanVien() {
+    // sl.get<SharedPreferenceHelper>().userId.then((userId) {
+
+    // });
+
+    thuChiNhanVienProvider.paginate(
+      limit: 50 ,
+      page: 1,
+      filter: '&idNhanVien=615dd8acd1075063bbd84f24',
+      onSuccess: (models) {
+        for (final ThuChiNhanVienModel thuChiModel in models) {
+          if (_isRevenue(thuChiModel.loai!)) {
+            revenue = revenue! + (double.parse(thuChiModel.soTien!));
+          } else {
+            expenditure = expenditure! + double.parse(thuChiModel.soTien!);
+          }
+
+          total = total! + revenue!;
+          total = total! - expenditure!;
+        }
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  ///
+  /// check is revenue
+  ///
+  bool _isRevenue(String type) {
+    if (type.toLowerCase() == "loai 1") {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
