@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/hinh_thuc_thanh_toan_model.dart';
+import 'package:template/data/model/request/hinh_thuc_thanh_toan_request.dart';
+import 'package:template/data/model/response/hinh_thuc_thanh_toan_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/hinh_thuc_thanh_toan_repository.dart';
 
@@ -12,7 +13,7 @@ class HinhThucThanhToanProvider {
   /// Get all hinhThucThanhToans
   ///
   Future<void> all({
-    required Function(List<HinhThucThanhToanModel> hinhThucThanhToans) onSuccess,
+    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class HinhThucThanhToanProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => HinhThucThanhToanModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class HinhThucThanhToanProvider {
   /// Insert hinhThucThanhToan to database
   ///
   Future<void> add({
-    required HinhThucThanhToanModel data,
-    required Function(HinhThucThanhToanModel hinhThucThanhToan) onSuccess,
+    required HinhThucThanhToanRequest data,
+    required Function(HinhThucThanhToanRequest hinhThucThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class HinhThucThanhToanProvider {
   /// Update hinhThucThanhToan to database
   ///
   Future<void> update({
-    required HinhThucThanhToanModel data,
-    required Function(HinhThucThanhToanModel hinhThucThanhToan) onSuccess,
+    required HinhThucThanhToanRequest data,
+    required Function(HinhThucThanhToanRequest hinhThucThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class HinhThucThanhToanProvider {
   ///
   Future<void> delete({
     required String id,
-    required HinhThucThanhToanModel data,
-    required Function(HinhThucThanhToanModel hinhThucThanhToan) onSuccess,
+    required Function(HinhThucThanhToanRequest hinhThucThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class HinhThucThanhToanProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<HinhThucThanhToanModel> hinhThucThanhToans) onSuccess,
+    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class HinhThucThanhToanProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => HinhThucThanhToanModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class HinhThucThanhToanProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(HinhThucThanhToanModel hinhThucThanhToan) onSuccess,
+    required Function(HinhThucThanhToanResponse hinhThucThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(HinhThucThanhToanResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

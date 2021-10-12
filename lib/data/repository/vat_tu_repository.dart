@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/vat_tu_model.dart';
+import 'package:template/data/model/request/vat_tu_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class VatTuRepository {
@@ -24,7 +24,7 @@ class VatTuRepository {
   ///
   /// Insert vat-tu to database
   ///
-  Future<ApiResponse> add(VatTuModel data) async {
+  Future<ApiResponse> add(VatTuRequest data) async {
     try {
       final response = await dioClient!.post('/vat-tus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class VatTuRepository {
   ///
   /// Update vat-tu to database
   ///
-  Future<ApiResponse> update(VatTuModel data) async {
+  Future<ApiResponse> update(VatTuRequest data) async {
     try {
       final response = await dioClient!.put('/vat-tus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class VatTuRepository {
   ///
   /// Update vat-tu to database
   ///
-  Future<ApiResponse> delete(String id, VatTuModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/vat-tus/$id', data: data.toJson());
+          await dioClient!.delete('/vat-tus/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

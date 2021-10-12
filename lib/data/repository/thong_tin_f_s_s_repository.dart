@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/thong_tin_f_s_s_model.dart';
+import 'package:template/data/model/request/thong_tin_f_s_s_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class ThongTinFSSRepository {
@@ -24,7 +24,7 @@ class ThongTinFSSRepository {
   ///
   /// Insert thong-tin-f-s-s to database
   ///
-  Future<ApiResponse> add(ThongTinFSSModel data) async {
+  Future<ApiResponse> add(ThongTinFSSRequest data) async {
     try {
       final response = await dioClient!.post('/thong-tin-f-s-ss', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class ThongTinFSSRepository {
   ///
   /// Update thong-tin-f-s-s to database
   ///
-  Future<ApiResponse> update(ThongTinFSSModel data) async {
+  Future<ApiResponse> update(ThongTinFSSRequest data) async {
     try {
       final response = await dioClient!.put('/thong-tin-f-s-ss', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class ThongTinFSSRepository {
   ///
   /// Update thong-tin-f-s-s to database
   ///
-  Future<ApiResponse> delete(String id, ThongTinFSSModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/thong-tin-f-s-ss/$id', data: data.toJson());
+          await dioClient!.delete('/thong-tin-f-s-ss/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

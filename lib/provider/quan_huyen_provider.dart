@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/quan_huyen_model.dart';
+import 'package:template/data/model/request/quan_huyen_request.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/quan_huyen_repository.dart';
 
@@ -12,7 +13,7 @@ class QuanHuyenProvider {
   /// Get all quanHuyens
   ///
   Future<void> all({
-    required Function(List<QuanHuyenModel> quanHuyens) onSuccess,
+    required Function(List<QuanHuyenResponse> quanHuyens) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class QuanHuyenProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => QuanHuyenModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => QuanHuyenResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class QuanHuyenProvider {
   /// Insert quanHuyen to database
   ///
   Future<void> add({
-    required QuanHuyenModel data,
-    required Function(QuanHuyenModel quanHuyen) onSuccess,
+    required QuanHuyenRequest data,
+    required Function(QuanHuyenRequest quanHuyen) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class QuanHuyenProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(QuanHuyenModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(QuanHuyenRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class QuanHuyenProvider {
   /// Update quanHuyen to database
   ///
   Future<void> update({
-    required QuanHuyenModel data,
-    required Function(QuanHuyenModel quanHuyen) onSuccess,
+    required QuanHuyenRequest data,
+    required Function(QuanHuyenRequest quanHuyen) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class QuanHuyenProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(QuanHuyenModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(QuanHuyenRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class QuanHuyenProvider {
   ///
   Future<void> delete({
     required String id,
-    required QuanHuyenModel data,
-    required Function(QuanHuyenModel quanHuyen) onSuccess,
+    required Function(QuanHuyenRequest quanHuyen) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(QuanHuyenModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(QuanHuyenRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class QuanHuyenProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<QuanHuyenModel> quanHuyens) onSuccess,
+    required Function(List<QuanHuyenResponse> quanHuyens) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class QuanHuyenProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => QuanHuyenModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => QuanHuyenResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class QuanHuyenProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(QuanHuyenModel quanHuyen) onSuccess,
+    required Function(QuanHuyenResponse quanHuyen) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class QuanHuyenProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(QuanHuyenModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(QuanHuyenResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

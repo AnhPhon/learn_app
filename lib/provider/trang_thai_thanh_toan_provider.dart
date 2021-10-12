@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/trang_thai_thanh_toan_model.dart';
+import 'package:template/data/model/request/trang_thai_thanh_toan_request.dart';
+import 'package:template/data/model/response/trang_thai_thanh_toan_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/trang_thai_thanh_toan_repository.dart';
 
@@ -12,7 +13,7 @@ class TrangThaiThanhToanProvider {
   /// Get all trangThaiThanhToans
   ///
   Future<void> all({
-    required Function(List<TrangThaiThanhToanModel> trangThaiThanhToans) onSuccess,
+    required Function(List<TrangThaiThanhToanResponse> trangThaiThanhToans) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class TrangThaiThanhToanProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiThanhToanModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TrangThaiThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class TrangThaiThanhToanProvider {
   /// Insert trangThaiThanhToan to database
   ///
   Future<void> add({
-    required TrangThaiThanhToanModel data,
-    required Function(TrangThaiThanhToanModel trangThaiThanhToan) onSuccess,
+    required TrangThaiThanhToanRequest data,
+    required Function(TrangThaiThanhToanRequest trangThaiThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class TrangThaiThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class TrangThaiThanhToanProvider {
   /// Update trangThaiThanhToan to database
   ///
   Future<void> update({
-    required TrangThaiThanhToanModel data,
-    required Function(TrangThaiThanhToanModel trangThaiThanhToan) onSuccess,
+    required TrangThaiThanhToanRequest data,
+    required Function(TrangThaiThanhToanRequest trangThaiThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class TrangThaiThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class TrangThaiThanhToanProvider {
   ///
   Future<void> delete({
     required String id,
-    required TrangThaiThanhToanModel data,
-    required Function(TrangThaiThanhToanModel trangThaiThanhToan) onSuccess,
+    required Function(TrangThaiThanhToanRequest trangThaiThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class TrangThaiThanhToanProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TrangThaiThanhToanModel> trangThaiThanhToans) onSuccess,
+    required Function(List<TrangThaiThanhToanResponse> trangThaiThanhToans) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class TrangThaiThanhToanProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiThanhToanModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TrangThaiThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class TrangThaiThanhToanProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(TrangThaiThanhToanModel trangThaiThanhToan) onSuccess,
+    required Function(TrangThaiThanhToanResponse trangThaiThanhToan) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class TrangThaiThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiThanhToanModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiThanhToanResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/xuat_nhap_kho_model.dart';
+import 'package:template/data/model/request/xuat_nhap_kho_request.dart';
+import 'package:template/data/model/response/xuat_nhap_kho_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/xuat_nhap_kho_repository.dart';
 
@@ -12,7 +13,7 @@ class XuatNhapKhoProvider {
   /// Get all xuatNhapKhos
   ///
   Future<void> all({
-    required Function(List<XuatNhapKhoModel> xuatNhapKhos) onSuccess,
+    required Function(List<XuatNhapKhoResponse> xuatNhapKhos) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class XuatNhapKhoProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => XuatNhapKhoModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => XuatNhapKhoResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class XuatNhapKhoProvider {
   /// Insert xuatNhapKho to database
   ///
   Future<void> add({
-    required XuatNhapKhoModel data,
-    required Function(XuatNhapKhoModel xuatNhapKho) onSuccess,
+    required XuatNhapKhoRequest data,
+    required Function(XuatNhapKhoRequest xuatNhapKho) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class XuatNhapKhoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(XuatNhapKhoModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(XuatNhapKhoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class XuatNhapKhoProvider {
   /// Update xuatNhapKho to database
   ///
   Future<void> update({
-    required XuatNhapKhoModel data,
-    required Function(XuatNhapKhoModel xuatNhapKho) onSuccess,
+    required XuatNhapKhoRequest data,
+    required Function(XuatNhapKhoRequest xuatNhapKho) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class XuatNhapKhoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(XuatNhapKhoModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(XuatNhapKhoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class XuatNhapKhoProvider {
   ///
   Future<void> delete({
     required String id,
-    required XuatNhapKhoModel data,
-    required Function(XuatNhapKhoModel xuatNhapKho) onSuccess,
+    required Function(XuatNhapKhoRequest xuatNhapKho) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(XuatNhapKhoModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(XuatNhapKhoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class XuatNhapKhoProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<XuatNhapKhoModel> xuatNhapKhos) onSuccess,
+    required Function(List<XuatNhapKhoResponse> xuatNhapKhos) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class XuatNhapKhoProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => XuatNhapKhoModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => XuatNhapKhoResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class XuatNhapKhoProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(XuatNhapKhoModel xuatNhapKho) onSuccess,
+    required Function(XuatNhapKhoResponse xuatNhapKho) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class XuatNhapKhoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(XuatNhapKhoModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(XuatNhapKhoResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

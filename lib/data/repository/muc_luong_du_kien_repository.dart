@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/muc_luong_du_kien_model.dart';
+import 'package:template/data/model/request/muc_luong_du_kien_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class MucLuongDuKienRepository {
@@ -24,7 +24,7 @@ class MucLuongDuKienRepository {
   ///
   /// Insert muc-luong-du-kien to database
   ///
-  Future<ApiResponse> add(MucLuongDuKienModel data) async {
+  Future<ApiResponse> add(MucLuongDuKienRequest data) async {
     try {
       final response = await dioClient!.post('/muc-luong-du-kiens', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class MucLuongDuKienRepository {
   ///
   /// Update muc-luong-du-kien to database
   ///
-  Future<ApiResponse> update(MucLuongDuKienModel data) async {
+  Future<ApiResponse> update(MucLuongDuKienRequest data) async {
     try {
       final response = await dioClient!.put('/muc-luong-du-kiens', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class MucLuongDuKienRepository {
   ///
   /// Update muc-luong-du-kien to database
   ///
-  Future<ApiResponse> delete(String id, MucLuongDuKienModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/muc-luong-du-kiens/$id', data: data.toJson());
+          await dioClient!.delete('/muc-luong-du-kiens/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

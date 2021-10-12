@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/bang_luong_model.dart';
+import 'package:template/data/model/request/bang_luong_request.dart';
+import 'package:template/data/model/response/bang_luong_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/bang_luong_repository.dart';
 
@@ -12,7 +13,7 @@ class BangLuongProvider {
   /// Get all bangLuongs
   ///
   Future<void> all({
-    required Function(List<BangLuongModel> bangLuongs) onSuccess,
+    required Function(List<BangLuongResponse> bangLuongs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class BangLuongProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => BangLuongModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => BangLuongResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class BangLuongProvider {
   /// Insert bangLuong to database
   ///
   Future<void> add({
-    required BangLuongModel data,
-    required Function(BangLuongModel bangLuong) onSuccess,
+    required BangLuongRequest data,
+    required Function(BangLuongRequest bangLuong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class BangLuongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangLuongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangLuongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class BangLuongProvider {
   /// Update bangLuong to database
   ///
   Future<void> update({
-    required BangLuongModel data,
-    required Function(BangLuongModel bangLuong) onSuccess,
+    required BangLuongRequest data,
+    required Function(BangLuongRequest bangLuong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class BangLuongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangLuongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangLuongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class BangLuongProvider {
   ///
   Future<void> delete({
     required String id,
-    required BangLuongModel data,
-    required Function(BangLuongModel bangLuong) onSuccess,
+    required Function(BangLuongRequest bangLuong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangLuongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangLuongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class BangLuongProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<BangLuongModel> bangLuongs) onSuccess,
+    required Function(List<BangLuongResponse> bangLuongs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class BangLuongProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => BangLuongModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => BangLuongResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class BangLuongProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(BangLuongModel bangLuong) onSuccess,
+    required Function(BangLuongResponse bangLuong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class BangLuongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangLuongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangLuongResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/bang_gia_don_hang_model.dart';
+import 'package:template/data/model/request/bang_gia_don_hang_request.dart';
+import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class BangGiaDonHangProvider {
   /// Get all bangGiaDonHangs
   ///
   Future<void> all({
-    required Function(List<BangGiaDonHangModel> bangGiaDonHangs) onSuccess,
+    required Function(List<BangGiaDonHangResponse> bangGiaDonHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class BangGiaDonHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => BangGiaDonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => BangGiaDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class BangGiaDonHangProvider {
   /// Insert bangGiaDonHang to database
   ///
   Future<void> add({
-    required BangGiaDonHangModel data,
-    required Function(BangGiaDonHangModel bangGiaDonHang) onSuccess,
+    required BangGiaDonHangRequest data,
+    required Function(BangGiaDonHangRequest bangGiaDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class BangGiaDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangGiaDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class BangGiaDonHangProvider {
   /// Update bangGiaDonHang to database
   ///
   Future<void> update({
-    required BangGiaDonHangModel data,
-    required Function(BangGiaDonHangModel bangGiaDonHang) onSuccess,
+    required BangGiaDonHangRequest data,
+    required Function(BangGiaDonHangRequest bangGiaDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class BangGiaDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangGiaDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class BangGiaDonHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required BangGiaDonHangModel data,
-    required Function(BangGiaDonHangModel bangGiaDonHang) onSuccess,
+    required Function(BangGiaDonHangRequest bangGiaDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangGiaDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class BangGiaDonHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<BangGiaDonHangModel> bangGiaDonHangs) onSuccess,
+    required Function(List<BangGiaDonHangResponse> bangGiaDonHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class BangGiaDonHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => BangGiaDonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => BangGiaDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class BangGiaDonHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(BangGiaDonHangModel bangGiaDonHang) onSuccess,
+    required Function(BangGiaDonHangResponse bangGiaDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class BangGiaDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(BangGiaDonHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

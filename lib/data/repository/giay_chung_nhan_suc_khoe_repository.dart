@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/giay_chung_nhan_suc_khoe_model.dart';
+import 'package:template/data/model/request/giay_chung_nhan_suc_khoe_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class GiayChungNhanSucKhoeRepository {
@@ -24,7 +24,7 @@ class GiayChungNhanSucKhoeRepository {
   ///
   /// Insert giay-chung-nhan-suc-khoe to database
   ///
-  Future<ApiResponse> add(GiayChungNhanSucKhoeModel data) async {
+  Future<ApiResponse> add(GiayChungNhanSucKhoeRequest data) async {
     try {
       final response = await dioClient!.post('/giay-chung-nhan-suc-khoes', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class GiayChungNhanSucKhoeRepository {
   ///
   /// Update giay-chung-nhan-suc-khoe to database
   ///
-  Future<ApiResponse> update(GiayChungNhanSucKhoeModel data) async {
+  Future<ApiResponse> update(GiayChungNhanSucKhoeRequest data) async {
     try {
       final response = await dioClient!.put('/giay-chung-nhan-suc-khoes', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class GiayChungNhanSucKhoeRepository {
   ///
   /// Update giay-chung-nhan-suc-khoe to database
   ///
-  Future<ApiResponse> delete(String id, GiayChungNhanSucKhoeModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/giay-chung-nhan-suc-khoes/$id', data: data.toJson());
+          await dioClient!.delete('/giay-chung-nhan-suc-khoes/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/cham_cong_model.dart';
+import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class ChamCongRepository {
@@ -24,7 +24,7 @@ class ChamCongRepository {
   ///
   /// Insert cham-cong to database
   ///
-  Future<ApiResponse> add(ChamCongModel data) async {
+  Future<ApiResponse> add(ChamCongRequest data) async {
     try {
       final response = await dioClient!.post('/cham-congs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class ChamCongRepository {
   ///
   /// Update cham-cong to database
   ///
-  Future<ApiResponse> update(ChamCongModel data) async {
+  Future<ApiResponse> update(ChamCongRequest data) async {
     try {
       final response = await dioClient!.put('/cham-congs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class ChamCongRepository {
   ///
   /// Update cham-cong to database
   ///
-  Future<ApiResponse> delete(String id, ChamCongModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/cham-congs/$id', data: data.toJson());
+          await dioClient!.delete('/cham-congs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

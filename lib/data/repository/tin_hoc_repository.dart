@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/tin_hoc_model.dart';
+import 'package:template/data/model/request/tin_hoc_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class TinHocRepository {
@@ -24,7 +24,7 @@ class TinHocRepository {
   ///
   /// Insert tin-hoc to database
   ///
-  Future<ApiResponse> add(TinHocModel data) async {
+  Future<ApiResponse> add(TinHocRequest data) async {
     try {
       final response = await dioClient!.post('/tin-hocs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class TinHocRepository {
   ///
   /// Update tin-hoc to database
   ///
-  Future<ApiResponse> update(TinHocModel data) async {
+  Future<ApiResponse> update(TinHocRequest data) async {
     try {
       final response = await dioClient!.put('/tin-hocs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class TinHocRepository {
   ///
   /// Update tin-hoc to database
   ///
-  Future<ApiResponse> delete(String id, TinHocModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/tin-hocs/$id', data: data.toJson());
+          await dioClient!.delete('/tin-hocs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

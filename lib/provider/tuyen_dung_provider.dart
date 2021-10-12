@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/tuyen_dung_model.dart';
+import 'package:template/data/model/request/tuyen_dung_request.dart';
+import 'package:template/data/model/response/tuyen_dung_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/tuyen_dung_repository.dart';
 
@@ -12,7 +13,7 @@ class TuyenDungProvider {
   /// Get all tuyenDungs
   ///
   Future<void> all({
-    required Function(List<TuyenDungModel> tuyenDungs) onSuccess,
+    required Function(List<TuyenDungResponse> tuyenDungs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class TuyenDungProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TuyenDungModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TuyenDungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class TuyenDungProvider {
   /// Insert tuyenDung to database
   ///
   Future<void> add({
-    required TuyenDungModel data,
-    required Function(TuyenDungModel tuyenDung) onSuccess,
+    required TuyenDungRequest data,
+    required Function(TuyenDungRequest tuyenDung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class TuyenDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TuyenDungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TuyenDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class TuyenDungProvider {
   /// Update tuyenDung to database
   ///
   Future<void> update({
-    required TuyenDungModel data,
-    required Function(TuyenDungModel tuyenDung) onSuccess,
+    required TuyenDungRequest data,
+    required Function(TuyenDungRequest tuyenDung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class TuyenDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TuyenDungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TuyenDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class TuyenDungProvider {
   ///
   Future<void> delete({
     required String id,
-    required TuyenDungModel data,
-    required Function(TuyenDungModel tuyenDung) onSuccess,
+    required Function(TuyenDungRequest tuyenDung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TuyenDungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TuyenDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class TuyenDungProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TuyenDungModel> tuyenDungs) onSuccess,
+    required Function(List<TuyenDungResponse> tuyenDungs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class TuyenDungProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TuyenDungModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TuyenDungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class TuyenDungProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(TuyenDungModel tuyenDung) onSuccess,
+    required Function(TuyenDungResponse tuyenDung) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class TuyenDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TuyenDungModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TuyenDungResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/loai_tot_nghiep_model.dart';
+import 'package:template/data/model/request/loai_tot_nghiep_request.dart';
+import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/loai_tot_nghiep_repository.dart';
 
@@ -12,7 +13,7 @@ class LoaiTotNghiepProvider {
   /// Get all loaiTotNghieps
   ///
   Future<void> all({
-    required Function(List<LoaiTotNghiepModel> loaiTotNghieps) onSuccess,
+    required Function(List<LoaiTotNghiepResponse> loaiTotNghieps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class LoaiTotNghiepProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => LoaiTotNghiepModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LoaiTotNghiepResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class LoaiTotNghiepProvider {
   /// Insert loaiTotNghiep to database
   ///
   Future<void> add({
-    required LoaiTotNghiepModel data,
-    required Function(LoaiTotNghiepModel loaiTotNghiep) onSuccess,
+    required LoaiTotNghiepRequest data,
+    required Function(LoaiTotNghiepRequest loaiTotNghiep) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class LoaiTotNghiepProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiTotNghiepModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiTotNghiepRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class LoaiTotNghiepProvider {
   /// Update loaiTotNghiep to database
   ///
   Future<void> update({
-    required LoaiTotNghiepModel data,
-    required Function(LoaiTotNghiepModel loaiTotNghiep) onSuccess,
+    required LoaiTotNghiepRequest data,
+    required Function(LoaiTotNghiepRequest loaiTotNghiep) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class LoaiTotNghiepProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiTotNghiepModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiTotNghiepRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class LoaiTotNghiepProvider {
   ///
   Future<void> delete({
     required String id,
-    required LoaiTotNghiepModel data,
-    required Function(LoaiTotNghiepModel loaiTotNghiep) onSuccess,
+    required Function(LoaiTotNghiepRequest loaiTotNghiep) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiTotNghiepModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiTotNghiepRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class LoaiTotNghiepProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<LoaiTotNghiepModel> loaiTotNghieps) onSuccess,
+    required Function(List<LoaiTotNghiepResponse> loaiTotNghieps) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class LoaiTotNghiepProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => LoaiTotNghiepModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LoaiTotNghiepResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class LoaiTotNghiepProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(LoaiTotNghiepModel loaiTotNghiep) onSuccess,
+    required Function(LoaiTotNghiepResponse loaiTotNghiep) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class LoaiTotNghiepProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LoaiTotNghiepModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LoaiTotNghiepResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

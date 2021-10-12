@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/lien_he_cong_ty_model.dart';
+import 'package:template/data/model/request/lien_he_cong_ty_request.dart';
+import 'package:template/data/model/response/lien_he_cong_ty_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/lien_he_cong_ty_repository.dart';
 
@@ -12,7 +13,7 @@ class LienHeCongTyProvider {
   /// Get all lienHeCongTys
   ///
   Future<void> all({
-    required Function(List<LienHeCongTyModel> lienHeCongTys) onSuccess,
+    required Function(List<LienHeCongTyResponse> lienHeCongTys) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class LienHeCongTyProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => LienHeCongTyModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LienHeCongTyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class LienHeCongTyProvider {
   /// Insert lienHeCongTy to database
   ///
   Future<void> add({
-    required LienHeCongTyModel data,
-    required Function(LienHeCongTyModel lienHeCongTy) onSuccess,
+    required LienHeCongTyRequest data,
+    required Function(LienHeCongTyRequest lienHeCongTy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class LienHeCongTyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LienHeCongTyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LienHeCongTyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class LienHeCongTyProvider {
   /// Update lienHeCongTy to database
   ///
   Future<void> update({
-    required LienHeCongTyModel data,
-    required Function(LienHeCongTyModel lienHeCongTy) onSuccess,
+    required LienHeCongTyRequest data,
+    required Function(LienHeCongTyRequest lienHeCongTy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class LienHeCongTyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LienHeCongTyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LienHeCongTyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class LienHeCongTyProvider {
   ///
   Future<void> delete({
     required String id,
-    required LienHeCongTyModel data,
-    required Function(LienHeCongTyModel lienHeCongTy) onSuccess,
+    required Function(LienHeCongTyRequest lienHeCongTy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LienHeCongTyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LienHeCongTyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class LienHeCongTyProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<LienHeCongTyModel> lienHeCongTys) onSuccess,
+    required Function(List<LienHeCongTyResponse> lienHeCongTys) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class LienHeCongTyProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => LienHeCongTyModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LienHeCongTyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class LienHeCongTyProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(LienHeCongTyModel lienHeCongTy) onSuccess,
+    required Function(LienHeCongTyResponse lienHeCongTy) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class LienHeCongTyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LienHeCongTyModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LienHeCongTyResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
