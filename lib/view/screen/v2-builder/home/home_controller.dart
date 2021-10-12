@@ -102,7 +102,9 @@ class V2HomeController extends GetxController {
     // Đăng ký viẹc mới
   }
 
-  // on Need Update Click
+  ///
+  /// on Need Update Click
+  ///
   void onNeedUpdateClick() {
     Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
   }
