@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
+  // providers
+  ThuChiNhanVienProvider thuChiNhanVienProvider =
+      GetIt.I.get<ThuChiNhanVienProvider>();
+
   List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
@@ -54,6 +62,7 @@ class V4HomeController extends GetxController {
     revenue = 10000000;
     expenditure = 10000000;
   }
+
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
 
@@ -104,6 +113,7 @@ class V4HomeController extends GetxController {
       return onClickToReportTimeKeeping();
     }
   }
+
   ///
   ///click to export page
   ///
@@ -129,5 +139,23 @@ class V4HomeController extends GetxController {
   ///
   void onClickExpenditure() {
     Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  }
+
+  ///
+  /// read revenue and expenditure
+  ///
+  void _readRevenueAndExpenditure() {
+    // sl.get<SharedPreferenceHelper>().userId.then((value) {
+
+    // });
+
+    // use thuChiNhanVienProvider
+    thuChiNhanVienProvider.paginate(
+      page: 1,
+      limit: 10,
+      filter: "",
+      onSuccess: (models) {},
+      onError: (error) {},
+    );
   }
 }

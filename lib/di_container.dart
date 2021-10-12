@@ -2,8 +2,14 @@ import 'package:connectivity/connectivity.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
+import 'package:template/data/repository/kho_hang_repository.dart';
+import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
+import 'package:template/data/repository/tin_tuc_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
+import 'package:template/provider/kho_hang_provider.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -24,11 +30,15 @@ Future<void> init() async {
 
   // Repository
   // sl.registerLazySingleton(() => RegionRepo());
-  // sl.registerLazySingleton(() => AuthRepository());
+  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => KhoHangRepository());
 
   // Provider
   // sl.registerFactory(() => RegionProvider());
-  // sl.registerFactory(() => AuthProvider());
+  sl.registerFactory(() => ThuChiNhanVienProvider());
+  sl.registerFactory(() => TinTucProvider());
+  sl.registerFactory(() => KhoHangProvider());
 
   // Provider
   // sl.registerFactory(() => AuthProvider());
