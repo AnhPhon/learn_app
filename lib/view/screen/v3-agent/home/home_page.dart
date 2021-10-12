@@ -141,7 +141,8 @@ class V3HomePage extends GetView<V3HomeController> {
             index,
           ) {
             return Padding(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              padding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: NewsBox(
                 title: controller.tinTucList[index].tieuDe!,
                 describe: controller.tinTucList[index].tomTat!,
@@ -165,7 +166,7 @@ class V3HomePage extends GetView<V3HomeController> {
           top: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: ListView.builder(
-          itemCount: 2,
+          itemCount: controller.sanPhamList.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -175,9 +176,10 @@ class V3HomePage extends GetView<V3HomeController> {
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
-                tenSanPham: "Kệ son nồi",
-                maSanPham: "BN001",
-                giaSanPham: "${PriceConverter.convertPrice(ctx, 500000)} đ",
+                tenSanPham: controller.sanPhamList[index].ten!,
+                maSanPham: controller.sanPhamList[index].maSanPham!,
+                giaSanPham:
+                    "${PriceConverter.convertPrice(ctx, double.parse(controller.sanPhamList[index].gia!))} đ",
                 quyCach: "Kim đỉnh",
               ),
             );

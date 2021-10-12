@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/kho_hang_model.dart';
-import 'package:template/data/model/body/tin_tuc_model.dart';
-import 'package:template/provider/kho_hang_provider.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
@@ -11,11 +11,11 @@ class V3HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
 
-  final KhoHangProvider _khoHangProvider = GetIt.I.get<KhoHangProvider>();
+  final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
 
-  List<TinTucModel> tinTucList = [];
-  List<KhoHangModel> khohangList = [];
+  List<TinTucResponse> tinTucList = [];
+  List<SanPhamResponse> sanPhamList = [];
 
   @override
   void onInit() {
@@ -111,12 +111,12 @@ class V3HomeController extends GetxController {
   /// read kho san pham
   ///
   void _readKhosanPham() {
-    _khoHangProvider.paginate(
+    _sanPhamProvider.paginate(
       page: 1,
       limit: 2,
       filter: "",
-      onSuccess: (khoModels) {
-        khohangList = khoModels;
+      onSuccess: (sanPhamModels) {
+        sanPhamList = sanPhamModels;
         update();
       },
       onError: (error) {
@@ -133,8 +133,8 @@ class V3HomeController extends GetxController {
       page: 1,
       limit: 2,
       filter: "",
-      onSuccess: (tinTucModels) {
-        tinTucList = tinTucModels;
+      onSuccess: (tinTucResponses) {
+        tinTucList = tinTucResponses;
         update();
       },
       onError: (error) {
