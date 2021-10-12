@@ -3,6 +3,9 @@ import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/mail/mail_page.dart';
+import 'package:template/view/screen/v1-customer/account/my_order/my_order_page.dart';
+import 'package:template/view/screen/v1-customer/account/personal_info/personal_info_page.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
@@ -435,6 +438,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PERSONAL_INFORMATION,
+      page: () => V1PersonalInfoPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_MAIL,
+      page: () => V1MailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_MY_ORDER,
+      page: () => V1MyOrderPage(),
     ),
 
     ///

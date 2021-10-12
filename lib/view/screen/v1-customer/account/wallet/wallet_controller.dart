@@ -10,21 +10,21 @@ class V1WalletController extends GetxController {
     History(dateTime: "THÁNG 09/2021", itemHistory: [
       ItemHistory(
         id: "2123123FGS4312",
-        price: "-10000000đ",
+        price: "+500.000đ",
         content: "Nội dung thanh toán",
         time: "26/09 15:30",
         status: 1,
       ),
       ItemHistory(
         id: "2123123FGS4312",
-        price: "-10000000đ",
+        price: "+10.000đ",
         content: "Nội dung thanh toán",
         time: "26/09 15:30",
         status: 0,
       ),
       ItemHistory(
         id: "2123123FGS4312",
-        price: "-10000000đ",
+        price: "+10.000.000đ",
         content: "Nội dung thanh toán",
         time: "26/09 15:30",
         status: 1,
@@ -35,7 +35,7 @@ class V1WalletController extends GetxController {
       itemHistory: [
         ItemHistory(
           id: "2123123FGS4312",
-          price: "-10000000đ",
+          price: "+1.000.000đ",
           content: "Nội dung thanh toán",
           time: "26/09 15:30",
           status: 1,

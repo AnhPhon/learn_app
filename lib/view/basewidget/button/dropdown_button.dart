@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -14,6 +15,8 @@ class DropDownButton1<T> extends StatelessWidget {
     this.label,
     this.labelBold = false,
     required this.width,
+    this.isBorder = true,
+    this.isShadow = false,
   });
 
   final String hint;
@@ -21,7 +24,7 @@ class DropDownButton1<T> extends StatelessWidget {
   final List<T> data;
   final T? value;
   final bool? isColorFieldWhite;
-  final bool? obligatory, labelBold;
+  final bool? obligatory, labelBold, isBorder, isShadow;
   final String? label;
   final double width;
   @override
@@ -61,7 +64,18 @@ class DropDownButton1<T> extends StatelessWidget {
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
             margin: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledSize(context, .025)),
+              vertical: DeviceUtils.getScaledSize(context, .025),
+            ),
+            decoration: BoxDecoration(
+              boxShadow: (isShadow == true)
+                  ? [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: ColorResources.BLACK.withOpacity(.2),
+                          offset: const Offset(0, 2)),
+                    ]
+                  : [],
+            ),
             child: FormField(
               builder: (field) {
                 return InputDecorator(
@@ -72,34 +86,37 @@ class DropDownButton1<T> extends StatelessWidget {
                         : Colors.transparent,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                     disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),
                         vertical: DeviceUtils.getScaledSize(context, 0.038)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(

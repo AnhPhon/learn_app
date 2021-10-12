@@ -9,15 +9,15 @@ class BtnCustom extends StatelessWidget {
   final double width;
   final EdgeInsetsGeometry? margin;
   final bool? isPadding;
-  const BtnCustom(
-      {Key? key,
-      required this.onTap,
-      required this.color,
-      required this.text,
-      required this.width,
-      this.isPadding,
-      this.margin})
-      : super(key: key);
+  const BtnCustom({
+    Key? key,
+    required this.onTap,
+    required this.color,
+    required this.text,
+    required this.width,
+    this.isPadding,
+    this.margin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

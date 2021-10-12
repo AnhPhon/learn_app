@@ -152,7 +152,7 @@ class V1WalletPage extends GetView<V1WalletController> {
       child: Text(
         "Lịch sử giao dịch",
         textAlign: TextAlign.center,
-        style: Dimensions.fontSizeStyle18w600().copyWith(
+        style: Dimensions.fontSizeStyle22w600().copyWith(
           color: ColorResources.RED,
         ),
       ),
@@ -237,7 +237,7 @@ class V1WalletPage extends GetView<V1WalletController> {
                         height: DeviceUtils.getScaledHeight(context, .013),
                         decoration: BoxDecoration(
                             color: status == 0
-                                ? ColorResources.RED
+                                ? ColorResources.YELLOW
                                 : ColorResources.GREEN,
                             borderRadius: BorderRadius.circular(
                                 Dimensions.BORDER_RADIUS_LARGE - 5)),
@@ -248,7 +248,7 @@ class V1WalletPage extends GetView<V1WalletController> {
 
                       //status
                       Text(
-                        status == 0 ? "Thất bại" : "Thành công",
+                        status == 0 ? "Đang đợi" : "Thành công",
                       ),
                       const Spacer(),
                     ],

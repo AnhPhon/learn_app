@@ -65,7 +65,7 @@ class V1AccountPage extends GetView<V1AccountController> {
                         _items(
                           icon: const Icon(Icons.person_outlined),
                           text: "Thông tin cá nhân (chỉnh sửa nếu có thể)",
-                          onTap: () {},
+                          onTap: () => controller.onPersonalInfoClick(),
                         ),
 
                         // point-based
@@ -92,9 +92,9 @@ class V1AccountPage extends GetView<V1AccountController> {
 
                         // Review
                         _items(
-                          icon: const Icon(Icons.person_outlined),
+                          icon: const Icon(Icons.star_half),
                           text: "Đánh giá",
-                          onTap: () {},
+                          onTap: () => controller.showDialogRating(context),
                         ),
 
                         // history
@@ -129,7 +129,14 @@ class V1AccountPage extends GetView<V1AccountController> {
                         _items(
                           icon: const Icon(Icons.local_post_office),
                           text: "Hộp thư",
-                          onTap: () {},
+                          onTap: () => controller.onMailClick(),
+                        ),
+
+                        // my order
+                        _items(
+                          icon: const Icon(Icons.shopping_cart_outlined),
+                          text: "Đơn hàng của tôi",
+                          onTap: () => controller.onMyOrderClick(),
                         ),
 
                         // image update
