@@ -68,7 +68,7 @@ class V3HomePage extends GetView<V3HomeController> {
           const Icon(CupertinoIcons.bell, color: Color(0xff4D4D4D)),
           const Spacer(),
           GestureDetector(
-            onTap: () {},
+            onTap: controller.onNeedUpdateClick,
             child: Container(
               width: 100,
               alignment: Alignment.center,

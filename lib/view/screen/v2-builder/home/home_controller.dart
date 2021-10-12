@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 
 class V2HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
@@ -41,7 +40,6 @@ class V2HomeController extends GetxController {
         ),
         "icon": Icons.checklist_rtl_sharp,
         "onTap": () {
-          onClickToWorkflowManagement();
           onClickJobManagement();
         }
       },
@@ -63,25 +61,17 @@ class V2HomeController extends GetxController {
   }
 
   ///
-  ///Click to workflow management page
-  ///
-  void onClickToWorkflowManagement() {
-    Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
-  }
-
   ///go to shorthanded page
   ///
-  void onShortHandedPageClick() {}
+  void onShortHandedPageClick() {
+    Get.toNamed(AppRoutes.V2_SHORTHANDED);
+  }
 
   ///
   ///go to product page
   ///
   void onProductPageClick() {
     Get.toNamed(AppRoutes.V2_PRODUCT);
-  }
-
-  void onNeedUpdateClick() {
-    Get.to(V2FinishUpdatePage());
   }
 
   ///
@@ -95,7 +85,7 @@ class V2HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickJobManagement() {
-    Get.toNamed(AppRoutes.V2_JOB_MANAGEMENT);
+    Get.toNamed(AppRoutes.V2_WORKFLOW_MANAGEMENT);
   }
 
   ///
@@ -110,5 +100,12 @@ class V2HomeController extends GetxController {
   ///
   void onClickRegisterJob() {
     // Đăng ký viẹc mới
+  }
+
+  ///
+  /// on Need Update Click
+  ///
+  void onNeedUpdateClick() {
+    Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
   }
 }
