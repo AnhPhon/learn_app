@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:template/data/model/v1/select_province_custom_model.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1Request1Controller extends GetxController {
@@ -17,7 +16,7 @@ class V1Request1Controller extends GetxController {
   String? firstSelect;
 
   // radio
-  List<SelectProvinceCustomModel>? provinceData;
+  // List<SelectProvinceCustomModel>? provinceData;
   dynamic selectIndex;
 
   @override
@@ -34,20 +33,20 @@ class V1Request1Controller extends GetxController {
     toDate = TextEditingController();
 
     selectIndex = "TP.HCM";
-    provinceData = [
-      SelectProvinceCustomModel(
-        value: "TP.HCM",
-        onChanged: (val)=> onChange,
-      ),
-      SelectProvinceCustomModel(
-        value: "Hà Nội",
-        onChanged: onChange,
-      ),
-      SelectProvinceCustomModel(
-        value: "Đà Nẵng",
-        onChanged: onChange,
-      ),
-    ];
+    // provinceData = [
+    //   SelectProvinceCustomModel(
+    //     value: "TP.HCM",
+    //     onChanged: (val)=> onChange,
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Hà Nội",
+    //     onChanged: onChange,
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Đà Nẵng",
+    //     onChanged: onChange,
+    //   ),
+    // ];
   }
 
   ///

@@ -60,10 +60,11 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
               width: DeviceUtils.getScaledWidth(context, 1),
               child: Container(
-                padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT),
+                padding:
+                    const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_DEFAULT),
                 child: Row(
                   children: [
                     Builder(
@@ -73,8 +74,10 @@ class HomeWidget extends StatelessWidget {
                             Scaffold.of(context).openDrawer();
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                            margin: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_SMALL),
+                            padding: const EdgeInsets.all(
+                                Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                            margin: const EdgeInsets.only(
+                                right: Dimensions.MARGIN_SIZE_SMALL),
                             child: const Icon(Icons.menu, color: Colors.white),
                           ),
                         );
@@ -91,7 +94,8 @@ class HomeWidget extends StatelessWidget {
                     const Spacer(),
                     Container(
                       alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      padding: const EdgeInsets.all(
+                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoutes.V1_NOTIFICATION);
@@ -112,7 +116,7 @@ class HomeWidget extends StatelessWidget {
 
         // white
         Positioned(
-          top: 100,
+          top: 140,
           child: Container(
             alignment: Alignment.topLeft,
             height: DeviceUtils.getScaledHeight(context, 1) - 180,

@@ -15,6 +15,19 @@ class V1AccountPage extends GetView<V1AccountController> {
         init: V1AccountController(),
         builder: (V1AccountController controller) {
           return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              title: const Text(
+                "Tài khoản",
+                style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                ),
+              ),
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
             body: Stack(
               children: [
                 LargeSizeAppBar(title: controller.title),
