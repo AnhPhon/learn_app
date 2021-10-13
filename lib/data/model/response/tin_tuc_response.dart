@@ -10,7 +10,6 @@ class TinTucResponse {
   String? noiDung;
   String? hinhAnh;
   String? luotXem;
-  String? createdAt;
 
   String? createdAt;
   String? updatedAt;
