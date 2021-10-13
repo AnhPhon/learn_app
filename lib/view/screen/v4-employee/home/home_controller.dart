@@ -21,10 +21,10 @@ class V4HomeController extends GetxController {
   double? revenue; // thu
   double? expenditure; // chi
 
-  int? moiTaoQuality;
-  int? dangLamQuality;
-  int? hoanThanhQuality;
-  int? chamTreQuality;
+  int moiTaoQuality = 0;
+  int dangLamQuality = 0;
+  int hoanThanhQuality = 0;
+  int chamTreQuality = 0;
 
   @override
   void onInit() {
@@ -35,13 +35,10 @@ class V4HomeController extends GetxController {
     revenue = 0;
     expenditure = 0;
 
-    moiTaoQuality = 0;
-    dangLamQuality = 0;
-    hoanThanhQuality = 0;
-    chamTreQuality = 0;
-
-    _resetContenGrid();
+    // load thu chi
     _readRevenueAndExpenditure();
+
+    // xử lý tiến độ công việc
     _theoDoiTienDo();
   }
 
@@ -167,13 +164,13 @@ class V4HomeController extends GetxController {
         for (final model in models) {
           final String status = model.trangThai!.toLowerCase();
           if (status == "moi tao") {
-            moiTaoQuality = moiTaoQuality! + 1;
+            moiTaoQuality = moiTaoQuality + 1;
           } else if (status == "dang lam") {
-            dangLamQuality = dangLamQuality! + 1;
+            dangLamQuality = dangLamQuality + 1;
           } else if (status == "hoan thanh") {
-            hoanThanhQuality = hoanThanhQuality! + 1;
+            hoanThanhQuality = hoanThanhQuality + 1;
           } else {
-            chamTreQuality = chamTreQuality! + 1;
+            chamTreQuality = chamTreQuality + 1;
           }
           _resetContenGrid();
           update();
