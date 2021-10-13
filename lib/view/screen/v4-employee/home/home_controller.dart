@@ -2,30 +2,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/thu_chi_nhan_vien_model.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
+  // providers
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
 
+  CongViecNhanVienProvider congViecNhanVienProvider =
+      GetIt.I.get<CongViecNhanVienProvider>();
+
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+
   List<Map<String, dynamic>>? contentGrid;
+
   String fullname = "Phạm Dương";
+  String avatar = "";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
 
+  // số lượng các tiến độ
   int moiTaoQuality = 0;
   int dangLamQuality = 0;
   int hoanThanhQuality = 0;
   int chamTreQuality = 0;
 
-  String? userId = '615da85c9ecc24273f89a383';
-
-  bool isLoading = false;
+  // isloading
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -36,42 +45,25 @@ class V4HomeController extends GetxController {
     revenue = 0;
     expenditure = 0;
 
-    contentGrid = [
-      {
-        "title": "Mới tạo",
-        "quality": 3,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
-      },
-      {
-        "title": "Đang làm",
-        "quality": 2,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
-        ]),
-      },
-      {
-        "title": "Hoàn Thành",
-        "quality": 4,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
-        ]),
-      },
-      {
-        "title": "Chậm trễ",
-        "quality": 1,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
-        ]),
-      }
-    ];
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (taiKhoanResponse) {
+          fullname = taiKhoanResponse.hoTen!;
+          avatar = taiKhoanResponse.hinhDaiDien!;
+          // load thu chi
+          _readRevenueAndExpenditure();
 
-    // _readThuChiDataNhanVien();
+          // xử lý tiến độ công việc
+          _theoDoiTienDo();
+        },
+        onError: (error) {
+          print(error);
+        },
+      );
+    });
+
+    update();
   }
 
   //khai báo thời gian báo cáo
@@ -152,23 +144,24 @@ class V4HomeController extends GetxController {
     Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
   }
 
-  void _readThuChiDataNhanVien() {
-    // sl.get<SharedPreferenceHelper>().userId.then((userId) {
-
-    // });
-
+  ///
+  /// set user
+  ///
+  void _readRevenueAndExpenditure() {
+    // set name of user
     thuChiNhanVienProvider.paginate(
-      limit: 50 ,
       page: 1,
-      filter: '&idNhanVien=615dd8acd1075063bbd84f24',
+      limit: 50,
+      filter: "",
       onSuccess: (models) {
-        for (final ThuChiNhanVienModel thuChiModel in models) {
-          if (_isRevenue(thuChiModel.loai!)) {
-            revenue = revenue! + (double.parse(thuChiModel.soTien!));
+        for (final model in models) {
+          String type = model.loai.toString().toLowerCase();
+          double money = double.parse(model.soTien!);
+          if (type == "loai 1") {
+            revenue = revenue! + money;
           } else {
-            expenditure = expenditure! + double.parse(thuChiModel.soTien!);
+            expenditure = expenditure! + money;
           }
-
           total = total! + revenue!;
           total = total! - expenditure!;
         }
@@ -181,13 +174,73 @@ class V4HomeController extends GetxController {
   }
 
   ///
-  /// check is revenue
+  ///  theo doi tien do
   ///
-  bool _isRevenue(String type) {
-    if (type.toLowerCase() == "loai 1") {
-      return true;
-    } else {
-      return false;
-    }
+  void _theoDoiTienDo() {
+    congViecNhanVienProvider.paginate(
+      page: 1,
+      limit: 10,
+      filter: "",
+      onSuccess: (models) {
+        for (final model in models) {
+          final String status = model.trangThai!.toLowerCase();
+          if (status == "moi tao") {
+            moiTaoQuality = moiTaoQuality + 1;
+          } else if (status == "dang lam") {
+            dangLamQuality = dangLamQuality + 1;
+          } else if (status == "hoan thanh") {
+            hoanThanhQuality = hoanThanhQuality + 1;
+          } else {
+            chamTreQuality = chamTreQuality + 1;
+          }
+          _resetContenGrid();
+          isLoading = false;
+          update();
+        }
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  ///
+  /// reset content grid
+  ///
+  void _resetContenGrid() {
+    contentGrid = [
+      {
+        "title": "Mới tạo",
+        "quality": moiTaoQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff79B4B8),
+        ])
+      },
+      {
+        "title": "Đang làm",
+        "quality": dangLamQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00B4D8),
+        ]),
+      },
+      {
+        "title": "Hoàn Thành",
+        "quality": hoanThanhQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00A676),
+        ]),
+      },
+      {
+        "title": "Chậm trễ",
+        "quality": chamTreQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xffD00000),
+        ]),
+      }
+    ];
   }
 }
