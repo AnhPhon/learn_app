@@ -10,7 +10,7 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: controller.title),
+      appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
       body: GetBuilder<V3QuoteListController>(
         init: V3QuoteListController(),
         builder: (V3QuoteListController controller) {
@@ -32,7 +32,8 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                   content: "Công trình khách 5 sao",
                   locationName: "Đà Nẵng",
                   image: Images.location_example,
-                  onTap: controller.toReponse,
+                  onTap: () {
+                  },
                 );
               },
             ),
@@ -41,4 +42,7 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
       ),
     );
   }
+}
+
+mixin V3_QUOTE_REQUEST {
 }

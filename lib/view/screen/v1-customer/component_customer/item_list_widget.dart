@@ -41,7 +41,7 @@ class ItemListWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
             horizontal: Dimensions.MARGIN_SIZE_SMALL,
             vertical: Dimensions.MARGIN_SIZE_SMALL),
-        height: DeviceUtils.getScaledHeight(context, .118),
+        height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -93,8 +93,10 @@ class ItemListWidget extends StatelessWidget {
                       child: Text(
                         title,
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        ),
                       ),
                     ),
                   ),
@@ -108,7 +110,9 @@ class ItemListWidget extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                          fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                          color: ColorResources.GREY,
+                        ),
                       ),
                     ),
                   Padding(

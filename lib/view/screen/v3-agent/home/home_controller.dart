@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:template/data/model/response/san_pham_response.dart';
-import 'package:template/data/model/response/tin_tuc_response.dart';
-import 'package:template/di_container.dart';
-import 'package:template/provider/san_pham_provider.dart';
-import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3HomeController extends GetxController {
-  final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
-  final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
-  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
-
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
@@ -27,6 +15,7 @@ class V3HomeController extends GetxController {
 
   @override
   void onInit() {
+    // TODO: implement onInit
     super.onInit();
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       // tìm kiếm tài khoản theo id user được login
@@ -107,7 +96,7 @@ class V3HomeController extends GetxController {
           Color(0xff8CE3E9),
           Color(0xff8CE3E9),
         ]),
-        "onTap": () {
+        "onTap": (){
           onClickStore();
         }
       },

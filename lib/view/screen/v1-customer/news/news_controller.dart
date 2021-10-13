@@ -10,19 +10,26 @@ import 'package:template/routes/app_routes.dart';
 
 class V1NewsController extends GetxController
     with SingleGetTickerProviderMixin {
-  // TabController? tabController;
+  TabController? tabController;
+  int isSelectedIndexTab = 0;
+
+  List<ScrollController> scrollController = [];
 
   DanhMucTinTucProvider danhMucTinTucProvider =
       GetIt.I.get<DanhMucTinTucProvider>();
   List<DanhMucTinTucResponse> danhMucTinTucList = [];
 
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
-  List<List<TinTucResponse>> tinTucModelList = [];
+  List<TinTucResponse> tinTucModelList = [];
 
   String title = "Tin tức";
 
+  int pageMax = 1;
+  int currentMax = 5;
+  int indexScroll = 0;
+
   bool isLoading = true;
-  bool isLoadingNews = true;
+  bool isLoadingNews = false;
 
   @override
   void onInit() {
@@ -30,41 +37,87 @@ class V1NewsController extends GetxController
     getAllCategoryNews();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    tabController!.dispose();
+  }
+
   ///
   ///get all categoryNews
   ///
   void getAllCategoryNews() {
-    tinTucModelList.clear();
     danhMucTinTucProvider.all(onSuccess: (value) {
       danhMucTinTucList = value;
 
-      //add value
-      value.forEach((element) {
-        getNewsByIdCategory(id: element.id.toString());
-      });
+      // binding data tab
+      tabController = TabController(vsync: this, length: value.length);
+
+      //binding scroll controller tab
+      scrollController =
+          List<ScrollController>.filled(value.length, ScrollController());
+      print(scrollController.length);
+
+      // load data product with id categories
+      getNewsByIdCategory(index: isSelectedIndexTab);
 
       isLoading = false;
-      isLoadingNews = false;
       update();
     }, onError: (error) {
       print(error);
-    });
+    }).then((value) => listenerScroll());
   }
 
   ///
   ///get all tin tuc
   ///
-  void getNewsByIdCategory({required String id}) {
+  void getNewsByIdCategory({required int index}) {
+    isLoadingNews = true;
+    indexScroll = index;
+    pageMax = 1;
+    currentMax = 5;
+    tinTucModelList.clear();
+    update();
     tinTucProvider.paginate(
         page: 1,
-        limit: 100,
-        filter: "&idDanhMucTinTuc=$id",
+        limit: 5,
+        filter: "&idDanhMucTinTuc=${danhMucTinTucList[index].id}&sortBy=desc",
         onSuccess: (value) {
-          tinTucModelList.add(value);
+          tinTucModelList = value;
+          isLoadingNews = false;
+          update();
         },
         onError: (error) {
           print(error);
         });
+  }
+
+  ///
+  ///listener scroll
+  ///
+  void listenerScroll() {
+    scrollController[indexScroll].addListener(() {
+      print(scrollController[indexScroll].position.pixels ==
+          scrollController[indexScroll].position.maxScrollExtent);
+      if (scrollController[indexScroll].position.pixels ==
+          scrollController[indexScroll].position.maxScrollExtent) {
+        pageMax += 1;
+        currentMax = currentMax;
+        tinTucProvider.paginate(
+          page: pageMax,
+          limit: currentMax,
+          filter:
+              "&idDanhMucTinTuc=${danhMucTinTucList[indexScroll].id}&sortBy=desc",
+          onSuccess: (value) {
+            tinTucModelList = tinTucModelList + value;
+            update();
+          },
+          onError: (error) {
+            print(error);
+          },
+        );
+      }
+    });
   }
 
   ///
@@ -79,8 +132,7 @@ class V1NewsController extends GetxController
   ///
   ///go to news detail page
   ///
-  void onNewsDetailClick({required int indexA, required int indexB}) {
-    Get.toNamed(
-        "${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucModelList[indexA][indexB].id}");
+  void onNewsDetailClick({required int index}) {
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucModelList[index].id}");
   }
 }

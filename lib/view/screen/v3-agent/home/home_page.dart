@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
@@ -23,9 +21,6 @@ class V3HomePage extends GetView<V3HomeController> {
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),
         builder: (V3HomeController controller) {
-          if (controller.isLoading == true) {
-            return const Center(child: CircularProgressIndicator());
-          }
           return HomeWidget(
             fullname: "ĐL, ${controller.fullname}!",
             content: Column(
@@ -40,10 +35,10 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                _newsWidget(),
+                _newsWidget(controller:controller),
 
                 // product widget
-                _productWidget()
+                _productWidget(controller: controller)
               ],
             ),
           );
@@ -189,7 +184,41 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
-  Widget _productWidget() {
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget({required V3HomeController controller}) {
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {
+        controller.onClickNews();
+      },
+      widget: Container(
+        height: 220,
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        child: ListView.builder(
+          itemCount: 2,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return const Padding(
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              child: NewsBox(
+                title: "Tin nóng tóm tắt tổng hợp",
+                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _productWidget({required V3HomeController controller}) {
     return FieldWidget(
       title: "Kho sản phẩm",
       onTap: () {
@@ -201,7 +230,7 @@ class V3HomePage extends GetView<V3HomeController> {
           top: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: ListView.builder(
-          itemCount: controller.sanPhamList.length,
+          itemCount: 2,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -211,10 +240,9 @@ class V3HomePage extends GetView<V3HomeController> {
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
-                tenSanPham: controller.sanPhamList[index].ten!,
-                maSanPham: controller.sanPhamList[index].maSanPham!,
-                giaSanPham:
-                    "${PriceConverter.convertPrice(ctx, double.parse(controller.sanPhamList[index].gia!))} đ",
+                tenSanPham: "Kệ son nồi",
+                maSanPham: "BN001",
+                giaSanPham: "${PriceConverter.convertPrice(ctx, 500000)} đ",
                 quyCach: "Kim đỉnh",
               ),
             );
