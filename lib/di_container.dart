@@ -60,4 +60,5 @@ Future<void> init() async {
   sl.registerFactory(() => TinTucProvider());
   sl.registerFactory(() => DanhMucTinTucProvider());
   // sl.registerFactory(() => AuthProvider());
+  sl.registerFactory(() => ThongBaoProvider());
 }
