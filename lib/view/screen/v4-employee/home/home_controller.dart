@@ -21,6 +21,16 @@ class V4HomeController extends GetxController {
 
   List<Map<String, dynamic>>? contentGrid;
 
+  //khai báo thời gian báo cáo
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
+
+  //khai báo thời gian chấm công
+  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+
+  //khai báo thay đổi text chấm công và báo cáo
+  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+
+
   String fullname = "Phạm Dương";
   String avatar = "";
   double? total;
@@ -66,15 +76,6 @@ class V4HomeController extends GetxController {
     update();
   }
 
-  //khai báo thời gian báo cáo
-  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
-
-  //khai báo thời gian chấm công
-  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
-
-  //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
-
   ///
   /// click to work progress page
   ///
@@ -98,8 +99,7 @@ class V4HomeController extends GetxController {
   ///
   /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
   ///
-  // ignore: unused_element
-  void onClick() {
+  void onBtnTimeKeepingClick() {
     // ignore: prefer_final_locals
     double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
         (reportTimekeeping.minute.toDouble() / 60);
