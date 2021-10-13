@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/di_container.dart';
+import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
   // providers
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
+
+  CongViecNhanVienProvider congViecNhanVienProvider =
+      GetIt.I.get<CongViecNhanVienProvider>();
 
   List<Map<String, dynamic>>? contentGrid;
 
@@ -19,48 +21,28 @@ class V4HomeController extends GetxController {
   double? revenue; // thu
   double? expenditure; // chi
 
+  int? moiTaoQuality;
+  int? dangLamQuality;
+  int? hoanThanhQuality;
+  int? chamTreQuality;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    contentGrid = [
-      {
-        "title": "Mới tạo",
-        "quality": 3,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
-      },
-      {
-        "title": "Đang làm",
-        "quality": "2",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
-        ]),
-      },
-      {
-        "title": "Hoàn Thành",
-        "quality": "4",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
-        ]),
-      },
-      {
-        "title": "Chậm trễ",
-        "quality": "1",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
-        ]),
-      }
-    ];
 
-    total = 10000000;
-    revenue = 10000000;
-    expenditure = 10000000;
+    total = 0;
+    revenue = 0;
+    expenditure = 0;
+
+    moiTaoQuality = 0;
+    dangLamQuality = 0;
+    hoanThanhQuality = 0;
+    chamTreQuality = 0;
+
+    _resetContenGrid();
+    _readRevenueAndExpenditure();
+    _theoDoiTienDo();
   }
 
   //khai báo thời gian báo cáo
@@ -149,13 +131,97 @@ class V4HomeController extends GetxController {
 
     // });
 
+    // &idNhanVien=615dd8acd1075063bbd84f24
     // use thuChiNhanVienProvider
     thuChiNhanVienProvider.paginate(
       page: 1,
+      limit: 50,
+      filter: "",
+      onSuccess: (models) {
+        for (final model in models) {
+          String type = model.loai.toString().toLowerCase();
+          double money = double.parse(model.soTien!);
+          if (type == "loai 1") {
+            revenue = revenue! + money;
+          } else {
+            expenditure = expenditure! + money;
+          }
+          total = total! + revenue!;
+          total = total! - expenditure!;
+          update();
+        }
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  // theo doi tien do
+  void _theoDoiTienDo() {
+    congViecNhanVienProvider.paginate(
+      page: 1,
       limit: 10,
       filter: "",
-      onSuccess: (models) {},
-      onError: (error) {},
+      onSuccess: (models) {
+        for (final model in models) {
+          final String status = model.trangThai!.toLowerCase();
+          if (status == "moi tao") {
+            moiTaoQuality = moiTaoQuality! + 1;
+          } else if (status == "dang lam") {
+            dangLamQuality = dangLamQuality! + 1;
+          } else if (status == "hoan thanh") {
+            hoanThanhQuality = hoanThanhQuality! + 1;
+          } else {
+            chamTreQuality = chamTreQuality! + 1;
+          }
+          _resetContenGrid();
+          update();
+        }
+      },
+      onError: (error) {
+        print(error);
+      },
     );
+  }
+
+  ///
+  /// reset content grid
+  ///
+  void _resetContenGrid() {
+    contentGrid = [
+      {
+        "title": "Mới tạo",
+        "quality": moiTaoQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff79B4B8),
+        ])
+      },
+      {
+        "title": "Đang làm",
+        "quality": dangLamQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00B4D8),
+        ]),
+      },
+      {
+        "title": "Hoàn Thành",
+        "quality": hoanThanhQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00A676),
+        ]),
+      },
+      {
+        "title": "Chậm trễ",
+        "quality": chamTreQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xffD00000),
+        ]),
+      }
+    ];
   }
 }
