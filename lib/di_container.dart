@@ -47,6 +47,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SanPhamRepository());
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
+  
 
   // Provider
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
