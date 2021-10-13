@@ -8,7 +8,8 @@ import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V1NewsController extends GetxController with SingleGetTickerProviderMixin{
+class V1NewsController extends GetxController
+    with SingleGetTickerProviderMixin {
   // TabController? tabController;
 
   DanhMucTinTucProvider danhMucTinTucProvider =
@@ -21,6 +22,7 @@ class V1NewsController extends GetxController with SingleGetTickerProviderMixin{
   String title = "Tin tức";
 
   bool isLoading = true;
+  bool isLoadingNews = true;
 
   @override
   void onInit() {
@@ -34,15 +36,15 @@ class V1NewsController extends GetxController with SingleGetTickerProviderMixin{
   void getAllCategoryNews() {
     tinTucModelList.clear();
     danhMucTinTucProvider.all(onSuccess: (value) {
-      
       danhMucTinTucList = value;
 
       //add value
-      for (var i = 0; i < value.length; i++) {
-        getNewsByIdCategory(index: i);
-      }
+      value.forEach((element) {
+        getNewsByIdCategory(id: element.id.toString());
+      });
 
       isLoading = false;
+      isLoadingNews = false;
       update();
     }, onError: (error) {
       print(error);
@@ -52,14 +54,13 @@ class V1NewsController extends GetxController with SingleGetTickerProviderMixin{
   ///
   ///get all tin tuc
   ///
-  void getNewsByIdCategory({required int index}) {
+  void getNewsByIdCategory({required String id}) {
     tinTucProvider.paginate(
         page: 1,
         limit: 100,
-        filter: "&idDanhMucTinTuc=${danhMucTinTucList[index].id}",
+        filter: "&idDanhMucTinTuc=$id",
         onSuccess: (value) {
           tinTucModelList.add(value);
-          update();
         },
         onError: (error) {
           print(error);
@@ -79,6 +80,7 @@ class V1NewsController extends GetxController with SingleGetTickerProviderMixin{
   ///go to news detail page
   ///
   void onNewsDetailClick({required int indexA, required int indexB}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucModelList[indexA][indexB].id}");
+    Get.toNamed(
+        "${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucModelList[indexA][indexB].id}");
   }
 }

@@ -61,34 +61,40 @@ class V1NewsPage extends GetView<V1NewsController> {
   ///
   Widget _itemList(
       {required V1NewsController controller, required int indexA}) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_LARGE,
-          ),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: controller.tinTucModelList[indexA].length,
-            itemBuilder: (BuildContext ctx, int index) {
-              return ItemListWidget(
-                urlImage: controller.tinTucModelList[indexA][index].hinhAnh
-                    .toString(),
-                onTap: () => controller.onNewsDetailClick(indexA: indexA, indexB: index),
-                title:
-                    controller.tinTucModelList[indexA][index].tieuDe.toString(),
-                subTitle: controller.tinTucModelList[indexA][index].tomTat,
-                rowText2: controller.formatDateTime(
-                  dateTime: controller.tinTucModelList[indexA][index].createdAt
-                      .toString(),
+    return (controller.tinTucModelList.isNotEmpty)
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_LARGE,
                 ),
-                colorRowText2: ColorResources.GREY,
-              );
-            },
-          ),
-        ],
-      ),
-    );
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: controller.tinTucModelList[indexA].length,
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return ItemListWidget(
+                      urlImage: controller
+                          .tinTucModelList[indexA][index].hinhAnh
+                          .toString(),
+                      onTap: () => controller.onNewsDetailClick(
+                          indexA: indexA, indexB: index),
+                      title: controller.tinTucModelList[indexA][index].tieuDe
+                          .toString(),
+                      subTitle: controller.tinTucModelList[indexA][index].tomTat
+                          .toString(),
+                      rowText2: controller.formatDateTime(
+                        dateTime: controller
+                            .tinTucModelList[indexA][index].createdAt
+                            .toString(),
+                      ),
+                      colorRowText2: ColorResources.GREY,
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
+        : Container();
   }
 }
