@@ -22,6 +22,9 @@ class V3HomePage extends GetView<V3HomeController> {
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),
         builder: (V3HomeController controller) {
+          if (controller.isLoading == true) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return HomeWidget(
             fullname: "ĐL, ${controller.fullname}!",
             content: Column(

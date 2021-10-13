@@ -8,14 +8,15 @@ import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V3HomeController extends GetxController {
-  String fullname = "Nguyễn Văn A";
-  List<Map<String, dynamic>>? threeFeatures;
-
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
 
+  String fullname = "Nguyễn Văn A";
+  List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
   List<SanPhamResponse> sanPhamList = [];
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -80,6 +81,7 @@ class V3HomeController extends GetxController {
       filter: "&sortBy=create_at:desc",
       onSuccess: (sanPhamModels) {
         sanPhamList = sanPhamModels;
+        isLoading = false;
         update();
       },
       onError: (error) {
@@ -98,6 +100,7 @@ class V3HomeController extends GetxController {
       filter: "&sortBy=create_at:desc",
       onSuccess: (tinTucResponses) {
         tinTucList = tinTucResponses;
+        isLoading = false;
         update();
       },
       onError: (error) {
