@@ -22,6 +22,11 @@ class V4HomePage extends GetView<V4HomeController> {
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
         builder: (V4HomeController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return HomeWidget(
             image: Images.example,
             fullname: "Hi, ${controller.fullname}!",
@@ -100,7 +105,8 @@ class V4HomePage extends GetView<V4HomeController> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: const Color(0xff2196F3),
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         child: Center(
           child: Text(
@@ -124,7 +130,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -236,7 +243,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -400,7 +408,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),

@@ -6,6 +6,7 @@ import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
 import 'package:template/data/repository/kho_hang_repository.dart';
 import 'package:template/data/repository/san_pham_repository.dart';
+import 'package:template/data/repository/tai_khoan_repository.dart';
 import 'package:template/data/repository/thong_bao_repository.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
@@ -15,6 +16,7 @@ import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -35,42 +37,25 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
   sl.registerSingleton<DioClient>(DioClient());
-  // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => DanhMucTinTucRepository());
-  // sl.registerLazySingleton(() => RegionRepo());
   sl.registerLazySingleton(() => ThongBaoRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => SanPhamRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
+  sl.registerLazySingleton(() => TaiKhoanRepository());
   
 
   // Provider
-  // sl.registerFactory(() => RegionProvider());
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
   sl.registerLazySingleton(() => TinTucProvider());
   sl.registerLazySingleton(() => ThongBaoProvider());
   sl.registerLazySingleton(() => KhoHangProvider());
   sl.registerLazySingleton(() => SanPhamProvider());
-
-  sl.registerLazySingleton(() => CongViecNhanVienRepository());
-  // sl.registerLazySingleton(() => AuthRepository());
-  sl.registerLazySingleton(() => ThongBaoRepository());
-
-  // Provider
-  // sl.registerFactory(() => RegionProvider());
-  sl.registerFactory(() => ThuChiNhanVienProvider());
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => KhoHangProvider());
-  sl.registerFactory(() => SanPhamProvider());
-  sl.registerFactory(() => CongViecNhanVienProvider());
-  
-
-  // Provider
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => DanhMucTinTucProvider());
-  // sl.registerFactory(() => AuthProvider());
+  sl.registerLazySingleton(() => CongViecNhanVienProvider());
+  sl.registerLazySingleton(() => DanhMucTinTucProvider());
+  sl.registerLazySingleton(() => TaiKhoanProvider());
 }
