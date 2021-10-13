@@ -30,4 +30,9 @@ class TinhTpResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten!;
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -34,17 +36,17 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
 
                   // Nhập địa chỉ cụ thể
-                  form(context, controller),
+                  form(context, controller:controller),
                   
-                  material(context, controller),
+                  material(context, controller:controller),
                   // Danh sách vật liệu
-                  materialList(),
+                  materialList(context,controller:controller),
                   //Thêm file
-                  attchFile(context),
+                  attchFile(context,controller:controller),
                   // Hình ảnh bảng vật liệu
-                  imageMaterial(),
+                  imageMaterial(controller: controller),
                   // Bản vẽ
-                  drawing(),
+                  drawing(controller: controller),
                   // Ghi chú
                   note(),
                   // Button tiếp tục
@@ -63,7 +65,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   ///
   /// form tiêu đề công việc và mô tả công việc , Thời gian
   ///
-  Widget form(BuildContext context,V1G1CreateWorkController controller ){
+  Widget form(BuildContext context,{required V1G1CreateWorkController controller} ){
     return Column(
       children: [
         InputField(
@@ -122,7 +124,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   ///
   /// Thêm vật liệu
   ///
-  Widget material(BuildContext context, V1G1CreateWorkController controller ){
+  Widget material(BuildContext context, {required V1G1CreateWorkController controller} ){
     return Column(
       children: [
         const Label(
@@ -161,7 +163,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
             InputField(
               allowEdit: true,
               allowMultiline: false,
-              controller: controller.specificationController,
+              controller: controller.massController,
               fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
               holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
               hidden: false,
@@ -170,21 +172,14 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               typeInput: TextInputType.text,
               width: DeviceUtils.getScaledWidth(context,0.5),
             ),
-            // DropDownButton<String>(
-            //   data: const ["Xây nhà","Lót gạch men"],
-            //   obligatory: true,
-            //   onChanged: (value){},
-            //   value: "Xây nhà",
-            //   width: DeviceUtils.getScaledSize(context,0.5),
-            //   label: "Khối lượng",
-            // ),
           DropDownButton<String>(
-            data: const ["Xây nhà","Lót gạch men"],
+            data: const ["m2","m3",'Tấn','Tạ','KG'],
             obligatory: true,
-            onChanged: (value){},
-            value: "Xây nhà",
+            onChanged: (unit)=> controller.onChangedUnit(unit!),
+            value: controller.unit,
             width: DeviceUtils.getScaledSize(context,0.5),
             label: "Đơn vị",
+            hint: 'Chọn đơn vị',
           ),
           ],
          ),
@@ -195,7 +190,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           child: LongButton(
              title: '+ Thêm vật liệu', 
              color: ColorResources.PRIMARYCOLOR, 
-             onPressed: (){},
+             onPressed: controller.onClickAddMass,
              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
              vertical: Dimensions.PADDING_SIZE_SMALL,
           ),
@@ -207,16 +202,16 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   ///
   /// Danh sách vật liệu được thêm 
   ///
-  Widget materialList(){
+  Widget materialList(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
-      children: const [
-        MaterialCard(),
-        MaterialCard()
-      ],
+      children: controller.massList.map((e) => 
+      SizedBox(
+        width: DeviceUtils.getScaledWidth(context, 1),
+        child: MaterialCard(mass: e))).toList()
     );
   }
 
-  Widget attchFile(BuildContext context){
+  Widget attchFile(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
       children: [
         const Label(
@@ -224,48 +219,48 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: false,
         ),
         AttachButton(
-          title: "Thêm tập tin", 
+          title: controller.file == null ? "Thêm tập tin" : controller.fileName!, 
           color: ColorResources.WHITE, 
-          onPressed: (){},
+          onPressed: controller.pickerFile,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         )
       ],
     );
   }
 
-  Widget imageMaterial(){
+  Widget imageMaterial({required V1G1CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children: [
+        const Label(
           label: "Hình ảnh bảng khối lượng",
           obligatory: false,
           paddingTitle: 0
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: Text("(Bảng in hoặc viết bằng tay nếu có)"),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.images,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.images) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
         ),
       ],
     );
   }
 
-  Widget drawing(){
+  Widget drawing({required V1G1CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Hình ảnh bản vẽ (nếu có)",
           obligatory: false,
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.drawingImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.drawingImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
         ),
       ],
     );
@@ -301,7 +296,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
-        onPressed: ()=> controller.onClickContinueButton(),
+        onPressed: controller.onClickContinueButton,
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         vertical: Dimensions.PADDING_SIZE_DEFAULT,

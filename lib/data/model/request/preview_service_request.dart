@@ -1,4 +1,8 @@
-class DonDichVuRequest {
+import 'dart:io';
+
+import 'package:template/data/model/response/vat_tu_response.dart';
+
+class PreviewServiceRequest {
   String? id;
   String? idTaiKhoan;
   String? idNhomDichVu;
@@ -6,8 +10,9 @@ class DonDichVuRequest {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
-  String? hinhAnhBanVe;
+  List<VatTuResponse>? bangKhoiLuong;
+  List<File>? hinhAnhBanKhoiLuong;
+  List<File>? hinhAnhBanVe;
   String? idTrangThaiDonHang;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
@@ -39,7 +44,7 @@ class DonDichVuRequest {
   String? tienCoc;
   String? diaChiCuThe;
 
-  DonDichVuRequest({
+  PreviewServiceRequest({
       this.id,
       this.idTaiKhoan,
       this.idNhomDichVu,
@@ -78,13 +83,14 @@ class DonDichVuRequest {
       this.tongDon,
       this.taiKhoanNhanDon,
       this.tienCoc,
-      this.diaChiCuThe
+      this.diaChiCuThe,
+      this.bangKhoiLuong
       });
   
   ///
   /// From JSON
   ///
-  DonDichVuRequest.fromJson(Map<String, dynamic> json) {
+  PreviewServiceRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idNhomDichVu = json['idNhomDichVu'].toString();
@@ -92,8 +98,8 @@ class DonDichVuRequest {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString();
+    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<File>;
+    hinhAnhBanVe = json['hinhAnhBanVe'].toString() as List<File>;
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
@@ -124,6 +130,7 @@ class DonDichVuRequest {
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
+    bangKhoiLuong = json['bangKhoiLuong'] as List<VatTuResponse>;
   }
 
   ///

@@ -30,4 +30,9 @@ class NhomDichVuResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return tenDichVu!;
+  }
 }

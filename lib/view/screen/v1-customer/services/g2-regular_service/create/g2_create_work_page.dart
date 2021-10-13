@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -22,24 +24,31 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Tạo đơn công việc"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      body: GetBuilder(
+        builder: (V1G2CreateWorkController controller) {
+          if(controller.isLoading){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-              // Tiêu tề nhóm công việc
-              const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+                  // Tiêu tề nhóm công việc
+                  const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
 
-              // Form nhập dữ 
-              form(context, _controller),
-              
-              // Button tiếp tục
-              nextButton(controller: _controller)
-            ],
-          ),
-        ),
+                  // Form nhập dữ 
+                  form(context, _controller),
+                  
+                  // Button tiếp tục
+                  nextButton(controller: _controller)
+                ],
+              ),
+            ),
+          );
+        },
       )
     );
   }
@@ -68,9 +77,15 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
           child: Column(
             children: [
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
+              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
+                controller.onSelectedTommorow(val: val!);
+               },status: controller.tommorow,),
+              CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+                controller.onSelectedAfternoon(val: val!);
+               },status: controller.afternoon,),
+              CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  
+                controller.onSelectedTonight(val: val!);
+              },status: controller.tonight,),
             ],
           ),
         ),
@@ -127,9 +142,9 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
 
         // Thực trạng
-        currentImage(),
+        currentImage(controller: controller),
         // San phẩm mẫu
-        sampleProductImages(),
+        sampleProductImages(controller: controller),
 
         InputField(
           allowEdit: true,
@@ -145,9 +160,9 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
 
         // HÌnh ảnh bảng khối lượng
-        massTableImage(),
+        massTableImage(controller: controller),
         // Thêm file
-        attchFile(context),
+        attchFile(context, controller: controller),
       ],
     );
   }
@@ -155,22 +170,22 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
   ///
   ///Hình ảnh hiện trạng
   ///
-  Widget currentImage(){
+  Widget currentImage({required V1G2CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children: [
+        const Label(
           label: "Hình ảnh hiện trạng nếu có",
           obligatory: false,
           paddingTitle: 0
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: Text("(Những công viêc mang tính chất cải tạo cần nhiều hình ảnh chi tiết, cụ thể, rõ ràng để báo giá sát nhất,...)"),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.images,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.images) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
         ),
       ],
     );
@@ -179,18 +194,18 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
   ///
   ///Hình ảnh sản phầm mẫu
   ///
-  Widget sampleProductImages(){
+  Widget sampleProductImages({required V1G2CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Hình ảnh sản phẩm mẫu (nếu có)",
           obligatory: false,
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.productImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.productImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
         ),
       ],
     );
@@ -200,18 +215,18 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
   /// Hinh ảnh bảng khối lượng
   ///
 
-  Widget massTableImage(){
+  Widget massTableImage({required V1G2CreateWorkController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Hình ảnh bảng khối lượng (nếu có)",
           obligatory: false,
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.massImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.massImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
         ),
       ],
     );
@@ -221,7 +236,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
   /// Nút thêm file
   ///
 
-  Widget attchFile(BuildContext context){
+  Widget attchFile(BuildContext context,{required V1G2CreateWorkController controller}){
     return Column(
       children: [
         const Label(
@@ -229,9 +244,9 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           obligatory: false,
         ),
         AttachButton(
-          title: "Thêm tập tin", 
+          title: controller.file == null ? "Thêm tập tin" : controller.fileName!, 
           color: ColorResources.WHITE, 
-          onPressed: (){},
+          onPressed: controller.pickerFile,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         )
       ],
