@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 
 class V1WalletController extends GetxController {
@@ -50,5 +51,12 @@ class V1WalletController extends GetxController {
   void setShow() {
     isShow = !isShow;
     update();
+  }
+
+  ///
+  ///recharge
+  ///
+  void onRecharge() {
+    Get.toNamed(AppRoutes.V1_BEFORE_RECHARGE);
   }
 }

@@ -26,7 +26,7 @@ class V1WalletPage extends GetView<V1WalletController> {
               Column(
                 children: [
                   //wallet status
-                  _walletStatus(context),
+                  _walletStatus(context, controller: controller),
 
                   const SizedBox(
                     height: Dimensions.MARGIN_SIZE_EXTRA_LARGE +
@@ -48,7 +48,8 @@ class V1WalletPage extends GetView<V1WalletController> {
   ///
   ///wallet status
   ///
-  Widget _walletStatus(BuildContext context) {
+  Widget _walletStatus(BuildContext context,
+      {required V1WalletController controller}) {
     return Container(
       alignment: Alignment.bottomCenter,
       height: DeviceUtils.getScaledHeight(context, .31),
@@ -76,16 +77,10 @@ class V1WalletPage extends GetView<V1WalletController> {
                 ),
                 Row(
                   children: [
-                    if (controller.isShow)
-                      Text(
-                        "7.000.000 vnđ",
-                        style: Dimensions.fontSizeStyle18w600(),
-                      )
-                    else
-                      Text(
-                        "Xem số dư",
-                        style: Dimensions.fontSizeStyle18w600(),
-                      ),
+                    Text(
+                      (controller.isShow) ? "7.000.000 vnđ" : "Xem số dư",
+                      style: Dimensions.fontSizeStyle18w600(),
+                    ),
                     const SizedBox(
                       width: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
@@ -106,7 +101,7 @@ class V1WalletPage extends GetView<V1WalletController> {
               ],
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => controller.onRecharge(),
               child: Column(
                 children: [
                   const Icon(
@@ -162,12 +157,14 @@ class V1WalletPage extends GetView<V1WalletController> {
   ///
   ///item history
   ///
-  Widget _itemHistory(BuildContext context,
-      {required String id,
-      required String price,
-      required String content,
-      required String time,
-      required int status}) {
+  Widget _itemHistory(
+    BuildContext context, {
+    required String id,
+    required String price,
+    required String content,
+    required String time,
+    required int status,
+  }) {
     return Padding(
       padding:
           const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),

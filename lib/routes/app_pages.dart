@@ -16,6 +16,7 @@ import 'package:template/view/screen/v1-customer/account/profile/profile_page.da
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
@@ -453,6 +454,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_MY_ORDER,
       page: () => V1MyOrderPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_BEFORE_RECHARGE,
+      page: () => V1BeforeRechargePage(),
     ),
 
     ///

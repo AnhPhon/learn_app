@@ -4,9 +4,11 @@ import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class InputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
+  final Function(dynamic)? onChanged;
   final String? hintText;
   final String? label;
   final double width;
@@ -41,6 +43,7 @@ class InputWidget extends StatelessWidget {
     this.isBorder = true,
     this.isShadow = false,
     this.isMaxLine = false,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -133,6 +136,8 @@ class InputWidget extends StatelessWidget {
                         }
                       : () {},
               child: TextField(
+                inputFormatters: [ThousandsSeparatorInputFormatter()],
+                onChanged: onChanged,
                 maxLines: (isMaxLine == true) ? 5 : 1,
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,

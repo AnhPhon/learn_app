@@ -127,6 +127,7 @@ class AppRoutes {
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
   static const String V1_MY_ORDER = '/v1_my_order';
+  static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
