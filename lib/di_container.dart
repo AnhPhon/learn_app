@@ -35,42 +35,23 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
   sl.registerSingleton<DioClient>(DioClient());
-  // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => DanhMucTinTucRepository());
-  // sl.registerLazySingleton(() => RegionRepo());
   sl.registerLazySingleton(() => ThongBaoRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => SanPhamRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
   
 
   // Provider
-  // sl.registerFactory(() => RegionProvider());
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
   sl.registerLazySingleton(() => TinTucProvider());
   sl.registerLazySingleton(() => ThongBaoProvider());
   sl.registerLazySingleton(() => KhoHangProvider());
   sl.registerLazySingleton(() => SanPhamProvider());
-
-  sl.registerLazySingleton(() => CongViecNhanVienRepository());
-  // sl.registerLazySingleton(() => AuthRepository());
-  sl.registerLazySingleton(() => ThongBaoRepository());
-
-  // Provider
-  // sl.registerFactory(() => RegionProvider());
-  sl.registerFactory(() => ThuChiNhanVienProvider());
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => KhoHangProvider());
-  sl.registerFactory(() => SanPhamProvider());
-  sl.registerFactory(() => CongViecNhanVienProvider());
-  
-
-  // Provider
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => DanhMucTinTucProvider());
-  // sl.registerFactory(() => AuthProvider());
+  sl.registerLazySingleton(() => CongViecNhanVienProvider());
+  sl.registerLazySingleton(() => DanhMucTinTucProvider());
 }
