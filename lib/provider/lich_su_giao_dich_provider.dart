@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/lich_su_giao_dich_model.dart';
+import 'package:template/data/model/request/lich_su_giao_dich_request.dart';
+import 'package:template/data/model/response/lich_su_giao_dich_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/lich_su_giao_dich_repository.dart';
 
@@ -12,7 +13,7 @@ class LichSuGiaoDichProvider {
   /// Get all lichSuGiaoDichs
   ///
   Future<void> all({
-    required Function(List<LichSuGiaoDichModel> lichSuGiaoDichs) onSuccess,
+    required Function(List<LichSuGiaoDichResponse> lichSuGiaoDichs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class LichSuGiaoDichProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => LichSuGiaoDichModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LichSuGiaoDichResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class LichSuGiaoDichProvider {
   /// Insert lichSuGiaoDich to database
   ///
   Future<void> add({
-    required LichSuGiaoDichModel data,
-    required Function(LichSuGiaoDichModel lichSuGiaoDich) onSuccess,
+    required LichSuGiaoDichRequest data,
+    required Function(LichSuGiaoDichRequest lichSuGiaoDich) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class LichSuGiaoDichProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LichSuGiaoDichModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LichSuGiaoDichRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class LichSuGiaoDichProvider {
   /// Update lichSuGiaoDich to database
   ///
   Future<void> update({
-    required LichSuGiaoDichModel data,
-    required Function(LichSuGiaoDichModel lichSuGiaoDich) onSuccess,
+    required LichSuGiaoDichRequest data,
+    required Function(LichSuGiaoDichRequest lichSuGiaoDich) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class LichSuGiaoDichProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LichSuGiaoDichModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LichSuGiaoDichRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class LichSuGiaoDichProvider {
   ///
   Future<void> delete({
     required String id,
-    required LichSuGiaoDichModel data,
-    required Function(LichSuGiaoDichModel lichSuGiaoDich) onSuccess,
+    required Function(LichSuGiaoDichRequest lichSuGiaoDich) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LichSuGiaoDichModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LichSuGiaoDichRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class LichSuGiaoDichProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<LichSuGiaoDichModel> lichSuGiaoDichs) onSuccess,
+    required Function(List<LichSuGiaoDichResponse> lichSuGiaoDichs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class LichSuGiaoDichProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => LichSuGiaoDichModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => LichSuGiaoDichResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class LichSuGiaoDichProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(LichSuGiaoDichModel lichSuGiaoDich) onSuccess,
+    required Function(LichSuGiaoDichResponse lichSuGiaoDich) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class LichSuGiaoDichProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(LichSuGiaoDichModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(LichSuGiaoDichResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

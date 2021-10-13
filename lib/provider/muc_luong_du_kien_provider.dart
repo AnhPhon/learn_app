@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/muc_luong_du_kien_model.dart';
+import 'package:template/data/model/request/muc_luong_du_kien_request.dart';
+import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/muc_luong_du_kien_repository.dart';
 
@@ -12,7 +13,7 @@ class MucLuongDuKienProvider {
   /// Get all mucLuongDuKiens
   ///
   Future<void> all({
-    required Function(List<MucLuongDuKienModel> mucLuongDuKiens) onSuccess,
+    required Function(List<MucLuongDuKienResponse> mucLuongDuKiens) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class MucLuongDuKienProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => MucLuongDuKienModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class MucLuongDuKienProvider {
   /// Insert mucLuongDuKien to database
   ///
   Future<void> add({
-    required MucLuongDuKienModel data,
-    required Function(MucLuongDuKienModel mucLuongDuKien) onSuccess,
+    required MucLuongDuKienRequest data,
+    required Function(MucLuongDuKienRequest mucLuongDuKien) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class MucLuongDuKienProvider {
   /// Update mucLuongDuKien to database
   ///
   Future<void> update({
-    required MucLuongDuKienModel data,
-    required Function(MucLuongDuKienModel mucLuongDuKien) onSuccess,
+    required MucLuongDuKienRequest data,
+    required Function(MucLuongDuKienRequest mucLuongDuKien) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class MucLuongDuKienProvider {
   ///
   Future<void> delete({
     required String id,
-    required MucLuongDuKienModel data,
-    required Function(MucLuongDuKienModel mucLuongDuKien) onSuccess,
+    required Function(MucLuongDuKienRequest mucLuongDuKien) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class MucLuongDuKienProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<MucLuongDuKienModel> mucLuongDuKiens) onSuccess,
+    required Function(List<MucLuongDuKienResponse> mucLuongDuKiens) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class MucLuongDuKienProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => MucLuongDuKienModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class MucLuongDuKienProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(MucLuongDuKienModel mucLuongDuKien) onSuccess,
+    required Function(MucLuongDuKienResponse mucLuongDuKien) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(MucLuongDuKienResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

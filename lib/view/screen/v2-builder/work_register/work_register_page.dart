@@ -102,40 +102,40 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
               Dimensions.SCALE_DEFAULT,
             ),
           ),
-          Column(
-            children: List.generate(
-              controller.provinceData!.length,
-              (index) => Stack(
-                children: [
-                  Checkbox(
-                    value: controller.checkList![index],
-                    onChanged: (val) {
-                      controller.onChange(index, val);
-                    },
-                    fillColor: MaterialStateProperty.all(
-                      ColorResources.THEME_DEFAULT,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-                      top: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
-                    child: LabelContent(
-                      title: controller.provinceData![index].value.toString(),
-                      content: _labelSelect(
-                        context,
-                        ["Quận/huyện", "Phường/xã"],
-                        [(value) {}, (value) {}],
-                        [[], []],
-                      ),
-                      isRequired: false,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+          // Column(
+          //   children: List.generate(
+          //     controller.provinceData!.length,
+          //     (index) => Stack(
+          //       children: [
+          //         Checkbox(
+          //           value: controller.checkList![index],
+          //           onChanged: (val) {
+          //             controller.onChange(index, val);
+          //           },
+          //           fillColor: MaterialStateProperty.all(
+          //             ColorResources.THEME_DEFAULT,
+          //           ),
+          //         ),
+          //         Container(
+          //           margin: const EdgeInsets.only(
+          //             left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+          //             top: Dimensions.MARGIN_SIZE_SMALL,
+          //           ),
+          //           child: LabelContent(
+          //             title: controller.provinceData![index].value.toString(),
+          //             content: _labelSelect(
+          //               context,
+          //               ["Quận/huyện", "Phường/xã"],
+          //               [(value) {}, (value) {}],
+          //               [[], []],
+          //             ),
+          //             isRequired: false,
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       isRequired: true,

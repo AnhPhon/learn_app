@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/kho_hang_model.dart';
+import 'package:template/data/model/request/kho_hang_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class KhoHangRepository {
@@ -24,7 +24,7 @@ class KhoHangRepository {
   ///
   /// Insert kho-hang to database
   ///
-  Future<ApiResponse> add(KhoHangModel data) async {
+  Future<ApiResponse> add(KhoHangRequest data) async {
     try {
       final response = await dioClient!.post('/kho-hangs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class KhoHangRepository {
   ///
   /// Update kho-hang to database
   ///
-  Future<ApiResponse> update(KhoHangModel data) async {
+  Future<ApiResponse> update(KhoHangRequest data) async {
     try {
       final response = await dioClient!.put('/kho-hangs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class KhoHangRepository {
   ///
   /// Update kho-hang to database
   ///
-  Future<ApiResponse> delete(String id, KhoHangModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/kho-hangs/$id', data: data.toJson());
+          await dioClient!.delete('/kho-hangs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

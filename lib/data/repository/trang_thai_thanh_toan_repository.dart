@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/trang_thai_thanh_toan_model.dart';
+import 'package:template/data/model/request/trang_thai_thanh_toan_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class TrangThaiThanhToanRepository {
@@ -24,7 +24,7 @@ class TrangThaiThanhToanRepository {
   ///
   /// Insert trang-thai-thanh-toan to database
   ///
-  Future<ApiResponse> add(TrangThaiThanhToanModel data) async {
+  Future<ApiResponse> add(TrangThaiThanhToanRequest data) async {
     try {
       final response = await dioClient!.post('/trang-thai-thanh-toans', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class TrangThaiThanhToanRepository {
   ///
   /// Update trang-thai-thanh-toan to database
   ///
-  Future<ApiResponse> update(TrangThaiThanhToanModel data) async {
+  Future<ApiResponse> update(TrangThaiThanhToanRequest data) async {
     try {
       final response = await dioClient!.put('/trang-thai-thanh-toans', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class TrangThaiThanhToanRepository {
   ///
   /// Update trang-thai-thanh-toan to database
   ///
-  Future<ApiResponse> delete(String id, TrangThaiThanhToanModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/trang-thai-thanh-toans/$id', data: data.toJson());
+          await dioClient!.delete('/trang-thai-thanh-toans/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

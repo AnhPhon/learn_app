@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/don_dich_vu_model.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class DonDichVuRepository {
@@ -24,7 +24,7 @@ class DonDichVuRepository {
   ///
   /// Insert don-dich-vu to database
   ///
-  Future<ApiResponse> add(DonDichVuModel data) async {
+  Future<ApiResponse> add(DonDichVuRequest data) async {
     try {
       final response = await dioClient!.post('/don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class DonDichVuRepository {
   ///
   /// Update don-dich-vu to database
   ///
-  Future<ApiResponse> update(DonDichVuModel data) async {
+  Future<ApiResponse> update(DonDichVuRequest data) async {
     try {
       final response = await dioClient!.put('/don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class DonDichVuRepository {
   ///
   /// Update don-dich-vu to database
   ///
-  Future<ApiResponse> delete(String id, DonDichVuModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/don-dich-vus/$id', data: data.toJson());
+          await dioClient!.delete('/don-dich-vus/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

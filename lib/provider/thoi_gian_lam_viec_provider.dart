@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/thoi_gian_lam_viec_model.dart';
+import 'package:template/data/model/request/thoi_gian_lam_viec_request.dart';
+import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/thoi_gian_lam_viec_repository.dart';
 
@@ -12,7 +13,7 @@ class ThoiGianLamViecProvider {
   /// Get all thoiGianLamViecs
   ///
   Future<void> all({
-    required Function(List<ThoiGianLamViecModel> thoiGianLamViecs) onSuccess,
+    required Function(List<ThoiGianLamViecResponse> thoiGianLamViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class ThoiGianLamViecProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ThoiGianLamViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class ThoiGianLamViecProvider {
   /// Insert thoiGianLamViec to database
   ///
   Future<void> add({
-    required ThoiGianLamViecModel data,
-    required Function(ThoiGianLamViecModel thoiGianLamViec) onSuccess,
+    required ThoiGianLamViecRequest data,
+    required Function(ThoiGianLamViecRequest thoiGianLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class ThoiGianLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThoiGianLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThoiGianLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class ThoiGianLamViecProvider {
   /// Update thoiGianLamViec to database
   ///
   Future<void> update({
-    required ThoiGianLamViecModel data,
-    required Function(ThoiGianLamViecModel thoiGianLamViec) onSuccess,
+    required ThoiGianLamViecRequest data,
+    required Function(ThoiGianLamViecRequest thoiGianLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class ThoiGianLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThoiGianLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThoiGianLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class ThoiGianLamViecProvider {
   ///
   Future<void> delete({
     required String id,
-    required ThoiGianLamViecModel data,
-    required Function(ThoiGianLamViecModel thoiGianLamViec) onSuccess,
+    required Function(ThoiGianLamViecRequest thoiGianLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThoiGianLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThoiGianLamViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class ThoiGianLamViecProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ThoiGianLamViecModel> thoiGianLamViecs) onSuccess,
+    required Function(List<ThoiGianLamViecResponse> thoiGianLamViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class ThoiGianLamViecProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ThoiGianLamViecModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class ThoiGianLamViecProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(ThoiGianLamViecModel thoiGianLamViec) onSuccess,
+    required Function(ThoiGianLamViecResponse thoiGianLamViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class ThoiGianLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThoiGianLamViecModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThoiGianLamViecResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

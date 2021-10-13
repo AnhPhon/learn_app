@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/tin_tuc_model.dart';
+import 'package:template/data/model/request/tin_tuc_request.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
 
@@ -12,7 +13,7 @@ class TinTucProvider {
   /// Get all tinTucs
   ///
   Future<void> all({
-    required Function(List<TinTucModel> tinTucs) onSuccess,
+    required Function(List<TinTucResponse> tinTucs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class TinTucProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TinTucModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TinTucResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class TinTucProvider {
   /// Insert tinTuc to database
   ///
   Future<void> add({
-    required TinTucModel data,
-    required Function(TinTucModel tinTuc) onSuccess,
+    required TinTucRequest data,
+    required Function(TinTucRequest tinTuc) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class TinTucProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinTucModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinTucRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class TinTucProvider {
   /// Update tinTuc to database
   ///
   Future<void> update({
-    required TinTucModel data,
-    required Function(TinTucModel tinTuc) onSuccess,
+    required TinTucRequest data,
+    required Function(TinTucRequest tinTuc) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class TinTucProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinTucModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinTucRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class TinTucProvider {
   ///
   Future<void> delete({
     required String id,
-    required TinTucModel data,
-    required Function(TinTucModel tinTuc) onSuccess,
+    required Function(TinTucRequest tinTuc) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinTucModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinTucRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class TinTucProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TinTucModel> tinTucs) onSuccess,
+    required Function(List<TinTucResponse> tinTucs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class TinTucProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TinTucModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TinTucResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class TinTucProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(TinTucModel tinTuc) onSuccess,
+    required Function(TinTucResponse tinTuc) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class TinTucProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TinTucModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TinTucResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

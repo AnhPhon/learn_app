@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/du_an_khach_hang_model.dart';
+import 'package:template/data/model/request/du_an_khach_hang_request.dart';
+import 'package:template/data/model/response/du_an_khach_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/du_an_khach_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class DuAnKhachHangProvider {
   /// Get all duAnKhachHangs
   ///
   Future<void> all({
-    required Function(List<DuAnKhachHangModel> duAnKhachHangs) onSuccess,
+    required Function(List<DuAnKhachHangResponse> duAnKhachHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DuAnKhachHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DuAnKhachHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DuAnKhachHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DuAnKhachHangProvider {
   /// Insert duAnKhachHang to database
   ///
   Future<void> add({
-    required DuAnKhachHangModel data,
-    required Function(DuAnKhachHangModel duAnKhachHang) onSuccess,
+    required DuAnKhachHangRequest data,
+    required Function(DuAnKhachHangRequest duAnKhachHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DuAnKhachHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DuAnKhachHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DuAnKhachHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DuAnKhachHangProvider {
   /// Update duAnKhachHang to database
   ///
   Future<void> update({
-    required DuAnKhachHangModel data,
-    required Function(DuAnKhachHangModel duAnKhachHang) onSuccess,
+    required DuAnKhachHangRequest data,
+    required Function(DuAnKhachHangRequest duAnKhachHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DuAnKhachHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DuAnKhachHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DuAnKhachHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DuAnKhachHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required DuAnKhachHangModel data,
-    required Function(DuAnKhachHangModel duAnKhachHang) onSuccess,
+    required Function(DuAnKhachHangRequest duAnKhachHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DuAnKhachHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DuAnKhachHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DuAnKhachHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DuAnKhachHangModel> duAnKhachHangs) onSuccess,
+    required Function(List<DuAnKhachHangResponse> duAnKhachHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DuAnKhachHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DuAnKhachHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DuAnKhachHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DuAnKhachHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DuAnKhachHangModel duAnKhachHang) onSuccess,
+    required Function(DuAnKhachHangResponse duAnKhachHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DuAnKhachHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DuAnKhachHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DuAnKhachHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

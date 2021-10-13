@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/dang_ky_hop_dong_s_b_s_model.dart';
+import 'package:template/data/model/request/dang_ky_hop_dong_s_b_s_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class DangKyHopDongSBSRepository {
@@ -24,7 +24,7 @@ class DangKyHopDongSBSRepository {
   ///
   /// Insert dang-ky-hop-dong-s-b-s to database
   ///
-  Future<ApiResponse> add(DangKyHopDongSBSModel data) async {
+  Future<ApiResponse> add(DangKyHopDongSBSRequest data) async {
     try {
       final response = await dioClient!.post('/dang-ky-hop-dong-s-b-ss', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class DangKyHopDongSBSRepository {
   ///
   /// Update dang-ky-hop-dong-s-b-s to database
   ///
-  Future<ApiResponse> update(DangKyHopDongSBSModel data) async {
+  Future<ApiResponse> update(DangKyHopDongSBSRequest data) async {
     try {
       final response = await dioClient!.put('/dang-ky-hop-dong-s-b-ss', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class DangKyHopDongSBSRepository {
   ///
   /// Update dang-ky-hop-dong-s-b-s to database
   ///
-  Future<ApiResponse> delete(String id, DangKyHopDongSBSModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/dang-ky-hop-dong-s-b-ss/$id', data: data.toJson());
+          await dioClient!.delete('/dang-ky-hop-dong-s-b-ss/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

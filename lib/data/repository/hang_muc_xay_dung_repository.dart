@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/hang_muc_xay_dung_model.dart';
+import 'package:template/data/model/request/hang_muc_xay_dung_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class HangMucXayDungRepository {
@@ -24,7 +24,7 @@ class HangMucXayDungRepository {
   ///
   /// Insert hang-muc-xay-dung to database
   ///
-  Future<ApiResponse> add(HangMucXayDungModel data) async {
+  Future<ApiResponse> add(HangMucXayDungRequest data) async {
     try {
       final response = await dioClient!.post('/hang-muc-xay-dungs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class HangMucXayDungRepository {
   ///
   /// Update hang-muc-xay-dung to database
   ///
-  Future<ApiResponse> update(HangMucXayDungModel data) async {
+  Future<ApiResponse> update(HangMucXayDungRequest data) async {
     try {
       final response = await dioClient!.put('/hang-muc-xay-dungs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class HangMucXayDungRepository {
   ///
   /// Update hang-muc-xay-dung to database
   ///
-  Future<ApiResponse> delete(String id, HangMucXayDungModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/hang-muc-xay-dungs/$id', data: data.toJson());
+          await dioClient!.delete('/hang-muc-xay-dungs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

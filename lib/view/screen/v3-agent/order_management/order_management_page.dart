@@ -123,7 +123,7 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: Dimensions.MARGIN_SIZE_SMALL,
               ),
               Expanded(
                 child: SizedBox(
@@ -158,7 +158,9 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
 
           //payment method
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

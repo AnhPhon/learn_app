@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/loai_cong_viec_model.dart';
+import 'package:template/data/model/request/loai_cong_viec_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class LoaiCongViecRepository {
@@ -24,7 +24,7 @@ class LoaiCongViecRepository {
   ///
   /// Insert loai-cong-viec to database
   ///
-  Future<ApiResponse> add(LoaiCongViecModel data) async {
+  Future<ApiResponse> add(LoaiCongViecRequest data) async {
     try {
       final response = await dioClient!.post('/loai-cong-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class LoaiCongViecRepository {
   ///
   /// Update loai-cong-viec to database
   ///
-  Future<ApiResponse> update(LoaiCongViecModel data) async {
+  Future<ApiResponse> update(LoaiCongViecRequest data) async {
     try {
       final response = await dioClient!.put('/loai-cong-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class LoaiCongViecRepository {
   ///
   /// Update loai-cong-viec to database
   ///
-  Future<ApiResponse> delete(String id, LoaiCongViecModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/loai-cong-viecs/$id', data: data.toJson());
+          await dioClient!.delete('/loai-cong-viecs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

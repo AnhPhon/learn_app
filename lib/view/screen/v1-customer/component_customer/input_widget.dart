@@ -4,9 +4,11 @@ import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class InputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
+  final Function(dynamic)? onChanged;
   final String? hintText;
   final String? label;
   final double width;
@@ -19,7 +21,9 @@ class InputWidget extends StatelessWidget {
       allowEdit,
       labelBold,
       obligatory,
-      isPaddingLarge;
+      isBorder,
+      isShadow,
+      isMaxLine;
 
   const InputWidget({
     Key? key,
@@ -36,7 +40,10 @@ class InputWidget extends StatelessWidget {
     this.obligatory = false,
     required this.width,
     this.paddingTop,
-    this.isPaddingLarge = false,
+    this.isBorder = true,
+    this.isShadow = false,
+    this.isMaxLine = false,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -79,6 +86,16 @@ class InputWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: paddingTop ?? 0),
             width: DeviceUtils.getScaledWidth(context, width),
+            decoration: BoxDecoration(
+              boxShadow: (isShadow == true)
+                  ? [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: ColorResources.BLACK.withOpacity(.2),
+                          offset: const Offset(0, 2)),
+                    ]
+                  : [],
+            ),
             child: GestureDetector(
               onTap: (isDate == true)
                   ? () {
@@ -119,6 +136,9 @@ class InputWidget extends StatelessWidget {
                         }
                       : () {},
               child: TextField(
+                inputFormatters: [ThousandsSeparatorInputFormatter()],
+                onChanged: onChanged,
+                maxLines: (isMaxLine == true) ? 5 : 1,
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
                 controller: textEditingController,
@@ -128,33 +148,31 @@ class InputWidget extends StatelessWidget {
                   isDense: true,
                   prefixIcon: prefixIcon,
                   suffixIcon: suffixIcon,
-                  contentPadding: isPaddingLarge == true
-                      ? const EdgeInsets.only(
-                          bottom: Dimensions.PADDING_SIZE_EXTRA_LARGE * 4,
-                          top: Dimensions.PADDING_SIZE_SMALL,
-                        )
-                      : const EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_SMALL,
-                          vertical: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY, width: 2),
-                  ),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: (isBorder == true)
+                          ? const BorderSide(
+                              color: ColorResources.PRIMARY, width: 2)
+                          : BorderSide.none),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY, width: 2),
-                  ),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: (isBorder == true)
+                          ? const BorderSide(
+                              color: ColorResources.PRIMARY, width: 2)
+                          : BorderSide.none),
                   disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                    borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY, width: 2),
-                  ),
+                      borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      borderSide: (isBorder == true)
+                          ? const BorderSide(
+                              color: ColorResources.PRIMARY, width: 2)
+                          : BorderSide.none),
                   hintText: hintText,
                   filled: true,
                   fillColor: (isColorFieldWhite == true)
