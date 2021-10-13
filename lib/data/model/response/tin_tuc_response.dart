@@ -10,6 +10,7 @@ class TinTucResponse {
   String? noiDung;
   String? hinhAnh;
   String? luotXem;
+  String? createdAt;
 
   String? createdAt;
   String? updatedAt;
@@ -46,6 +47,7 @@ class TinTucResponse {
     noiDung = json['noiDung'].toString();
     hinhAnh = json['hinhAnh'].toString();
     luotXem = json['luotXem'].toString();
+    createdAt = json['created_at'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();

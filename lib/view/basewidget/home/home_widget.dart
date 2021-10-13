@@ -62,7 +62,7 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
               width: DeviceUtils.getScaledWidth(context, 1),
               child: Container(
                 padding:
@@ -125,7 +125,7 @@ class HomeWidget extends StatelessWidget {
 
         // white
         Positioned(
-          top: 100,
+          top: 140,
           child: Container(
             alignment: Alignment.topLeft,
             height: DeviceUtils.getScaledHeight(context, 1) - 180,

@@ -13,6 +13,11 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
     return GetBuilder<V1NewsDetailController>(
         init: V1NewsDetailController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
@@ -22,16 +27,16 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
                   _imageNews(context),
 
                   //view and like
-                  _totalsView(context),
+                  _totalsView(context, controller: controller),
 
                   //title news
-                  _titleNews(controller),
+                  _titleNews(controller: controller),
 
                   //authors and time
-                  _authors(controller),
+                  _authors(controller: controller),
 
                   //content
-                  _content(),
+                  _content(controller: controller),
                 ],
               ),
             ),
@@ -43,43 +48,51 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///image
   ///
   Widget _imageNews(BuildContext context) {
-    return Image.asset(
-      Images.newsTemplate,
-      fit: BoxFit.fill,
-      height: DeviceUtils.getScaledHeight(context, .25),
+    return FadeInImage.assetNetwork(
+      placeholder: Images.placeholder,
+      image: controller.tinTucModel.hinhAnh.toString(),
+      height: DeviceUtils.getScaledHeight(context, .35),
       width: double.infinity,
+      fit: BoxFit.fill,
+      imageErrorBuilder: (c, o, s) => Image.asset(
+        Images.placeholder,
+        height: DeviceUtils.getScaledHeight(context, .35),
+        width: double.infinity,
+        fit: BoxFit.fill,
+      ),
     );
   }
 
   ///
   ///view and like
   ///
-  Widget _totalsView(BuildContext context) {
+  Widget _totalsView(BuildContext context,
+      {required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Row(
-        children: const [
-          Spacer(),
+        children: [
+          const Spacer(),
           //view
-          Icon(
+          const Icon(
             Icons.remove_red_eye_sharp,
             color: ColorResources.PRIMARYCOLOR,
           ),
-          Text("21.32k"),
+          Text(controller.tinTucModel.luotXem.toString()),
 
-          SizedBox(
+          const SizedBox(
             width: Dimensions.MARGIN_SIZE_SMALL,
           ),
 
           //reacion
-          Icon(
+          const Icon(
             Icons.favorite_border_outlined,
             color: ColorResources.RED,
           ),
-          Text("600"),
+          const Text("600"),
         ],
       ),
     );
@@ -88,13 +101,13 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///
   ///title news
   ///
-  Widget _titleNews(V1NewsDetailController controller) {
+  Widget _titleNews({required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
-        controller.titleNews,
+        controller.tinTucModel.tieuDe.toString(),
         textAlign: TextAlign.center,
         style: Dimensions.fontSizeStyle20w600(),
       ),
@@ -104,29 +117,31 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///
   ///authors and time
   ///
-  Widget _authors(V1NewsDetailController controller) {
+  Widget _authors({required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
-      child: Row(
-        children: [
-          RichText(
-            text: TextSpan(
-                text: controller.time,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Text(
+              controller.formatDateTime(
+                dateTime: controller.tinTucModel.createdAt.toString(),
+              ),
+              style: Dimensions.fontSizeStyle16w600()
+                  .copyWith(color: ColorResources.PRIMARY),
+            ),
+            const VerticalDivider(
+              thickness: 2,
+            ),
+            Text(controller.tinTucModel.tacGia.toString(),
                 style: Dimensions.fontSizeStyle16w600()
-                    .copyWith(color: ColorResources.PRIMARY),
-                children: [
-                  TextSpan(
-                    text: controller.authors,
-                    style: Dimensions.fontSizeStyle16w600()
-                        .copyWith(color: ColorResources.BLACK),
-                  ),
-                ]),
-          ),
-          const Spacer(),
-        ],
+                    .copyWith(color: ColorResources.BLACK)),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
@@ -134,13 +149,13 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///
   ///content
   ///
-  Widget _content() {
+  Widget _content({required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
-        controller.content,
+        controller.tinTucModel.noiDung.toString(),
         textAlign: TextAlign.justify,
         style:
             Dimensions.fontSizeStyle18().copyWith(color: ColorResources.BLACK),

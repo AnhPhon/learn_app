@@ -2,8 +2,12 @@ import 'package:connectivity/connectivity.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
+import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/tin_tuc_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
+import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -23,6 +27,8 @@ Future<void> init() async {
   // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   // sl.registerLazySingleton(() => RegionRepo());
   // sl.registerLazySingleton(() => AuthRepository());
 
@@ -31,5 +37,7 @@ Future<void> init() async {
   // sl.registerFactory(() => AuthProvider());
 
   // Provider
+  sl.registerFactory(() => TinTucProvider());
+  sl.registerFactory(() => DanhMucTinTucProvider());
   // sl.registerFactory(() => AuthProvider());
 }
