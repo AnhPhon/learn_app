@@ -17,12 +17,6 @@ import 'home_controller.dart';
 class V4HomePage extends GetView<V4HomeController> {
   @override
   Widget build(BuildContext context) {
-    if (controller.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     return Scaffold(
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
