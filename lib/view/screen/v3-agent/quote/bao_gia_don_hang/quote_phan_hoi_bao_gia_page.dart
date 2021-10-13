@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -24,7 +25,11 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
                 tabBarWidget(context: context),
 
                 //item list
-                ...List.generate(5, (index) => _itemList(context)),
+                ...List.generate(5, (index) {
+                  final DonDichVuResponse donDichVuResponse = controller
+                      .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!;
+                  return _itemList(context, donDichVuResponse);
+                }),
               ],
             ),
           );
@@ -36,15 +41,15 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context) {
+  Widget _itemList(BuildContext context, DonDichVuResponse donDichVu) {
     return BaoGiaCard(
-      donHangName: "Cần báo giá vật liệu cát, xi, đá, gạch xây",
+      donHangName: donDichVu.tieuDe.toString(),
       donHangId: "ĐH123456",
-      time: "12:00pm",
-      date: "20/09/2021 ",
-      label: "Thợ ốp lát",
-      content: "Công trình khách 5 sao",
-      locationName: "Đà Nẵng",
+      time: donDichVu.ngayBatDau.toString().split("T")[0],
+      date: donDichVu.ngayBatDau.toString().split("T")[0],
+      label: "Thợ ốp lát".toString(),
+      content: "Công trình khách 5 sao".toString(),
+      locationName: donDichVu.diaDiemBocHang.toString(),
       image: Images.location_example,
       onTap: controller.toReponse,
     );
