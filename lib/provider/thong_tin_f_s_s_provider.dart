@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/thong_tin_f_s_s_model.dart';
+import 'package:template/data/model/request/thong_tin_f_s_s_request.dart';
+import 'package:template/data/model/response/thong_tin_f_s_s_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/thong_tin_f_s_s_repository.dart';
 
@@ -12,7 +13,7 @@ class ThongTinFSSProvider {
   /// Get all thongTinFSSs
   ///
   Future<void> all({
-    required Function(List<ThongTinFSSModel> thongTinFSSs) onSuccess,
+    required Function(List<ThongTinFSSResponse> thongTinFSSs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class ThongTinFSSProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ThongTinFSSModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThongTinFSSResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class ThongTinFSSProvider {
   /// Insert thongTinFSS to database
   ///
   Future<void> add({
-    required ThongTinFSSModel data,
-    required Function(ThongTinFSSModel thongTinFSS) onSuccess,
+    required ThongTinFSSRequest data,
+    required Function(ThongTinFSSRequest thongTinFSS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class ThongTinFSSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinFSSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinFSSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class ThongTinFSSProvider {
   /// Update thongTinFSS to database
   ///
   Future<void> update({
-    required ThongTinFSSModel data,
-    required Function(ThongTinFSSModel thongTinFSS) onSuccess,
+    required ThongTinFSSRequest data,
+    required Function(ThongTinFSSRequest thongTinFSS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class ThongTinFSSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinFSSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinFSSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class ThongTinFSSProvider {
   ///
   Future<void> delete({
     required String id,
-    required ThongTinFSSModel data,
-    required Function(ThongTinFSSModel thongTinFSS) onSuccess,
+    required Function(ThongTinFSSRequest thongTinFSS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinFSSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinFSSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class ThongTinFSSProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ThongTinFSSModel> thongTinFSSs) onSuccess,
+    required Function(List<ThongTinFSSResponse> thongTinFSSs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class ThongTinFSSProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ThongTinFSSModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThongTinFSSResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class ThongTinFSSProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(ThongTinFSSModel thongTinFSS) onSuccess,
+    required Function(ThongTinFSSResponse thongTinFSS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class ThongTinFSSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongTinFSSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ThongTinFSSResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

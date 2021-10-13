@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/dang_ky_bao_hiem_model.dart';
+import 'package:template/data/model/request/dang_ky_bao_hiem_request.dart';
+import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/dang_ky_bao_hiem_repository.dart';
 
@@ -12,7 +13,7 @@ class DangKyBaoHiemProvider {
   /// Get all dangKyBaoHiems
   ///
   Future<void> all({
-    required Function(List<DangKyBaoHiemModel> dangKyBaoHiems) onSuccess,
+    required Function(List<DangKyBaoHiemResponse> dangKyBaoHiems) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DangKyBaoHiemProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DangKyBaoHiemModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DangKyBaoHiemResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DangKyBaoHiemProvider {
   /// Insert dangKyBaoHiem to database
   ///
   Future<void> add({
-    required DangKyBaoHiemModel data,
-    required Function(DangKyBaoHiemModel dangKyBaoHiem) onSuccess,
+    required DangKyBaoHiemRequest data,
+    required Function(DangKyBaoHiemRequest dangKyBaoHiem) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DangKyBaoHiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyBaoHiemModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyBaoHiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DangKyBaoHiemProvider {
   /// Update dangKyBaoHiem to database
   ///
   Future<void> update({
-    required DangKyBaoHiemModel data,
-    required Function(DangKyBaoHiemModel dangKyBaoHiem) onSuccess,
+    required DangKyBaoHiemRequest data,
+    required Function(DangKyBaoHiemRequest dangKyBaoHiem) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DangKyBaoHiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyBaoHiemModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyBaoHiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DangKyBaoHiemProvider {
   ///
   Future<void> delete({
     required String id,
-    required DangKyBaoHiemModel data,
-    required Function(DangKyBaoHiemModel dangKyBaoHiem) onSuccess,
+    required Function(DangKyBaoHiemRequest dangKyBaoHiem) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyBaoHiemModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyBaoHiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DangKyBaoHiemProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DangKyBaoHiemModel> dangKyBaoHiems) onSuccess,
+    required Function(List<DangKyBaoHiemResponse> dangKyBaoHiems) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DangKyBaoHiemProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DangKyBaoHiemModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DangKyBaoHiemResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DangKyBaoHiemProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DangKyBaoHiemModel dangKyBaoHiem) onSuccess,
+    required Function(DangKyBaoHiemResponse dangKyBaoHiem) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DangKyBaoHiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyBaoHiemModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyBaoHiemResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

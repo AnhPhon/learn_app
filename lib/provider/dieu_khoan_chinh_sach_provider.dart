@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/dieu_khoan_chinh_sach_model.dart';
+import 'package:template/data/model/request/dieu_khoan_chinh_sach_request.dart';
+import 'package:template/data/model/response/dieu_khoan_chinh_sach_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/dieu_khoan_chinh_sach_repository.dart';
 
@@ -12,7 +13,7 @@ class DieuKhoanChinhSachProvider {
   /// Get all dieuKhoanChinhSachs
   ///
   Future<void> all({
-    required Function(List<DieuKhoanChinhSachModel> dieuKhoanChinhSachs) onSuccess,
+    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DieuKhoanChinhSachProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DieuKhoanChinhSachModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DieuKhoanChinhSachProvider {
   /// Insert dieuKhoanChinhSach to database
   ///
   Future<void> add({
-    required DieuKhoanChinhSachModel data,
-    required Function(DieuKhoanChinhSachModel dieuKhoanChinhSach) onSuccess,
+    required DieuKhoanChinhSachRequest data,
+    required Function(DieuKhoanChinhSachRequest dieuKhoanChinhSach) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DieuKhoanChinhSachProvider {
   /// Update dieuKhoanChinhSach to database
   ///
   Future<void> update({
-    required DieuKhoanChinhSachModel data,
-    required Function(DieuKhoanChinhSachModel dieuKhoanChinhSach) onSuccess,
+    required DieuKhoanChinhSachRequest data,
+    required Function(DieuKhoanChinhSachRequest dieuKhoanChinhSach) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DieuKhoanChinhSachProvider {
   ///
   Future<void> delete({
     required String id,
-    required DieuKhoanChinhSachModel data,
-    required Function(DieuKhoanChinhSachModel dieuKhoanChinhSach) onSuccess,
+    required Function(DieuKhoanChinhSachRequest dieuKhoanChinhSach) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DieuKhoanChinhSachProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DieuKhoanChinhSachModel> dieuKhoanChinhSachs) onSuccess,
+    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DieuKhoanChinhSachProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DieuKhoanChinhSachModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DieuKhoanChinhSachProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DieuKhoanChinhSachModel dieuKhoanChinhSach) onSuccess,
+    required Function(DieuKhoanChinhSachResponse dieuKhoanChinhSach) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DieuKhoanChinhSachResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

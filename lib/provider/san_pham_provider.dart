@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/san_pham_model.dart';
+import 'package:template/data/model/request/san_pham_request.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/san_pham_repository.dart';
 
@@ -12,7 +13,7 @@ class SanPhamProvider {
   /// Get all sanPhams
   ///
   Future<void> all({
-    required Function(List<SanPhamModel> sanPhams) onSuccess,
+    required Function(List<SanPhamResponse> sanPhams) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class SanPhamProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => SanPhamModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => SanPhamResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class SanPhamProvider {
   /// Insert sanPham to database
   ///
   Future<void> add({
-    required SanPhamModel data,
-    required Function(SanPhamModel sanPham) onSuccess,
+    required SanPhamRequest data,
+    required Function(SanPhamRequest sanPham) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class SanPhamProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(SanPhamModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(SanPhamRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class SanPhamProvider {
   /// Update sanPham to database
   ///
   Future<void> update({
-    required SanPhamModel data,
-    required Function(SanPhamModel sanPham) onSuccess,
+    required SanPhamRequest data,
+    required Function(SanPhamRequest sanPham) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class SanPhamProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(SanPhamModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(SanPhamRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class SanPhamProvider {
   ///
   Future<void> delete({
     required String id,
-    required SanPhamModel data,
-    required Function(SanPhamModel sanPham) onSuccess,
+    required Function(SanPhamRequest sanPham) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(SanPhamModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(SanPhamRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class SanPhamProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<SanPhamModel> sanPhams) onSuccess,
+    required Function(List<SanPhamResponse> sanPhams) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class SanPhamProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => SanPhamModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => SanPhamResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class SanPhamProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(SanPhamModel sanPham) onSuccess,
+    required Function(SanPhamResponse sanPham) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class SanPhamProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(SanPhamModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(SanPhamResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

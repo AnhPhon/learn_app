@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/thoi_gian_lam_viec_model.dart';
+import 'package:template/data/model/request/thoi_gian_lam_viec_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class ThoiGianLamViecRepository {
@@ -24,7 +24,7 @@ class ThoiGianLamViecRepository {
   ///
   /// Insert thoi-gian-lam-viec to database
   ///
-  Future<ApiResponse> add(ThoiGianLamViecModel data) async {
+  Future<ApiResponse> add(ThoiGianLamViecRequest data) async {
     try {
       final response = await dioClient!.post('/thoi-gian-lam-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class ThoiGianLamViecRepository {
   ///
   /// Update thoi-gian-lam-viec to database
   ///
-  Future<ApiResponse> update(ThoiGianLamViecModel data) async {
+  Future<ApiResponse> update(ThoiGianLamViecRequest data) async {
     try {
       final response = await dioClient!.put('/thoi-gian-lam-viecs', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class ThoiGianLamViecRepository {
   ///
   /// Update thoi-gian-lam-viec to database
   ///
-  Future<ApiResponse> delete(String id, ThoiGianLamViecModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/thoi-gian-lam-viecs/$id', data: data.toJson());
+          await dioClient!.delete('/thoi-gian-lam-viecs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

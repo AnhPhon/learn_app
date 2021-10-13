@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/cham_cong_model.dart';
+import 'package:template/data/model/request/cham_cong_request.dart';
+import 'package:template/data/model/response/cham_cong_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 
@@ -12,7 +13,7 @@ class ChamCongProvider {
   /// Get all chamCongs
   ///
   Future<void> all({
-    required Function(List<ChamCongModel> chamCongs) onSuccess,
+    required Function(List<ChamCongResponse> chamCongs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class ChamCongProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ChamCongModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ChamCongResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class ChamCongProvider {
   /// Insert chamCong to database
   ///
   Future<void> add({
-    required ChamCongModel data,
-    required Function(ChamCongModel chamCong) onSuccess,
+    required ChamCongRequest data,
+    required Function(ChamCongRequest chamCong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class ChamCongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChamCongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChamCongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class ChamCongProvider {
   /// Update chamCong to database
   ///
   Future<void> update({
-    required ChamCongModel data,
-    required Function(ChamCongModel chamCong) onSuccess,
+    required ChamCongRequest data,
+    required Function(ChamCongRequest chamCong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class ChamCongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChamCongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChamCongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class ChamCongProvider {
   ///
   Future<void> delete({
     required String id,
-    required ChamCongModel data,
-    required Function(ChamCongModel chamCong) onSuccess,
+    required Function(ChamCongRequest chamCong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChamCongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChamCongRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class ChamCongProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ChamCongModel> chamCongs) onSuccess,
+    required Function(List<ChamCongResponse> chamCongs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class ChamCongProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ChamCongModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ChamCongResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class ChamCongProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(ChamCongModel chamCong) onSuccess,
+    required Function(ChamCongResponse chamCong) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class ChamCongProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChamCongModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(ChamCongResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

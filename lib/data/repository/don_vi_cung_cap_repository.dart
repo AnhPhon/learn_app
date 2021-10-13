@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/don_vi_cung_cap_model.dart';
+import 'package:template/data/model/request/don_vi_cung_cap_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class DonViCungCapRepository {
@@ -24,7 +24,7 @@ class DonViCungCapRepository {
   ///
   /// Insert don-vi-cung-cap to database
   ///
-  Future<ApiResponse> add(DonViCungCapModel data) async {
+  Future<ApiResponse> add(DonViCungCapRequest data) async {
     try {
       final response = await dioClient!.post('/don-vi-cung-caps', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class DonViCungCapRepository {
   ///
   /// Update don-vi-cung-cap to database
   ///
-  Future<ApiResponse> update(DonViCungCapModel data) async {
+  Future<ApiResponse> update(DonViCungCapRequest data) async {
     try {
       final response = await dioClient!.put('/don-vi-cung-caps', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class DonViCungCapRepository {
   ///
   /// Update don-vi-cung-cap to database
   ///
-  Future<ApiResponse> delete(String id, DonViCungCapModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/don-vi-cung-caps/$id', data: data.toJson());
+          await dioClient!.delete('/don-vi-cung-caps/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

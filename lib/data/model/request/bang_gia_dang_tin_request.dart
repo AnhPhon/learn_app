@@ -1,10 +1,10 @@
 
-class BangGiaDangTinResponse {
+class BangGiaDangTinRequest {
   String? id;
   String? tieuDe;
   String? donGia;
 
-  BangGiaDangTinResponse({
+  BangGiaDangTinRequest({
       this.id,
       this.tieuDe,
       this.donGia});
@@ -12,7 +12,7 @@ class BangGiaDangTinResponse {
   ///
   /// From JSON
   ///
-  BangGiaDangTinResponse.fromJson(Map<String, dynamic> json) {
+  BangGiaDangTinRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tieuDe = json['tieuDe'].toString();
     donGia = json['donGia'].toString();

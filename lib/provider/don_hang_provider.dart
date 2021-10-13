@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/don_hang_model.dart';
+import 'package:template/data/model/request/don_hang_request.dart';
+import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/don_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class DonHangProvider {
   /// Get all donHangs
   ///
   Future<void> all({
-    required Function(List<DonHangModel> donHangs) onSuccess,
+    required Function(List<DonHangResponse> donHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DonHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DonHangProvider {
   /// Insert donHang to database
   ///
   Future<void> add({
-    required DonHangModel data,
-    required Function(DonHangModel donHang) onSuccess,
+    required DonHangRequest data,
+    required Function(DonHangRequest donHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DonHangProvider {
   /// Update donHang to database
   ///
   Future<void> update({
-    required DonHangModel data,
-    required Function(DonHangModel donHang) onSuccess,
+    required DonHangRequest data,
+    required Function(DonHangRequest donHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DonHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required DonHangModel data,
-    required Function(DonHangModel donHang) onSuccess,
+    required Function(DonHangRequest donHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DonHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DonHangModel> donHangs) onSuccess,
+    required Function(List<DonHangResponse> donHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DonHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DonHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DonHangModel donHang) onSuccess,
+    required Function(DonHangResponse donHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DonHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

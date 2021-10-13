@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/trang_thai_don_hang_model.dart';
+import 'package:template/data/model/request/trang_thai_don_hang_request.dart';
+import 'package:template/data/model/response/trang_thai_don_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/trang_thai_don_hang_repository.dart';
 
@@ -12,7 +13,7 @@ class TrangThaiDonHangProvider {
   /// Get all trangThaiDonHangs
   ///
   Future<void> all({
-    required Function(List<TrangThaiDonHangModel> trangThaiDonHangs) onSuccess,
+    required Function(List<TrangThaiDonHangResponse> trangThaiDonHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class TrangThaiDonHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiDonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TrangThaiDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class TrangThaiDonHangProvider {
   /// Insert trangThaiDonHang to database
   ///
   Future<void> add({
-    required TrangThaiDonHangModel data,
-    required Function(TrangThaiDonHangModel trangThaiDonHang) onSuccess,
+    required TrangThaiDonHangRequest data,
+    required Function(TrangThaiDonHangRequest trangThaiDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class TrangThaiDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class TrangThaiDonHangProvider {
   /// Update trangThaiDonHang to database
   ///
   Future<void> update({
-    required TrangThaiDonHangModel data,
-    required Function(TrangThaiDonHangModel trangThaiDonHang) onSuccess,
+    required TrangThaiDonHangRequest data,
+    required Function(TrangThaiDonHangRequest trangThaiDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class TrangThaiDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class TrangThaiDonHangProvider {
   ///
   Future<void> delete({
     required String id,
-    required TrangThaiDonHangModel data,
-    required Function(TrangThaiDonHangModel trangThaiDonHang) onSuccess,
+    required Function(TrangThaiDonHangRequest trangThaiDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class TrangThaiDonHangProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TrangThaiDonHangModel> trangThaiDonHangs) onSuccess,
+    required Function(List<TrangThaiDonHangResponse> trangThaiDonHangs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class TrangThaiDonHangProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiDonHangModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => TrangThaiDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class TrangThaiDonHangProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(TrangThaiDonHangModel trangThaiDonHang) onSuccess,
+    required Function(TrangThaiDonHangResponse trangThaiDonHang) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class TrangThaiDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonHangModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(TrangThaiDonHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

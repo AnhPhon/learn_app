@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/san_pham_model.dart';
+import 'package:template/data/model/request/san_pham_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class SanPhamRepository {
@@ -24,7 +24,7 @@ class SanPhamRepository {
   ///
   /// Insert san-pham to database
   ///
-  Future<ApiResponse> add(SanPhamModel data) async {
+  Future<ApiResponse> add(SanPhamRequest data) async {
     try {
       final response = await dioClient!.post('/san-phams', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class SanPhamRepository {
   ///
   /// Update san-pham to database
   ///
-  Future<ApiResponse> update(SanPhamModel data) async {
+  Future<ApiResponse> update(SanPhamRequest data) async {
     try {
       final response = await dioClient!.put('/san-phams', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class SanPhamRepository {
   ///
   /// Update san-pham to database
   ///
-  Future<ApiResponse> delete(String id, SanPhamModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/san-phams/$id', data: data.toJson());
+          await dioClient!.delete('/san-phams/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

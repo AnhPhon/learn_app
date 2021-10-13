@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/dang_ky_hop_dong_s_b_s_model.dart';
+import 'package:template/data/model/request/dang_ky_hop_dong_s_b_s_request.dart';
+import 'package:template/data/model/response/dang_ky_hop_dong_s_b_s_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/dang_ky_hop_dong_s_b_s_repository.dart';
 
@@ -12,7 +13,7 @@ class DangKyHopDongSBSProvider {
   /// Get all dangKyHopDongSBSs
   ///
   Future<void> all({
-    required Function(List<DangKyHopDongSBSModel> dangKyHopDongSBSs) onSuccess,
+    required Function(List<DangKyHopDongSBSResponse> dangKyHopDongSBSs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -21,7 +22,7 @@ class DangKyHopDongSBSProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DangKyHopDongSBSModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DangKyHopDongSBSResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -32,8 +33,8 @@ class DangKyHopDongSBSProvider {
   /// Insert dangKyHopDongSBS to database
   ///
   Future<void> add({
-    required DangKyHopDongSBSModel data,
-    required Function(DangKyHopDongSBSModel dangKyHopDongSBS) onSuccess,
+    required DangKyHopDongSBSRequest data,
+    required Function(DangKyHopDongSBSRequest dangKyHopDongSBS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -41,7 +42,7 @@ class DangKyHopDongSBSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyHopDongSBSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyHopDongSBSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -51,8 +52,8 @@ class DangKyHopDongSBSProvider {
   /// Update dangKyHopDongSBS to database
   ///
   Future<void> update({
-    required DangKyHopDongSBSModel data,
-    required Function(DangKyHopDongSBSModel dangKyHopDongSBS) onSuccess,
+    required DangKyHopDongSBSRequest data,
+    required Function(DangKyHopDongSBSRequest dangKyHopDongSBS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -60,7 +61,7 @@ class DangKyHopDongSBSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyHopDongSBSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyHopDongSBSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -71,16 +72,15 @@ class DangKyHopDongSBSProvider {
   ///
   Future<void> delete({
     required String id,
-    required DangKyHopDongSBSModel data,
-    required Function(DangKyHopDongSBSModel dangKyHopDongSBS) onSuccess,
+    required Function(DangKyHopDongSBSRequest dangKyHopDongSBS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await repository!.delete(id, data);
+    final ApiResponse apiResponse = await repository!.delete(id);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyHopDongSBSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyHopDongSBSRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +93,7 @@ class DangKyHopDongSBSProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DangKyHopDongSBSModel> dangKyHopDongSBSs) onSuccess,
+    required Function(List<DangKyHopDongSBSResponse> dangKyHopDongSBSs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +103,7 @@ class DangKyHopDongSBSProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => DangKyHopDongSBSModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => DangKyHopDongSBSResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +115,7 @@ class DangKyHopDongSBSProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DangKyHopDongSBSModel dangKyHopDongSBS) onSuccess,
+    required Function(DangKyHopDongSBSResponse dangKyHopDongSBS) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +123,7 @@ class DangKyHopDongSBSProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyHopDongSBSModel.fromJson(results as Map<String, dynamic>));
+      onSuccess(DangKyHopDongSBSResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/hinh_thuc_thanh_toan_model.dart';
+import 'package:template/data/model/request/hinh_thuc_thanh_toan_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class HinhThucThanhToanRepository {
@@ -24,7 +24,7 @@ class HinhThucThanhToanRepository {
   ///
   /// Insert hinh-thuc-thanh-toan to database
   ///
-  Future<ApiResponse> add(HinhThucThanhToanModel data) async {
+  Future<ApiResponse> add(HinhThucThanhToanRequest data) async {
     try {
       final response = await dioClient!.post('/hinh-thuc-thanh-toans', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class HinhThucThanhToanRepository {
   ///
   /// Update hinh-thuc-thanh-toan to database
   ///
-  Future<ApiResponse> update(HinhThucThanhToanModel data) async {
+  Future<ApiResponse> update(HinhThucThanhToanRequest data) async {
     try {
       final response = await dioClient!.put('/hinh-thuc-thanh-toans', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class HinhThucThanhToanRepository {
   ///
   /// Update hinh-thuc-thanh-toan to database
   ///
-  Future<ApiResponse> delete(String id, HinhThucThanhToanModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/hinh-thuc-thanh-toans/$id', data: data.toJson());
+          await dioClient!.delete('/hinh-thuc-thanh-toans/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

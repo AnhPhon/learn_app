@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/body/bang_gia_loc_ho_so_model.dart';
+import 'package:template/data/model/request/bang_gia_loc_ho_so_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class BangGiaLocHoSoRepository {
@@ -24,7 +24,7 @@ class BangGiaLocHoSoRepository {
   ///
   /// Insert bang-gia-loc-ho-so to database
   ///
-  Future<ApiResponse> add(BangGiaLocHoSoModel data) async {
+  Future<ApiResponse> add(BangGiaLocHoSoRequest data) async {
     try {
       final response = await dioClient!.post('/bang-gia-loc-ho-sos', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -36,7 +36,7 @@ class BangGiaLocHoSoRepository {
   ///
   /// Update bang-gia-loc-ho-so to database
   ///
-  Future<ApiResponse> update(BangGiaLocHoSoModel data) async {
+  Future<ApiResponse> update(BangGiaLocHoSoRequest data) async {
     try {
       final response = await dioClient!.put('/bang-gia-loc-ho-sos', data: data.toJson());
       return ApiResponse.withSuccess(response);
@@ -48,10 +48,10 @@ class BangGiaLocHoSoRepository {
   ///
   /// Update bang-gia-loc-ho-so to database
   ///
-  Future<ApiResponse> delete(String id, BangGiaLocHoSoModel data) async {
+  Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/bang-gia-loc-ho-sos/$id', data: data.toJson());
+          await dioClient!.delete('/bang-gia-loc-ho-sos/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
