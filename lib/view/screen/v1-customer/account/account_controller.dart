@@ -19,6 +19,8 @@ class V1AccountController extends GetxController {
 
   String email = "email@gmail.com";
 
+  
+
   ///
   ///go to profile page
   ///

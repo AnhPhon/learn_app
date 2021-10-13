@@ -65,11 +65,14 @@ class ItemListWidget extends StatelessWidget {
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
                   image: urlImage,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.fill,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
 
@@ -14,13 +13,45 @@ class V1NewsPage extends GetView<V1NewsController> {
     return GetBuilder<V1NewsController>(
       init: V1NewsController(),
       builder: (controller) {
-        return Scaffold(
-          appBar: AppBarWidget(
-            title: controller.title,
-            isNotBack: true,
-          ),
-          body: _itemList(controller: controller),
-        );
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return controller.danhMucTinTucList.isEmpty
+            ? const Center(child: Text("Tin tức trống!"))
+            : DefaultTabController(
+                length: controller.danhMucTinTucList.length,
+                child: Scaffold(
+                  appBar: AppBarWithTabBar(
+                    title: controller.title,
+                    bottom: TabBar(
+                      // controller: controller.tabController,
+                      isScrollable: true,
+                      indicatorColor: ColorResources.PRIMARY,
+                      labelColor: ColorResources.PRIMARY,
+                      unselectedLabelColor: Colors.grey,
+                      tabs: [
+                        ...List.generate(
+                          controller.danhMucTinTucList.length,
+                          (index) => Tab(
+                              text: controller.danhMucTinTucList[index].tieuDe),
+                        )
+                      ],
+                    ),
+                  ),
+                  body: TabBarView(
+                    // controller: controller.tabController,
+                    children: List.generate(
+                      controller.danhMucTinTucList.length,
+                      (index) => _itemList(
+                        controller: controller,
+                        indexA: index,
+                      ),
+                    ),
+                  ),
+                ),
+              );
       },
     );
   }
@@ -28,7 +59,8 @@ class V1NewsPage extends GetView<V1NewsController> {
   ///
   ///item list
   ///
-  Widget _itemList({required V1NewsController controller}) {
+  Widget _itemList(
+      {required V1NewsController controller, required int indexA}) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -38,14 +70,19 @@ class V1NewsPage extends GetView<V1NewsController> {
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 10,
+            itemCount: controller.tinTucModelList[indexA].length,
             itemBuilder: (BuildContext ctx, int index) {
               return ItemListWidget(
-                urlImage: Images.example,
-                onTap: () => controller.onNewsDetailClick(),
-                title: "Thợ ốp lát: Công trình khách hàng 5 sao",
-                subTitle: "Thợ ốp lát: Công trình khách hàng 5 sao",
-                rowText2: "7:00 20/09/2021",
+                urlImage: controller.tinTucModelList[indexA][index].hinhAnh
+                    .toString(),
+                onTap: () => controller.onNewsDetailClick(indexA: indexA, indexB: index),
+                title:
+                    controller.tinTucModelList[indexA][index].tieuDe.toString(),
+                subTitle: controller.tinTucModelList[indexA][index].tomTat,
+                rowText2: controller.formatDateTime(
+                  dateTime: controller.tinTucModelList[indexA][index].createdAt
+                      .toString(),
+                ),
                 colorRowText2: ColorResources.GREY,
               );
             },
