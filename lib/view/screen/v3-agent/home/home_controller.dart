@@ -19,61 +19,24 @@ class V3HomeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-
-    threeFeatures = [
-      {
-        "icon": Icons.shop,
-        "label": "Cửa hàng \ncủa bạn",
-        "image": null,
-        "gradient": const RadialGradient(colors: [
-          Color(0xff8CE3E9),
-          Color(0xff8CE3E9),
-        ]),
-        "onTap": () {
-          onClickStore();
-        }
-      },
-      {
-        "icon": Icons.chat,
-        "label": "Phản hồi \nbáo giá",
-        "image": null,
-        "gradient": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffC1E6EE),
-        ]),
-        "onTap": () {
-          onClickQuoteReponse();
-        }
-      },
-      {
-        "icon": Icons.request_page,
-        "label": "Yêu cầu \nbáo giá",
-        "image": null,
-        "gradient": const RadialGradient(colors: [
-          Color(0xff79B4B8),
-          Color(0xff79B4B8),
-        ]),
-        "onTap": () {
-          onClickQuoteRequest();
-        }
-      },
-    ];
 
     // read tin tuc
     _readTinTuc();
 
     // read Kho san Pham
     _readKhosanPham();
+
+    // binding three feature
+    _bindingThreeFeature();
   }
 
   void onClickNews() {
     Get.toNamed(AppRoutes.V3_NEWS);
   }
 
-  /// Tơi màn hình quản lý sản phẩm
   ///
+  /// Tơi màn hình quản lý sản phẩm
   ///
   void onClickWareHouse() {
     Get.toNamed(AppRoutes.V3_WAREHOUSE);
@@ -114,7 +77,7 @@ class V3HomeController extends GetxController {
     _sanPhamProvider.paginate(
       page: 1,
       limit: 2,
-      filter: "&sortBy:desc",
+      filter: "&sortBy=create_at:desc",
       onSuccess: (sanPhamModels) {
         sanPhamList = sanPhamModels;
         update();
@@ -132,7 +95,7 @@ class V3HomeController extends GetxController {
     _tinTucProvider.paginate(
       page: 1,
       limit: 2,
-      filter: "",
+      filter: "&sortBy=create_at:desc",
       onSuccess: (tinTucResponses) {
         tinTucList = tinTucResponses;
         update();
@@ -141,5 +104,49 @@ class V3HomeController extends GetxController {
         print(error);
       },
     );
+  }
+
+  ///
+  /// binding three feature
+  ///
+  void _bindingThreeFeature() {
+    threeFeatures = [
+      {
+        "icon": Icons.shop,
+        "label": "Cửa hàng \ncủa bạn",
+        "image": null,
+        "gradient": const RadialGradient(colors: [
+          Color(0xff8CE3E9),
+          Color(0xff8CE3E9),
+        ]),
+        "onTap": () {
+          onClickStore();
+        }
+      },
+      {
+        "icon": Icons.chat,
+        "label": "Phản hồi \nbáo giá",
+        "image": null,
+        "gradient": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xffC1E6EE),
+        ]),
+        "onTap": () {
+          onClickQuoteReponse();
+        }
+      },
+      {
+        "icon": Icons.request_page,
+        "label": "Yêu cầu \nbáo giá",
+        "image": null,
+        "gradient": const RadialGradient(colors: [
+          Color(0xff79B4B8),
+          Color(0xff79B4B8),
+        ]),
+        "onTap": () {
+          onClickQuoteRequest();
+        }
+      },
+    ];
   }
 }
