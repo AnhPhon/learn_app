@@ -310,16 +310,16 @@ class V2HomePage extends GetView<V2HomeController> {
           height: 250,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount:2,
             itemBuilder: (
               BuildContext ctx,
               index,
             ) {
-              return const Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              return Padding(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: NewsBox(
-                  title: "Tin nóng tóm tắt tổng hợp",
-                  describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+                  title: controller.tinTucList[index].tieuDe.toString(),
+                  describe: controller.tinTucList[index].tomTat.toString(),
                 ),
               );
             },

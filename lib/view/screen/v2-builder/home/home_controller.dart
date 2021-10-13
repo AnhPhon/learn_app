@@ -1,12 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V2HomeController extends GetxController {
+  final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
+
   String fullname = "Nguyễn Văn A";
 
   List<Map<String, dynamic>>? contentGrid;
+
+  List<TinTucResponse> tinTucList = [];
+  List<SanPhamResponse> sanPhamList = [];
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -58,6 +71,9 @@ class V2HomeController extends GetxController {
         }
       },
     ];
+
+    _loadTinTuc();
+    _loadSanPham();
   }
 
   ///
@@ -107,5 +123,40 @@ class V2HomeController extends GetxController {
   ///
   void onNeedUpdateClick() {
     Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
+  }
+
+  ///
+  /// load san pham
+  ///
+  void _loadSanPham() {
+    _sanPhamProvider.paginate(
+      page: 1,
+      limit: 9,
+      filter: "",
+      onSuccess: (value) {
+        sanPhamList = value;
+        isLoading = true;
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  ///
+  /// load tin tuc
+  ///
+  void _loadTinTuc() {
+    _tinTucProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "",
+      onSuccess: (value) {
+        tinTucList = value;
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
   }
 }
