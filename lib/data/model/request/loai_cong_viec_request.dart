@@ -2,6 +2,7 @@ class LoaiCongViecRequest {
   String? id;
   String? idNhomDichVu;
   String? tenCongViec;
+
   LoaiCongViecRequest({
       this.id,
       this.idNhomDichVu,
@@ -21,9 +22,16 @@ class LoaiCongViecRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idNhomDichVu'] = idNhomDichVu;
-    data['tenCongViec'] = tenCongViec;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idNhomDichVu
+    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu; 
+
+    // check null tenCongViec
+    if (tenCongViec != null) data['tenCongViec'] = tenCongViec; 
+
+
     return data;
   }
 }

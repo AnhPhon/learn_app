@@ -7,6 +7,7 @@ class NgoaiNguRequest {
   String? noi;
   String? doc;
   String? viet;
+
   NgoaiNguRequest({
       this.id,
       this.idTaiKhoan,
@@ -36,14 +37,31 @@ class NgoaiNguRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['loaiNgoaiNgu'] = loaiNgoaiNgu;
-    data['trinhDo'] = trinhDo;
-    data['nghe'] = nghe;
-    data['noi'] = noi;
-    data['doc'] = doc;
-    data['viet'] = viet;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null loaiNgoaiNgu
+    if (loaiNgoaiNgu != null) data['loaiNgoaiNgu'] = loaiNgoaiNgu; 
+
+    // check null trinhDo
+    if (trinhDo != null) data['trinhDo'] = trinhDo; 
+
+    // check null nghe
+    if (nghe != null) data['nghe'] = nghe; 
+
+    // check null noi
+    if (noi != null) data['noi'] = noi; 
+
+    // check null doc
+    if (doc != null) data['doc'] = doc; 
+
+    // check null viet
+    if (viet != null) data['viet'] = viet; 
+
+
     return data;
   }
 }

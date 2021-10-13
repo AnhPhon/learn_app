@@ -2,6 +2,7 @@ class BangGiaLocHoSoRequest {
   String? id;
   String? tieuDe;
   String? donGia;
+
   BangGiaLocHoSoRequest({
       this.id,
       this.tieuDe,
@@ -21,9 +22,16 @@ class BangGiaLocHoSoRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['tieuDe'] = tieuDe;
-    data['donGia'] = donGia;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null donGia
+    if (donGia != null) data['donGia'] = donGia; 
+
+
     return data;
   }
 }

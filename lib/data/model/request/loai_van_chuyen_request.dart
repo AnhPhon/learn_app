@@ -2,6 +2,7 @@ class LoaiVanChuyenRequest {
   String? id;
   String? idTaiKhoan;
   String? tieuDe;
+
   LoaiVanChuyenRequest({
       this.id,
       this.idTaiKhoan,
@@ -21,9 +22,16 @@ class LoaiVanChuyenRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['tieuDe'] = tieuDe;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+
     return data;
   }
 }

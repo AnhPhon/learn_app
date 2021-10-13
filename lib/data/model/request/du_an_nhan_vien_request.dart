@@ -6,6 +6,7 @@ class DuAnNhanVienRequest {
   String? tieuDe;
   String? diaChi;
   String? moTa;
+
   DuAnNhanVienRequest({
       this.id,
       this.idTinhTp,
@@ -33,13 +34,28 @@ class DuAnNhanVienRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['tieuDe'] = tieuDe;
-    data['diaChi'] = diaChi;
-    data['moTa'] = moTa;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null moTa
+    if (moTa != null) data['moTa'] = moTa; 
+
+
     return data;
   }
 }

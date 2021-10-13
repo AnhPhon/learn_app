@@ -7,6 +7,7 @@ class BangBangCapRequest {
   String? namTotNghiep;
   String? donViDaoTao;
   String? anhBangCap;
+
   BangBangCapRequest({
       this.id,
       this.idTaiKhoan,
@@ -36,14 +37,31 @@ class BangBangCapRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['idTrinhDo'] = idTrinhDo;
-    data['idChuyenMon'] = idChuyenMon;
-    data['idLoaiTotNghiep'] = idLoaiTotNghiep;
-    data['namTotNghiep'] = namTotNghiep;
-    data['donViDaoTao'] = donViDaoTao;
-    data['anhBangCap'] = anhBangCap;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null idTrinhDo
+    if (idTrinhDo != null) data['idTrinhDo'] = idTrinhDo; 
+
+    // check null idChuyenMon
+    if (idChuyenMon != null) data['idChuyenMon'] = idChuyenMon; 
+
+    // check null idLoaiTotNghiep
+    if (idLoaiTotNghiep != null) data['idLoaiTotNghiep'] = idLoaiTotNghiep; 
+
+    // check null namTotNghiep
+    if (namTotNghiep != null) data['namTotNghiep'] = namTotNghiep; 
+
+    // check null donViDaoTao
+    if (donViDaoTao != null) data['donViDaoTao'] = donViDaoTao; 
+
+    // check null anhBangCap
+    if (anhBangCap != null) data['anhBangCap'] = anhBangCap; 
+
+
     return data;
   }
 }

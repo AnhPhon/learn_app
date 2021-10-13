@@ -2,6 +2,7 @@ class QuanHuyenRequest {
   String? id;
   String? idTinhTp;
   String? ten;
+
   QuanHuyenRequest({
       this.id,
       this.idTinhTp,
@@ -21,9 +22,16 @@ class QuanHuyenRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTinhTp'] = idTinhTp;
-    data['ten'] = ten;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+
     return data;
   }
 }

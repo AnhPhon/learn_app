@@ -1,6 +1,7 @@
 class LoaiTotNghiepRequest {
   String? id;
   String? tieuDe;
+
   LoaiTotNghiepRequest({
       this.id,
       this.tieuDe});
@@ -18,8 +19,13 @@ class LoaiTotNghiepRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['tieuDe'] = tieuDe;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+
     return data;
   }
 }

@@ -3,6 +3,7 @@ class BangGiaPhiVanChuyenRequest {
   String? idLoaiVanChuyen;
   String? idSanPham;
   String? soTien;
+
   BangGiaPhiVanChuyenRequest({
       this.id,
       this.idLoaiVanChuyen,
@@ -24,10 +25,19 @@ class BangGiaPhiVanChuyenRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idLoaiVanChuyen'] = idLoaiVanChuyen;
-    data['idSanPham'] = idSanPham;
-    data['soTien'] = soTien;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idLoaiVanChuyen
+    if (idLoaiVanChuyen != null) data['idLoaiVanChuyen'] = idLoaiVanChuyen; 
+
+    // check null idSanPham
+    if (idSanPham != null) data['idSanPham'] = idSanPham; 
+
+    // check null soTien
+    if (soTien != null) data['soTien'] = soTien; 
+
+
     return data;
   }
 }

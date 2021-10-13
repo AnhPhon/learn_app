@@ -8,6 +8,7 @@ class KhoHangDaiLyRequest {
   String? diaChi;
   String? idSanPham;
   String? soluong;
+
   KhoHangDaiLyRequest({
       this.id,
       this.idTaiKhoan,
@@ -39,15 +40,34 @@ class KhoHangDaiLyRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['idTaiKhoan'] = idTaiKhoan;
-    data['ten'] = ten;
-    data['idTinhTp'] = idTinhTp;
-    data['idQuanHuyen'] = idQuanHuyen;
-    data['idPhuongXa'] = idPhuongXa;
-    data['diaChi'] = diaChi;
-    data['idSanPham'] = idSanPham;
-    data['soluong'] = soluong;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null ten
+    if (ten != null) data['ten'] = ten; 
+
+    // check null idTinhTp
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+
+    // check null idQuanHuyen
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+
+    // check null idPhuongXa
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+
+    // check null diaChi
+    if (diaChi != null) data['diaChi'] = diaChi; 
+
+    // check null idSanPham
+    if (idSanPham != null) data['idSanPham'] = idSanPham; 
+
+    // check null soluong
+    if (soluong != null) data['soluong'] = soluong; 
+
+
     return data;
   }
 }

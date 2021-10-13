@@ -1,6 +1,7 @@
 class NhomDichVuRequest {
   String? id;
   String? tenDichVu;
+
   NhomDichVuRequest({
       this.id,
       this.tenDichVu});
@@ -18,8 +19,13 @@ class NhomDichVuRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['tenDichVu'] = tenDichVu;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null tenDichVu
+    if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
+
+
     return data;
   }
 }

@@ -2,6 +2,7 @@ class HangMucXayDungRequest {
   String? id;
   String? tieuDe;
   String? hinhAnh;
+
   HangMucXayDungRequest({
       this.id,
       this.tieuDe,
@@ -21,9 +22,16 @@ class HangMucXayDungRequest {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['tieuDe'] = tieuDe;
-    data['hinhAnh'] = hinhAnh;
+    // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null hinhAnh
+    if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
+
+
     return data;
   }
 }
