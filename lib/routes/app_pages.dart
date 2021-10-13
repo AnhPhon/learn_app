@@ -128,16 +128,6 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -165,6 +155,16 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/w
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_binding.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
@@ -174,7 +174,10 @@ import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_binding.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
@@ -760,6 +763,11 @@ class AppPages {
       name: AppRoutes.V3_NEWS,
       page: () => V3NewsPage(),
     ),
+    // báo giá đơn hàng
+    GetPage(
+      name: AppRoutes.V3_NEWS,
+      page: () => V3QuotePhanHoiBaoGiaPage(),
+    ),
     GetPage(
       name: AppRoutes.V3_NEWS_DETAIL,
       page: () => V3NewsDetailPage(),
@@ -768,6 +776,13 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_QUOTE_LIST,
       page: () => V3QuoteListPage(),
+      binding: V3QuoteListBinding(),
+    ),
+    // v3 - response list
+    GetPage(
+      name: AppRoutes.V3_PHAN_HOI_BAO_GIA,
+      page: () => V3QuotePhanHoiBaoGiaPage(),
+      binding: V3QuotePhanHoiBaoGiaBinding(),
     ),
     // v3 - quote check
     // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển

@@ -35,10 +35,10 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                _newsWidget(controller:controller),
+                _newsWidget(),
 
                 // product widget
-                _productWidget(controller: controller)
+                _productWidget()
               ],
             ),
           );
@@ -122,7 +122,7 @@ class V3HomePage extends GetView<V3HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget({required V3HomeController controller}) {
+  Widget _newsWidget() {
     return FieldWidget(
       title: "Tin tức",
       onTap: () {
@@ -134,17 +134,18 @@ class V3HomePage extends GetView<V3HomeController> {
           top: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: ListView.builder(
-          itemCount: 2,
+          itemCount: controller.tinTucList.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
             index,
           ) {
-            return const Padding(
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            return Padding(
+              padding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: NewsBox(
-                title: "Tin nóng tóm tắt tổng hợp",
-                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+                title: controller.tinTucList[index].tieuDe!,
+                describe: controller.tinTucList[index].tomTat!,
               ),
             );
           },
@@ -153,7 +154,7 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
-  Widget _productWidget({required V3HomeController controller}) {
+  Widget _productWidget() {
     return FieldWidget(
       title: "Kho sản phẩm",
       onTap: () {
@@ -165,7 +166,7 @@ class V3HomePage extends GetView<V3HomeController> {
           top: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: ListView.builder(
-          itemCount: 2,
+          itemCount: controller.sanPhamList.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -175,9 +176,10 @@ class V3HomePage extends GetView<V3HomeController> {
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
               child: KhoSanPham(
-                tenSanPham: "Kệ son nồi",
-                maSanPham: "BN001",
-                giaSanPham: "${PriceConverter.convertPrice(ctx, 500000)} đ",
+                tenSanPham: controller.sanPhamList[index].ten!,
+                maSanPham: controller.sanPhamList[index].maSanPham!,
+                giaSanPham:
+                    "${PriceConverter.convertPrice(ctx, double.parse(controller.sanPhamList[index].gia!))} đ",
                 quyCach: "Kim đỉnh",
               ),
             );
