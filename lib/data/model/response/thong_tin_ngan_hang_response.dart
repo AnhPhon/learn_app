@@ -5,11 +5,16 @@ class ThongTinNganHangResponse {
   String? soTaiKhoan;
   String? tenChuTaiKhoan;
 
+  String? createdAt;
+  String? updatedAt;
+
   ThongTinNganHangResponse({
       this.id,
       this.tenNganHang,
       this.soTaiKhoan,
-      this.tenChuTaiKhoan});
+      this.tenChuTaiKhoan,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -20,6 +25,8 @@ class ThongTinNganHangResponse {
     soTaiKhoan = json['soTaiKhoan'].toString();
     tenChuTaiKhoan = json['tenChuTaiKhoan'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

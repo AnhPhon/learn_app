@@ -3,6 +3,9 @@ import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/mail/mail_page.dart';
+import 'package:template/view/screen/v1-customer/account/my_order/my_order_page.dart';
+import 'package:template/view/screen/v1-customer/account/personal_info/personal_info_page.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_page.dart';
@@ -13,6 +16,7 @@ import 'package:template/view/screen/v1-customer/account/profile/profile_page.da
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
@@ -441,6 +445,22 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_PERSONAL_INFORMATION,
+      page: () => V1PersonalInfoPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_MAIL,
+      page: () => V1MailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_MY_ORDER,
+      page: () => V1MyOrderPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_BEFORE_RECHARGE,
+      page: () => V1BeforeRechargePage(),
     ),
 
     ///

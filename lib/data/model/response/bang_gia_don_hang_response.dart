@@ -5,11 +5,16 @@ class BangGiaDonHangResponse {
   String? giaTien;
   String? donViTinh;
 
+  String? createdAt;
+  String? updatedAt;
+
   BangGiaDonHangResponse({
       this.id,
       this.tieuDe,
       this.giaTien,
-      this.donViTinh});
+      this.donViTinh,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -20,6 +25,8 @@ class BangGiaDonHangResponse {
     giaTien = json['giaTien'].toString();
     donViTinh = json['donViTinh'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

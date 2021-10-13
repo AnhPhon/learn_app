@@ -24,6 +24,9 @@ class DuAnKhachHangResponse {
   TrangThaiDuAnResponse? idTrangThaiDuAn;
   String? taiKhoanTrungThau;
 
+  String? createdAt;
+  String? updatedAt;
+
   DuAnKhachHangResponse({
       this.id,
       this.idTaiKhoan,
@@ -41,7 +44,9 @@ class DuAnKhachHangResponse {
       this.file,
       this.hinhAnhDaiDien,
       this.idTrangThaiDuAn,
-      this.taiKhoanTrungThau});
+      this.taiKhoanTrungThau,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -101,6 +106,8 @@ class DuAnKhachHangResponse {
     }                                                                                  
     taiKhoanTrungThau = json['taiKhoanTrungThau'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

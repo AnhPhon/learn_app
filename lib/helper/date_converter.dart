@@ -29,6 +29,10 @@ mixin DateConverter {
     return DateFormat('dd:MM:yy').format(isoStringToLocalDate(dateTime));
   }
 
+  static String isoStringToLocalFullDateOnly(String dateTime) {
+    return DateFormat('dd/MM/yyyy').format(isoStringToLocalDate(dateTime));
+  }
+
   static String isoStringToLocalDateHMS(String dateTime) {
     return DateFormat('HH:mm dd/MM/yyyy')
         .format(isoStringToLocalDate(dateTime));

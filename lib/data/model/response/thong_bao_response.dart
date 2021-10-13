@@ -16,6 +16,9 @@ class ThongBaoResponse {
   String? hinhDaiDien;
   DuAnNhanVienResponse? idDuAnNhanVien;
 
+  String? createdAt;
+  String? updatedAt;
+
   ThongBaoResponse({
       this.id,
       this.doiTuong,
@@ -26,7 +29,9 @@ class ThongBaoResponse {
       this.tieuDe,
       this.noiDung,
       this.hinhDaiDien,
-      this.idDuAnNhanVien});
+      this.idDuAnNhanVien,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -73,6 +78,8 @@ class ThongBaoResponse {
       idDuAnNhanVien = null;                                                               
     }                                                                                  
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
