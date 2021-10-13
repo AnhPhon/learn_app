@@ -7,13 +7,18 @@ class ThongTinFSSResponse {
   String? quyTrinhSuDungGiaoDich;
   String? loiIchThamGiaFSS;
 
+  String? createdAt;
+  String? updatedAt;
+
   ThongTinFSSResponse({
       this.id,
       this.doiTuong,
       this.gioiThieuTomTatCoCheHoatDong,
       this.quyenNghiaVuFSS,
       this.quyTrinhSuDungGiaoDich,
-      this.loiIchThamGiaFSS});
+      this.loiIchThamGiaFSS,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -26,6 +31,8 @@ class ThongTinFSSResponse {
     quyTrinhSuDungGiaoDich = json['quyTrinhSuDungGiaoDich'].toString();
     loiIchThamGiaFSS = json['loiIchThamGiaFSS'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

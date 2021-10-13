@@ -9,13 +9,18 @@ class BaoCaoNhanVienResponse {
   String? soTuan;
   String? noiDung;
 
+  String? createdAt;
+  String? updatedAt;
+
   BaoCaoNhanVienResponse({
       this.id,
       this.idNhanVien,
       this.idDuAnNhanVien,
       this.loai,
       this.soTuan,
-      this.noiDung});
+      this.noiDung,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -40,6 +45,8 @@ class BaoCaoNhanVienResponse {
     soTuan = json['soTuan'].toString();
     noiDung = json['noiDung'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

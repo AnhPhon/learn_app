@@ -11,6 +11,9 @@ class TinHocResponse {
   String? soThichKyNang;
   String? soTichTinhCach;
 
+  String? createdAt;
+  String? updatedAt;
+
   TinHocResponse({
       this.id,
       this.idTaiKhoan,
@@ -20,7 +23,9 @@ class TinHocResponse {
       this.phanMemHoTro,
       this.soThichTrinhDo,
       this.soThichKyNang,
-      this.soTichTinhCach});
+      this.soTichTinhCach,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -42,6 +47,8 @@ class TinHocResponse {
     soThichKyNang = json['soThichKyNang'].toString();
     soTichTinhCach = json['soTichTinhCach'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

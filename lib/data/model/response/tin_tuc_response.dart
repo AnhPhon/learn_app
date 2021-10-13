@@ -12,6 +12,9 @@ class TinTucResponse {
   String? luotXem;
   String? createdAt;
 
+  String? createdAt;
+  String? updatedAt;
+
   TinTucResponse({
       this.id,
       this.loai,
@@ -23,7 +26,7 @@ class TinTucResponse {
       this.hinhAnh,
       this.luotXem,
       this.createdAt,
-      });
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -46,6 +49,8 @@ class TinTucResponse {
     luotXem = json['luotXem'].toString();
     createdAt = json['created_at'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

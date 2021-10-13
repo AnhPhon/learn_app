@@ -11,6 +11,9 @@ class KeKhaiKinhNghiemResponse {
   String? congViecPhuTrach;
   String? ketQua;
 
+  String? createdAt;
+  String? updatedAt;
+
   KeKhaiKinhNghiemResponse({
       this.id,
       this.idTaiKhoan,
@@ -20,7 +23,9 @@ class KeKhaiKinhNghiemResponse {
       this.chucVu,
       this.mucLuong,
       this.congViecPhuTrach,
-      this.ketQua});
+      this.ketQua,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -42,6 +47,8 @@ class KeKhaiKinhNghiemResponse {
     congViecPhuTrach = json['congViecPhuTrach'].toString();
     ketQua = json['ketQua'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
