@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/basewidget/news/news.dart';
 
 import 'home_controller.dart';
 
@@ -89,6 +90,138 @@ class V3HomePage extends GetView<V3HomeController> {
   }
 
   ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {
+        controller.onClickNews();
+      },
+      widget: Container(
+        height: 320,
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        child: ListView.builder(
+          itemCount: controller.tinTucList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return _itemList(ctx, index);
+          },
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// item list
+  ///
+  Widget _itemList(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_SMALL,
+            vertical: Dimensions.MARGIN_SIZE_SMALL),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.MARGIN_SIZE_SMALL,
+        ),
+        decoration: BoxDecoration(
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          color: ColorResources.WHITE,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 10,
+                offset: const Offset(0, 2)),
+          ],
+        ),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+            ),
+            Expanded(
+              flex: 4,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  child: FadeInImage.assetNetwork(
+                    placeholder: Images.logo,
+                    image: controller.tinTucList[index].hinhAnh!,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+            ),
+            Expanded(
+              flex: 8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    ),
+                    child: Text(
+                      controller.tinTucList[index].tieuDe!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    ),
+                    child: Text(
+                      controller.tinTucList[index].tomTat!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Text(
+                        "7:00 20/09/2021",
+                        style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
+                      ),
+                      SizedBox(
+                        width: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
   /// features widget
   ///
   Widget _featuresWidget() {
@@ -115,41 +248,6 @@ class V3HomePage extends GetView<V3HomeController> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  ///
-  /// news widget
-  ///
-  Widget _newsWidget() {
-    return FieldWidget(
-      title: "Tin tức",
-      onTap: () {
-        controller.onClickNews();
-      },
-      widget: Container(
-        height: 220,
-        padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
-        child: ListView.builder(
-          itemCount: controller.tinTucList.length,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (
-            BuildContext ctx,
-            index,
-          ) {
-            return Padding(
-              padding:
-                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: NewsBox(
-                title: controller.tinTucList[index].tieuDe!,
-                describe: controller.tinTucList[index].tomTat!,
-              ),
-            );
-          },
-        ),
       ),
     );
   }

@@ -114,7 +114,7 @@ class V3HomeController extends GetxController {
     _sanPhamProvider.paginate(
       page: 1,
       limit: 2,
-      filter: "",
+      filter: "&sortBy:desc",
       onSuccess: (sanPhamModels) {
         sanPhamList = sanPhamModels;
         update();
