@@ -3,9 +3,14 @@ class DonViCungCapResponse {
   String? id;
   String? tenDonVi;
 
+  String? createdAt;
+  String? updatedAt;
+
   DonViCungCapResponse({
       this.id,
-      this.tenDonVi});
+      this.tenDonVi,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -14,6 +19,8 @@ class DonViCungCapResponse {
     id = json['id'].toString();
     tenDonVi = json['tenDonVi'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

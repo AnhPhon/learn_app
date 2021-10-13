@@ -17,6 +17,9 @@ class ChamCongResponse {
   String? noiDungBaoCao;
   String? viTri;
 
+  String? createdAt;
+  String? updatedAt;
+
   ChamCongResponse({
       this.id,
       this.idNhanVien,
@@ -28,7 +31,9 @@ class ChamCongResponse {
       this.idPhuongXa,
       this.diaChi,
       this.noiDungBaoCao,
-      this.viTri});
+      this.viTri,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -76,6 +81,8 @@ class ChamCongResponse {
     noiDungBaoCao = json['noiDungBaoCao'].toString();
     viTri = json['viTri'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

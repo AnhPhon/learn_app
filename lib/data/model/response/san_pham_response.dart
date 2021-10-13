@@ -17,6 +17,9 @@ class SanPhamResponse {
   String? kieuVanChuyen;
   BangGiaPhiVanChuyenResponse? idBangGiaPhiVanChuyen;
 
+  String? createdAt;
+  String? updatedAt;
+
   SanPhamResponse({
       this.id,
       this.idTaiKhoan,
@@ -30,7 +33,9 @@ class SanPhamResponse {
       this.gia,
       this.maSanPham,
       this.kieuVanChuyen,
-      this.idBangGiaPhiVanChuyen});
+      this.idBangGiaPhiVanChuyen,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -68,6 +73,8 @@ class SanPhamResponse {
       idBangGiaPhiVanChuyen = null;                                                               
     }                                                                                  
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

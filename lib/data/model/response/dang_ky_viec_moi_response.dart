@@ -37,6 +37,9 @@ class DangKyViecMoiResponse {
   NgoaiNguResponse? idNgoaiNgu;
   TinHocResponse? idTinHoc;
 
+  String? createdAt;
+  String? updatedAt;
+
   DangKyViecMoiResponse({
       this.id,
       this.idTaiKhoan,
@@ -63,7 +66,9 @@ class DangKyViecMoiResponse {
       this.fileHoSoXinViec,
       this.kyNangSoTruong,
       this.idNgoaiNgu,
-      this.idTinHoc});
+      this.idTinHoc,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -156,6 +161,8 @@ class DangKyViecMoiResponse {
       idTinHoc = null;                                                               
     }                                                                                  
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

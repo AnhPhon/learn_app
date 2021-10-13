@@ -4,10 +4,15 @@ class BangGiaDangTinResponse {
   String? tieuDe;
   String? donGia;
 
+  String? createdAt;
+  String? updatedAt;
+
   BangGiaDangTinResponse({
       this.id,
       this.tieuDe,
-      this.donGia});
+      this.donGia,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -17,6 +22,8 @@ class BangGiaDangTinResponse {
     tieuDe = json['tieuDe'].toString();
     donGia = json['donGia'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

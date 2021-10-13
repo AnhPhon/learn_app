@@ -8,13 +8,18 @@ class DanhGiaDaiLyResponse {
   String? tieuDe;
   String? noiDung;
 
+  String? createdAt;
+  String? updatedAt;
+
   DanhGiaDaiLyResponse({
       this.id,
       this.idTaiKhoan,
       this.taiKhoanDanhGia,
       this.diemDanhGia,
       this.tieuDe,
-      this.noiDung});
+      this.noiDung,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -33,6 +38,8 @@ class DanhGiaDaiLyResponse {
     tieuDe = json['tieuDe'].toString();
     noiDung = json['noiDung'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

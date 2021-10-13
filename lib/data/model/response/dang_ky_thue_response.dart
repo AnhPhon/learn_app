@@ -6,11 +6,16 @@ class DangKyThueResponse {
   String? file;
   String? trangThai;
 
+  String? createdAt;
+  String? updatedAt;
+
   DangKyThueResponse({
       this.id,
       this.idTaiKhoan,
       this.file,
-      this.trangThai});
+      this.trangThai,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -27,6 +32,8 @@ class DangKyThueResponse {
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

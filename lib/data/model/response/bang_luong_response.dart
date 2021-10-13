@@ -5,10 +5,15 @@ class BangLuongResponse {
   NhanVienResponse? idNhanVien;
   String? file;
 
+  String? createdAt;
+  String? updatedAt;
+
   BangLuongResponse({
       this.id,
       this.idNhanVien,
-      this.file});
+      this.file,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -24,6 +29,8 @@ class BangLuongResponse {
     }                                                                                  
     file = json['file'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
