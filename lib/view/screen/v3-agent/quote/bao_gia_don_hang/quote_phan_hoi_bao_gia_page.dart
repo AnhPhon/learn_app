@@ -25,11 +25,15 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
                 tabBarWidget(context: context),
 
                 //item list
-                ...List.generate(5, (index) {
-                  final DonDichVuResponse donDichVuResponse = controller
-                      .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!;
-                  return _itemList(context, donDichVuResponse);
-                }),
+                ...List.generate(
+                  controller.danhSachBaoGiaDonDichVuResponse.length,
+                  (index) => _itemList(
+                    context,
+                    controller
+                        .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!,
+                        index,
+                  ),
+                )
               ],
             ),
           );
@@ -41,14 +45,15 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, DonDichVuResponse donDichVu) {
+  Widget _itemList(BuildContext context, DonDichVuResponse donDichVu, int index) {
     return BaoGiaCard(
       donHangName: donDichVu.tieuDe.toString(),
-      donHangId: "ĐH123456",
-      time: donDichVu.ngayBatDau.toString().split("T")[0],
-      date: donDichVu.ngayBatDau.toString().split("T")[0],
-      label: "Thợ ốp lát".toString(),
-      content: "Công trình khách 5 sao".toString(),
+      donHangId: "",
+      // controller.quanHuyenNameList[index]
+      time: donDichVu.ngayKetThuc.toString().substring(11, 16),
+      date: donDichVu.ngayKetThuc.toString().substring(0, 10),
+      label: "Thợ ốp lát",
+      content: "Công trình khách 5 sao",
       locationName: donDichVu.diaDiemBocHang.toString(),
       image: Images.location_example,
       onTap: controller.toReponse,

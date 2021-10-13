@@ -24,12 +24,13 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                 BuildContext ctx,
                 index,
               ) {
-                final DonDichVuResponse _donDichVuResponse = controller.danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!;
+                final DonDichVuResponse _donDichVuResponse = controller
+                    .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!;
                 return BaoGiaCard(
                   donHangName: _donDichVuResponse.tieuDe.toString(),
                   donHangId: "ĐH123456",
-                  time: _donDichVuResponse.ngayBatDau.toString().split("T")[0],
-                  date: _donDichVuResponse.ngayBatDau.toString().split("T")[0],
+                  time: _donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  date: _donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
                   label: "Thợ ốp lát".toString(),
                   content: "Công trình khách 5 sao".toString(),
                   locationName: _donDichVuResponse.diaDiemBocHang.toString(),

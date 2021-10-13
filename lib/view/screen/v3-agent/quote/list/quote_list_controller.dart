@@ -38,7 +38,7 @@ class V3QuoteListController extends GetxController {
         update();
       },
       onError: (error) {
-
+        print(error);
       },
     );
   }

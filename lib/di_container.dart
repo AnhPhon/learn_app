@@ -4,18 +4,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
 import 'package:template/data/repository/danh_sach_bao_gia_don_dich_vu_repository.dart';
+import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/data/repository/kho_hang_repository.dart';
+import 'package:template/data/repository/quan_huyen_repository.dart';
 import 'package:template/data/repository/san_pham_repository.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
+import 'package:template/data/repository/tinh_tp_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
+import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
+import 'package:template/provider/tinh_tp_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -42,6 +48,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SanPhamRepository());
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => DanhSachBaoGiaDonDichVuRepository());
+  sl.registerLazySingleton(() => TinhTpRepository());
+  sl.registerLazySingleton(() => QuanHuyenRepository());
+  sl.registerLazySingleton(() => DonDichVuRepository());
 
   // Provider
   // sl.registerFactory(() => RegionProvider());
@@ -51,6 +60,9 @@ Future<void> init() async {
   sl.registerFactory(() => SanPhamProvider());
   sl.registerFactory(() => CongViecNhanVienProvider());
   sl.registerFactory(() => DanhSachBaoGiaDonDichVuProvider());
+  sl.registerFactory(() => TinhTpProvider());
+  sl.registerFactory(() => QuanHuyenProvider());
+  sl.registerFactory(() => DonDichVuProvider());
   
 
   // Provider

@@ -5,6 +5,5 @@ import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_
 class V3QuotePhanHoiBaoGiaBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<V3QuotePhanHoiBaoGiaController>(() => V3QuotePhanHoiBaoGiaController());
   }
 }

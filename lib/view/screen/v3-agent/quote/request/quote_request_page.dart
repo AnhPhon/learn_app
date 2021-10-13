@@ -16,7 +16,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
+      appBar: AppBarWidget(title: controller.title),
       body: GetBuilder<V3QuoteRequestController>(
         init: V3QuoteRequestController(),
         builder: (V3QuoteRequestController controller) {
