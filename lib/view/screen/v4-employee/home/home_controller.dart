@@ -77,74 +77,6 @@ class V4HomeController extends GetxController {
   }
 
   ///
-  /// click to work progress page
-  ///
-  void onClickToWorkProgress(int index) {
-    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
-  }
-
-  /// click to timekeeping
-  ///
-  void onClickToTimeKeeping() {
-    Get.toNamed(AppRoutes.V4_TIMEKEEPING);
-  }
-
-  ///
-  ///click to report timekeeping
-  ///
-  void onClickToReportTimeKeeping() {
-    Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING);
-  }
-
-  ///
-  /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
-  ///
-  void onBtnTimeKeepingClick() {
-    // ignore: prefer_final_locals
-    double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
-        (reportTimekeeping.minute.toDouble() / 60);
-    // ignore: prefer_final_locals
-    double _timekeeping =
-        timekeeping.hour.toDouble() + (timekeeping.minute.toDouble() / 60);
-    // ignore: prefer_final_locals
-    double _timeNow = TimeOfDay.now().hour.toDouble() +
-        (TimeOfDay.now().minute.toDouble() / 60);
-
-    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
-      return onClickToTimeKeeping();
-    } else {
-      return onClickToReportTimeKeeping();
-    }
-  }
-
-  ///
-  ///click to export page
-  ///
-  void onClickToExprot() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true");
-  }
-
-  ///
-  ///click to import page
-  ///
-  void onClickToImport() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase");
-  }
-
-  /// click to Revenue page
-  ///
-  void onClickRevenue() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
-  }
-
-  ///
-  /// click to Expenditure page
-  ///
-  void onClickExpenditure() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
-  }
-
-  ///
   /// set user
   ///
   void _readRevenueAndExpenditure() {
@@ -193,7 +125,7 @@ class V4HomeController extends GetxController {
           } else {
             chamTreQuality = chamTreQuality + 1;
           }
-          _resetContenGrid();
+          _initContenGrid();
           isLoading = false;
           update();
         }
@@ -207,7 +139,7 @@ class V4HomeController extends GetxController {
   ///
   /// reset content grid
   ///
-  void _resetContenGrid() {
+  void _initContenGrid() {
     contentGrid = [
       {
         "title": "Mới tạo",
@@ -242,5 +174,70 @@ class V4HomeController extends GetxController {
         ]),
       }
     ];
+  }
+
+  ///
+  /// click to work progress page
+  ///
+  void onClickToWorkProgress(int index) {
+    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
+  }
+
+  /// click to timekeeping
+  ///
+  void onClickToTimeKeeping() {
+    Get.toNamed(AppRoutes.V4_TIMEKEEPING);
+  }
+
+  ///
+  ///click to report timekeeping
+  ///
+  void onClickToReportTimeKeeping() {
+    Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING);
+  }
+
+  ///
+  /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
+  ///
+  void onBtnTimeKeepingClick() {
+    final double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
+        (reportTimekeeping.minute.toDouble() / 60);
+    final double _timekeeping =
+        timekeeping.hour.toDouble() + (timekeeping.minute.toDouble() / 60);
+    final double _timeNow = TimeOfDay.now().hour.toDouble() +
+        (TimeOfDay.now().minute.toDouble() / 60);
+
+    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
+      return onClickToTimeKeeping();
+    } else {
+      return onClickToReportTimeKeeping();
+    }
+  }
+
+  ///
+  ///click to export page
+  ///
+  void onClickToExprot() {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true");
+  }
+
+  ///
+  ///click to import page
+  ///
+  void onClickToImport() {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase");
+  }
+
+  /// click to Revenue page
+  ///
+  void onClickRevenue() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
+  }
+
+  ///
+  /// click to Expenditure page
+  ///
+  void onClickExpenditure() {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
   }
 }
