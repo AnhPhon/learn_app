@@ -11,6 +11,7 @@ import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
+import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -64,11 +65,34 @@ class V3HomePage extends GetView<V3HomeController> {
           boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
       child: Row(
         children: [
-          const Text('Bạn cần hoàn thiện hồ sơ',
-              style: TextStyle(
+          Row(
+            children: [
+              const Text(
+                "Bạn cần hoàn thiện ",
+                style: TextStyle(
                   color: Color(0xff4D4D4D),
                   fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_LARGE)),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
+              ),
+              Text(
+                controller.number.toString(),
+                style: const TextStyle(
+                  color: ColorResources.RED,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
+              ),
+              const Text(
+                " hồ sơ",
+                style: TextStyle(
+                  color: Color(0xff4D4D4D),
+                  fontWeight: FontWeight.bold,
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                ),
+              ),
+            ],
+          ),
           const Icon(CupertinoIcons.bell, color: Color(0xff4D4D4D)),
           const Spacer(),
           GestureDetector(
@@ -101,11 +125,8 @@ class V3HomePage extends GetView<V3HomeController> {
       onTap: () {
         controller.onClickNews();
       },
-      widget: Container(
-        height: 320,
-        padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
+      widget: SizedBox(
+        height: 260,
         child: ListView.builder(
           itemCount: controller.tinTucList.length,
           physics: const NeverScrollableScrollPhysics(),
@@ -124,103 +145,16 @@ class V3HomePage extends GetView<V3HomeController> {
   /// item list
   ///
   Widget _itemList(BuildContext context, int index) {
-    return GestureDetector(
+    return ItemListWidget(
+      urlImage: controller.tinTucList[index].hinhAnh.toString(),
       onTap: () {},
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: Dimensions.MARGIN_SIZE_SMALL,
-            vertical: Dimensions.MARGIN_SIZE_SMALL),
-        padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_SMALL,
-        ),
-        decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          color: ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 2)),
-          ],
-        ),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
-            Expanded(
-              flex: 4,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                  child: FadeInImage.assetNetwork(
-                    placeholder: Images.logo,
-                    image: controller.tinTucList[index].hinhAnh!,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
-            Expanded(
-              flex: 8,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    ),
-                    child: Text(
-                      controller.tinTucList[index].tieuDe!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_LARGE,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    ),
-                    child: Text(
-                      controller.tinTucList[index].tomTat!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_DEFAULT),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "7:00 20/09/2021",
-                        style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
-                      ),
-                      SizedBox(
-                        width: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      title: controller.tinTucList[index].tieuDe.toString(),
+      colorRowText2: ColorResources.GREY,
+      icon1: const Icon(Icons.remove_red_eye_sharp),
+      rowText1: "10",
+      icon2: const Icon(Icons.calendar_today),
+      rowText2: "20/09/2021",
+      isSpaceBetween: true,
     );
   }
 
