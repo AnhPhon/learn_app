@@ -310,7 +310,7 @@ class V2HomePage extends GetView<V2HomeController> {
           height: 250,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount:2,
+            itemCount: 2,
             itemBuilder: (
               BuildContext ctx,
               index,
