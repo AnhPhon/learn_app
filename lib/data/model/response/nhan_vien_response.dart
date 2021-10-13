@@ -20,6 +20,9 @@ class NhanVienResponse {
   String? matKhau;
   String? tokenDevice;
 
+  String? createdAt;
+  String? updatedAt;
+
   NhanVienResponse({
       this.id,
       this.idTinhTp,
@@ -36,7 +39,9 @@ class NhanVienResponse {
       this.anhMTCMND,
       this.anhMSCMND,
       this.matKhau,
-      this.tokenDevice});
+      this.tokenDevice,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -77,6 +82,8 @@ class NhanVienResponse {
     matKhau = json['matKhau'].toString();
     tokenDevice = json['tokenDevice'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

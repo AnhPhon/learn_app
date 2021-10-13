@@ -9,6 +9,9 @@ class DanhSachBaoGiaDonDichVuResponse {
   String? file;
   String? daXem;
 
+  String? createdAt;
+  String? updatedAt;
+
   DanhSachBaoGiaDonDichVuResponse({
       this.id,
       this.idDonDichVu,
@@ -16,7 +19,9 @@ class DanhSachBaoGiaDonDichVuResponse {
       this.giaBao,
       this.ghiChu,
       this.file,
-      this.daXem});
+      this.daXem,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -36,6 +41,8 @@ class DanhSachBaoGiaDonDichVuResponse {
     file = json['file'].toString();
     daXem = json['daXem'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

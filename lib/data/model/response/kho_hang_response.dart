@@ -5,10 +5,15 @@ class KhoHangResponse {
   DuAnNhanVienResponse? idDuAnNhanVien;
   String? tenKho;
 
+  String? createdAt;
+  String? updatedAt;
+
   KhoHangResponse({
       this.id,
       this.idDuAnNhanVien,
-      this.tenKho});
+      this.tenKho,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -24,6 +29,8 @@ class KhoHangResponse {
     }                                                                                  
     tenKho = json['tenKho'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

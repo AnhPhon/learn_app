@@ -7,11 +7,16 @@ class BangGiaPhiVanChuyenResponse {
   SanPhamResponse? idSanPham;
   String? soTien;
 
+  String? createdAt;
+  String? updatedAt;
+
   BangGiaPhiVanChuyenResponse({
       this.id,
       this.idLoaiVanChuyen,
       this.idSanPham,
-      this.soTien});
+      this.soTien,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -34,6 +39,8 @@ class BangGiaPhiVanChuyenResponse {
     }                                                                                  
     soTien = json['soTien'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
@@ -12,28 +10,30 @@ class BoxShadowWidget extends StatelessWidget {
     this.elevation,
     required this.child,
     this.padding,
+    this.margin,
   }) : super(key: key);
   final double? borderRadius;
   final double? elevation;
   final Widget child;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? padding, margin;
   @override
   Widget build(BuildContext context) {
     return Material(
       // elevation: elevation ?? 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius ?? Dimensions.BORDER_RADIUS_EXTRA_SMALL)
-      ),
+          borderRadius: BorderRadius.circular(
+              borderRadius ?? Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
       child: Container(
-        //alignment: Alignment.topLeft,
-        padding: padding ?? const EdgeInsets.all(0.0),
-        decoration: BoxDecoration(
-          boxShadow: boxShadow,
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          color: ColorResources.WHITE,
-        ),
-        child: child
-      ),
+          //alignment: Alignment.topLeft,
+          margin: margin ?? const EdgeInsets.all(0.0),
+          padding: padding ?? const EdgeInsets.all(0.0),
+          decoration: BoxDecoration(
+            boxShadow: boxShadow,
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+            color: ColorResources.WHITE,
+          ),
+          child: child),
     );
   }
 }

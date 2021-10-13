@@ -7,6 +7,7 @@ import 'package:template/utils/images.dart';
 class ItemListWidget extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+  final String? subTitle;
   final String? rowText1;
   final String? rowText2;
   final String urlImage;
@@ -29,6 +30,7 @@ class ItemListWidget extends StatelessWidget {
     this.icon1,
     this.icon2,
     required this.urlImage,
+    this.subTitle,
   }) : super(key: key);
 
   @override
@@ -63,11 +65,14 @@ class ItemListWidget extends StatelessWidget {
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
                   image: urlImage,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.fill,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -93,6 +98,19 @@ class ItemListWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (subTitle != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      ),
+                      child: Text(
+                        subTitle.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
