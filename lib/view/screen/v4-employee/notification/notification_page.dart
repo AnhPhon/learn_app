@@ -50,124 +50,139 @@ class V4NotificationPage extends GetView<V4NotificationController> {
         shrinkWrap: true,
         itemCount: controller.thongbaoList.length,
         itemBuilder: (context, index) {
-          return Container(
-            width: DeviceUtils.getScaledWidth(context, 1),
-            decoration: BoxDecoration(
-              color: ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(
-                Dimensions.BORDER_RADIUS_SMALL,
+          return GestureDetector(
+            onTap: () {
+              controller.onClickDetailNotification(index: index);
+            },
+            child: Container(
+              width: DeviceUtils.getScaledWidth(context, 1),
+              decoration: BoxDecoration(
+                color: ColorResources.WHITE,
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_SMALL,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 2),
+                    blurRadius: 2,
+                    color: ColorResources.BLACK.withAlpha(20),
+                  ),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 2),
-                  blurRadius: 2,
-                  color: ColorResources.BLACK.withAlpha(20),
-                ),
-              ],
-            ),
-            child: Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                const Positioned(
-                  top: Dimensions.PADDING_SIZE_LARGE,
-                  left: Dimensions.PADDING_SIZE_SMALL,
-                  child: Icon(
-                    Icons.notifications_active_outlined,
-                    size: Dimensions.ICON_SIZE_LARGE,
+              child: Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  const Positioned(
+                    top: Dimensions.PADDING_SIZE_LARGE,
+                    left: Dimensions.PADDING_SIZE_SMALL,
+                    child: Icon(
+                      Icons.notifications_active_outlined,
+                      size: Dimensions.ICON_SIZE_LARGE,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(
-                    0,
-                    Dimensions.PADDING_SIZE_LARGE,
-                    Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    Dimensions.PADDING_SIZE_LARGE,
-                  ),
-                  width: DeviceUtils.getScaledWidth(context, 0.85),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Tiêu đề thông báo
-                      Wrap(
-                        children: [
-                          Text(
-                            controller.thongbaoList[index].tieuDe!,
-                            style: Dimensions.fontSizeStyle18w600(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      ),
-
-                      //Nội dung thông báo
-                      Wrap(
-                        children: [
-                          Text(
-                            controller.thongbaoList[index].noiDung!,
-                            style: Dimensions.fontSizeStyle16(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      ),
-
-                      //Địa chỉ
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            color: ColorResources.PRIMARY,
-                          ),
-                          Text(
-                            controller
-                                .thongbaoList[index].idDuAnNhanVien!.diaChi
-                                .toString(),
-                            style: Dimensions.fontSizeStyle16(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      ),
-
-                      //Tên dự án và thời gian
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RichText(
-                            text: TextSpan(
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(
+                      0,
+                      Dimensions.PADDING_SIZE_LARGE,
+                      Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      Dimensions.PADDING_SIZE_LARGE,
+                    ),
+                    width: DeviceUtils.getScaledWidth(context, 0.85),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Tiêu đề thông báo
+                        Wrap(
+                          children: [
+                            Text(
+                              controller.thongbaoList[index].tieuDe!,
                               style: const TextStyle(
-                                color: ColorResources.BLACK,
-                                fontSize: Dimensions.FONT_SIZE_LARGE,
+                                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                                fontWeight: FontWeight.bold,
                               ),
-                              children: [
-                                const TextSpan(
-                                  text: "Dự án: ",
-                                ),
-                                TextSpan(
-                                  text: controller.thongbaoList[index]
-                                      .idDuAnNhanVien!.tieuDe,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        ),
 
-                          //Đợi update trường date ở model
-                          Text(
-                            '2021-10-13',
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                        ],
-                      ),
-                    ],
+                        //Nội dung thông báo
+                        Wrap(
+                          children: [
+                            Text(
+                              controller.thongbaoList[index].noiDung!,
+                              style: Dimensions.fontSizeStyle16(),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Địa chỉ
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on_outlined,
+                              color: ColorResources.PRIMARY,
+                            ),
+                            Text(
+                              controller
+                                  .thongbaoList[index].idDuAnNhanVien!.diaChi
+                                  .toString(),
+                              style: Dimensions.fontSizeStyle16(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Tên dự án và thời gian
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: ColorResources.BLACK,
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                ),
+                                children: [
+                                  const TextSpan(
+                                    text: "Dự án: ",
+                                  ),
+                                  TextSpan(
+                                    text: controller.thongbaoList[index]
+                                        .idDuAnNhanVien!.tieuDe,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            //Đợi update trường date ở model
+                            Text(
+                              controller.formatDateTime(
+                                dateTime: controller.thongbaoList[index]
+                                    .idDuAnNhanVien!.createdAt!,
+                              ),
+                              style: Dimensions.fontSizeStyle14(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         });
