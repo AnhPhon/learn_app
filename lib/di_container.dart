@@ -41,10 +41,21 @@ Future<void> init() async {
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => DanhMucTinTucRepository());
   // sl.registerLazySingleton(() => RegionRepo());
+  sl.registerLazySingleton(() => ThongBaoRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => SanPhamRepository());
+  
+
+  // Provider
+  // sl.registerFactory(() => RegionProvider());
+  sl.registerLazySingleton(() => ThuChiNhanVienProvider());
+  sl.registerLazySingleton(() => TinTucProvider());
+  sl.registerLazySingleton(() => ThongBaoProvider());
+  sl.registerLazySingleton(() => KhoHangProvider());
+  sl.registerLazySingleton(() => SanPhamProvider());
+
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   // sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => ThongBaoRepository());
@@ -62,5 +73,4 @@ Future<void> init() async {
   sl.registerFactory(() => TinTucProvider());
   sl.registerFactory(() => DanhMucTinTucProvider());
   // sl.registerFactory(() => AuthProvider());
-  sl.registerFactory(() => ThongBaoProvider());
 }
