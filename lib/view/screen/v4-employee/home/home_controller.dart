@@ -22,6 +22,7 @@ class V4HomeController extends GetxController {
   List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
+  String avatar = "";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
@@ -49,17 +50,20 @@ class V4HomeController extends GetxController {
         id: id!,
         onSuccess: (taiKhoanResponse) {
           fullname = taiKhoanResponse.hoTen!;
+          avatar = taiKhoanResponse.hinhDaiDien!;
+          // load thu chi
+          _readRevenueAndExpenditure();
+
+          // xử lý tiến độ công việc
+          _theoDoiTienDo();
         },
         onError: (error) {
           print(error);
         },
       );
-      // load thu chi
-      _readRevenueAndExpenditure();
-
-      // xử lý tiến độ công việc
-      _theoDoiTienDo();
     });
+
+    update();
   }
 
   //khai báo thời gian báo cáo

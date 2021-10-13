@@ -11,7 +11,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'home_controller.dart';
 
@@ -28,7 +27,7 @@ class V4HomePage extends GetView<V4HomeController> {
             );
           }
           return HomeWidget(
-            image: Images.example,
+            image: controller.avatar,
             fullname: "Hi, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,
             content: Column(
