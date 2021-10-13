@@ -1,24 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
-import 'package:template/di_container.dart';
-import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
-import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
-  // providers
-  ThuChiNhanVienProvider thuChiNhanVienProvider =
-      GetIt.I.get<ThuChiNhanVienProvider>();
-
-  CongViecNhanVienProvider congViecNhanVienProvider =
-      GetIt.I.get<CongViecNhanVienProvider>();
-
-  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
-
   List<Map<String, dynamic>>? contentGrid;
 
   //khai báo thời gian báo cáo
@@ -32,48 +17,52 @@ class V4HomeController extends GetxController {
 
 
   String fullname = "Phạm Dương";
-  String avatar = "";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
-
-  // số lượng các tiến độ
-  int moiTaoQuality = 0;
-  int dangLamQuality = 0;
-  int hoanThanhQuality = 0;
-  int chamTreQuality = 0;
-
-  // isloading
-  bool isLoading = true;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    contentGrid = [
+      {
+        "title": "Mới tạo",
+        "quality": 3,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff79B4B8),
+        ])
+      },
+      {
+        "title": "Đang làm",
+        "quality": "2",
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00B4D8),
+        ]),
+      },
+      {
+        "title": "Hoàn Thành",
+        "quality": "4",
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00A676),
+        ]),
+      },
+      {
+        "title": "Chậm trễ",
+        "quality": "1",
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xffD00000),
+        ]),
+      }
+    ];
 
-    total = 0;
-    revenue = 0;
-    expenditure = 0;
-
-    sl.get<SharedPreferenceHelper>().userId.then((id) {
-      taiKhoanProvider.find(
-        id: id!,
-        onSuccess: (taiKhoanResponse) {
-          fullname = taiKhoanResponse.hoTen!;
-          avatar = taiKhoanResponse.hinhDaiDien!;
-          // load thu chi
-          _readRevenueAndExpenditure();
-
-          // xử lý tiến độ công việc
-          _theoDoiTienDo();
-        },
-        onError: (error) {
-          print(error);
-        },
-      );
-    });
-
-    update();
+    total = 10000000;
+    revenue = 10000000;
+    expenditure = 10000000;
   }
 
   ///

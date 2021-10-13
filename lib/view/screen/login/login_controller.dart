@@ -17,18 +17,18 @@ class LoginController extends GetxController {
   AuthModel? auth;
   bool isLoading = true;
 
-  @override
-  void onInit() {
-    usernameController.text = '4';
-    passwordController.text = '';
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   // usernameController.text = 'ytp3001';
+  //   // passwordController.text = 'password';
+  //   super.onInit();
+  // }
 
   ///
   /// on login click
   ///
   void onLoginBtnClick() {
-    sl.get<SharedPreferenceHelper>().saveUserId("6161831d4afc4f67f5e66eaf");
+    sl.get<SharedPreferenceHelper>().saveUserId("61663478b7ee197cba6475e5");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {

@@ -6,6 +6,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_controller.dart';
+import 'package:template/view/screen/v1-customer/news/new_detail/news_specification.dart';
 
 class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   @override
@@ -26,14 +27,19 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
                   //image
                   _imageNews(context),
 
-                  //view and like
-                  _totalsView(context, controller: controller),
-
                   //title news
                   _titleNews(controller: controller),
 
-                  //authors and time
-                  _authors(controller: controller),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //authors and time
+                      _authors(controller: controller),
+
+                      //view and like
+                      _totalsView(context, controller: controller),
+                    ],
+                  ),
 
                   //content
                   _content(controller: controller),
@@ -75,24 +81,28 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
       ),
       child: Row(
         children: [
-          const Spacer(),
           //view
           const Icon(
             Icons.remove_red_eye_sharp,
             color: ColorResources.PRIMARYCOLOR,
           ),
-          Text(controller.tinTucModel.luotXem.toString()),
-
           const SizedBox(
             width: Dimensions.MARGIN_SIZE_SMALL,
           ),
+          Text(
+            controller.tinTucModel.luotXem.toString(),
+          ),
+
+          // const SizedBox(
+          //   width: Dimensions.MARGIN_SIZE_SMALL,
+          // ),
 
           //reacion
-          const Icon(
-            Icons.favorite_border_outlined,
-            color: ColorResources.RED,
-          ),
-          const Text("600"),
+          // const Icon(
+          //   Icons.favorite_border_outlined,
+          //   color: ColorResources.RED,
+          // ),
+          // const Text("600"),
         ],
       ),
     );
@@ -104,12 +114,13 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   Widget _titleNews({required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_LARGE,
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
         controller.tinTucModel.tieuDe.toString(),
         textAlign: TextAlign.center,
-        style: Dimensions.fontSizeStyle20w600(),
+        style: Dimensions.fontSizeStyle22w600(),
       ),
     );
   }
@@ -130,16 +141,18 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
               controller.formatDateTime(
                 dateTime: controller.tinTucModel.createdAt.toString(),
               ),
-              style: Dimensions.fontSizeStyle16w600()
-                  .copyWith(color: ColorResources.PRIMARY),
+              style: Dimensions.fontSizeStyle16w600().copyWith(
+                color: ColorResources.PRIMARY,
+              ),
             ),
             const VerticalDivider(
               thickness: 2,
             ),
-            Text(controller.tinTucModel.tacGia.toString(),
-                style: Dimensions.fontSizeStyle16w600()
-                    .copyWith(color: ColorResources.BLACK)),
-            const Spacer(),
+            Text(
+              controller.tinTucModel.tacGia.toString(),
+              style: Dimensions.fontSizeStyle16w600()
+                  .copyWith(color: ColorResources.BLACK),
+            ),
           ],
         ),
       ),
@@ -150,16 +163,8 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///content
   ///
   Widget _content({required V1NewsDetailController controller}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: Text(
-        controller.tinTucModel.noiDung.toString(),
-        textAlign: TextAlign.justify,
-        style:
-            Dimensions.fontSizeStyle18().copyWith(color: ColorResources.BLACK),
-      ),
+    return NewsSpecification(
+      newsSpecification: controller.tinTucModel.noiDung.toString(),
     );
   }
 }
