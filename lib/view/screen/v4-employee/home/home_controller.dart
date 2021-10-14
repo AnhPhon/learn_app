@@ -96,6 +96,7 @@ class V4HomeController extends GetxController {
           total = total! + revenue!;
           total = total! - expenditure!;
         }
+        isLoading = false;
         update();
       },
       onError: (error) {
@@ -125,7 +126,6 @@ class V4HomeController extends GetxController {
             chamTreQuality = chamTreQuality + 1;
           }
           _resetContenGrid();
-          isLoading = false;
           update();
         }
       },
