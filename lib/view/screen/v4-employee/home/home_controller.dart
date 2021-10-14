@@ -86,8 +86,8 @@ class V4HomeController extends GetxController {
       filter: "",
       onSuccess: (models) {
         for (final model in models) {
-          String type = model.loai.toString().toLowerCase();
-          double money = double.parse(model.soTien!);
+          final String type = model.loai.toString().toLowerCase();
+          final double money = double.parse(model.soTien!);
           if (type == "loai 1") {
             revenue = revenue! + money;
           } else {
@@ -96,7 +96,6 @@ class V4HomeController extends GetxController {
           total = total! + revenue!;
           total = total! - expenditure!;
         }
-        isLoading = false;
         update();
       },
       onError: (error) {
@@ -126,6 +125,7 @@ class V4HomeController extends GetxController {
             chamTreQuality = chamTreQuality + 1;
           }
           _resetContenGrid();
+          isLoading = false;
           update();
         }
       },
