@@ -6,6 +6,16 @@ import 'package:template/routes/app_routes.dart';
 class V4HomeController extends GetxController {
   List<Map<String, dynamic>>? contentGrid;
 
+  //khai báo thời gian báo cáo
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
+
+  //khai báo thời gian chấm công
+  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+
+  //khai báo thay đổi text chấm công và báo cáo
+  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+
+
   String fullname = "Phạm Dương";
   double? total;
   double? revenue; // thu
@@ -54,14 +64,106 @@ class V4HomeController extends GetxController {
     revenue = 10000000;
     expenditure = 10000000;
   }
-  //khai báo thời gian báo cáo
-  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
 
-  //khai báo thời gian chấm công
-  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+  ///
+  /// set user
+  ///
+  void _readRevenueAndExpenditure() {
+    // set name of user
+    thuChiNhanVienProvider.paginate(
+      page: 1,
+      limit: 50,
+      filter: "",
+      onSuccess: (models) {
+        for (final model in models) {
+          String type = model.loai.toString().toLowerCase();
+          double money = double.parse(model.soTien!);
+          if (type == "loai 1") {
+            revenue = revenue! + money;
+          } else {
+            expenditure = expenditure! + money;
+          }
+          total = total! + revenue!;
+          total = total! - expenditure!;
+        }
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
 
-  //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  ///
+  ///  theo doi tien do
+  ///
+  void _theoDoiTienDo() {
+    congViecNhanVienProvider.paginate(
+      page: 1,
+      limit: 10,
+      filter: "",
+      onSuccess: (models) {
+        for (final model in models) {
+          final String status = model.trangThai!.toLowerCase();
+          if (status == "moi tao") {
+            moiTaoQuality = moiTaoQuality + 1;
+          } else if (status == "dang lam") {
+            dangLamQuality = dangLamQuality + 1;
+          } else if (status == "hoan thanh") {
+            hoanThanhQuality = hoanThanhQuality + 1;
+          } else {
+            chamTreQuality = chamTreQuality + 1;
+          }
+          _initContenGrid();
+          isLoading = false;
+          update();
+        }
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  ///
+  /// reset content grid
+  ///
+  void _initContenGrid() {
+    contentGrid = [
+      {
+        "title": "Mới tạo",
+        "quality": moiTaoQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff79B4B8),
+        ])
+      },
+      {
+        "title": "Đang làm",
+        "quality": dangLamQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00B4D8),
+        ]),
+      },
+      {
+        "title": "Hoàn Thành",
+        "quality": hoanThanhQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xff00A676),
+        ]),
+      },
+      {
+        "title": "Chậm trễ",
+        "quality": chamTreQuality,
+        "color": const RadialGradient(colors: [
+          Color(0xffC1E6EE),
+          Color(0xffD00000),
+        ]),
+      }
+    ];
+  }
 
   ///
   /// click to work progress page
@@ -86,16 +188,12 @@ class V4HomeController extends GetxController {
   ///
   /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
   ///
-  // ignore: unused_element
-  void onClick() {
-    // ignore: prefer_final_locals
-    double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
+  void onBtnTimeKeepingClick() {
+    final double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
         (reportTimekeeping.minute.toDouble() / 60);
-    // ignore: prefer_final_locals
-    double _timekeeping =
+    final double _timekeeping =
         timekeeping.hour.toDouble() + (timekeeping.minute.toDouble() / 60);
-    // ignore: prefer_final_locals
-    double _timeNow = TimeOfDay.now().hour.toDouble() +
+    final double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
     if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
@@ -104,6 +202,7 @@ class V4HomeController extends GetxController {
       return onClickToReportTimeKeeping();
     }
   }
+
   ///
   ///click to export page
   ///

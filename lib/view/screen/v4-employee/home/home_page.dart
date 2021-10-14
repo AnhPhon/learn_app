@@ -21,6 +21,11 @@ class V4HomePage extends GetView<V4HomeController> {
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
         builder: (V4HomeController controller) {
+          if(controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return HomeWidget(
             fullname: "Hi, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,
@@ -90,7 +95,7 @@ class V4HomePage extends GetView<V4HomeController> {
   Widget _btnTimekeeping() {
     return GestureDetector(
       onTap: () {
-        controller.onClick();
+        controller.onBtnTimeKeepingClick();
       },
       child: Container(
         width: 150,

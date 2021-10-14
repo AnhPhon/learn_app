@@ -93,8 +93,10 @@ class ItemListWidget extends StatelessWidget {
                       child: Text(
                         title,
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        ),
                       ),
                     ),
                   ),
@@ -108,7 +110,9 @@ class ItemListWidget extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                          fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                          color: ColorResources.GREY,
+                        ),
                       ),
                     ),
                   Padding(
