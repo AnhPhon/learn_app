@@ -1,10 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
-  List<Map<String, dynamic>>? contentGrid;
+  // providers
+  ThuChiNhanVienProvider thuChiNhanVienProvider =
+      GetIt.I.get<ThuChiNhanVienProvider>();
+
+  CongViecNhanVienProvider congViecNhanVienProvider =
+      GetIt.I.get<CongViecNhanVienProvider>();
+
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
@@ -15,54 +28,51 @@ class V4HomeController extends GetxController {
   //khai báo thay đổi text chấm công và báo cáo
   bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
 
+  List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
+  String avatar = "";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
+
+  // số lượng các tiến độ
+  int moiTaoQuality = 0;
+  int dangLamQuality = 0;
+  int hoanThanhQuality = 0;
+  int chamTreQuality = 0;
+
+  // isloading
+  bool isLoading = true;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    contentGrid = [
-      {
-        "title": "Mới tạo",
-        "quality": 3,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
-      },
-      {
-        "title": "Đang làm",
-        "quality": "2",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
-        ]),
-      },
-      {
-        "title": "Hoàn Thành",
-        "quality": "4",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
-        ]),
-      },
-      {
-        "title": "Chậm trễ",
-        "quality": "1",
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
-        ]),
-      }
-    ];
 
-    total = 10000000;
-    revenue = 10000000;
-    expenditure = 10000000;
+    total = 0;
+    revenue = 0;
+    expenditure = 0;
+
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (taiKhoanResponse) {
+          fullname = taiKhoanResponse.hoTen!;
+          avatar = taiKhoanResponse.hinhDaiDien!;
+          // load thu chi
+          _readRevenueAndExpenditure();
+
+          // xử lý tiến độ công việc
+          _theoDoiTienDo();
+        },
+        onError: (error) {
+          print(error);
+        },
+      );
+    });
+
+    update();
   }
 
   ///
@@ -76,8 +86,8 @@ class V4HomeController extends GetxController {
       filter: "",
       onSuccess: (models) {
         for (final model in models) {
-          String type = model.loai.toString().toLowerCase();
-          double money = double.parse(model.soTien!);
+          final String type = model.loai.toString().toLowerCase();
+          final double money = double.parse(model.soTien!);
           if (type == "loai 1") {
             revenue = revenue! + money;
           } else {
@@ -114,7 +124,7 @@ class V4HomeController extends GetxController {
           } else {
             chamTreQuality = chamTreQuality + 1;
           }
-          _initContenGrid();
+          _resetContenGrid();
           isLoading = false;
           update();
         }
@@ -128,7 +138,7 @@ class V4HomeController extends GetxController {
   ///
   /// reset content grid
   ///
-  void _initContenGrid() {
+  void _resetContenGrid() {
     contentGrid = [
       {
         "title": "Mới tạo",
