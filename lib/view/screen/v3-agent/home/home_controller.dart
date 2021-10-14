@@ -22,10 +22,9 @@ class V3HomeController extends GetxController {
       taiKhoanProvider.find(
         id: id!,
         onSuccess: (taiKhoanResponse) {
-          
           // set lại full name theo tài khoản
           fullname = taiKhoanResponse.hoTen!;
-          
+
           // read tin tuc
           _readTinTuc();
 
@@ -51,7 +50,7 @@ class V3HomeController extends GetxController {
       limit: 2,
       filter: "&sortBy=create_at:desc",
       onSuccess: (tinTucResponses) {
-        // get tin tuc list 
+        // get tin tuc list
         tinTucList = tinTucResponses;
         update();
       },
@@ -96,7 +95,7 @@ class V3HomeController extends GetxController {
           Color(0xff8CE3E9),
           Color(0xff8CE3E9),
         ]),
-        "onTap": (){
+        "onTap": () {
           onClickStore();
         }
       },
