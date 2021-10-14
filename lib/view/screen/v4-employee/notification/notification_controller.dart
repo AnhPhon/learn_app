@@ -9,7 +9,10 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
-class V4NotificationController extends GetxController {
+class V4NotificationController extends GetxController
+    with SingleGetTickerProviderMixin {
+  ThongBaoResponse? thongBaoList;
+
   ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   //Khai báo model thông báo
@@ -37,21 +40,24 @@ class V4NotificationController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+    refreshController.dispose();
   }
 
   ///
   /// lấy danh sách thông báo
   ///
   void getNotification() {
+    pageMax = 1;
+    currentMax = 10;
+    thongbaoModelList.clear();
+    update();
     thongBaoProvider.paginate(
         page: 1,
         limit: 10,
-        filter: '&doiTuong=1&sortBy=create_at:desc',
+        filter: '&doiTuong=1&sortBy=created_at:desc',
         onSuccess: (value) {
           thongbaoModelList.value = value;
-
           isLoading = false;
-
           update();
         },
         onError: (error) {
@@ -79,18 +85,18 @@ class V4NotificationController extends GetxController {
   ///reload
   ///
   void reloadNotifications() {
+    print('reloadNotifications');
+    pageMax = 1;
+    currentMax = 10;
     update();
     thongBaoProvider.paginate(
-        page: pageMax,
-        limit: currentMax,
-        filter: '&doiTuong=1&sortBy=create_at:desc',
+        page: 1,
+        limit: 10,
+        filter: '&doiTuong=1&sortBy=created_at:desc',
         onSuccess: (value) {
           thongbaoModelList.value = value;
-
-          isLoading = false;
-
           refreshController.refreshCompleted();
-
+          isLoading = false;
           update();
         },
         onError: (error) {
@@ -104,18 +110,20 @@ class V4NotificationController extends GetxController {
   ///
   void loadMoreNotification() {
     pageMax += 1;
+    print(pageMax);
     currentMax = currentMax;
     thongBaoProvider.paginate(
         page: pageMax,
         limit: currentMax,
-        filter: '&doiTuong=1&sortBy=create_at:desc',
+        filter: '&doiTuong=1&sortBy=created_at:desc',
         onSuccess: (value) {
-          thongbaoModelList.value = value.toList() + value;
-
+          if (value.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            thongbaoModelList.value = value.toList() + value;
+            refreshController.loadComplete();
+          }
           isLoading = false;
-
-          refreshController.loadComplete();
-
           update();
         },
         onError: (error) {

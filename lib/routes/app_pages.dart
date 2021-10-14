@@ -823,6 +823,10 @@ class AppPages {
       page: () => V3ProductAddPage(),
     ),
     GetPage(
+      name: AppRoutes.V3_PHAN_HOI_BAO_GIA,
+      page: () => V3QuoteResponsePage(),
+    ),
+    GetPage(
       name: AppRoutes.V3_FINISH_UPDATE,
       page: () => V3FinishUpdatePage(),
     ),

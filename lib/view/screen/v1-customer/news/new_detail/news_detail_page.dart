@@ -33,11 +33,11 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //authors and time
-                      _authors(controller: controller),
-
                       //view and like
-                      _totalsView(context, controller: controller),
+                      _author(context, controller: controller),
+
+                      //authors and time
+                      _views(controller: controller),
                     ],
                   ),
 
@@ -70,52 +70,14 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   }
 
   ///
-  ///view and like
-  ///
-  Widget _totalsView(BuildContext context,
-      {required V1NewsDetailController controller}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: Row(
-        children: [
-          //view
-          const Icon(
-            Icons.remove_red_eye_sharp,
-            color: ColorResources.PRIMARYCOLOR,
-          ),
-          const SizedBox(
-            width: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          Text(
-            controller.tinTucModel.luotXem.toString(),
-          ),
-
-          // const SizedBox(
-          //   width: Dimensions.MARGIN_SIZE_SMALL,
-          // ),
-
-          //reacion
-          // const Icon(
-          //   Icons.favorite_border_outlined,
-          //   color: ColorResources.RED,
-          // ),
-          // const Text("600"),
-        ],
-      ),
-    );
-  }
-
-  ///
   ///title news
   ///
   Widget _titleNews({required V1NewsDetailController controller}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
         controller.tinTucModel.tieuDe.toString(),
@@ -126,12 +88,29 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   }
 
   ///
-  ///authors and time
+  ///author
   ///
-  Widget _authors({required V1NewsDetailController controller}) {
+  Widget _author(BuildContext context,
+      {required V1NewsDetailController controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+      child: Text(
+        controller.tinTucModel.tacGia.toString(),
+        style: Dimensions.fontSizeStyle16w600()
+            .copyWith(color: ColorResources.BLACK),
+      ),
+    );
+  }
+
+  ///
+  ///view and time
+  ///
+  Widget _views({required V1NewsDetailController controller}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: IntrinsicHeight(
@@ -142,16 +121,26 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
                 dateTime: controller.tinTucModel.createdAt.toString(),
               ),
               style: Dimensions.fontSizeStyle16w600().copyWith(
-                color: ColorResources.PRIMARY,
+                color: ColorResources.GREY,
               ),
             ),
             const VerticalDivider(
               thickness: 2,
             ),
-            Text(
-              controller.tinTucModel.tacGia.toString(),
-              style: Dimensions.fontSizeStyle16w600()
-                  .copyWith(color: ColorResources.BLACK),
+            Row(
+              children: [
+                //view
+                const Icon(
+                  Icons.remove_red_eye_sharp,
+                  color: ColorResources.PRIMARYCOLOR,
+                ),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                Text(
+                  controller.tinTucModel.luotXem.toString(),
+                ),
+              ],
             ),
           ],
         ),

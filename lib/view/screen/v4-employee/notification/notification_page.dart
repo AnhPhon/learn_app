@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 // ignore: unused_import
 import 'package:template/utils/device_utils.dart';
@@ -46,8 +47,10 @@ class V4NotificationPage extends GetView<V4NotificationController> {
   /// ListView Notification
   ///
   Widget _listViewNotification() {
-    return RefreshIndicator(
+    return SmartRefresher(
+      onLoading: controller.onLoading,
       onRefresh: controller.onRefresh,
+      controller: controller.refreshController,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: controller.thongbaoModelList.length,

@@ -202,6 +202,7 @@ class AppRoutes {
   static const String V3_NEWS_DETAIL = '/v3_news_detail';
   static const String V3_NEWS = '/v3_news';
   static const String V3_FINISH_UPDATE = '/v3_finish_update';
+  static const String V3_PHAN_HOI_BAO_GIA = '/v3_finish_update';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
