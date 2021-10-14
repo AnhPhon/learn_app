@@ -129,7 +129,7 @@ class ItemListWidget extends StatelessWidget {
                         Row(
                           children: [
                             if (icon1 != null) icon1!,
-                            if (isSpaceBetween == false)
+                            if (icon1 != null && rowText1 != null)
                               const SizedBox(
                                   width: Dimensions.MARGIN_SIZE_SMALL),
                             if (rowText1 != null)
@@ -146,7 +146,7 @@ class ItemListWidget extends StatelessWidget {
                         Row(
                           children: [
                             if (icon2 != null) icon2!,
-                            if (isSpaceBetween == false)
+                            if (icon2 != null && rowText2 != null)
                               const SizedBox(
                                   width: Dimensions.MARGIN_SIZE_SMALL),
                             if (rowText2 != null)

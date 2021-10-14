@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v1-customer/keep_alive_wrapper.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
 
 import 'categories/news_categories_page.dart';
@@ -29,7 +25,6 @@ class V1NewsPage extends GetView<V1NewsController> {
                   title: controller.title,
                   bottom: TabBar(
                     controller: controller.tabController,
-                    // onTap: (val) => controller.getNewsByIdCategory(index: val),
                     isScrollable: true,
                     indicatorColor: ColorResources.PRIMARY,
                     labelColor: ColorResources.PRIMARY,
@@ -37,13 +32,13 @@ class V1NewsPage extends GetView<V1NewsController> {
                     tabs: [
                       ...List.generate(
                         controller.danhMucTinTucList.length,
-                        (index) => Tab(text: controller.danhMucTinTucList[index].tieuDe),
+                        (index) => Tab(
+                            text: controller.danhMucTinTucList[index].tieuDe),
                       )
                     ],
                   ),
                 ),
                 body: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
                   controller: controller.tabController,
                   children: List.generate(
                     controller.danhMucTinTucList.length,

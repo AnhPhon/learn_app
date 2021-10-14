@@ -4,6 +4,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/danh_muc_tin_tuc_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
@@ -13,13 +14,15 @@ import 'news_categories_controller.dart';
 class V1NewsCategoriesPage extends StatefulWidget {
   final DanhMucTinTucResponse danhMucTinTucList;
 
-  const V1NewsCategoriesPage({Key? key, required this.danhMucTinTucList}) : super(key: key);
+  const V1NewsCategoriesPage({Key? key, required this.danhMucTinTucList})
+      : super(key: key);
 
   @override
   _V1NewsCategoriesPageState createState() => _V1NewsCategoriesPageState();
 }
 
-class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage> with AutomaticKeepAliveClientMixin {
+class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage>
+    with AutomaticKeepAliveClientMixin {
   V1NewsCategoriesController? controller;
 
   @override
@@ -29,7 +32,8 @@ class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage> with Automa
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller = Get.put(V1NewsCategoriesController(), tag: widget.key.toString());
+    controller =
+        Get.put(V1NewsCategoriesController(), tag: widget.key.toString());
     controller!.danhMucTinTucList = widget.danhMucTinTucList;
   }
 
@@ -41,7 +45,6 @@ class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage> with Automa
       key: UniqueKey(),
       controller: controller!.refreshController,
       enablePullUp: true,
-      enablePullDown: true,
       onLoading: controller!.onLoading,
       onRefresh: controller!.onRefresh,
       child: Obx(
@@ -71,18 +74,23 @@ class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage> with Automa
                         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                       child: ItemListWidget(
-                        urlImage: controller!.tinTucModelList[index].hinhAnh.toString(),
-                        onTap: () {},
-                        title: controller!.tinTucModelList[index].tieuDe.toString(),
-                        rowText1: controller!.formatDateTime(
-                          dateTime: controller!.tinTucModelList[index].createdAt.toString(),
+                        onTap: () =>
+                            controller!.onNewsDetailClick(index: index),
+                        urlImage: controller!.tinTucModelList[index].hinhAnh
+                            .toString(),
+                        title: controller!.tinTucModelList[index].tieuDe
+                            .toString(),
+                        rowText1: DateConverter.formatDateTime(
+                          controller!.tinTucModelList[index].createdAt
+                              .toString(),
                         ),
                         icon1: const Icon(
                           Icons.calendar_today_outlined,
                           color: ColorResources.GREY,
                         ),
                         colorRowText1: ColorResources.GREY,
-                        rowText2: controller!.tinTucModelList[index].luotXem.toString(),
+                        rowText2: controller!.tinTucModelList[index].luotXem
+                            .toString(),
                         icon2: const Icon(
                           Icons.remove_red_eye,
                           color: ColorResources.GREY,
