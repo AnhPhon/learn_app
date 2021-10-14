@@ -49,4 +49,11 @@ mixin DateConverter {
   static String localDateToIsoString(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
   }
+
+  static String readMongoToString(String dateTimeStr) {
+    final String first10letter = dateTimeStr.substring(0, 10);
+    return DateFormat('dd/MM/yyyy').format(
+      DateFormat('yyyy-MM-dd').parse(first10letter),
+    );
+  }
 }

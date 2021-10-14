@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
@@ -336,7 +337,9 @@ class V1HomePage extends GetView<V1HomeController> {
               icon1: const Icon(Icons.remove_red_eye_sharp),
               rowText1: controller.tinTucList[index].luotXem,
               icon2: const Icon(Icons.calendar_today),
-              rowText2: "20/09/2021",
+              rowText2: DateConverter.readMongoToString(
+                controller.tinTucList[index].createdAt!,
+              ),
               isSpaceBetween: true,
             );
           },
