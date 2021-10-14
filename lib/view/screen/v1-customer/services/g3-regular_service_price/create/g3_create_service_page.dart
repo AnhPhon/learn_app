@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
@@ -12,7 +13,6 @@ import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/create/g3_create_service_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
 
@@ -61,15 +61,19 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
 
         // Giới tính
         const Label(label: "Giới tính", obligatory: true, paddingTitle: 0,),
-        Padding(
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
-          child: Row(
-            children: [
-              RadioButton<int>(title: "Nam", onChanged: (val){}, value: 1, groupValue: 1),
-              RadioButton<int>(title: "Nữ", onChanged: (val){}, value: 2, groupValue: 1),
-              RadioButton<int>(title: "Khác", onChanged: (val){}, value: 0, groupValue: 1),
-            ],
-          ),
+        GetBuilder(
+          builder: (V1G3CreateServiceController controller) {
+            return Padding(
+              padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
+              child: Row(
+                children: [
+                  RadioButton<int>(title: "Nam", onChanged: (val){}, value: 1, groupValue: 1),
+                  RadioButton<int>(title: "Nữ", onChanged: (val){}, value: 2, groupValue: 1),
+                  RadioButton<int>(title: "Khác", onChanged: (val){}, value: 0, groupValue: 1),
+                ],
+              ),
+            );
+          },
         ),
 
         // Số lượng yêu cầu
@@ -89,15 +93,25 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
 
         // Thời gian làm việc
         const Label(label: "Thời gian làm trong ngày", obligatory: true, paddingTitle: 0,),
-        Padding(
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
-          child: Column(
-            children: [
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: false,),
-              CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) {  },status: true,),
-            ],
-          ),
+        GetBuilder(
+          builder: ( V1G3CreateServiceController controller) {
+            return Padding(
+              padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
+              child: Column(
+                children: [
+                  CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
+                    controller.onSelectedTommorow(val: val!);
+                  },status: controller.tommorow,),
+                  CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+                    controller.onSelectedAfternoon(val: val!);
+                  },status: controller.afternoon,),
+                  CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  
+                    controller.onSelectedTonight(val: val!);
+                  },status: controller.tonight,),
+                ],
+              ),
+            );
+          },
         ),
 
         TextFieldDate(

@@ -126,7 +126,7 @@ class V1G2CreateWorkController extends GetxController{
   }
 
   /// 
-  /// Thêm thời gian làm việc db
+  /// lấy thời gian làm việc db
   /// 
   void getWorkTime(){
     thoiGianLamViecProvider.all(onSuccess: (data){
@@ -141,11 +141,10 @@ class V1G2CreateWorkController extends GetxController{
   }
 
   ///
-  /// Nhấn tiếp tục 
+  /// Nhấn tiếp tục hoàn thành tạo đơn
   ///
   void onClickContinueButton(){
-
-    if(tommorow == false || afternoon == false || tonight == false){
+    if(tommorow == false & afternoon & false || tonight & false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
     }else if(startTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
@@ -153,20 +152,49 @@ class V1G2CreateWorkController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
     }else{
       EasyLoading.show(status:"Loading ...");
-      DonDichVuRequest dichVuRequest = DonDichVuRequest();
-      dichVuRequest = serviceApplication!;
-      dichVuRequest.idThoiGianLamViec = afternoonReponse!.id;
-      dichVuRequest.ngayBatDau = startTime.text.toString();
-      dichVuRequest.ngayKetThuc = startTime.text.toString().isEmpty ? startTime.text.toString() : '';
-      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
-      dichVuRequest.moTa = descController.text.toString();
-      dichVuRequest.moTaChiTiet = workDesc.text.toString();
-      donDichVuProvider.add(data: dichVuRequest, onSuccess: (data){
+      donDichVuProvider.add(data: request(), onSuccess: (data){
         Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){
         showSnackBar(title: "Lỗi", message: onError.toString());
       });
     }
+  }
+
+  ///
+  /// Tạo đối tượng request
+  ///
+  DonDichVuRequest request(){
+    String? workTime = '';
+      DonDichVuRequest dichVuRequest = DonDichVuRequest();
+      dichVuRequest = serviceApplication!;
+      if(tommorow == true){
+        workTime = tommowReponse!.id;
+      }
+      if(afternoon == true){
+        workTime = '${workTime!},${afternoonReponse!.id}'; 
+      }
+      if(tonight == true){
+        workTime = '${workTime!},${tonightReponse!.id}';
+      }
+      dichVuRequest.idThoiGianLamViec = workTime;
+      dichVuRequest.ngayBatDau = startTime.text.toString();
+      dichVuRequest.ngayKetThuc = startTime.text.toString().isEmpty ? startTime.text.toString() : '';
+      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
+      dichVuRequest.moTa = descController.text.toString();
+      dichVuRequest.moTaChiTiet = workDesc.text.toString();
+      images.forEach((element) {
+        // Tải hình ảnh hiên trạng
+      });
+      productImages.forEach((element) {
+        // HỈnh ảnh sản phẩm mẫu
+      });
+      massImages.forEach((element) {
+        // HÌnh ảnh khối lượng
+      });
+      massImages.forEach((element) {
+        // Tải file lên
+      });
+      return dichVuRequest;
   }
 
   @override
@@ -179,5 +207,6 @@ class V1G2CreateWorkController extends GetxController{
      massDesc.dispose();
      workDesc.dispose();
   }
+
 
 }

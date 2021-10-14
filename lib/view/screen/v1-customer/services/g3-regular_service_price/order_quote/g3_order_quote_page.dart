@@ -52,6 +52,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT
         ),
         child: ListView.builder(
+          controller: controller.scrollController,
           padding: const EdgeInsets.symmetric(
             vertical: Dimensions.PADDING_SIZE_SMALL,
           ),

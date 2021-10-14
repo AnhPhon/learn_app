@@ -240,7 +240,7 @@ class CreateWorkController extends GetxController{
   /// Nhấn vào nút tiếp tục
   ///
   void onClickContinue() async{
-    final DonDichVuRequest serviceApplication = DonDichVuRequest();
+   
     
       if(dichvu == null){
         return Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
@@ -255,22 +255,16 @@ class CreateWorkController extends GetxController{
       }else if(addressController.text.toString().isEmpty){
         return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
       }else{
-        serviceApplication.idTinhTp = tinh!.id;
-        serviceApplication.idQuanHuyen = quanHuyen!.id;
-        serviceApplication.idPhuongXa = phuongXa!.id;
-        serviceApplication.idNhomDichVu = dichvu!.id;
-        serviceApplication.idTaiKhoan = await sl.get<SharedPreferenceHelper>().userId;
-        serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
-        serviceApplication.diaChiCuThe = addressController.text.toString();
         
-        if(dichvu!.id! == nhomDichVuResponseList[0].id){
+        
+        if(dichvu!.id! == nhomDichVuResponseList[8].id){
         // Nhóm 1
-        Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: serviceApplication);
-        }else if(dichvu!.id! == nhomDichVuResponseList[8].id){
-          Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: serviceApplication);
-        }else if( dichvu == 3){
+        Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
+        }else if(dichvu!.id! == nhomDichVuResponseList[2].id){
+          Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
+        }else if(dichvu!.id! == nhomDichVuResponseList[1].id){
           // Tạo đơn dịch vụ có gía
-          Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE);
+          Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
         }else if(dichvu == 4){
           // Tạo đơn dich vụ có giá nhóm 4
           Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE);
@@ -285,6 +279,18 @@ class CreateWorkController extends GetxController{
           Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
         }
       }
+  }
+
+  Future<DonDichVuRequest> request()async {
+      final DonDichVuRequest serviceApplication = DonDichVuRequest();
+      serviceApplication.idTinhTp = tinh!.id;
+      serviceApplication.idQuanHuyen = quanHuyen!.id;
+      serviceApplication.idPhuongXa = phuongXa!.id;
+      serviceApplication.idNhomDichVu = dichvu!.id;
+      serviceApplication.idTaiKhoan = await sl.get<SharedPreferenceHelper>().userId;
+      serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
+      serviceApplication.diaChiCuThe = addressController.text.toString();
+      return serviceApplication;
   }
 
   @override
