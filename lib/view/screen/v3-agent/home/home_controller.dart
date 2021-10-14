@@ -22,70 +22,70 @@ class V3HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    sl.get<SharedPreferenceHelper>().userId.then((id) {
-      // tìm kiếm tài khoản theo id user được login
-      taiKhoanProvider.find(
-        id: id!,
-        onSuccess: (taiKhoanResponse) {
+    // sl.get<SharedPreferenceHelper>().userId.then((id) {
+    //   // tìm kiếm tài khoản theo id user được login
+    //   taiKhoanProvider.find(
+    //     id: id!,
+    //     onSuccess: (taiKhoanResponse) {
           
-          // set lại full name theo tài khoản
-          fullname = taiKhoanResponse.hoTen!;
+    //       // set lại full name theo tài khoản
+    //       fullname = taiKhoanResponse.hoTen!;
           
-          // read tin tuc
-          _readTinTuc();
+    //       // read tin tuc
+    //       _readTinTuc();
 
-          // read Kho san Pham
-          _readKhosanPham();
+    //       // read Kho san Pham
+    //       _readKhosanPham();
 
-          // binding three feature
-          _bindingThreeFeature();
-        },
-        onError: (error) {
-          print(error);
-        },
-      );
-    });
+    //       // binding three feature
+    //       _bindingThreeFeature();
+    //     },
+    //     onError: (error) {
+    //       print(error);
+    //     },
+    //   );
+    // });
   }
 
   ///
   /// read tin tuc
   ///
   void _readTinTuc() {
-    _tinTucProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "&sortBy=create_at:desc",
-      onSuccess: (tinTucResponses) {
-        // get tin tuc list 
-        tinTucList = tinTucResponses;
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
+    // _tinTucProvider.paginate(
+    //   page: 1,
+    //   limit: 2,
+    //   filter: "&sortBy=create_at:desc",
+    //   onSuccess: (tinTucResponses) {
+    //     // get tin tuc list 
+    //     tinTucList = tinTucResponses;
+    //     update();
+    //   },
+    //   onError: (error) {
+    //     print(error);
+    //   },
+    // );
   }
 
   ///
   /// read kho san pham
   ///
   void _readKhosanPham() {
-    _sanPhamProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "&sortBy=create_at:desc",
-      onSuccess: (sanPhamModels) {
-        // get san pham list
-        sanPhamList = sanPhamModels;
+    // _sanPhamProvider.paginate(
+    //   page: 1,
+    //   limit: 2,
+    //   filter: "&sortBy=create_at:desc",
+    //   onSuccess: (sanPhamModels) {
+    //     // get san pham list
+    //     sanPhamList = sanPhamModels;
 
-        // set is loading
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
+    //     // set is loading
+    //     isLoading = false;
+    //     update();
+    //   },
+    //   onError: (error) {
+    //     print(error);
+    //   },
+    // );
   }
 
   ///
@@ -157,7 +157,7 @@ class V3HomeController extends GetxController {
   /// Phản hòi báo giá
   ///
   void onClickQuoteReponse() {
-    Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
+    // Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
   }
 
   ///

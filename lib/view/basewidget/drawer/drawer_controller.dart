@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:template/data/model/body/menu.dart';
 import 'package:template/routes/app_routes.dart';
 class DrawerController extends GetxController{
@@ -17,7 +18,7 @@ class DrawerController extends GetxController{
       Menu(title: 'Quy trình sử dụng vào giao dịch', onPress: ()=> onPushName(AppRoutes.V1_USAGE_PROCEDURE)),
       Menu(title: 'Điều khoản và chính sách', onPress: ()=> onPushName(AppRoutes.V1_TERM_AND_POLICY)),
       Menu(title: 'Lợi ích khi tham gia FSS', onPress: ()=> onPushName(AppRoutes.V1_BENEFITS)),
-      Menu(title: 'Đánh giá', onPress: (){}),
+      Menu(title: 'Đánh giá', onPress: rating),
       Menu(title: 'Đăng xuất', onPress: ()=> onPushName(AppRoutes.LOGIN)),
     ];
     
@@ -27,6 +28,14 @@ class DrawerController extends GetxController{
       'VP: 170 Nguyễn Đình Thi Phường Hoà Xuân, Quận Cẩm Lệ Thành Phố Đà Nẵng'
     ];
 
+  }
+
+  void rating()async{
+    final InAppReview inAppReview = InAppReview.instance;
+    print("Show");
+    if (await inAppReview.isAvailable()) {
+        inAppReview.requestReview();
+    }
   }
 
   void onPushName(String name){

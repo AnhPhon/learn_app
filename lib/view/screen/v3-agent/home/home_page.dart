@@ -131,6 +131,8 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+
+
   ///
   /// features widget
   ///
