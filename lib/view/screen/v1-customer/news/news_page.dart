@@ -9,6 +9,8 @@ import 'package:template/view/screen/v1-customer/component_customer/item_list_wi
 import 'package:template/view/screen/v1-customer/keep_alive_wrapper.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
 
+import 'categories/news_categories_page.dart';
+
 class V1NewsPage extends GetView<V1NewsController> {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class V1NewsPage extends GetView<V1NewsController> {
                   title: controller.title,
                   bottom: TabBar(
                     controller: controller.tabController,
-                    onTap: (val) => controller.getNewsByIdCategory(index: val),
+                    // onTap: (val) => controller.getNewsByIdCategory(index: val),
                     isScrollable: true,
                     indicatorColor: ColorResources.PRIMARY,
                     labelColor: ColorResources.PRIMARY,
@@ -35,8 +37,7 @@ class V1NewsPage extends GetView<V1NewsController> {
                     tabs: [
                       ...List.generate(
                         controller.danhMucTinTucList.length,
-                        (index) => Tab(
-                            text: controller.danhMucTinTucList[index].tieuDe),
+                        (index) => Tab(text: controller.danhMucTinTucList[index].tieuDe),
                       )
                     ],
                   ),
@@ -47,86 +48,15 @@ class V1NewsPage extends GetView<V1NewsController> {
                   children: List.generate(
                     controller.danhMucTinTucList.length,
                     (index) {
-                      if (controller.isLoadingNews && controller.refreshController[index] == null) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                      return new SmartRefresher(
-                              key: UniqueKey(),
-                              controller: controller.refreshController[index],
-                              enablePullUp: true,
-                              onLoading: controller.onLoading,
-                              onRefresh: controller.onRefresh,
-                              child: _itemList(
-                                context,
-                                controller: controller,
-                              ),
-                            );
-                         
+                      return V1NewsCategoriesPage(
+                        key: UniqueKey(),
+                        danhMucTinTucList: controller.danhMucTinTucList[index],
+                      );
                     },
                   ),
                 ),
               );
       },
     );
-  }
-
-  ///
-  ///item list
-  ///
-  Widget _itemList(
-    BuildContext context, {
-    required V1NewsController controller,
-  }) {
-    return (controller.tinTucModelList.isNotEmpty)
-        ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: controller.tinTucModelList.length,
-                    itemBuilder: (BuildContext ctx, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: ItemListWidget(
-                          urlImage: controller.tinTucModelList[index].hinhAnh
-                              .toString(),
-                          onTap: () {},
-                          title: controller.tinTucModelList[index].tieuDe
-                              .toString(),
-                          rowText1: controller.formatDateTime(
-                            dateTime: controller
-                                .tinTucModelList[index].createdAt
-                                .toString(),
-                          ),
-                          icon1: const Icon(
-                            Icons.calendar_today_outlined,
-                            color: ColorResources.GREY,
-                          ),
-                          colorRowText1: ColorResources.GREY,
-                          rowText2: controller.tinTucModelList[index].luotXem
-                              .toString(),
-                          icon2: const Icon(
-                            Icons.remove_red_eye,
-                            color: ColorResources.GREY,
-                          ),
-                          colorRowText2: ColorResources.GREY,
-                          isSpaceBetween: true,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            
-          )
-        : Container();
   }
 }
