@@ -67,105 +67,105 @@ class V4HomeController extends GetxController {
     expenditure = 10000000;
   }
 
-  ///
-  /// set user
-  ///
-  void _readRevenueAndExpenditure() {
-    // set name of user
-    thuChiNhanVienProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "",
-      onSuccess: (models) {
-        for (final model in models) {
-          String type = model.loai.toString().toLowerCase();
-          double money = double.parse(model.soTien!);
-          if (type == "loai 1") {
-            revenue = revenue! + money;
-          } else {
-            expenditure = expenditure! + money;
-          }
-          total = total! + revenue!;
-          total = total! - expenditure!;
-        }
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
-  }
+  // ///
+  // /// set user
+  // ///
+  // void _readRevenueAndExpenditure() {
+  //   // set name of user
+  //   thuChiNhanVienProvider.paginate(
+  //     page: 1,
+  //     limit: 50,
+  //     filter: "",
+  //     onSuccess: (models) {
+  //       for (final model in models) {
+  //         String type = model.loai.toString().toLowerCase();
+  //         double money = double.parse(model.soTien!);
+  //         if (type == "loai 1") {
+  //           revenue = revenue! + money;
+  //         } else {
+  //           expenditure = expenditure! + money;
+  //         }
+  //         total = total! + revenue!;
+  //         total = total! - expenditure!;
+  //       }
+  //       update();
+  //     },
+  //     onError: (error) {
+  //       print(error);
+  //     },
+  //   );
+  // }
 
   ///
   ///  theo doi tien do
   ///
-  void _theoDoiTienDo() {
-    congViecNhanVienProvider.paginate(
-      page: 1,
-      limit: 10,
-      filter: "",
-      onSuccess: (models) {
-        for (final model in models) {
-          final String status = model.trangThai!.toLowerCase();
-          if (status == "moi tao") {
-            moiTaoQuality = moiTaoQuality + 1;
-          } else if (status == "dang lam") {
-            dangLamQuality = dangLamQuality + 1;
-          } else if (status == "hoan thanh") {
-            hoanThanhQuality = hoanThanhQuality + 1;
-          } else {
-            chamTreQuality = chamTreQuality + 1;
-          }
-          _initContenGrid();
-          isLoading = false;
-          update();
-        }
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
-  }
+  // void _theoDoiTienDo() {
+  //   congViecNhanVienProvider.paginate(
+  //     page: 1,
+  //     limit: 10,
+  //     filter: "",
+  //     onSuccess: (models) {
+  //       for (final model in models) {
+  //         final String status = model.trangThai!.toLowerCase();
+  //         if (status == "moi tao") {
+  //           moiTaoQuality = moiTaoQuality + 1;
+  //         } else if (status == "dang lam") {
+  //           dangLamQuality = dangLamQuality + 1;
+  //         } else if (status == "hoan thanh") {
+  //           hoanThanhQuality = hoanThanhQuality + 1;
+  //         } else {
+  //           chamTreQuality = chamTreQuality + 1;
+  //         }
+  //         _initContenGrid();
+  //         isLoading = false;
+  //         update();
+  //       }
+  //     },
+  //     onError: (error) {
+  //       print(error);
+  //     },
+  //   );
+  // }
 
   ///
   /// reset content grid
   ///
-  void _initContenGrid() {
-    contentGrid = [
-      {
-        "title": "Mới tạo",
-        "quality": moiTaoQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
-      },
-      {
-        "title": "Đang làm",
-        "quality": dangLamQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
-        ]),
-      },
-      {
-        "title": "Hoàn Thành",
-        "quality": hoanThanhQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
-        ]),
-      },
-      {
-        "title": "Chậm trễ",
-        "quality": chamTreQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
-        ]),
-      }
-    ];
-  }
+  // void _initContenGrid() {
+  //   contentGrid = [
+  //     {
+  //       "title": "Mới tạo",
+  //       "quality": moiTaoQuality,
+  //       "color": const RadialGradient(colors: [
+  //         Color(0xffC1E6EE),
+  //         Color(0xff79B4B8),
+  //       ])
+  //     },
+  //     {
+  //       "title": "Đang làm",
+  //       "quality": dangLamQuality,
+  //       "color": const RadialGradient(colors: [
+  //         Color(0xffC1E6EE),
+  //         Color(0xff00B4D8),
+  //       ]),
+  //     },
+  //     {
+  //       "title": "Hoàn Thành",
+  //       "quality": hoanThanhQuality,
+  //       "color": const RadialGradient(colors: [
+  //         Color(0xffC1E6EE),
+  //         Color(0xff00A676),
+  //       ]),
+  //     },
+  //     {
+  //       "title": "Chậm trễ",
+  //       "quality": chamTreQuality,
+  //       "color": const RadialGradient(colors: [
+  //         Color(0xffC1E6EE),
+  //         Color(0xffD00000),
+  //       ]),
+  //     }
+  //   ];
+  // }
 
   ///
   /// click to work progress page
