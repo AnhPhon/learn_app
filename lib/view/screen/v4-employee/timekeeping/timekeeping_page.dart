@@ -40,7 +40,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       //thành phố
-                      _city(context),
+                      _city(controller, context),
 
                       //quận/huyện
                       _district(context),
@@ -112,13 +112,13 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
 ///
 /// Tỉnh /Tp
 ///
-Widget _city(BuildContext context) {
+Widget _city(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton<String>(
     hint: 'Tỉnh/Tp',
-    data: const ['Đà Nẵng', "Huế"],
+    data: controller.tinhTpList,
     obligatory: true,
-    onChanged: (value) {},
-    value: 'Đà Nẵng',
+    onChanged: controller.setChonTinhTp,
+    value: controller.tinhTp!,
     width: DeviceUtils.getScaledWidth(context, 0.5),
   );
 }

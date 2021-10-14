@@ -37,7 +37,7 @@ class V4TimekeepingController extends GetxController {
   void getTinhTp() {
     tinhTpProvider.all(onSuccess: (value) {
       tinhTpModelList = value;
-
+      tinhTpModelList.map((e) => tinhTpList.add(e.ten.toString())).toList();
       isLoading = false;
       update();
     }, onError: (error) {
@@ -51,5 +51,6 @@ class V4TimekeepingController extends GetxController {
   ///
   void setChonTinhTp(String? value) {
     tinhTp = value;
+    update();
   }
 }
