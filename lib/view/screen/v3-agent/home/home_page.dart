@@ -10,7 +10,6 @@ import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/basewidget/news/news.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
@@ -131,7 +130,47 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {
+        controller.onClickNews();
+      },
+      widget: SizedBox(
+        height: 260,
+        child: ListView.builder(
+          itemCount: controller.tinTucList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return _itemList(ctx, index);
+          },
+        ),
+      ),
+    );
+  }
 
+  ///
+  /// item list
+  ///
+  Widget _itemList(BuildContext context, int index) {
+    return ItemListWidget(
+      urlImage: controller.tinTucList[index].hinhAnh.toString(),
+      onTap: () {},
+      title: controller.tinTucList[index].tieuDe.toString(),
+      colorRowText2: ColorResources.GREY,
+      icon1: const Icon(Icons.remove_red_eye_sharp),
+      rowText1: "10",
+      icon2: const Icon(Icons.calendar_today),
+      rowText2: "20/09/2021",
+      isSpaceBetween: true,
+    );
+  }
 
   ///
   /// features widget
