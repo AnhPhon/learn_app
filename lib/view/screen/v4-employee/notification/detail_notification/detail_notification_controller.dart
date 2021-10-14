@@ -39,7 +39,7 @@ class V4DetailNotificationController extends GetxController {
   ///format date time
   ///
   String formatDateTime({required String dateTime}) {
-    return DateConverter.isoStringToLocalFullDateOnly(
+    return DateConverter.isoStringToLocalDateHMS(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }
