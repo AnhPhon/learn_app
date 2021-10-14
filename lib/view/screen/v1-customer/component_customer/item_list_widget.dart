@@ -39,8 +39,8 @@ class ItemListWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(
-            horizontal: Dimensions.MARGIN_SIZE_SMALL,
-            vertical: Dimensions.MARGIN_SIZE_SMALL),
+          vertical: Dimensions.MARGIN_SIZE_SMALL,
+        ),
         height: DeviceUtils.getScaledHeight(context, .118),
         decoration: BoxDecoration(
           borderRadius:
@@ -139,14 +139,18 @@ class ItemListWidget extends StatelessWidget {
                               ),
                           ],
                         ),
-                        if (icon2 != null) icon2!,
-                        if (rowText2 != null)
-                          Text(
-                            rowText2!,
-                            style: TextStyle(
-                                color: colorRowText2,
-                                fontSize: Dimensions.FONT_SIZE_SMALL),
-                          ),
+                        Row(
+                          children: [
+                            if (icon2 != null) icon2!,
+                            if (rowText2 != null)
+                              Text(
+                                rowText2!,
+                                style: TextStyle(
+                                    color: colorRowText2,
+                                    fontSize: Dimensions.FONT_SIZE_SMALL),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

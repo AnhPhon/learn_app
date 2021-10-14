@@ -3,12 +3,16 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/data/repository/san_pham_repository.dart';
+import 'package:template/data/repository/tai_khoan_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
@@ -26,22 +30,18 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
   sl.registerSingleton<DioClient>(DioClient());
-  // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => DanhMucTinTucRepository());
   sl.registerLazySingleton(() => SanPhamRepository());
-  // sl.registerLazySingleton(() => RegionRepo());
-  // sl.registerLazySingleton(() => AuthRepository());
+  sl.registerLazySingleton(() => TaiKhoanRepository());
+  sl.registerLazySingleton(() => DonDichVuRepository());
 
   // Provider
-  // sl.registerFactory(() => RegionProvider());
-  // sl.registerFactory(() => AuthProvider());
-
-  // Provider
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => DanhMucTinTucProvider());
-  sl.registerFactory(() => SanPhamProvider());
-  // sl.registerFactory(() => AuthProvider());
+  sl.registerLazySingleton(() => TinTucProvider());
+  sl.registerLazySingleton(() => DanhMucTinTucProvider());
+  sl.registerLazySingleton(() => SanPhamProvider());
+  sl.registerLazySingleton(() => TaiKhoanProvider());
+  sl.registerLazySingleton(() => DonDichVuProvider());
 }

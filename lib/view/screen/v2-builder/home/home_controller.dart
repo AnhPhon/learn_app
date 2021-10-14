@@ -2,22 +2,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2HomeController extends GetxController {
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
+  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
+  List<String>? idCongViecDangCanNguoiList = [
+    "616049b2c8e6fa122227e283",
+    "616049a5c8e6fa122227e27a",
+    "616049bac8e6fa122227e289",
+  ];
   String fullname = "Nguyễn Văn A";
 
   List<Map<String, dynamic>>? contentGrid;
 
-  List<TinTucResponse> tinTucList = [];
+  List<DonDichVuResponse> donDichVuList = [];
   List<SanPhamResponse> sanPhamList = [];
+  List<TinTucResponse> tinTucList = [];
 
   bool isLoading = true;
 
@@ -26,6 +39,94 @@ class V2HomeController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
+    // get user id
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      _taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (value) {
+          fullname = value.hoTen!;
+
+          // load cong viec đang cần người
+          _loadCongViecDangCanNguoi("616049b2c8e6fa122227e283");
+          // load tin tuc
+          _loadTinTuc();
+
+          // load san pham
+          _loadSanPham();
+
+          // khoi tao three feature
+          _initThreeFeatures();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
+  }
+
+  ///
+  /// load công việc đang cần người
+  ///
+  void _loadCongViecDangCanNguoi(String _idCongViecDangCanNguoiList) {
+    final int index =
+        idCongViecDangCanNguoiList!.indexOf(_idCongViecDangCanNguoiList);
+    if (index != -1) {
+      _donDichVuProvider.paginate(
+        page: 1,
+        limit: 2,
+        filter:
+            "&idNhomDichVu=$_idCongViecDangCanNguoiList&sortBy=created_at:desc",
+        onSuccess: (value) {
+          donDichVuList = value;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    } else {
+      donDichVuList = [];
+    }
+  }
+
+  ///
+  /// load san pham
+  ///
+  void _loadSanPham() {
+    _sanPhamProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (value) {
+        sanPhamList = value;
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// load tin tuc
+  ///
+  void _loadTinTuc() {
+    _tinTucProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (value) {
+        tinTucList = value;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  void _initThreeFeatures() {
     // declare content grid
     contentGrid = [
       {
@@ -71,9 +172,6 @@ class V2HomeController extends GetxController {
         }
       },
     ];
-
-    _loadTinTuc();
-    _loadSanPham();
   }
 
   ///
@@ -123,40 +221,5 @@ class V2HomeController extends GetxController {
   ///
   void onNeedUpdateClick() {
     Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
-  }
-
-  ///
-  /// load san pham
-  ///
-  void _loadSanPham() {
-    _sanPhamProvider.paginate(
-      page: 1,
-      limit: 9,
-      filter: "",
-      onSuccess: (value) {
-        sanPhamList = value;
-        isLoading = true;
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
-  }
-
-  ///
-  /// load tin tuc
-  ///
-  void _loadTinTuc() {
-    _tinTucProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "",
-      onSuccess: (value) {
-        tinTucList = value;
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
   }
 }
