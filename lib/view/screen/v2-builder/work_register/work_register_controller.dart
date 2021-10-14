@@ -26,7 +26,7 @@ class V2WorkRegisterController extends GetxController {
   String? firstSelect;
 
   // radio
-  //List<SelectProvinceCustomModel>? provinceData;
+  // List<SelectProvinceCustomModel>? provinceData;
   List<bool>? checkList;
 
   @override

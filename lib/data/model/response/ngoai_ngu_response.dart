@@ -10,6 +10,9 @@ class NgoaiNguResponse {
   String? doc;
   String? viet;
 
+  String? createdAt;
+  String? updatedAt;
+
   NgoaiNguResponse({
       this.id,
       this.idTaiKhoan,
@@ -18,7 +21,9 @@ class NgoaiNguResponse {
       this.nghe,
       this.noi,
       this.doc,
-      this.viet});
+      this.viet,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -39,6 +44,8 @@ class NgoaiNguResponse {
     doc = json['doc'].toString();
     viet = json['viet'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

@@ -83,7 +83,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                         "Nhập nội dung tương ứng với yêu cầu của khách hàng, nêu rõ một số chi tiết cần thiết để nêu rõ với khách hàng",
                     textEditingController: controller.contentController,
                     width: 1,
-                    isPaddingLarge: true,
+                    isMaxLine: true,
                     isColorFieldWhite: true,
                   ),
 

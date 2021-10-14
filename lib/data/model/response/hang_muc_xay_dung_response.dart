@@ -4,10 +4,15 @@ class HangMucXayDungResponse {
   String? tieuDe;
   String? hinhAnh;
 
+  String? createdAt;
+  String? updatedAt;
+
   HangMucXayDungResponse({
       this.id,
       this.tieuDe,
-      this.hinhAnh});
+      this.hinhAnh,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -17,6 +22,8 @@ class HangMucXayDungResponse {
     tieuDe = json['tieuDe'].toString();
     hinhAnh = json['hinhAnh'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

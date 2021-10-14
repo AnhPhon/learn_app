@@ -5,11 +5,16 @@ class LienHeCongTyResponse {
   String? email;
   String? soDienThoai;
 
+  String? createdAt;
+  String? updatedAt;
+
   LienHeCongTyResponse({
       this.id,
       this.diaChi,
       this.email,
-      this.soDienThoai});
+      this.soDienThoai,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -20,6 +25,8 @@ class LienHeCongTyResponse {
     email = json['email'].toString();
     soDienThoai = json['soDienThoai'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

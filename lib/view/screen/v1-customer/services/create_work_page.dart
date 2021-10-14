@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/body/hang_muc_xay_dung_model.dart';
-import 'package:template/data/model/body/loai_cong_viec_model.dart';
-import 'package:template/data/model/body/nhom_dich_vu_model.dart';
-import 'package:template/data/model/body/phuong_xa_model.dart';
-import 'package:template/data/model/body/quan_huyen_model.dart';
-import 'package:template/data/model/body/tinh_tp_model.dart';
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
+import 'package:template/data/model/response/nhom_dich_vu_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -63,8 +62,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   Widget workGroup(BuildContext context, {required CreateWorkController controller}){
     return Column(
       children: [
-          DropDownButton<NhomDichVuModel>(
-            data: controller.dichvu == null ? const [] : controller.nhomDichVuModelList,
+          DropDownButton<NhomDichVuResponse>(
+            data: controller.dichvu == null ? const [] : controller.nhomDichVuResponseList,
             obligatory: true,
             onChanged: (value) => controller.onChangedDichVu(value!),
             value: controller.dichvu,
@@ -72,7 +71,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             label: "Chọn nhóm công việc phù hợp",
             hint: "Chọn nhóm công việc",
           ),
-          // if (controller.loaiCongViec == null || controller.loaiCongViecModelList.isEmpty) 
+          // if (controller.loaiCongViec == null || controller.loaiCongViecResponseList.isEmpty) 
           // DropDownButton<String>(
           //   data: const [],
           //   obligatory: true,
@@ -82,8 +81,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
           //   label: "Chọn công việc phù hợp",
           //   hint: 'Chọn nhóm công việc',
           // ) else 
-          DropDownButton<LoaiCongViecModel>(
-            data: controller.loaiCongViecModelList,
+          DropDownButton<LoaiCongViecResponse>(
+            data: controller.loaiCongViecResponseList,
             obligatory: true,
             onChanged: (value)=> controller.onChangedLoaiCongViec(value!),
             value: controller.loaiCongViec,
@@ -129,8 +128,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   value: 0,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
                   phuong: controller.phuongXa,
                   huyen: controller.quanHuyen
                 ),
@@ -142,8 +141,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   value: 1,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
                   phuong: controller.phuongXa,
                   huyen: controller.quanHuyen
                 ),
@@ -155,8 +154,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   value: 2,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
                   phuong: controller.phuongXa,
                   huyen: controller.quanHuyen
                 ),
@@ -168,13 +167,13 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   value: 3,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenModel? val)=> controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaModel? val)=> controller.onChangedPhuongXa(val!),
+                  onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
+                  onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
                   phuong: controller.phuongXa,
                   huyen: controller.quanHuyen,
                   isRadio: false,
                   tinh: controller.tinh,
-                  onChangedProvince: (TinhTpModel? val)=> controller.onChangedTinhThanh(val!),
+                  onChangedProvince: (TinhTpResponse? val)=> controller.onChangedTinhThanh(val!),
                   tinhList: controller.tinhTps
                 ),
               ],
@@ -188,20 +187,20 @@ class CreateWorkPage extends GetView<CreateWorkController>{
   /// Radio button chon đia điểm làm việc
   ///
   Widget onSelectedWorkLocation(BuildContext context, {
-    required List<QuanHuyenModel> district,
+    required List<QuanHuyenResponse> district,
     required String city,
-    required List<PhuongXaModel> ward,
+    required List<PhuongXaResponse> ward,
     required int value,
-    QuanHuyenModel? huyen,
-    PhuongXaModel? phuong,
+    QuanHuyenResponse? huyen,
+    PhuongXaResponse? phuong,
     required int groupValue,
     required Function(int? val) onChanged,
-    required Function(QuanHuyenModel? val) onChangedHuyen,
-    required Function(PhuongXaModel? val) onChangedPhuong,
+    required Function(QuanHuyenResponse? val) onChangedHuyen,
+    required Function(PhuongXaResponse? val) onChangedPhuong,
     bool? isRadio = true,
-    List<TinhTpModel>? tinhList,
-    TinhTpModel? tinh,
-    Function(TinhTpModel? val)? onChangedProvince,
+    List<TinhTpResponse>? tinhList,
+    TinhTpResponse? tinh,
+    Function(TinhTpResponse? val)? onChangedProvince,
     }){
     return Column(
       children: [
@@ -219,9 +218,9 @@ class CreateWorkPage extends GetView<CreateWorkController>{
               groupValue: groupValue,
               onChanged: (int? val)=> onChanged(val),
             ),
-            DropDownButtonHideUnderLineWidget<TinhTpModel>(
+            DropDownButtonHideUnderLineWidget<TinhTpResponse>(
               data: tinhList!,
-              onChanged: value == groupValue ?  (TinhTpModel? val)=> onChangedProvince!(val): null,
+              onChanged: value == groupValue ?  (TinhTpResponse? val)=> onChangedProvince!(val): null,
               value: tinh,
               hint: "Chọn tỉnh",
               width: DeviceUtils.getScaledWidth(context, 0.83),
@@ -233,16 +232,16 @@ class CreateWorkPage extends GetView<CreateWorkController>{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              DropDownButtonHideUnderLineWidget<QuanHuyenModel>(
+              DropDownButtonHideUnderLineWidget<QuanHuyenResponse>(
                 data: district,
-                onChanged: value == groupValue ?  (QuanHuyenModel? val)=> onChangedHuyen(val): null,
+                onChanged: value == groupValue ?  (QuanHuyenResponse? val)=> onChangedHuyen(val): null,
                 value: huyen,
                 hint: "Quận/Huyện",
                 width: DeviceUtils.getScaledWidth(context, 0.35),
               ),
-              DropDownButtonHideUnderLineWidget<PhuongXaModel>(
+              DropDownButtonHideUnderLineWidget<PhuongXaResponse>(
                 data: ward,
-                onChanged: value == groupValue ?  (PhuongXaModel? val)=> onChangedPhuong(val) : null,
+                onChanged: value == groupValue ?  (PhuongXaResponse? val)=> onChangedPhuong(val) : null,
                 value: phuong,
                 hint: "Phường/xa",
                 width: DeviceUtils.getScaledWidth(context, 0.35),

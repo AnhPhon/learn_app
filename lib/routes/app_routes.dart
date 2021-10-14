@@ -126,6 +126,8 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_MY_ORDER = '/v1_my_order';
+  static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -157,8 +159,8 @@ class AppRoutes {
   static const String V2_PAYMENT_SUCCESS = '/v2_payment_success';
   static const String V2_RECHARGE = '/v2_recharge';
   static const String V2_NEWS_DETAIL = '/v2_news_detail';
-  static const String V2_PROJECT_DETAIL  = '/v2_project_detail';
-  
+  static const String V2_PROJECT_DETAIL = '/v2_project_detail';
+
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
   static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
@@ -211,7 +213,6 @@ class AppRoutes {
   static const String V4_NEWS_DETAIL = '/v4_news_detail';
   static const String V4_NEWS = '/v4_news';
   static const String V4_NOTIFICATION = '/v4_notification';
-
 
   //builder
 

@@ -12,6 +12,9 @@ class DanhSachThoThauBaoGiaResponse {
   String? tienCoc;
   String? daXem;
 
+  String? createdAt;
+  String? updatedAt;
+
   DanhSachThoThauBaoGiaResponse({
       this.id,
       this.idDuAnKhachHang,
@@ -21,7 +24,9 @@ class DanhSachThoThauBaoGiaResponse {
       this.giaBao,
       this.ghiChu,
       this.tienCoc,
-      this.daXem});
+      this.daXem,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -49,6 +54,8 @@ class DanhSachThoThauBaoGiaResponse {
     tienCoc = json['tienCoc'].toString();
     daXem = json['daXem'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

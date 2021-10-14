@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/body/loai_cong_viec_model.dart';
-import 'package:template/data/model/body/nhom_dich_vu_model.dart';
-import 'package:template/data/model/body/phuong_xa_model.dart';
-import 'package:template/data/model/body/quan_huyen_model.dart';
-import 'package:template/data/model/body/tinh_tp_model.dart';
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
+import 'package:template/data/model/response/nhom_dich_vu_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
@@ -25,21 +25,21 @@ class CreateWorkController extends GetxController{
   // Địa chỉ cụ thể
   final addressController = TextEditingController();
   // Nhóm dịch vụ
-  NhomDichVuModel? dichvu;
-  List<NhomDichVuModel> nhomDichVuModelList = [];
+  NhomDichVuResponse? dichvu;
+  List<NhomDichVuResponse> nhomDichVuResponseList = [];
   // Công việc
-  LoaiCongViecModel? loaiCongViec;
-  List<LoaiCongViecModel> loaiCongViecModelList = [];
+  LoaiCongViecResponse? loaiCongViec;
+  List<LoaiCongViecResponse> loaiCongViecResponseList = [];
   // Loading nhóm dich vụ
   bool isLoadingNhomDichVu = true;
   //Tỉnh thành phố
-  List<TinhTpModel> tinhTps = [];
-  TinhTpModel? tinh;
+  List<TinhTpResponse> tinhTps = [];
+  TinhTpResponse? tinh;
   int groupTinhTpValue = 0;
-  List<QuanHuyenModel> quanHuyenList = [];
-  QuanHuyenModel? quanHuyen;
-  List<PhuongXaModel> phuongXaList = [];
-  PhuongXaModel? phuongXa;
+  List<QuanHuyenResponse> quanHuyenList = [];
+  QuanHuyenResponse? quanHuyen;
+  List<PhuongXaResponse> phuongXaList = [];
+  PhuongXaResponse? phuongXa;
 
   @override
   void onInit() {
@@ -53,7 +53,7 @@ class CreateWorkController extends GetxController{
   ///
   /// Thay đổi nhóm công việc
   ///
-  void onChangedDichVu(NhomDichVuModel dichvu){
+  void onChangedDichVu(NhomDichVuResponse dichvu){
     this.dichvu = dichvu;
     getLoaiCongViec();
     update();
@@ -62,7 +62,7 @@ class CreateWorkController extends GetxController{
   ///
   /// Thay đổi công việc
   ///
-  void onChangedLoaiCongViec(LoaiCongViecModel loaiCongViec){
+  void onChangedLoaiCongViec(LoaiCongViecResponse loaiCongViec){
     this.loaiCongViec = loaiCongViec;
     update();
   }
@@ -80,7 +80,7 @@ class CreateWorkController extends GetxController{
   ///
   ///Thay đổi tỉnh thành
   ///
-  void onChangedTinhThanh(TinhTpModel tinhTp){
+  void onChangedTinhThanh(TinhTpResponse tinhTp){
     tinh = tinhTp;
     //getQuanHuyen(filter: '&idTinhTp=615d6a143e28b243e76682e1');
     update();
@@ -90,7 +90,7 @@ class CreateWorkController extends GetxController{
   ///
   ///Thay đổi quận huyện
   ///
-  void onChangedQuanHuyen(QuanHuyenModel quanHuyen){
+  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen){
     this.quanHuyen = quanHuyen;
     getPhuongXa(filter: '&idQuanHuyen=615d6a3b3e28b243e76682e4');
     update();
@@ -100,7 +100,7 @@ class CreateWorkController extends GetxController{
   ///
   ///Thay đổi tỉnh thành
   ///
-  void onChangedPhuongXa(PhuongXaModel phuongXa){
+  void onChangedPhuongXa(PhuongXaResponse phuongXa){
     this.phuongXa = phuongXa;
     update();
   }
@@ -113,9 +113,9 @@ class CreateWorkController extends GetxController{
     nhomDichVuProvider.all(onSuccess: (data){
       isLoadingNhomDichVu = true;
       if(data.isNotEmpty){
-        nhomDichVuModelList.clear();
-        nhomDichVuModelList.addAll(data);
-        dichvu = nhomDichVuModelList.first;
+        nhomDichVuResponseList.clear();
+        nhomDichVuResponseList.addAll(data);
+        dichvu = nhomDichVuResponseList.first;
       }
       isLoadingNhomDichVu = false;
       getLoaiCongViec();
@@ -135,9 +135,9 @@ class CreateWorkController extends GetxController{
     loaiCongViecProvider.paginate(page: 1, limit: 100, filter: "&idNhomDichVu=61614f9c48049a21aa824129" ,onSuccess: (data){
       print(data);
       if(data.isNotEmpty){
-        loaiCongViecModelList.clear();
-        loaiCongViecModelList.addAll(data);
-        loaiCongViec = loaiCongViecModelList.first;
+        loaiCongViecResponseList.clear();
+        loaiCongViecResponseList.addAll(data);
+        loaiCongViec = loaiCongViecResponseList.first;
       }
       update();
     }, onError:(error){
@@ -237,7 +237,7 @@ class CreateWorkController extends GetxController{
   /// Nhấn vào nút tiếp tục
   ///
   void onClickContinue(){
-    if(dichvu!.tenDichVu! == nhomDichVuModelList[0].tenDichVu){
+    if(dichvu!.tenDichVu! == nhomDichVuResponseList[0].tenDichVu){
       // Nhóm 1
       Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: {
         "address": addressController.text.isEmpty ? "" : addressController.text.toString(),

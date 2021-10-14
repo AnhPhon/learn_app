@@ -2,7 +2,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
-import 'package:template/data/model/body/don_vi_cung_cap_model.dart';
 import 'package:template/data/repository/auth_repository.dart';
 import 'package:template/data/repository/bang_bang_cap_repository.dart';
 import 'package:template/data/repository/bang_gia_dang_tin_repository.dart';
@@ -17,20 +16,24 @@ import 'package:template/data/repository/chuyen_mon_repository.dart';
 import 'package:template/data/repository/chuyen_nganh_chinh_repository.dart';
 import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
 import 'package:template/data/repository/dang_ky_bao_hiem_repository.dart';
+import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
 import 'package:template/data/repository/hang_muc_xay_dung_repository.dart';
 import 'package:template/data/repository/loai_cong_viec_repository.dart';
 import 'package:template/data/repository/nhom_dich_vu_repository.dart';
 import 'package:template/data/repository/phuong_xa_repository.dart';
 import 'package:template/data/repository/quan_huyen_repository.dart';
+import 'package:template/data/repository/tin_tuc_repository.dart';
 import 'package:template/data/repository/tinh_tp_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
+import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/hang_muc_xay_dung_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'data/repository/bang_gia_phi_van_chuyen_repository.dart';
@@ -53,6 +56,8 @@ Future<void> init() async {
   // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   // sl.registerLazySingleton(() => RegionRepo());
   sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() =>BangBangCapRepository());
@@ -91,5 +96,7 @@ Future<void> init() async {
   sl.registerFactory(() => PhuongXaProvider());
 
   // Provider
+  sl.registerFactory(() => TinTucProvider());
+  sl.registerFactory(() => DanhMucTinTucProvider());
   // sl.registerFactory(() => AuthProvider());
 }

@@ -5,11 +5,16 @@ class QuyCheCongTyResponse {
   String? tomTat;
   String? noiDung;
 
+  String? createdAt;
+  String? updatedAt;
+
   QuyCheCongTyResponse({
       this.id,
       this.tieuDe,
       this.tomTat,
-      this.noiDung});
+      this.noiDung,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -20,6 +25,8 @@ class QuyCheCongTyResponse {
     tomTat = json['tomTat'].toString();
     noiDung = json['noiDung'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

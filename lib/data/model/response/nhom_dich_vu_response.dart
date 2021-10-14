@@ -3,9 +3,14 @@ class NhomDichVuResponse {
   String? id;
   String? tenDichVu;
 
+  String? createdAt;
+  String? updatedAt;
+
   NhomDichVuResponse({
       this.id,
-      this.tenDichVu});
+      this.tenDichVu,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -14,6 +19,8 @@ class NhomDichVuResponse {
     id = json['id'].toString();
     tenDichVu = json['tenDichVu'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
