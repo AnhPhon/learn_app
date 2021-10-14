@@ -13,6 +13,13 @@ class V2HomeController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
+    _initFeatures();
+  }
+
+  ///
+  /// init feature
+  ///
+  void _initFeatures() {
     // declare content grid
     contentGrid = [
       {
