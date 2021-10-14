@@ -10,7 +10,7 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4HomeController extends GetxController {
-  // declare provider
+  // providers
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
 
@@ -18,8 +18,6 @@ class V4HomeController extends GetxController {
       GetIt.I.get<CongViecNhanVienProvider>();
 
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
-
-  List<Map<String, dynamic>>? contentGrid;
 
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
@@ -30,50 +28,51 @@ class V4HomeController extends GetxController {
   //khai báo thay đổi text chấm công và báo cáo
   bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
 
-  bool isLoading = true;
+  List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
+  String avatar = "";
   double? total;
   double? revenue; // thu
   double? expenditure; // chi
 
+  // số lượng các tiến độ
   int moiTaoQuality = 0;
   int dangLamQuality = 0;
   int hoanThanhQuality = 0;
   int chamTreQuality = 0;
 
+  // isloading
+  bool isLoading = true;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     total = 0;
     revenue = 0;
     expenditure = 0;
 
-    sl.get<SharedPreferenceHelper>().userId.then(
-      (id) {
-        taiKhoanProvider.find(
-          id: id!,
-          onSuccess: (taiKhoan) {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (taiKhoanResponse) {
+          fullname = taiKhoanResponse.hoTen!;
+          avatar = taiKhoanResponse.hinhDaiDien!;
+          // load thu chi
+          _readRevenueAndExpenditure();
 
-            // reset họ tên
-            fullname = taiKhoan.hoTen!;
+          // xử lý tiến độ công việc
+          _theoDoiTienDo();
+        },
+        onError: (error) {
+          print(error);
+        },
+      );
+    });
 
-            // đọc thông tin thu chi
-            _readRevenueAndExpenditure();
-
-            // xử lý thông tin tiến độ công việc
-            _theoDoiTienDo();
-
-            // khởi tạo thông tin ban đầu
-            _initContenGrid();
-          },
-          onError: (error) {
-            print(error);
-          },
-        );
-      },
-    );
+    update();
   }
 
   ///
@@ -125,7 +124,7 @@ class V4HomeController extends GetxController {
           } else {
             chamTreQuality = chamTreQuality + 1;
           }
-          _initContenGrid();
+          _resetContenGrid();
           isLoading = false;
           update();
         }
@@ -139,7 +138,7 @@ class V4HomeController extends GetxController {
   ///
   /// reset content grid
   ///
-  void _initContenGrid() {
+  void _resetContenGrid() {
     contentGrid = [
       {
         "title": "Mới tạo",
