@@ -1,22 +1,68 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/images.dart';
 
 class V1HomeController extends GetxController {
-  ///
-  /// go to Form Management Page
-  ///
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   List<Map<String, dynamic>>? threeFeatures;
-  List<Map<String, dynamic>>? productList;
   List<Map<String, dynamic>>? contentGrid;
+  List<SanPhamResponse> productList = [];
+  List<TinTucResponse> tinTucList = [];
+
+  String fullname = "KH, Nguyễn Văn A";
+
+  bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
 
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (value) {
+        // find tai khoan by user id
+        taiKhoanProvider.find(
+          id: value!,
+          onSuccess: (value) {
+            // set user
+            fullname = value.hoTen!;
+
+            // load san pham
+            _loadDanhMucSanPham();
+
+            // load tin tuc
+            _loadTinTuc();
+
+            // init six feature category
+            _initSixFeatureCategory();
+
+            // init product image category
+            _initProductImageCategory();
+          },
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      },
+    );
+  }
+
+  ///
+  /// init six feature category
+  ///
+  void _initSixFeatureCategory() {
     // declare content grid
     contentGrid = [
       {
@@ -104,7 +150,12 @@ class V1HomeController extends GetxController {
         }
       },
     ];
+  }
 
+  ///
+  /// init product image category
+  ///
+  void _initProductImageCategory() {
     // three features
     threeFeatures = [
       {
@@ -146,49 +197,55 @@ class V1HomeController extends GetxController {
         "onTap": () {}
       },
     ];
-
-    // product list
-    productList = [
-      {
-        "title": "Điều hòa",
-        "image": Images.V1Product1Home,
-      },
-      {
-        "title": "Bơm nước",
-        "image": Images.V1Product2Home,
-      },
-      {
-        "title": "Bếp hồng ngoại",
-        "image": Images.V1Product3Home,
-      },
-      {
-        "title": "Kệ chắn bát",
-        "image": Images.V1Product4Home,
-      },
-      {
-        "title": "Khây đồ khô",
-        "image": Images.V1Product5Home,
-      },
-      {
-        "title": "Kệ son nồi",
-        "image": Images.V1Product6Home,
-      },
-      {
-        "title": "Kệ chắn bát",
-        "image": Images.V1Product7Home,
-      },
-      {
-        "title": "Khây đồ khô",
-        "image": Images.V1Product8Home,
-      },
-      {
-        "title": "Kệ son nồi",
-        "image": Images.V1Product9Home,
-      },
-    ];
   }
 
-  String fullname = "KH, Nguyễn Văn A";
+  ///
+  /// load danh muc san pham
+  ///
+  void _loadDanhMucSanPham() {
+    // product list
+    sanPhamProvider.paginate(
+      page: 1,
+      limit: 9,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (values) {
+        // assign values to productList
+        productList = values;
+
+        // xử lý tạm
+        if (productList.length != 9) {
+          _fillProductList(productList);
+        }
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
+
+  ///
+  /// load tin tuc
+  ///
+  void _loadTinTuc() {
+    tinTucProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (values) {
+        tinTucList = values;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// onClickFormManagementPage
+  ///
   void onClickFormManagementPage() {
     Get.toNamed(AppRoutes.V1_FORM_MANAGEMENT);
   }
@@ -232,5 +289,17 @@ class V1HomeController extends GetxController {
   ///
   void onClickJobManagement() {
     //Get.toNamed(AppRoutes.V1_JOB_MANAGEMENT);
+  }
+
+  ///
+  /// lập đấy sản phẩm cho list - xử lý tạm thời
+  ///
+  void _fillProductList(List<SanPhamResponse> productList) {
+    while (productList.length != 9) {
+      productList.add(SanPhamResponse(
+        ten: "San pham mau",
+        hinhAnhSanPham: Images.location_example,
+      ));
+    }
   }
 }

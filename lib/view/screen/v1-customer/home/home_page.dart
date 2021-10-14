@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/news.dart';
+import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -20,6 +22,11 @@ class V1HomePage extends GetView<V1HomeController> {
       body: GetBuilder<V1HomeController>(
         init: V1HomeController(),
         builder: (V1HomeController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return HomeWidget(
             fullname: controller.fullname,
             content: Column(
@@ -163,7 +170,7 @@ class V1HomePage extends GetView<V1HomeController> {
         Container(
           height: 400,
           padding: const EdgeInsets.only(
-            top: Dimensions.PADDING_SIZE_DEFAULT,
+            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
           ),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -178,8 +185,8 @@ class V1HomePage extends GetView<V1HomeController> {
               return GestureDetector(
                 onTap: () {},
                 child: _imageWidget(
-                  controller.productList![index]["title"].toString(),
-                  controller.productList![index]["image"].toString(),
+                  controller.productList[index].ten!,
+                  controller.productList[index].hinhAnhSanPham!,
                 ),
               );
             },
@@ -220,7 +227,7 @@ class V1HomePage extends GetView<V1HomeController> {
                   )
                 ],
                 image: DecorationImage(
-                  image: AssetImage(url),
+                  image: NetworkImage(url),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -266,32 +273,33 @@ class V1HomePage extends GetView<V1HomeController> {
     );
   }
 
+  ///
+  /// product widget
+  ///
   Widget _productWidget(V1HomeController controller) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
         title: "Sản phẩm",
         onTap: () => controller.onMoreProductList(),
-        widget: Container(
-          height: 400,
-          padding: const EdgeInsets.only(
-            top: Dimensions.PADDING_SIZE_DEFAULT,
-          ),
+        widget: SizedBox(
+          height: 380,
           child: GridView.builder(
+            padding: const EdgeInsets.only(
+              top: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisExtent: 120,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 9,
+            itemCount: controller.productList.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () {},
                 child: _imageWidget(
-                  controller.productList![index]["title"].toString(),
-                  controller.productList![index]["image"].toString(),
+                  controller.productList[index].ten!,
+                  controller.productList[index].hinhAnhSanPham!,
                 ),
               );
             },
@@ -310,24 +318,26 @@ class V1HomePage extends GetView<V1HomeController> {
       onTap: () {
         controller.onClickHotNews();
       },
-      widget: Container(
-        height: 230,
-        padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
+      widget: SizedBox(
+        height: 270,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 2,
+          padding: const EdgeInsets.all(0),
           itemBuilder: (
             BuildContext ctx,
             index,
           ) {
-            return const Padding(
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: NewsBox(
-                title: "Tin nóng tóm tắt tổng hợp",
-                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
-              ),
+            return ItemListWidget(
+              urlImage: controller.tinTucList[index].hinhAnh.toString(),
+              onTap: () {},
+              title: controller.tinTucList[index].tieuDe.toString(),
+              colorRowText2: ColorResources.GREY,
+              icon1: const Icon(Icons.remove_red_eye_sharp),
+              rowText1: controller.tinTucList[index].luotXem,
+              icon2: const Icon(Icons.calendar_today),
+              rowText2: "20/09/2021",
+              isSpaceBetween: true,
             );
           },
         ),
