@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
+import 'package:template/view/screen/v1-customer/keep_alive_wrapper.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
 
 class V1NewsPage extends GetView<V1NewsController> {
@@ -46,16 +47,23 @@ class V1NewsPage extends GetView<V1NewsController> {
                   children: List.generate(
                     controller.danhMucTinTucList.length,
                     (index) {
-                      return GetBuilder<V1NewsController>(
-                          init: V1NewsController(),
-                          builder: (controller) {
-                            if (controller.isLoadingNews) {
+                      if (controller.isLoadingNews && controller.refreshController[index] == null) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            return _itemList(context, controller: controller);
-                          });
+                      return new SmartRefresher(
+                              key: UniqueKey(),
+                              controller: controller.refreshController[index],
+                              enablePullUp: true,
+                              onLoading: controller.onLoading,
+                              onRefresh: controller.onRefresh,
+                              child: _itemList(
+                                context,
+                                controller: controller,
+                              ),
+                            );
+                         
                     },
                   ),
                 ),
@@ -73,35 +81,51 @@ class V1NewsPage extends GetView<V1NewsController> {
   }) {
     return (controller.tinTucModelList.isNotEmpty)
         ? SingleChildScrollView(
-            controller: controller.scrollController[controller.indexScroll],
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_LARGE,
-                ),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.tinTucModelList.length,
-                  itemBuilder: (BuildContext ctx, int index) {
-                    return ItemListWidget(
-                      urlImage:
-                          controller.tinTucModelList[index].hinhAnh.toString(),
-                      onTap: () => controller.onNewsDetailClick(index: index),
-                      title:
-                          controller.tinTucModelList[index].tieuDe.toString(),
-                      subTitle:
-                          controller.tinTucModelList[index].tomTat.toString(),
-                      rowText2: controller.formatDateTime(
-                        dateTime: controller.tinTucModelList[index].createdAt
-                            .toString(),
-                      ),
-                      colorRowText2: ColorResources.GREY,
-                    );
-                  },
-                ),
-              ],
-            ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.tinTucModelList.length,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        child: ItemListWidget(
+                          urlImage: controller.tinTucModelList[index].hinhAnh
+                              .toString(),
+                          onTap: () {},
+                          title: controller.tinTucModelList[index].tieuDe
+                              .toString(),
+                          rowText1: controller.formatDateTime(
+                            dateTime: controller
+                                .tinTucModelList[index].createdAt
+                                .toString(),
+                          ),
+                          icon1: const Icon(
+                            Icons.calendar_today_outlined,
+                            color: ColorResources.GREY,
+                          ),
+                          colorRowText1: ColorResources.GREY,
+                          rowText2: controller.tinTucModelList[index].luotXem
+                              .toString(),
+                          icon2: const Icon(
+                            Icons.remove_red_eye,
+                            color: ColorResources.GREY,
+                          ),
+                          colorRowText2: ColorResources.GREY,
+                          isSpaceBetween: true,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            
           )
         : Container();
   }
