@@ -65,7 +65,7 @@ class V1G1CreateWorkController extends GetxController{
       previewServiceRequest.bangKhoiLuong = massList;
       previewServiceRequest.hinhAnhBanVe  = drawingImages;
       if(file != null){
-        previewServiceRequest.file = file!.path;
+        previewServiceRequest.file = file ;
       }
       Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
     }

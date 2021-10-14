@@ -115,7 +115,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
 
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.valueController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,

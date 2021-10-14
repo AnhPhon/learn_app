@@ -257,12 +257,12 @@ class CreateWorkController extends GetxController{
       }else{
         
         
-        if(dichvu!.id! == nhomDichVuResponseList[8].id){
+        if(dichvu!.id! == nhomDichVuResponseList[1].id){
         // Nhóm 1
         Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.id! == nhomDichVuResponseList[2].id){
+        }else if(dichvu!.id! == nhomDichVuResponseList[8].id){
           Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.id! == nhomDichVuResponseList[1].id){
+        }else if(dichvu!.id! == nhomDichVuResponseList[2].id){
           // Tạo đơn dịch vụ có gía
           Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
         }else if(dichvu == 4){

@@ -18,10 +18,10 @@ class V1G1ReviewController extends GetxController{
   void onInit() {
     super.onInit();
     previewServiceRequest = Get.arguments as PreviewServiceRequest;
-    onSave();
   }
 
   void onClickButton(){
+    onSave();
     Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
   }
 
@@ -30,17 +30,18 @@ class V1G1ReviewController extends GetxController{
   ///
   void onSave(){
     EasyLoading.show(status: "Loading ...");
-    request();
-    // dichVuProvider.add(data: request(), onSuccess: (data){
-    //   EasyLoading.dismiss();
-    // }, onError: (error){
-    //   showSnackBar(title: "Lỗi", message: error.toString());
-    // });
+    dichVuProvider.add(data: request(), onSuccess: (data){
+      EasyLoading.dismiss();
+      showSnackBar(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất");
+    }, onError: (error){
+      EasyLoading.dismiss();
+      showSnackBar(title: "Lỗi", message: error.toString());
+    });
   }
 
   DonDichVuRequest request(){
     String massImages = '';
-    String drawingImage = '';
+    String drawingImages = '';
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
     dichVuRequest.ngayBatDau = previewServiceRequest!.ngayBatDau;
@@ -52,28 +53,43 @@ class V1G1ReviewController extends GetxController{
     dichVuRequest.idTaiKhoan = previewServiceRequest!.idTaiKhoan;
     dichVuRequest.tieuDe = previewServiceRequest!.tieuDe;
     dichVuRequest.diaChiCuThe = previewServiceRequest!.diaChiCuThe ;
+
+    // Hình ảnh bản khối lượng
     previewServiceRequest!.hinhAnhBanKhoiLuong!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
-        massImages = "${massImages},${data.data}";
+        massImages = "$massImages${data.data},";
       }, onError: (onError){
         print("Error");
       });
     });
+    // Ảnh bản vẽ
     previewServiceRequest!.hinhAnhBanVe!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
-        drawingImage = "$drawingImage,${data.data}";
+        drawingImages = "$drawingImages${data.data},";
       }, onError: (onError){
         print("Error");
       });
     });
-    print(massImages);
+    // Tài file
+    if(previewServiceRequest!.file != null){
+      imageUpdateProvider.add(file: previewServiceRequest!.file!, onSuccess: (data){
+        dichVuRequest.file = data as String;
+      }, onError: (onError){
+        showSnackBar(title: "Lỗi", message: "Tải file thất bại");
+      });
+    }
+    
     previewServiceRequest!.bangKhoiLuong!.forEach((element) {
       // Tải bảng khối lượng lên
     });
-    // dichVuRequest.hinhAnhBanKhoiLuong = previewServiceRequest!.hinhAnhBanKhoiLuong;
+    Future.delayed(const Duration(seconds: 4)).then((value){
+      dichVuRequest.hinhAnhBanKhoiLuong = massImages;
+      dichVuRequest.hinhAnhBanVe  = drawingImages;
+      return dichVuRequest;
+    });
+    
     //dichVuRequest.bangKhoiLuong = previewServiceRequest!.bangKhoiLuong;
     // Thiếu bảng khối lượng
-    // dichVuRequest.hinhAnhBanVe  = previewServiceRequest!.hinhAnhBanVe;
     return dichVuRequest;
   }
 

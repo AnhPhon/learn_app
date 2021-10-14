@@ -23,7 +23,7 @@ class PreviewServiceRequest {
   String? giaTriKhachDeXuat;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
-  String? file;
+  File? file;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -110,7 +110,7 @@ class PreviewServiceRequest {
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'].toString();
+    file = json['file'] as File;
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
