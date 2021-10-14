@@ -123,8 +123,7 @@ class DropDownButton1<T> extends StatelessWidget {
                         hint: Text(hint),
                         isDense: true,
                         isExpanded: true,
-                        // value: getCutContent(value),
-                        // onChanged: onChanged,
+                        value: value,
                         onChanged: onChanged,
                         items: data
                             .map((e) => DropdownMenuItem<T>(

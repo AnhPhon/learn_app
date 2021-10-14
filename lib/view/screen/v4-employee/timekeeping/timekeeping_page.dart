@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
 
@@ -43,7 +46,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                       _city(controller, context),
 
                       //quận/huyện
-                      _district(context),
+                      _district(controller, context),
                     ],
                   ),
                   Container(
@@ -100,7 +103,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       controller: controller.address,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
-      holdplacer: 'Da Nang Ciy',
+      holdplacer: 'Vui lòng nhập địa chỉ cụ thể',
       label: 'Địa chỉ',
       obligatory: true,
       typeInput: TextInputType.text,
@@ -113,27 +116,27 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
 /// Tỉnh /Tp
 ///
 Widget _city(V4TimekeepingController controller, BuildContext context) {
-  return DropDownButton<String>(
+  return DropDownButton1<TinhTpResponse>(
     hint: 'Tỉnh/Tp',
-    data: controller.tinhTpList,
+    data: controller.tinhTps,
     obligatory: true,
-    onChanged: controller.setChonTinhTp,
-    value: controller.tinhTp!,
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    onChanged: (value) => controller.onChangedTinhThanh(value!),
+    value: controller.tinh,
+    width: .4,
   );
 }
 
 ///
 /// Quận/Huyện
 ///
-Widget _district(BuildContext context) {
-  return DropDownButton<String>(
-    hint: 'Quyện/Huyện',
-    data: const ['Hải Châu', "Cẩm Lệ"],
+Widget _district(V4TimekeepingController controller, BuildContext context) {
+  return DropDownButton1<QuanHuyenResponse>(
+    hint: 'Quận/Huyện',
+    data: controller.quanHuyenList,
     obligatory: true,
-    onChanged: (value) {},
-    value: 'Hải Châu',
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    onChanged: (value) => controller.onChangedQuanHuyen(value!),
+    value: controller.quanHuyen,
+    width: 0.4,
   );
 }
 

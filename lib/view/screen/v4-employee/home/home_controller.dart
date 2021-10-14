@@ -54,6 +54,7 @@ class V4HomeController extends GetxController {
     revenue = 10000000;
     expenditure = 10000000;
   }
+
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
 
@@ -98,12 +99,13 @@ class V4HomeController extends GetxController {
     double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
-    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
+    if (_reportTimekeeping < _timeNow || _timeNow < _timekeeping) {
       return onClickToTimeKeeping();
     } else {
       return onClickToReportTimeKeeping();
     }
   }
+
   ///
   ///click to export page
   ///

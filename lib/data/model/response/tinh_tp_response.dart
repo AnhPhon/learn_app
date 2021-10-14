@@ -1,4 +1,3 @@
-
 class TinhTpResponse {
   String? id;
   String? ten;
@@ -6,12 +5,8 @@ class TinhTpResponse {
   String? createdAt;
   String? updatedAt;
 
-  TinhTpResponse({
-      this.id,
-      this.ten,
-      this.createdAt,
-      this.updatedAt});
-  
+  TinhTpResponse({this.id, this.ten, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
@@ -29,12 +24,16 @@ class TinhTpResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null ten
-    if (ten != null) data['ten'] = ten; 
-
+    if (ten != null) data['ten'] = ten;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return ten!;
   }
 }
