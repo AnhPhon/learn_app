@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
@@ -112,30 +113,6 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
-  ///
-  /// news widget
-  ///
-  Widget _newsWidget() {
-    return FieldWidget(
-      title: "Tin tức",
-      onTap: () {
-        controller.onClickNews();
-      },
-      widget: SizedBox(
-        height: 260,
-        child: ListView.builder(
-          itemCount: controller.tinTucList.length,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (
-            BuildContext ctx,
-            index,
-          ) {
-            return _itemList(ctx, index);
-          },
-        ),
-      ),
-    );
-  }
 
   ///
   /// item list

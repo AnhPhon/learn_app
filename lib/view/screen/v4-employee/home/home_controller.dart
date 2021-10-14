@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V4HomeController extends GetxController {
@@ -14,6 +16,7 @@ class V4HomeController extends GetxController {
 
   //khai báo thay đổi text chấm công và báo cáo
   bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  ThuChiNhanVienProvider thuChiNhanVienProvider = GetIt.I.get<ThuChiNhanVienProvider>();
 
 
   String fullname = "Phạm Dương";

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+
+import '../../../../di_container.dart';
 
 class V3HomeController extends GetxController {
   String fullname = "Nguyễn Văn A";
