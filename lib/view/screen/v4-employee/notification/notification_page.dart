@@ -49,10 +49,14 @@ class V4NotificationPage extends GetView<V4NotificationController> {
     return RefreshIndicator(
       onRefresh: controller.onRefresh,
       child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: controller.thongbaoModelList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
+        shrinkWrap: true,
+        itemCount: controller.thongbaoModelList.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: Dimensions.PADDING_SIZE_SMALL,
+            ),
+            child: GestureDetector(
               onTap: () {
                 controller.onClickDetailNotification(index: index);
               },
@@ -140,18 +144,19 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                                   dateTime: controller
                                       .thongbaoModelList[index].createdAt!,
                                 ),
-                                style: Dimensions.fontSizeStyle14(),
-                              ),
+                              )
                             ],
                           ),
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
