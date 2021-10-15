@@ -15,11 +15,6 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
     return Scaffold(
       appBar: const AppBarWidget(title: "Báo cáo cuối ngày"),
       body: GetBuilder(builder: (V4ReportTimekeepingControllter controller) {
-        // if (controller.isLoading) {
-        //   return const Center(
-        //     child: CircularProgressIndicator(),
-        //   );
-        // }
         return Column(
           children: [
             //chọn thời gian reprot chấm công

@@ -2,18 +2,36 @@ import 'package:connectivity/connectivity.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
+import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
 import 'package:template/data/repository/quan_huyen_repository.dart';
+import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
+import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/kho_hang_repository.dart';
+import 'package:template/data/repository/san_pham_repository.dart';
+import 'package:template/data/repository/tai_khoan_repository.dart';
+import 'package:template/data/repository/thong_bao_repository.dart';
+import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
 import 'package:template/data/repository/tinh_tp_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
+import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/kho_hang_provider.dart';
+import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/thong_bao_provider.dart';
+import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
+
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -30,7 +48,6 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo(sl()));
   sl.registerSingleton<DioClient>(DioClient());
-  // sl.registerSingleton<FirebaseService>(FirebaseService());
 
   // Repository
   sl.registerLazySingleton(() => TinTucRepository());
@@ -40,16 +57,22 @@ Future<void> init() async {
   sl.registerLazySingleton(() => TinhTpRepository());
   sl.registerLazySingleton(() => QuanHuyenRepository());
   sl.registerLazySingleton(() => ChamCongRepository());
+  sl.registerLazySingleton(() => ThongBaoRepository());
+  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
+  sl.registerLazySingleton(() => KhoHangRepository());
+  sl.registerLazySingleton(() => SanPhamRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
+  sl.registerLazySingleton(() => TaiKhoanRepository());
+  sl.registerLazySingleton(() => BaoCaoNhanVienRepository());
 
   // Provider
-  // sl.registerFactory(() => RegionProvider());
-  // sl.registerFactory(() => AuthProvider());
-
-  // Provider
-  sl.registerFactory(() => TinTucProvider());
-  sl.registerFactory(() => DanhMucTinTucProvider());
-  // sl.registerFactory(() => AuthProvider());
-  sl.registerFactory(() => TinhTpProvider());
-  sl.registerFactory(() => QuanHuyenProvider());
-  sl.registerFactory(() => ChamCongProvider());
+  sl.registerLazySingleton(() => ThuChiNhanVienProvider());
+  sl.registerLazySingleton(() => TinTucProvider());
+  sl.registerLazySingleton(() => ThongBaoProvider());
+  sl.registerLazySingleton(() => KhoHangProvider());
+  sl.registerLazySingleton(() => SanPhamProvider());
+  sl.registerLazySingleton(() => CongViecNhanVienProvider());
+  sl.registerLazySingleton(() => DanhMucTinTucProvider());
+  sl.registerLazySingleton(() => TaiKhoanProvider());
+  sl.registerLazySingleton(() => BaoCaoNhanVienProvider());
 }
