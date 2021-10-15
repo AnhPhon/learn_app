@@ -51,6 +51,7 @@ import 'package:template/provider/chuyen_nganh_chinh_provider.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
+import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/hang_muc_xay_dung_provider.dart';
@@ -62,6 +63,7 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trang_thai_don_hang_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
@@ -122,6 +124,8 @@ Future<void> init() async {
 
   // Provider
   sl.registerLazySingleton(() => AuthProvider());
+  sl.registerLazySingleton(() => TinTucProvider());
+  sl.registerLazySingleton(() => DanhMucTinTucProvider());
   sl.registerLazySingleton(() => BangBangCapProvider());
   sl.registerLazySingleton(() => BangGiaDangTinProvider());
   sl.registerLazySingleton(() => BangGiaLocHoSoProvider());
