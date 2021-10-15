@@ -253,7 +253,22 @@ class V4HomeController extends GetxController {
   ///
   /// click to Expenditure page
   ///
-  void onClickExpenditure() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  void onClickExpenditure(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false")!
+        .then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công!",
+            description: "Thêm chi thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 }

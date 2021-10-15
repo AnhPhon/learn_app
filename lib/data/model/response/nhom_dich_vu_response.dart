@@ -2,6 +2,7 @@
 class NhomDichVuResponse {
   String? id;
   String? tenDichVu;
+  String? nhomDichVu;
 
   String? createdAt;
   String? updatedAt;
@@ -18,6 +19,7 @@ class NhomDichVuResponse {
   NhomDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tenDichVu = json['tenDichVu'].toString();
+    nhomDichVu = json['nhomDichVu'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -34,7 +36,15 @@ class NhomDichVuResponse {
     // check null tenDichVu
     if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
 
+    // check null nhomDichVu
+    if (nhomDichVu != null) data['nhomDichVu'] = nhomDichVu; 
+
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tenDichVu!;
   }
 }

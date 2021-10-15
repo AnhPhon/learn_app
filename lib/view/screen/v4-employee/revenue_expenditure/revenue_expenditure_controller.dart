@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 
 class V4RevenueExpenditureController extends GetxController {
@@ -30,8 +32,103 @@ class V4RevenueExpenditureController extends GetxController {
     isRevenue = Get.parameters["revenue"].toString() == 'true';
   }
 
+  ///
+  /// Check value THÊM THU
+  ///
+  bool validateThu() {
+    if (timeRevenueExpenditure.text.toString().isEmpty) {
+      Get.snackbar("Ngày không hợp lệ!", "Vui lòng chọn ngày hợp lệ!");
+      return false;
+    }
+    if (contentRevenueController.text.toString().isEmpty) {
+      Get.snackbar("Nội dung thu chính không hơp lệ!",
+          "Vui lòng nhập nội dung thi chính hợp lệ!");
+      return false;
+    }
+    if (moneyController.text.toString().isEmpty) {
+      Get.snackbar("Số tiền không hơp lệ!", "Vui lòng nhập số tiền hợp lệ!");
+      return false;
+    }
+    if (detailContentRevenueController.text.toString().isEmpty) {
+      Get.snackbar("Nội dung chi tiết không hơp lệ!",
+          "Vui lòng nhập nội dung chi tiết hợp lệ!");
+      return false;
+    }
+    return true;
+  }
+
+  ///
+  /// Thêm thu
+  ///
   void onAddThu() {
-    revenueController.text = '1';
-    print(revenueController.text);
+    if (validateThu()) {
+      revenueController.text = '1';
+      thuChiNhanVienProvider.add(
+        data: ThuChiNhanVienRequest(
+          loai: revenueController.text,
+          tieuDe: contentRevenueController.text,
+          soTien: moneyController.text,
+          noiDung: detailContentRevenueController.text,
+        ),
+        onSuccess: (value) {
+          Get.back(result: true);
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        },
+      );
+    }
+  }
+
+  ///
+  /// Check value THÊM CHI
+  ///
+  bool validateChi() {
+    if (timeRevenueExpenditure.text.toString().isEmpty) {
+      Get.snackbar("Ngày không hợp lệ!", "Vui lòng chọn ngày hợp lệ!");
+      return false;
+    }
+    if (contentExpenditureController.text.toString().isEmpty) {
+      Get.snackbar("Nội dung chi chính không hơp lệ!",
+          "Vui lòng nhập nội dung chi chính hợp lệ!");
+      return false;
+    }
+    if (moneyController.text.toString().isEmpty) {
+      Get.snackbar("Số tiền không hơp lệ!", "Vui lòng nhập số tiền hợp lệ!");
+      return false;
+    }
+    if (detailContentExpenditureController.text.toString().isEmpty) {
+      Get.snackbar("Nội dung chi tiết không hơp lệ!",
+          "Vui lòng nhập nội dung chi tiết hợp lệ!");
+      return false;
+    }
+    return true;
+  }
+
+  ///
+  /// Thêm thu
+  ///
+  void onAddChi() {
+    if (validateChi()) {
+      expenditureController.text = '2';
+      thuChiNhanVienProvider.add(
+        data: ThuChiNhanVienRequest(
+          loai: expenditureController.text,
+          tieuDe: contentExpenditureController.text,
+          soTien: moneyController.text,
+          noiDung: detailContentExpenditureController.text,
+        ),
+        onSuccess: (value) {
+          Get.back(result: true);
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        },
+      );
+    }
   }
 }

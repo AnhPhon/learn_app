@@ -26,6 +26,7 @@ class V4HomePage extends GetView<V4HomeController> {
               child: CircularProgressIndicator(),
             );
           }
+
           return HomeWidget(
             fullname: "Hi, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,
@@ -366,7 +367,7 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  controller.onClickExpenditure();
+                  controller.onClickExpenditure(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
