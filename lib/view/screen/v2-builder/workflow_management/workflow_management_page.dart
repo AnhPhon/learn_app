@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/state_manager.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -19,11 +17,11 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
         body: GetBuilder(
             init: V2WorkflowManagementController(),
             builder: (V2WorkflowManagementController controller) {
-              // if (controller.isLoading) {
-              //   return const Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // }
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Column(
                 children: [
                   Padding(
@@ -42,8 +40,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
                           ),
-
-                          // ignore: prefer_const_constructors
                           child: TabBar(
                             labelPadding: const EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -64,14 +60,12 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             ),
                             unselectedLabelColor:
                                 ColorResources.UNSELECT_TABBAR,
-
-                            // ignore: prefer_const_literals_to_create_immutables
-                            tabs: [
+                            tabs: const [
                               //tab VIỆC ĐANG LÀM
-                              const Text('Việc đang làm'),
+                              Text('Việc đang làm'),
 
                               //tab VIỆC ĐÃ LÀM
-                              const Text('Việc đã làm'),
+                              Text('Việc đã làm'),
                             ],
                           ),
                         ),
@@ -134,8 +128,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
             child: Stack(
               alignment: Alignment.centerRight,
               children: [
-                // ignore: sized_box_for_whitespace
-                Container(
+                SizedBox(
                   width: DeviceUtils.getScaledWidth(context, 0.65),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -151,21 +144,10 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               color: ColorResources.BLACK,
                             ),
                             children: [
-                              //Tên công việc
-                              TextSpan(
-                                text: "Thợ ốp lát",
-                                style: Dimensions.fontSizeStyle16w600(),
-                              ),
-
-                              // dấu :
-                              TextSpan(
-                                text: ": ",
-                                style: Dimensions.fontSizeStyle16w600(),
-                              ),
-
                               //Tiêu đề công việc
                               TextSpan(
-                                text: controller.dangLam[index].tieuDe,
+                                text:
+                                    controller.dangLam[index].tieuDe.toString(),
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
                             ],
@@ -178,7 +160,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
                                 const Icon(
                                   Icons.location_on_outlined,
@@ -186,32 +167,38 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Địa điểm
                                 Text(
-                                  controller
-                                      .dangLam[index].idDuAnNhanVien!.diaChi!,
+                                  controller.dangLam[index].idTinhTp!.ten!,
                                   style: Dimensions.fontSizeStyle12(),
                                 ),
                               ],
                             ),
                             Row(
-                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
                                 Icon(
-                                  controller.isRecruiting ==
-                                          controller.uiWorkflowManagement![0]
-                                              ['isStatus']
+                                  controller.dangLam[index].idTrangThaiDonHang!
+                                              .tieuDe!
+                                              .toLowerCase() ==
+                                          "dang tuyen"
                                       ? Icons.person_add_outlined
                                       : Icons.watch_later_outlined,
-                                  color: controller.isRecruiting ==
-                                          controller.uiWorkflowManagement![0]
-                                              ['isStatus']
+                                  color: controller.dangLam[index]
+                                              .idTrangThaiDonHang!.tieuDe!
+                                              .toLowerCase() ==
+                                          "dang tuyen"
                                       ? ColorResources.GREEN
                                       : ColorResources.YELLOW,
                                 ),
 
                                 //Trạng thái
                                 Text(
-                                  controller.uiWorkflowManagement![0]['status']
-                                      .toString(),
+                                  controller.dangLam[index].idTrangThaiDonHang!
+                                              .tieuDe!
+                                              .toLowerCase() ==
+                                          "dang tuyen"
+                                      ? controller.dangLam[index]
+                                          .idTrangThaiDonHang!.tieuDe!
+                                      : controller.getDeadline(controller
+                                          .dangLam[index].ngayKetThuc!),
                                   style: Dimensions.fontSizeStyle12(),
                                 ),
                               ],
@@ -256,8 +243,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         Stack(
                           children: [
                             Text(
-                              controller.uiWorkflowManagement![0]['city']
-                                  .toString(),
+                              controller.hoanThanh[index].idTinhTp!.ten!,
                               style: TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
                                 fontWeight: FontWeight.w600,
@@ -268,8 +254,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               ),
                             ),
                             Text(
-                              controller.uiWorkflowManagement![0]['city']
-                                  .toString(),
+                              controller.hoanThanh[index].idTinhTp!.ten!,
                               style: const TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
                                 color: ColorResources.BLACK,
@@ -322,8 +307,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
             child: Stack(
               alignment: Alignment.centerRight,
               children: [
-                // ignore: sized_box_for_whitespace
-                Container(
+                SizedBox(
                   width: DeviceUtils.getScaledWidth(context, 0.65),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -339,18 +323,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               color: ColorResources.BLACK,
                             ),
                             children: [
-                              //Tên công việc
-                              TextSpan(
-                                text: "Thợ ốp lát",
-                                style: Dimensions.fontSizeStyle16w600(),
-                              ),
-
-                              // dấu :
-                              TextSpan(
-                                text: ": ",
-                                style: Dimensions.fontSizeStyle16w600(),
-                              ),
-
                               //Tiêu đề công việc
                               TextSpan(
                                 text: controller.hoanThanh[index].tieuDe,
@@ -366,7 +338,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
                                 const Icon(
                                   Icons.location_on_outlined,
@@ -374,8 +345,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Địa điểm
                                 Text(
-                                  controller
-                                      .hoanThanh[index].idDuAnNhanVien!.diaChi!,
+                                  controller.hoanThanh[index].idTinhTp!.ten!,
                                   style: Dimensions.fontSizeStyle14(),
                                 ),
                               ],
@@ -383,8 +353,8 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                             //Trang thái kết quả công việc đã làm
                             Text(
-                              controller.uiWorkflowManagement![0]['result']
-                                  .toString(),
+                              controller
+                                  .hoanThanh[index].idTrangThaiDonHang!.tieuDe!,
                               style: Dimensions.fontSizeStyle14w600(),
                             )
                           ],
@@ -427,8 +397,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         Stack(
                           children: [
                             Text(
-                              controller.uiWorkflowManagement![0]['city']
-                                  .toString(),
+                              controller.hoanThanh[index].idTinhTp!.ten!,
                               style: TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
                                 fontWeight: FontWeight.w600,
@@ -439,8 +408,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               ),
                             ),
                             Text(
-                              controller.uiWorkflowManagement![0]['city']
-                                  .toString(),
+                              controller.hoanThanh[index].idTinhTp!.ten!,
                               style: const TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
                                 color: ColorResources.BLACK,

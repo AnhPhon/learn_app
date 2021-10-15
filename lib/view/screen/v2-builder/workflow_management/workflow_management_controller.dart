@@ -1,22 +1,21 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/response/cong_viec_nhan_vien_response.dart';
-import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2WorkflowManagementController extends GetxController
     with SingleGetTickerProviderMixin {
-  CongViecNhanVienProvider congViecNhanVienProvider =
-      GetIt.I.get<CongViecNhanVienProvider>();
-
-  //set model để thiết kế UI Quản lý công việc
-  List<Map<String, dynamic>>? uiWorkflowManagement;
-
+  DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
   // cong viec dang lam
-  List<CongViecNhanVienResponse> dangLam = [];
+  List<DonDichVuResponse> dangLam = [];
 
   // cong viec hoan thanh
-  List<CongViecNhanVienResponse> hoanThanh = [];
+  List<DonDichVuResponse> hoanThanh = [];
 
   //khai báo isLoading
   bool isLoading = true;
@@ -28,88 +27,53 @@ class V2WorkflowManagementController extends GetxController
   void onInit() {
     super.onInit();
 
-    // read cong viec nhan vien
-    _readCongViecNhanVien();
-
-    // init work flow
-    _initWorkflow();
+    // get data theo id người dùng
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (id) {
+        taiKhoanProvider.find(
+          id: id!,
+          onSuccess: (values) {
+            // read cong viec nhan vien
+            _readCongViecNhanVien();
+          },
+          onError: (error) {
+            print(error);
+          },
+        );
+      },
+    );
   }
 
   ///
   /// get cong viec
   ///
   void _readCongViecNhanVien() {
-    congViecNhanVienProvider.paginate(
+    donDichVuProvider.paginate(
       page: 1,
-      limit: 10,
+      limit: 20,
       filter: "&sortBy=created_at:desc",
       onSuccess: (values) {
         for (final value in values) {
-          if (value.trangThai!.toLowerCase() == 'dang lam') {
-            dangLam.add(value);
-          } else {
-            hoanThanh.add(value);
+          if (value.idTrangThaiDonHang != null) {
+            final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
+            if (value.idNhomDichVu!.nhomDichVu! == "3" ||
+                value.idNhomDichVu!.nhomDichVu! == "4") {
+              if (tieuDe.toLowerCase() == "đang xử lý" ||
+                  tieuDe.toLowerCase() == "dang tuyen") {
+                dangLam.add(value);
+              } else {
+                hoanThanh.add(value);
+              }
+            }
           }
         }
+        isLoading = false;
         update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
-  }
-
-  ///
-  /// init work flow
-  ///
-  void _initWorkflow() {
-    // List model thiết kế UI
-    uiWorkflowManagement = [
-      {
-        "job": "Thợ ốp lát",
-        "title": "Công trình khách hàng 4 sao tại Đà Nẵng",
-        "city": "Đà Nẵng",
-        "address": "Ngũ Hành Sơn",
-        "status": "35 ngày",
-        "isStatus": false,
-        "result": "Chưa nghiệm thu",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-      {
-        "job": "Thợ xây tường",
-        "title": "Công trình khách hàng 5 sao tại Đà Nẵng",
-        "city": "Đà Nẵng",
-        "address": "Ngũ Hành Sơn",
-        "status": "Đang tuyển",
-        "isStatus": true,
-        "result": "Đã nghiệm thu",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-      {
-        "job": "Thợ lót nền",
-        "title": "Công trình khách hàng 4 sao tại Hồ Chí Minh",
-        "city": "Hồ Chí Minh",
-        "address": "Ngũ Hành Sơn",
-        "status": "20 ngày",
-        "isStatus": false,
-        "result": "Đã quyết toán",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-      {
-        "job": "Thợ xây tường",
-        "title": "Công trình khách hàng 3 sao tại Hồ Chí Minh",
-        "city": "Hồ Chí Minh",
-        "address": "Ngũ Hành Sơn",
-        "status": "Đang tuyển",
-        "isStatus": true,
-        "result": "20/08/2021",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-    ];
   }
 
   ///
@@ -124,5 +88,15 @@ class V2WorkflowManagementController extends GetxController
   ///
   void onClickToWorkInProgressPage() {
     Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS);
+  }
+
+  ///
+  /// format date
+  ///
+  String getDeadline(String end) {
+    final DateTime current = DateTime.now();
+    final DateTime dateEnd = DateTime.parse(end);
+
+    return "${current.difference(dateEnd).inDays} ngày";
   }
 }

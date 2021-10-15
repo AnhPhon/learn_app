@@ -20,9 +20,10 @@ class V2HomeController extends GetxController {
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
   List<String>? idCongViecDangCanNguoiList = [
-    "616049b2c8e6fa122227e283",
-    "616049a5c8e6fa122227e27a",
-    "616049bac8e6fa122227e289",
+    "1",
+    "2",
+    "5",
+    "6",
   ];
   String fullname = "Nguyễn Văn A";
 
@@ -54,12 +55,13 @@ class V2HomeController extends GetxController {
           fullname = value.hoTen!;
 
           // load cong viec đang cần người
-          _loadCongViecDangCanNguoi("616049b2c8e6fa122227e283");
-          // load tin tuc
-          _loadTinTuc();
+          _loadCongViecDangCanNguoi();
 
           // load san pham
           _loadSanPham();
+
+          // load tin tuc
+          _loadTinTuc();
 
           // khoi tao three feature
           _initThreeFeatures();
@@ -74,26 +76,19 @@ class V2HomeController extends GetxController {
   ///
   /// load công việc đang cần người
   ///
-  void _loadCongViecDangCanNguoi(String _idCongViecDangCanNguoiList) {
-    final int index =
-        idCongViecDangCanNguoiList!.indexOf(_idCongViecDangCanNguoiList);
-    if (index != -1) {
-      _donDichVuProvider.paginate(
-        page: 1,
-        limit: 2,
-        filter:
-            "&idNhomDichVu=$_idCongViecDangCanNguoiList&sortBy=created_at:desc",
-        onSuccess: (value) {
-          donDichVuList = value;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        },
-      );
-    } else {
-      donDichVuList = [];
-    }
+  void _loadCongViecDangCanNguoi() {
+    _donDichVuProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (value) {
+        donDichVuList = value;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
   }
 
   ///

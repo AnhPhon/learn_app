@@ -43,7 +43,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 _box(),
 
                 // need people widget
-                _needPeopleWidget(controller),
+                _needPeopleWidget(),
 
                 // san pham widget
                 _sanPhamWidget(context),
@@ -228,7 +228,7 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// need people widget
   ///
-  Widget _needPeopleWidget(V2HomeController controller) {
+  Widget _needPeopleWidget() {
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
@@ -245,13 +245,16 @@ class V2HomePage extends GetView<V2HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return TaskNeedWorker(
-                nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
-                tenTask: controller.donDichVuList[index].tieuDe!,
-                maTask:
-                    "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
-                trangThai:
-                    controller.donDichVuList[index].idTrangThaiDonHang!.tieuDe!,
-              );
+                  nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
+                  tenTask: controller.donDichVuList[index].tieuDe!,
+                  maTask:
+                      "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
+                  trangThai:
+                      (controller.donDichVuList[index].idTrangThaiDonHang !=
+                              null)
+                          ? controller
+                              .donDichVuList[index].idTrangThaiDonHang!.tieuDe!
+                          : "");
             },
           ),
         ),
