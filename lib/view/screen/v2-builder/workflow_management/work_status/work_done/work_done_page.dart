@@ -10,9 +10,8 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
-
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/component/image_card_in_work_done_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/component/v2_long_button.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/component/image_card_in_work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/component/v2_long_button.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_controller.dart';
 
 class V2WorkDonePage extends GetView<V2WorkDoneController> {
@@ -148,7 +147,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     ),
 
                     //Hình ảnh thực tế
-                    const ImageCardInWorkDonePage(
+                    ImageCardInWorkPage(
                       title: 'Hình ảnh thực tế',
                       isRequired: false,
                     ),
@@ -174,7 +173,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     ),
 
                     //Hình ảnh bảo hành
-                    const ImageCardInWorkDonePage(
+                    ImageCardInWorkPage(
                       title: 'Hình ảnh bảo hành(nếu có)',
                       isRequired: false,
                     ),

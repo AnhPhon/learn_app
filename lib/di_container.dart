@@ -5,6 +5,7 @@ import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
 import 'package:template/data/repository/danh_muc_san_pham_repository.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/danh_sach_bao_gia_don_dich_vu_repository.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/data/repository/kho_hang_repository.dart';
 import 'package:template/data/repository/phan_hoi_don_dich_vu_repository.dart';
@@ -14,10 +15,12 @@ import 'package:template/data/repository/thong_bao_repository.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
 import 'package:template/data/repository/trang_thai_don_hang_repository.dart';
+import 'package:template/data/repository/vat_tu_repository.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
@@ -27,6 +30,7 @@ import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/provider/trang_thai_don_hang_provider.dart';
+import 'package:template/provider/vat_tu_provider.dart';
 
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
@@ -58,6 +62,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhMucSanPhamRepository());
   sl.registerLazySingleton(() => PhanHoiDonDichVuRepository());
   sl.registerLazySingleton(() => TrangThaiDonHangRepository());
+  sl.registerLazySingleton(() => VatTuRepository());
+  sl.registerLazySingleton(() => DanhSachBaoGiaDonDichVuRepository());
 
   // Provider
   sl.registerLazySingleton(() => TinTucProvider());
@@ -72,4 +78,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhMucSanPhamProvider());
   sl.registerLazySingleton(() => PhanHoiDonDichVuProvider());
   sl.registerLazySingleton(() => TrangThaiDonHangProvider());
+  sl.registerLazySingleton(() => VatTuProvider());
+  sl.registerLazySingleton(() => DanhSachBaoGiaDonDichVuProvider());
 }
