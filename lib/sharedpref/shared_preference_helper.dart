@@ -181,4 +181,17 @@ class SharedPreferenceHelper {
   Future<bool> removeIsFirst() async {
     return _sharedPreference.remove(Preferences.isFirst);
   }
+
+  // workFlowId: ----------------------------------------------------------
+  Future<String?> get workFlowId async {
+    return _sharedPreference.getString(Preferences.workFlowId);
+  }
+
+  Future<bool> saveWorkFlow({required String id}) async {
+    return _sharedPreference.setString(Preferences.workFlowId, id);
+  }
+
+  Future<bool> removeWorkFlow() async {
+    return _sharedPreference.remove(Preferences.workFlowId);
+  }
 }

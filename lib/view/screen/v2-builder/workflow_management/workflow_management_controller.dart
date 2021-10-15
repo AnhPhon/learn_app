@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
@@ -79,15 +80,25 @@ class V2WorkflowManagementController extends GetxController
   ///
   ///Click to Work done page
   ///
-  void onClickToWorkDonePage() {
-    Get.toNamed(AppRoutes.V2_WORK_DONE);
+  void onClickToWorkDonePage(String idDonDichVu) {
+    sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
+    Get.toNamed(AppRoutes.V2_WORK_DONE)!.then((value) {
+      if (value == true) {
+        EasyLoading.showSuccess("Gửi thành công");
+      }
+    });
   }
 
   ///
   ///Click to Work in progress
   ///
-  void onClickToWorkInProgressPage() {
-    Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS);
+  void onClickToWorkInProgressPage(String idDonDichVu) {
+    sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
+    Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS)!.then((value) {
+      if (value == true) {
+        EasyLoading.showSuccess("Gửi thành công");
+      }
+    });
   }
 
   ///

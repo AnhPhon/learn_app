@@ -32,6 +32,11 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
       body: GetBuilder<V2WorkInProgressController>(
           init: V2WorkInProgressController(),
           builder: (V2WorkInProgressController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -155,118 +160,120 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
       ],
     );
   }
-}
 
-///
-///Tiêu đề việc đang làm
-///
-Widget _titleWorkInProgress(V2WorkInProgressController controller) {
-  return Container(
-    padding: const EdgeInsets.symmetric(
-      vertical: Dimensions.PADDING_SIZE_LARGE,
-    ),
-    child: Text(
-      '${controller.job}: ${controller.title}',
-      textAlign: TextAlign.center,
-      style: Dimensions.fontSizeStyle18w600(),
-    ),
-  );
-}
-
-///
-/// Thành phố
-///
-Widget _cityWorkInProgress(V2WorkInProgressController controller) {
-  return Row(
-    children: [
-      const Icon(
-        Icons.location_city_outlined,
-        color: ColorResources.PRIMARY,
+  ///
+  ///Tiêu đề việc đang làm
+  ///
+  Widget _titleWorkInProgress(V2WorkInProgressController controller) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_LARGE,
       ),
-      Text(
-        controller.city,
-        style: Dimensions.fontSizeStyle16w600(),
+      child: Text(
+        '${controller.job}: ${controller.title}',
+        textAlign: TextAlign.center,
+        style: Dimensions.fontSizeStyle18w600(),
       ),
-    ],
-  );
-}
+    );
+  }
 
-///
-/// quận/huyện
-///
-Widget _districtWorkInProgress(V2WorkInProgressController controller) {
-  return Row(
-    children: [
-      const Icon(
-        Icons.location_on_outlined,
-        color: ColorResources.PRIMARY,
-      ),
-      Text(
-        controller.address,
-        style: Dimensions.fontSizeStyle16w600(),
-      ),
-    ],
-  );
-}
+  ///
+  /// Thành phố
+  ///
+  Widget _cityWorkInProgress(V2WorkInProgressController controller) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.location_city_outlined,
+          color: ColorResources.PRIMARY,
+        ),
+        Text(
+          controller.city,
+          style: Dimensions.fontSizeStyle16w600(),
+        ),
+      ],
+    );
+  }
 
-///
-/// thời gian
-///
-Widget _timeWorkInProgress(V2WorkInProgressController controller) {
-  return Row(
-    children: [
-      const Icon(
-        Icons.schedule_outlined,
-        color: ColorResources.PRIMARY,
-      ),
-      Text(
-        controller.status,
-        style: Dimensions.fontSizeStyle16w600(),
-      ),
-    ],
-  );
-}
+  ///
+  /// quận/huyện
+  ///
+  Widget _districtWorkInProgress(V2WorkInProgressController controller) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.location_on_outlined,
+          color: ColorResources.PRIMARY,
+        ),
+        Text(
+          controller.address,
+          style: Dimensions.fontSizeStyle16w600(),
+        ),
+      ],
+    );
+  }
 
-///
-/// Trạng thái công việc
-///
-Widget _statusWorkInProgress(BuildContext context) {
-  return DropDownButton<String>(
-    data: const ["Hoàn thành", "Đang làm"],
-    obligatory: false,
-    onChanged: (value) {},
-    value: "Hoàn thành",
-    width: DeviceUtils.getScaledWidth(context, 0.4),
-  );
-}
+  ///
+  /// thời gian
+  ///
+  Widget _timeWorkInProgress(V2WorkInProgressController controller) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.schedule_outlined,
+          color: ColorResources.PRIMARY,
+        ),
+        Text(
+          controller.status,
+          style: Dimensions.fontSizeStyle16w600(),
+        ),
+      ],
+    );
+  }
 
-///
-/// Ý kiến của thợ thầu
-///
-Widget _contentOpinion(
-    V2WorkInProgressController controller, BuildContext context) {
-  return InputField(
-    line: 4,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.rateBuilder,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Thầu/Thợ ý kiến tại đây',
-    label: 'Ý kiến thầu thợ',
-    obligatory: false,
-    typeInput: TextInputType.text,
-    width: DeviceUtils.getScaledWidth(context, 1),
-  );
-}
+  ///
+  /// Trạng thái công việc
+  ///
+  Widget _statusWorkInProgress(BuildContext context) {
+    return DropDownButton<String>(
+      data: const ["Hoàn thành", "Đang làm"],
+      obligatory: false,
+      onChanged: (value) {},
+      value: "Hoàn thành",
+      width: DeviceUtils.getScaledWidth(context, 0.4),
+    );
+  }
 
-///
-/// Button Send
-///
-Widget _btnSend() {
-  return LongButton(
-    color: ColorResources.PRIMARY,
-    onPressed: () {},
-    title: 'Gửi',
-  );
+  ///
+  /// Ý kiến của thợ thầu
+  ///
+  Widget _contentOpinion(
+      V2WorkInProgressController controller, BuildContext context) {
+    return InputField(
+      line: 4,
+      allowEdit: true,
+      allowMultiline: true,
+      controller: controller.rateBuilder,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
+      hidden: false,
+      holdplacer: 'Thầu/Thợ ý kiến tại đây',
+      label: 'Ý kiến thầu thợ',
+      obligatory: false,
+      typeInput: TextInputType.text,
+      width: DeviceUtils.getScaledWidth(context, 1),
+    );
+  }
+
+  ///
+  /// Button Send
+  ///
+  Widget _btnSend() {
+    return LongButton(
+      color: ColorResources.PRIMARY,
+      onPressed: () {
+        controller.submit();
+      },
+      title: 'Gửi',
+    );
+  }
 }
