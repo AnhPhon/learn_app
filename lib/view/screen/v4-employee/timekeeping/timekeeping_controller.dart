@@ -181,48 +181,54 @@ class V4TimekeepingController extends GetxController {
         });
   }
 
-  // ///
-  // ///Kiểm tra
-  // ///
-  // void check() {
-  //   if (addressController.text.toString().isEmpty) {
-  //     return Get.snackbar(
-  //         "Địa chỉ không hợp lệ!", "Vui lòng nhập địa chỉ hợp lệ!");
-  //   } else if (tinh == null) {
-  //     return Get.snackbar("Tỉnh không hơp lệ!", "Vui lòng chọn tỉnh hợp lệ!");
-  //   } else if (quanHuyen == null) {
-  //     return Get.snackbar(
-  //         "Quận huyện không hơp lệ!", "Vui lòng chọn quận huyện hợp lệ!");
-  //   } else if (phuongXa == null) {
-  //     return Get.snackbar(
-  //         "Phường xã không hơp lệ!", "Vui lòng chọn phường xã hợp lệ!");
-  //   } else {
-  //     onChamCong();
-  //   }
-  // }
+  ///
+  /// Check rỗng
+  ///
+  bool validate() {
+    if (addressController.text.toString().isEmpty) {
+      Get.snackbar("Địa chỉ không hợp lệ!", "Vui lòng nhập địa chỉ hợp lệ!");
+      return false;
+    }
+    if (tinh == null) {
+      Get.snackbar("Tỉnh không hơp lệ!", "Vui lòng chọn tỉnh hợp lệ!");
+      return false;
+    }
+    if (quanHuyen == null) {
+      Get.snackbar(
+          "Quận huyện không hơp lệ!", "Vui lòng chọn quận huyện hợp lệ!");
+      return false;
+    }
+    if (phuongXa == null) {
+      Get.snackbar(
+          "Phường xã không hơp lệ!", "Vui lòng chọn phường xã hợp lệ!");
+      return false;
+    }
+    return true;
+  }
 
   ///
   ///Chấm công
   ///
   void onChamCong() {
-    timekeeping.text = DateConverter.readMongoToString(timekeeping.text);
-    chamCongProvider.add(
-      data: ChamCongRequest(
-        thoiGianBatDau: timekeeping.text,
-        idDuAnNhanVien: duAnNhanVien!.id,
-        diaChi: addressController.text,
-        idTinhTp: tinh!.id,
-        idQuanHuyen: quanHuyen!.id,
-        idPhuongXa: phuongXa!.id,
-      ),
-      onSuccess: (value) {
-        Get.back(result: true);
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        update();
-      },
-    );
-    // }
+    if (validate()) {
+      timekeeping.text = DateConverter.readMongoToString(timekeeping.text);
+      chamCongProvider.add(
+        data: ChamCongRequest(
+          thoiGianBatDau: timekeeping.text,
+          idDuAnNhanVien: duAnNhanVien!.id,
+          diaChi: addressController.text,
+          idTinhTp: tinh!.id,
+          idQuanHuyen: quanHuyen!.id,
+          idPhuongXa: phuongXa!.id,
+        ),
+        onSuccess: (value) {
+          Get.back(result: true);
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        },
+      );
+    }
   }
 }

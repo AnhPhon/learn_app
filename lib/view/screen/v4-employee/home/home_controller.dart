@@ -22,13 +22,13 @@ class V4HomeController extends GetxController {
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   //khai báo thời gian báo cáo
-  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 17, minute: 0);
 
   //khai báo thời gian chấm công
-  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+  TimeOfDay timekeeping = const TimeOfDay(hour: 7, minute: 0);
 
   //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  bool isvalid = 7 >= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
 
   List<Map<String, dynamic>>? contentGrid;
 
@@ -236,7 +236,7 @@ class V4HomeController extends GetxController {
     final double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
-    if (_reportTimekeeping < _timeNow || _timeNow < _timekeeping) {
+    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
       return onClickToTimeKeeping(context);
     } else {
       return onClickToReportTimeKeeping(context);

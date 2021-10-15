@@ -22,23 +22,37 @@ class V4ReportTimekeepingControllter extends GetxController {
     super.onInit();
   }
 
-  //
+  ///
+  ///Check rỗng
+  ///
+  bool validate() {
+    if (reportContent.text.toString().isEmpty) {
+      Get.snackbar("Nội dung không hợp lệ!", "Vui lòng nội dung hợp lệ!");
+      return false;
+    }
+    return true;
+  }
 
+  ///
+  /// Button báo cáo
+  ///
   void report() {
-    reportTimekeeping.text =
-        DateConverter.readMongoToString(reportTimekeeping.text);
-    chamCongProvider.add(
-      data: ChamCongRequest(
-        thoiGianKetThuc: reportTimekeeping.text,
-        noiDungBaoCao: reportContent.text,
-      ),
-      onSuccess: (value) {
-        Get.back(result: true);
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        update();
-      },
-    );
+    if (validate()) {
+      reportTimekeeping.text =
+          DateConverter.readMongoToString(reportTimekeeping.text);
+      chamCongProvider.add(
+        data: ChamCongRequest(
+          thoiGianKetThuc: reportTimekeeping.text,
+          noiDungBaoCao: reportContent.text,
+        ),
+        onSuccess: (value) {
+          Get.back(result: true);
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        },
+      );
+    }
   }
 }
