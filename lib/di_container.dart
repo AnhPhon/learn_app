@@ -13,6 +13,7 @@ import 'package:template/data/repository/tai_khoan_repository.dart';
 import 'package:template/data/repository/thong_bao_repository.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
+import 'package:template/data/repository/trang_thai_don_hang_repository.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
@@ -25,6 +26,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
+import 'package:template/provider/trang_thai_don_hang_provider.dart';
 
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'sharedpref/shared_preference_helper.dart';
@@ -55,6 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => DanhMucSanPhamRepository());
   sl.registerLazySingleton(() => PhanHoiDonDichVuRepository());
+  sl.registerLazySingleton(() => TrangThaiDonHangRepository());
 
   // Provider
   sl.registerLazySingleton(() => TinTucProvider());
@@ -68,4 +71,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CongViecNhanVienProvider());
   sl.registerLazySingleton(() => DanhMucSanPhamProvider());
   sl.registerLazySingleton(() => PhanHoiDonDichVuProvider());
+  sl.registerLazySingleton(() => TrangThaiDonHangProvider());
 }

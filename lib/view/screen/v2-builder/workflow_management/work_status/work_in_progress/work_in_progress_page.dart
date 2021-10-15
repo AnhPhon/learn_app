@@ -224,7 +224,7 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
           color: ColorResources.PRIMARY,
         ),
         Text(
-          controller.status,
+          controller.deadline,
           style: Dimensions.fontSizeStyle16w600(),
         ),
       ],
@@ -236,10 +236,21 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
   ///
   Widget _statusWorkInProgress(BuildContext context) {
     return DropDownButton<String>(
-      data: const ["Hoàn thành", "Đang làm"],
+      data: controller.selectList.map((e) => e.tieuDe!).toList(),
       obligatory: false,
-      onChanged: (value) {},
-      value: "Hoàn thành",
+      onChanged: (value) {
+        // trả về một list tiêu đề
+        final List<String> names =
+            controller.selectList.map((e) => e.tieuDe!).toList();
+
+        // get selecte index of list
+        final int selectIndex = names.indexOf(value!);
+        controller.onStatusChange(
+          value,
+          controller.selectList[selectIndex].id,
+        );
+      },
+      value: controller.selectIndex!,
       width: DeviceUtils.getScaledWidth(context, 0.4),
     );
   }
@@ -248,7 +259,9 @@ class V2WorkInProgressPage extends GetView<V2WorkInProgressController> {
   /// Ý kiến của thợ thầu
   ///
   Widget _contentOpinion(
-      V2WorkInProgressController controller, BuildContext context) {
+    V2WorkInProgressController controller,
+    BuildContext context,
+  ) {
     return InputField(
       line: 4,
       allowEdit: true,

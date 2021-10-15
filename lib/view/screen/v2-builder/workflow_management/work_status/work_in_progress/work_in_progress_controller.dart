@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/data/model/response/trang_thai_don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
+import 'package:template/provider/trang_thai_don_hang_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2WorkInProgressController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  TrangThaiDonHangProvider trangThaiDonHangProvider =
+      GetIt.I.get<TrangThaiDonHangProvider>();
   PhanHoiDonDichVuProvider phanHoiDonDichVuProvider =
       GetIt.I.get<PhanHoiDonDichVuProvider>();
 
@@ -23,7 +29,7 @@ class V2WorkInProgressController extends GetxController {
   String title = "Công trình khách hàng 4 sao tại Đà Nẵng";
   String city = "Đà Nẵng";
   String address = "Ngũ Hành Sơn";
-  String status = "Còn 35 ngày";
+  String deadline = "35 ngày";
   bool isStatus = true;
   String result = "Chưa nghiệm thu";
   String rate = "Không có";
@@ -32,15 +38,48 @@ class V2WorkInProgressController extends GetxController {
   final String dangXuLyKey = "đang xử lý";
   final String hoanThanhKey = "hoàn thành";
 
+  String? selectIndex;
+  String? keyIndex;
+  List<TrangThaiDonHangResponse> selectList = [];
   @override
   void onInit() {
     super.onInit();
+
+    // load trang thai
+    loadTrangThai();
 
     // get data don dich vu
     getDonDichVu();
 
     // trang thai khach hang
     getKhachHangDanhGia();
+  }
+
+  ///
+  /// load trang thai
+  ///
+  void loadTrangThai() {
+    trangThaiDonHangProvider.paginate(
+      page: 1,
+      limit: 20,
+      filter: "",
+      onSuccess: (models) {
+        selectList = [];
+        for (final element in models) {
+          final String tieuDe = element.tieuDe!.toLowerCase();
+          if (tieuDe == 'hoàn thành' || tieuDe == 'đang xử lý') {
+            selectList.add(element);
+          }
+        }
+        if (selectList.isNotEmpty) {
+          selectIndex = selectList[0].tieuDe;
+          keyIndex = selectList[0].id;
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
   }
 
   ///
@@ -68,7 +107,7 @@ class V2WorkInProgressController extends GetxController {
           city = model.idTinhTp!.ten!;
 
           // set deadline
-          status = _getDeadline(model.ngayKetThuc!);
+          deadline = _getDeadline(model.ngayKetThuc!);
 
           // set icon and color
           isStatus =
@@ -110,7 +149,7 @@ class V2WorkInProgressController extends GetxController {
   }
 
   ///
-  /// update data
+  /// update data feature
   ///
   void updateData() {
     sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
@@ -121,13 +160,28 @@ class V2WorkInProgressController extends GetxController {
         onSuccess: (models) {
           if (models.isNotEmpty) {
             final String id = models[0].id!;
+            // update y kien tho thau
             phanHoiDonDichVuProvider.update(
               data: PhanHoiDonDichVuRequest(
                 yKienThoThau: rateBuilder.text,
                 id: id,
               ),
               onSuccess: (value) {
-                Get.back(result: true);
+                // set trang thái
+                donDichVuProvider.update(
+                  data: DonDichVuRequest(
+                    id: workFlowId,
+                    idTrangThaiDonHang: keyIndex,
+                  ),
+                  onSuccess: (success) {
+                    Get.back(result: true);
+                  },
+                  onError: (error) {
+                    print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error",
+                    );
+                  },
+                );
               },
               onError: (error) {
                 print(
@@ -146,6 +200,15 @@ class V2WorkInProgressController extends GetxController {
         },
       );
     });
+  }
+
+  ///
+  /// on status change
+  ///
+  void onStatusChange(String? name, String? id) {
+    selectIndex = name;
+    keyIndex = id;
+    update();
   }
 
   ///
