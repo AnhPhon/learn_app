@@ -41,7 +41,7 @@ class ItemListWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_SMALL,
         ),
-        height: DeviceUtils.getScaledHeight(context, .118),
+        height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -129,7 +129,7 @@ class ItemListWidget extends StatelessWidget {
                         Row(
                           children: [
                             if (icon1 != null) icon1!,
-                            if (isSpaceBetween == false)
+                            if (icon1 != null && rowText1 != null)
                               const SizedBox(
                                   width: Dimensions.MARGIN_SIZE_SMALL),
                             if (rowText1 != null)
@@ -146,6 +146,9 @@ class ItemListWidget extends StatelessWidget {
                         Row(
                           children: [
                             if (icon2 != null) icon2!,
+                            if (icon2 != null && rowText2 != null)
+                              const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_SMALL),
                             if (rowText2 != null)
                               Text(
                                 rowText2!,

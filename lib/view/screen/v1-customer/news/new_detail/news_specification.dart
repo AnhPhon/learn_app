@@ -15,7 +15,9 @@ class NewsSpecification extends StatelessWidget {
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
         child: Html(
           data: _parseHtmlString(newsSpecification),
           style: {

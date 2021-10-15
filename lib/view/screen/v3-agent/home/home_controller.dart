@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3HomeController extends GetxController {
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
+  SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
@@ -45,7 +57,7 @@ class V3HomeController extends GetxController {
   /// read tin tuc
   ///
   void _readTinTuc() {
-    _tinTucProvider.paginate(
+    tinTucProvider.paginate(
       page: 1,
       limit: 2,
       filter: "&sortBy=create_at:desc",
@@ -64,7 +76,7 @@ class V3HomeController extends GetxController {
   /// read kho san pham
   ///
   void _readKhosanPham() {
-    _sanPhamProvider.paginate(
+    sanPhamProvider.paginate(
       page: 1,
       limit: 2,
       filter: "&sortBy=create_at:desc",

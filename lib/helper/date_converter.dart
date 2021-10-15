@@ -49,4 +49,10 @@ mixin DateConverter {
   static String localDateToIsoString(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
   }
+
+  static String formatDateTime(String dateTime) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
+  }
 }
