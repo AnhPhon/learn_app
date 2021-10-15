@@ -40,7 +40,7 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                _newsWidget(),
+                //_newsWidget(),
 
                 // product widget
                 _productWidget(controller: controller)

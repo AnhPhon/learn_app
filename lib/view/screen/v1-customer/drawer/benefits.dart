@@ -9,7 +9,7 @@ class Benefits extends GetView<BenefitsController> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: const AppBarWidget(title: "Điều khoản và chính sách"),
+      appBar: const AppBarWidget(title: "Lợi ích khi tham gia FSS"),
       body: GetBuilder(
         init: BenefitsController(),
         builder: (BenefitsController controller) {

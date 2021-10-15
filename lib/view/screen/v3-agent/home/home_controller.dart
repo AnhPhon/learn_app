@@ -122,7 +122,7 @@ class V3HomeController extends GetxController {
           Color(0xffC1E6EE),
         ]),
         "onTap": () {
-          onClickQuoteReponse();
+          //onClickQuoteReponse();
         }
       },
       {
