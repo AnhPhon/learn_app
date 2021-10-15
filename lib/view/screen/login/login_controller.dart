@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/provider/auth_provider.dart';
+import 'package:template/di_container.dart';
 // import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -91,6 +92,7 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
+    sl.get<SharedPreferenceHelper>().saveUserId("6161831d4afc4f67f5e66eaf");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {

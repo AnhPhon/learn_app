@@ -5,13 +5,19 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class HomeWidget extends StatelessWidget {
   final String fullname;
   final Widget content;
   String? notificationURL;
-  HomeWidget(
-      {required this.fullname, required this.content, this.notificationURL});
+  String? imageNetwork;
+  HomeWidget({
+    required this.fullname,
+    required this.content,
+    this.notificationURL,
+    this.imageNetwork,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,7 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
               width: DeviceUtils.getScaledWidth(context, 1),
               child: Container(
                 padding:
@@ -80,10 +86,15 @@ class HomeWidget extends StatelessWidget {
                                 Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                             margin: const EdgeInsets.only(
                                 right: Dimensions.MARGIN_SIZE_SMALL),
-                            child: Image.asset(
-                              "assets/images/avatar.png",
-                              width: DeviceUtils.getScaledWidth(context, .1),
-                            ),
+                            child: (imageNetwork == null)
+                                ? const Icon(
+                                    Icons.menu,
+                                    color: ColorResources.WHITE,
+                                  )
+                                : FadeInImage.assetNetwork(
+                                    placeholder: Images.logo,
+                                    image: imageNetwork!,
+                                  ),
                           ),
                         );
                       },
@@ -125,7 +136,7 @@ class HomeWidget extends StatelessWidget {
 
         // white
         Positioned(
-          top: 100,
+          top: 140,
           child: Container(
             alignment: Alignment.topLeft,
             height: DeviceUtils.getScaledHeight(context, 1) - 180,

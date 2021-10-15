@@ -4,10 +4,15 @@ class HinhThucThanhToanResponse {
   String? tieuDe;
   String? noiDung;
 
+  String? createdAt;
+  String? updatedAt;
+
   HinhThucThanhToanResponse({
       this.id,
       this.tieuDe,
-      this.noiDung});
+      this.noiDung,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -17,6 +22,8 @@ class HinhThucThanhToanResponse {
     tieuDe = json['tieuDe'].toString();
     noiDung = json['noiDung'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

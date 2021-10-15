@@ -7,6 +7,7 @@ import 'package:template/utils/images.dart';
 class ItemListWidget extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+  final String? subTitle;
   final String? rowText1;
   final String? rowText2;
   final String urlImage;
@@ -29,6 +30,7 @@ class ItemListWidget extends StatelessWidget {
     this.icon1,
     this.icon2,
     required this.urlImage,
+    this.subTitle,
   }) : super(key: key);
 
   @override
@@ -37,9 +39,9 @@ class ItemListWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(
-            horizontal: Dimensions.MARGIN_SIZE_SMALL,
-            vertical: Dimensions.MARGIN_SIZE_SMALL),
-        height: DeviceUtils.getScaledHeight(context, .118),
+          vertical: Dimensions.MARGIN_SIZE_SMALL,
+        ),
+        height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -63,11 +65,14 @@ class ItemListWidget extends StatelessWidget {
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
                   image: urlImage,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
+                  height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.fill,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -88,11 +93,28 @@ class ItemListWidget extends StatelessWidget {
                       child: Text(
                         title,
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        ),
                       ),
                     ),
                   ),
+                  if (subTitle != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      ),
+                      child: Text(
+                        subTitle.toString(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                          color: ColorResources.GREY,
+                        ),
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -107,7 +129,7 @@ class ItemListWidget extends StatelessWidget {
                         Row(
                           children: [
                             if (icon1 != null) icon1!,
-                            if (isSpaceBetween == false)
+                            if (icon1 != null && rowText1 != null)
                               const SizedBox(
                                   width: Dimensions.MARGIN_SIZE_SMALL),
                             if (rowText1 != null)
@@ -121,14 +143,21 @@ class ItemListWidget extends StatelessWidget {
                               ),
                           ],
                         ),
-                        if (icon2 != null) icon2!,
-                        if (rowText2 != null)
-                          Text(
-                            rowText2!,
-                            style: TextStyle(
-                                color: colorRowText2,
-                                fontSize: Dimensions.FONT_SIZE_SMALL),
-                          ),
+                        Row(
+                          children: [
+                            if (icon2 != null) icon2!,
+                            if (icon2 != null && rowText2 != null)
+                              const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_SMALL),
+                            if (rowText2 != null)
+                              Text(
+                                rowText2!,
+                                style: TextStyle(
+                                    color: colorRowText2,
+                                    fontSize: Dimensions.FONT_SIZE_SMALL),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

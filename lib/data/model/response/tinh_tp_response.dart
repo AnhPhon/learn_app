@@ -3,9 +3,14 @@ class TinhTpResponse {
   String? id;
   String? ten;
 
+  String? createdAt;
+  String? updatedAt;
+
   TinhTpResponse({
       this.id,
-      this.ten});
+      this.ten,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -14,6 +19,8 @@ class TinhTpResponse {
     id = json['id'].toString();
     ten = json['ten'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

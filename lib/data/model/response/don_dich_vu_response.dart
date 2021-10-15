@@ -50,6 +50,9 @@ class DonDichVuResponse {
   String? taiKhoanNhanDon;
   String? tienCoc;
 
+  String? createdAt;
+  String? updatedAt;
+
   DonDichVuResponse({
       this.id,
       this.idTaiKhoan,
@@ -88,7 +91,9 @@ class DonDichVuResponse {
       this.soTien,
       this.tongDon,
       this.taiKhoanNhanDon,
-      this.tienCoc});
+      this.tienCoc,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -199,6 +204,8 @@ class DonDichVuResponse {
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

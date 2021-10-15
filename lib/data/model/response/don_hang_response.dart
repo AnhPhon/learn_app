@@ -21,6 +21,9 @@ class DonHangResponse {
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
 
+  String? createdAt;
+  String? updatedAt;
+
   DonHangResponse({
       this.id,
       this.idTaiKhoan,
@@ -35,7 +38,9 @@ class DonHangResponse {
       this.soTien,
       this.tongTien,
       this.idTrangThaiDonHang,
-      this.idHinhThucThanhToan});
+      this.idHinhThucThanhToan,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -92,6 +97,8 @@ class DonHangResponse {
       idHinhThucThanhToan = null;                                                               
     }                                                                                  
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///

@@ -1,15 +1,47 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 
 class V1NewsDetailController extends GetxController {
+
+  TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
+  TinTucResponse tinTucModel = TinTucResponse();
+
   String title = "Chi tiết tin tức";
 
-  String titleNews =
-      "Việt nam sắp có vắc xin điều trị Covid sắp có vắc xin điều trị Covid Việt nam sắp có vắc xin điều trị Covid";
+  bool isLoading = true;
 
-  String authors = " - Nick Shoner";
+  @override
+  void onInit() {
+    super.onInit();
+    getNewsById();
+  }
 
-  String time = "20/09/2021";
+  ///
+  ///get news by id
+  ///
+  void getNewsById() {
+    tinTucProvider.find(
+      id: Get.parameters['id'].toString(),
+      onSuccess: (value) {
+        tinTucModel = value;
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
 
-  String content =
-      'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.';
+    ///
+  ///format date time
+  ///
+  String formatDateTime({required String dateTime}) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
+  }
 }

@@ -33,6 +33,10 @@ mixin DateConverter {
     return DateFormat('dd:MM:yy').format(isoStringToLocalDate(dateTime));
   }
 
+  static String isoStringToLocalFullDateOnly(String dateTime) {
+    return DateFormat('dd/MM/yyyy').format(isoStringToLocalDate(dateTime));
+  }
+
   static String isoStringToLocalDateHMS(String dateTime) {
     return DateFormat('HH:mm dd/MM/yyyy')
         .format(isoStringToLocalDate(dateTime));
@@ -52,5 +56,18 @@ mixin DateConverter {
 
   static int differenceDate({required String startDate, required String endDate}) {
     return int.parse(convertStringToDate(endDate).difference(convertStringToDate(startDate)).inDays.toString());
+  }
+  
+  static String formatDateTime(String dateTime) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
+  }
+
+  static String readMongoToString(String dateTimeStr) {
+    final String first10letter = dateTimeStr.substring(0, 10);
+    return DateFormat('dd/MM/yyyy').format(
+      DateFormat('yyyy-MM-dd').parse(first10letter),
+    );
   }
 }

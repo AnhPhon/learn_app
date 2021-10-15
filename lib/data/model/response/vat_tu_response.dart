@@ -7,12 +7,17 @@ class VatTuResponse {
   String? donGia;
   String? idDonDichVu;
 
+  String? createdAt;
+  String? updatedAt;
+
   VatTuResponse({
       this.id,
       this.tenVatTu,
       this.quyCach,
       this.donVi,
-      this.donGia});
+      this.donGia,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -25,6 +30,8 @@ class VatTuResponse {
     donGia = json['donGia'].toString();
     idDonDichVu = json['idDonDichVu'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
