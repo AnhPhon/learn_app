@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:template/data/model/response/vat_tu_response.dart';
+
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
+import 'package:template/view/screen/v1-customer/services/components/order_content_string_value.dart';
 
 class MaterialCard extends StatelessWidget {
 
@@ -10,12 +13,14 @@ class MaterialCard extends StatelessWidget {
   final double? bottomPading;
   final double? leftPading; 
   final double? rightPading;
+  final VatTuResponse mass;
   const MaterialCard({
     Key? key,
     this.topPading = Dimensions.PADDING_SIZE_DEFAULT,
     this.bottomPading = 0,
     this.leftPading = Dimensions.PADDING_SIZE_DEFAULT,
     this.rightPading = Dimensions.PADDING_SIZE_DEFAULT,
+    required this.mass,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -30,22 +35,42 @@ class MaterialCard extends StatelessWidget {
           padding: paddingSmall,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              TextHighlight(
+            children:[
+              OrderContentStringValue(
                 title: "Tên công việc: ",
-                content: "Lát gạch phòng ngủ 600*600",
+                value: mass.tenVatTu!,
+                boldTitle: true,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                ),
               ),
-              TextHighlight(
+              OrderContentStringValue(
                 title: "Quy cách: ",
-                content: "Dùng keo, gạch thạch bàn mã TB123",
+                value: mass.quyCach!,
+                boldTitle: true,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                ),
               ),
-              TextHighlight(
+              OrderContentStringValue(
                 title: "Khối lượng: ",
-                content: "20",
+                value: mass.donGia!,
+                boldTitle: true,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                ),
               ),
-              TextHighlight(
+              OrderContentStringValue(
                 title: "Đơn vị: ",
-                content: "m2",
+                value: mass.donVi!,
+                boldTitle: true,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                ),
               ),
             ],
           ),
