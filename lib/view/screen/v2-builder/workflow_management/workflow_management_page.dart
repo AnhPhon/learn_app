@@ -107,7 +107,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
   ///
   Widget _listViewDangLam() {
     return ListView.builder(
-      itemCount: controller.uiWorkflowManagement!.length,
+      itemCount: controller.dangLam.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
@@ -153,9 +153,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             children: [
                               //Tên công việc
                               TextSpan(
-                                text: controller.uiWorkflowManagement![index]
-                                        ["job"]
-                                    .toString(),
+                                text: "Thợ ốp lát",
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
 
@@ -167,9 +165,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                               //Tiêu đề công việc
                               TextSpan(
-                                text: controller.uiWorkflowManagement![index]
-                                        ["title"]
-                                    .toString(),
+                                text: controller.dangLam[index].tieuDe,
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
                             ],
@@ -190,10 +186,9 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Địa điểm
                                 Text(
-                                  controller.uiWorkflowManagement![index]
-                                          ['address']
-                                      .toString(),
-                                  style: Dimensions.fontSizeStyle14(),
+                                  controller
+                                      .dangLam[index].idDuAnNhanVien!.diaChi!,
+                                  style: Dimensions.fontSizeStyle12(),
                                 ),
                               ],
                             ),
@@ -202,14 +197,12 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               children: [
                                 Icon(
                                   controller.isRecruiting ==
-                                          controller
-                                                  .uiWorkflowManagement![index]
+                                          controller.uiWorkflowManagement![0]
                                               ['isStatus']
                                       ? Icons.person_add_outlined
                                       : Icons.watch_later_outlined,
                                   color: controller.isRecruiting ==
-                                          controller
-                                                  .uiWorkflowManagement![index]
+                                          controller.uiWorkflowManagement![0]
                                               ['isStatus']
                                       ? ColorResources.GREEN
                                       : ColorResources.YELLOW,
@@ -217,10 +210,9 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Trạng thái
                                 Text(
-                                  controller.uiWorkflowManagement![index]
-                                          ['status']
+                                  controller.uiWorkflowManagement![0]['status']
                                       .toString(),
-                                  style: Dimensions.fontSizeStyle14(),
+                                  style: Dimensions.fontSizeStyle12(),
                                 ),
                               ],
                             ),
@@ -264,7 +256,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         Stack(
                           children: [
                             Text(
-                              controller.uiWorkflowManagement![index]['city']
+                              controller.uiWorkflowManagement![0]['city']
                                   .toString(),
                               style: TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -276,7 +268,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               ),
                             ),
                             Text(
-                              controller.uiWorkflowManagement![index]['city']
+                              controller.uiWorkflowManagement![0]['city']
                                   .toString(),
                               style: const TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -303,7 +295,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
   ///
   Widget _listViewDaLam() {
     return ListView.builder(
-      itemCount: controller.uiWorkflowManagement!.length,
+      itemCount: controller.hoanThanh.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
@@ -349,9 +341,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             children: [
                               //Tên công việc
                               TextSpan(
-                                text: controller.uiWorkflowManagement![index]
-                                        ["job"]
-                                    .toString(),
+                                text: "Thợ ốp lát",
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
 
@@ -363,9 +353,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                               //Tiêu đề công việc
                               TextSpan(
-                                text: controller.uiWorkflowManagement![index]
-                                        ["title"]
-                                    .toString(),
+                                text: controller.hoanThanh[index].tieuDe,
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
                             ],
@@ -386,9 +374,8 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Địa điểm
                                 Text(
-                                  controller.uiWorkflowManagement![index]
-                                          ['address']
-                                      .toString(),
+                                  controller
+                                      .hoanThanh[index].idDuAnNhanVien!.diaChi!,
                                   style: Dimensions.fontSizeStyle14(),
                                 ),
                               ],
@@ -396,7 +383,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                             //Trang thái kết quả công việc đã làm
                             Text(
-                              controller.uiWorkflowManagement![index]['result']
+                              controller.uiWorkflowManagement![0]['result']
                                   .toString(),
                               style: Dimensions.fontSizeStyle14w600(),
                             )
@@ -440,7 +427,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         Stack(
                           children: [
                             Text(
-                              controller.uiWorkflowManagement![index]['city']
+                              controller.uiWorkflowManagement![0]['city']
                                   .toString(),
                               style: TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,
@@ -452,7 +439,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               ),
                             ),
                             Text(
-                              controller.uiWorkflowManagement![index]['city']
+                              controller.uiWorkflowManagement![0]['city']
                                   .toString(),
                               style: const TextStyle(
                                 fontSize: Dimensions.FONT_SIZE_DEFAULT,

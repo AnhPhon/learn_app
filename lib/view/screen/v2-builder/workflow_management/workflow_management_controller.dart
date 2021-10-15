@@ -1,11 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/cong_viec_nhan_vien_response.dart';
+import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V2WorkflowManagementController extends GetxController
     with SingleGetTickerProviderMixin {
+  CongViecNhanVienProvider congViecNhanVienProvider =
+      GetIt.I.get<CongViecNhanVienProvider>();
+
   //set model để thiết kế UI Quản lý công việc
   List<Map<String, dynamic>>? uiWorkflowManagement;
+
+  // cong viec dang lam
+  List<CongViecNhanVienResponse> dangLam = [];
+
+  // cong viec hoan thanh
+  List<CongViecNhanVienResponse> hoanThanh = [];
 
   //khai báo isLoading
   bool isLoading = true;
@@ -15,17 +26,51 @@ class V2WorkflowManagementController extends GetxController
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
-    //List model thiết kế UI
+    // read cong viec nhan vien
+    _readCongViecNhanVien();
+
+    // init work flow
+    _initWorkflow();
+  }
+
+  ///
+  /// get cong viec
+  ///
+  void _readCongViecNhanVien() {
+    congViecNhanVienProvider.paginate(
+      page: 1,
+      limit: 10,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (values) {
+        for (final value in values) {
+          if (value.trangThai!.toLowerCase() == 'dang lam') {
+            dangLam.add(value);
+          } else {
+            hoanThanh.add(value);
+          }
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// init work flow
+  ///
+  void _initWorkflow() {
+    // List model thiết kế UI
     uiWorkflowManagement = [
       {
         "job": "Thợ ốp lát",
         "title": "Công trình khách hàng 4 sao tại Đà Nẵng",
         "city": "Đà Nẵng",
         "address": "Ngũ Hành Sơn",
-        "status": "Còn 35 ngày",
+        "status": "35 ngày",
         "isStatus": false,
         "result": "Chưa nghiệm thu",
         "rate":
@@ -47,7 +92,7 @@ class V2WorkflowManagementController extends GetxController
         "title": "Công trình khách hàng 4 sao tại Hồ Chí Minh",
         "city": "Hồ Chí Minh",
         "address": "Ngũ Hành Sơn",
-        "status": "Còn 20 ngày",
+        "status": "20 ngày",
         "isStatus": false,
         "result": "Đã quyết toán",
         "rate":
