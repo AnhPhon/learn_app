@@ -29,7 +29,13 @@ class LabelDropdown extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label, style: Dimensions.textTitleStyleCard()),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             if (isRequire == true)
               const Text(
                 "*",
@@ -44,34 +50,37 @@ class LabelDropdown extends StatelessWidget {
         SizedBox(
             height:
                 DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
-        FormField<String>(
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              decoration: InputDecoration(
-                  labelStyle: Dimensions.textNormalStyleCard(),
-                  errorStyle: const TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: Dimensions.FONT_SIZE_LARGE,
+        SizedBox(
+          height: 60,
+          child: FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                    labelStyle: Dimensions.textNormalStyleCard(),
+                    errorStyle: const TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                    ),
+                    hintText: labelText,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
+                isEmpty: currentSelectvalue == '',
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: currentSelectvalue,
+                    isDense: true,
+                    onChanged: onChanged,
+                    items: currencies.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
-                  hintText: labelText,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-              isEmpty: currentSelectvalue == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: currentSelectvalue,
-                  isDense: true,
-                  onChanged: onChanged,
-                  items: currencies.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         )
       ],
     );

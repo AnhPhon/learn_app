@@ -1,11 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:template/provider/loai_cong_viec_provider.dart';
+import 'package:template/provider/nhom_dich_vu_provider.dart';
+import 'package:template/provider/phuong_xa_provider.dart';
+import 'package:template/provider/quan_huyen_provider.dart';
+import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
-
 class V2WorkRegisterController extends GetxController {
+  // provider
+  NhomDichVuProvider nhomDichVuProvider = GetIt.I.get<NhomDichVuProvider>();
+  LoaiCongViecProvider loaiCongViecProvider =
+      GetIt.I.get<LoaiCongViecProvider>();
+
+  TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
+  QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
+  PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
+
   String title = "Đăng ký việc";
 
   TextEditingController? tieuDeBaoGiaController;
@@ -20,14 +34,14 @@ class V2WorkRegisterController extends GetxController {
 
   TextEditingController timeStartController = TextEditingController();
   TextEditingController timeEndController = TextEditingController();
-
+  TextEditingController soLuongController = TextEditingController();
 
   List<String>? currencies;
   String? firstSelect;
 
   // radio
   //List<SelectProvinceCustomModel>? provinceData;
-  // List<SelectProvinceCustomModel>? provinceData;
+  List<SelectProvinceCustomModel>? provinceData;
   List<bool>? checkList;
 
   @override
@@ -48,32 +62,32 @@ class V2WorkRegisterController extends GetxController {
     fromDate = TextEditingController();
     toDate = TextEditingController();
 
-    // provinceData = [
-    //   SelectProvinceCustomModel(
-    //     value: "TP.HCM",
-    //     onChanged: (val) {
-    //       onChange(0, val as bool);
-    //     },
-    //   ),
-    //   SelectProvinceCustomModel(
-    //     value: "Hà Nội",
-    //     onChanged: (val) {
-    //       onChange(1, val as bool);
-    //     },
-    //   ),
-    //   SelectProvinceCustomModel(
-    //     value: "Đà Nẵng",
-    //     onChanged: (val) {
-    //       onChange(2, val as bool);
-    //     },
-    //   ),
-    //   SelectProvinceCustomModel(
-    //     value: "Tỉnh khác",
-    //     onChanged: (val) {
-    //       onChange(3, val as bool);
-    //     },
-    //   ),
-    // ];
+    provinceData = [
+      SelectProvinceCustomModel(
+        value: "TP.HCM",
+        onChanged: (val) {
+          onChange(0, val as bool);
+        },
+      ),
+      SelectProvinceCustomModel(
+        value: "Hà Nội",
+        onChanged: (val) {
+          onChange(1, val as bool);
+        },
+      ),
+      SelectProvinceCustomModel(
+        value: "Đà Nẵng",
+        onChanged: (val) {
+          onChange(2, val as bool);
+        },
+      ),
+      SelectProvinceCustomModel(
+        value: "Tỉnh khác",
+        onChanged: (val) {
+          onChange(3, val as bool);
+        },
+      ),
+    ];
   }
 
   ///
@@ -136,6 +150,13 @@ class V2WorkRegisterController extends GetxController {
         update();
       }
     });
+  }
+
+  ///
+  /// format date
+  ///
+  String formatDate(String date) {
+    return DateFormat("dd/MM/yyyy").format(DateTime.parse(date));
   }
 }
 

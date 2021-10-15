@@ -22,7 +22,13 @@ class LabelInput extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label, style: Dimensions.textTitleStyleCard()),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             if (isRequire == true)
               const Text(
                 "*",
@@ -34,7 +40,9 @@ class LabelInput extends StatelessWidget {
               )
           ],
         ),
-        SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+        SizedBox(
+            height:
+                DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
         TextField(
           decoration: InputDecoration(
             border: const OutlineInputBorder(),

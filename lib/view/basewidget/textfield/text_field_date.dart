@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -28,10 +29,7 @@ class TextFieldDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
+      padding: EdgeInsets.only(top: paddingTop!),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +60,8 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           TextField(
+            readOnly: true,
+            enableInteractiveSelection: false,
             textInputAction: TextInputAction.done,
             keyboardType: isDate ? null : typeInput,
             textAlignVertical: TextAlignVertical.center,
@@ -76,8 +76,8 @@ class TextFieldDate extends StatelessWidget {
                       firstDate: DateTime(2001),
                       lastDate: DateTime(2100),
                     ).then((value) {
-                      controller.text =
-                          "${value!.year}-${value.month}-${value.day}";
+                      controller.text = formatDate(
+                          "${value!.year}-${value.month}-${value.day}");
                     });
                   }
                 : null,
@@ -93,27 +93,25 @@ class TextFieldDate extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      const BorderSide(color: ColorResources.LIGHT_BLACK),
                   borderRadius: BorderRadius.circular(
                       Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      const BorderSide(color: ColorResources.LIGHT_BLACK),
                   borderRadius: BorderRadius.circular(
                       Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                      const BorderSide(color: ColorResources.LIGHT_BLACK),
                   borderRadius: BorderRadius.circular(
                       Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
                 hintText: holdplacer,
                 filled: true,
-                fillColor: (allowEdit == false)
-                    ? ColorResources.GREY
-                    : Colors.transparent,
+                fillColor: Colors.transparent,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),
@@ -124,7 +122,7 @@ class TextFieldDate extends StatelessWidget {
                         child: Icon(
                           Icons.date_range,
                           size: Dimensions.ICON_SIZE_SMALL,
-                          color: ColorResources.PRIMARYCOLOR,
+                          color: ColorResources.LIGHT_BLACK,
                         ),
                       )
                     : null),
@@ -132,5 +130,12 @@ class TextFieldDate extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ///
+  /// format date
+  ///
+  String formatDate(String date) {
+    return DateFormat("dd/MM/yyyy").format(DateTime.parse(date));
   }
 }
