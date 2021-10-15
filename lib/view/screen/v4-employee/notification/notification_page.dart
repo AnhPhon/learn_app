@@ -57,7 +57,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: Dimensions.PADDING_SIZE_SMALL,
+              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
             child: GestureDetector(
               onTap: () {
