@@ -7,10 +7,17 @@ import 'package:template/routes/app_routes.dart';
 class V1G1CreateWorkController extends GetxController{
   final worKTitleController = TextEditingController();
   final descController = TextEditingController();
-  final startTime = TextEditingController();
-  final endTime = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
+  final nameTitleController = TextEditingController();
+  final specificationController = TextEditingController();
 
-
+  @override
+  void onInit() {
+    final data =Get.arguments as Map<String, dynamic>;
+    worKTitleController.text = data['jobTitle']  as String;
+    print(data);  
+  }
   ///
   /// Nhấn tiếp tục qua trang xem lại đơn tạo
   ///
@@ -18,5 +25,16 @@ class V1G1CreateWorkController extends GetxController{
     Get.toNamed(AppRoutes.V1_G1_REVIEW);
   }
 
+
+  @override
+  void onClose() {
+    super.onClose();
+    worKTitleController.dispose();
+    descController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
+    nameTitleController.dispose();
+    specificationController.dispose();
+  }
 
 }

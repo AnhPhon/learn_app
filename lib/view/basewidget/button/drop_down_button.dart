@@ -23,7 +23,7 @@ class DropDownButton<T> extends StatelessWidget {
   final List<T> data;
   final double? paddingTop;
   final bool? isColorFieldWhite;
-  final T value;
+  final T? value;
   @override
   Widget build(BuildContext context) {
     return Container(

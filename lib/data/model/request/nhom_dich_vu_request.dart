@@ -28,4 +28,9 @@ class NhomDichVuRequest {
 
     return data;
   }
+
+  @override
+  String toString() {
+      return tenDichVu!;
+  }
 }

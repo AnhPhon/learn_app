@@ -79,8 +79,6 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
-        
-
         InputField(
           allowEdit: true,
           allowMultiline: true,
@@ -97,7 +95,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         TextFieldDate(
           isDate: true,
           allowEdit: true,
-          controller: controller.startTime,
+          controller: controller.startTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
           label: "Thời gian bắt đầu",
@@ -108,7 +106,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
 
         TextFieldDate(
           allowEdit: true,
-          controller: controller.endTime,
+          controller: controller.endTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
           label: "Thời gian kết thúc",
@@ -133,13 +131,13 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         ),
         InputField(
           paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
-          controller: controller.worKTitleController,
+          controller: controller.nameTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Xây nhà",
           hidden: false,
-          label: "Tiêu đề công việc",
+          label: "Tên công việc",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -148,11 +146,11 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.descController,
+          controller: controller.specificationController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Xây nhà lầu",
           hidden: false,
-          label: "Mô tả công việc",
+          label: "Quy cách",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -160,14 +158,26 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            DropDownButton<String>(
-              data: const ["Xây nhà","Lót gạch men"],
-              obligatory: true,
-              onChanged: (value){},
-              value: "Xây nhà",
-              width: DeviceUtils.getScaledSize(context,0.5),
+            InputField(
+              allowEdit: true,
+              allowMultiline: false,
+              controller: controller.specificationController,
+              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
+              hidden: false,
               label: "Khối lượng",
+              obligatory: true,
+              typeInput: TextInputType.text,
+              width: DeviceUtils.getScaledWidth(context,0.5),
             ),
+            // DropDownButton<String>(
+            //   data: const ["Xây nhà","Lót gạch men"],
+            //   obligatory: true,
+            //   onChanged: (value){},
+            //   value: "Xây nhà",
+            //   width: DeviceUtils.getScaledSize(context,0.5),
+            //   label: "Khối lượng",
+            // ),
           DropDownButton<String>(
             data: const ["Xây nhà","Lót gạch men"],
             obligatory: true,

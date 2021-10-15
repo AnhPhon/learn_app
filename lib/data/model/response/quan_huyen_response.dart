@@ -50,4 +50,10 @@ class QuanHuyenResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten!;
+  }
+
 }
