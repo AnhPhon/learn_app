@@ -35,6 +35,7 @@ import 'package:template/data/repository/tinh_tp_repository.dart';
 import 'package:template/data/repository/trang_thai_don_hang_repository.dart';
 import 'package:template/data/repository/vat_tu_repository.dart';
 import 'package:template/helper/network_info.dart';
+import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/bang_bang_cap_provider.dart';
 import 'package:template/provider/bang_gia_dang_tin_provider.dart';
 import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
@@ -120,6 +121,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhSachBaoGiaDonDichVuRepository());
 
   // Provider
+  sl.registerLazySingleton(() => AuthProvider());
   sl.registerLazySingleton(() => BangBangCapProvider());
   sl.registerLazySingleton(() => BangGiaDangTinProvider());
   sl.registerLazySingleton(() => BangGiaLocHoSoProvider());
