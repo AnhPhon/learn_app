@@ -168,7 +168,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                                 //Địa điểm
                                 Text(
                                   controller.dangLam[index].idTinhTp!.ten!,
-                                  style: Dimensions.fontSizeStyle12(),
+                                  style: Dimensions.fontSizeStyle14(),
                                 ),
                               ],
                             ),
@@ -199,7 +199,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                                           .idTrangThaiDonHang!.tieuDe!
                                       : controller.getDeadline(controller
                                           .dangLam[index].ngayKetThuc!),
-                                  style: Dimensions.fontSizeStyle12(),
+                                  style: Dimensions.fontSizeStyle14(),
                                 ),
                               ],
                             ),
