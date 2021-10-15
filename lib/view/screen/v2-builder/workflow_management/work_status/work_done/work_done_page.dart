@@ -37,6 +37,11 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
       body: GetBuilder<V2WorkDoneController>(
           init: V2WorkDoneController(),
           builder: (V2WorkDoneController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,

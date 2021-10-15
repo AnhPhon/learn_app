@@ -179,13 +179,13 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                                   controller.dangLam[index].idTrangThaiDonHang!
                                               .tieuDe!
                                               .toLowerCase() ==
-                                          "dang tuyen"
+                                          controller.dangTuyenKey
                                       ? Icons.person_add_outlined
                                       : Icons.watch_later_outlined,
                                   color: controller.dangLam[index]
                                               .idTrangThaiDonHang!.tieuDe!
                                               .toLowerCase() ==
-                                          "dang tuyen"
+                                          controller.dangTuyenKey
                                       ? ColorResources.GREEN
                                       : ColorResources.YELLOW,
                                 ),
@@ -195,7 +195,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                                   controller.dangLam[index].idTrangThaiDonHang!
                                               .tieuDe!
                                               .toLowerCase() ==
-                                          "dang tuyen"
+                                          controller.dangTuyenKey
                                       ? controller.dangLam[index]
                                           .idTrangThaiDonHang!.tieuDe!
                                       : controller.getDeadline(controller

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
@@ -24,8 +26,11 @@ class V2WorkInProgressController extends GetxController {
   String status = "Còn 35 ngày";
   bool isStatus = true;
   String result = "Chưa nghiệm thu";
-  String rate =
-      "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.";
+  String rate = "Không có";
+
+  final String dangTuyenKey = "đang tuyển";
+  final String dangXuLyKey = "đang xử lý";
+  final String hoanThanhKey = "hoàn thành";
 
   @override
   void onInit() {
@@ -67,7 +72,7 @@ class V2WorkInProgressController extends GetxController {
 
           // set icon and color
           isStatus =
-              model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == "dang tuyen";
+              model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
 
           // set status
           result = model.idTrangThaiDonHang!.tieuDe!;
@@ -105,6 +110,45 @@ class V2WorkInProgressController extends GetxController {
   }
 
   ///
+  /// update data
+  ///
+  void updateData() {
+    sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+      phanHoiDonDichVuProvider.paginate(
+        page: 1,
+        limit: 20,
+        filter: "&idDonDichVu=$workFlowId",
+        onSuccess: (models) {
+          if (models.isNotEmpty) {
+            final String id = models[0].id!;
+            phanHoiDonDichVuProvider.update(
+              data: PhanHoiDonDichVuRequest(
+                yKienThoThau: rateBuilder.text,
+                id: id,
+              ),
+              onSuccess: (value) {
+                Get.back(result: true);
+              },
+              onError: (error) {
+                print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error",
+                );
+              },
+            );
+          } else {
+            EasyLoading.showError(
+              "Không thể cập nhật thông tin vào trường rỗng",
+            );
+          }
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
+  }
+
+  ///
   ///Click to Detail Work In progress page
   ///
   void onClickToDetialWorkInProgressPage() {
@@ -116,7 +160,7 @@ class V2WorkInProgressController extends GetxController {
   ///
   void submit() {
     if (_validate()) {
-      Get.back(result: true);
+      updateData();
     }
   }
 

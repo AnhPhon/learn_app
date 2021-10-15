@@ -27,6 +27,10 @@ class V2WorkDoneController extends GetxController {
   String rate =
       "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.";
 
+  final String dangTuyenKey = "đang tuyển";
+  final String dangXuLyKey = "đang xử lý";
+  final String hoanThanhKey = "hoàn thành";
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -57,7 +61,7 @@ class V2WorkDoneController extends GetxController {
 
           // set icon and color
           isStatus =
-              model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == "dang tuyen";
+              model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
 
           // set status
           result = model.idTrangThaiDonHang!.tieuDe!;

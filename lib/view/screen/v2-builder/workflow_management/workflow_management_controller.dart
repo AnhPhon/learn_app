@@ -24,6 +24,11 @@ class V2WorkflowManagementController extends GetxController
   //Khai báo isRecruiting
   bool isRecruiting = true;
 
+  final String dangTuyenKey = "đang tuyển";
+  final String dangXuLyKey = "đang xử lý";
+  final String dangGiaoKey = "đang giao";
+  final String hoanThanhKey = "hoàn thành";
+
   @override
   void onInit() {
     super.onInit();
@@ -51,16 +56,17 @@ class V2WorkflowManagementController extends GetxController
   void _readCongViecNhanVien() {
     donDichVuProvider.paginate(
       page: 1,
-      limit: 20,
+      limit: 30,
       filter: "&sortBy=created_at:desc",
       onSuccess: (values) {
         for (final value in values) {
-          if (value.idTrangThaiDonHang != null) {
+          if (value.idTrangThaiDonHang != null && value.idNhomDichVu != null) {
             final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
-            if (value.idNhomDichVu!.nhomDichVu! == "3" ||
-                value.idNhomDichVu!.nhomDichVu! == "4") {
-              if (tieuDe.toLowerCase() == "đang xử lý" ||
-                  tieuDe.toLowerCase() == "dang tuyen") {
+            final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
+            if (nhomDichVu == "3" || nhomDichVu == "4") {
+              if (tieuDe.toLowerCase() == dangXuLyKey ||
+                  tieuDe.toLowerCase() == dangTuyenKey ||
+                  tieuDe.toLowerCase() == dangGiaoKey) {
                 dangLam.add(value);
               } else {
                 hoanThanh.add(value);
