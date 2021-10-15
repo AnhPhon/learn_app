@@ -25,7 +25,7 @@ class RightsAndObligationsController extends GetxController{
       isLoading = false;
       update();
     }, onError: (onError){
-      
+      print("RightsAndObligationsController getRightsAndObligation onError $onError");
     });
   }
 }

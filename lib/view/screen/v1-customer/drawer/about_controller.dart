@@ -27,7 +27,7 @@ class AboutController extends GetxController{
       isLoading = false;
       update();
     }, onError: (onError){
-      
+      print("AboutController getAbout onError $onError");
     });
   }
 }

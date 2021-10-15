@@ -25,7 +25,7 @@ class TermsAndPolicyController extends GetxController{
       isLoading = false;
       update();
     }, onError: (onError){
-      
+      print("TermsAndPolicyController getTermsAndPolicy onError $onError");
     });
   }
 }

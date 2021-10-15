@@ -25,7 +25,7 @@ class BenefitsController extends GetxController{
       isLoading = false;
       update();
     }, onError: (onError){
-      
+      print("BenefitsController getBenefits onError $onError");
     });
   }
 }

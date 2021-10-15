@@ -25,7 +25,7 @@ class UsageProcedureController extends GetxController{
       isLoading = false;
       update();
     }, onError: (onError){
-      
+      print("UsageProcedureController getUsageProcedure onError $onError");
     });
   }
 }

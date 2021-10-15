@@ -74,7 +74,7 @@ class LoginController extends GetxController {
           onError: (error) {
             isLoading = false;
             Get.snackbar(
-              "Hey i'm a Get SnackBar!", // title
+              "Lỗi", // title
               error.toString(), // message
               icon: const Icon(Icons.error_outline),
               shouldIconPulse: true,
