@@ -26,7 +26,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
       body: GetBuilder(
         init: CreateWorkController(),
         builder: (CreateWorkController controller) {
-          if(controller.isLoadingNhomDichVu ){
+          if(controller.isLoadingNhomDichVu || controller.isLoading){
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
@@ -71,16 +71,6 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             label: "Chọn nhóm công việc phù hợp",
             hint: "Chọn nhóm công việc",
           ),
-          // if (controller.loaiCongViec == null || controller.loaiCongViecResponseList.isEmpty) 
-          // DropDownButton<String>(
-          //   data: const [],
-          //   obligatory: true,
-          //   onChanged: (cal){},
-          //   value: "",
-          //   width: DeviceUtils.getScaledSize(context,1),
-          //   label: "Chọn công việc phù hợp",
-          //   hint: 'Chọn nhóm công việc',
-          // ) else 
           DropDownButton<LoaiCongViecResponse>(
             data: controller.loaiCongViecResponseList,
             obligatory: true,
@@ -219,10 +209,10 @@ class CreateWorkPage extends GetView<CreateWorkController>{
               onChanged: (int? val)=> onChanged(val),
             ),
             DropDownButtonHideUnderLineWidget<TinhTpResponse>(
-              data: tinhList!,
+              data: !(value == groupValue) ? [] : tinhList!,
               onChanged: value == groupValue ?  (TinhTpResponse? val)=> onChangedProvince!(val): null,
               value: tinh,
-              hint: "Chọn tỉnh",
+              hint: "Chọn tỉnh khác",
               width: DeviceUtils.getScaledWidth(context, 0.83),
             ),
           ],

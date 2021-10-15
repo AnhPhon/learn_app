@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'dart:io' as io;
-import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
+import 'dart:io';
 
-class DonDichVuRequest {
+import 'package:template/data/model/response/vat_tu_response.dart';
+
+class PreviewServiceRequest {
   String? id;
   String? idTaiKhoan;
   String? idNhomDichVu;
@@ -10,19 +10,20 @@ class DonDichVuRequest {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
-  String? hinhAnhBanVe;
+  List<VatTuResponse>? bangKhoiLuong;
+  List<File>? hinhAnhBanKhoiLuong;
+  List<File>? hinhAnhBanVe;
   String? idTrangThaiDonHang;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
-  List<ThoiGianLamViecResponse>? thoiGianLamViec;
+  String? idThoiGianLamViec;
   String? idTinhTp;
   String? idQuanHuyen;
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
-  String? file;
+  File? file;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -43,7 +44,7 @@ class DonDichVuRequest {
   String? tienCoc;
   String? diaChiCuThe;
 
-  DonDichVuRequest({
+  PreviewServiceRequest({
       this.id,
       this.idTaiKhoan,
       this.idNhomDichVu,
@@ -56,7 +57,7 @@ class DonDichVuRequest {
       this.idTrangThaiDonHang,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
-      this.thoiGianLamViec,
+      this.idThoiGianLamViec,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
@@ -82,13 +83,14 @@ class DonDichVuRequest {
       this.tongDon,
       this.taiKhoanNhanDon,
       this.tienCoc,
-      this.diaChiCuThe
+      this.diaChiCuThe,
+      this.bangKhoiLuong
       });
   
   ///
   /// From JSON
   ///
-  DonDichVuRequest.fromJson(Map<String, dynamic> json) {
+  PreviewServiceRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idNhomDichVu = json['idNhomDichVu'].toString();
@@ -96,19 +98,19 @@ class DonDichVuRequest {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString();
+    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<File>;
+    hinhAnhBanVe = json['hinhAnhBanVe'].toString() as List<File>;
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>).map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>)).toList();
+    idThoiGianLamViec = json['idThoiGianLamViec'].toString();
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'].toString();
+    file = json['file'] as File;
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
@@ -128,6 +130,7 @@ class DonDichVuRequest {
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
+    bangKhoiLuong = json['bangKhoiLuong'] as List<VatTuResponse>;
   }
 
   ///
@@ -172,7 +175,7 @@ class DonDichVuRequest {
     if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
 
     // check null idThoiGianLamViec
-    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec!.map((e) => {'idThoiGianLamViec':e.id!}).toList(); 
+    if (idThoiGianLamViec != null) data['idThoiGianLamViec'] = idThoiGianLamViec; 
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
@@ -253,27 +256,3 @@ class DonDichVuRequest {
     return data;
   }
 }
-
-//class ThoiGianLamViec {
-//   String? idThoiGianLamViec;
-//   ThoiGianLamViec({
-//     this.idThoiGianLamViec,
-//   });
-  
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'idThoiGianLamViec': idThoiGianLamViec,
-//     };
-//   }
-
-//   factory ThoiGianLamViec.fromMap(Map<String, dynamic> map) {
-//     return ThoiGianLamViec(
-//       idThoiGianLamViec: map['id'] as String,
-//     );
-//   }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory ThoiGianLamViec.fromJson(String source) => ThoiGianLamViec.fromMap(json.decode(source) as Map<String, dynamic>);
-// }

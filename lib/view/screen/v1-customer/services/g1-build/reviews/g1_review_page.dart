@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/attach_button.dart';
@@ -30,16 +29,16 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
               children: [
                 // Tiêu tề nhóm công việc
                     const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
-                    workContent(),
+                    workContent(controller: controller),
                     
                     // Danh sách vật liệu
-                    materialList(),
+                    materialList(context,controller: controller),
                     //Thêm file
-                    attchFile(context),
+                    attchFile(context,controller: controller),
                     // Hình ảnh bảng vật liệu
-                    imageMaterial(),
+                    imageMaterial(controller: controller),
                     // Bản vẽ
-                    drawing(),
+                    drawing(controller: controller),
                     // Ghi chú
                     note(),
                     // Button
@@ -57,20 +56,20 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   /// Nội dung tiêu đề công việc và mô tả công việc , Thời gian
   ///
   
-  Widget workContent(){
+  Widget workContent({required V1G1ReviewController controller}){
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          TextHighlight(title: "Công việc: ", content: "Thợt ốp lát công trình 5 sao"),
+        children: [
+          TextHighlight(title: "Công việc: ", content: controller.previewServiceRequest!.tieuDe!),
           Padding(
-            padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: TextHighlight(title: "Mô tả công việc: ", content: "Thợ óp công trình 5 sao của công trình"),
+            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+            child: TextHighlight(title: "Mô tả công việc: ", content: controller.previewServiceRequest!.moTa!),
           ),
           Padding(
-            padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: TextHighlight(title: "Thời gian: ", content: "12-09-2021 đến 10-11-2021"),
+            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+            child: TextHighlight(title: "Thời gian: ", content: "${controller.previewServiceRequest!.ngayBatDau} - ${controller.previewServiceRequest!.ngayKetThuc}"),
           ),
         ],
       ),
@@ -81,67 +80,70 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   ///
   /// Danh sách vật liệu được thêm 
   ///
-  Widget materialList(){
+  Widget materialList(BuildContext context,{required V1G1ReviewController controller}){
     return Column(
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Bảng khối lượng công việc(nếu có)",
           obligatory: false,
           topPadding: 0,
         ),
-        MaterialCard(topPading: 0,),
-        MaterialCard()
+        ...controller.previewServiceRequest!.bangKhoiLuong!.map((e) => 
+        SizedBox(
+        width: DeviceUtils.getScaledWidth(context, 1),
+        child: MaterialCard(mass: e))).toList()
       ],
     );
   }
 
-  Widget attchFile(BuildContext context){
-    return Padding(
+  Widget attchFile(BuildContext context,{required V1G1ReviewController controller}){
+    return controller.previewServiceRequest!.file != null ? 
+    Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_LARGE
       ),
       child: AttachButton(
-        title: "vatlieu.doc", 
+        title: controller.previewServiceRequest!.file.toString(), 
         color: ColorResources.WHITE, 
         onPressed: (){},
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
-    );
+    ) : Container();
   }
 
-  Widget imageMaterial(){
+  Widget imageMaterial({required V1G1ReviewController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Hình ảnh bảng khối lượng",
           obligatory: false,
           paddingTitle: 0
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: Text("(Bảng in hoặc viết bằng tay nếu có)"),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: []),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanKhoiLuong!),
         ),
       ],
     );
   }
 
-  Widget drawing(){
+  Widget drawing({required V1G1ReviewController controller}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Label(
+      children:  [
+        const Label(
           label: "Hình ảnh bản vẽ (nếu có)",
           obligatory: false,
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: [],isAddImage: true,),
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanVe!,),
         ),
       ],
     );
