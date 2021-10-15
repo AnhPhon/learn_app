@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;
@@ -17,15 +18,14 @@ class ProductCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(.5),
-            blurRadius: 10,
-            offset: const Offset(0, -Dimensions.MARGIN_SIZE_SMALL)
-          )
-        ],
-        borderRadius: const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))
-      ),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(.5),
+                blurRadius: 10,
+                offset: const Offset(0, -Dimensions.MARGIN_SIZE_SMALL))
+          ],
+          borderRadius: const BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
       child: Column(
         children: [
           SizedBox(
@@ -34,7 +34,12 @@ class ProductCard extends StatelessWidget {
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               ),
-              child: Image.network(image),
+              child: FadeInImage.assetNetwork(
+                placeholder: Images.logo,
+                image: image,
+                height: 160,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Container(

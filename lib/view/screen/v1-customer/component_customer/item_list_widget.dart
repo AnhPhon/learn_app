@@ -152,11 +152,9 @@ class ItemListWidget extends StatelessWidget {
                             if (rowText2 != null)
                               Text(
                                 rowText2!,
-                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  color: colorRowText1,
-                                ),
+                                    color: colorRowText2,
+                                    fontSize: Dimensions.FONT_SIZE_SMALL),
                               ),
                           ],
                         ),

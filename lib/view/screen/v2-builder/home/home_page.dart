@@ -5,14 +5,13 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/card/product_card.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
-import 'package:template/view/basewidget/news/news.dart';
 import 'package:template/view/basewidget/task_need_worker.dart';
+import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -24,8 +23,11 @@ class V2HomePage extends GetView<V2HomeController> {
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
         builder: (V2HomeController controller) {
+          if (controller.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return HomeWidget(
-            fullname: "KH, ${controller.fullname}!",
+            fullname: "NT, ${controller.fullname}!",
             content: Column(
               children: [
                 const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -47,7 +49,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 _sanPhamWidget(context),
 
                 // news
-                _newsWidget(controller:controller)
+                _newsWidget()
               ],
             ),
           );
@@ -227,22 +229,28 @@ class V2HomePage extends GetView<V2HomeController> {
   /// need people widget
   ///
   Widget _needPeopleWidget(V2HomeController controller) {
+    final int length = controller.donDichVuList.length > 2
+        ? 2
+        : controller.donDichVuList.length;
+    final double len = length * 1.0;
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
         onTap: () => controller.onShortHandedPageClick(),
         title: "Công việc đang cần người",
         widget: SizedBox(
-          height: 220,
+          height: (len > 0) ? 140 * len : 0,
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: length,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
-              return const TaskNeedWorker(
-                nhanTask: "Thợ ốp lát",
-                tenTask: "Công trình khách 5 sao tại TP Đà Nẵng",
-                maTask: "DH123456",
-                trangThai: "Đang tuyển",
+              return TaskNeedWorker(
+                nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
+                tenTask: controller.donDichVuList[index].tieuDe!,
+                maTask:
+                    "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
+                trangThai:
+                    controller.donDichVuList[index].idTrangThaiDonHang!.tieuDe!,
               );
             },
           ),
@@ -255,6 +263,9 @@ class V2HomePage extends GetView<V2HomeController> {
   /// _sanPhamWidget
   ///
   Widget _sanPhamWidget(BuildContext context) {
+    final int length =
+        controller.sanPhamList.length > 2 ? 2 : controller.sanPhamList.length;
+    final double len = length * 1.0;
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
@@ -269,10 +280,10 @@ class V2HomePage extends GetView<V2HomeController> {
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisExtent: 270,
+              mainAxisExtent: 280,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount: length,
             itemBuilder: (BuildContext ctx, index) {
               return Container(
                 decoration: const BoxDecoration(
@@ -283,8 +294,8 @@ class V2HomePage extends GetView<V2HomeController> {
                 padding:
                     const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ProductCard(
-                  title: "Ke chữ thập màu vàng cho ...",
-                  image: Images.example,
+                  title: controller.sanPhamList[index].ten!,
+                  image: controller.sanPhamList[index].hinhAnhSanPham!,
                   cost: PriceConverter.convertPrice(context, 100000),
                 ),
               );
@@ -298,7 +309,10 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget({required V2HomeController controller}) {
+  Widget _newsWidget() {
+    final int length =
+        controller.tinTucList.length > 2 ? 2 : controller.tinTucList.length;
+    final double len = length * 1.0;
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
@@ -307,19 +321,30 @@ class V2HomePage extends GetView<V2HomeController> {
           controller.onClickHotNews();
         },
         widget: SizedBox(
-          height: 250,
+          height: (len > 0) ? 140 * len : 0,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount: length,
             itemBuilder: (
               BuildContext ctx,
               index,
             ) {
-              return const Padding(
+              return Padding(
                 padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: NewsBox(
-                  title: "Tin nóng tóm tắt tổng hợp",
-                  describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
+                child: ItemListWidget(
+                  onTap: () {},
+                  title: "Biệt thự 170 Nguyễn Đình Thi",
+                  icon1: const Icon(Icons.remove_red_eye),
+                  rowText1: controller.tinTucList[index].luotXem,
+                  colorRowText1: ColorResources.BLACKGREY,
+                  icon2: const Icon(Icons.monetization_on_outlined),
+                  rowText2: controller.tinTucList[index].createdAt
+                      .toString()
+                      .substring(0, 10),
+                  colorRowText2: ColorResources.BLACKGREY,
+                  isStart: true,
+                  urlImage: controller.tinTucList[index].hinhAnh!,
+                  isSpaceBetween: true,
                 ),
               );
             },
