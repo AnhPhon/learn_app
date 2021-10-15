@@ -5,9 +5,13 @@ import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/du_an_nhan_vien_repository.dart';
+import 'package:template/data/repository/phuong_xa_repository.dart';
 import 'package:template/data/repository/quan_huyen_repository.dart';
 import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
+import 'package:template/data/repository/danh_muc_san_pham_repository.dart';
 import 'package:template/data/repository/danh_muc_tin_tuc_repository.dart';
+import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/data/repository/kho_hang_repository.dart';
 import 'package:template/data/repository/san_pham_repository.dart';
 import 'package:template/data/repository/tai_khoan_repository.dart';
@@ -20,11 +24,15 @@ import 'package:template/helper/network_info.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/du_an_nhan_vien_provider.dart';
+import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
@@ -56,14 +64,22 @@ Future<void> init() async {
   // sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => TinhTpRepository());
   sl.registerLazySingleton(() => QuanHuyenRepository());
+  sl.registerLazySingleton(() => PhuongXaRepository());
   sl.registerLazySingleton(() => ChamCongRepository());
+  sl.registerLazySingleton(() => SanPhamRepository());
+  sl.registerLazySingleton(() => TaiKhoanRepository());
+  sl.registerLazySingleton(() => DonDichVuRepository());
+  sl.registerLazySingleton(() => DuAnNhanVienRepository());
+
+  // Provider
+
+  sl.registerLazySingleton(() => DonDichVuProvider());
   sl.registerLazySingleton(() => ThongBaoRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
-  sl.registerLazySingleton(() => SanPhamRepository());
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
-  sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => BaoCaoNhanVienRepository());
+  sl.registerLazySingleton(() => DanhMucSanPhamRepository());
 
   // Provider
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
@@ -78,4 +94,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChamCongProvider());
   sl.registerLazySingleton(() => TinhTpProvider());
   sl.registerLazySingleton(() => QuanHuyenProvider());
+  sl.registerLazySingleton(() => PhuongXaProvider());
+  sl.registerLazySingleton(() => DanhMucSanPhamProvider());
+  sl.registerLazySingleton(() => DuAnNhanVienProvider());
 }

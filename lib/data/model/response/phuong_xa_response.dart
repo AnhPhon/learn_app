@@ -8,25 +8,23 @@ class PhuongXaResponse {
   String? createdAt;
   String? updatedAt;
 
-  PhuongXaResponse({
-      this.id,
-      this.idQuanHuyen,
-      this.ten,
-      this.createdAt,
-      this.updatedAt});
-  
+  PhuongXaResponse(
+      {this.id, this.idQuanHuyen, this.ten, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
   PhuongXaResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
 
-    // mapping idQuanHuyen                                                              
-    if (json['idQuanHuyen'] != null && json['idQuanHuyen'].toString().length!=24) {                                                  
-      idQuanHuyen = QuanHuyenResponse.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idQuanHuyen = null;                                                               
-    }                                                                                  
+    // mapping idQuanHuyen
+    if (json['idQuanHuyen'] != null &&
+        json['idQuanHuyen'].toString().length != 24) {
+      idQuanHuyen = QuanHuyenResponse.fromJson(
+          json['idQuanHuyen'] as Map<String, dynamic>);
+    } else {
+      idQuanHuyen = null;
+    }
     ten = json['ten'].toString();
 
     createdAt = json['created_at'].toString();
@@ -39,15 +37,19 @@ class PhuongXaResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idQuanHuyen
-    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen;
 
     // check null ten
-    if (ten != null) data['ten'] = ten; 
-
+    if (ten != null) data['ten'] = ten;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return ten!;
   }
 }

@@ -20,6 +20,7 @@ class InputField extends StatelessWidget {
       required this.obligatory,
       this.line = 5,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.isColorFieldWhite,
       required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
@@ -33,6 +34,7 @@ class InputField extends StatelessWidget {
   final int? line;
   final Function(String value)? onChanged;
   bool? boldHinText;
+  final bool? isColorFieldWhite;
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +119,9 @@ class InputField extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_LARGE,
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
-                  fillColor: (allowEdit == false)
+                  fillColor: (isColorFieldWhite == false)
                       ? ColorResources.GREY
-                      : Colors.transparent,
+                      : ColorResources.WHITE,
                   suffixIcon: suffixIcon),
             ),
           ),

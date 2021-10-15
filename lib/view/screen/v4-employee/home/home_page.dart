@@ -21,7 +21,7 @@ class V4HomePage extends GetView<V4HomeController> {
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
         builder: (V4HomeController controller) {
-          if(controller.isLoading) {
+          if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -36,7 +36,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                 // time keeping
-                _btnTimekeeping(),
+                _btnTimekeeping(context),
                 const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                 // _followWorkProgressWidget
@@ -92,10 +92,10 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   /// button time keeping
   ///
-  Widget _btnTimekeeping() {
+  Widget _btnTimekeeping(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.onBtnTimeKeepingClick();
+        controller.onBtnTimeKeepingClick(context);
       },
       child: Container(
         width: 150,
@@ -103,7 +103,8 @@ class V4HomePage extends GetView<V4HomeController> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: const Color(0xff2196F3),
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         child: Center(
           child: Text(
@@ -127,7 +128,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -239,7 +241,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -403,7 +406,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),

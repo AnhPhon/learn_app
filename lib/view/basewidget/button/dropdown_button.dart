@@ -38,6 +38,7 @@ class DropDownButton1<T> extends StatelessWidget {
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
             Align(

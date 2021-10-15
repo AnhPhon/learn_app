@@ -10,11 +10,15 @@ mixin DateConverter {
   }
 
   static String estimatedDateOnly(DateTime dateTime) {
-    return DateFormat('dd/MM/yyyy').format(dateTime);
+    return DateFormat('dd-MM-yyyy').format(dateTime);
   }
 
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
+  }
+
+  static DateTime convertStringToddMMyyyyDatetime(String dateTime) {
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
@@ -54,5 +58,12 @@ mixin DateConverter {
     return DateConverter.isoStringToLocalFullDateOnly(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
+  }
+
+  static String readMongoToString(String dateTimeStr) {
+    final String first10letter = dateTimeStr.substring(0, 10);
+    return DateFormat('dd/MM/yyyy').format(
+      DateFormat('yyyy-MM-dd').parse(first10letter),
+    );
   }
 }
