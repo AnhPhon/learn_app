@@ -23,6 +23,9 @@ class V3HomePage extends GetView<V3HomeController> {
       body: GetBuilder<V3HomeController>(
         init: V3HomeController(),
         builder: (V3HomeController controller) {
+          if (controller.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return HomeWidget(
             fullname: "ĐL, ${controller.fullname}!",
             content: Column(
@@ -37,7 +40,7 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                _newsWidget(controller:controller),
+                _newsWidget(),
 
                 // product widget
                 _productWidget(controller: controller)
@@ -162,40 +165,6 @@ class V3HomePage extends GetView<V3HomeController> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  ///
-  /// news widget
-  ///
-  Widget _newsWidget({required V3HomeController controller}) {
-    return FieldWidget(
-      title: "Tin tức",
-      onTap: () {
-        controller.onClickNews();
-      },
-      widget: Container(
-        height: 220,
-        padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
-        child: ListView.builder(
-          itemCount: 2,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (
-            BuildContext ctx,
-            index,
-          ) {
-            return const Padding(
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: NewsBox(
-                title: "Tin nóng tóm tắt tổng hợp",
-                describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
-              ),
-            );
-          },
-        ),
       ),
     );
   }

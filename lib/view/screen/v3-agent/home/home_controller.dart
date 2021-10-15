@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3HomeController extends GetxController {
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
+  SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
@@ -19,36 +31,70 @@ class V3HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    // sl.get<SharedPreferenceHelper>().userId.then((id) {
-    //   // tìm kiếm tài khoản theo id user được login
-    //   taiKhoanProvider.find(
-    //     id: id!,
-    //     onSuccess: (taiKhoanResponse) {
-          
-    //       // set lại full name theo tài khoản
-    //       fullname = taiKhoanResponse.hoTen!;
-          
-    //       // read tin tuc
-    //       _readTinTuc();
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      // tìm kiếm tài khoản theo id user được login
+      taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (taiKhoanResponse) {
+          // set lại full name theo tài khoản
+          fullname = taiKhoanResponse.hoTen!;
 
-    //       // read Kho san Pham
-    //       _readKhosanPham();
+          // read tin tuc
+          _readTinTuc();
 
-    //       // binding three feature
-    //       _bindingThreeFeature();
-    //     },
-    //     onError: (error) {
-    //       print(error);
-    //     },
-    //   );
-    // });
+          // read Kho san Pham
+          _readKhosanPham();
+
+          // binding three feature
+          _bindingThreeFeature();
+        },
+        onError: (error) {
+          print(error);
+        },
+      );
+    });
   }
 
-
+  ///
+  /// read tin tuc
+  ///
+  void _readTinTuc() {
+    tinTucProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=create_at:desc",
+      onSuccess: (tinTucResponses) {
+        // get tin tuc list
+        tinTucList = tinTucResponses;
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
 
   ///
   /// read kho san pham
-  //
+  ///
+  void _readKhosanPham() {
+    sanPhamProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=create_at:desc",
+      onSuccess: (sanPhamModels) {
+        // get san pham list
+        sanPhamList = sanPhamModels;
+
+        // set is loading
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print(error);
+      },
+    );
+  }
 
   ///
   /// binding three feature
@@ -63,7 +109,7 @@ class V3HomeController extends GetxController {
           Color(0xff8CE3E9),
           Color(0xff8CE3E9),
         ]),
-        "onTap": (){
+        "onTap": () {
           onClickStore();
         }
       },
