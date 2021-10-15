@@ -61,7 +61,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                   ),
 
                   //button thêm
-                  _btnAdd(),
+                  _btnAdd(controller),
                 ],
               ),
             );
@@ -235,10 +235,12 @@ Widget _detailContentExpenditure(
 ///
 /// Button Thêm
 ///
-Widget _btnAdd() {
+Widget _btnAdd(V4RevenueExpenditureController controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.onAddThu();
+    },
     title: 'Thêm',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );

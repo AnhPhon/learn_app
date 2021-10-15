@@ -47,6 +47,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SanPhamRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => DonDichVuRepository());
+  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
+  sl.registerLazySingleton(() => DanhMucSanPhamRepository());
+  sl.registerLazySingleton(() => KhoHangRepository());
 
   // Provider
   sl.registerLazySingleton(() => TinTucProvider());
@@ -55,21 +59,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => TaiKhoanProvider());
   sl.registerLazySingleton(() => DonDichVuProvider());
   sl.registerLazySingleton(() => ThongBaoRepository());
-  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
-  sl.registerLazySingleton(() => KhoHangRepository());
-  sl.registerLazySingleton(() => SanPhamRepository());
-  sl.registerLazySingleton(() => CongViecNhanVienRepository());
-  sl.registerLazySingleton(() => TaiKhoanRepository());
-  sl.registerLazySingleton(() => DanhMucSanPhamRepository());
-
-  // Provider
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
-  sl.registerLazySingleton(() => TinTucProvider());
   sl.registerLazySingleton(() => ThongBaoProvider());
   sl.registerLazySingleton(() => KhoHangProvider());
-  sl.registerLazySingleton(() => SanPhamProvider());
   sl.registerLazySingleton(() => CongViecNhanVienProvider());
-  sl.registerLazySingleton(() => DanhMucTinTucProvider());
-  sl.registerLazySingleton(() => TaiKhoanProvider());
   sl.registerLazySingleton(() => DanhMucSanPhamProvider());
 }
