@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -21,7 +22,10 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           // Tiêu tề nhóm công việc
           const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
           // Bảng giá từng loại
-          servicesList()
+          servicesList(context),
+          const SizedBox(
+            height: Dimensions.SIZE_SUPER_LARGE,
+          )
         ],
       ),
       bottomSheet: BottomAppBar(
@@ -29,7 +33,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           onTap: ()=> controller.onNextPage(),
           child: Container(
             width: DeviceUtils.getScaledWidth(context,1),
-            height: 90,
+            height: Dimensions.SIZE_SUPER_LARGE,
             color: ColorResources.PRIMARYCOLOR,
             alignment: Alignment.center,
             child: const Text("Tiếp tục", style: TextStyle(
@@ -44,71 +48,81 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
   }
 
 
-  Widget servicesList(){
+  Widget servicesList(BuildContext context){
     return Expanded(
       child: Container(
         margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
         padding: const EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_DEFAULT
         ),
-        child: ListView.builder(
-          controller: controller.scrollController,
-          padding: const EdgeInsets.symmetric(
-            vertical: Dimensions.PADDING_SIZE_SMALL,
-          ),
-          itemCount: 120,
-          itemBuilder: (context, index) {
-            return Padding(
+        child: GetBuilder(
+          builder: (V1G3OrderQuoteController controller) {
+            if(controller.isLoading){
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+              controller: controller.scrollController,
               padding: const EdgeInsets.symmetric(
                 vertical: Dimensions.PADDING_SIZE_SMALL,
               ),
-              child: GestureDetector(
-                onTap: (){
-                  _controller.onSelectedItem(1);
-                },
-                child: item(index: index)
-              ),
+              itemCount: controller.priceTable.length > (DeviceUtils.getScaledHeight(context, 1)/80) ? controller.priceTable.length + 1 : controller.priceTable.length,
+              itemBuilder: (context, index) {
+                if(index == controller.priceTable.length + 1){
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Dimensions.PADDING_SIZE_SMALL,
+                  ),
+                  child: GestureDetector(
+                    onTap: (){
+                      _controller.onSelectedItem(item: controller.priceTable[index]);
+                    },
+                    child: item(item: controller.priceTable[index])
+                  ),
+                );
+              },
             );
           },
-        ),
+        )
       ),
     );
   }
 
-  Widget item({required int index}){
+  Widget item({required BangGiaDonHangResponse item}){
     return GetBuilder(
       builder: (V1G3OrderQuoteController controller) {
         return Material(
-          elevation: 4,
+          elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
           ),
           child: Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
             decoration: BoxDecoration(
-              color: controller.currentSelected == index ? ColorResources.PRIMARYCOLOR.withOpacity(0.5) :  ColorResources.WHITE,
+              color: controller.currentSelected!.id == item.id ? ColorResources.PRIMARYCOLOR.withOpacity(0.5) :  ColorResources.WHITE,
               borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             ),
-            height: 60,
+            height: 70,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Text("Dịch vụ nail", style: TextStyle(
+                Text(item.tieuDe!, style: const TextStyle(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold
                 ),),
                 RichText(
-                  text: const TextSpan(
-                    text: "150.000đ",
-                    style: TextStyle(
+                  text: TextSpan(
+                    text: item.giaTien,
+                    style: const TextStyle(
                       color: ColorResources.RED,
                       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                       fontWeight: FontWeight.bold
                     ),
                     children: [
                       TextSpan(
-                        text: "/Lần"
+                        text: "/ ${item.donViTinh}"
                       )
                     ]
                   ),

@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -118,6 +119,7 @@ class V1G2CreateWorkController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
     }
   }
+
   ///
   /// Xoá hình ảnh
   ///
@@ -139,6 +141,7 @@ class V1G2CreateWorkController extends GetxController{
     }, onError: (error){
       isLoading = false;
       update();
+      print("V1G2CreateWorkController getWorkTime $error");
     });
   }
 
@@ -152,6 +155,10 @@ class V1G2CreateWorkController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
     }else if(endTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc dự kiến");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()) <= 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(workDesc.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
     }else if(valueController.text.toString().isEmpty){
@@ -161,15 +168,16 @@ class V1G2CreateWorkController extends GetxController{
     }else{
       EasyLoading.show(status:"Loading ...");
       DonDichVuRequest data = await request();
-      // Future.delayed(const Duration(seconds: 2)).then((value){
+      Future.delayed(const Duration(seconds: 2)).then((value){
         
-      // });
+      });
       donDichVuProvider.add(data: data, onSuccess: (data){
           EasyLoading.dismiss();
           Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
         }, onError: (onError){
           EasyLoading.dismiss();
           showSnackBar(title: "Lỗi", message: onError.toString());
+          print("V1G2CreateWorkController onClickContinueButton $onError");
         });
     }
   }
@@ -178,35 +186,36 @@ class V1G2CreateWorkController extends GetxController{
   /// Tạo đối tượng request
   ///
   Future<DonDichVuRequest> request(){
-      String? workTime = '';
+      final List<ThoiGianLamViecResponse> workTime = [];
       String massImagesLink = '';
       String productImagesLink = '';
       String currentStatusimages ='';
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
-        workTime = tommowReponse!.id;
+        workTime.add(tommowReponse!);
       }
       if(afternoon == true){
-        workTime = '${workTime!},${afternoonReponse!.id}'; 
+        workTime.add(afternoonReponse!); 
       }
       if(tonight == true){
-        workTime = '${workTime!},${tonightReponse!.id}';
+        workTime.add(tonightReponse!);
       }
       // Thời gian công việc chọn được nhiều ngày mà đây chỉ lưu được 1 ID
-      dichVuRequest.idThoiGianLamViec = afternoonReponse!.id;
+      dichVuRequest.thoiGianLamViec = workTime;
+      ////////////////////////////////////////////////////////////////
       dichVuRequest.ngayBatDau = startTime.text.toString();
       dichVuRequest.ngayKetThuc = endTime.text.toString();
       dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
-      dichVuRequest.moTa = workDesc.text.toString();
-      dichVuRequest.moTaChiTiet = workDesc.text.toString();
-      
+      dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
+      dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
+
       // Tải hình ảnh hiên trạng
       images.forEach((element) {
         imageUpdateProvider.add(file: element,onSuccess: (data){
           currentStatusimages = "$currentStatusimages${data.data},";
         }, onError: (onError){
-          print("Error");
+          print("V1G2CreateWorkController request hiện trạng $onError");
           EasyLoading.dismiss();
         });
       });
@@ -216,7 +225,7 @@ class V1G2CreateWorkController extends GetxController{
         imageUpdateProvider.add(file: element,onSuccess: (data){
           productImagesLink = "$productImagesLink${data.data},";
         }, onError: (onError){
-          print("Error");
+          print("V1G2CreateWorkController request ảnh sản phẩm mẫu $onError");
           EasyLoading.dismiss();
         });
       });
@@ -226,7 +235,7 @@ class V1G2CreateWorkController extends GetxController{
         imageUpdateProvider.add(file: element,onSuccess: (data){
           massImagesLink = "$massImagesLink${data.data},";
         }, onError: (onError){
-          print("Error");
+          print("V1G2CreateWorkController request khối lượng $onError");
           EasyLoading.dismiss();
         });
       });
@@ -237,13 +246,14 @@ class V1G2CreateWorkController extends GetxController{
           dichVuRequest.file = data.data;
         }, onError: (onError){
           EasyLoading.dismiss();
+          print("V1G2CreateWorkController request tải file $onError");
         });
       }
 
       return Future.delayed(const Duration(seconds: 1),(){
           dichVuRequest.hinhAnhBanKhoiLuong = massImagesLink;
-          dichVuRequest.hinhAnhBaoGia = currentStatusimages;
-          dichVuRequest.hinhAnhChiTiet = productImagesLink;
+          dichVuRequest.hinhAnhBanVe = productImagesLink;// Hình ảnh bản vẽ là hình ảnh sản phẩm mẫu
+          dichVuRequest.hinhAnhChiTiet = currentStatusimages; // Hình ảnh chi tiết cho là hình ảnh hiện trạng
           return dichVuRequest;
       });
       //return dichVuRequest;

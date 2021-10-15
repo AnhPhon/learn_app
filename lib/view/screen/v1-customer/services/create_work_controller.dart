@@ -46,7 +46,8 @@ class CreateWorkController extends GetxController{
   QuanHuyenResponse? quanHuyen;
   List<PhuongXaResponse> phuongXaList = [];
   PhuongXaResponse? phuongXa;
-
+  // Id User
+  String idUser = '';
   @override
   void onInit() {
     super.onInit();
@@ -54,6 +55,13 @@ class CreateWorkController extends GetxController{
     // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6 
     getNhomDichVu();
     getTinhThanh();
+    getUserId();
+  }
+
+
+  Future<void> getUserId()async{
+    final idUser =  await sl.get<SharedPreferenceHelper>().userId;
+    this.idUser = idUser!;
   }
 
   ///
@@ -256,13 +264,14 @@ class CreateWorkController extends GetxController{
         return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
       }else{
         
-        
-        if(dichvu!.id! == nhomDichVuResponseList[1].id){
-        // Nhóm 1
-        Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.id! == nhomDichVuResponseList[8].id){
+        if(dichvu!.nhomDichVu! == '1'){
+         // Nhóm 1
+          Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
+        }else if(dichvu!.nhomDichVu! == '2'){
+          // Nhóm 2
           Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.id! == nhomDichVuResponseList[2].id){
+        }else if(dichvu!.nhomDichVu! == '3'){
+          // Nhóm 3
           // Tạo đơn dịch vụ có gía
           Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
         }else if(dichvu == 4){

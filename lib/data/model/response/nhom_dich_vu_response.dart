@@ -2,6 +2,7 @@
 class NhomDichVuResponse {
   String? id;
   String? tenDichVu;
+  String? nhomDichVu;
 
   NhomDichVuResponse({
       this.id,
@@ -13,6 +14,7 @@ class NhomDichVuResponse {
   NhomDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tenDichVu = json['tenDichVu'].toString();
+    nhomDichVu = json['nhomDichVu'].toString();
 
   }
 
@@ -26,6 +28,9 @@ class NhomDichVuResponse {
 
     // check null tenDichVu
     if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
+
+    // check null nhomDichVu
+    if (nhomDichVu != null) data['nhomDichVu'] = nhomDichVu; 
 
 
     return data;

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io' as io;
+import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
+
 class DonDichVuRequest {
   String? id;
   String? idTaiKhoan;
@@ -11,7 +15,7 @@ class DonDichVuRequest {
   String? idTrangThaiDonHang;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
-  String? idThoiGianLamViec;
+  List<ThoiGianLamViecResponse>? thoiGianLamViec;
   String? idTinhTp;
   String? idQuanHuyen;
   String? idPhuongXa;
@@ -52,7 +56,7 @@ class DonDichVuRequest {
       this.idTrangThaiDonHang,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
-      this.idThoiGianLamViec,
+      this.thoiGianLamViec,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
@@ -97,7 +101,7 @@ class DonDichVuRequest {
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-    idThoiGianLamViec = json['idThoiGianLamViec'].toString();
+    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>).map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>)).toList();
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
@@ -168,7 +172,7 @@ class DonDichVuRequest {
     if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
 
     // check null idThoiGianLamViec
-    if (idThoiGianLamViec != null) data['idThoiGianLamViec'] = idThoiGianLamViec; 
+    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec!.map((e) => {'idThoiGianLamViec':e.id!}).toList(); 
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
@@ -249,3 +253,27 @@ class DonDichVuRequest {
     return data;
   }
 }
+
+//class ThoiGianLamViec {
+//   String? idThoiGianLamViec;
+//   ThoiGianLamViec({
+//     this.idThoiGianLamViec,
+//   });
+  
+
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'idThoiGianLamViec': idThoiGianLamViec,
+//     };
+//   }
+
+//   factory ThoiGianLamViec.fromMap(Map<String, dynamic> map) {
+//     return ThoiGianLamViec(
+//       idThoiGianLamViec: map['id'] as String,
+//     );
+//   }
+
+//   String toJson() => json.encode(toMap());
+
+//   factory ThoiGianLamViec.fromJson(String source) => ThoiGianLamViec.fromMap(json.decode(source) as Map<String, dynamic>);
+// }

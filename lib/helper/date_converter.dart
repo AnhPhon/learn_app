@@ -17,6 +17,10 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }
 
+  static DateTime convertStringToDate(String dateTime) {
+    return DateFormat('yyyy-MM-dd').parse(dateTime);
+  }
+
   static DateTime isoStringToLocalDate(String dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
@@ -44,5 +48,9 @@ mixin DateConverter {
 
   static String localDateToIsoString(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
+  }
+
+  static int differenceDate({required String startDate, required String endDate}) {
+    return int.parse(convertStringToDate(endDate).difference(convertStringToDate(startDate)).inDays.toString());
   }
 }

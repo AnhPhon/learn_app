@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -67,9 +68,9 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
               padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
               child: Row(
                 children: [
-                  RadioButton<int>(title: "Nam", onChanged: (val){}, value: 1, groupValue: 1),
-                  RadioButton<int>(title: "Nữ", onChanged: (val){}, value: 2, groupValue: 1),
-                  RadioButton<int>(title: "Khác", onChanged: (val){}, value: 0, groupValue: 1),
+                  RadioButton<GENDER>(title: "Nam", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nam, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Nữ", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nu, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Khác", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
                 ],
               ),
             );
@@ -79,7 +80,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         // Số lượng yêu cầu
         InputField(
           paddingTop: 0,
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.amountController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -87,7 +88,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           hidden: false,
           label: "Số lượng yêu cầu",
           obligatory: true,
-          typeInput: TextInputType.text,
+          typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
@@ -140,7 +141,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         ),
 
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.valueController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -148,7 +149,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           hidden: false,
           label: "Giá trị khách hàng đề xuất (nếu có) : VNĐ",
           obligatory: false,
-          typeInput: TextInputType.text,
+          typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
@@ -181,7 +182,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
-        onPressed: ()=> controller.onClickContinueButton(),
+        onPressed: controller.onClickContinueButton,
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         vertical: Dimensions.PADDING_SIZE_DEFAULT,

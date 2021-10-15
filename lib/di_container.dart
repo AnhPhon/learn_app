@@ -5,6 +5,7 @@ import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/repository/auth_repository.dart';
 import 'package:template/data/repository/bang_bang_cap_repository.dart';
 import 'package:template/data/repository/bang_gia_dang_tin_repository.dart';
+import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
 import 'package:template/data/repository/bang_gia_loc_ho_so_repository.dart';
 import 'package:template/data/repository/bang_luong_repository.dart';
 import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
@@ -25,9 +26,11 @@ import 'package:template/data/repository/phuong_xa_repository.dart';
 import 'package:template/data/repository/quan_huyen_repository.dart';
 import 'package:template/data/repository/thoi_gian_lam_viec_repository.dart';
 import 'package:template/data/repository/tinh_tp_repository.dart';
+import 'package:template/data/repository/vat_tu_repository.dart';
 // import 'package:template/data/repository/auth_repo.dart';
 import 'package:template/helper/network_info.dart';
 import 'package:template/provider/auth_provider.dart';
+import 'package:template/provider/bang_gia_don_hang_provider.dart';
 import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/hang_muc_xay_dung_provider.dart';
@@ -38,6 +41,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
+import 'package:template/provider/vat_tu_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'data/repository/bang_gia_phi_van_chuyen_repository.dart';
 import 'data/repository/tai_khoan_repository.dart';
@@ -90,6 +94,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DonDichVuRepository());
   sl.registerLazySingleton(() => ThoiGianLamViecRepository());
   sl.registerLazySingleton(() => ImageUpdateRepository());
+  sl.registerLazySingleton(() => VatTuRepository());
+  sl.registerLazySingleton(() => BangGiaDonHangRepository());
   // Provider
   // sl.registerFactory(() => RegionProvider());
   sl.registerFactory(() => AuthProvider());
@@ -104,6 +110,8 @@ Future<void> init() async {
   sl.registerFactory(() => DonDichVuProvider());
   sl.registerFactory(() => ThoiGianLamViecProvider());
   sl.registerFactory(() => ImageUpdateProvider());
+  sl.registerFactory(() => VatTuProvider());
+  sl.registerFactory(() => BangGiaDonHangProvider());
   // Provider
   // sl.registerFactory(() => AuthProvider());
 }

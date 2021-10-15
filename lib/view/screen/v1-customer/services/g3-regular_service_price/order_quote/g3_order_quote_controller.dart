@@ -1,71 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
+import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/bang_gia_don_hang_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1G3OrderQuoteController extends GetxController{
-  int currentSelected = 0;
+  final BangGiaDonHangProvider bangGiaDonHangProvider = GetIt.I.get<BangGiaDonHangProvider>();
+
+  BangGiaDonHangResponse? currentSelected;
   final ScrollController scrollController = ScrollController();
 
-  //final List<
+  // Danh sách bản giá đơn hàng
+  List<BangGiaDonHangResponse> priceTable = [];
 
-  int pageMax = 1;
-  int currentMax = 15;
+
+  // Đối tương request truyền từ màn hình trước qua
+  DonDichVuRequest? request;
+
+  int page = 1;
+  int limit = 15;
   bool reload = false;
+  bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
-    //loadData(reload: reload);
+    request = Get.arguments as DonDichVuRequest;
+    // Lắng nghe cuộn
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        currentMax = currentMax;
-        pageMax += 1;
-        // dreamOfNumbersProvider.getDreamList(
-        //     onSuccess: (value) {
-        //       dreamOfNumbersList = dreamOfNumbersList + value;
-        //       update();
-        //     },
-        //     onError: (error) {
-        //       update();
-        //     },
-        //     page: pageMax,
-        //     limit: currentMax);
-        Future.delayed(const Duration(seconds: 2)).then((value) => update());
+          if(limit >= 99){
+            limit = 15;
+          }
+          limit += 15;
+          getAllBangGia(limit: limit,page: page);
       }
     });
+
+    getAllBangGia(limit: limit,page: page);
   }
 
-  // void loadData({bool? reload}) {
-  //   isSearching = false;
-  //   if (reload! || dreamOfNumbersList.isEmpty) {
-  //     dreamOfNumbersList.clear();
-  //     pageMax = 1;
-  //     dreamOfNumbersProvider.getDreamList(
-  //         onSuccess: (value) {
-  //           dreamOfNumbersList = value;
-  //           update();
-  //         },
-  //         onError: (error) {
-  //           update();
-  //         },
-  //         page: pageMax,
-  //         limit: currentMax);
-  //     update();
-  //   }
-  // }
+  void loadData() {
+      priceTable.clear();
+      limit = 15;
+      page = 1;
+      getAllBangGia(limit: limit,page: page);
+      update();
+  }
+
+
+  ////////////////////////////////
+  ///Lấy bảng giá đơn hàng
+  ///
+  void getAllBangGia({required int limit, required int page}){
+    bangGiaDonHangProvider.paginate(page: page, limit: limit, filter:'', onSuccess: (data){
+      priceTable = data;
+      if(priceTable.isNotEmpty){
+        currentSelected = priceTable.first;
+      }
+      isLoading = false;
+      update();
+    }, onError: (onError){
+      isLoading = false;
+      update();
+      print("V1G3OrderQuoteController getAllBangGia Error $onError");
+    });
+  }
 
   ///
   /// Chọn item
   ///
-  void onSelectedItem(int index){
+  void onSelectedItem({required BangGiaDonHangResponse item}){
     // Get item position index 
-    currentSelected = index;
+    currentSelected = item;
     update();
   }
 
+  ///
+  /// Tiếp tục
+  ///
   void onNextPage(){
-    Get.toNamed(AppRoutes.V1_G3_ORDER_DETAIL);
+    request!.soTien = currentSelected!.giaTien;
+    request!.phiDichVu = '0';
+    request!.khuyenMai = '0';
+    request!.soNgay = DateConverter.differenceDate(startDate: request!.ngayKetThuc!, endDate: request!.ngayKetThuc!).toString();
+    request!.tongDon = currentSelected!.giaTien;
+    request!.tieuDe = currentSelected!.tieuDe;
+    Get.toNamed(AppRoutes.V1_G3_ORDER_DETAIL, arguments: request);
   }
 
 }

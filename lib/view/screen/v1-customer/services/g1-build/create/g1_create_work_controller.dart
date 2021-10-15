@@ -104,7 +104,9 @@ class V1G1CreateWorkController extends GetxController{
     }
   }
 
-
+  ///
+  /// Chon file
+  ///
   Future<void> pickerFile() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
