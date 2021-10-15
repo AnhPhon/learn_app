@@ -75,4 +75,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhMucTinTucProvider());
   sl.registerLazySingleton(() => TaiKhoanProvider());
   sl.registerLazySingleton(() => BaoCaoNhanVienProvider());
+  sl.registerLazySingleton(() => ChamCongProvider());
+  sl.registerLazySingleton(() => TinhTpProvider());
+  sl.registerLazySingleton(() => QuanHuyenProvider());
 }

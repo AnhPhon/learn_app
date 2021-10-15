@@ -70,7 +70,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       isDate: true,
       allowEdit: true,
       controller: controller.timekeeping,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       holdplacer: "12-11-2021",
       label: "Thời gian",
       obligatory: true,
@@ -82,8 +82,11 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   /// dự án
   ///
-  DropDownButton<String> _project(BuildContext context) {
-    return DropDownButton<String>(
+  Widget _project(BuildContext context) {
+    return DropDownButton1<String>(
+      isColorFieldWhite: true,
+      labelBold: true,
+      hint: 'Vui lòng chọn dự án',
       label: 'Dự án(nếu có)',
       data: const ['Dự án A', "Dự án C"],
       obligatory: true,
@@ -101,7 +104,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       allowEdit: true,
       allowMultiline: false,
       controller: controller.address,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       hidden: false,
       holdplacer: 'Vui lòng nhập địa chỉ cụ thể',
       label: 'Địa chỉ',
@@ -117,6 +120,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
 ///
 Widget _city(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton1<TinhTpResponse>(
+    isColorFieldWhite: true,
     hint: 'Tỉnh/Tp',
     data: controller.tinhTps,
     obligatory: true,
@@ -131,6 +135,7 @@ Widget _city(V4TimekeepingController controller, BuildContext context) {
 ///
 Widget _district(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton1<QuanHuyenResponse>(
+    isColorFieldWhite: true,
     hint: 'Quận/Huyện',
     data: controller.quanHuyenList,
     obligatory: true,

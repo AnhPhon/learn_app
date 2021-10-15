@@ -67,7 +67,6 @@ class V4TimekeepingController extends GetxController {
 
       if (data.isNotEmpty) {
         tinhTps.addAll(data);
-        tinh = tinhTps.first;
       }
 
       isLoading = false;
@@ -94,8 +93,6 @@ class V4TimekeepingController extends GetxController {
 
           if (data.isNotEmpty) {
             quanHuyenList.addAll(data);
-
-            quanHuyen = quanHuyenList.first;
           }
 
           isLoading = false;
