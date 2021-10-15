@@ -3,13 +3,11 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 class TaskNeedWorker extends StatelessWidget {
-  final String nhanTask;
   final String tenTask;
   final String maTask;
   final String trangThai;
 
   const TaskNeedWorker({
-    required this.nhanTask,
     required this.tenTask,
     required this.maTask,
     required this.trangThai,
@@ -61,7 +59,7 @@ class TaskNeedWorker extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "$nhanTask: $tenTask",
+                    tenTask,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),

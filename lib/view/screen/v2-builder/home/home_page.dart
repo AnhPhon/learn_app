@@ -245,7 +245,6 @@ class V2HomePage extends GetView<V2HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return TaskNeedWorker(
-                  nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
                   tenTask: controller.donDichVuList[index].tieuDe!,
                   maTask:
                       "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
