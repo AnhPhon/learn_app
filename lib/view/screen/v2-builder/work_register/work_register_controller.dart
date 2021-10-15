@@ -27,6 +27,7 @@ class V2WorkRegisterController extends GetxController {
 
   // radio
   //List<SelectProvinceCustomModel>? provinceData;
+  // List<SelectProvinceCustomModel>? provinceData;
   List<bool>? checkList;
 
   @override

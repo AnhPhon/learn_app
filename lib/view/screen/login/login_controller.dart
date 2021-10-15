@@ -6,6 +6,8 @@ import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/di_container.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -76,7 +78,7 @@ class LoginController extends GetxController {
           onError: (error) {
             isLoading = false;
             Get.snackbar(
-              "Hey i'm a Get SnackBar!", // title
+              "Lỗi", // title
               error.toString(), // message
               icon: const Icon(Icons.error_outline),
               shouldIconPulse: true,

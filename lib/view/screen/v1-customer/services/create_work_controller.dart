@@ -156,6 +156,7 @@ class CreateWorkController extends GetxController{
       }
       update();
     }, onError:(error){
+      print("CreateWorkController getLoaiCongViec onError $error");
       update();
       Get.snackbar("Error",error.message.toString(),);
     });
@@ -187,7 +188,8 @@ class CreateWorkController extends GetxController{
     }, onError: (error){
       isLoading = false;
       update();
-      Get.snackbar("Error",error.message.toString(),);
+      SnackBar(content: Text(error.message.toString()),);
+      print("CreateWorkController getTinhThanh onError $error");
     });
   }
 
@@ -215,7 +217,8 @@ class CreateWorkController extends GetxController{
       update();
     }, onError: (error){
       update();
-      Get.snackbar("Error",error.message.toString(),);
+      SnackBar(content: Text(error.message.toString()),);
+      print("CreateWorkController getQuanHuyen onError $error");
     });
   }
 
@@ -239,7 +242,8 @@ class CreateWorkController extends GetxController{
       update();
     }, onError: (error){
       update();
-      Get.snackbar("Error",error.message.toString(),);
+      SnackBar(content: Text(error.message.toString()),);
+      print("CreateWorkController getPhuongXa onError $error");
     });
   }
 
