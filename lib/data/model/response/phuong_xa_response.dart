@@ -50,4 +50,10 @@ class PhuongXaResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten!;    
+  }
+
 }

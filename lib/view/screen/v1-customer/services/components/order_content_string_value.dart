@@ -11,19 +11,24 @@ class OrderContentStringValue extends StatelessWidget {
     required this.title,
     required this.value,
     this.boldValue = false,
+    this.boldTitle = false,
+    this.padding,
   }) : super(key: key);
   final String title;
   final String value;
   final bool? boldValue;
+  final bool? boldTitle;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      padding: padding ?? const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,style: const TextStyle(
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+          Text(title,style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontWeight: boldTitle! ? FontWeight.bold : FontWeight.normal
           )),
           Text(value , style: TextStyle(
             color: ColorResources.BLACK,

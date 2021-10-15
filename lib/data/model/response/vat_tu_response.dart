@@ -5,6 +5,7 @@ class VatTuResponse {
   String? quyCach;
   String? donVi;
   String? donGia;
+  String? idDonDichVu;
 
   String? createdAt;
   String? updatedAt;
@@ -27,6 +28,7 @@ class VatTuResponse {
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
     donGia = json['donGia'].toString();
+    idDonDichVu = json['idDonDichVu'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -51,6 +53,9 @@ class VatTuResponse {
 
     // check null donGia
     if (donGia != null) data['donGia'] = donGia; 
+
+    // check null donGia
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
 
 
     return data;

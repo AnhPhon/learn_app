@@ -85,6 +85,7 @@ class Dimensions {
   static const double SIZE_EXTRA_LAEGE = 40;
   static const double SIZE_EXTRA_LARGE = 40;
   static const double SIZE_OVER_LARGE = 50;
+    static const double SIZE_SUPER_LARGE = 90;
 
 
   // COLOR

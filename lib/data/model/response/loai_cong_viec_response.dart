@@ -50,4 +50,9 @@ class LoaiCongViecResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return tenCongViec!;
+  }
 }

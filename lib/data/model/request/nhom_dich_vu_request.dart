@@ -1,6 +1,7 @@
 class NhomDichVuRequest {
   String? id;
   String? tenDichVu;
+  String? nhomDichVu;
 
   NhomDichVuRequest({
       this.id,
@@ -12,6 +13,7 @@ class NhomDichVuRequest {
   NhomDichVuRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tenDichVu = json['tenDichVu'].toString();
+    nhomDichVu = json['nhomDichVu'].toString();
   }
 
   ///
@@ -24,8 +26,16 @@ class NhomDichVuRequest {
 
     // check null tenDichVu
     if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
+    
+    // check null nhomDichVu
+    if (nhomDichVu != null) data['nhomDichVu'] = nhomDichVu; 
 
 
     return data;
+  }
+
+  @override
+  String toString() {
+      return tenDichVu!;
   }
 }
