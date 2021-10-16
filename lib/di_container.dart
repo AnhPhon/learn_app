@@ -152,25 +152,19 @@ Future<void> init() async {
   sl.registerFactory(() => ImageUpdateProvider());
   sl.registerFactory(() => VatTuProvider());
   sl.registerFactory(() => BangGiaDonHangProvider());
-  ;
-
   sl.registerFactory(() => ThongTinFSSProvider());
   sl.registerFactory(() => DieuKhoanChinhSachProvider());
   sl.registerFactory(() => LienHeCongTyProvider());
   sl.registerLazySingleton(() => SanPhamRepository());
-
   sl.registerLazySingleton(() => ThongBaoRepository());
-
   sl.registerLazySingleton(() => DieuKhoanChinhSachRepository());
   sl.registerLazySingleton(() => LienHeCongTyRepository());
 
   // Provider
   sl.registerLazySingleton(() => DanhMucTinTucProvider());
-  ;
   sl.registerLazySingleton(() => ThuChiNhanVienProvider());
   sl.registerLazySingleton(() => ThongBaoProvider());
   sl.registerLazySingleton(() => KhoHangProvider());
   sl.registerLazySingleton(() => CongViecNhanVienProvider());
-
   sl.registerLazySingleton(() => DanhMucSanPhamProvider());
 }

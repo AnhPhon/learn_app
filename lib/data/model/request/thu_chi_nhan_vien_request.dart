@@ -5,6 +5,7 @@ class ThuChiNhanVienRequest {
   String? tieuDe;
   String? soTien;
   String? noiDung;
+  String? ngayThuChi;
 
   ThuChiNhanVienRequest({
     this.id,
@@ -13,6 +14,7 @@ class ThuChiNhanVienRequest {
     this.tieuDe,
     this.soTien,
     this.noiDung,
+    this.ngayThuChi,
   });
 
   ///
@@ -25,6 +27,7 @@ class ThuChiNhanVienRequest {
     tieuDe = json['tieuDe'].toString();
     soTien = json['soTien'].toString();
     noiDung = json['noiDung'].toString();
+    ngayThuChi = json['ngayThuChi'].toString();
   }
 
   ///
@@ -49,6 +52,9 @@ class ThuChiNhanVienRequest {
 
     // check null noiDung
     if (noiDung != null) data['noiDung'] = noiDung;
+
+    //check null Ngay Thu Chi
+    if (ngayThuChi != null) data['ngayThuChi'] = ngayThuChi;
 
     return data;
   }

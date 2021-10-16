@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
-import 'package:template/helper/date_converter.dart';
+
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 
 class V4RevenueExpenditureController extends GetxController {
@@ -15,6 +16,9 @@ class V4RevenueExpenditureController extends GetxController {
   bool isLoading = true;
 
   bool isRevenue = true;
+
+  //Set ngày hiện Tại
+  String timeNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   final timeRevenueExpenditure = TextEditingController();
   final revenueController = TextEditingController(text: "Thu");
@@ -33,7 +37,7 @@ class V4RevenueExpenditureController extends GetxController {
   }
 
   ///
-  /// Check value THÊM THU
+  /// Check null value THÊM THU
   ///
   bool validateThu() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
@@ -63,8 +67,10 @@ class V4RevenueExpenditureController extends GetxController {
   void onAddThu() {
     if (validateThu()) {
       revenueController.text = '1';
+      print(timeRevenueExpenditure.text);
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
+          ngayThuChi: timeRevenueExpenditure.text,
           loai: revenueController.text,
           tieuDe: contentRevenueController.text,
           soTien: moneyController.text,
@@ -83,7 +89,7 @@ class V4RevenueExpenditureController extends GetxController {
   }
 
   ///
-  /// Check value THÊM CHI
+  /// Check null value THÊM CHI
   ///
   bool validateChi() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
@@ -115,6 +121,7 @@ class V4RevenueExpenditureController extends GetxController {
       expenditureController.text = '2';
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
+          ngayThuChi: timeRevenueExpenditure.text,
           loai: expenditureController.text,
           tieuDe: contentExpenditureController.text,
           soTien: moneyController.text,

@@ -83,7 +83,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       allowEdit: true,
       controller: controller.timeRevenueExpenditure,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: "12-11-2021",
+      holdplacer: controller.timeNow,
       label: "Ngày",
       obligatory: true,
       typeInput: TextInputType.text,

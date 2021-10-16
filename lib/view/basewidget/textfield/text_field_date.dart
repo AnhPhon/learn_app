@@ -77,7 +77,7 @@ class TextFieldDate extends StatelessWidget {
                       lastDate: DateTime(2100),
                     ).then((value) {
                       controller.text =
-                          "${value!.day}-${value.month}-${value.year}";
+                          "${value!.year}-${value.month}-${value.day}";
                     });
                   }
                 : null,

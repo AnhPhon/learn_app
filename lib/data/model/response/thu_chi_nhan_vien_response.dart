@@ -10,16 +10,18 @@ class ThuChiNhanVienResponse {
 
   String? createdAt;
   String? updatedAt;
-
-  ThuChiNhanVienResponse(
-      {this.id,
-      this.idNhanVien,
-      this.loai,
-      this.tieuDe,
-      this.soTien,
-      this.noiDung,
-      this.createdAt,
-      this.updatedAt});
+  String? ngayThuChi;
+  ThuChiNhanVienResponse({
+    this.id,
+    this.idNhanVien,
+    this.loai,
+    this.tieuDe,
+    this.soTien,
+    this.noiDung,
+    this.createdAt,
+    this.updatedAt,
+    this.ngayThuChi,
+  });
 
   ///
   /// From JSON
@@ -42,6 +44,7 @@ class ThuChiNhanVienResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    ngayThuChi = json['ngayThuChi'].toString();
   }
 
   ///
@@ -66,6 +69,9 @@ class ThuChiNhanVienResponse {
 
     // check null noiDung
     if (noiDung != null) data['noiDung'] = noiDung;
+
+    //check null ngay thu chil
+    if (ngayThuChi != null) data['ngayThuChi'] = noiDung;
 
     return data;
   }

@@ -54,10 +54,14 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
   }
 
-  static int differenceDate({required String startDate, required String endDate}) {
-    return int.parse(convertStringToDate(endDate).difference(convertStringToDate(startDate)).inDays.toString());
+  static int differenceDate(
+      {required String startDate, required String endDate}) {
+    return int.parse(convertStringToDate(endDate)
+        .difference(convertStringToDate(startDate))
+        .inDays
+        .toString());
   }
-  
+
   static String formatDateTime(String dateTime) {
     return DateConverter.isoStringToLocalFullDateOnly(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
