@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 // ignore: unused_import
 import 'package:template/utils/device_utils.dart';
@@ -23,15 +24,15 @@ class V4NotificationPage extends GetView<V4NotificationController> {
       body: GetBuilder<V4NotificationController>(
           init: V4NotificationController(),
           builder: (V4NotificationController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: Dimensions.PADDING_SIZE_SMALL,
-                horizontal: Dimensions.PADDING_SIZE_LARGE,
+                horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
               ),
               child:
 
@@ -46,139 +47,119 @@ class V4NotificationPage extends GetView<V4NotificationController> {
   /// ListView Notification
   ///
   Widget _listViewNotification() {
-    return ListView.builder(
-        itemCount: 10,
+    return SmartRefresher(
+      onLoading: controller.onLoading,
+      onRefresh: controller.onRefresh,
+      controller: controller.refreshController,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: controller.thongbaoModelList.length,
         itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            width: DeviceUtils.getScaledWidth(context, 1),
-            height: DeviceUtils.getScaledHeight(context, 0.2),
-            decoration: BoxDecoration(
-              color: index == 2
-                  ? ColorResources.UNREAD_NOTICE
-                  : ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(9),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 2),
-                  blurRadius: 2,
-                  color: ColorResources.BLACK.withAlpha(20),
-                ),
-              ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
-            child: Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                // ignore: sized_box_for_whitespace
-                Container(
-                  width: DeviceUtils.getScaledWidth(context, 0.75),
-                  height: DeviceUtils.getScaledHeight(context, 0.2),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_LARGE,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Thông báo tiến độ công việc",
-                          style: Dimensions.fontSizeStyle16w600(),
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            // ignore: prefer_const_constructors
-                            style: TextStyle(
-                              color: ColorResources.BLACK,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'Công việc:  ',
-                                style: Dimensions.fontSizeStyle14(),
-                              ),
-                              TextSpan(
-                                text: 'Xây tường',
-                                style: Dimensions.fontSizeStyle14w600(),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-                        Text(
-                          'Phòng D,E,F của công trình A',
-                          style: Dimensions.fontSizeStyle14(),
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-                        Row(
-                          // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            const Icon(
-                              Icons.place_outlined,
-                              color: ColorResources.PRIMARY,
-                            ),
-                            Text(
-                              'Ngũ Hành Sơn',
-                              style: Dimensions.fontSizeStyle14w600(),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: Dimensions.PADDING_SIZE_DEFAULT,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(
-                                    color: ColorResources.BLACK,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: "Dự án:  ",
-                                      style: Dimensions.fontSizeStyle14(),
-                                    ),
-                                    TextSpan(
-                                      text: 'Dự án ABC',
-                                      style: Dimensions.fontSizeStyle14w600(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                '05/10/2021',
-                                style: Dimensions.fontSizeStyle14(),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                controller.onClickDetailNotification(index: index);
+              },
+              child: Container(
+                width: DeviceUtils.getScaledWidth(context, 1),
+                decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.BORDER_RADIUS_DEFAULT,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 2),
+                      blurRadius: 2,
+                      color: ColorResources.BLACK.withAlpha(20),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2.5,
-                  left: Dimensions.PADDING_SIZE_DEFAULT,
-                  child: Icon(
-                    index == 2
-                        ? Icons.notifications_active
-                        : Icons.notifications_active_outlined,
-                    size: Dimensions.ICON_SIZE_LARGE,
-                  ),
-                )
-              ],
+                child: Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    const Positioned(
+                      top: Dimensions.PADDING_SIZE_LARGE,
+                      left: Dimensions.PADDING_SIZE_SMALL,
+                      child: Icon(
+                        Icons.notifications_active_outlined,
+                        size: Dimensions.ICON_SIZE_LARGE,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.PADDING_SIZE_LARGE,
+                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        Dimensions.PADDING_SIZE_LARGE,
+                      ),
+                      width: DeviceUtils.getScaledWidth(context, 0.85),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Tiêu đề thông báo
+                          Wrap(
+                            children: [
+                              Text(
+                                controller.thongbaoModelList[index].tieuDe!,
+                                style: const TextStyle(
+                                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          ),
+
+                          //Nội dung thông báo
+                          Wrap(
+                            children: [
+                              Text(
+                                controller.thongbaoModelList[index].noiDung!,
+                                style: Dimensions.fontSizeStyle16(),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          ),
+
+                          const SizedBox(
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          ),
+
+                          //Thời gian thông báo
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              //Đợi update trường date ở model
+                              Text(
+                                controller.formatDateTime(
+                                  dateTime: controller
+                                      .thongbaoModelList[index].createdAt!,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           );
-        });
+        },
+      ),
+    );
   }
 }

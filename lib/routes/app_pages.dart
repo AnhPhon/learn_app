@@ -194,6 +194,8 @@ import 'package:template/view/screen/v4-employee/export_import/export_import_bin
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v4-employee/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_page.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
@@ -989,6 +991,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.V4_NOTIFICATION,
       page: () => V4NotificationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_DETAIL_NOTIFICATION,
+      page: () => V4DetailNotificationPage(),
+      binding: V4DetailNotificationBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

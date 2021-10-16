@@ -61,7 +61,10 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                   ),
 
                   //button thêm
-                  _btnAdd(),
+                  if (controller.isRevenue == true)
+                    _btnAddThu(controller)
+                  else
+                    _btnAddChi(controller),
                 ],
               ),
             );
@@ -80,7 +83,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       allowEdit: true,
       controller: controller.timeRevenueExpenditure,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: "12-11-2021",
+      holdplacer: controller.timeNow,
       label: "Ngày",
       obligatory: true,
       typeInput: TextInputType.text,
@@ -159,7 +162,7 @@ Widget _contentExpenditure(
     line: 5,
     allowEdit: true,
     allowMultiline: true,
-    controller: controller.contentRevenueController,
+    controller: controller.contentExpenditureController,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     hidden: false,
     holdplacer: 'Nhập nội dung chi chính',
@@ -235,11 +238,27 @@ Widget _detailContentExpenditure(
 ///
 /// Button Thêm
 ///
-Widget _btnAdd() {
+Widget _btnAddThu(V4RevenueExpenditureController controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
-    title: 'Thêm',
+    onPressed: () {
+      controller.onAddThu();
+    },
+    title: 'Thêm thu',
+    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+  );
+}
+
+///
+/// Button Chi
+///
+Widget _btnAddChi(V4RevenueExpenditureController controller) {
+  return LongButton(
+    color: ColorResources.APPBARCOLOR,
+    onPressed: () {
+      controller.onAddChi();
+    },
+    title: 'Thêm chi',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );
 }
