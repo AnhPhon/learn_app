@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
@@ -27,6 +29,7 @@ class DropDownButton1<T> extends StatelessWidget {
   final bool? obligatory, labelBold, isBorder, isShadow;
   final String? label;
   final double width;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,6 +38,7 @@ class DropDownButton1<T> extends StatelessWidget {
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
             Align(
@@ -123,8 +127,7 @@ class DropDownButton1<T> extends StatelessWidget {
                         hint: Text(hint),
                         isDense: true,
                         isExpanded: true,
-                        // value: getCutContent(value),
-                        // onChanged: onChanged,
+                        value: value,
                         onChanged: onChanged,
                         items: data
                             .map((e) => DropdownMenuItem<T>(

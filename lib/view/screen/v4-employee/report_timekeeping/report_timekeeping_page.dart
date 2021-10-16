@@ -15,26 +15,23 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
     return Scaffold(
       appBar: const AppBarWidget(title: "Báo cáo cuối ngày"),
       body: GetBuilder(builder: (V4ReportTimekeepingControllter controller) {
-        // if (controller.isLoading) {
-        //   return const Center(
-        //     child: CircularProgressIndicator(),
-        //   );
-        // }
-        return Column(
-          children: [
-            //chọn thời gian reprot chấm công
-            _reportTimekeeping(controller, context),
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              //chọn thời gian reprot chấm công
+              _reportTimekeeping(controller, context),
 
-            //điền nội dung report chấm công
-            _reportContent(controller, context),
+              //điền nội dung report chấm công
+              _reportContent(controller, context),
 
-            Container(
-              height: DeviceUtils.getScaledHeight(context, .4),
-            ),
+              Container(
+                height: DeviceUtils.getScaledHeight(context, .4),
+              ),
 
-            //Button báo cáo
-            _btnReport()
-          ],
+              //Button báo cáo
+              _btnReport(controller)
+            ],
+          ),
         );
       }),
     );
@@ -47,11 +44,11 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
       V4ReportTimekeepingControllter controller, BuildContext context) {
     return TextFieldDate(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
+      isDate: false,
+      allowEdit: false,
       controller: controller.reportTimekeeping,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: "12-11-2021",
+      holdplacer: '',
       label: "Thời gian",
       obligatory: true,
       typeInput: TextInputType.text,
@@ -66,7 +63,6 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
 InputField _reportContent(
     V4ReportTimekeepingControllter controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
     line: 5,
     allowEdit: true,
     allowMultiline: true,
@@ -85,10 +81,12 @@ InputField _reportContent(
 /// Button báo cáo
 ///
 
-LongButton _btnReport() {
+LongButton _btnReport(V4ReportTimekeepingControllter controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.report();
+    },
     title: 'Báo cáo',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );

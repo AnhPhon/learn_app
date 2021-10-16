@@ -22,10 +22,10 @@ class V4HomeController extends GetxController {
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   //khai báo thời gian báo cáo
-  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 7, minute: 0);
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 17, minute: 0);
 
   //khai báo thời gian chấm công
-  TimeOfDay timekeeping = const TimeOfDay(hour: 10, minute: 0);
+  TimeOfDay timekeeping = const TimeOfDay(hour: 7, minute: 0);
 
   //khai báo thay đổi text chấm công và báo cáo
   bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
@@ -186,21 +186,49 @@ class V4HomeController extends GetxController {
 
   /// click to timekeeping
   ///
-  void onClickToTimeKeeping() {
-    Get.toNamed(AppRoutes.V4_TIMEKEEPING);
+  void onClickToTimeKeeping(BuildContext context) {
+    Get.toNamed(AppRoutes.V4_TIMEKEEPING)!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Bạn đã chấm công thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   ///click to report timekeeping
   ///
-  void onClickToReportTimeKeeping() {
-    Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING);
+  void onClickToReportTimeKeeping(BuildContext context) {
+    Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING)!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Báo cáo thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   /// Từ 7h đén 17 thì sẽ điểu hướng đến page chấm công , từ 17h đến 7h sáng hôm sau sẽ điều hướng đén trang báo cáo
   ///
-  void onBtnTimeKeepingClick() {
+  void onBtnTimeKeepingClick(BuildContext context) {
     final double _reportTimekeeping = reportTimekeeping.hour.toDouble() +
         (reportTimekeeping.minute.toDouble() / 60);
     final double _timekeeping =
@@ -209,9 +237,9 @@ class V4HomeController extends GetxController {
         (TimeOfDay.now().minute.toDouble() / 60);
 
     if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
-      return onClickToTimeKeeping();
+      return onClickToReportTimeKeeping(context);
     } else {
-      return onClickToReportTimeKeeping();
+      return onClickToTimeKeeping(context);
     }
   }
 

@@ -37,7 +37,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                 // time keeping
-                _btnTimekeeping(),
+                _btnTimekeeping(context),
                 const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                 // _followWorkProgressWidget
@@ -93,10 +93,10 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   /// button time keeping
   ///
-  Widget _btnTimekeeping() {
+  Widget _btnTimekeeping(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.onBtnTimeKeepingClick();
+        controller.onBtnTimeKeepingClick(context);
       },
       child: Container(
         width: 150,
