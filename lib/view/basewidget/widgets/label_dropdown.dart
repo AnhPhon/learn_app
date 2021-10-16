@@ -67,6 +67,7 @@ class LabelDropdown extends StatelessWidget {
                 isEmpty: currentSelectvalue == '',
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
+                    isExpanded: true,
                     value: currentSelectvalue,
                     isDense: true,
                     onChanged: onChanged,

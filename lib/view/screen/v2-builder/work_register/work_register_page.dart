@@ -5,7 +5,6 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
@@ -17,107 +16,125 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerWidget(),
-      appBar: AppBarWidget(title: controller.title),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-          child: Column(
-            children: [
-              // nhóm công việc phù hợp
-              _dropdownWidget(
-                "Nhóm công việc phù hợp",
-                controller.nhomCongViec!,
-                true,
-                context,
-              ),
+        drawer: const DrawerWidget(),
+        appBar: AppBarWidget(title: controller.title),
+        body: GetBuilder<V2WorkRegisterController>(
+            init: V2WorkRegisterController(),
+            builder: (V2WorkRegisterController controller) {
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Column(
+                    children: [
+                      // nhóm công việc phù hợp
+                      _dropdownWidget(
+                        "Nhóm công việc phù hợp",
+                        controller.nhomCongViec,
+                        true,
+                        context,
+                        controller.tenNhomCongViec,
+                        controller.nhomDichVu.map((e) => e.tenDichVu!).toList(),
+                        controller.onNhomCongViecChange,
+                      ),
 
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // Công việc phù hợp
+                      _dropdownWidget(
+                        "Chọn công việc phù hợp",
+                        controller.congViecPhuHop,
+                        false,
+                        context,
+                        "",
+                        [""],
+                        (value) {},
+                      ),
+
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // thời gian bắt đầu
+                      _timeStart(context),
+
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // thời gian bắt đầu
+                      _timeEnd(context),
+
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      LabelInput(
+                        label: "Số lượng",
+                        labelText: "Số lượng",
+                        controller: controller.soLuongController,
+                        isRequire: true,
+                      ),
+
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // điểm đăng ký làm việc
+                      _diemDangKy(context, "Điểm đăng ký làm việc"),
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // Thêm địa điểm khác
+                      _dropdownWidget(
+                        "Thêm địa điểm khác \n(chọn được nhiều địa điểm)",
+                        controller.diaDiemKhacController,
+                        false,
+                        context,
+                        "",
+                        [""],
+                        (value) {},
+                      ),
+                      SizedBox(
+                        height: DeviceUtils.getScaledHeight(
+                          context,
+                          Dimensions.SCALE_DEFAULT,
+                        ),
+                      ),
+
+                      // nut đăng ký
+                      _dangKyButton(context),
+                    ],
+                  ),
                 ),
-              ),
-
-              // Công việc phù hợp
-              _dropdownWidget(
-                "Chọn công việc phù hợp",
-                controller.nhomCongViec!,
-                true,
-                context,
-              ),
-
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              // thời gian bắt đầu
-              _timeStart(context),
-
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              // thời gian bắt đầu
-              _timeEnd(context),
-
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              LabelInput(
-                label: "Số lượng",
-                labelText: "Số lượng",
-                controller: controller.soLuongController,
-                isRequire: true,
-              ),
-
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              // điểm đăng ký làm việc
-              _diemDangKy(context, "Điểm đăng ký làm việc"),
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              // Thêm địa điểm khác
-              _dropdownWidget(
-                "Thêm địa điểm khác \n(chọn được nhiều địa điểm)",
-                controller.nhomCongViec!,
-                false,
-                context,
-              ),
-              SizedBox(
-                height: DeviceUtils.getScaledHeight(
-                  context,
-                  Dimensions.SCALE_DEFAULT,
-                ),
-              ),
-
-              // nut đăng ký
-              _dangKyButton(context),
-            ],
-          ),
-        ),
-      ),
-    );
+              );
+            }));
   }
 
   ///
@@ -198,18 +215,23 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   ///
   /// Loại công trình
   ///
-  Widget _dropdownWidget(String label, TextEditingController ctrl, bool require,
-      BuildContext context) {
+  Widget _dropdownWidget(
+    String label,
+    TextEditingController ctrl,
+    bool require,
+    BuildContext context,
+    String selectValue,
+    List<String> data,
+    Function(String?) onChanged,
+  ) {
     return LabelDropdown(
       label: label,
       labelText: label,
       controller: ctrl,
       isRequire: require,
-      currencies: controller.currencies!,
-      currentSelectvalue: ctrl.text,
-      onChanged: (value) {
-        controller.onLoaiCongTrinhChange(value);
-      },
+      currencies: data,
+      currentSelectvalue: selectValue,
+      onChanged: onChanged,
     );
   }
 

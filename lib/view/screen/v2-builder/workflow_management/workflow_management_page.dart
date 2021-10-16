@@ -19,11 +19,11 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
         body: GetBuilder(
             init: V2WorkflowManagementController(),
             builder: (V2WorkflowManagementController controller) {
-              // if (controller.isLoading) {
-              //   return const Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // }
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Column(
                 children: [
                   Padding(
