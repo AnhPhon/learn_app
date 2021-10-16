@@ -35,59 +35,34 @@ class V2WorkRegisterController extends GetxController {
   TextEditingController timeStartController = TextEditingController();
   TextEditingController timeEndController = TextEditingController();
   TextEditingController soLuongController = TextEditingController();
+  TextEditingController diaDiemKhacController = TextEditingController();
 
   List<String>? currencies;
   String? firstSelect;
 
-  // radio
-  //List<SelectProvinceCustomModel>? provinceData;
-  List<SelectProvinceCustomModel>? provinceData;
   List<bool>? checkList;
+
+  bool tphcmCheck = false;
+  bool hanoiCheck = false;
+  bool danangCheck = false;
+  bool tinhKhacCheck = false;
 
   @override
   void onInit() {
     super.onInit();
-    checkList = [false, false, false, false];
+    checkList = [tphcmCheck, hanoiCheck, danangCheck, tinhKhacCheck];
 
     firstSelect = "Công trình 1";
     currencies = ["Công trình 1", "Công trình 2", "Công trình 3"];
 
     tieuDeBaoGiaController = TextEditingController();
     loaiCongTrinh = TextEditingController(text: firstSelect);
-
     nhomCongViec = TextEditingController(text: firstSelect);
     congViecPhuHop = TextEditingController(text: firstSelect);
     toanTinh = TextEditingController(text: firstSelect);
 
     fromDate = TextEditingController();
     toDate = TextEditingController();
-
-    provinceData = [
-      SelectProvinceCustomModel(
-        value: "TP.HCM",
-        onChanged: (val) {
-          onChange(0, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Hà Nội",
-        onChanged: (val) {
-          onChange(1, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Đà Nẵng",
-        onChanged: (val) {
-          onChange(2, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Tỉnh khác",
-        onChanged: (val) {
-          onChange(3, val as bool);
-        },
-      ),
-    ];
   }
 
   ///
@@ -99,10 +74,25 @@ class V2WorkRegisterController extends GetxController {
   }
 
   ///
-  /// onChange
+  /// onCheckBoxChange
   ///
-  void onChange(int index, dynamic value) {
-    checkList![index] = value as bool;
+  void onCheckBoxChange(int index, {required bool value}) {
+    if (index == 0) {
+      tphcmCheck = value;
+    }
+
+    if (index == 1) {
+      hanoiCheck = value;
+    }
+
+    if (index == 2) {
+      danangCheck = value;
+    }
+
+    if (index == 3) {
+      tinhKhacCheck = value;
+    }
+
     update();
   }
 
@@ -158,14 +148,4 @@ class V2WorkRegisterController extends GetxController {
   String formatDate(String date) {
     return DateFormat("dd/MM/yyyy").format(DateTime.parse(date));
   }
-}
-
-class SelectProvinceCustomModel {
-  String value;
-  Function(dynamic) onChanged;
-
-  SelectProvinceCustomModel({
-    required this.value,
-    required this.onChanged,
-  });
 }

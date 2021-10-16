@@ -148,52 +148,46 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
               Dimensions.SCALE_DEFAULT,
             ),
           ),
-          Column(
-            children: List.generate(
-              controller.provinceData!.length,
-              (index) => Stack(
-                children: [
-                  Checkbox(
-                    value: controller.checkList![index],
-                    onChanged: (val) {
-                      controller.onChange(index, val);
-                    },
-                    fillColor: MaterialStateProperty.all(
-                      ColorResources.THEME_DEFAULT,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-                      top: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
-                    child: (index > 2)
-                        ? LabelContent(
-                            title: controller.provinceData![index].value
-                                .toString(),
-                            content: _labelSelect(
-                              context,
-                              ["Tỉnh", "Quận/huyện", "Phường/xã"],
-                              [(value) {}, (value) {}, (value) {}],
-                              [[], [], []],
-                            ),
-                            isRequired: false,
-                          )
-                        : LabelContent(
-                            title: controller.provinceData![index].value
-                                .toString(),
-                            content: _labelSelect(
-                              context,
-                              ["Quận/huyện", "Phường/xã"],
-                              [(value) {}, (value) {}],
-                              [[], []],
-                            ),
-                            isRequired: false,
-                          ),
-                  )
-                ],
-              ),
-            ),
+          _tinhThanhCheckBox(
+            context,
+            controller.tphcmCheck,
+            "TP.HCM",
+            (value) => controller.onCheckBoxChange(0, value: value!),
+            [
+              (value) {},
+              (value) {},
+            ],
+            [[], []],
+          ),
+          _tinhThanhCheckBox(
+            context,
+            controller.hanoiCheck,
+            "Hà Nội",
+            (value) => controller.onCheckBoxChange(1, value: value!),
+            [
+              (value) {},
+              (value) {},
+            ],
+            [[], []],
+          ),
+          _tinhThanhCheckBox(
+            context,
+            controller.danangCheck,
+            "Đà Nẵng",
+            (value) => controller.onCheckBoxChange(2, value: value!),
+            [
+              (value) {},
+              (value) {},
+            ],
+            [[], []],
+          ),
+          _tinhThanhKhacCheckBox(
+            context,
+            controller.tinhKhacCheck,
+            "Tỉnh khác",
+            (value) => controller.onCheckBoxChange(3, value: value!),
+            [(value) {}, (value) {}, (value) {}],
+            [[], [], []],
           ),
         ],
       ),
@@ -363,6 +357,86 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
           );
         },
       ),
+    );
+  }
+
+  ///
+  /// check box tỉnh thành
+  ///
+  Widget _tinhThanhCheckBox(
+    BuildContext context,
+    bool firstValue,
+    String label,
+    Function(bool?) onchange,
+    List<Function(dynamic)> selectFunctionList,
+    List<List<String>> dataList,
+  ) {
+    return Stack(
+      children: [
+        Checkbox(
+          value: firstValue,
+          onChanged: onchange,
+          fillColor: MaterialStateProperty.all(
+            ColorResources.THEME_DEFAULT,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+            top: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+          child: LabelContent(
+            title: label,
+            content: _labelSelect(
+              context,
+              ["Quận/huyện", "Phường/xã"],
+              selectFunctionList,
+              dataList,
+            ),
+            isRequired: false,
+          ),
+        )
+      ],
+    );
+  }
+
+  ///
+  /// check box tỉnh thành
+  ///
+  Widget _tinhThanhKhacCheckBox(
+    BuildContext context,
+    bool firstValue,
+    String label,
+    Function(bool?) onchange,
+    List<Function(dynamic)> selectFunctionList,
+    List<List<String>> dataList,
+  ) {
+    return Stack(
+      children: [
+        Checkbox(
+          value: firstValue,
+          onChanged: onchange,
+          fillColor: MaterialStateProperty.all(
+            ColorResources.THEME_DEFAULT,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+            top: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+          child: LabelContent(
+            title: label,
+            content: _labelSelect(
+              context,
+              ["Tỉnh/TP", "Quận/huyện", "Phường/xã"],
+              selectFunctionList,
+              dataList,
+            ),
+            isRequired: false,
+          ),
+        )
+      ],
     );
   }
 
