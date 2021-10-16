@@ -46,7 +46,7 @@ class V4TimekeepingController extends GetxController {
 
   //Khai báo Thời gian chấm công phải trùng với thời gian hiện tại
   final timekeeping = TextEditingController(
-      text: DateConverter.estimatedDateOnly(DateTime.now()));
+      text: DateConverter.estimatedDateMonthYear(DateTime.now()));
 
   //Khai báo TextEditingController của địa chỉ chấm công
   final addressController = TextEditingController();
@@ -211,7 +211,6 @@ class V4TimekeepingController extends GetxController {
   ///
   void onChamCong() {
     if (validate()) {
-      timekeeping.text = DateConverter.readMongoToString(timekeeping.text);
       chamCongProvider.add(
         data: ChamCongRequest(
           thoiGianBatDau: timekeeping.text,
