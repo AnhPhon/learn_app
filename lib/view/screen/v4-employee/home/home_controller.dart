@@ -28,7 +28,7 @@ class V4HomeController extends GetxController {
   TimeOfDay timekeeping = const TimeOfDay(hour: 7, minute: 0);
 
   //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 >= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
 
   List<Map<String, dynamic>>? contentGrid;
 
@@ -237,9 +237,9 @@ class V4HomeController extends GetxController {
         (TimeOfDay.now().minute.toDouble() / 60);
 
     if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
-      return onClickToTimeKeeping(context);
-    } else {
       return onClickToReportTimeKeeping(context);
+    } else {
+      return onClickToTimeKeeping(context);
     }
   }
 
@@ -259,14 +259,44 @@ class V4HomeController extends GetxController {
 
   /// click to Revenue page
   ///
-  void onClickRevenue() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
+  void onClickRevenue(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true")!
+        .then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công!",
+            description: "Thêm thu thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   /// click to Expenditure page
   ///
-  void onClickExpenditure() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  void onClickExpenditure(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false")!
+        .then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công!",
+            description: "Thêm chi thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 }
