@@ -13,6 +13,10 @@ mixin DateConverter {
     return DateFormat('dd-MM-yyyy').format(dateTime);
   }
 
+  static String estimatedDateMonthYear(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
+
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }
