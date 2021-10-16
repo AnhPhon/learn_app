@@ -32,8 +32,7 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-
-  void login(){
+  void login() {
     if (usernameController.text == '' || passwordController.text == '') {
       Get.snackbar(
         "Thông báo!", // title
@@ -90,12 +89,13 @@ class LoginController extends GetxController {
           });
     }
   }
+
   ///
   /// on login click
   ///
   void onLoginBtnClick() {
     sl.get<SharedPreferenceHelper>().saveUserId("616810a88d9f85b24d1be73f");
-    sl.get<SharedPreferenceHelper>().saveUserId("6161831d4afc4f67f5e66eaf");
+    sl.get<SharedPreferenceHelper>().saveUserId("616a534b06a577482e02933d");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {
@@ -107,7 +107,7 @@ class LoginController extends GetxController {
     } else {}
 
     // validate infomation username password
-    
+
     //validate infomation username password
     // if (usernameController.text == '' || passwordController.text == '') {
     //   Get.snackbar(
