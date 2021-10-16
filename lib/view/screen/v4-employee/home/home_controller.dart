@@ -8,6 +8,8 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4HomeController extends GetxController {
   // providers
@@ -229,14 +231,44 @@ class V4HomeController extends GetxController {
 
   /// click to Revenue page
   ///
-  void onClickRevenue() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true");
+  void onClickRevenue(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true")!
+        .then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công!",
+            description: "Thêm thu thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   /// click to Expenditure page
   ///
-  void onClickExpenditure() {
-    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false");
+  void onClickExpenditure(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false")!
+        .then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công!",
+            description: "Thêm chi thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 }

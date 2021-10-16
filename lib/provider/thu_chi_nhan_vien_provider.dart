@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 
 class ThuChiNhanVienProvider {
-  ThuChiNhanVienRepository? repository = GetIt.I.get<ThuChiNhanVienRepository>();
+  ThuChiNhanVienRepository? repository =
+      GetIt.I.get<ThuChiNhanVienRepository>();
 
   ThuChiNhanVienProvider();
 
@@ -22,7 +23,8 @@ class ThuChiNhanVienProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ThuChiNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ThuChiNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class ThuChiNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class ThuChiNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class ThuChiNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThuChiNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -103,7 +108,8 @@ class ThuChiNhanVienProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => ThuChiNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ThuChiNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +129,8 @@ class ThuChiNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThuChiNhanVienResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThuChiNhanVienResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
