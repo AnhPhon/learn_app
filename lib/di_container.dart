@@ -181,7 +181,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => TinTucRepository());
   sl.registerLazySingleton(() => DanhMucTinTucRepository());
-  sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => BangBangCapRepository());
   sl.registerLazySingleton(() => BangGiaDangTinRepository());
   sl.registerLazySingleton(() => BangGiaDonHangRepository());
