@@ -23,7 +23,7 @@ class DonDichVuResponse {
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
   TrangThaiThanhToanResponse? idTrangThaiThanhToan;
-  ThoiGianLamViecResponse? idThoiGianLamViec;
+  List<ThoiGianLamViecResponse>? thoiGianLamViec;
   TinhTpResponse? idTinhTp;
   QuanHuyenResponse? idQuanHuyen;
   PhuongXaResponse? idPhuongXa;
@@ -66,7 +66,7 @@ class DonDichVuResponse {
       this.idTrangThaiDonHang,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
-      this.idThoiGianLamViec,
+      this.thoiGianLamViec,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
@@ -143,10 +143,10 @@ class DonDichVuResponse {
     }                                                                                  
 
     // mapping idThoiGianLamViec                                                              
-    if (json['idThoiGianLamViec'] != null && json['idThoiGianLamViec'].toString().length!=24) {                                                  
-      idThoiGianLamViec = ThoiGianLamViecResponse.fromJson(json['idThoiGianLamViec'] as Map<String, dynamic>); 
+    if (json['thoiGianLamViec'] != null && json['thoiGianLamViec'].toString().length!=24) {                                                  
+      thoiGianLamViec = (json['thoiGianLamViec'] as List<ThoiGianLamViecResponse>).map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>)).toList();
     } else {                                                                           
-      idThoiGianLamViec = null;                                                               
+      thoiGianLamViec = null;                                                               
     }                                                                                  
 
     // mapping idTinhTp                                                              
@@ -250,7 +250,7 @@ class DonDichVuResponse {
     if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
 
     // check null idThoiGianLamViec
-    if (idThoiGianLamViec != null) data['idThoiGianLamViec'] = idThoiGianLamViec; 
+    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec; 
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 

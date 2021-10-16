@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:template/utils/color_resources.dart';
@@ -10,9 +12,11 @@ class ImageCard extends StatelessWidget {
     Key? key,
     required this.image,
     required this.isAddImage,
+    this.onDelete,
   }) : super(key: key);
-  final String image;
+  final File image;
   final bool isAddImage;
+  final Function? onDelete;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,16 +36,14 @@ class ImageCard extends StatelessWidget {
               width: double.infinity,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                child: Image.asset(
+                child: Image.file(
                   image, fit: BoxFit.cover,
                 )
               ),
             ),
             if(isAddImage)
             GestureDetector(
-              onTap: (){
-                print("Xoá ảnh");
-              },
+              onTap: ()=> onDelete!(),
               child: const Icon(
                 Icons.cancel_outlined, 
                 color: ColorResources.RED,

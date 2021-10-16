@@ -16,7 +16,7 @@ class V1Request1Controller extends GetxController {
   String? firstSelect;
 
   // radio
-  List<SelectProvinceCustomModel>? provinceData;
+  //List<SelectProvinceCustomModel>? provinceData;
   dynamic selectIndex;
 
   @override
@@ -33,20 +33,20 @@ class V1Request1Controller extends GetxController {
     toDate = TextEditingController();
 
     selectIndex = "TP.HCM";
-    provinceData = [
-      SelectProvinceCustomModel(
-        value: "TP.HCM",
-        onChanged: (val) => onChange,
-      ),
-      SelectProvinceCustomModel(
-        value: "Hà Nội",
-        onChanged: onChange,
-      ),
-      SelectProvinceCustomModel(
-        value: "Đà Nẵng",
-        onChanged: onChange,
-      ),
-    ];
+    // provinceData = [
+    //   SelectProvinceCustomModel(
+    //     value: "TP.HCM",
+    //     onChanged: (val)=> onChange,
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Hà Nội",
+    //     onChanged: onChange,
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Đà Nẵng",
+    //     onChanged: onChange,
+    //   ),
+    // ];
   }
 
   ///

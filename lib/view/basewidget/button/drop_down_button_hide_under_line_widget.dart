@@ -10,14 +10,14 @@ import 'package:template/utils/dimensions.dart';
 class DropDownButtonHideUnderLineWidget<T> extends StatelessWidget {
   final String? hint;
   final double? width;
-  final Function(T? value) onChanged;
+  final Function(T? value)? onChanged;
   final List<T> data;
   final T? value;
   const DropDownButtonHideUnderLineWidget({
     Key? key,
     this.hint,
     this.width,
-    required this.onChanged,
+    this.onChanged,
     required this.data,
     required this.value,
   }) : super(key: key);
@@ -38,7 +38,7 @@ class DropDownButtonHideUnderLineWidget<T> extends StatelessWidget {
           isDense: true,
           isExpanded: true,
           onChanged: onChanged,
-          items: data.map((e) => DropdownMenuItem<T>(value: e,child: Text(e.toString(), style: const TextStyle(
+          items: data.map((e) => DropdownMenuItem<T>(value: e,child: Text(e.toString(), overflow: TextOverflow.ellipsis,style: const TextStyle(
             fontSize: Dimensions.FONT_SIZE_LARGE,
           ),))).toList(),
         ),

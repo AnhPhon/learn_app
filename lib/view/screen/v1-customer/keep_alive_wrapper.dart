@@ -7,12 +7,13 @@ class KeepAliveWrapper extends StatefulWidget {
   final RefreshController refreshController;
   final Widget child;
 
-  const KeepAliveWrapper(
-      {Key? key,
-      this.onRefresh,
-      this.onLoading,
-      required this.refreshController, required this.child,})
-      : super(key: key);
+  const KeepAliveWrapper({
+    Key? key,
+    this.onRefresh,
+    this.onLoading,
+    required this.refreshController,
+    required this.child,
+  }) : super(key: key);
 
   @override
   __KeepAliveWrapperState createState() => __KeepAliveWrapperState();

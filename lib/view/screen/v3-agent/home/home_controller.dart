@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
@@ -120,7 +122,7 @@ class V3HomeController extends GetxController {
           Color(0xffC1E6EE),
         ]),
         "onTap": () {
-          onClickQuoteReponse();
+          //onClickQuoteReponse();
         }
       },
       {
@@ -159,12 +161,12 @@ class V3HomeController extends GetxController {
     Get.toNamed(AppRoutes.V3_QUOTE_LIST);
   }
 
-  ///
-  /// Phản hòi báo giá
-  ///
-  void onClickQuoteReponse() {
-    Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
-  }
+  // ///
+  // /// Phản hòi báo giá
+  // ///
+  // void onClickQuoteReponse() {
+  //   Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
+  // }
 
   ///
   /// Cửa hàng
