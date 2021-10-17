@@ -285,6 +285,22 @@ class V1HomeController extends GetxController {
   }
 
   ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void goToNewPageClick(String idNews) {
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=$idNews");
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void goToSanPhamPageClick(String idHangMucSanPham) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: idHangMucSanPham);
+    onMoreProductList();
+  }
+
+  ///
   /// Quản lý công việc
   ///
   void onClickJobManagement() {
