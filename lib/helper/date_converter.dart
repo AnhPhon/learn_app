@@ -21,6 +21,10 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }
 
+  static DateTime convertStringToDatetimeddMMyyyy(String dateTime) {
+    return DateFormat('HH:mm dd-MM-yyyy').parse(dateTime);
+  }
+
   static DateTime convertStringToddMMyyyyDatetime(String dateTime) {
     return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
@@ -60,6 +64,10 @@ mixin DateConverter {
 
   static String localDateToIsoString(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
+  }
+
+  static String localDateToIsoStringHaveHour(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime.toUtc());
   }
 
   static String localDateToIsoStringyyyyMMdd(DateTime dateTime) {

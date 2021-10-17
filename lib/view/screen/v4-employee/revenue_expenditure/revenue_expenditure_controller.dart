@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
+import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/utils/color_resources.dart';
@@ -19,11 +20,11 @@ class V4RevenueExpenditureController extends GetxController {
   bool isRevenue = true;
 
   //Set ngày hiện Tại
-  String timeNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String timeNow = DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now());
 
   final timeRevenueExpenditure = TextEditingController();
-  final revenueController = TextEditingController(text: "Thu");
-  final expenditureController = TextEditingController(text: "Chi");
+  final revenueController = TextEditingController(text: "THÊM THU");
+  final expenditureController = TextEditingController(text: "THÊM CHI");
   final contentRevenueController = TextEditingController();
   final contentExpenditureController = TextEditingController();
   final moneyController = TextEditingController();
@@ -98,10 +99,12 @@ class V4RevenueExpenditureController extends GetxController {
   void onAddThu() {
     if (validateThu()) {
       revenueController.text = '1';
-      print(timeRevenueExpenditure.text);
+      final String timeA = DateConverter.localDateToIsoStringHaveHour(
+          DateConverter.convertStringToDatetimeddMMyyyy(
+              timeRevenueExpenditure.text));
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
-          ngayThuChi: timeRevenueExpenditure.text,
+          ngayThuChi: timeA,
           loai: revenueController.text,
           tieuDe: contentRevenueController.text,
           soTien: moneyController.text,
@@ -180,9 +183,12 @@ class V4RevenueExpenditureController extends GetxController {
   void onAddChi() {
     if (validateChi()) {
       expenditureController.text = '2';
+      final String timeB = DateConverter.localDateToIsoStringHaveHour(
+          DateConverter.convertStringToDatetimeddMMyyyy(
+              timeRevenueExpenditure.text));
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
-          ngayThuChi: timeRevenueExpenditure.text,
+          ngayThuChi: timeB,
           loai: expenditureController.text,
           tieuDe: contentExpenditureController.text,
           soTien: moneyController.text,
