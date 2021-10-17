@@ -85,8 +85,9 @@ class TextFieldDate extends StatelessWidget {
             decoration: InputDecoration(
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
                       Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -112,7 +113,7 @@ class TextFieldDate extends StatelessWidget {
                 hintText: holdplacer,
                 filled: true,
                 fillColor: (allowEdit == false)
-                    ? ColorResources.LIGHT_GREY
+                    ? ColorResources.WHITE
                     : Colors.transparent,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,

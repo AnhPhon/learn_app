@@ -7,6 +7,7 @@ import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/cham_cong_provider.dart';
+import 'package:template/utils/color_resources.dart';
 
 class V4ReportTimekeepingControllter extends GetxController {
   ChamCongProvider chamCongProvider = GetIt.I.get<ChamCongProvider>();
@@ -27,7 +28,15 @@ class V4ReportTimekeepingControllter extends GetxController {
   ///
   bool validate() {
     if (reportContent.text.toString().isEmpty) {
-      Get.snackbar("Nội dung không hợp lệ!", "Vui lòng nội dung hợp lệ!");
+      Get.snackbar(
+        "Nội dung không hợp lệ!",
+        "Vui lòng nội dung hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
       return false;
     }
     return true;

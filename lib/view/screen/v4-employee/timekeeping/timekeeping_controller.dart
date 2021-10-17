@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/data/model/response/cham_cong_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
@@ -14,6 +15,7 @@ import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/utils/color_resources.dart';
 
 class V4TimekeepingController extends GetxController {
   ChamCongProvider chamCongProvider = GetIt.I.get<ChamCongProvider>();
@@ -46,7 +48,7 @@ class V4TimekeepingController extends GetxController {
 
   //Khai báo Thời gian chấm công phải trùng với thời gian hiện tại
   final timekeeping = TextEditingController(
-      text: DateConverter.estimatedDateMonthYear(DateTime.now()));
+      text: DateConverter.estimatedDateOnly(DateTime.now()));
 
   //Khai báo TextEditingController của địa chỉ chấm công
   final addressController = TextEditingController();
@@ -185,22 +187,65 @@ class V4TimekeepingController extends GetxController {
   /// Check rỗng
   ///
   bool validate() {
-    if (addressController.text.toString().isEmpty) {
-      Get.snackbar("Địa chỉ không hợp lệ!", "Vui lòng nhập địa chỉ hợp lệ!");
+    if (duAnNhanVien == null) {
+      Get.snackbar(
+        "Dự án không hơp lệ!",
+        "Vui lòng chọn dự án hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
       return false;
     }
+    if (addressController.text.toString().isEmpty) {
+      Get.snackbar(
+        "Địa chỉ không hợp lệ!",
+        "Vui lòng nhập địa chỉ hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
+      return false;
+    }
+
     if (tinh == null) {
-      Get.snackbar("Tỉnh không hơp lệ!", "Vui lòng chọn tỉnh hợp lệ!");
+      Get.snackbar(
+        "Tỉnh không hơp lệ!",
+        "Vui lòng chọn tỉnh hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
       return false;
     }
     if (quanHuyen == null) {
       Get.snackbar(
-          "Quận huyện không hơp lệ!", "Vui lòng chọn quận huyện hợp lệ!");
+        "Quận huyện không hơp lệ!",
+        "Vui lòng chọn quận huyện hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
       return false;
     }
     if (phuongXa == null) {
       Get.snackbar(
-          "Phường xã không hơp lệ!", "Vui lòng chọn phường xã hợp lệ!");
+        "Phường xã không hơp lệ!",
+        "Vui lòng chọn phường xã hợp lệ!",
+        duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
+      );
       return false;
     }
     return true;
@@ -211,9 +256,11 @@ class V4TimekeepingController extends GetxController {
   ///
   void onChamCong() {
     if (validate()) {
+      final String timeKeeping = DateConverter.localDateToIsoStringyyyyMMdd(
+          DateConverter.convertStringToddMMyyyyDatetime(timekeeping.text));
       chamCongProvider.add(
         data: ChamCongRequest(
-          thoiGianBatDau: timekeeping.text,
+          thoiGianBatDau: timeKeeping,
           idDuAnNhanVien: duAnNhanVien!.id,
           diaChi: addressController.text,
           idTinhTp: tinh!.id,
