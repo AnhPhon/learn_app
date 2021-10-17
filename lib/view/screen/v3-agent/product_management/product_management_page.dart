@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -14,6 +16,11 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
     return GetBuilder<V3ProductManagementController>(
         init: V3ProductManagementController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWithTabBar(
               title: controller.title,
@@ -23,28 +30,30 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                 indicatorColor: ColorResources.PRIMARY,
                 labelColor: ColorResources.PRIMARY,
                 unselectedLabelColor: Colors.grey,
-                tabs: controller.categoriesList
-                    .map((categories) => Tab(text: categories.toString()))
-                    .toList(),
+                tabs: controller.danhMucSanPhamResponse.map(
+                  (categories) {
+                    return Tab(text: categories.ten.toString());
+                  },
+                ).toList(),
               ),
             ),
             backgroundColor: Colors.transparent,
-            body: TabBarView(controller: controller.tabController, children: [
-              ...List.generate(controller.categoriesList.length, (index) {
-                return ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (BuildContext ctx, int i) {
-                      return _item(
-                        context,
-                        title: "Sản phẩm ${index + 1} ",
-                        unit: "unit",
-                        price: "${Random().nextInt(4000000) + 1000000} vnđ",
-                        urlImg: controller.urlImage,
-                        code: "SP${Random().nextInt(2000) + 1000}",
+            body: SmartRefresher(
+              controller: controller.refreshController,
+              child: TabBarView(
+                controller: controller.tabController,
+                children: controller.danhMucSanPhamResponse.map(
+                  (element) {
+                    if (controller.isLoadingProduct) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    });
-              }),
-            ]),
+                    }
+                    return _item(context, controller: controller);
+                  },
+                ).toList(),
+              ),
+            ),
           );
         });
   }
@@ -53,89 +62,100 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
   ///item
   ///
   Widget _item(BuildContext context,
-      {required String title,
-      required String unit,
-      required String price,
-      required String code,
-      required String urlImg}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_SMALL,
-          horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-      decoration: BoxDecoration(
-        color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: urlImg,
-                  height: DeviceUtils.getScaledHeight(context, .08),
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                  ),
+      {required V3ProductManagementController controller}) {
+    return ListView.builder(
+        itemCount: controller.sanPhamResponse.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(
+                vertical: Dimensions.MARGIN_SIZE_SMALL,
+                horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+            decoration: BoxDecoration(
+              color: ColorResources.WHITE,
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 2,
                 ),
-              ),
-              const SizedBox(
-                width: Dimensions.MARGIN_SIZE_SMALL,
-              ),
-              Expanded(
-                flex: 7,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      maxLines: 2,
-                      style: Dimensions.fontSizeStyle16w600(),
+                    Expanded(
+                      flex: 2,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder,
+                        image: controller.sanPhamResponse[index].hinhAnhDaiDien
+                            .toString(),
+                        height: DeviceUtils.getScaledHeight(context, .08),
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                        imageErrorBuilder: (c, o, s) => Image.asset(
+                          Images.placeholder,
+                        ),
+                      ),
                     ),
                     const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                      width: Dimensions.MARGIN_SIZE_SMALL,
                     ),
-                    IntrinsicHeight(
-                      child: Row(
+                    Expanded(
+                      flex: 7,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(unit),
-                          VerticalDivider(
-                            color: ColorResources.BLACK.withOpacity(.7),
+                          Text(
+                            controller.sanPhamResponse[index].ten.toString(),
+                            maxLines: 2,
+                            style: Dimensions.fontSizeStyle16w600(),
                           ),
-                          Text(price),
+                          const SizedBox(
+                            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                          ),
+                          IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Text(controller.sanPhamResponse[index].moTa
+                                    .toString()),
+                                VerticalDivider(
+                                  color: ColorResources.BLACK.withOpacity(.7),
+                                ),
+                                Text(
+                                  "${PriceConverter.convertPrice(
+                                    context,
+                                    double.parse(
+                                      controller.sanPhamResponse[index].gia
+                                          .toString(),
+                                    ),
+                                  )} vnđ",
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
 
-          Divider(
-            height: 20,
-            color: ColorResources.BLACK.withOpacity(.7),
-          ),
+                Divider(
+                  height: 20,
+                  color: ColorResources.BLACK.withOpacity(.7),
+                ),
 
-          //product code
-          Text(code),
-        ],
-      ),
-    );
+                //product code
+                Text(controller.sanPhamResponse[index].maSanPham.toString()),
+              ],
+            ),
+          );
+        });
   }
 }

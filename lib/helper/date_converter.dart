@@ -42,7 +42,7 @@ mixin DateConverter {
   }
 
   static String isoStringToLocalFullDateOnly(String dateTime) {
-    return DateFormat('dd/MM/yyyy').format(isoStringToLocalDate(dateTime));
+    return DateFormat('dd-MM-yyyy').format(isoStringToLocalDate(dateTime));
   }
 
   static String isoStringToLocalDateHMS(String dateTime) {

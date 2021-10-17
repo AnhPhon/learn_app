@@ -151,7 +151,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
               ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.taxImageList.length,
+                  itemCount: controller.imageList.length,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(
@@ -160,7 +160,7 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         child: Image.file(
-                          controller.taxImageList[index],
+                          controller.imageList[index],
                           fit: BoxFit.fill,
                           height: DeviceUtils.getScaledHeight(context, .122),
                           width: DeviceUtils.getScaledWidth(context, .254),

@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -15,6 +18,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
     return GetBuilder<V3WarehouseController>(
         init: V3WarehouseController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Column(
@@ -36,18 +44,10 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
 
                 //item
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (BuildContext ctx, int i) {
-                        return _item(
-                          context,
-                          title: "Sản phẩm ${i + 1} ",
-                          unit: "unit",
-                          price: "${Random().nextInt(4000000) + 1000000} vnđ",
-                          urlImg: controller.urlImage,
-                          code: "SP${Random().nextInt(2000) + 1000}",
-                        );
-                      }),
+                  child: SmartRefresher(
+                    controller: controller.refreshController,
+                    child: _item(context, controller: controller),
+                  ),
                 )
               ],
             ),
@@ -59,92 +59,123 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
   ///item
   ///
   Widget _item(BuildContext context,
-      {required String title,
-      required String unit,
-      required String price,
-      required String code,
-      required String urlImg}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_SMALL,
-          horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-      decoration: BoxDecoration(
-        color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: urlImg,
-                  height: DeviceUtils.getScaledHeight(context, .08),
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                  ),
+      {required V3WarehouseController controller}) {
+    return ListView.builder(
+        itemCount: controller.khoHangDaiLyResponse.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(
+                vertical: Dimensions.MARGIN_SIZE_SMALL,
+                horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+            decoration: BoxDecoration(
+              color: ColorResources.WHITE,
+              borderRadius:
+                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 2,
                 ),
-              ),
-              const SizedBox(
-                width: Dimensions.MARGIN_SIZE_SMALL,
-              ),
-              Expanded(
-                flex: 7,
-                child: SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, .08),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        maxLines: 2,
-                        style: Dimensions.fontSizeStyle16w600(),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder,
+                        image: controller.khoHangDaiLyResponse[index].idSanPham!
+                            .hinhAnhDaiDien
+                            .toString(),
+                        height: DeviceUtils.getScaledHeight(context, .08),
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                        imageErrorBuilder: (c, o, s) => Image.asset(
+                          Images.placeholder,
+                        ),
                       ),
-                      const SizedBox(
-                        height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                      ),
-                      IntrinsicHeight(
-                        child: Row(
+                    ),
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: SizedBox(
+                        height: DeviceUtils.getScaledHeight(context, .08),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(unit),
-                            VerticalDivider(
-                              color: ColorResources.BLACK.withOpacity(.7),
+                            Text(
+                              controller
+                                  .khoHangDaiLyResponse[index].idSanPham!.ten
+                                  .toString(),
+                              maxLines: 2,
+                              style: Dimensions.fontSizeStyle16w600(),
                             ),
-                            Text(price),
+                            const SizedBox(
+                              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                            ),
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Text((controller.khoHangDaiLyResponse[index]
+                                              .soluong ==
+                                          "0")
+                                      ? "Hết hàng"
+                                      : "${controller.khoHangDaiLyResponse[index].soluong} sản phẩm"),
+                                  VerticalDivider(
+                                    color: ColorResources.BLACK.withOpacity(.7),
+                                  ),
+                                  Text(
+                                    "${PriceConverter.convertPrice(
+                                      context,
+                                      double.parse(
+                                        controller.khoHangDaiLyResponse[index]
+                                            .idSanPham!.gia
+                                            .toString(),
+                                      ),
+                                    )} đ",
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
 
-          Divider(
-            height: 20,
-            color: ColorResources.BLACK.withOpacity(.7),
-          ),
+                Divider(
+                  height: 20,
+                  color: ColorResources.BLACK.withOpacity(.7),
+                ),
 
-          //product code
-          Text(code),
-        ],
-      ),
-    );
+                //product code
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Nhập kho: ${DateConverter.formatDateTime(
+                        controller.khoHangDaiLyResponse[index].createdAt
+                            .toString(),
+                      )}",
+                    ),
+                    Text(
+                      "Quy cách: ${controller.khoHangDaiLyResponse[index].idSanPham!.quyCach}",
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

@@ -68,7 +68,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   //store group
                   DropDownButton<StoreGroup>(
                     hint: "Chọn nhóm cửa hàng",
-                    value: controller.storeGroup!,
+                    value: controller.storeGroup,
                     onChanged: controller.onSelectedStoreGroup,
                     data: controller.storeGroupList,
                     width: double.infinity,
@@ -80,7 +80,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   //product special
                   DropDownButton<ProductSpecial>(
                     hint: "Chọn nhóm cửa hàng",
-                    value: controller.productSpecial!,
+                    value: controller.productSpecial,
                     onChanged: (value) =>
                         controller.onProductSpecialGroup(value!),
                     data: controller.productSpecialList,
