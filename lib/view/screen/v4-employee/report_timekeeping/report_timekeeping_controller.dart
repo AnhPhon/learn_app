@@ -40,7 +40,7 @@ class V4ReportTimekeepingControllter extends GetxController {
     if (validate()) {
       reportTimekeeping.text =
           DateConverter.readMongoToString(reportTimekeeping.text);
-      chamCongProvider.add(
+      chamCongProvider.update(
         data: ChamCongRequest(
           thoiGianKetThuc: reportTimekeeping.text,
           noiDungBaoCao: reportContent.text,

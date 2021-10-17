@@ -236,7 +236,9 @@ class V4HomeController extends GetxController {
     final double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
-    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
+    if (_reportTimekeeping < _timeNow) {
+      return onClickToReportTimeKeeping(context);
+    } else if (_timeNow < _timekeeping) {
       return onClickToReportTimeKeeping(context);
     } else {
       return onClickToTimeKeeping(context);

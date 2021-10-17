@@ -98,7 +98,7 @@ class LoginController extends GetxController {
   ///
   void onLoginBtnClick() {
     sl.get<SharedPreferenceHelper>().saveUserId("616a51bc000118120619c3a2");
-    sl.get<SharedPreferenceHelper>().saveUserId("616a534b06a577482e02933d");
+    sl.get<SharedPreferenceHelper>().saveUserId("616a970406a577482e029c19");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {
