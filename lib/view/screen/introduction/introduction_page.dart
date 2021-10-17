@@ -38,27 +38,23 @@ class IntroductionPage extends GetView<IntroductionController> {
 
             pages: [
               PageViewModel(
-                title: "Bảo vệ môi trường",
+                title: "Kinh nghiệm thi công",
                 body:
-                    "Cùng nhau lan tỏa lợi ích về tiết kiệm tài chính và bảo vệ môi trường đến toàn cộng đồng.",
+                    "Kinh nghiệm với hàng trăm công trình xây nhà trọn gói, sửa chữa nhà trọn gói quy mô lớn nhỏ trên khắp mọi tỉnh, thành.",
                 image: _buildImage("img1.jpg"),
                 decoration: pageDecoration,
               ),
               PageViewModel(
-                title: "Sản phẩm xanh",
+                title: "Thủ tục pháp lý",
                 body:
-                    "Mang tới những sản phẩm tốt, thân thiện và bảo vệ môi trường xanh sạch tới cộng đồng (như viên nén tiết kiệm và bảo vệ môi trường Yamamoto…).",
+                    "Tư vấn chi tiết các thủ tục pháp lý, song hành cùng chủ đầu tư giải quyết các vấn đề có liên quan.",
                 image: _buildImage("img2.jpg"),
                 decoration: pageDecoration,
               ),
               PageViewModel(
-                title: "YTP Mang tới lợi ích và sự hỗ trợ tài chính",
-                bodyWidget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text("Cộng đồng bảo vệ môi trường xanh", style: bodyStyle),
-                  ],
-                ),
+                title: "Chi phí và quy trình",
+                body:
+                    "Tiên lượng tất cả các chi phí có thể phát sinh trong quá trình xây dựng. Quy trình quản lý kỹ thuật chặt chẽ, Đảm bảo tiến độ công trình.",
                 decoration: pageDecoration.copyWith(
                   bodyFlex: 2,
                   imageFlex: 4,
@@ -79,7 +75,7 @@ class IntroductionPage extends GetView<IntroductionController> {
                 style: TextStyle(color: ColorResources.PRIMARY)),
             next:
                 const Icon(Icons.arrow_forward, color: ColorResources.PRIMARY),
-            done: const Text('Đăng ký',
+            done: const Text('Tiếp tục',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: ColorResources.PRIMARY)),
@@ -95,12 +91,15 @@ class IntroductionPage extends GetView<IntroductionController> {
                     Dimensions.PADDING_SIZE_EXTRA_SMALL - 1.0,
                   ),
             dotsDecorator: const DotsDecorator(
-              size: Size(Dimensions.PADDING_SIZE_SMALL, Dimensions.PADDING_SIZE_SMALL),
+              size: Size(
+                  Dimensions.PADDING_SIZE_SMALL, Dimensions.PADDING_SIZE_SMALL),
               color: ColorResources.PRIMARY,
-              activeSize: Size(Dimensions.PADDING_SIZE_LARGE + 2, Dimensions.PADDING_SIZE_SMALL),
+              activeSize: Size(Dimensions.PADDING_SIZE_LARGE + 2,
+                  Dimensions.PADDING_SIZE_SMALL),
               activeColor: ColorResources.PRIMARY,
               activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(Dimensions.PADDING_SIZE_EXTRA_LARGE)),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(Dimensions.PADDING_SIZE_EXTRA_LARGE)),
               ),
             ),
           );

@@ -204,8 +204,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_report_on
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
-// import 'package:template/view/screen/introduction/introduction_page.dart';
-// import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/introduction/introduction_page.dart';
+import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
@@ -219,8 +219,18 @@ import 'app_routes.dart';
 class AppPages {
   static List<GetPage> list = [
     GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => SplashPage(),
+    ),
+
+    GetPage(
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.INTRO,
+      page: () => IntroductionPage(),
     ),
 
     // custommer
