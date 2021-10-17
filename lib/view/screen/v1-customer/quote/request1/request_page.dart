@@ -43,7 +43,7 @@ class V1Request1Page extends GetView<V1Request1Controller> {
                     height: DeviceUtils.getScaledHeight(
                         context, Dimensions.SCALE_DEFAULT),
                   ),
-                  
+
                   // địa điểm nhận
                   _inputWidget(
                     "Địa điểm nhận",
@@ -125,39 +125,6 @@ class V1Request1Page extends GetView<V1Request1Controller> {
               Dimensions.SCALE_DEFAULT,
             ),
           ),
-          // Column(
-          //   children: List.generate(
-          //     controller.provinceData!.length,
-          //     (index) => Stack(
-          //       children: [
-          //         Radio(
-          //           value: controller.provinceData![index].value,
-          //           groupValue: controller.selectIndex,
-          //           onChanged: controller.provinceData![index].onChanged,
-          //           fillColor: MaterialStateProperty.all(
-          //             ColorResources.THEME_DEFAULT,
-          //           ),
-          //         ),
-          //         Container(
-          //           margin: const EdgeInsets.only(
-          //             left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-          //             top: Dimensions.MARGIN_SIZE_SMALL,
-          //           ),
-          //           child: LabelContent(
-          //             title: controller.provinceData![index].value.toString(),
-          //             content: _labelSelect(
-          //               context,
-          //               ["Quận/huyện", "Phường/xã"],
-          //               [(value) {}, (value) {}],
-          //               [[], []],
-          //             ),
-          //             isRequired: false,
-          //           ),
-          //         )
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Column(
             children: [
               Stack(

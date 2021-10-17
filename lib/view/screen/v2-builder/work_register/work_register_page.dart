@@ -35,11 +35,13 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                       // nhóm công việc phù hợp
                       _dropdownWidget(
                         "Nhóm công việc phù hợp",
-                        controller.nhomCongViec,
+                        controller.nhomCongViecController,
                         true,
                         context,
-                        controller.tenNhomCongViec,
-                        controller.nhomDichVu.map((e) => e.tenDichVu!).toList(),
+                        controller.idNhomCongViec,
+                        controller.nhomDichVu
+                            .map((e) => [e.id!, e.tenDichVu!])
+                            .toList(),
                         controller.onNhomCongViecChange,
                       ),
 
@@ -53,12 +55,14 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                       // Công việc phù hợp
                       _dropdownWidget(
                         "Chọn công việc phù hợp",
-                        controller.congViecPhuHop,
+                        controller.congViecPhuHopController,
                         false,
                         context,
-                        "",
-                        [""],
-                        (value) {},
+                        controller.idCongViec,
+                        controller.dichVuList
+                            .map((e) => [e.id!, e.tieuDe!])
+                            .toList(),
+                        controller.onCongViecChange,
                       ),
 
                       SizedBox(
@@ -93,6 +97,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                         labelText: "Số lượng",
                         controller: controller.soLuongController,
                         isRequire: true,
+                        isNumber: true,
                       ),
 
                       SizedBox(
@@ -118,7 +123,9 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                         false,
                         context,
                         "",
-                        [""],
+                        [
+                          ["", ""]
+                        ],
                         (value) {},
                       ),
                       SizedBox(
@@ -171,10 +178,21 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
             "TP.HCM",
             (value) => controller.onCheckBoxChange(0, value: value!),
             [
-              (value) {},
-              (value) {},
+              (val) {
+                controller.onQuanHuyenCheckBoxChange(0, value: val!);
+              },
+              (val) {
+                controller.onPhuongXaCheckBoxChange(0, value: val!);
+              },
             ],
-            [[], []],
+            [
+              controller.quanHCM.map((e) => [e.id!, e.ten!]).toList(),
+              controller.phuongHCM.map((e) => [e.id!, e.ten!]).toList()
+            ],
+            [
+              controller.quanHuyenHCM,
+              controller.phuongXaHCM,
+            ],
           ),
           _tinhThanhCheckBox(
             context,
@@ -182,10 +200,21 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
             "Hà Nội",
             (value) => controller.onCheckBoxChange(1, value: value!),
             [
-              (value) {},
-              (value) {},
+              (val) {
+                controller.onQuanHuyenCheckBoxChange(1, value: val!);
+              },
+              (val) {
+                controller.onPhuongXaCheckBoxChange(1, value: val!);
+              },
             ],
-            [[], []],
+            [
+              controller.quanHN.map((e) => [e.id!, e.ten!]).toList(),
+              controller.phuongHN.map((e) => [e.id!, e.ten!]).toList()
+            ],
+            [
+              controller.quanHuyenHaNoi,
+              controller.phuongXaHaNoi,
+            ],
           ),
           _tinhThanhCheckBox(
             context,
@@ -193,19 +222,36 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
             "Đà Nẵng",
             (value) => controller.onCheckBoxChange(2, value: value!),
             [
-              (value) {},
-              (value) {},
+              (val) {
+                controller.onQuanHuyenCheckBoxChange(2, value: val!);
+              },
+              (val) {
+                controller.onPhuongXaCheckBoxChange(2, value: val!);
+              },
             ],
-            [[], []],
+            [
+              controller.quanDN.map((e) => [e.id!, e.ten!]).toList(),
+              controller.phuongDN.map((e) => [e.id!, e.ten!]).toList()
+            ],
+            [
+              controller.quanHuyenDaNang,
+              controller.phuongXaDaNang,
+            ],
           ),
-          _tinhThanhKhacCheckBox(
-            context,
-            controller.tinhKhacCheck,
-            "Tỉnh khác",
-            (value) => controller.onCheckBoxChange(3, value: value!),
-            [(value) {}, (value) {}, (value) {}],
-            [[], [], []],
-          ),
+          _tinhThanhKhacCheckBox(context, controller.tinhKhacCheck, "Tỉnh khác",
+              (value) => controller.onCheckBoxChange(3, value: value!), [
+            (value) {},
+            (value) {},
+            (value) {}
+          ], [
+            [],
+            [],
+            []
+          ], [
+            "",
+            "",
+            "",
+          ]),
         ],
       ),
       isRequired: false,
@@ -221,7 +267,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
     bool require,
     BuildContext context,
     String selectValue,
-    List<String> data,
+    List<List<String>> data,
     Function(String?) onChanged,
   ) {
     return LabelDropdown(
@@ -232,42 +278,6 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
       currencies: data,
       currentSelectvalue: selectValue,
       onChanged: onChanged,
-    );
-  }
-
-  ///
-  /// labelSelect
-  ///
-  Widget _labelSelect(
-    BuildContext context,
-    List<String> labels,
-    List<Function(dynamic)> onChangedList,
-    List<List<String>> onList,
-  ) {
-    return SizedBox(
-      height: 100,
-      child: GridView.builder(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: onList.length,
-          mainAxisExtent: 100,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-        ),
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: onList.length,
-        itemBuilder: (BuildContext ctx, index) {
-          return LabelContent(
-            title: labels[index],
-            content: _formField(
-              labels[index],
-              onChangedList[index],
-              onList[index],
-            ),
-            isRequired: false,
-          );
-        },
-      ),
     );
   }
 
@@ -338,51 +348,6 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   }
 
   ///
-  /// form field
-  ///
-  Widget _formField(
-    String label,
-    Function(dynamic) onChanged,
-    List<String> contentList,
-  ) {
-    return SizedBox(
-      height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-      child: FormField<String>(
-        builder: (FormFieldState<String> state) {
-          return InputDecorator(
-            decoration: InputDecoration(
-              labelStyle: Dimensions.textNormalStyle(),
-              errorStyle: const TextStyle(
-                color: Colors.redAccent,
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_SMALL,
-                ),
-              ),
-            ),
-            isEmpty: label == '',
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: label,
-                isDense: true,
-                onChanged: onChanged,
-                items: contentList.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  ///
   /// check box tỉnh thành
   ///
   Widget _tinhThanhCheckBox(
@@ -390,8 +355,9 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
     bool firstValue,
     String label,
     Function(bool?) onchange,
-    List<Function(dynamic)> selectFunctionList,
-    List<List<String>> dataList,
+    List<Function(String?)> selectFunctionList,
+    List<List<List<String>>> dataList,
+    List<String> selectIndex,
   ) {
     return Stack(
       children: [
@@ -414,6 +380,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
               ["Quận/huyện", "Phường/xã"],
               selectFunctionList,
               dataList,
+              selectIndex,
             ),
             isRequired: false,
           ),
@@ -431,7 +398,8 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
     String label,
     Function(bool?) onchange,
     List<Function(dynamic)> selectFunctionList,
-    List<List<String>> dataList,
+    List<List<List<String>>> dataList,
+    List<String> selectIndex,
   ) {
     return Stack(
       children: [
@@ -454,11 +422,101 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
               ["Tỉnh/TP", "Quận/huyện", "Phường/xã"],
               selectFunctionList,
               dataList,
+              selectIndex,
             ),
             isRequired: false,
           ),
         )
       ],
+    );
+  }
+
+  ///
+  /// labelSelect
+  ///
+  Widget _labelSelect(
+    BuildContext context,
+    List<String> labels,
+    List<Function(String?)> onChangedList,
+    List<List<List<String>>> onList,
+    List<String> selectIndex,
+  ) {
+    return SizedBox(
+      height: 100,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: onList.length,
+          mainAxisExtent: 100,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: onList.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return LabelContent(
+            title: labels[index],
+            content: _formField(
+              labels[index],
+              onChangedList[index],
+              onList[index],
+              selectIndex[index],
+            ),
+            isRequired: false,
+          );
+        },
+      ),
+    );
+  }
+
+  ///
+  /// form field
+  ///
+  Widget _formField(
+    String label,
+    Function(String?) onChanged,
+    List<List<String>> contentList,
+    String selectIndex,
+  ) {
+    return SizedBox(
+      height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+      child: FormField<String>(
+        builder: (FormFieldState<String> state) {
+          return InputDecorator(
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              labelStyle: Dimensions.textNormalStyle(),
+              errorStyle: const TextStyle(
+                color: Colors.redAccent,
+                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_SMALL,
+                ),
+              ),
+            ),
+            isEmpty: label == '',
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: selectIndex,
+                isDense: true,
+                onChanged: (val) {
+                  onChanged(val);
+                },
+                items: contentList.map((value) {
+                  return DropdownMenuItem<String>(
+                    value: value[0],
+                    child: Text(value[1]),
+                  );
+                }).toList(),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -484,7 +542,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
               height: DeviceUtils.getScaledHeight(
                   context, Dimensions.SCALE_DEFAULT)),
           GestureDetector(
-            onTap: () {},
+            onTap: controller.onRegisterClick,
             child: Container(
               width: DeviceUtils.getScaledWidth(context, 1),
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),

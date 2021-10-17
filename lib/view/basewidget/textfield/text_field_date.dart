@@ -136,6 +136,7 @@ class TextFieldDate extends StatelessWidget {
   /// format date
   ///
   String formatDate(String date) {
-    return DateFormat("dd/MM/yyyy").format(DateTime.parse(date));
+    return DateFormat("dd/MM/yyyy")
+        .format(DateFormat("yyyy-MM-dd").parse(date));
   }
 }

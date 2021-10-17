@@ -9,12 +9,15 @@ class LabelInput extends StatelessWidget {
   final String labelText;
   final bool isRequire;
   final TextEditingController controller;
+  bool? isNumber;
 
-  const LabelInput(
-      {required this.label,
-      required this.labelText,
-      required this.controller,
-      required this.isRequire});
+  LabelInput({
+    required this.label,
+    required this.labelText,
+    required this.controller,
+    required this.isRequire,
+    this.isNumber,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +47,13 @@ class LabelInput extends StatelessWidget {
             height:
                 DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
         TextField(
+          keyboardType:
+              (isNumber == true) ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: labelText,
           ),
+          controller: controller,
         )
       ],
     );

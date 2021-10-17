@@ -4,12 +4,12 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class LabelDropdown extends StatelessWidget {
+class LabelDropdown<T> extends StatelessWidget {
   final String label;
   final String labelText;
   final bool isRequire;
   final String currentSelectvalue;
-  final List<String> currencies;
+  final List<List<String>> currencies;
   final TextEditingController controller;
   final Function(String?) onChanged;
 
@@ -71,10 +71,10 @@ class LabelDropdown extends StatelessWidget {
                     value: currentSelectvalue,
                     isDense: true,
                     onChanged: onChanged,
-                    items: currencies.map((String value) {
+                    items: currencies.map((List<String> value) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                        value: value[0],
+                        child: Text(value[1]),
                       );
                     }).toList(),
                   ),
