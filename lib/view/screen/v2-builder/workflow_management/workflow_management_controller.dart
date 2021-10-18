@@ -60,9 +60,13 @@ class V2WorkflowManagementController extends GetxController
       filter: "&sortBy=created_at:desc",
       onSuccess: (values) {
         for (final value in values) {
+          print(value.tieuDe);
+          print(value.idTrangThaiDonHang);
+          print(value.idNhomDichVu);
           if (value.idTrangThaiDonHang != null && value.idNhomDichVu != null) {
             final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
             final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
+            print("$tieuDe $nhomDichVu");
             if (nhomDichVu == "3" || nhomDichVu == "4") {
               if (tieuDe.toLowerCase() == dangXuLyKey ||
                   tieuDe.toLowerCase() == dangTuyenKey ||
