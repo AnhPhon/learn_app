@@ -296,10 +296,9 @@ class V1HomeController extends GetxController {
   ///
   void _fillProductList(List<SanPhamResponse> productList) {
     while (productList.length != 9) {
-      productList.add(SanPhamResponse(
-        ten: "San pham mau",
-        hinhAnhSanPham: Images.location_example,
-      ));
+      productList.add(
+        SanPhamResponse(ten: "San pham mau", hinhAnhSanPham: Images.logo),
+      );
     }
   }
 }

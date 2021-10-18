@@ -27,7 +27,7 @@ class V2HomePage extends GetView<V2HomeController> {
             return const Center(child: CircularProgressIndicator());
           }
           return HomeWidget(
-            fullname: "NT, ${controller.fullname}!",
+            fullname: "${controller.fullname}!",
             content: Column(
               children: [
                 const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -321,7 +321,7 @@ class V2HomePage extends GetView<V2HomeController> {
           controller.onClickHotNews();
         },
         widget: SizedBox(
-          height: (len > 0) ? 140 * len : 0,
+          height: 140 * len + 50,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: length,
@@ -330,7 +330,8 @@ class V2HomePage extends GetView<V2HomeController> {
               index,
             ) {
               return Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                padding:
+                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ItemListWidget(
                   onTap: () {},
                   title: "Biệt thự 170 Nguyễn Đình Thi",

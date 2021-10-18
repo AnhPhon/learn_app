@@ -7,6 +7,7 @@ import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -16,13 +17,16 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V2HomeController extends GetxController {
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
-  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final NhomDichVuProvider _nhomDichVuProvider =
+      GetIt.I.get<NhomDichVuProvider>();
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   List<String>? idCongViecDangCanNguoiList = [
-    "616049b2c8e6fa122227e283",
-    "616049a5c8e6fa122227e27a",
-    "616049bac8e6fa122227e289",
+    "1",
+    "2",
+    "5",
+    "6",
   ];
   String fullname = "Nguyễn Văn A";
 
@@ -47,7 +51,8 @@ class V2HomeController extends GetxController {
           fullname = value.hoTen!;
 
           // load cong viec đang cần người
-          _loadCongViecDangCanNguoi("616049b2c8e6fa122227e283");
+          _loadCongViecDangCanNguoi(value.id!);
+
           // load tin tuc
           _loadTinTuc();
 
@@ -67,26 +72,27 @@ class V2HomeController extends GetxController {
   ///
   /// load công việc đang cần người
   ///
-  void _loadCongViecDangCanNguoi(String _idCongViecDangCanNguoiList) {
-    final int index =
-        idCongViecDangCanNguoiList!.indexOf(_idCongViecDangCanNguoiList);
-    if (index != -1) {
-      _donDichVuProvider.paginate(
-        page: 1,
-        limit: 2,
-        filter:
-            "&idNhomDichVu=$_idCongViecDangCanNguoiList&sortBy=created_at:desc",
-        onSuccess: (value) {
-          donDichVuList = value;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        },
-      );
-    } else {
-      donDichVuList = [];
-    }
+  void _loadCongViecDangCanNguoi(String idNguoiDung) {
+    print("URL:&idTaiKhoan=$idNguoiDung");
+    _donDichVuProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$idNguoiDung",
+      onSuccess: (values) {
+        for (final value in values) {
+          final int index = idCongViecDangCanNguoiList!
+              .indexOf(value.idNhomDichVu!.nhomDichVu!);
+          if (index != -1) {
+            donDichVuList.add(value);
+          }
+        }
+        print(donDichVuList);
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
   }
 
   ///
@@ -99,7 +105,6 @@ class V2HomeController extends GetxController {
       filter: "&sortBy=created_at:desc",
       onSuccess: (value) {
         sanPhamList = value;
-        isLoading = false;
         update();
       },
       onError: (error) {
@@ -118,6 +123,7 @@ class V2HomeController extends GetxController {
       filter: "&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucList = value;
+        isLoading = false;
         update();
       },
       onError: (error) {
