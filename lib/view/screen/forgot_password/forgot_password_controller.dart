@@ -8,7 +8,7 @@ import 'package:template/di_container.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
-class LoginController extends GetxController {
+class ForgotPasswordController extends GetxController {
   // AuthProvider authProvider = GetIt.I.get<AuthProvider>();
   // UserProvider userProvider = GetIt.I.get<UserProvider>();
   final usernameController = TextEditingController();
@@ -28,27 +28,17 @@ class LoginController extends GetxController {
   ///
   /// on checkbox remember click
   ///
-  void onCheckBoxRememberClick() {
-    if (isRemember) {
-      isRemember = false;
-    } else {
-      isRemember = true;
-    }
+  void onCheckBoxRememberClick(bool? value) {
+    isRemember = value!;
     update();
-  }
-
-  ///
-  /// on checkbox remember click
-  ///
-  void onBtnForgotPasswordTap() {
-    Get.toNamed(AppRoutes.V1_DASHBOARD);
   }
 
   ///
   /// on login click
   ///
-  void onLoginBtnClick() { 
-    sl.get<SharedPreferenceHelper>().saveUserId("616a8b65000118120619d644");
+  void onLoginBtnClick() {
+    print('asdf');
+    sl.get<SharedPreferenceHelper>().saveUserId("616a534b06a577482e02933d");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {

@@ -1,6 +1,7 @@
 class Images {
   static const String logo_image = 'assets/images/logo.png';
   static const String logo_fss = 'assets/images/logo.jpg';
+  static const String logo_removebg = 'assets/images/logo_removebg.png';
   static const String no_internet = 'assets/images/opps_internet.png';
   static const String no_data = 'assets/images/no_data.png';
   static const String admin_background = 'assets/images/background.png';
@@ -24,6 +25,9 @@ class Images {
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
   static const String qr_code = 'assets/images/qr_code.png';
+
+  // login
+  static const String login_background = 'assets/images/login_background.png';
 
   // v1-customer
   static const String V1Product1Home = 'assets/images/product1.png';
