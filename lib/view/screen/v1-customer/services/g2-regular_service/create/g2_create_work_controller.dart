@@ -151,30 +151,19 @@ class V1G2CreateWorkController extends GetxController {
   ///
   /// Nhấn tiếp tục hoàn thành tạo đơn
   ///
-  void onClickContinueButton() async {
-    if (tommorow == false & afternoon & false || tonight & false) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
-    } else if (startTime.text.toString().isEmpty) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
-    } else if (endTime.text.toString().isEmpty) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc dự kiến");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: endTime.text.toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: DateTime.now().toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi",
-          message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
-    } else if (workDesc.text.toString().isEmpty) {
+  void onClickContinueButton()async{
+    print(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()));
+    if(tommorow == false && afternoon == false && tonight == false){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
+    }else if(startTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
+    }else if(endTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc dự kiến");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()) > 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+    }else if(workDesc.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
     } else if (valueController.text.toString().isEmpty) {
       showSnackBar(title: "Lỗi", message: "Vui lòng nhập giá trị đề xuất");

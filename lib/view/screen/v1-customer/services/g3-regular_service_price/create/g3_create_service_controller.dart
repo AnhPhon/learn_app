@@ -69,10 +69,9 @@ class V1G3CreateServiceController extends GetxController {
 
   void onSelectedAfternoon({required bool val}) {
     afternoon = val;
-    if (tommorow) {
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull(
-          (element) => element.tieuDe!.contains('11h30 - 17h30'));
-    } else {
+    if(afternoon){
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 5h30'));
+    }else{
       afternoonReponse = null;
     }
     update();
@@ -80,10 +79,9 @@ class V1G3CreateServiceController extends GetxController {
 
   void onSelectedTonight({required bool val}) {
     tonight = val;
-    if (tommorow) {
-      tonightReponse = thoiGianLamViecList.firstWhereOrNull(
-          (element) => element.tieuDe!.contains('18h30 - 22h30'));
-    } else {
+    if(tonight){
+      tonightReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('18h30 - 22h30'));
+    }else{
       tonightReponse = null;
     }
     update();
@@ -108,8 +106,9 @@ class V1G3CreateServiceController extends GetxController {
   ///
   /// Nhấn tiếp tục tới trang báo giá đơn hàng
   ///
-  void onClickContinueButton() {
-    if (tommorow == false & afternoon & false || tonight & false) {
+  void onClickContinueButton(){
+    print(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()));
+    if(tommorow == false && afternoon == false && tonight == false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
     } else if (amountController.text.toString().isEmpty) {
       showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
@@ -119,21 +118,12 @@ class V1G3CreateServiceController extends GetxController {
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
     } else if (descController.text.toString().isEmpty) {
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: endTime.text.toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: DateTime.now().toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi",
-          message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
-    } else {
-      Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()) > 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+    }else{
+       Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
     }
   }
 
