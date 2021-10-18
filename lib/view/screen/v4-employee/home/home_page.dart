@@ -141,7 +141,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: 250,
+            height: 280,
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
             child: GridView.builder(

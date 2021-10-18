@@ -54,37 +54,37 @@ class V2WorkflowManagementController extends GetxController
   /// get cong viec
   ///
   void _readCongViecNhanVien() {
-    donDichVuProvider.paginate(
-      page: 1,
-      limit: 30,
-      filter: "&sortBy=created_at:desc",
-      onSuccess: (values) {
-        for (final value in values) {
-          print(value.tieuDe);
-          print(value.idTrangThaiDonHang);
-          print(value.idNhomDichVu);
-          if (value.idTrangThaiDonHang != null && value.idNhomDichVu != null) {
-            final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
-            final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
-            print("$tieuDe $nhomDichVu");
-            if (nhomDichVu == "3" || nhomDichVu == "4") {
-              if (tieuDe.toLowerCase() == dangXuLyKey ||
-                  tieuDe.toLowerCase() == dangTuyenKey ||
-                  tieuDe.toLowerCase() == dangGiaoKey) {
-                dangLam.add(value);
-              } else {
-                hoanThanh.add(value);
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      donDichVuProvider.paginate(
+        page: 1,
+        limit: 30,
+        filter: "&idTaiKhoan=$id",
+        onSuccess: (values) {
+          for (final value in values) {
+            if (value.idTrangThaiDonHang != null &&
+                value.idNhomDichVu != null) {
+              final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
+              final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
+
+              if (nhomDichVu == "3" || nhomDichVu == "4") {
+                if (tieuDe.toLowerCase() == dangXuLyKey ||
+                    tieuDe.toLowerCase() == dangTuyenKey ||
+                    tieuDe.toLowerCase() == dangGiaoKey) {
+                  dangLam.add(value);
+                } else {
+                  hoanThanh.add(value);
+                }
               }
             }
           }
-        }
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
   }
 
   ///
