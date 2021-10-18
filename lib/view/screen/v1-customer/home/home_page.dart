@@ -30,9 +30,9 @@ class V1HomePage extends GetView<V1HomeController> {
             );
           }
           return SmartRefresher(
-            controller: controller.refreshController,
-            onLoading: controller.onLoading,
+            controller: controller.refreshController!,
             onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
             child: HomeWidget(
               fullname: "KH, ${controller.fullname}",
               content: Column(

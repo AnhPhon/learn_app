@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -17,32 +17,32 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V2HomeController extends GetxController {
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
-  final NhomDichVuProvider _nhomDichVuProvider =
-      GetIt.I.get<NhomDichVuProvider>();
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
-  List<String>? idCongViecDangCanNguoiList = [
-    "1",
-    "2",
-    "5",
-    "6",
-  ];
-  String fullname = "Nguyễn Văn A";
+  // refresh controller
+  RefreshController? refreshController;
 
+  List<String>? idCongViecDangCanNguoiList = ["1", "2", "5", "6"];
   List<Map<String, dynamic>>? contentGrid;
-
   List<DonDichVuResponse> donDichVuList = [];
   List<SanPhamResponse> sanPhamList = [];
   List<TinTucResponse> tinTucList = [];
+
+  int number = 0;
+
+  String fullname = "Nguyễn Văn A";
 
   bool isLoading = true;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
+    // init refreshController
+    refreshController ??= RefreshController();
+
+    // init features
     _initFeatures();
   }
 
@@ -245,9 +245,33 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  ///go to news detail page
+  ///
+  void onNewsDetailClick({required int index}) {
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+  }
+
+  ///
   /// on Need Update Click
   ///
   void onNeedUpdateClick() {
     Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    _initFeatures();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

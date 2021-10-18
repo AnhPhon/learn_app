@@ -23,7 +23,7 @@ class V1HomeController extends GetxController {
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   // refresh controller
-  RefreshController refreshController = RefreshController();
+  RefreshController? refreshController;
 
   // declare list
   List<Map<String, dynamic>>? threeFeatures;
@@ -41,6 +41,8 @@ class V1HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    refreshController = RefreshController();
 
     loadInit();
   }
@@ -342,18 +344,18 @@ class V1HomeController extends GetxController {
   ///
   /// on refresh
   ///
-  void onRefresh() async {
+  Future<void> onRefresh() async {
     loadInit();
     await Future.delayed(const Duration(milliseconds: 1000));
-    refreshController.refreshCompleted();
+    refreshController!.refreshCompleted();
   }
 
   ///
   /// on loading
   ///
-  void onLoading() async {
+  Future<void> onLoading() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    refreshController.loadComplete();
+    refreshController!.loadComplete();
   }
 
   ///
