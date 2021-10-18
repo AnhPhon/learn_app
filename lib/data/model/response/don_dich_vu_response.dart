@@ -153,10 +153,10 @@ class DonDichVuResponse {
     }
 
     // mapping idThoiGianLamViec
-    if (json['idThoiGianLamViec'] != null &&
-        json['idThoiGianLamViec'].toString().length != 24) {
+    if (json['thoiGianLamViec'] != null &&
+        json['thoiGianLamViec'].toString().length != 24) {
       thoiGianLamViec =
-          (json['idThoiGianLamViec'] as List<ThoiGianLamViecResponse>)
+          (json['thoiGianLamViec'] as List<ThoiGianLamViecResponse>)
               .map((e) =>
                   ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
               .toList();

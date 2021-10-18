@@ -194,4 +194,42 @@ class SharedPreferenceHelper {
   Future<bool> removeWorkFlow() async {
     return _sharedPreference.remove(Preferences.workFlowId);
   }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get idTinTuc async {
+    return _sharedPreference.getString(Preferences.idTinTuc);
+  }
+
+  Future<bool> saveTinTuc({required String id}) async {
+    return _sharedPreference.setString(Preferences.isFirst, id);
+  }
+
+  Future<bool> removeTinTuc() async {
+    return _sharedPreference.remove(Preferences.idTinTuc);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get idSanPham async {
+    return _sharedPreference.getString(Preferences.idSanPham);
+  }
+
+  Future<bool> saveSanPham({required String id}) async {
+    return _sharedPreference.setString(Preferences.isFirst, id);
+  }
+
+  Future<bool> removeSanPham() async {
+    return _sharedPreference.remove(Preferences.idSanPham);
+  }
+
+  Future<String?> get chamcong async {
+    return _sharedPreference.getString(Preferences.isChamCong);
+  }
+
+  Future<bool> saveChamCongId(String id) async {
+    return _sharedPreference.setString(Preferences.isChamCong, id);
+  }
+
+  Future<bool> removeChamCongId() async {
+    return _sharedPreference.remove(Preferences.isChamCong);
+  }
 }

@@ -7,6 +7,7 @@ import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -16,8 +17,10 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V2HomeController extends GetxController {
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
-  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final NhomDichVuProvider _nhomDichVuProvider =
+      GetIt.I.get<NhomDichVuProvider>();
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   List<String>? idCongViecDangCanNguoiList = [
     "1",
@@ -55,7 +58,10 @@ class V2HomeController extends GetxController {
           fullname = value.hoTen!;
 
           // load cong viec đang cần người
-          _loadCongViecDangCanNguoi();
+          _loadCongViecDangCanNguoi(value.id!);
+
+          // load tin tuc
+          _loadTinTuc();
 
           // load san pham
           _loadSanPham();
@@ -76,13 +82,19 @@ class V2HomeController extends GetxController {
   ///
   /// load công việc đang cần người
   ///
-  void _loadCongViecDangCanNguoi() {
+  void _loadCongViecDangCanNguoi(String idNguoiDung) {
     _donDichVuProvider.paginate(
       page: 1,
-      limit: 2,
-      filter: "&sortBy=created_at:desc",
-      onSuccess: (value) {
-        donDichVuList = value;
+      limit: 30,
+      filter: "&idTaiKhoan=$idNguoiDung",
+      onSuccess: (values) {
+        for (final value in values) {
+          final int index = idCongViecDangCanNguoiList!
+              .indexOf(value.idNhomDichVu!.nhomDichVu!);
+          if (index != -1) {
+            donDichVuList.add(value);
+          }
+        }
         update();
       },
       onError: (error) {
@@ -101,7 +113,6 @@ class V2HomeController extends GetxController {
       filter: "&sortBy=created_at:desc",
       onSuccess: (value) {
         sanPhamList = value;
-        isLoading = false;
         update();
       },
       onError: (error) {
@@ -120,6 +131,7 @@ class V2HomeController extends GetxController {
       filter: "&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucList = value;
+        isLoading = false;
         update();
       },
       onError: (error) {
@@ -191,10 +203,24 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  /// xem chi tiết 1 sản phẩm
+  ///
+  void onClickProductDetail(String id) {
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  }
+
+  ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
     Get.toNamed(AppRoutes.V2_NEWS);
+  }
+
+  ///
+  /// vào tin tức chi tiết
+  ///
+  void onClickHotNewsDetail(String idNews) {
+    Get.toNamed(AppRoutes.V2_NEWS_DETAIL);
   }
 
   ///

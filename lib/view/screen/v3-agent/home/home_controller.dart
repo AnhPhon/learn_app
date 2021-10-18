@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/response/san_pham_response.dart';
-import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
@@ -43,10 +41,10 @@ class V3HomeController extends GetxController {
           _readTinTuc();
 
           // read Kho san Pham
-          _readKhosanPham();
+          readKhosanPham();
 
           // binding three feature
-          _bindingThreeFeature();
+          bindingThreeFeature();
         },
         onError: (error) {
           print(error);
@@ -77,7 +75,7 @@ class V3HomeController extends GetxController {
   ///
   /// read kho san pham
   ///
-  void _readKhosanPham() {
+  void readKhosanPham() {
     sanPhamProvider.paginate(
       page: 1,
       limit: 2,
@@ -99,7 +97,7 @@ class V3HomeController extends GetxController {
   ///
   /// binding three feature
   ///
-  void _bindingThreeFeature() {
+  void bindingThreeFeature() {
     threeFeatures = [
       {
         "icon": Icons.shop,
@@ -159,6 +157,29 @@ class V3HomeController extends GetxController {
   ///
   void onClickQuoteRequest() {
     Get.toNamed(AppRoutes.V3_QUOTE_LIST);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews() {
+    Get.toNamed(AppRoutes.V2_NEWS);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNewsDetail(String id) {
+    // goto detail news
+    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+  }
+
+  ///
+  /// Nhấn nút sản phẩm
+  ///
+  void onClickHotProductDetail(String id) {
+    // goto detail news
+    Get.toNamed("${AppRoutes.V1_PRODUCT_DETAIL}?id=$id");
   }
 
   // ///

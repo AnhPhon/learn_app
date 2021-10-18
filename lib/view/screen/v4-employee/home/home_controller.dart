@@ -63,7 +63,7 @@ class V4HomeController extends GetxController {
           fullname = taiKhoanResponse.hoTen!;
           avatar = taiKhoanResponse.hinhDaiDien!;
           // load thu chi
-          _readRevenueAndExpenditure();
+          _readRevenueAndExpenditure(id);
 
           // xử lý tiến độ công việc
           _theoDoiTienDo();
@@ -80,12 +80,12 @@ class V4HomeController extends GetxController {
   ///
   /// set user
   ///
-  void _readRevenueAndExpenditure() {
+  void _readRevenueAndExpenditure(String id) {
     // set name of user
     thuChiNhanVienProvider.paginate(
       page: 1,
       limit: 50,
-      filter: "",
+      filter: "&idNhanVien=$id",
       onSuccess: (models) {
         for (final model in models) {
           final String type = model.loai.toString().toLowerCase();
@@ -236,10 +236,12 @@ class V4HomeController extends GetxController {
     final double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
-    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
-      return onClickToReportTimeKeeping(context);
+    if (_reportTimekeeping < _timeNow) {
+      onClickToReportTimeKeeping(context);
+    } else if (_timeNow < _timekeeping) {
+      onClickToReportTimeKeeping(context);
     } else {
-      return onClickToTimeKeeping(context);
+      onClickToTimeKeeping(context);
     }
   }
 

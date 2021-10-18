@@ -245,15 +245,14 @@ class V2HomePage extends GetView<V2HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return TaskNeedWorker(
-                  tenTask: controller.donDichVuList[index].tieuDe!,
-                  maTask:
-                      "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
-                  trangThai:
-                      (controller.donDichVuList[index].idTrangThaiDonHang !=
-                              null)
-                          ? controller
-                              .donDichVuList[index].idTrangThaiDonHang!.tieuDe!
-                          : "");
+                nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
+                tenTask: controller.donDichVuList[index].tieuDe!,
+                maTask:
+                    "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
+                trangThai:
+                    controller.donDichVuList[index].idTrangThaiDonHang!.tieuDe!,
+                imageURL: controller.donDichVuList[index].hinhAnhBanVe,
+              );
             },
           ),
         ),
@@ -287,18 +286,24 @@ class V2HomePage extends GetView<V2HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: length,
             itemBuilder: (BuildContext ctx, index) {
-              return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              return GestureDetector(
+                onTap: () {
+                  controller
+                      .onClickProductDetail(controller.sanPhamList[index].id!);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    ),
                   ),
-                ),
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: ProductCard(
-                  title: controller.sanPhamList[index].ten!,
-                  image: controller.sanPhamList[index].hinhAnhSanPham!,
-                  cost: PriceConverter.convertPrice(context, 100000),
+                  padding:
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: ProductCard(
+                    title: controller.sanPhamList[index].ten!,
+                    image: controller.sanPhamList[index].hinhAnhSanPham!,
+                    cost: PriceConverter.convertPrice(context, 100000),
+                  ),
                 ),
               );
             },
@@ -323,7 +328,7 @@ class V2HomePage extends GetView<V2HomeController> {
           controller.onClickHotNews();
         },
         widget: SizedBox(
-          height: (len > 0) ? 140 * len : 0,
+          height: 140 * len + 50,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: length,
@@ -332,9 +337,13 @@ class V2HomePage extends GetView<V2HomeController> {
               index,
             ) {
               return Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                padding:
+                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ItemListWidget(
-                  onTap: () {},
+                  onTap: () {
+                    controller
+                        .onClickHotNewsDetail(controller.tinTucList[index].id!);
+                  },
                   title: "Biệt thự 170 Nguyễn Đình Thi",
                   icon1: const Icon(Icons.remove_red_eye),
                   rowText1: controller.tinTucList[index].luotXem,
