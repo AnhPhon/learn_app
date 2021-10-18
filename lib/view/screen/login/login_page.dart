@@ -10,6 +10,67 @@ import 'package:template/utils/images.dart';
 import 'login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<LoginController>(
+        init: LoginController(),
+        builder: (LoginController value) {
+          return Scaffold(
+            backgroundColor: ColorResources.WHITE,
+            body: Stack(
+              children: [
+                // bottom
+                Stack(
+                  children: [
+                    _bottomWidget(DeviceUtils.getScaledWidth(context, 1)),
+                  ],
+                ),
+
+                SingleChildScrollView(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+
+                        // logo
+                        Image.asset(
+                          Images.logo_image,
+                          scale: 1,
+                        ),
+
+                        const SizedBox(
+                          height: 50,
+                        ),
+
+                        // username enter widget
+                        _usernameEnterWidget(context),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        
+                        //  password enter widget
+                        _passwordEnterWidget(context),
+                        const SizedBox(
+                          height: 50,
+                        ),
+
+                        //  login button widget
+                        _loginBtnWidget(context, "Đăng nhập",
+                            DeviceUtils.getScaledWidth(context, 1)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   ///
   /// _usernameEnterWidget
   ///
@@ -25,16 +86,20 @@ class LoginPage extends GetView<LoginController> {
             horizontal: DeviceUtils.getScaledSize(context, 0.025),
             vertical: DeviceUtils.getScaledSize(context, 0.038)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Tài khoản",
         filled: true,
@@ -71,16 +136,20 @@ class LoginPage extends GetView<LoginController> {
             horizontal: DeviceUtils.getScaledSize(context, 0.025),
             vertical: DeviceUtils.getScaledSize(context, 0.038)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.PRIMARY)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             borderSide: const BorderSide(color: ColorResources.GREY)),
         hintText: "Mật khẩu",
         filled: true,
@@ -164,64 +233,5 @@ class LoginPage extends GetView<LoginController> {
         ],
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(
-        init: LoginController(),
-        builder: (LoginController value) {
-          return Scaffold(
-            backgroundColor: ColorResources.WHITE,
-            body: Stack(
-              children: [
-                // bottom
-                Stack(
-                  children: [
-                    _bottomWidget(DeviceUtils.getScaledWidth(context, 1)),
-                  ],
-                ),
-
-                SingleChildScrollView(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        // logo
-                        Image.asset(
-                          Images.logo_image,
-                          scale: 1.3,
-                        ),
-
-                        const SizedBox(
-                          height: 50,
-                        ),
-
-                        // username enter widget
-                        _usernameEnterWidget(context),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        //  password enter widget
-                        _passwordEnterWidget(context),
-                        const SizedBox(
-                          height: 50,
-                        ),
-
-                        //  login button widget
-                        _loginBtnWidget(context, "Đăng nhập", DeviceUtils.getScaledWidth(context, 1)),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
   }
 }

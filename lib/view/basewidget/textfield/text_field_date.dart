@@ -112,7 +112,7 @@ class TextFieldDate extends StatelessWidget {
                 hintText: holdplacer,
                 filled: true,
                 fillColor: (allowEdit == false)
-                    ? ColorResources.GREY
+                    ? ColorResources.LIGHT_GREY
                     : Colors.transparent,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
