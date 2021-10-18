@@ -6,14 +6,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
-import 'login_controller.dart';
+import 'forgot_password_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(
-        init: LoginController(),
-        builder: (LoginController value) {
+    return GetBuilder<ForgotPasswordController>(
+        init: ForgotPasswordController(),
+        builder: (ForgotPasswordController value) {
           return Scaffold(
             body: Stack(children: [
               // background
@@ -157,12 +157,11 @@ class LoginPage extends GetView<LoginController> {
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
                 controller: controller.usernameController,
-                keyboardType: TextInputType.number,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
                   isDense: true,
                   border: InputBorder.none,
-                  hintText: "Nhập số điện thoại",
+                  hintText: "Nhập tên đăng nhập",
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
@@ -225,58 +224,50 @@ class LoginPage extends GetView<LoginController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            // on click checkbox remember password
-            onTap: () => controller.onCheckBoxRememberClick(),
-            child: SizedBox(
-              height: 25,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Checkbox(
-                      checkColor: Colors.white,
-                      value: controller.isRemember,
-                      onChanged: (bool? value) {
-                        // onCheckBoxRememberClick
-                        controller.onCheckBoxRememberClick();
-                      },
-                    ),
+          SizedBox(
+            height: 25,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  const SizedBox(width: 2),
-                  const Text(
-                    "Nhớ mật khẩu",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xff2a3547),
-                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                    ),
+                  child: Checkbox(
+                    checkColor: Colors.white,
+                    value: controller.isRemember,
+                    onChanged: (bool? value) {
+                      // onCheckBoxRememberClick
+                      controller.onCheckBoxRememberClick(value);
+                    },
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 2),
+                const Text(
+                  "Nhớ mật khẩu",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xff2a3547),
+                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                  ),
+                ),
+              ],
             ),
           ),
 
           // link forgot password
-          GestureDetector(
-            // on tap button forgot password
-            onTap: () => controller.onBtnForgotPasswordTap(),
-            child: const Text(
-              "Quên mật khẩu?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff0f90f3),
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                decoration: TextDecoration.underline,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
-              ),
+          const Text(
+            "Quên mật khẩu?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xff0f90f3),
+              fontSize: Dimensions.FONT_SIZE_DEFAULT,
+              decoration: TextDecoration.underline,
+              fontFamily: "Nunito Sans",
+              fontWeight: FontWeight.w700,
             ),
           )
         ],
