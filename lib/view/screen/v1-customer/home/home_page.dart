@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
@@ -54,7 +55,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   Widget _categoryBoxWidget() {
     return SizedBox(
-      height: 240,
+      height: 220,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -85,7 +86,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   Widget _threeFeatureWidget() {
     return SizedBox(
-      height: 140,
+      height: 120,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -242,7 +243,7 @@ class V1HomePage extends GetView<V1HomeController> {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
-        title: "Sản phẩm",
+        title: "Danh mục sản phẩm",
         onTap: () => controller.onMoreProductList(),
         widget: SizedBox(
           height: 380,
@@ -255,16 +256,17 @@ class V1HomePage extends GetView<V1HomeController> {
               mainAxisExtent: 120,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.productList.length,
+            itemCount: controller.danhMucList.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () {
                   controller
-                      .onMoreProductDetail(controller.productList[index].id!);
+                      .onMoreCategoryProduct(controller.danhMucList[index].id!);
                 },
                 child: _imageWidget(
-                  controller.productList[index].ten!,
-                  controller.productList[index].hinhAnhSanPham!,
+                  controller.danhMucList[index].ten!,
+                  Images.location_example,
+                  // controller.danhMucList[index].hinhAnhSanPham!,
                 ),
               );
             },

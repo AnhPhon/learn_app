@@ -2,28 +2,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/images.dart';
 
 class V1HomeController extends GetxController {
+  // declare provider
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  DanhMucSanPhamProvider danhMucSanPhamProvider =
+      GetIt.I.get<DanhMucSanPhamProvider>();
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
+  // declare list
   List<Map<String, dynamic>>? threeFeatures;
   List<Map<String, dynamic>>? contentGrid;
   List<SanPhamResponse> productList = [];
   List<TinTucResponse> tinTucList = [];
+  List<DanhMucSanPhamResponse> danhMucList = [];
 
+  // declare string
   String fullname = "KH, Nguyễn Văn A";
 
+  // declare boolean
   bool isLoading = true;
 
   @override
@@ -204,17 +212,17 @@ class V1HomeController extends GetxController {
   ///
   void _loadDanhMucSanPham() {
     // product list
-    sanPhamProvider.paginate(
+    danhMucSanPhamProvider.paginate(
       page: 1,
       limit: 9,
-      filter: "&sortBy=created_at:desc",
+      filter: "",
       onSuccess: (values) {
         // assign values to productList
-        productList = values;
+        danhMucList = values;
 
         // xử lý tạm
-        if (productList.length != 9) {
-          _fillProductList(productList);
+        if (danhMucList.length != 9) {
+          _fillProductList(danhMucList);
         }
         isLoading = false;
         update();
@@ -277,6 +285,11 @@ class V1HomeController extends GetxController {
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
+  void onMoreCategoryProduct(String id) {
+    sl.get<SharedPreferenceHelper>().saveProductCategoryId(id);
+    Get.toNamed(AppRoutes.V1_PRODUCT);
+  }
+
   ///
   /// đến màn hình tuyển dung úng vieen
   ///
@@ -317,10 +330,12 @@ class V1HomeController extends GetxController {
   ///
   /// lập đấy sản phẩm cho list - xử lý tạm thời
   ///
-  void _fillProductList(List<SanPhamResponse> productList) {
+  void _fillProductList(List<DanhMucSanPhamResponse> productList) {
     while (productList.length != 9) {
       productList.add(
-        SanPhamResponse(ten: "San pham mau", hinhAnhSanPham: Images.logo),
+        DanhMucSanPhamResponse(
+          ten: "San pham mau",
+        ),
       );
     }
   }

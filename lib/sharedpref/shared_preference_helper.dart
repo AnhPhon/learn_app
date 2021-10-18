@@ -221,6 +221,7 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.idSanPham);
   }
 
+  //  : ----------------------------------------------------------
   Future<String?> get chamcong async {
     return _sharedPreference.getString(Preferences.isChamCong);
   }
@@ -231,5 +232,18 @@ class SharedPreferenceHelper {
 
   Future<bool> removeChamCongId() async {
     return _sharedPreference.remove(Preferences.isChamCong);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productCategoryId async {
+    return _sharedPreference.getString(Preferences.productCategoryId);
+  }
+
+  Future<bool> saveProductCategoryId(String id) async {
+    return _sharedPreference.setString(Preferences.productCategoryId, id);
+  }
+
+  Future<bool> removeProductCategoryId() async {
+    return _sharedPreference.remove(Preferences.productCategoryId);
   }
 }
