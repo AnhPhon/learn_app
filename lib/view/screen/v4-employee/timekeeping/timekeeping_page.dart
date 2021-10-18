@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
 
@@ -26,30 +31,40 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
           builder: (V4TimekeepingController controller) {
             return SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // chọn thời gian chấm công
                   _timekeeping(controller, context),
 
+                  const SizedBox(
+                    height: 25,
+                  ),
                   //dự án
-                  _project(context),
+                  _project(controller, context),
 
                   //địa chỉ
                   _address(controller, context),
+                  const SizedBox(
+                    height: 25,
+                  ),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       //thành phố
-                      _city(context),
+                      _city(controller, context),
 
                       //quận/huyện
-                      _district(context),
+                      _district(controller, context),
                     ],
                   ),
+
+                  //Phường/xã
+                  _wards(controller, context),
                   Container(
-                    height: DeviceUtils.getScaledHeight(context, .3),
+                    height: DeviceUtils.getScaledHeight(context, .04),
                   ),
-                  _btnTimekeeping(),
+                  _btnTimekeeping(controller),
                 ],
               ),
             );
@@ -64,10 +79,10 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       V4TimekeepingController controller, BuildContext context) {
     return TextFieldDate(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
+      isDate: false,
+      allowEdit: false,
       controller: controller.timekeeping,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       holdplacer: "12-11-2021",
       label: "Thời gian",
       obligatory: true,
@@ -79,13 +94,16 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   /// dự án
   ///
-  DropDownButton<String> _project(BuildContext context) {
-    return DropDownButton<String>(
+  Widget _project(V4TimekeepingController controller, BuildContext context) {
+    return DropDownButton1<DuAnNhanVienResponse>(
+      isColorFieldWhite: true,
+      labelBold: true,
+      hint: 'Vui lòng chọn dự án',
       label: 'Dự án(nếu có)',
-      data: const ['Dự án A', "Dự án C"],
-      obligatory: true,
-      onChanged: (value) {},
-      value: 'Dự án A',
+      data: controller.duAnNhanVienList,
+      obligatory: false,
+      onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
+      value: controller.duAnNhanVien,
       width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
@@ -95,12 +113,13 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   Widget _address(V4TimekeepingController controller, BuildContext context) {
     return InputField(
+      isColorFieldWhite: true,
       allowEdit: true,
       allowMultiline: false,
-      controller: controller.address,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      controller: controller.addressController,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       hidden: false,
-      holdplacer: 'Da Nang Ciy',
+      holdplacer: 'Vui lòng nhập địa chỉ cụ thể',
       label: 'Địa chỉ',
       obligatory: true,
       typeInput: TextInputType.text,
@@ -112,38 +131,63 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
 ///
 /// Tỉnh /Tp
 ///
-Widget _city(BuildContext context) {
-  return DropDownButton<String>(
+Widget _city(V4TimekeepingController controller, BuildContext context) {
+  return DropDownButton1<TinhTpResponse>(
+    labelBold: true,
+    label: 'Tỉnh/Tp',
+    isColorFieldWhite: true,
     hint: 'Tỉnh/Tp',
-    data: const ['Đà Nẵng', "Huế"],
+    data: controller.tinhTps,
     obligatory: true,
-    onChanged: (value) {},
-    value: 'Đà Nẵng',
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    onChanged: (value) => controller.onChangedTinhThanh(value!),
+    value: controller.tinh,
+    width: .4,
   );
 }
 
 ///
 /// Quận/Huyện
 ///
-Widget _district(BuildContext context) {
-  return DropDownButton<String>(
-    hint: 'Quyện/Huyện',
-    data: const ['Hải Châu', "Cẩm Lệ"],
+Widget _district(V4TimekeepingController controller, BuildContext context) {
+  return DropDownButton1<QuanHuyenResponse>(
+    labelBold: true,
+    label: 'Quận/Huyện',
+    isColorFieldWhite: true,
+    hint: 'Quận/Huyện',
+    data: controller.quanHuyenList,
     obligatory: true,
-    onChanged: (value) {},
-    value: 'Hải Châu',
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    onChanged: (value) => controller.onChangedQuanHuyen(value!),
+    value: controller.quanHuyen,
+    width: 0.4,
+  );
+}
+
+///
+/// Phường/Xã
+///
+Widget _wards(V4TimekeepingController controller, BuildContext context) {
+  return DropDownButton1<PhuongXaResponse>(
+    labelBold: true,
+    label: 'Phường/Xã',
+    isColorFieldWhite: true,
+    hint: 'Phường/Xã',
+    data: controller.phuongXaList,
+    obligatory: true,
+    onChanged: (value) => controller.onChangedPhuongXa(value!),
+    value: controller.phuongXa,
+    width: 0.4,
   );
 }
 
 ///
 /// Button chấm công
 ///
-Widget _btnTimekeeping() {
+Widget _btnTimekeeping(V4TimekeepingController controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.onChamCong();
+    },
     title: 'Chấm công',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );
