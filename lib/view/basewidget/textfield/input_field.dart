@@ -85,8 +85,9 @@ class InputField extends StatelessWidget {
               onChanged: onChanged,
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL,
-                      vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -110,6 +111,7 @@ class InputField extends StatelessWidget {
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   errorText: errorText,
+                  filled: true,
                   isDense: true,
                   hintText: holdplacer,
                   hintStyle: TextStyle(

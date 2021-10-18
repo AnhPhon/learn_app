@@ -10,7 +10,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
+
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -33,11 +33,15 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_SMALL,
+                  ),
+
                   // chọn thời gian chấm công
                   _timekeeping(controller, context),
 
                   const SizedBox(
-                    height: 25,
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
                   ),
                   //dự án
                   _project(controller, context),
@@ -45,7 +49,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   //địa chỉ
                   _address(controller, context),
                   const SizedBox(
-                    height: 25,
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
                   ),
 
                   Row(
@@ -65,6 +69,10 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                     height: DeviceUtils.getScaledHeight(context, .04),
                   ),
                   _btnTimekeeping(controller),
+
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
                 ],
               ),
             );
@@ -99,9 +107,9 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       isColorFieldWhite: true,
       labelBold: true,
       hint: 'Vui lòng chọn dự án',
-      label: 'Dự án(nếu có)',
+      label: 'Dự án',
       data: controller.duAnNhanVienList,
-      obligatory: false,
+      obligatory: true,
       onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
       value: controller.duAnNhanVien,
       width: DeviceUtils.getScaledWidth(context, 1),

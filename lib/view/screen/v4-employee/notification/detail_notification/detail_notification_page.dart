@@ -24,81 +24,69 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
               );
             }
             return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(
-                  Dimensions.PADDING_SIZE_LARGE,
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(
-                        Dimensions.PADDING_SIZE_SMALL,
-                        Dimensions.PADDING_SIZE_LARGE,
-                        Dimensions.PADDING_SIZE_SMALL,
-                        Dimensions.PADDING_SIZE_LARGE,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: controller.thongBaoModel.hinhDaiDien!,
+                    child: Container(
+                      width: DeviceUtils.getScaledWidth(context, 1),
+                      height: DeviceUtils.getScaledHeight(context, 0.3),
                       decoration: BoxDecoration(
-                        color: ColorResources.WHITE,
-                        borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_SMALL,
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            controller.thongBaoModel.hinhDaiDien.toString(),
+                          ),
+                          fit: BoxFit.cover,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 2),
-                            blurRadius: 2,
-                            color: ColorResources.BLACK.withAlpha(30),
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.notifications_active_outlined,
-                                    size: Dimensions.ICON_SIZE_LARGE,
-                                  ),
-                                  Text(
-                                    'Tiêu đề:',
-                                    style: Dimensions.fontSizeStyle18w600(),
-                                  ),
-                                ],
-                              ),
-                              Text(controller.formatDateTime(
-                                dateTime: controller.thongBaoModel.createdAt!,
-                              ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-                          Text(
-                            controller.thongBaoModel.tieuDe!,
-                            style: Dimensions.fontSizeStyle18(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_SMALL,
-                          ),
-                          Text(
-                            'Nội Dung:',
-                            style: Dimensions.fontSizeStyle18w600(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-                          Text(
-                            controller.thongBaoModel.noiDung!,
-                            style: Dimensions.fontSizeStyle16(),
-                          ),
-                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_SMALL),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          controller.formatDateTime(
+                            dateTime:
+                                controller.thongBaoModel.createdAt.toString(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                      vertical: Dimensions.PADDING_SIZE_LARGE,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.thongBaoModel.tieuDe!,
+                          style: const TextStyle(
+                            color: ColorResources.BLACK,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.PADDING_SIZE_LARGE,
+                        ),
+                        Text(
+                          controller.thongBaoModel.noiDung!,
+                          style: Dimensions.fontSizeStyle16(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             );
           }),

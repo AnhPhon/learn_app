@@ -17,4 +17,5 @@ class Preferences {
   static const String isFirst = "first";
   static const String idTinTuc = "news";
   static const String idSanPham = "product";
+  static const String isChamCong = "idChamCong";
 }
