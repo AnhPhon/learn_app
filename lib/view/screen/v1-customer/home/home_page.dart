@@ -159,44 +159,6 @@ class V1HomePage extends GetView<V1HomeController> {
   }
 
   ///
-  /// product
-  ///
-  Widget product() {
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-      child: _fieldWidget(
-        "Sản phẩm",
-        () {},
-        Container(
-          height: 400,
-          padding: const EdgeInsets.only(
-            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          ),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 120,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 9,
-            itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () {},
-                child: _imageWidget(
-                  controller.productList[index].ten!,
-                  controller.productList[index].hinhAnhSanPham!,
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  ///
   /// image widget
   ///
   Widget _imageWidget(String title, String url) {
@@ -297,7 +259,8 @@ class V1HomePage extends GetView<V1HomeController> {
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () {
-                  controller.onMoreProductList();
+                  controller
+                      .onMoreProductDetail(controller.productList[index].id!);
                 },
                 child: _imageWidget(
                   controller.productList[index].ten!,
@@ -337,7 +300,7 @@ class V1HomePage extends GetView<V1HomeController> {
             return ItemListWidget(
               urlImage: controller.tinTucList[index].hinhAnh.toString(),
               onTap: () {
-                controller.goToSanPhamPageClick("idHangMucSanPham");
+                controller.goToNewPageClick(controller.tinTucList[index].id!);
               },
               title: controller.tinTucList[index].tieuDe.toString(),
               colorRowText2: ColorResources.GREY,

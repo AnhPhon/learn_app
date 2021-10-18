@@ -271,6 +271,13 @@ class V1HomeController extends GetxController {
   }
 
   ///
+  /// go to Product detail Page
+  ///
+  void onMoreProductDetail(String s) {
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  }
+
+  ///
   /// đến màn hình tuyển dung úng vieen
   ///
   void onClickCandicate() {
