@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/di_container.dart';
@@ -14,6 +15,9 @@ class V1ProductController extends GetxController {
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   DanhMucSanPhamProvider danhMucSanPhamProvider =
       GetIt.I.get<DanhMucSanPhamProvider>();
+
+  // refresh controller
+  RefreshController refreshController = RefreshController();
 
   // list
   List<SanPhamResponse> sanPhamList = [];
@@ -31,6 +35,14 @@ class V1ProductController extends GetxController {
   void onInit() {
     super.onInit();
 
+    // load init
+    loadInit();
+  }
+
+  ///
+  /// load init
+  ///
+  void loadInit() {
     // load san pham theo muc san pham
     sl
         .get<SharedPreferenceHelper>()
@@ -111,5 +123,22 @@ class V1ProductController extends GetxController {
       readProductByCategoryIdAndUserId(userId!, selectIndex);
     });
     update();
+  }
+
+  ///
+  /// on refresh
+  ///
+  void onRefresh() async {
+    loadInit();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  void onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController.loadComplete();
   }
 }

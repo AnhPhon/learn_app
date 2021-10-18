@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -28,21 +29,26 @@ class V1HomePage extends GetView<V1HomeController> {
               child: CircularProgressIndicator(),
             );
           }
-          return HomeWidget(
-            fullname: "KH, ${controller.fullname}",
-            content: Column(
-              children: [
-                // _categoryBoxWidget
-                _categoryBoxWidget(),
+          return SmartRefresher(
+            controller: controller.refreshController,
+            onLoading: controller.onLoading,
+            onRefresh: controller.onRefresh,
+            child: HomeWidget(
+              fullname: "KH, ${controller.fullname}",
+              content: Column(
+                children: [
+                  // _categoryBoxWidget
+                  _categoryBoxWidget(),
 
-                // _threeFeatureWidget
-                _threeFeatureWidget(),
+                  // _threeFeatureWidget
+                  _threeFeatureWidget(),
 
-                // product
-                _productWidget(controller),
+                  // product
+                  _productWidget(controller),
 
-                _newsWidget(controller: controller)
-              ],
+                  _newsWidget(controller: controller)
+                ],
+              ),
             ),
           );
         },

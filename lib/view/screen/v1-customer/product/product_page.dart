@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -15,7 +16,11 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V1ProductController>(
+    return SmartRefresher(
+      onRefresh: controller.onRefresh,
+      onLoading: controller.onLoading,
+      controller: controller.refreshController,
+      child: GetBuilder<V1ProductController>(
         init: V1ProductController(),
         builder: (controller) {
           if (controller.isLoading) {
@@ -73,7 +78,9 @@ class V1ProductPage extends GetView<V1ProductController> {
               ],
             ),
           );
-        });
+        },
+      ),
+    );
   }
 
   ///

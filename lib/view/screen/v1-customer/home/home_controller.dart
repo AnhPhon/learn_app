@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
@@ -21,6 +22,9 @@ class V1HomeController extends GetxController {
       GetIt.I.get<DanhMucSanPhamProvider>();
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
+  // refresh controller
+  RefreshController refreshController = RefreshController();
+
   // declare list
   List<Map<String, dynamic>>? threeFeatures;
   List<Map<String, dynamic>>? contentGrid;
@@ -38,33 +42,7 @@ class V1HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    sl.get<SharedPreferenceHelper>().userId.then(
-      (value) {
-        // find tai khoan by user id
-        taiKhoanProvider.find(
-          id: value!,
-          onSuccess: (value) {
-            // set user
-            fullname = value.hoTen!;
-
-            // load san pham
-            _loadDanhMucSanPham();
-
-            // load tin tuc
-            _loadTinTuc();
-
-            // init six feature category
-            _initSixFeatureCategory();
-
-            // init product image category
-            _initProductImageCategory();
-          },
-          onError: (error) {
-            print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          },
-        );
-      },
-    );
+    loadInit();
   }
 
   ///
@@ -325,6 +303,57 @@ class V1HomeController extends GetxController {
   ///
   void onClickJobManagement() {
     //Get.toNamed(AppRoutes.V1_JOB_MANAGEMENT);
+  }
+
+  ///
+  /// load init
+  ///
+  void loadInit() {
+    // load thông tin
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (value) {
+        // find tai khoan by user id
+        taiKhoanProvider.find(
+          id: value!,
+          onSuccess: (value) {
+            // set user
+            fullname = value.hoTen!;
+
+            // load san pham
+            _loadDanhMucSanPham();
+
+            // load tin tuc
+            _loadTinTuc();
+
+            // init six feature category
+            _initSixFeatureCategory();
+
+            // init product image category
+            _initProductImageCategory();
+          },
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      },
+    );
+  }
+
+  ///
+  /// on refresh
+  ///
+  void onRefresh() async {
+    loadInit();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  void onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController.loadComplete();
   }
 
   ///
