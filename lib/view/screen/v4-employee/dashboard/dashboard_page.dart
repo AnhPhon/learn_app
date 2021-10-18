@@ -19,49 +19,47 @@ class V4DashboardPage extends StatelessWidget {
     return GetBuilder<V4DashboardController>(
       init: V4DashboardController(),
       builder: (controller) {
-        return SafeArea(
-          child: Scaffold(
-            body: IndexedStack(
-              index: controller.tabIndex,
-              children: [
-                V4HomePage(),
-                V4NotificationPage(),
-                V4NewsPage(),
-                V4ReportPage(),
-                V4AccountPage(),
-              ],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: ColorResources.PRIMARY,
-              backgroundColor: ColorResources.WHITE,
-              onTap: controller.changeTabIndex,
-              currentIndex: controller.tabIndex,
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              items: [
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.home,
-                  label: 'Trang chủ',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.bell,
-                  label: 'Thông báo',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.news,
-                  label: 'Tin tức',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.pen,
-                  label: 'Báo cáo',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.person,
-                  label: 'Tài khoản',
-                ),
-              ],
-            ),
+        return Scaffold(
+          body: IndexedStack(
+            index: controller.tabIndex,
+            children: [
+              V4HomePage(),
+              V4NotificationPage(),
+              V4NewsPage(),
+              V4ReportPage(),
+              V4AccountPage(),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: ColorResources.PRIMARY,
+            backgroundColor: ColorResources.WHITE,
+            onTap: controller.changeTabIndex,
+            currentIndex: controller.tabIndex,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            items: [
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.home,
+                label: 'Trang chủ',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.bell,
+                label: 'Thông báo',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.news,
+                label: 'Tin tức',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.pen,
+                label: 'Báo cáo',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.person,
+                label: 'Tài khoản',
+              ),
+            ],
           ),
         );
       },

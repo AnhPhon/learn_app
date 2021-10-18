@@ -73,7 +73,6 @@ class V2HomeController extends GetxController {
   /// load công việc đang cần người
   ///
   void _loadCongViecDangCanNguoi(String idNguoiDung) {
-    print("URL:&idTaiKhoan=$idNguoiDung");
     _donDichVuProvider.paginate(
       page: 1,
       limit: 30,
@@ -86,7 +85,6 @@ class V2HomeController extends GetxController {
             donDichVuList.add(value);
           }
         }
-        print(donDichVuList);
         update();
       },
       onError: (error) {

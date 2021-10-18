@@ -19,49 +19,47 @@ class V3DashboardPage extends StatelessWidget {
     return GetBuilder<V3DashboardController>(
       init: V3DashboardController(),
       builder: (controller) {
-        return SafeArea(
-          child: Scaffold(
-            body: IndexedStack(
-              index: controller.tabIndex,
-              children: [
-                V3HomePage(),
-                V3ProjectPage(),
-                V3EntertainmentPage(),
-                V3NewsPage(),
-                V3AccountPage(),
-              ],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: ColorResources.PRIMARY,
-              backgroundColor: ColorResources.WHITE,
-              onTap: controller.changeTabIndex,
-              currentIndex: controller.tabIndex,
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              items: [
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.home,
-                  label: 'Trang chủ',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.bag_fill,
-                  label: 'Dự án',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.star_lefthalf_fill,
-                  label: 'Giải trí',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.news,
-                  label: 'Tin tức',
-                ),
-                _bottomNavigationBarItem(
-                  icon: CupertinoIcons.person,
-                  label: 'Tài khoản',
-                ),
-              ],
-            ),
+        return Scaffold(
+          body: IndexedStack(
+            index: controller.tabIndex,
+            children: [
+              V3HomePage(),
+              V3ProjectPage(),
+              V3EntertainmentPage(),
+              V3NewsPage(),
+              V3AccountPage(),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: ColorResources.PRIMARY,
+            backgroundColor: ColorResources.WHITE,
+            onTap: controller.changeTabIndex,
+            currentIndex: controller.tabIndex,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            items: [
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.home,
+                label: 'Trang chủ',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.bag_fill,
+                label: 'Dự án',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.star_lefthalf_fill,
+                label: 'Giải trí',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.news,
+                label: 'Tin tức',
+              ),
+              _bottomNavigationBarItem(
+                icon: CupertinoIcons.person,
+                label: 'Tài khoản',
+              ),
+            ],
           ),
         );
       },

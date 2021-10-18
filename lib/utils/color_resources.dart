@@ -153,7 +153,7 @@ class ColorResources {
 
   static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
   static const Color UNSELECT_TABBAR = Color(0xff848485);
-  static const Color ERROR_NOTICE_SNACKBAR = Color(0xfFf25c54);
+  static const Color ERROR_NOTICE_SNACKBAR = Color(0xffFFEBEE);
   static const Map<int, Color> colorMap = {
     50: Color(0x10192D6B),
     100: Color(0x20192D6B),
