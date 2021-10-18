@@ -5,6 +5,7 @@ import 'package:template/utils/dimensions.dart';
 class TextFieldDate extends StatelessWidget {
   const TextFieldDate(
       {this.label,
+      this.isToHour = true,
       required this.holdplacer,
       required this.controller,
       required this.allowEdit,
@@ -24,7 +25,7 @@ class TextFieldDate extends StatelessWidget {
   final bool obligatory;
   final bool? area;
   final double? paddingTop;
-
+  final bool? isToHour;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,8 +77,11 @@ class TextFieldDate extends StatelessWidget {
                       firstDate: DateTime(2001),
                       lastDate: DateTime(2100),
                     ).then((value) {
-                      controller.text =
-                          "${value!.year}-${value.month}-${value.day}";
+                      isToHour == true
+                          ? controller.text =
+                              "${value!.year}-${value.month}-${value.day}"
+                          : controller.text =
+                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
                     });
                   }
                 : null,
@@ -85,8 +89,9 @@ class TextFieldDate extends StatelessWidget {
             decoration: InputDecoration(
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                  vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
                       Dimensions.BORDER_RADIUS_EXTRA_SMALL),
@@ -111,9 +116,8 @@ class TextFieldDate extends StatelessWidget {
                 ),
                 hintText: holdplacer,
                 filled: true,
-                fillColor: (allowEdit == false)
-                    ? ColorResources.LIGHT_GREY
-                    : Colors.transparent,
+                fillColor:
+                    (allowEdit == false) ? ColorResources.WHITE : Colors.white,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),
