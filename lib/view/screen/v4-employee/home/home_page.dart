@@ -27,7 +27,7 @@ class V4HomePage extends GetView<V4HomeController> {
             );
           }
           return HomeWidget(
-            fullname: "Hi, ${controller.fullname}!",
+            fullname: "NV, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,
             content: Column(
               children: [

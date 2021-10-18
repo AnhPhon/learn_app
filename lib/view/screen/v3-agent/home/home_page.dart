@@ -27,7 +27,7 @@ class V3HomePage extends GetView<V3HomeController> {
             return const Center(child: CircularProgressIndicator());
           }
           return HomeWidget(
-            fullname: "${controller.fullname}!",
+            fullname: "DL, ${controller.fullname}",
             content: Column(
               children: [
                 const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),

@@ -28,7 +28,7 @@ class V1HomePage extends GetView<V1HomeController> {
             );
           }
           return HomeWidget(
-            fullname: controller.fullname,
+            fullname: "KH, ${controller.fullname}",
             content: Column(
               children: [
                 // _categoryBoxWidget

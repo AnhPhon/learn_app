@@ -27,7 +27,7 @@ class V2HomePage extends GetView<V2HomeController> {
             return const Center(child: CircularProgressIndicator());
           }
           return HomeWidget(
-            fullname: "${controller.fullname}!",
+            fullname: "NT, ${controller.fullname}",
             content: Column(
               children: [
                 const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
