@@ -271,6 +271,13 @@ class V1HomeController extends GetxController {
   }
 
   ///
+  /// go to Product detail Page
+  ///
+  void onMoreProductDetail(String s) {
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  }
+
+  ///
   /// đến màn hình tuyển dung úng vieen
   ///
   void onClickCandicate() {
@@ -282,6 +289,22 @@ class V1HomeController extends GetxController {
   ///
   void onClickHotNews() {
     Get.toNamed(AppRoutes.V1_NEWS);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void goToNewPageClick(String idNews) {
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=$idNews");
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void goToSanPhamPageClick(String idHangMucSanPham) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: idHangMucSanPham);
+    onMoreProductList();
   }
 
   ///

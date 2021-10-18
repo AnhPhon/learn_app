@@ -10,7 +10,6 @@ import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
-import 'package:template/view/basewidget/news/news.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
@@ -160,44 +159,6 @@ class V1HomePage extends GetView<V1HomeController> {
   }
 
   ///
-  /// product
-  ///
-  Widget product() {
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-      child: _fieldWidget(
-        "Sản phẩm",
-        () {},
-        Container(
-          height: 400,
-          padding: const EdgeInsets.only(
-            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          ),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 120,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 9,
-            itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () {},
-                child: _imageWidget(
-                  controller.productList[index].ten!,
-                  controller.productList[index].hinhAnhSanPham!,
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  ///
   /// image widget
   ///
   Widget _imageWidget(String title, String url) {
@@ -297,7 +258,10 @@ class V1HomePage extends GetView<V1HomeController> {
             itemCount: controller.productList.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  controller
+                      .onMoreProductDetail(controller.productList[index].id!);
+                },
                 child: _imageWidget(
                   controller.productList[index].ten!,
                   controller.productList[index].hinhAnhSanPham!,
@@ -314,16 +278,20 @@ class V1HomePage extends GetView<V1HomeController> {
   /// news widget
   ///
   Widget _newsWidget({required V1HomeController controller}) {
+    final int size =
+        controller.tinTucList.length <= 2 ? controller.tinTucList.length : 2;
     return FieldWidget(
       title: "Tin tức",
       onTap: () {
         controller.onClickHotNews();
       },
       widget: SizedBox(
-        height: 270,
+        height: 135 * size * 1.0 + 10,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 2,
+          itemCount: controller.tinTucList.length <= 2
+              ? controller.tinTucList.length
+              : 2,
           padding: const EdgeInsets.all(0),
           itemBuilder: (
             BuildContext ctx,
@@ -331,7 +299,9 @@ class V1HomePage extends GetView<V1HomeController> {
           ) {
             return ItemListWidget(
               urlImage: controller.tinTucList[index].hinhAnh.toString(),
-              onTap: () {},
+              onTap: () {
+                controller.goToNewPageClick(controller.tinTucList[index].id!);
+              },
               title: controller.tinTucList[index].tieuDe.toString(),
               colorRowText2: ColorResources.GREY,
               icon1: const Icon(Icons.remove_red_eye_sharp),
