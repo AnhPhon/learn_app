@@ -15,9 +15,11 @@ import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V4TimekeepingController extends GetxController {
+  GetIt sl = GetIt.instance;
   ChamCongProvider chamCongProvider = GetIt.I.get<ChamCongProvider>();
   List<ChamCongResponse> chamCongList = [];
 
@@ -269,6 +271,7 @@ class V4TimekeepingController extends GetxController {
         ),
         onSuccess: (value) {
           Get.back(result: true);
+          sl.get<SharedPreferenceHelper>().saveChamCongId(value.id.toString());
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

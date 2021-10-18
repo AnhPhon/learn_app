@@ -74,26 +74,6 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   }
 
   ///
-  /// Chọn thời gian thu chi
-  ///
-  Widget _timeRevenueExpenditure(
-      V4RevenueExpenditureController controller, BuildContext context) {
-    return TextFieldDate(
-      isToHour: false,
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
-      controller: controller.timeRevenueExpenditure,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: controller.timeNow,
-      label: "Ngày",
-      obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 1),
-    );
-  }
-
-  ///
   /// Thu  được chọn theo ở trang chủ
   ///
   Widget _revenue(
@@ -106,6 +86,26 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       hidden: false,
       holdplacer: 'Thu',
       label: 'Loại thêm',
+      obligatory: true,
+      typeInput: TextInputType.text,
+      width: DeviceUtils.getScaledWidth(context, 1),
+    );
+  }
+
+  ///
+  /// Chọn thời gian thu chi
+  ///
+  Widget _timeRevenueExpenditure(
+      V4RevenueExpenditureController controller, BuildContext context) {
+    return TextFieldDate(
+      isToHour: false,
+      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      isDate: true,
+      allowEdit: true,
+      controller: controller.timeRevenueExpenditure,
+      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      holdplacer: controller.timeNow,
+      label: "Thời gian",
       obligatory: true,
       typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
