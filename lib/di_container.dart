@@ -178,10 +178,9 @@ Future<void> init() async {
   sl.registerSingleton<DioClient>(DioClient());
 
   // Repository
+  // sl.registerLazySingleton(() => RegionRepo());
   sl.registerLazySingleton(() => AuthRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
-  sl.registerLazySingleton(() => DanhMucTinTucRepository());
-  sl.registerLazySingleton(() => BangBangCapRepository());
+  sl.registerLazySingleton(() =>BangBangCapRepository());
   sl.registerLazySingleton(() => BangGiaDangTinRepository());
   sl.registerLazySingleton(() => BangGiaDonHangRepository());
   sl.registerLazySingleton(() => BangGiaLocHoSoRepository());
@@ -204,58 +203,40 @@ Future<void> init() async {
   sl.registerLazySingleton(() => PhuongXaRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => DonDichVuRepository());
-  sl.registerLazySingleton(() => KhoHangRepository());
-  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
-  sl.registerLazySingleton(() => ThongBaoRepository());
-  sl.registerLazySingleton(() => SanPhamRepository());
-  sl.registerLazySingleton(() => DanhMucSanPhamRepository());
-  sl.registerLazySingleton(() => PhanHoiDonDichVuRepository());
-  sl.registerLazySingleton(() => TrangThaiDonHangRepository());
-  sl.registerLazySingleton(() => VatTuRepository());
-  sl.registerLazySingleton(() => DanhSachThoThauBaoGiaRepository());
-  sl.registerLazySingleton(() => DanhSachBaoGiaDonDichVuRepository());
-  sl.registerLazySingleton(() => DangKyHopDongSBSRepository());
-  sl.registerLazySingleton(() => DangKyThueRepository());
-  sl.registerLazySingleton(() => DangKyViecMoiRepository());
-  sl.registerLazySingleton(() => DanhGiaDaiLyRepository());
-  sl.registerLazySingleton(() => DanhSachUngTuyenRepository());
-  sl.registerLazySingleton(() => DieuKhoanChinhSachRepository());
-  sl.registerLazySingleton(() => DonHangRepository());
-  sl.registerLazySingleton(() => DonViCungCapRepository());
-  sl.registerLazySingleton(() => DuAnKhachHangRepository());
-  sl.registerLazySingleton(() => DuAnNhanVienRepository());
-  sl.registerLazySingleton(() => GiayChungNhanSucKhoeRepository());
-  sl.registerLazySingleton(() => HinhThucLamViecRepository());
-  sl.registerLazySingleton(() => HinhThucThanhToanRepository());
-  sl.registerLazySingleton(() => ImageUpdateRepository());
-  sl.registerLazySingleton(() => KeKhaiKinhNghiemRepository());
-  sl.registerLazySingleton(() => KhoHangDaiLyRepository());
-  sl.registerLazySingleton(() => LichSuGiaoDichRepository());
-  sl.registerLazySingleton(() => LienHeCongTyRepository());
-  sl.registerLazySingleton(() => LoaiNhanVienRepository());
-  sl.registerLazySingleton(() => LoaiTaiKhoanRepository());
-  sl.registerLazySingleton(() => LoaiTotNghiepRepository());
-  sl.registerLazySingleton(() => LoaiVanChuyenRepository());
-  sl.registerLazySingleton(() => MatHangDacTrungRepository());
-  sl.registerLazySingleton(() => MucLuongDuKienRepository());
-  sl.registerLazySingleton(() => NgoaiNguRepository());
-  sl.registerLazySingleton(() => NhanVienRepository());
-  sl.registerLazySingleton(() => NhomCuaHangRepository());
-  sl.registerLazySingleton(() => NotificationRepository());
-  sl.registerLazySingleton(() => QuyCheCongTyRepository());
-  sl.registerLazySingleton(() => SoNamKinhNghiemRepository());
   sl.registerLazySingleton(() => ThoiGianLamViecRepository());
-  sl.registerLazySingleton(() => ThongSoKyThuatRepository());
-  sl.registerLazySingleton(() => ThongTinFSSRepository());
-  sl.registerLazySingleton(() => ThongTinNganHangRepository());
-  sl.registerLazySingleton(() => TinHocRepository());
-  sl.registerLazySingleton(() => TrangThaiBaoGiaRepository());
-  sl.registerLazySingleton(() => TrangThaiDuAnRepository());
-  sl.registerLazySingleton(() => TrangThaiThanhToanRepository());
-  sl.registerLazySingleton(() => TrinhDoHocVanRepository());
-  sl.registerLazySingleton(() => TrinhDoRepository());
-  sl.registerLazySingleton(() => TuyenDungRepository());
-  sl.registerLazySingleton(() => XuatNhapKhoRepository());
+  sl.registerLazySingleton(() => ImageUpdateRepository());
+  sl.registerLazySingleton(() => VatTuRepository());
+  sl.registerLazySingleton(() => BangGiaDonHangRepository());
+  sl.registerLazySingleton(()=> ThongTinFSSRepository());
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => DanhMucTinTucRepository());
+  sl.registerLazySingleton(() => SanPhamRepository());
+  sl.registerLazySingleton(() => ThongBaoRepository());
+  sl.registerLazySingleton(() => KhoHangRepository());
+  sl.registerLazySingleton(() => DieuKhoanChinhSachRepository());
+  sl.registerLazySingleton(() => LienHeCongTyRepository());
+  sl.registerLazySingleton(() => ThuChiNhanVienRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
+  sl.registerLazySingleton(() => DanhMucSanPhamRepository());
+
+  // Provider
+  // sl.registerFactory(() => RegionProvider());
+  sl.registerFactory(() => AuthProvider());
+  // Tạo đơn công việc
+  sl.registerFactory(() => NhomDichVuProvider());
+  sl.registerFactory(() => HangMucXayDungProvider());
+  sl.registerFactory(() => LoaiCongViecProvider());
+  sl.registerFactory(() => TinhTpProvider());
+  sl.registerFactory(() => QuanHuyenProvider());
+  sl.registerFactory(() => PhuongXaProvider());
+  sl.registerFactory(() => ThoiGianLamViecProvider());
+  sl.registerFactory(() => ImageUpdateProvider());
+  sl.registerFactory(() => VatTuProvider());
+  sl.registerFactory(() => BangGiaDonHangProvider());
+  sl.registerFactory(() => ThongTinFSSProvider());
+  sl.registerFactory(() => DieuKhoanChinhSachProvider());
+  sl.registerFactory(() => LienHeCongTyProvider());
+  
 
   // Provider
   sl.registerLazySingleton(() => AuthProvider());
