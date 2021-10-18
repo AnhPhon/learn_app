@@ -1,6 +1,13 @@
 class AppRoutes {
   static const String SPLASH = '/';
+
+  // auth
   static const String AUTH = '/auth';
+  static const String FORGOT_PASSWORD = '/forgot_password';
+  static const String UPDATE_PASSWORD = '/update_password';
+  static const String OTP_VERIFIER = '/otp_verifier';
+  static const String REGISTER = '/register';
+
   static const String DASHBOARD = '/dashboard';
   static const String HOME = "/home";
   static const String V1_ABOUT = "/v1_about";
@@ -9,6 +16,7 @@ class AppRoutes {
   static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
+
   // Phản hồi dịch vụ thường xuyên click từ thông báo
   static const String V1_ORDER_FEEDBACK_CONTRACTORS =
       "/v1orderfeedbackcontractors";
@@ -213,6 +221,7 @@ class AppRoutes {
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
   static const String V4_NEWS_DETAIL = '/v4_news_detail';
   static const String V4_NEWS = '/v4_news';
+
   static const String V4_NOTIFICATION = '/v4_notification';
   static const String V4_DETAIL_NOTIFICATION = '/v4_detail_notification';
 

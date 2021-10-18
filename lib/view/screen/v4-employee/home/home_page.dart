@@ -26,7 +26,6 @@ class V4HomePage extends GetView<V4HomeController> {
               child: CircularProgressIndicator(),
             );
           }
-
           return HomeWidget(
             fullname: "Hi, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,

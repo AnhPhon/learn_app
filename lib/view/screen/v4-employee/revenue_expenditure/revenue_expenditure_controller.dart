@@ -7,6 +7,7 @@ import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
 import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V4RevenueExpenditureController extends GetxController {
@@ -18,6 +19,8 @@ class V4RevenueExpenditureController extends GetxController {
   bool isLoading = true;
 
   bool isRevenue = true;
+
+  String idChamCong = '';
 
   //Set ngày hiện Tại
   String timeNow = DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now());
@@ -180,12 +183,13 @@ class V4RevenueExpenditureController extends GetxController {
   ///
   /// Thêm thu
   ///
-  void onAddChi() {
+  Future<void> onAddChi() async {
     if (validateChi()) {
       expenditureController.text = '2';
       final String timeB = DateConverter.localDateToIsoStringHaveHour(
           DateConverter.convertStringToDatetimeddMMyyyy(
               timeRevenueExpenditure.text));
+
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
           ngayThuChi: timeB,

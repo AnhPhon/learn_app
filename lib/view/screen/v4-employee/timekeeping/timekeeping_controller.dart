@@ -258,11 +258,13 @@ class V4TimekeepingController extends GetxController {
   ///
   void onChamCong() {
     if (validate()) {
-      final String timeKeeping = DateConverter.localDateToIsoStringyyyyMMdd(
-          DateConverter.convertStringToddMMyyyyDatetime(timekeeping.text));
+      final DateTime timeKeeping = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timekeeping.text)
+          .toString()
+          .substring(0, 10));
       chamCongProvider.add(
         data: ChamCongRequest(
-          thoiGianBatDau: timeKeeping,
+          thoiGianBatDau: timeKeeping.toString(),
           idDuAnNhanVien: duAnNhanVien!.id,
           diaChi: addressController.text,
           idTinhTp: tinh!.id,
@@ -270,8 +272,9 @@ class V4TimekeepingController extends GetxController {
           idPhuongXa: phuongXa!.id,
         ),
         onSuccess: (value) {
-          Get.back(result: true);
           sl.get<SharedPreferenceHelper>().saveChamCongId(value.id.toString());
+          print(value.id.toString());
+          Get.back(result: true);
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
