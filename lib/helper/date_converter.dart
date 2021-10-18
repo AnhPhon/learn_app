@@ -30,7 +30,7 @@ mixin DateConverter {
   }
 
   static DateTime convertStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd').parse(dateTime);
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {

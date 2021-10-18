@@ -71,7 +71,7 @@ class V1G3CreateServiceController extends GetxController {
     afternoon = val;
     if (tommorow) {
       afternoonReponse = thoiGianLamViecList.firstWhereOrNull(
-          (element) => element.tieuDe!.contains('1h30 - 5h30'));
+          (element) => element.tieuDe!.contains('11h30 - 17h30'));
     } else {
       afternoonReponse = null;
     }

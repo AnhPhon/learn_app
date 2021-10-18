@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -75,6 +76,7 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
+              inputFormatters: typeInput == TextInputType.number ? [FilteringTextInputFormatter.digitsOnly] : [FilteringTextInputFormatter.allow(RegExp('^[a-zA-Z0-9 "!?.-]+'))],
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,

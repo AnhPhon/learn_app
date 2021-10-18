@@ -60,8 +60,9 @@ class CreateWorkController extends GetxController{
 
 
   Future<void> getUserId()async{
-    final idUser =  await sl.get<SharedPreferenceHelper>().userId;
-    this.idUser = idUser!;
+    await sl.get<SharedPreferenceHelper>().userId.then((value){
+      idUser = value!;
+    });
   }
 
   ///
@@ -278,18 +279,18 @@ class CreateWorkController extends GetxController{
           // Nhóm 3
           // Tạo đơn dịch vụ có gía
           Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
-        }else if(dichvu == 4){
+        }else if(dichvu!.nhomDichVu! == '4'){
           // Tạo đơn dich vụ có giá nhóm 4
-          Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE);
-        }else if(dichvu == 5){
+          Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE,arguments: await request());
+        }else if(dichvu!.nhomDichVu! == '5'){
           // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE);
-        }else if(dichvu == 6){
+          Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE, arguments: await request());
+        }else if(dichvu!.nhomDichVu! == '6'){
           // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE);
-        }else if(dichvu == 7){
+          Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE, arguments: await request());
+        }else if(dichvu!.nhomDichVu! == '7'){
           // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
+          Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: await request());
         }
       }
   }
@@ -300,7 +301,7 @@ class CreateWorkController extends GetxController{
       serviceApplication.idQuanHuyen = quanHuyen!.id;
       serviceApplication.idPhuongXa = phuongXa!.id;
       serviceApplication.idNhomDichVu = dichvu!.id;
-      serviceApplication.idTaiKhoan = await sl.get<SharedPreferenceHelper>().userId;
+      serviceApplication.idTaiKhoan = idUser;//await sl.get<SharedPreferenceHelper>().userId;
       serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
       serviceApplication.diaChiCuThe = addressController.text.toString();
       return serviceApplication;

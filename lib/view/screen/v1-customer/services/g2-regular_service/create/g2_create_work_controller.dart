@@ -97,7 +97,7 @@ class V1G2CreateWorkController extends GetxController {
     update();
   }
 
-  Future<void> pickerFile() async {
+  void addFile()async{
     final FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       file = File(result.files.single.path!);

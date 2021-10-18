@@ -78,7 +78,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
                     onTap: (){
                       _controller.onSelectedItem(item: controller.priceTable[index]);
                     },
-                    child: item(item: controller.priceTable[index])
+                    child: item(item: controller.priceTable[index], controller: controller)
                   ),
                 );
               },
@@ -89,49 +89,45 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
     );
   }
 
-  Widget item({required BangGiaDonHangResponse item}){
-    return GetBuilder(
-      builder: (V1G3OrderQuoteController controller) {
-        return Material(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-            decoration: BoxDecoration(
-              color: controller.currentSelected!.id == item.id ? ColorResources.PRIMARYCOLOR.withOpacity(0.5) :  ColorResources.WHITE,
-              borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-            ),
-            height: 70,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(item.tieuDe!, style: const TextStyle(
+  Widget item({required BangGiaDonHangResponse item, required V1G3OrderQuoteController controller}){
+    return Material(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        decoration: BoxDecoration(
+          color: controller.currentSelected!.id == item.id ? ColorResources.PRIMARYCOLOR.withOpacity(0.5) :  ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+        ),
+        height: 70,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(item.tieuDe!, style: const TextStyle(
+              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              fontWeight: FontWeight.bold
+            ),),
+            RichText(
+              text: TextSpan(
+                text: item.giaTien,
+                style: const TextStyle(
+                  color: ColorResources.RED,
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                   fontWeight: FontWeight.bold
-                ),),
-                RichText(
-                  text: TextSpan(
-                    text: item.giaTien,
-                    style: const TextStyle(
-                      color: ColorResources.RED,
-                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                      fontWeight: FontWeight.bold
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "/ ${item.donViTinh}"
-                      )
-                    ]
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
+                ),
+                children: [
+                  TextSpan(
+                    text: "/ ${item.donViTinh}"
+                  )
+                ]
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 

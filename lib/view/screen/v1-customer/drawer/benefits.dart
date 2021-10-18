@@ -16,8 +16,10 @@ class Benefits extends GetView<BenefitsController> {
           if(controller.isLoading){
             return const Center(child: CircularProgressIndicator());
           }
-          return Center(
-            child: Text(controller.fss.first.loiIchThamGiaFSS!)
+          return SingleChildScrollView(
+            child: Center(
+              child: Text(controller.fss.first.loiIchThamGiaFSS!)
+            ),
           );
         },
       )

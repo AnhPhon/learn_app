@@ -2,6 +2,7 @@ class Images {
   static const String logo_image = 'assets/images/logo.png';
   static const String logo_fss = 'assets/images/logo.jpg';
   static const String logo_removebg = 'assets/images/logo_removebg.png';
+  static const String background_draw = 'assets/images/background.png';
   static const String no_internet = 'assets/images/opps_internet.png';
   static const String no_data = 'assets/images/no_data.png';
   static const String admin_background = 'assets/images/background.png';
