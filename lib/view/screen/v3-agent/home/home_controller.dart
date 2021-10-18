@@ -29,6 +29,15 @@ class V3HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    // init run
+    initProgramRun();
+  }
+
+  ///
+  /// initProgramRun
+  ///
+  void initProgramRun() {
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       // tìm kiếm tài khoản theo id user được login
       taiKhoanProvider.find(
@@ -120,7 +129,7 @@ class V3HomeController extends GetxController {
           Color(0xffC1E6EE),
         ]),
         "onTap": () {
-          //onClickQuoteReponse();
+          onClickQuoteReponse();
         }
       },
       {
@@ -178,16 +187,17 @@ class V3HomeController extends GetxController {
   /// Nhấn nút sản phẩm
   ///
   void onClickHotProductDetail(String id) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
     // goto detail news
-    Get.toNamed("${AppRoutes.V1_PRODUCT_DETAIL}?id=$id");
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
-  // ///
-  // /// Phản hòi báo giá
-  // ///
-  // void onClickQuoteReponse() {
-  //   Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
-  // }
+  ///
+  /// Phản hòi báo giá
+  ///
+  void onClickQuoteReponse() {
+    Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
+  }
 
   ///
   /// Cửa hàng
@@ -200,6 +210,13 @@ class V3HomeController extends GetxController {
   /// on Need Update Click
   ///
   void onNeedUpdateClick() {
-    Get.toNamed(AppRoutes.V3_FINISH_UPDATE);
+    Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
+  }
+
+  ///
+  ///go to news detail page
+  ///
+  void onNewsDetailClick({required int index}) {
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
   }
 }
