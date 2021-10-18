@@ -6,11 +6,11 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/card/product_card.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/basewidget/news/news.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
@@ -27,7 +27,7 @@ class V3HomePage extends GetView<V3HomeController> {
             return const Center(child: CircularProgressIndicator());
           }
           return HomeWidget(
-            fullname: "ĐL, ${controller.fullname}!",
+            fullname: "${controller.fullname}!",
             content: Column(
               children: [
                 const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -40,7 +40,7 @@ class V3HomePage extends GetView<V3HomeController> {
                 _featuresWidget(),
 
                 // news widget
-                //_newsWidget(),
+                _newsWidget(),
 
                 // product widget
                 _productWidget(controller: controller)
@@ -116,7 +116,6 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
-
   ///
   /// item list
   ///
@@ -133,10 +132,6 @@ class V3HomePage extends GetView<V3HomeController> {
       isSpaceBetween: true,
     );
   }
-
-
-
-
 
   ///
   /// features widget
@@ -169,19 +164,77 @@ class V3HomePage extends GetView<V3HomeController> {
     );
   }
 
+  ///
+  /// news widget
+  ///
+  Widget _newsWidget() {
+    final int length =
+        controller.tinTucList.length > 2 ? 2 : controller.tinTucList.length;
+    final double len = length * 1.0;
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      child: FieldWidget(
+        title: "Tin tức",
+        onTap: () {
+          controller.onClickHotNews();
+        },
+        widget: SizedBox(
+          height: (len > 0) ? 140 * len : 0,
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: length,
+            itemBuilder: (
+              BuildContext ctx,
+              index,
+            ) {
+              return Padding(
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: ItemListWidget(
+                  onTap: () {
+                    // call detail
+                    controller
+                        .onClickHotNewsDetail(controller.tinTucList[index].id!);
+                  },
+                  title: "Biệt thự 170 Nguyễn Đình Thi",
+                  icon1: const Icon(Icons.remove_red_eye),
+                  rowText1: controller.tinTucList[index].luotXem,
+                  colorRowText1: ColorResources.BLACKGREY,
+                  icon2: const Icon(Icons.monetization_on_outlined),
+                  rowText2: controller.tinTucList[index].createdAt
+                      .toString()
+                      .substring(0, 10),
+                  colorRowText2: ColorResources.BLACKGREY,
+                  isStart: true,
+                  urlImage: controller.tinTucList[index].hinhAnh!,
+                  isSpaceBetween: true,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// product widget
+  ///
   Widget _productWidget({required V3HomeController controller}) {
+    final int size =
+        controller.sanPhamList.length <= 2 ? controller.sanPhamList.length : 2;
+
     return FieldWidget(
       title: "Kho sản phẩm",
       onTap: () {
         controller.onClickWareHouse();
       },
       widget: Container(
-        height: 220,
+        height: 110 * size + 50,
         padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
+          top: Dimensions.PADDING_SIZE_SMALL,
         ),
         child: ListView.builder(
-          itemCount: 2,
+          itemCount: size,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -190,11 +243,21 @@ class V3HomePage extends GetView<V3HomeController> {
             return Padding(
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: KhoSanPham(
-                tenSanPham: "Kệ son nồi",
-                maSanPham: "BN001",
-                giaSanPham: "${PriceConverter.convertPrice(ctx, 500000)} đ",
-                quyCach: "Kim đỉnh",
+              child: GestureDetector(
+                onTap: () {
+                  controller.onClickHotProductDetail(
+                    controller.sanPhamList[index].id!,
+                  );
+                },
+                child: KhoSanPham(
+                  tenSanPham: controller.sanPhamList[index].ten!,
+                  maSanPham: "${controller.sanPhamList[index].maSanPham}",
+                  giaSanPham: "${PriceConverter.convertPrice(
+                    ctx,
+                    double.parse(controller.sanPhamList[index].gia!),
+                  )} đ",
+                  quyCach: controller.sanPhamList[index].quyCach!,
+                ),
               ),
             );
           },
