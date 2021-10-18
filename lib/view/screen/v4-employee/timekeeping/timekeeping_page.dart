@@ -41,7 +41,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   _timekeeping(controller, context),
 
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                    height: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
                   //dự án
                   _project(controller, context),
@@ -49,7 +49,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   //địa chỉ
                   _address(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                    height: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
 
                   Row(
@@ -62,11 +62,15 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                       _district(controller, context),
                     ],
                   ),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_SMALL,
+                  ),
 
                   //Phường/xã
                   _wards(controller, context),
+
                   Container(
-                    height: DeviceUtils.getScaledHeight(context, .04),
+                    height: DeviceUtils.getScaledHeight(context, .08),
                   ),
                   _btnTimekeeping(controller),
 
@@ -87,7 +91,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       V4TimekeepingController controller, BuildContext context) {
     return TextFieldDate(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: false,
+      isDate: true,
       allowEdit: false,
       controller: controller.timekeeping,
       fontSize: Dimensions.FONT_SIZE_LARGE,

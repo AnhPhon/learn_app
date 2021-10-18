@@ -25,7 +25,7 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
               _reportContent(controller, context),
 
               Container(
-                height: DeviceUtils.getScaledHeight(context, .4),
+                height: DeviceUtils.getScaledHeight(context, .27),
               ),
 
               //Button báo cáo
@@ -44,7 +44,7 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
       V4ReportTimekeepingControllter controller, BuildContext context) {
     return TextFieldDate(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: false,
+      isDate: true,
       allowEdit: false,
       controller: controller.reportTimekeeping,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -63,7 +63,7 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
 InputField _reportContent(
     V4ReportTimekeepingControllter controller, BuildContext context) {
   return InputField(
-    line: 5,
+    line: 10,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.reportContent,

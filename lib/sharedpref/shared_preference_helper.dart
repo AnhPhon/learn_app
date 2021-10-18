@@ -219,4 +219,16 @@ class SharedPreferenceHelper {
   Future<bool> removeChamCongId() async {
     return _sharedPreference.remove(Preferences.isChamCong);
   }
+
+  Future<String?> get duAnNhanVien async {
+    return _sharedPreference.getString(Preferences.idDuAn);
+  }
+
+  Future<bool> saveIdDuAnNhanVien(String id) async {
+    return _sharedPreference.setString(Preferences.idDuAn, id);
+  }
+
+  Future<bool> removeIdDuAnNhanVien() async {
+    return _sharedPreference.remove(Preferences.idDuAn);
+  }
 }

@@ -55,7 +55,7 @@ class V4ReportTimekeepingControllter extends GetxController {
   ///
   /// Button báo cáo
   ///
-  void report() {
+  Future<void> report() async {
     if (validate()) {
       final DateTime report = DateTime.parse(DateFormat('dd-MM-yyyy')
           .parse(reportTimekeeping.text)
@@ -63,6 +63,8 @@ class V4ReportTimekeepingControllter extends GetxController {
           .substring(0, 10));
       chamCongProvider.update(
         data: ChamCongRequest(
+          idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
+          idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
           id: idChamCong,
           thoiGianKetThuc: report.toString(),
           noiDungBaoCao: reportContent.text,

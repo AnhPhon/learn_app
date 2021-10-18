@@ -79,6 +79,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   Widget _revenue(
       V4RevenueExpenditureController controller, BuildContext context) {
     return InputField(
+      isColorFieldWhite: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.revenueController,
@@ -93,31 +94,12 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   }
 
   ///
-  /// Chọn thời gian thu chi
-  ///
-  Widget _timeRevenueExpenditure(
-      V4RevenueExpenditureController controller, BuildContext context) {
-    return TextFieldDate(
-      isToHour: false,
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
-      controller: controller.timeRevenueExpenditure,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: controller.timeNow,
-      label: "Thời gian",
-      obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 1),
-    );
-  }
-
-  ///
   ///  Chi được chọn theo ở trang chủ
   ///
   Widget _expenditure(
       V4RevenueExpenditureController controller, BuildContext context) {
     return InputField(
+      isColorFieldWhite: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.expenditureController,
@@ -133,14 +115,33 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
 }
 
 ///
+/// Chọn thời gian thu chi
+///
+Widget _timeRevenueExpenditure(
+    V4RevenueExpenditureController controller, BuildContext context) {
+  return TextFieldDate(
+    isddMMyyyy: false,
+    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+    isDate: true,
+    allowEdit: true,
+    controller: controller.timeRevenueExpenditure,
+    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    holdplacer: controller.timeNow,
+    label: "Thời gian",
+    obligatory: true,
+    typeInput: TextInputType.text,
+    width: DeviceUtils.getScaledWidth(context, 1),
+  );
+}
+
+///
 /// Nội dung thu chính
 ///
 
 Widget _contentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.contentRevenueController,
@@ -160,8 +161,7 @@ Widget _contentRevenue(
 Widget _contentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.contentExpenditureController,
@@ -200,8 +200,7 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
 Widget _detailContentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.detailContentRevenueController,
@@ -223,7 +222,7 @@ Widget _detailContentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
     // ignore: avoid_redundant_argument_values
-    line: 5,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.detailContentExpenditureController,

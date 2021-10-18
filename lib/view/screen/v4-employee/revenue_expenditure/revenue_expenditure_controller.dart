@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
@@ -23,11 +24,11 @@ class V4RevenueExpenditureController extends GetxController {
   String idChamCong = '';
 
   //Set ngày hiện Tại
-  String timeNow = DateFormat('HH:mm dd-MM-yyyy').format(DateTime.now());
+  String timeNow = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
   final timeRevenueExpenditure = TextEditingController();
-  final revenueController = TextEditingController(text: "THÊM THU");
-  final expenditureController = TextEditingController(text: "THÊM CHI");
+  final revenueController = TextEditingController(text: "Thêm thu");
+  final expenditureController = TextEditingController(text: "Thêm chi");
   final contentRevenueController = TextEditingController();
   final contentExpenditureController = TextEditingController();
   final moneyController = TextEditingController();
@@ -99,15 +100,17 @@ class V4RevenueExpenditureController extends GetxController {
   ///
   /// Thêm thu
   ///
-  void onAddThu() {
+  Future<void> onAddThu() async {
     if (validateThu()) {
       revenueController.text = '1';
-      final String timeA = DateConverter.localDateToIsoStringHaveHour(
-          DateConverter.convertStringToDatetimeddMMyyyy(
-              timeRevenueExpenditure.text));
+      final DateTime timeA = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeRevenueExpenditure.text)
+          .toString()
+          .substring(0, 10));
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
-          ngayThuChi: timeA,
+          idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
+          ngayThuChi: timeA.toString(),
           loai: revenueController.text,
           tieuDe: contentRevenueController.text,
           soTien: moneyController.text,
@@ -186,13 +189,15 @@ class V4RevenueExpenditureController extends GetxController {
   Future<void> onAddChi() async {
     if (validateChi()) {
       expenditureController.text = '2';
-      final String timeB = DateConverter.localDateToIsoStringHaveHour(
-          DateConverter.convertStringToDatetimeddMMyyyy(
-              timeRevenueExpenditure.text));
+      final DateTime timeB = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeRevenueExpenditure.text)
+          .toString()
+          .substring(0, 10));
 
       thuChiNhanVienProvider.add(
         data: ThuChiNhanVienRequest(
-          ngayThuChi: timeB,
+          idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
+          ngayThuChi: timeB.toString(),
           loai: expenditureController.text,
           tieuDe: contentExpenditureController.text,
           soTien: moneyController.text,

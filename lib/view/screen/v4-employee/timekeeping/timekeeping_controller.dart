@@ -54,7 +54,7 @@ class V4TimekeepingController extends GetxController {
 
   //Khai báo TextEditingController của địa chỉ chấm công
   final addressController = TextEditingController();
-
+  String idUser = '';
   @override
   void onInit() {
     // TODO: implement onInit
@@ -88,6 +88,7 @@ class V4TimekeepingController extends GetxController {
         if (value.isNotEmpty) {
           duAnNhanVienList.addAll(value);
         }
+
         update();
       },
       onError: (error) {
@@ -256,7 +257,7 @@ class V4TimekeepingController extends GetxController {
   ///
   ///Chấm công
   ///
-  void onChamCong() {
+  Future<void> onChamCong() async {
     if (validate()) {
       final DateTime timeKeeping = DateTime.parse(DateFormat('dd-MM-yyyy')
           .parse(timekeeping.text)
@@ -264,6 +265,7 @@ class V4TimekeepingController extends GetxController {
           .substring(0, 10));
       chamCongProvider.add(
         data: ChamCongRequest(
+          idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
           thoiGianBatDau: timeKeeping.toString(),
           idDuAnNhanVien: duAnNhanVien!.id,
           diaChi: addressController.text,
@@ -273,6 +275,10 @@ class V4TimekeepingController extends GetxController {
         ),
         onSuccess: (value) {
           sl.get<SharedPreferenceHelper>().saveChamCongId(value.id.toString());
+          sl
+              .get<SharedPreferenceHelper>()
+              .saveIdDuAnNhanVien(value.id.toString());
+
           print(value.id.toString());
           Get.back(result: true);
         },

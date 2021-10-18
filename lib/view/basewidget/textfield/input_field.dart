@@ -121,8 +121,8 @@ class InputField extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_LARGE,
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
-                  fillColor: (isColorFieldWhite == false)
-                      ? ColorResources.GREY
+                  fillColor: (isColorFieldWhite == true)
+                      ? ColorResources.NOT_ALLOW_EDIT
                       : ColorResources.WHITE,
                   suffixIcon: suffixIcon),
             ),
