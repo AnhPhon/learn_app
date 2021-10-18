@@ -62,9 +62,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 _inputWarehouse(context),
 
                 const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-
-                // _splitWidget
-                _splitWidget(context)
+                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
               ],
             ),
           );
@@ -279,7 +277,7 @@ class V4HomePage extends GetView<V4HomeController> {
                   ),
                 ),
                 child: Text(
-                  "${(controller.total! > 0 ? "+" : "-") + PriceConverter.convertPrice(
+                  "${(controller.total! > 0 ? "+" : (controller.total! == 0) ? "" : "-") + PriceConverter.convertPrice(
                         context,
                         controller.total!.toDouble(),
                       )} Đ",
@@ -495,7 +493,7 @@ class V4HomePage extends GetView<V4HomeController> {
   /// split widget
   ///
   Widget _splitWidget(BuildContext context) {
-    const double square = 4.0;
+    const double square = 2.0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
