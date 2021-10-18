@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -142,14 +143,18 @@ class V1ProductPage extends GetView<V1ProductController> {
             crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
             crossAxisCount: 2,
           ),
-          itemCount: 17,
+          itemCount: controller.sanPhamList.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () => controller.onProductDetailClick(),
               child: ProductWidget(
-                  imgUrl: Images.newsTemplate,
-                  name: "Sản phẩm ${index + 1}",
-                  price: "230.000 VND"),
+                imgUrl: controller.sanPhamList[index].hinhAnhSanPham!,
+                name: controller.sanPhamList[index].ten!,
+                price: "${PriceConverter.convertPrice(
+                  context,
+                  double.parse(controller.sanPhamList[index].gia!),
+                )} VND",
+              ),
             );
           }),
     );
