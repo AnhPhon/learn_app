@@ -340,7 +340,10 @@ class V2HomePage extends GetView<V2HomeController> {
                 padding:
                     const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ItemListWidget(
-                  onTap: () {},
+                  onTap: () {
+                    controller
+                        .onClickHotNewsDetail(controller.tinTucList[index].id!);
+                  },
                   title: "Biệt thự 170 Nguyễn Đình Thi",
                   icon1: const Icon(Icons.remove_red_eye),
                   rowText1: controller.tinTucList[index].luotXem,
