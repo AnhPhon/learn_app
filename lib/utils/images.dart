@@ -46,7 +46,8 @@ class Images {
 
   // v4-employee
   static const String V4NewsExample = 'assets/images/news1.png';
-  static const String V4AvatarHome = 'assets/images/avatar.png';
+  static const String V4AvatarHome =
+      'https://cdn-icons-png.flaticon.com/512/147/147144.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String toolbar_background = 'assets/images/appbar.png';
   static const String logo = 'assets/images/logo_primary.png';
