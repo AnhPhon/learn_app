@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
@@ -224,13 +225,30 @@ class AppPages {
     ),
 
     GetPage(
+      name: AppRoutes.INTRO,
+      page: () => IntroductionPage(),
+    ),
+
+    // auth
+    GetPage(
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
     ),
-
     GetPage(
-      name: AppRoutes.INTRO,
-      page: () => IntroductionPage(),
+      name: AppRoutes.FORGOT_PASSWORD,
+      page: () => ForgotPasswordPage(),
+    ),
+    GetPage(
+      name: AppRoutes.UPDATE_PASSWORD,
+      page: () => LoginPage(),
+    ),
+    GetPage(
+      name: AppRoutes.OTP_VERIFIER,
+      page: () => LoginPage(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER,
+      page: () => LoginPage(),
     ),
 
     // custommer
