@@ -1,20 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1ProductController extends GetxController {
   // provider
-  SanPhamProvider sanPhamProvider = SanPhamProvider();
+  SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  DanhMucSanPhamProvider danhMucSanPhamProvider =
+      GetIt.I.get<DanhMucSanPhamProvider>();
 
   // list
   List<SanPhamResponse> sanPhamList = [];
+  List<DanhMucSanPhamResponse> danhMucList = [];
 
   final searchController = TextEditingController();
   String title = "Sản phẩm";
+  String selectIndex = "";
+
+  // bool
+  bool isLoading = true;
+  bool isSPLoading = true;
 
   @override
   void onInit() {
@@ -27,6 +38,9 @@ class V1ProductController extends GetxController {
         .then((productCategoryId) {
       // load sản phẩm theo id người dùng
       sl.get<SharedPreferenceHelper>().userId.then((userId) {
+        // load danh mục
+        _loadDanhMucSanPham();
+
         // call product
         readProductByCategoryIdAndUserId(userId!, productCategoryId!);
       });
@@ -43,7 +57,34 @@ class V1ProductController extends GetxController {
       filter: "&idDanhMucSanPham=$idSanPham&idTaiKhoan=$idUser",
       onSuccess: (models) {
         sanPhamList = models;
-        print("LENGTH: ${sanPhamList.length}");
+        isSPLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// load danh muc san pham
+  ///
+  void _loadDanhMucSanPham() {
+    // product list
+    danhMucSanPhamProvider.all(
+      onSuccess: (values) {
+        // assign values to productList
+        danhMucList = values;
+        if (danhMucList.isNotEmpty) {
+          sl
+              .get<SharedPreferenceHelper>()
+              .productCategoryId
+              .then((productCategoryId) {
+            selectIndex = productCategoryId ?? danhMucList[0].id!;
+          });
+        }
+        isLoading = false;
+        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -54,7 +95,21 @@ class V1ProductController extends GetxController {
   ///
   ///go to product detail
   ///
-  void onProductDetailClick() {
+  void onProductDetailClick(String id) {
+    sl.get<SharedPreferenceHelper>().saveProductId(id);
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  }
+
+  ///
+  /// on Category Change
+  ///
+  void onCategoryChange(String? id) {
+    selectIndex = id!;
+    isSPLoading = true;
+    sl.get<SharedPreferenceHelper>().userId.then((userId) {
+      // call product
+      readProductByCategoryIdAndUserId(userId!, selectIndex);
+    });
+    update();
   }
 }

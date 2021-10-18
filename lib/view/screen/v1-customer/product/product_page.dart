@@ -5,7 +5,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/product_widget.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
@@ -19,13 +18,18 @@ class V1ProductPage extends GetView<V1ProductController> {
     return GetBuilder<V1ProductController>(
         init: V1ProductController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Column(
               children: [
                 //header
                 Container(
-                  height: DeviceUtils.getScaledHeight(context, 0.13),
+                  height: DeviceUtils.getScaledHeight(context, 0.14),
                   color: ColorResources.WHITE,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,35 +40,13 @@ class V1ProductPage extends GetView<V1ProductController> {
                       //category
                       GestureDetector(
                         onTap: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            //title
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                                vertical: Dimensions.PADDING_SIZE_DEFAULT,
-                              ),
-                              child: Text(
-                                "Hạng mục",
-                                style: TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-
-                            //icon
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                              ),
-                              child: Icon(
-                                Icons.arrow_drop_down,
-                                size: Dimensions.ICON_SIZE_EXTRA_LARGE,
-                              ),
-                            ),
-                          ],
+                        child: hangMucDropdown(
+                          "Hạng mục",
+                          controller.selectIndex,
+                          controller.danhMucList
+                              .map((e) => [e.id!, e.ten!])
+                              .toList(),
+                          controller.onCategoryChange,
                         ),
                       ),
                     ],
@@ -80,7 +62,10 @@ class V1ProductPage extends GetView<V1ProductController> {
                         const SizedBox(
                           height: Dimensions.MARGIN_SIZE_DEFAULT,
                         ),
-                        _productList(context, controller),
+                        if (controller.isSPLoading)
+                          const Center(child: CircularProgressIndicator())
+                        else
+                          _productList(context, controller),
                       ],
                     ),
                   ),
@@ -130,33 +115,80 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///product list
   ///
   Widget _productList(BuildContext context, V1ProductController controller) {
-    return Container(
-      color: ColorResources.WHITE,
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: .7,
-            crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
-            crossAxisCount: 2,
-          ),
-          itemCount: controller.sanPhamList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () => controller.onProductDetailClick(),
-              child: ProductWidget(
-                imgUrl: controller.sanPhamList[index].hinhAnhSanPham!,
-                name: controller.sanPhamList[index].ten!,
-                price: "${PriceConverter.convertPrice(
-                  context,
-                  double.parse(controller.sanPhamList[index].gia!),
-                )} VND",
+    if (controller.sanPhamList.isNotEmpty) {
+      return Container(
+        color: ColorResources.WHITE,
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: .7,
+              crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
+              crossAxisCount: 2,
+            ),
+            itemCount: controller.sanPhamList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () => controller
+                    .onProductDetailClick(controller.sanPhamList[index].id!),
+                child: ProductWidget(
+                  imgUrl: controller.sanPhamList[index].hinhAnhSanPham!,
+                  name: controller.sanPhamList[index].ten!,
+                  price: "${PriceConverter.convertPrice(
+                    context,
+                    double.parse(controller.sanPhamList[index].gia!),
+                  )} VND",
+                ),
+              );
+            }),
+      );
+    } else {
+      return const Center(
+        child: Text("Không có dữ liệu"),
+      );
+    }
+  }
+
+  ///
+  /// dropdown hạng mục
+  ///
+  Widget hangMucDropdown(
+    String labelText,
+    String selectValue,
+    List<List<String>> values,
+    Function(String?) onChanged,
+  ) {
+    return FormField<String>(
+      builder: (FormFieldState<String> state) {
+        return InputDecorator(
+          decoration: InputDecoration(
+              labelStyle: Dimensions.textNormalStyleCard(),
+              errorStyle: const TextStyle(
+                color: Colors.redAccent,
+                fontSize: Dimensions.FONT_SIZE_LARGE,
               ),
-            );
-          }),
+              hintText: labelText,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+          isEmpty: selectValue == 'hạng mục',
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: selectValue,
+              isDense: true,
+              onChanged: onChanged,
+              items: values.map((List<String> value) {
+                return DropdownMenuItem<String>(
+                  value: value[0],
+                  child: Text(value[1]),
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -246,4 +246,17 @@ class SharedPreferenceHelper {
   Future<bool> removeProductCategoryId() async {
     return _sharedPreference.remove(Preferences.productCategoryId);
   }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productId async {
+    return _sharedPreference.getString(Preferences.productId);
+  }
+
+  Future<bool> saveProductId(String id) async {
+    return _sharedPreference.setString(Preferences.productId, id);
+  }
+
+  Future<bool> removeProductId() async {
+    return _sharedPreference.remove(Preferences.productId);
+  }
 }
