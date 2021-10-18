@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
@@ -21,6 +22,9 @@ class V4HomeController extends GetxController {
 
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
+  // refresh controller
+  RefreshController? refreshController;
+
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 17, minute: 0);
 
@@ -39,10 +43,10 @@ class V4HomeController extends GetxController {
   double? expenditure; // chi
 
   // số lượng các tiến độ
-  int moiTaoQuality = 0;
-  int dangLamQuality = 0;
-  int hoanThanhQuality = 0;
-  int chamTreQuality = 0;
+  int? moiTaoQuality;
+  int? dangLamQuality;
+  int? hoanThanhQuality;
+  int? chamTreQuality;
 
   // isloading
   bool isLoading = true;
@@ -52,9 +56,25 @@ class V4HomeController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
+    // init refreshController
+    refreshController ??= RefreshController();
+
+    // init program run
+    initProgramRun();
+  }
+
+  ///
+  /// init program run
+  ///
+  void initProgramRun() {
     total = 0;
     revenue = 0;
     expenditure = 0;
+
+    moiTaoQuality = 0;
+    dangLamQuality = 0;
+    hoanThanhQuality = 0;
+    chamTreQuality = 0;
 
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       taiKhoanProvider.find(
@@ -73,8 +93,6 @@ class V4HomeController extends GetxController {
         },
       );
     });
-
-    update();
   }
 
   ///
@@ -90,7 +108,7 @@ class V4HomeController extends GetxController {
         for (final model in models) {
           final String type = model.loai.toString().toLowerCase();
           final double money = double.parse(model.soTien!);
-          if (type == "loai 1") {
+          if (type == "1") {
             revenue = revenue! + money;
           } else {
             expenditure = expenditure! + money;
@@ -118,13 +136,13 @@ class V4HomeController extends GetxController {
         for (final model in models) {
           final String status = model.trangThai!.toLowerCase();
           if (status == "moi tao") {
-            moiTaoQuality = moiTaoQuality + 1;
+            moiTaoQuality = moiTaoQuality! + 1;
           } else if (status == "dang lam") {
-            dangLamQuality = dangLamQuality + 1;
+            dangLamQuality = dangLamQuality! + 1;
           } else if (status == "hoan thanh") {
-            hoanThanhQuality = hoanThanhQuality + 1;
+            hoanThanhQuality = hoanThanhQuality! + 1;
           } else {
-            chamTreQuality = chamTreQuality + 1;
+            chamTreQuality = chamTreQuality! + 1;
           }
           _resetContenGrid();
           isLoading = false;
@@ -300,5 +318,22 @@ class V4HomeController extends GetxController {
         update();
       }
     });
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    initProgramRun();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

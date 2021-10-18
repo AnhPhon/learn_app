@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -25,25 +26,30 @@ class V3HomePage extends GetView<V3HomeController> {
           if (controller.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          return HomeWidget(
-            fullname: "DL, ${controller.fullname}",
-            content: Column(
-              children: [
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onLoading: controller.onLoading,
+            onRefresh: controller.onRefresh,
+            child: HomeWidget(
+              fullname: "DL, ${controller.fullname}",
+              content: Column(
+                children: [
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // need update widget
-                _needUpdateWidget(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  // need update widget
+                  _needUpdateWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // feature widget
-                _featuresWidget(),
+                  // feature widget
+                  _featuresWidget(),
 
-                // news widget
-                _newsWidget(),
+                  // news widget
+                  _newsWidget(),
 
-                // product widget
-                _productWidget(controller: controller)
-              ],
+                  // product widget
+                  _productWidget(controller: controller)
+                ],
+              ),
             ),
           );
         },

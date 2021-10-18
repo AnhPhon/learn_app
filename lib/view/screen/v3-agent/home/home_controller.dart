@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
@@ -15,6 +16,9 @@ class V3HomeController extends GetxController {
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
 
+  // refresh controller
+  RefreshController? refreshController;
+
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
@@ -27,8 +31,10 @@ class V3HomeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
+    // init refreshController
+    refreshController ??= RefreshController();
 
     // init run
     initProgramRun();
@@ -218,5 +224,22 @@ class V3HomeController extends GetxController {
   ///
   void onNewsDetailClick({required int index}) {
     Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    initProgramRun();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

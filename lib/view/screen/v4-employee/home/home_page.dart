@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
@@ -26,43 +27,48 @@ class V4HomePage extends GetView<V4HomeController> {
               child: CircularProgressIndicator(),
             );
           }
-          return HomeWidget(
-            fullname: "NV, ${controller.fullname}!",
-            notificationURL: AppRoutes.V4_NOTIFICATION,
-            content: Column(
-              children: [
-                // notificate label
-                _notificateLabel(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onLoading: controller.onLoading,
+            onRefresh: controller.onRefresh,
+            child: HomeWidget(
+              fullname: "NV, ${controller.fullname}!",
+              notificationURL: AppRoutes.V4_NOTIFICATION,
+              content: Column(
+                children: [
+                  // notificate label
+                  _notificateLabel(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // time keeping
-                _btnTimekeeping(context),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // time keeping
+                  _btnTimekeeping(context),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _followWorkProgressWidget
-                _followWorkProgressWidget(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // _followWorkProgressWidget
+                  _followWorkProgressWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _splitWidget
-                _splitWidget(context),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // _splitWidget
+                  _splitWidget(context),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _revenueStatistic
-                _revenueStatistic(context),
+                  // _revenueStatistic
+                  _revenueStatistic(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _splitWidget
-                _splitWidget(context),
+                  // _splitWidget
+                  _splitWidget(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _inputWarehouse
-                _inputWarehouse(context),
+                  // _inputWarehouse
+                  _inputWarehouse(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-              ],
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                ],
+              ),
             ),
           );
         },
