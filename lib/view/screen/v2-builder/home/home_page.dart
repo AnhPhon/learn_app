@@ -286,18 +286,24 @@ class V2HomePage extends GetView<V2HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: length,
             itemBuilder: (BuildContext ctx, index) {
-              return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              return GestureDetector(
+                onTap: () {
+                  controller
+                      .onClickProductDetail(controller.sanPhamList[index].id!);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    ),
                   ),
-                ),
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: ProductCard(
-                  title: controller.sanPhamList[index].ten!,
-                  image: controller.sanPhamList[index].hinhAnhSanPham!,
-                  cost: PriceConverter.convertPrice(context, 100000),
+                  padding:
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: ProductCard(
+                    title: controller.sanPhamList[index].ten!,
+                    image: controller.sanPhamList[index].hinhAnhSanPham!,
+                    cost: PriceConverter.convertPrice(context, 100000),
+                  ),
                 ),
               );
             },

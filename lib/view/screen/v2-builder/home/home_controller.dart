@@ -195,6 +195,13 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  /// xem chi tiết 1 sản phẩm
+  ///
+  void onClickProductDetail(String id) {
+    Get.toNamed("${AppRoutes.V2_PRODUCT_DETAIL}&id=$id");
+  }
+
+  ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
