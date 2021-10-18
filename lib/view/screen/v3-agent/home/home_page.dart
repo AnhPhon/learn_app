@@ -153,7 +153,7 @@ class V3HomePage extends GetView<V3HomeController> {
           return GestureDetector(
             onTap: controller.threeFeatures![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.threeFeatures![index]["label"] as String,
+              label: controller.threeFeatures![index]["label"] as List<String>,
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,

@@ -144,7 +144,7 @@ class V2HomeController extends GetxController {
     // declare content grid
     contentGrid = [
       {
-        "label": "Đăng ký việc",
+        "label": ["Đăng ký", "việc"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -158,7 +158,7 @@ class V2HomeController extends GetxController {
         }
       },
       {
-        "label": "Quản lý công việc",
+        "label": ["Quản lý", "công việc"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -172,7 +172,7 @@ class V2HomeController extends GetxController {
         }
       },
       {
-        "label": "Tin tuyển dụng",
+        "label": ["Tin tuyển", "dụng"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [

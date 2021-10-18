@@ -101,7 +101,7 @@ class V3HomeController extends GetxController {
     threeFeatures = [
       {
         "icon": Icons.shop,
-        "label": "Cửa hàng \ncủa bạn",
+        "label": ["Cửa hàng", "của bạn"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff8CE3E9),
@@ -113,7 +113,7 @@ class V3HomeController extends GetxController {
       },
       {
         "icon": Icons.chat,
-        "label": "Phản hồi \nbáo giá",
+        "label": ["Phản hồi", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xffC1E6EE),
@@ -125,7 +125,7 @@ class V3HomeController extends GetxController {
       },
       {
         "icon": Icons.request_page,
-        "label": "Yêu cầu \nbáo giá",
+        "label": ["Yêu cầu", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff79B4B8),

@@ -129,7 +129,7 @@ class V2HomePage extends GetView<V2HomeController> {
           return GestureDetector(
             onTap: controller.contentGrid![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.contentGrid![index]["label"].toString(),
+              label: controller.contentGrid![index]["label"] as List<String>,
               gradient:
                   controller.contentGrid![index]["gradient"] as RadialGradient,
               icon: controller.contentGrid![index]["icon"] as IconData,

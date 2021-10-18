@@ -66,7 +66,7 @@ class V1HomeController extends GetxController {
     // declare content grid
     contentGrid = [
       {
-        "label": "Tạo đơn công việc",
+        "label": ["Tạo đơn", "công việc"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -80,7 +80,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Báo giá VLXD",
+        "label": ["Báo giá", "VLXD"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -94,7 +94,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Dịch vụ thường xuyên",
+        "label": ["Dịch vụ", "thường xuyên"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -108,7 +108,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Quản lý đơn tạo",
+        "label": ["Quản lý", "đơn tạo"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -122,7 +122,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Quản lý báo giá",
+        "label": ["Quản lý", "báo giá"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -136,7 +136,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Tuyển dụng ứng viên",
+        "label": ["Tuyển dụng", "ứng viên"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -159,7 +159,7 @@ class V1HomeController extends GetxController {
     // three features
     threeFeatures = [
       {
-        "label": "Ảnh sản\nphẩm mẫu",
+        "label": ["Ảnh sản", "phẩm mẫu"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -171,7 +171,7 @@ class V1HomeController extends GetxController {
         "onTap": () {}
       },
       {
-        "label": "Quản lý\ncông việc",
+        "label": ["Quản lý", "công việc"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
@@ -185,7 +185,7 @@ class V1HomeController extends GetxController {
         }
       },
       {
-        "label": "Sản phẩm\nmẫu",
+        "label": ["Sản phẩm", "mẫu"],
         "gradient": const RadialGradient(
           radius: 1,
           colors: [
