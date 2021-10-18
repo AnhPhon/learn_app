@@ -22,23 +22,20 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
           builder: (V4RevenueExpenditureController controller) {
             return SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      //chọn thời gian thêm thu/chi
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: _timeRevenueExpenditure(controller, context),
-                      ),
+                  //thu hoặc chi
+                  if (controller.isRevenue == true)
+                    _revenue(controller, context)
+                  else
+                    _expenditure(controller, context),
 
-                      //thu hoặc chi
-                      if (controller.isRevenue == true)
-                        _revenue(controller, context)
-                      else
-                        _expenditure(controller, context),
-                    ],
+                  //chọn thời gian thêm thu/chi
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    child: _timeRevenueExpenditure(controller, context),
                   ),
 
                   //nội dung thu/chi
@@ -65,29 +62,14 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                     _btnAddThu(controller)
                   else
                     _btnAddChi(controller),
+
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                  ),
                 ],
               ),
             );
           }),
-    );
-  }
-
-  ///
-  /// Chọn thời gian thu chi
-  ///
-  Widget _timeRevenueExpenditure(
-      V4RevenueExpenditureController controller, BuildContext context) {
-    return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
-      controller: controller.timeRevenueExpenditure,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: controller.timeNow,
-      label: "Ngày",
-      obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
     );
   }
 
@@ -103,10 +85,30 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
       holdplacer: 'Thu',
-      label: 'Loại thu',
+      label: 'Loại thêm',
       obligatory: true,
       typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: DeviceUtils.getScaledWidth(context, 1),
+    );
+  }
+
+  ///
+  /// Chọn thời gian thu chi
+  ///
+  Widget _timeRevenueExpenditure(
+      V4RevenueExpenditureController controller, BuildContext context) {
+    return TextFieldDate(
+      isToHour: false,
+      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      isDate: true,
+      allowEdit: true,
+      controller: controller.timeRevenueExpenditure,
+      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      holdplacer: controller.timeNow,
+      label: "Thời gian",
+      obligatory: true,
+      typeInput: TextInputType.text,
+      width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
 
@@ -122,10 +124,10 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
       holdplacer: 'Chi',
-      label: 'Loại chi',
+      label: 'Loại thêm',
       obligatory: true,
       typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
 }

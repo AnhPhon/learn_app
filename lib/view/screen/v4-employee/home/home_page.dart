@@ -26,7 +26,6 @@ class V4HomePage extends GetView<V4HomeController> {
               child: CircularProgressIndicator(),
             );
           }
-
           return HomeWidget(
             fullname: "Hi, ${controller.fullname}!",
             notificationURL: AppRoutes.V4_NOTIFICATION,
@@ -259,7 +258,7 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               Container(
                 alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .33333),
+                width: DeviceUtils.getScaledWidth(context, .4),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                 decoration: BoxDecoration(
                   color: controller.total! > 0
