@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,12 +8,12 @@ import 'package:template/provider/san_pham_provider.dart';
 
 class V3ProductManagementController extends GetxController
     with SingleGetTickerProviderMixin {
-  TabController? tabController;
   int indexTab = 0;
 
-  RefreshController refreshController = RefreshController();
+  // RefreshController refreshController = RefreshController();
 
-  DanhMucSanPhamProvider danhMucSanPhamProvider = GetIt.I.get<DanhMucSanPhamProvider>();
+  DanhMucSanPhamProvider danhMucSanPhamProvider =
+      GetIt.I.get<DanhMucSanPhamProvider>();
   List<DanhMucSanPhamResponse> danhMucSanPhamResponse = [];
 
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
@@ -26,16 +25,6 @@ class V3ProductManagementController extends GetxController
   bool isLoading = true;
   bool isLoadingProduct = true;
 
-  List categoriesList = [
-    "Tất cả",
-    "Vật liệu xây dựng",
-    "Nội thất",
-    "Thiết bị",
-  ];
-
-  String urlImage =
-      "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg";
-
   String title = "Quản lý sản phẩm";
 
   @override
@@ -44,35 +33,24 @@ class V3ProductManagementController extends GetxController
     getAllCategory();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    tabController!.dispose();
-  }
-
   ///
   ///get all category
   ///
   void getAllCategory() {
+    print("object020asdas");
     danhMucSanPhamProvider.all(
       onSuccess: (value) {
+        print("object020");
         danhMucSanPhamResponse = value;
 
-        //binding tab controller
-        tabController =
-            TabController(length: danhMucSanPhamResponse.length, vsync: this);
-
-        //listener tab controller
-        listenerTabController();
-
         //get product
-        getProductByIdCategory(index: tabController!.index, isRefresh: true);
+        getProductByIdCategory(isRefresh: true);
 
         isLoading = false;
-        isLoadingProduct = false;
         update();
       },
       onError: (error) {
+        print("object023");
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
@@ -81,33 +59,32 @@ class V3ProductManagementController extends GetxController
   ///
   ///listener tab controller
   ///
-  void listenerTabController() {
-    tabController!.addListener(() {
-      getProductByIdCategory(index: tabController!.index, isRefresh: true);
-    });
+  void onChangedTab(int index) {
+    indexTab = index;
+    sanPhamResponse.clear();
+    isLoadingProduct = true;
+    update();
+    getProductByIdCategory(isRefresh: true);
   }
 
   ///
   ///get product by idCategory
   ///
-  void getProductByIdCategory({required int index, required bool isRefresh}) {
+  void getProductByIdCategory({required bool isRefresh}) {
     if (isRefresh) {
       pageMax = 1;
-      sanPhamResponse.clear();
     } else {
       pageMax++;
     }
-    isLoadingProduct = true;
-    update();
 
     //paginate by idCategory
     sanPhamProvider.paginate(
       page: pageMax,
       limit: limitMax,
-      filter: "&idDanhMucSanPham=${danhMucSanPhamResponse[index].id}",
+      filter: "&idDanhMucSanPham=${danhMucSanPhamResponse[indexTab].id}",
       onSuccess: (value) {
-        print(value);
         sanPhamResponse = value;
+
         isLoadingProduct = false;
         update();
       },

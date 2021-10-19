@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,37 +20,32 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
               child: CircularProgressIndicator(),
             );
           }
-          return Scaffold(
-            appBar: AppBarWithTabBar(
-              title: controller.title,
-              bottom: TabBar(
-                controller: controller.tabController,
-                isScrollable: true,
-                indicatorColor: ColorResources.PRIMARY,
-                labelColor: ColorResources.PRIMARY,
-                unselectedLabelColor: Colors.grey,
-                tabs: controller.danhMucSanPhamResponse.map(
-                  (categories) {
-                    return Tab(text: categories.ten.toString());
-                  },
-                ).toList(),
+          return DefaultTabController(
+            length: controller.danhMucSanPhamResponse.length,
+            child: Scaffold(
+              appBar: AppBarWithTabBar(
+                title: controller.title,
+                bottom: TabBar(
+                  onTap: controller.onChangedTab,
+                  physics: const NeverScrollableScrollPhysics(),
+                  isScrollable: true,
+                  indicatorColor: ColorResources.PRIMARY,
+                  labelColor: ColorResources.PRIMARY,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: controller.danhMucSanPhamResponse.map(
+                    (categories) {
+                      return Tab(text: categories.ten.toString());
+                    },
+                  ).toList(),
+                ),
               ),
-            ),
-            backgroundColor: Colors.transparent,
-            body: SmartRefresher(
-              controller: controller.refreshController,
-              child: TabBarView(
-                controller: controller.tabController,
-                children: controller.danhMucSanPhamResponse.map(
-                  (element) {
-                    if (controller.isLoadingProduct) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return _item(context, controller: controller);
-                  },
-                ).toList(),
+              backgroundColor: Colors.transparent,
+              body: TabBarView(
+                children: controller.danhMucSanPhamResponse
+                    .map(
+                      (element) => _item(context),
+                    )
+                    .toList(),
               ),
             ),
           );
@@ -61,101 +55,118 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
   ///
   ///item
   ///
-  Widget _item(BuildContext context,
-      {required V3ProductManagementController controller}) {
-    return ListView.builder(
-        itemCount: controller.sanPhamResponse.length,
-        itemBuilder: (BuildContext ctx, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.MARGIN_SIZE_SMALL,
-                horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            decoration: BoxDecoration(
-              color: ColorResources.WHITE,
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 2,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: FadeInImage.assetNetwork(
-                        placeholder: Images.placeholder,
-                        image: controller.sanPhamResponse[index].hinhAnhDaiDien
-                            .toString(),
-                        height: DeviceUtils.getScaledHeight(context, .08),
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                        imageErrorBuilder: (c, o, s) => Image.asset(
-                          Images.placeholder,
-                        ),
+  Widget _item(BuildContext context) {
+    if (controller.isLoadingProduct) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return GetBuilder<V3ProductManagementController>(builder: (controller) {
+      return (controller.sanPhamResponse.isEmpty)
+          ? const Center(
+              child: Text("Không có sản phẩm"),
+            )
+          : ListView.builder(
+              itemCount: controller.sanPhamResponse.length,
+              itemBuilder: (BuildContext ctx, int index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: Dimensions.MARGIN_SIZE_SMALL,
+                      horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
+                  padding:
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                  decoration: BoxDecoration(
+                    color: ColorResources.WHITE,
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 2,
                       ),
-                    ),
-                    const SizedBox(
-                      width: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            controller.sanPhamResponse[index].ten.toString(),
-                            maxLines: 2,
-                            style: Dimensions.fontSizeStyle16w600(),
+                          Expanded(
+                            flex: 2,
+                            child: FadeInImage.assetNetwork(
+                              placeholder: Images.placeholder,
+                              image: controller
+                                  .sanPhamResponse[index].hinhAnhDaiDien
+                                  .toString(),
+                              height: DeviceUtils.getScaledHeight(context, .08),
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                              imageErrorBuilder: (c, o, s) => Image.asset(
+                                Images.placeholder,
+                              ),
+                            ),
                           ),
                           const SizedBox(
-                            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                            width: Dimensions.MARGIN_SIZE_SMALL,
                           ),
-                          IntrinsicHeight(
-                            child: Row(
+                          Expanded(
+                            flex: 7,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(controller.sanPhamResponse[index].moTa
-                                    .toString()),
-                                VerticalDivider(
-                                  color: ColorResources.BLACK.withOpacity(.7),
-                                ),
                                 Text(
-                                  "${PriceConverter.convertPrice(
-                                    context,
-                                    double.parse(
-                                      controller.sanPhamResponse[index].gia
-                                          .toString(),
-                                    ),
-                                  )} vnđ",
+                                  controller.sanPhamResponse[index].ten
+                                      .toString(),
+                                  maxLines: 2,
+                                  style: Dimensions.fontSizeStyle16w600(),
+                                ),
+                                const SizedBox(
+                                  height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
+                                IntrinsicHeight(
+                                  child: Row(
+                                    children: [
+                                      Text(controller
+                                          .sanPhamResponse[index].moTa
+                                          .toString()),
+                                      VerticalDivider(
+                                        color: ColorResources.BLACK
+                                            .withOpacity(.7),
+                                      ),
+                                      Text(
+                                        "${PriceConverter.convertPrice(
+                                          context,
+                                          double.parse(
+                                            controller
+                                                .sanPhamResponse[index].gia
+                                                .toString(),
+                                          ),
+                                        )} vnđ",
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
 
-                Divider(
-                  height: 20,
-                  color: ColorResources.BLACK.withOpacity(.7),
-                ),
+                      Divider(
+                        height: 20,
+                        color: ColorResources.BLACK.withOpacity(.7),
+                      ),
 
-                //product code
-                Text(controller.sanPhamResponse[index].maSanPham.toString()),
-              ],
-            ),
-          );
-        });
+                      //product code
+                      Text(controller.sanPhamResponse[index].maSanPham
+                          .toString()),
+                    ],
+                  ),
+                );
+              });
+    });
   }
 }
