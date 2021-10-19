@@ -74,7 +74,7 @@ class V1G4CreateServiceController extends GetxController{
   void onSelectedAfternoon({required bool val}){
     afternoon = val;
     if(tommorow){
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 5h30'));
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 15h30'));
     }else{
       afternoonReponse = null;
     }
@@ -98,6 +98,7 @@ class V1G4CreateServiceController extends GetxController{
     thoiGianLamViecProvider.all(onSuccess: (data){
       thoiGianLamViecList.clear();
       thoiGianLamViecList.addAll(data);
+      print(data);
       isLoading = false;
       update();
     }, onError: (error){
@@ -118,6 +119,8 @@ class V1G4CreateServiceController extends GetxController{
     }else if(int.parse(amountController.text.toString()) <= 0){
       showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
     }else if(startTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+    }else if(endTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
     }else if(descController.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
@@ -135,21 +138,21 @@ class V1G4CreateServiceController extends GetxController{
   /// Tạo đối tượng request
   ///
   DonDichVuRequest request(){
-      final List<ThoiGianLamViecResponse> workTime = [];
+      final List<String> workTime = [];
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
-        workTime.add(tommowReponse!);
+        workTime.add(tommowReponse!.id!);
       }
       if(afternoon == true){
-        workTime.add(afternoonReponse!); 
+        workTime.add(afternoonReponse!.id!); 
       }
       if(tonight == true){
-        workTime.add(tonightReponse!);
+        workTime.add(tonightReponse!.id!);
       }
-      dichVuRequest.thoiGianLamViec = workTime;
-      dichVuRequest.ngayBatDau = startTime.text.toString();
-      dichVuRequest.ngayKetThuc = endTime.text.toString();//.isEmpty ? endTime.text.toString() : '';
+      dichVuRequest.idThoiGianLamViecs = workTime;
+      dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startTime.text.toString());
+      dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());//.isEmpty ? endTime.text.toString() : '';
       dichVuRequest.giaTriKhachDeXuat = valueController.text.toString().isEmpty ? '' : valueController.text.toString();
       dichVuRequest.moTa = descController.text.toString();
       if(amountController.text.toString().isNotEmpty){

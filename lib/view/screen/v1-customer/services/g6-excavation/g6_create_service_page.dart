@@ -112,7 +112,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
               CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
                     controller.onSelectedTommorow(val: val!);
                   },status: controller.tommorow,),
-                  CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+                  CheckBoxCustom(title: "Chiều: từ 13h30 - 17h30", onChanged: (bool? val) { 
                     controller.onSelectedAfternoon(val: val!);
                   },status: controller.afternoon,),
                   CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  

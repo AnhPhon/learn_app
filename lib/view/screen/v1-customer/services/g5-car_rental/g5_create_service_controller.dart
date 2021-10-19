@@ -76,7 +76,7 @@ class V1G5CreateServiceController extends GetxController{
   void onSelectedAfternoon({required bool val}){
     afternoon = val;
     if(afternoon){
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 5h30'));
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('13h30 - 17h30'));
     }else{
       afternoonReponse = null;
     }
@@ -141,7 +141,7 @@ class V1G5CreateServiceController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
     }else if(startWorkController.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
-    }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateTime.now().toString()) > 0){
+    }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng nhập địa điểm bốc hàng dự kiến");
@@ -156,7 +156,8 @@ class V1G5CreateServiceController extends GetxController{
       donDichVuProvider.add(data: request(), onSuccess: (data){
          EasyLoading.dismiss();
          showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất");
-         Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
+         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),arguments: request());
+         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
       }, onError: (onError){
          EasyLoading.dismiss();
          print("V1G5CreateServiceController onClickContinueButton $onError");
@@ -169,27 +170,29 @@ class V1G5CreateServiceController extends GetxController{
   /// Tạo đối tượng request
   ///
   DonDichVuRequest request(){
-      final List<ThoiGianLamViecResponse> workTime = [];
+      final List<String> workTime = [];
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
-        workTime.add(tommowReponse!);
+        workTime.add(tommowReponse!.id!);
       }
       if(afternoon == true){
-        workTime.add(afternoonReponse!); 
+        workTime.add(afternoonReponse!.id!); 
       }
       if(tonight == true){
-        workTime.add(tonightReponse!);
+        workTime.add(tonightReponse!.id!);
       }
-      dichVuRequest.thoiGianLamViec = workTime;
+      dichVuRequest.idThoiGianLamViecs= workTime;
       if(receivingWidthController.text.toString().isNotEmpty){
         dichVuRequest.beRongDiemNhan = receivingWidthController.text.toString();
       }
       if(returnWidthController.text.toString().isNotEmpty){
         dichVuRequest.beRongDiemTra = returnWidthController.text.toString();
       }
-      // dichVuRequest.idThongSoKyThuat = 
-      dichVuRequest.ngayBatDau = startWorkController.text.toString();
+      if(thongSo.isNotEmpty){
+        dichVuRequest.idThongSoKyThuats = thongSo.map((e) => e!.id!).toList(); 
+      }
+      dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startWorkController.text.toString());
       dichVuRequest.soLuongYeuCau = amountController.text.toString();
       dichVuRequest.diaDiemBocHang = estimatedPickUpLocation.text.toString();
       dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();

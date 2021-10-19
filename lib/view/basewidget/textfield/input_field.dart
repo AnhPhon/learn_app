@@ -76,7 +76,7 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
-              inputFormatters: typeInput == TextInputType.number ? [FilteringTextInputFormatter.digitsOnly] : [FilteringTextInputFormatter.allow(RegExp('^[a-zA-Z0-9 "!?.-]+'))],
+              inputFormatters: typeInput == TextInputType.number ? [FilteringTextInputFormatter.digitsOnly] : null,
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,

@@ -64,7 +64,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           allowMultiline: false,
           controller: controller.workTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà",
+          holdplacer: "Tiêu đề",
           hidden: false,
           label: "Tiêu đề công việc",
           obligatory: true,
@@ -80,7 +80,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
               CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
                 controller.onSelectedTommorow(val: val!);
                },status: controller.tommorow,),
-              CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+              CheckBoxCustom(title: "Chiều: từ 13h30 - 17h30", onChanged: (bool? val) { 
                 controller.onSelectedAfternoon(val: val!);
                },status: controller.afternoon,),
               CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  
@@ -92,7 +92,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
 
         TextFieldDate(
           isDate: true,
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.startTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
@@ -103,7 +103,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
 
         TextFieldDate(
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.endTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",

@@ -37,7 +37,7 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
                   title: "Chi tiết đơn hàng",
                   orderContents: [
                   OrderContentStringValue(title:controller.donDichVuRequest!.tieuDe! , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} đ/công", boldValue: true,),
-                  OrderContentStringValue(title:"Số giờ làm việc/ngày" , value:"${controller.donDichVuRequest!.thoiGianLamViec!.length * 4}", boldValue: true,),
+                  OrderContentStringValue(title:"Số giờ làm việc/ngày" , value:"${controller.donDichVuRequest!.idThoiGianLamViecs!.length * 4}", boldValue: true,),
                   OrderContentStringValue(title:"Số lượng" , value:controller.donDichVuRequest!.soLuongYeuCau!, boldValue: true,),
                   OrderContentStringValue(title:"Số ngày làm việc dự kiến" , value:controller.donDichVuRequest!.soNgay!, boldValue: true,),
                   OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} VNĐ", boldValue: true,),
