@@ -8,35 +8,40 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_controller.dart';
 
-class V1G7ReviewPage extends GetView<V1G7ReviewController>{
-
-  final V1G7ReviewController _controller = Get.find<V1G7ReviewController>();
-
+class V1G7ReviewPage extends GetView<V1G7ReviewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tin tuyển dụng"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              content(),
-              // Button tiếp tục
-              postButton(controller: _controller),
-            ],
-          ),
-        ),
-      )
-    );
+        appBar: const AppBarWidget(title: "Tin tuyển dụng"),
+        body: SingleChildScrollView(
+          child: GetBuilder(
+              init: V1G7ReviewController(),
+              builder: (V1G7ReviewController controller) {
+                if (controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      content(controller: controller),
+                      // Button tiếp tục
+                      postButton(controller: controller),
+                    ],
+                  ),
+                );
+              }),
+        ));
   }
 
   ///
   /// Nội dung đơn
   ///
-  Widget content(){
+  Widget content({required V1G7ReviewController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: BoxShadowWidget(
@@ -45,105 +50,158 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController>{
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Tiêu đề: ", content: "Cần tuyển 02 kiến trúc sư làm việc tại Đà Nẵng"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Tiêu đề: ",
+                      content: controller.titleController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Công ty:", content: "Công ty TNHH Five Start Building System"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Công ty: ",
+                      content: controller.nameController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Địa chỉ:", content: "Thôn Trung Đông - Xã Trung Đông - Huyện Trung Đông - Tỉnh Trung Đông"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Địa chỉ: ",
+                      content: controller.addressController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Giới tính:", content: "Nam"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Giới tính: ",
+                      content: controller.chooseSex == 1 ? 'Nam' : 'Nữ'),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Số lượng tuyển: ", content: "02"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Số lượng tuyển: ",
+                      content: controller.amountController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Hình thức làm việc: ", content: "Nhân viên chính thức"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Hình thức làm việc: ",
+                      content: controller.hinhThucLamViecController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Trình độ học vấn:", content: "Đại học"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Trình độ học vấn: ",
+                      content: controller.trinhDoHocVanController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Chuyên ngành chính:", content: "Tập tành lập trình"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Chuyên ngành chính: ",
+                      content: controller.chuyenNganhChinhController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Chuyên ngành phụ: ", content: "Xây dựng DD&CN;Xây dựng cầu đường"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Số năm kinh nghiệm: ",
+                      content: controller.soNamKinhNghiemController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Số năm kinh nghiệm: ", content: "3 năm"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Mức lương ban đầu dự kiến: ",
+                      content: controller.mucLuongDuKienController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Mức lương ban đầu dự kiến:", content: "7 triệu"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Nơi làm việc: ",
+                      content: controller.noiLamViecController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Nơi làm việc:", content: "Đà Nẵng"),
-                ),
-      
-                Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Thời gian thử việc:", content: "1 tháng"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Mô tả công việc: ",
+                      content: controller.descController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Mô tả công việc: ", content: "\n+ Phụ trách công tác thiết kế nội thất các công trình nhà dân \n+ Quản lý văn phòng đại diện Đà Nẵng"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Yêu cầu công việc: ",
+                      content: controller.requiredController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Yêu cầu công việc: ", content: "\n+ Sử dụng ít nhất một phần mềm thiết kế \n+ Tuân thủ nội dung công ty, làm việc với tinh thần tự giác"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Chế độ quyền lợi: ",
+                      content: controller.benifitController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Chế độ quyền lợi:", content: "\n+ Được hưởng đầy đủ các chế độ lao động theo quy định \n+ Được hưởng khi hoàn thành tốt công việc được giao"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Ưu tiên: ",
+                      content: controller.prioritizedController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Ưu tiên:", content: "\n+ Ưu tiên ứng viên có bằng lái xe B2 \n+ Ưu tiên hồ sơ nộp sơm nhất, đầy đủ nhất"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Hạn nộp hết ngày: ",
+                      content: controller.hanNopHoSo.toString()),
                 ),
-      
-                Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Hạn nộp hết ngày: ", content: "12/11/2021"),
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Liên hệ nộp hồ sơ:", content: "",titleStyle: TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    color: ColorResources.BLACK
-                  ),),
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Tên: ", content: "Đoàn Thị Minh Duyên"),
+                const Padding(
+                  padding:
+                      EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                    title: "Liên hệ nộp hồ sơ: ",
+                    content: "",
+                    titleStyle: TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        color: ColorResources.BLACK),
+                  ),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Số điện thoại:", content: "0934322343"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Tên: ", content: controller.nameController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Địa chỉ:", content: "51 Tô Hữu, Hải Châu, Thành Phố Đà Nẵng"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Số điện thoại: ",
+                      content: controller.phoneController.text),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: TextHighlight(title: "Email:", content: "tuyendung5sao@gmail.com"),
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Địa chỉ: ",
+                      content: controller.contactAddressController.text),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Email: ",
+                      content: controller.emailController.text),
                 ),
               ],
             ),
@@ -157,7 +215,7 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController>{
   /// Nút tiếp tục
   ///
 
-  Widget postButton({required V1G7ReviewController controller}){
+  Widget postButton({required V1G7ReviewController controller}) {
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
@@ -169,5 +227,4 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController>{
       ),
     );
   }
-
 }

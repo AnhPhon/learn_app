@@ -9,76 +9,94 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_list_controller.dart';
 
-class V1G7PriceListPage extends GetView<V1G7PriceListController>{
-
-  final V1G7PriceListController _controller = Get.find<V1G7PriceListController>();
-
+class V1G7PriceListPage extends GetView<V1G7PriceListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tin tuyển dụng"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        appBar: const AppBarWidget(title: "Tin tuyển dụng"),
+        body: SingleChildScrollView(
+          child: GetBuilder(
+              init: V1G7PriceListController(),
+              builder: (V1G7PriceListController controller) {
+                if (controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Tiêu tề nhóm công việc
+                      const GroupTitle(title: "Dịch vụ đăng tin tuyển dụng"),
 
-              // Tiêu tề nhóm công việc
-              const GroupTitle(title: "Dịch vụ đăng tin tuyển dụng"),
-
-
-              content(),
-              // Button tiếp tục
-              button(controller: _controller),
-            ],
-          ),
-        ),
-      )
-    );
+                      content(controller: controller),
+                      // Button tiếp tục
+                      button(controller: controller),
+                    ],
+                  ),
+                );
+              }),
+        ));
   }
 
   ///
   /// Nội dung đơn
   ///
-  Widget content(){
+  Widget content({required V1G7PriceListController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          priceListPosted(
-            children: [
-              priceType(title: "Đăng 4 tuần",price: 100000,groupValue: 1,value: 1),
-              priceType(title: "Đăng 4 tuần + lọc hồ sơ 100đ/8 tuần",price: 100000,groupValue: 1,value: 1),
-              priceType(title: "Đăng 4 tuần + lọc hồ sơ 300/ 16 tuần",price: 100000,groupValue: 1,value: 1)
-            ]
-          ),
+          priceListPosted(children: [
+            ...List.generate(
+                controller.bangGiaDangTinModel.length,
+                (index) => priceTypeDangTin(
+                    controller: controller,
+                    title:
+                        controller.bangGiaDangTinModel[index].tieuDe.toString(),
+                    price: double.parse(controller
+                        .bangGiaDangTinModel[index].donGia
+                        .toString()),
+                    groupValue: controller.chooseDangTin.toString(),
+                    value: controller.bangGiaDangTinModel[index].id.toString()))
+          ]),
           Padding(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-            child: priceListFilter(
-              children: [
-                priceType(title: "Lọc hồ sơ 90 điểm",price: 90000,groupValue: 1,value: 1),
-                priceType(title: "Lọc hồ sơ 100 điểm",price: 100000,groupValue: 1,value: 1),
-                priceType(title: "Lọc hồ sơ 500 điểm",price: 50000,groupValue: 1,value: 1)
-              ]
-            ),
+            padding:
+                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+            child: priceListFilter(children: [
+              ...List.generate(
+                  controller.bangGiaLocHoSoModel.length,
+                  (index) => priceTypeLocHoSo(
+                      controller: controller,
+                      title: controller.bangGiaLocHoSoModel[index].tieuDe
+                          .toString(),
+                      price: double.parse(controller
+                          .bangGiaLocHoSoModel[index].donGia
+                          .toString()),
+                      groupValue: controller.chooseLocHoSo.toString(),
+                      value:
+                          controller.bangGiaLocHoSoModel[index].id.toString()))
+            ]),
           ),
         ],
       ),
     );
   }
 
-  Widget priceListPosted({required List<Widget> children}){
+  Widget priceListPosted({required List<Widget> children}) {
     return BoxShadowWidget(
       child: Column(
         children: [
           const Padding(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text("Bảng giá đăng tin", style: TextStyle(
-              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-              fontWeight: FontWeight.bold
-            )),
+            child: Text("Bảng giá đăng tin",
+                style: TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                    fontWeight: FontWeight.bold)),
           ),
           ...children
         ],
@@ -86,16 +104,16 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController>{
     );
   }
 
-  Widget priceListFilter({required List<Widget> children}){
+  Widget priceListFilter({required List<Widget> children}) {
     return BoxShadowWidget(
       child: Column(
         children: [
           const Padding(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text("Bảng giá lọc hồ sơ", style: TextStyle(
-              fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-              fontWeight: FontWeight.bold
-            )),
+            child: Text("Bảng giá lọc hồ sơ",
+                style: TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                    fontWeight: FontWeight.bold)),
           ),
           ...children
         ],
@@ -103,30 +121,98 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController>{
     );
   }
 
-  Widget priceType({required String title, required int value, required int groupValue, required double price}){
+  Widget priceTypeDangTin(
+      {required String title,
+      required String value,
+      required String groupValue,
+      required double price,
+      required V1G7PriceListController controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_DEFAULT),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Radio(value: false, groupValue: true, onChanged: (val){}),
-          Flexible(
-            fit: FlexFit.tight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT),
-              child: Text(title, textAlign: TextAlign.start,style: const TextStyle(
-                fontSize: Dimensions.PADDING_SIZE_LARGE,
-              )),
+      child: GestureDetector(
+        onTap: () {
+          controller.getChangeDangTin(value);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Radio(
+                value: value,
+                groupValue: groupValue,
+                onChanged: (String? val) {
+                  controller.getChangeDangTin(val.toString());
+                }),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    right: Dimensions.PADDING_SIZE_DEFAULT),
+                child: Text(title,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: Dimensions.PADDING_SIZE_LARGE,
+                    )),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text("${CurrencyConverter.currencyConverterVND(price)} VNĐ",style: const TextStyle(
-              fontSize: Dimensions.PADDING_SIZE_LARGE,
-              color: ColorResources.RED
-            )),
-          )
-        ],
+            Padding(
+              padding:
+                  const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT),
+              child: Text(
+                  "${CurrencyConverter.currencyConverterVND(price)} VNĐ",
+                  style: const TextStyle(
+                      fontSize: Dimensions.PADDING_SIZE_LARGE,
+                      color: ColorResources.RED)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget priceTypeLocHoSo(
+      {required String title,
+      required String value,
+      required String groupValue,
+      required double price,
+      required V1G7PriceListController controller}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_DEFAULT),
+      child: GestureDetector(
+        onTap: () {
+          controller.getChangeLocHoSo(value);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Radio(
+                value: value,
+                groupValue: groupValue,
+                onChanged: (String? val) {
+                  controller.getChangeLocHoSo(val.toString());
+                }),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    right: Dimensions.PADDING_SIZE_DEFAULT),
+                child: Text(title,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: Dimensions.PADDING_SIZE_LARGE,
+                    )),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(right: Dimensions.PADDING_SIZE_DEFAULT),
+              child: Text(
+                  "${CurrencyConverter.currencyConverterVND(price)} VNĐ",
+                  style: const TextStyle(
+                      fontSize: Dimensions.PADDING_SIZE_LARGE,
+                      color: ColorResources.RED)),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -135,7 +221,7 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController>{
   /// Nút tiếp tục
   ///
 
-  Widget button({required V1G7PriceListController controller}){
+  Widget button({required V1G7PriceListController controller}) {
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
@@ -147,5 +233,4 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController>{
       ),
     );
   }
-
 }
