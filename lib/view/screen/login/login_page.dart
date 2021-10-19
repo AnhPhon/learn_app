@@ -78,52 +78,47 @@ class LoginPage extends GetView<LoginController> {
   Widget _logoWidget(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
-      width: 251,
+      width: DeviceUtils.getScaledWidth(context, 1),
       height: 79,
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Positioned(
-            left: 104,
-            top: 20,
-            child: Text(
-              "KẾT NỐI TINH HOA",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff3275ad),
-                fontSize: 16,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
+          Container(
+              width: 96,
+              height: 79,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Images.logo_removebg),
+                  fit: BoxFit.cover,
+                ),
+              )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                "KẾT NỐI TINH HOA",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xff3275ad),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontFamily: "Nunito Sans",
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-          ),
-          const Positioned(
-            left: 101,
-            top: 47,
-            child: Text(
-              "HỘI TỤ PHÁT TRIỂN",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xffc82e3e),
-                fontSize: 16,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
+              Container(
+                child: const Text(
+                  "HỘI TỤ PHÁT TRIỂN",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xffc82e3e),
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                    fontFamily: "Nunito Sans",
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                  width: 96,
-                  height: 79,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Images.logo_removebg),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-            ),
-          ),
+            ],
+          )
         ],
       ),
     );
@@ -331,40 +326,44 @@ class LoginPage extends GetView<LoginController> {
   /// _on Btn Login Tap
   ///
   Widget _registerWidget(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
-      width: DeviceUtils.getScaledWidth(context, 0.7),
-      height: 25,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const Text(
-            "Bạn chưa có tài khoản?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff2a3547),
-              fontSize: Dimensions.FONT_SIZE_LARGE,
-            ),
-          ),
-
-          const SizedBox(width: 4),
-
+    return GestureDetector(
+      // onBtnRegisterTap
+      onTap: () => controller.onBtnRegisterTap(),
+      child: Container(
+        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
+        width: DeviceUtils.getScaledWidth(context, 0.7),
+        height: 25,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           // ignore: prefer_const_literals_to_create_immutables
-          const Text(
-            "Đăng ký",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff0f90f3),
-              fontSize: Dimensions.FONT_SIZE_LARGE,
-              decoration: TextDecoration.underline,
-              fontFamily: "Nunito Sans",
-              fontWeight: FontWeight.w700,
+          children: [
+            const Text(
+              "Bạn chưa có tài khoản?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff2a3547),
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+              ),
             ),
-          ),
-        ],
+
+            const SizedBox(width: 4),
+
+            // ignore: prefer_const_literals_to_create_immutables
+            const Text(
+              "Đăng ký",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff0f90f3),
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                decoration: TextDecoration.underline,
+                fontFamily: "Nunito Sans",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

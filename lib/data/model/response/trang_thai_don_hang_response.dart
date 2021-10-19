@@ -1,4 +1,3 @@
-
 class TrangThaiDonHangResponse {
   String? id;
   String? tieuDe;
@@ -6,12 +5,9 @@ class TrangThaiDonHangResponse {
   String? createdAt;
   String? updatedAt;
 
-  TrangThaiDonHangResponse({
-      this.id,
-      this.tieuDe,
-      this.createdAt,
-      this.updatedAt});
-  
+  TrangThaiDonHangResponse(
+      {this.id, this.tieuDe, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
@@ -29,11 +25,10 @@ class TrangThaiDonHangResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tieuDe
-    if (tieuDe != null) data['tieuDe'] = tieuDe; 
-
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     return data;
   }

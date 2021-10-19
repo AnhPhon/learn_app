@@ -63,7 +63,7 @@ class TaskNeedWorker extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "$nhanTask: $tenTask",
+                    tenTask,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),

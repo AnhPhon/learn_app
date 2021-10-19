@@ -15,7 +15,10 @@ class Preferences {
   static const String ward = "ward";
   static const String isLogin = "login";
   static const String isFirst = "first";
+  static const String workFlowId = "workFlowId";
   static const String idTinTuc = "news";
   static const String idSanPham = "product";
   static const String isChamCong = "idChamCong";
+  static const String productCategoryId = "product_category_id";
+  static const String productId = "productId";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 class ProductWidget extends StatelessWidget {
   final String name;
@@ -20,8 +21,9 @@ class ProductWidget extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
           ),
-          child: Image.asset(
-            imgUrl,
+          child: FadeInImage.assetNetwork(
+            placeholder: Images.logo,
+            image: imgUrl,
             fit: BoxFit.fill,
             height: DeviceUtils.getScaledHeight(context, .197),
           ),

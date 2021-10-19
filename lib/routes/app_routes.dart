@@ -4,8 +4,8 @@ class AppRoutes {
   // auth
   static const String AUTH = '/auth';
   static const String FORGOT_PASSWORD = '/forgot_password';
-  static const String UPDATE_PASSWORD = '/update_password';
   static const String OTP_VERIFIER = '/otp_verifier';
+  static const String UPDATE_PASSWORD = '/update_password';
   static const String REGISTER = '/register';
 
   static const String DASHBOARD = '/dashboard';

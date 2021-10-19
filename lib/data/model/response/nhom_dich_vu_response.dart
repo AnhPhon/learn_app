@@ -1,4 +1,3 @@
-
 class NhomDichVuResponse {
   String? id;
   String? tenDichVu;
@@ -8,11 +7,13 @@ class NhomDichVuResponse {
   String? updatedAt;
 
   NhomDichVuResponse({
-      this.id,
-      this.tenDichVu,
-      this.createdAt,
-      this.updatedAt});
-  
+    this.id,
+    this.tenDichVu,
+    this.createdAt,
+    this.updatedAt,
+    this.nhomDichVu,
+  });
+
   ///
   /// From JSON
   ///
@@ -31,14 +32,13 @@ class NhomDichVuResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tenDichVu
-    if (tenDichVu != null) data['tenDichVu'] = tenDichVu; 
+    if (tenDichVu != null) data['tenDichVu'] = tenDichVu;
 
     // check null nhomDichVu
-    if (nhomDichVu != null) data['nhomDichVu'] = nhomDichVu; 
-
+    if (nhomDichVu != null) data['nhomDichVu'] = nhomDichVu;
 
     return data;
   }

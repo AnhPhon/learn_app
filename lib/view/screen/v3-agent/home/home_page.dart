@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -25,25 +26,30 @@ class V3HomePage extends GetView<V3HomeController> {
           if (controller.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          return HomeWidget(
-            fullname: "${controller.fullname}!",
-            content: Column(
-              children: [
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onLoading: controller.onLoading,
+            onRefresh: controller.onRefresh,
+            child: HomeWidget(
+              fullname: "DL, ${controller.fullname}",
+              content: Column(
+                children: [
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // need update widget
-                _needUpdateWidget(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  // need update widget
+                  _needUpdateWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // feature widget
-                _featuresWidget(),
+                  // feature widget
+                  _featuresWidget(),
 
-                // news widget
-                _newsWidget(),
+                  // news widget
+                  _newsWidget(),
 
-                // product widget
-                _productWidget(controller: controller)
-              ],
+                  // product widget
+                  _productWidget(controller: controller)
+                ],
+              ),
             ),
           );
         },
@@ -135,7 +141,7 @@ class V3HomePage extends GetView<V3HomeController> {
           return GestureDetector(
             onTap: controller.threeFeatures![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.threeFeatures![index]["label"] as String,
+              label: controller.threeFeatures![index]["label"] as List<String>,
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
@@ -164,6 +170,7 @@ class V3HomePage extends GetView<V3HomeController> {
           height: (len > 0) ? 140 * len : 0,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(0),
             itemCount: length,
             itemBuilder: (
               BuildContext ctx,
@@ -175,8 +182,7 @@ class V3HomePage extends GetView<V3HomeController> {
                 child: ItemListWidget(
                   onTap: () {
                     // call detail
-                    controller
-                        .onClickHotNewsDetail(controller.tinTucList[index].id!);
+                    controller.onNewsDetailClick(index: index);
                   },
                   title: "Biệt thự 170 Nguyễn Đình Thi",
                   icon1: const Icon(Icons.remove_red_eye),
@@ -218,6 +224,7 @@ class V3HomePage extends GetView<V3HomeController> {
         ),
         child: ListView.builder(
           itemCount: size,
+          padding: const EdgeInsets.all(0),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -234,6 +241,7 @@ class V3HomePage extends GetView<V3HomeController> {
                 },
                 child: KhoSanPham(
                   tenSanPham: controller.sanPhamList[index].ten!,
+                  hinhAnh: controller.sanPhamList[index].hinhAnhSanPham!,
                   maSanPham: "${controller.sanPhamList[index].maSanPham}",
                   giaSanPham: "${PriceConverter.convertPrice(
                     ctx,
