@@ -6,14 +6,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
-import 'forgot_password_controller.dart';
+import 'register_controller.dart';
 
-class ForgotPasswordPage extends GetView<ForgotPasswordController> {
+class RegisterPage extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ForgotPasswordController>(
-        init: ForgotPasswordController(),
-        builder: (ForgotPasswordController value) {
+    return GetBuilder<RegisterController>(
+        init: RegisterController(),
+        builder: (RegisterController value) {
           return Scaffold(
             body: Stack(children: [
               // background
@@ -49,11 +49,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       // logo
                       _logoWidget(context),
 
-                      // input number phone
-                      _usernameEnterWidget(context),
-
-                      // _on Btn OTP Verifier Tap
-                      _onBtnOTPVerifierTap(context),
+                       
                     ],
                   ),
                 ),

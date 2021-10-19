@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/register/register_page.dart';
+import 'package:template/view/screen/update_password/update_password_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
@@ -241,15 +244,15 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.UPDATE_PASSWORD,
-      page: () => LoginPage(),
+      page: () => UpdatePasswordPage(),
     ),
     GetPage(
       name: AppRoutes.OTP_VERIFIER,
-      page: () => LoginPage(),
+      page: () => OTPVerifierPage(),
     ),
     GetPage(
       name: AppRoutes.REGISTER,
-      page: () => LoginPage(),
+      page: () => RegisterPage(),
     ),
 
     // custommer

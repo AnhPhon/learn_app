@@ -38,17 +38,24 @@ class LoginController extends GetxController {
   }
 
   ///
-  /// on checkbox remember click
+  /// on button forgot password tap
   ///
   void onBtnForgotPasswordTap() {
-    Get.toNamed(AppRoutes.V1_DASHBOARD);
+    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+  }
+
+  ///
+  /// on button register tap
+  ///
+  void onBtnRegisterTap() {
+    Get.toNamed(AppRoutes.REGISTER);
   }
 
   ///
   /// on login click
   ///
-  void onLoginBtnClick() { 
-    sl.get<SharedPreferenceHelper>().saveUserId("616a8b65000118120619d644");
+  void onLoginBtnClick() {
+    sl.get<SharedPreferenceHelper>().saveUserId("616d99dd7e28e22b158543bb");
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {
