@@ -76,7 +76,7 @@ class V1G5CreateServiceController extends GetxController{
   void onSelectedAfternoon({required bool val}){
     afternoon = val;
     if(afternoon){
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 5h30'));
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('13h30 - 17h30'));
     }else{
       afternoonReponse = null;
     }
@@ -141,7 +141,7 @@ class V1G5CreateServiceController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
     }else if(startWorkController.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
-    }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateTime.now().toString()) > 0){
+    }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng nhập địa điểm bốc hàng dự kiến");

@@ -98,6 +98,7 @@ class V1G4CreateServiceController extends GetxController{
     thoiGianLamViecProvider.all(onSuccess: (data){
       thoiGianLamViecList.clear();
       thoiGianLamViecList.addAll(data);
+      print(data);
       isLoading = false;
       update();
     }, onError: (error){
@@ -118,6 +119,8 @@ class V1G4CreateServiceController extends GetxController{
     }else if(int.parse(amountController.text.toString()) <= 0){
       showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
     }else if(startTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+    }else if(endTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
     }else if(descController.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");

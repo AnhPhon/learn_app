@@ -6,12 +6,19 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+<<<<<<< HEAD
 import 'package:template/utils/images.dart';
+=======
+>>>>>>> 4ca5df4 (create 6)
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/reference_price_list/reference_price_table_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
+<<<<<<< HEAD
 class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
+=======
+class RefenrencePriceTablePage extends GetView<ReferencePriceTableController>{
+>>>>>>> 4ca5df4 (create 6)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +58,17 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
                       ],
                     ),
                   ),
+<<<<<<< HEAD
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text("Chú ý: Khi xem bảng giá bạn phải nhớ tên dịch vụ bạn muốn yêu cầu báo giá"),
+=======
+                  const Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text("Chú ý: Khi xem bảng giá bạn phải nhớ tên dịch vụ bạn muốn yêu cầu báo giá"),
+                    )
+>>>>>>> 4ca5df4 (create 6)
                   )
                 ],
               ),
@@ -66,9 +81,13 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
 
 
   Widget imageWidget(BuildContext context){
+<<<<<<< HEAD
     String imageNetwork = '';
     return imageNetwork.isEmpty ?  Image.asset(Images.login_background,fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5))
      : Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),);
+=======
+    return Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),);
+>>>>>>> 4ca5df4 (create 6)
   }
 
 }
