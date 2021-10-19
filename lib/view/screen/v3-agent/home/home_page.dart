@@ -6,7 +6,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
-import 'package:template/view/basewidget/card/product_card.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
@@ -117,23 +116,6 @@ class V3HomePage extends GetView<V3HomeController> {
   }
 
   ///
-  /// item list
-  ///
-  Widget _itemList(BuildContext context, int index) {
-    return ItemListWidget(
-      urlImage: controller.tinTucList[index].hinhAnh.toString(),
-      onTap: () {},
-      title: controller.tinTucList[index].tieuDe.toString(),
-      colorRowText2: ColorResources.GREY,
-      icon1: const Icon(Icons.remove_red_eye_sharp),
-      rowText1: "10",
-      icon2: const Icon(Icons.calendar_today),
-      rowText2: "20/09/2021",
-      isSpaceBetween: true,
-    );
-  }
-
-  ///
   /// features widget
   ///
   Widget _featuresWidget() {
@@ -188,7 +170,8 @@ class V3HomePage extends GetView<V3HomeController> {
               index,
             ) {
               return Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                padding:
+                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ItemListWidget(
                   onTap: () {
                     // call detail
