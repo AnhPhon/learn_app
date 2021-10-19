@@ -18,6 +18,7 @@ class InputWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final bool? isDate,
+      isddMMyyyy,
       isTime,
       isColorFieldWhite,
       allowEdit,
@@ -30,6 +31,7 @@ class InputWidget extends StatelessWidget {
   const InputWidget({
     Key? key,
     required this.textEditingController,
+    this.isddMMyyyy,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -118,8 +120,11 @@ class InputWidget extends StatelessWidget {
                         firstDate: DateTime(1800),
                         lastDate: DateTime(2100),
                       ).then((value) {
-                        textEditingController.text =
-                            DateConverter.formatDate(value!);
+                        isddMMyyyy == false
+                            ? textEditingController.text =
+                                DateConverter.formatDate(value!)
+                            : textEditingController.text =
+                                DateConverter.estimatedDateOnly(value!);
                       });
                     }
                   : (isTime == true)

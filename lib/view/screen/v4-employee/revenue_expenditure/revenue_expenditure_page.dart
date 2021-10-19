@@ -123,17 +123,22 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
 ///
 Widget _timeRevenueExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
-  return TextFieldDate(
-    isddMMyyyy: false,
+  return InputWidget(
+    isColorFieldWhite: true,
+    isddMMyyyy: true,
     paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
     isDate: true,
-    allowEdit: true,
-    controller: controller.timeRevenueExpenditure,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: controller.timeNow,
+    allowEdit: false,
     label: "Thời gian",
     obligatory: true,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.timeRevenueExpenditure,
+    hintText: controller.timeNow,
+    suffixIcon: const Icon(
+      Icons.date_range,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
   );
 }
 
