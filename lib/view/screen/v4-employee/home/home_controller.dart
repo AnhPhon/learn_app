@@ -113,9 +113,9 @@ class V4HomeController extends GetxController {
           } else {
             expenditure = expenditure! + money;
           }
-          total = total! + revenue!;
-          total = total! - expenditure!;
         }
+        total = total! + revenue!;
+        total = total! - expenditure!;
         update();
       },
       onError: (error) {
