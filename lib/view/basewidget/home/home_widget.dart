@@ -12,7 +12,7 @@ class HomeWidget extends StatelessWidget {
   final Widget content;
   String? notificationURL;
   String? imageNetwork;
-  String? soThongBao;
+  int? soThongBao;
   HomeWidget(
       {required this.fullname,
       required this.content,
@@ -147,7 +147,12 @@ class HomeWidget extends StatelessWidget {
                                   ),
                                 ),
                                 child: Text(
-                                  soThongBao ?? "0",
+                                  (soThongBao == null
+                                          ? "0"
+                                          : (soThongBao! > 9)
+                                              ? "+9"
+                                              : soThongBao)
+                                      .toString(),
                                   style: const TextStyle(
                                     color: ColorResources.WHITE,
                                     fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
