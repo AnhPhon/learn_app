@@ -38,10 +38,17 @@ class LoginController extends GetxController {
   }
 
   ///
-  /// on checkbox remember click
+  /// on button forgot password tap
   ///
   void onBtnForgotPasswordTap() {
-    Get.toNamed(AppRoutes.V1_DASHBOARD);
+    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+  }
+
+  ///
+  /// on button register tap
+  ///
+  void onBtnRegisterTap() {
+    Get.toNamed(AppRoutes.REGISTER);
   }
 
   ///

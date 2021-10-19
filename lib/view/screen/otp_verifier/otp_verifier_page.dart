@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
-import 'forgot_password_controller.dart';
+import 'otp_verifier_controller.dart';
 
-class ForgotPasswordPage extends GetView<ForgotPasswordController> {
+class OTPVerifierPage extends GetView<OTPVerifierController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ForgotPasswordController>(
-        init: ForgotPasswordController(),
-        builder: (ForgotPasswordController value) {
+    return GetBuilder<OTPVerifierController>(
+        init: OTPVerifierController(),
+        builder: (OTPVerifierController value) {
           return Scaffold(
             body: Stack(children: [
               // background
@@ -49,11 +50,14 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       // logo
                       _logoWidget(context),
 
-                      // input number phone
+                      // title verifier OTP
+                      _verifierOTPWidget(context),
+
+                      // input username
                       _usernameEnterWidget(context),
 
-                      // _on Btn OTP Verifier Tap
-                      _onBtnOTPVerifierTap(context),
+                      // login button
+                      _onBtnLoginTap(context),
                     ],
                   ),
                 ),
@@ -96,6 +100,8 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
+
+              // ignore: avoid_unnecessary_containers
               Container(
                 child: const Text(
                   "HỘI TỤ PHÁT TRIỂN",
@@ -116,56 +122,111 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   }
 
   ///
-  /// _usernameEnterWidget
+  /// _verifier OTP Widget
   ///
-  Widget _usernameEnterWidget(BuildContext context) {
+  Widget _verifierOTPWidget(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
       width: DeviceUtils.getScaledWidth(context, 0.7),
-      height: 48,
-      child: Row(
+      height: 89,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-              width: DeviceUtils.getScaledWidth(context, 0.7),
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+          const Text(
+            "Xác thực tài khoản",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xff2A3547),
+              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              fontFamily: "Nunito Sans",
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(height: 4),
+          SizedBox(
+            width: DeviceUtils.getScaledWidth(context, 0.7),
+            height: 58,
+            child: const Text(
+              "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff2A3547),
+                fontSize: Dimensions.FONT_SIZE_LARGE,
               ),
-              padding: const EdgeInsets.only(
-                left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                top: 13,
-                bottom: 7,
-              ),
-              child: TextField(
-                textInputAction: TextInputAction.done,
-                textAlignVertical: TextAlignVertical.center,
-                controller: controller.usernameController,
-                cursorColor: ColorResources.PRIMARY,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: "Nhập số điện thoại",
-                  filled: true,
-                  fillColor: Colors.transparent,
-                ),
-              )),
+            ),
+          ),
         ],
       ),
     );
   }
 
   ///
-  /// _on Btn OTP Verifier Tap
+  /// _usernameEnterWidget
   ///
-  Widget _onBtnOTPVerifierTap(BuildContext context) {
+  Widget _usernameEnterWidget(BuildContext context) {
+    return Container(
+        width: DeviceUtils.getScaledWidth(context, 0.5),
+        height: 58,
+        child: PinCodeTextField(
+          appContext: context,
+          pastedTextStyle: TextStyle(
+            color: Colors.green.shade600,
+            fontWeight: FontWeight.bold,
+          ),
+          length: 4,
+          obscureText: true,
+          obscuringCharacter: '*',
+          // obscuringWidget: FlutterLogo(
+          //   size: 24,
+          // ),
+          blinkWhenObscuring: true,
+          animationType: AnimationType.fade,
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(5),
+            fieldHeight: 50,
+            fieldWidth: 40,
+            activeFillColor: Colors.white,
+          ),
+          cursorColor: Colors.black,
+          animationDuration: const Duration(milliseconds: 300),
+          enableActiveFill: true,
+          errorAnimationController: controller.errorController,
+          controller: controller.textEditingController,
+          keyboardType: TextInputType.number,
+          // ignore: prefer_const_literals_to_create_immutables
+          boxShadows: [
+            const BoxShadow(
+              offset: Offset(0, 1),
+              color: Colors.black12,
+              blurRadius: 10,
+            )
+          ],
+          onCompleted: (v) {
+            // print("Completed $v");
+            controller.onBtnCompleteTap();
+          }, 
+          onChanged: (value) {
+          },
+          beforeTextPaste: (text) {
+            // print("Allowing to paste $text");
+            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+            //but you can show anything you want here, like your pop up saying wrong paste format or etc
+            return true;
+          },
+        ));
+  }
+
+  ///
+  /// _on Btn Login Tap
+  ///
+  Widget _onBtnLoginTap(BuildContext context) {
     return GestureDetector(
-      // onOTPVerifierTap
-      onTap: () => controller.onOTPVerifierTap(),
+      // onLoginBtnClick
+      onTap: () => controller.onBtnCompleteTap(),
       child: Container(
-        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
+        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
         width: DeviceUtils.getScaledWidth(context, 0.7),
         height: 48,
         child: Row(
@@ -184,7 +245,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 bottom: 9,
               ),
               child: const Text(
-                "Xác thực",
+                "Tiếp tục",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff0d5da0),

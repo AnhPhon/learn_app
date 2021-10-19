@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/routes/app_routes.dart';
 
-class ForgotPasswordController extends GetxController {
+class RegisterController extends GetxController {
   final usernameController = TextEditingController();
   AuthModel? auth;
   bool isLoading = true;
