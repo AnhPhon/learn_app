@@ -90,7 +90,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                     //IÊU ĐỀ THÔNG BÁO
                     Container(
                       padding: const EdgeInsets.fromLTRB(
-                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
                         Dimensions.PADDING_SIZE_LARGE,
                         Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         Dimensions.PADDING_SIZE_LARGE,

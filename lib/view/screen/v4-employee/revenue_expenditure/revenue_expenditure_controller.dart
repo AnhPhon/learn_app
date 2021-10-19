@@ -25,6 +25,8 @@ class V4RevenueExpenditureController extends GetxController
 
   String idChamCong = '';
 
+  bool justOnlyClick = false;
+
   //Set ngày hiện Tại
   String timeNow = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
@@ -104,7 +106,8 @@ class V4RevenueExpenditureController extends GetxController
   /// Thêm thu
   ///
   Future<void> onAddThu() async {
-    if (validateThu()) {
+    if (validateThu() && justOnlyClick == false) {
+      justOnlyClick = true;
       revenueController.text = '1';
       final DateTime timeA = DateTime.parse(DateFormat('dd-MM-yyyy')
           .parse(timeRevenueExpenditure.text)
@@ -190,7 +193,8 @@ class V4RevenueExpenditureController extends GetxController
   /// Thêm thu
   ///
   Future<void> onAddChi() async {
-    if (validateChi()) {
+    if (validateChi() && justOnlyClick == false) {
+      justOnlyClick = true;
       expenditureController.text = '2';
       final DateTime timeB = DateTime.parse(DateFormat('dd-MM-yyyy')
           .parse(timeRevenueExpenditure.text)
@@ -212,7 +216,6 @@ class V4RevenueExpenditureController extends GetxController
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
         },
       );
     }

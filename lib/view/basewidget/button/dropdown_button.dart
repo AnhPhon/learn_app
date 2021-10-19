@@ -68,7 +68,6 @@ class DropDownButton1<T> extends StatelessWidget {
             width: DeviceUtils.getScaledWidth(context, width),
             margin: const EdgeInsets.only(
               top: Dimensions.PADDING_SIZE_SMALL,
-              bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)

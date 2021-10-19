@@ -71,9 +71,11 @@ class InputWidget extends StatelessWidget {
                   style: labelBold == true
                       ? Dimensions.fontSizeStyle16w600().copyWith(
                           color: ColorResources.BLACK,
+                          fontWeight: FontWeight.w600,
                         )
                       : Dimensions.fontSizeStyle16().copyWith(
                           color: ColorResources.BLACK,
+                          fontWeight: FontWeight.w600,
                         ),
                 ),
                 if (obligatory == true)

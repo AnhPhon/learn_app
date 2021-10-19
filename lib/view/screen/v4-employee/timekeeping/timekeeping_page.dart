@@ -41,7 +41,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   _timekeeping(controller, context),
 
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_DEFAULT,
+                    height: Dimensions.PADDING_SIZE_EXTRA_SMALL + 4,
                   ),
                   //dự án
                   _project(controller, context),
@@ -49,7 +49,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   //địa chỉ
                   _address(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_DEFAULT,
+                    height: Dimensions.PADDING_SIZE_SMALL,
                   ),
 
                   Row(
@@ -70,7 +70,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   _wards(controller, context),
 
                   Container(
-                    height: DeviceUtils.getScaledHeight(context, .08),
+                    height: DeviceUtils.getScaledHeight(context, .1),
                   ),
                   _btnTimekeeping(controller),
 
