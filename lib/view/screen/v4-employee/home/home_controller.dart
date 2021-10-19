@@ -89,7 +89,7 @@ class V4HomeController extends GetxController {
           _theoDoiTienDo();
         },
         onError: (error) {
-          print(error);
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -119,7 +119,7 @@ class V4HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -150,7 +150,7 @@ class V4HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }

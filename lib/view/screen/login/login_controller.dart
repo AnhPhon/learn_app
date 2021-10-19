@@ -20,11 +20,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-<<<<<<< HEAD
     usernameController.text = '2';
-=======
-    usernameController.text = '4';
->>>>>>> origin/develop
     // passwordController.text = 'password';
     super.onInit();
   }
@@ -122,7 +118,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
@@ -178,7 +174,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }

@@ -91,7 +91,20 @@ class V2HomeController extends GetxController {
         for (final value in values) {
           final int index = idCongViecDangCanNguoiList!
               .indexOf(value.idNhomDichVu!.nhomDichVu!);
-          if (index != -1) {
+
+          bool isLoadValid = true;
+
+          // check tai khoan nhan don
+          if (value.taiKhoanNhanDon == null) {
+            isLoadValid = false;
+          }
+
+          // check trang thai don hang
+          if (value.idTrangThaiDonHang == null) {
+            isLoadValid = false;
+          }
+
+          if (isLoadValid && index != -1) {
             donDichVuList.add(value);
           }
         }

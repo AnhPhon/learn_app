@@ -259,6 +259,7 @@ class V2HomePage extends GetView<V2HomeController> {
         ? 2
         : controller.donDichVuList.length;
     final double len = length * 1.0;
+
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
