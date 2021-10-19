@@ -25,7 +25,7 @@ class V4NotificationController extends GetxController
       RefreshController(initialRefresh: false);
 
   int pageMax = 1;
-  int currentMax = 5;
+  int currentMax = 10;
 
   @override
   void onInit() {
@@ -48,12 +48,12 @@ class V4NotificationController extends GetxController
   ///
   void getNotification() {
     pageMax = 1;
-    currentMax = 5;
+    currentMax = 10;
     thongbaoModelList.clear();
     update();
     thongBaoProvider.paginate(
         page: 1,
-        limit: 5,
+        limit: 10,
         filter: '&doiTuong=1&sortBy=created_at:desc',
         onSuccess: (value) {
           thongbaoModelList.value = value;
@@ -87,7 +87,7 @@ class V4NotificationController extends GetxController
   void reloadNotifications() {
     print('reloadNotifications');
     pageMax = 1;
-    currentMax = 5;
+    currentMax = 10;
     update();
     thongBaoProvider.paginate(
         page: pageMax,

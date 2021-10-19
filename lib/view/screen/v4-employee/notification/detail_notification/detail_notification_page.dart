@@ -73,7 +73,7 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                           style: const TextStyle(
                             color: ColorResources.BLACK,
                             fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                           ),
                         ),
                         const SizedBox(

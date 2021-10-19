@@ -10,7 +10,7 @@ class TextFieldDate extends StatelessWidget {
       required this.controller,
       required this.allowEdit,
       required this.isDate,
-      required this.typeInput,
+      this.typeInput,
       required this.width,
       required this.obligatory,
       this.area = false,
@@ -20,7 +20,7 @@ class TextFieldDate extends StatelessWidget {
   final String? label;
   final TextEditingController controller;
   final bool allowEdit, isDate;
-  final TextInputType typeInput;
+  final TextInputType? typeInput;
   final double width, fontSize;
   final bool obligatory;
   final bool? area;
@@ -63,8 +63,8 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           TextField(
-            textInputAction: TextInputAction.done,
-            keyboardType: isDate ? null : typeInput,
+            textInputAction: TextInputAction.none,
+            keyboardType: (isDate == true) ? null : typeInput,
             textAlignVertical: TextAlignVertical.center,
             maxLines: area! ? 3 : 1,
             enabled: allowEdit,

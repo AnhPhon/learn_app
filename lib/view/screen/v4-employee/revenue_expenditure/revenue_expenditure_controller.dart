@@ -5,13 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
-class V4RevenueExpenditureController extends GetxController {
+class V4RevenueExpenditureController extends GetxController
+    with CurrencyConverter {
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
 
@@ -48,25 +50,25 @@ class V4RevenueExpenditureController extends GetxController {
   bool validateThu() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
       Get.snackbar(
-        "Ngày không hợp lệ!",
-        "Vui lòng chọn ngày hợp lệ!",
-        duration: const Duration(seconds: 2),
+        "Ngày không hợp lệ!", // title
+        "Vui lòng chọn ngày hợp lệ!", // message
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
     if (contentRevenueController.text.toString().isEmpty) {
       Get.snackbar(
-        "Nội dung thu chính không hơp lệ!",
-        "Vui lòng nhập nội dung thi chính hợp lệ!",
-        duration: const Duration(seconds: 2),
+        "Nội dung thu chính không hơp lệ!", // title
+        "Vui lòng nhập nội dung thi chính hợp lệ!", // message
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -74,23 +76,24 @@ class V4RevenueExpenditureController extends GetxController {
       Get.snackbar(
         "Số tiền không hơp lệ!",
         "Vui lòng nhập số tiền hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
+
       return false;
     }
     if (detailContentRevenueController.text.toString().isEmpty) {
       Get.snackbar(
         "Nội dung chi tiết không hơp lệ!",
         "Vui lòng nhập nội dung chi tiết hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -113,7 +116,7 @@ class V4RevenueExpenditureController extends GetxController {
           ngayThuChi: timeA.toString(),
           loai: revenueController.text,
           tieuDe: contentRevenueController.text,
-          soTien: moneyController.text,
+          soTien: moneyController.text.replaceAll(RegExp(','), ''),
           noiDung: detailContentRevenueController.text,
         ),
         onSuccess: (value) {
@@ -136,11 +139,11 @@ class V4RevenueExpenditureController extends GetxController {
       Get.snackbar(
         "Ngày không hợp lệ!",
         "Vui lòng chọn ngày hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -148,11 +151,11 @@ class V4RevenueExpenditureController extends GetxController {
       Get.snackbar(
         "Nội dung chi chính không hơp lệ!",
         "Vui lòng nhập nội dung chi chính hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -160,11 +163,11 @@ class V4RevenueExpenditureController extends GetxController {
       Get.snackbar(
         "Số tiền không hơp lệ!",
         "Vui lòng nhập số tiền hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -172,11 +175,11 @@ class V4RevenueExpenditureController extends GetxController {
       Get.snackbar(
         "Nội dung chi tiết không hơp lệ!",
         "Vui lòng nhập nội dung chi tiết hợp lệ!",
-        duration: const Duration(seconds: 2),
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -200,7 +203,7 @@ class V4RevenueExpenditureController extends GetxController {
           ngayThuChi: timeB.toString(),
           loai: expenditureController.text,
           tieuDe: contentExpenditureController.text,
-          soTien: moneyController.text,
+          soTien: moneyController.text.replaceAll(RegExp(','), ''),
           noiDung: detailContentExpenditureController.text,
         ),
         onSuccess: (value) {

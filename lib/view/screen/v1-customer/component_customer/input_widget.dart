@@ -15,6 +15,8 @@ class InputWidget extends StatelessWidget {
   final double? paddingTop;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
   final bool? isDate,
       isTime,
       isColorFieldWhite,
@@ -23,8 +25,8 @@ class InputWidget extends StatelessWidget {
       obligatory,
       isBorder,
       isShadow,
-      isMaxLine;
-
+      isMaxLine,
+      thousandsSeparator;
   const InputWidget({
     Key? key,
     required this.textEditingController,
@@ -44,15 +46,17 @@ class InputWidget extends StatelessWidget {
     this.isShadow = false,
     this.isMaxLine = false,
     this.onChanged,
+    this.thousandsSeparator = false,
+    this.textInputAction = TextInputAction.done,
+    this.textInputType = TextInputType.text,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT,
-          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
           top: paddingTop ?? 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +85,7 @@ class InputWidget extends StatelessWidget {
             ),
           if (label != null)
             const SizedBox(
-              height: Dimensions.MARGIN_SIZE_SMALL,
+              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
             margin: EdgeInsets.only(top: paddingTop ?? 0),
@@ -111,11 +115,11 @@ class InputWidget extends StatelessWidget {
                         },
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2001),
+                        firstDate: DateTime(1800),
                         lastDate: DateTime(2100),
                       ).then((value) {
                         textEditingController.text =
-                            DateConverter.estimatedDateOnly(value!);
+                            DateConverter.formatDate(value!);
                       });
                     }
                   : (isTime == true)
@@ -136,10 +140,13 @@ class InputWidget extends StatelessWidget {
                         }
                       : () {},
               child: TextField(
-                inputFormatters: [ThousandsSeparatorInputFormatter()],
+                inputFormatters: (thousandsSeparator == true)
+                    ? [ThousandsSeparatorInputFormatter()]
+                    : null,
                 onChanged: onChanged,
                 maxLines: (isMaxLine == true) ? 5 : 1,
-                textInputAction: TextInputAction.done,
+                textInputAction: textInputAction,
+                keyboardType: textInputType,
                 textAlignVertical: TextAlignVertical.center,
                 controller: textEditingController,
                 cursorColor: ColorResources.PRIMARY,
@@ -150,7 +157,7 @@ class InputWidget extends StatelessWidget {
                   suffixIcon: suffixIcon,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(

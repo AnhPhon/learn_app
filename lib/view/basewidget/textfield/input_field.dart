@@ -55,7 +55,7 @@ class InputField extends StatelessWidget {
                   label,
                   style: TextStyle(
                       fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: ColorResources.BLACK.withOpacity(0.7)),
                 ),
                 if (obligatory)

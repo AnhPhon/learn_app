@@ -125,7 +125,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   Widget _address(V4TimekeepingController controller, BuildContext context) {
     return InputField(
-      isColorFieldWhite: true,
+      isColorFieldWhite: false,
       allowEdit: true,
       allowMultiline: false,
       controller: controller.addressController,
