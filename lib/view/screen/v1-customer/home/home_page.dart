@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
@@ -27,21 +29,26 @@ class V1HomePage extends GetView<V1HomeController> {
               child: CircularProgressIndicator(),
             );
           }
-          return HomeWidget(
-            fullname: controller.fullname,
-            content: Column(
-              children: [
-                // _categoryBoxWidget
-                _categoryBoxWidget(),
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
+            child: HomeWidget(
+              fullname: "KH, ${controller.fullname}",
+              content: Column(
+                children: [
+                  // _categoryBoxWidget
+                  _categoryBoxWidget(),
 
-                // _threeFeatureWidget
-                _threeFeatureWidget(),
+                  // _threeFeatureWidget
+                  _threeFeatureWidget(),
 
-                // product
-                _productWidget(controller),
+                  // product
+                  _productWidget(controller),
 
-                _newsWidget(controller: controller)
-              ],
+                  _newsWidget(controller: controller)
+                ],
+              ),
             ),
           );
         },
@@ -54,7 +61,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   Widget _categoryBoxWidget() {
     return SizedBox(
-      height: 240,
+      height: 220,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -69,7 +76,7 @@ class V1HomePage extends GetView<V1HomeController> {
           return GestureDetector(
             onTap: controller.contentGrid![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.contentGrid![index]["label"].toString(),
+              label: controller.contentGrid![index]["label"] as List<String>,
               gradient:
                   controller.contentGrid![index]["gradient"] as RadialGradient,
               icon: controller.contentGrid![index]["icon"] as IconData,
@@ -85,7 +92,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   Widget _threeFeatureWidget() {
     return SizedBox(
-      height: 140,
+      height: 120,
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -100,7 +107,7 @@ class V1HomePage extends GetView<V1HomeController> {
           return GestureDetector(
             onTap: controller.threeFeatures![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.threeFeatures![index]["label"] as String,
+              label: controller.threeFeatures![index]["label"] as List<String>,
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
@@ -242,7 +249,7 @@ class V1HomePage extends GetView<V1HomeController> {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
-        title: "Sản phẩm",
+        title: "Danh mục sản phẩm",
         onTap: () => controller.onMoreProductList(),
         widget: SizedBox(
           height: 380,
@@ -255,16 +262,17 @@ class V1HomePage extends GetView<V1HomeController> {
               mainAxisExtent: 120,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.productList.length,
+            itemCount: controller.danhMucList.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () {
                   controller
-                      .onMoreProductDetail(controller.productList[index].id!);
+                      .onMoreCategoryProduct(controller.danhMucList[index].id!);
                 },
                 child: _imageWidget(
-                  controller.productList[index].ten!,
-                  controller.productList[index].hinhAnhSanPham!,
+                  controller.danhMucList[index].ten!,
+                  Images.location_example,
+                  // controller.danhMucList[index].hinhAnhSanPham!,
                 ),
               );
             },

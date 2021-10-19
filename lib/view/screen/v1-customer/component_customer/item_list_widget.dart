@@ -161,7 +161,6 @@ class ItemListWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                 ],
               ),
             ),
