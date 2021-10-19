@@ -163,33 +163,33 @@ class V4HomeController extends GetxController {
       {
         "title": "Mới tạo",
         "quality": moiTaoQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
+        "color": RadialGradient(colors: [
+          const Color(0xffE7C550).withOpacity(.78),
+          const Color(0xffBE8542).withOpacity(.78),
+        ]),
       },
       {
         "title": "Đang làm",
         "quality": dangLamQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
+        "color": RadialGradient(colors: [
+          const Color(0xffC1E6EE).withOpacity(.78),
+          const Color(0xff00B4D8).withOpacity(.78),
         ]),
       },
       {
         "title": "Hoàn Thành",
         "quality": hoanThanhQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
+        "color": RadialGradient(colors: [
+          const Color(0xff97DBAE).withOpacity(.78),
+          const Color(0xff3FA963).withOpacity(.78),
         ]),
       },
       {
         "title": "Chậm trễ",
         "quality": chamTreQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
+        "color": RadialGradient(colors: [
+          const Color(0xffEE7B7B).withOpacity(.78),
+          const Color(0xffF81818).withOpacity(.78),
         ]),
       }
     ];
