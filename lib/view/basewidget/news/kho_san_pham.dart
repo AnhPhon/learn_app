@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 
 class KhoSanPham extends StatelessWidget {
   final String tenSanPham;
   final String maSanPham;
   final String giaSanPham;
+  final String hinhAnh;
   final String quyCach;
 
   const KhoSanPham({
     required this.tenSanPham,
     required this.maSanPham,
+    required this.hinhAnh,
     required this.giaSanPham,
     required this.quyCach,
   });
@@ -39,20 +40,20 @@ class KhoSanPham extends StatelessWidget {
           Container(
             width: DeviceUtils.getScaledWidth(context, .2),
             height: 80,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage(Images.V4NewsExample),
+                image: NetworkImage(hinhAnh),
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            width: DeviceUtils.getScaledWidth(context, .7),
+            width: DeviceUtils.getScaledWidth(context, .65),
             child: Column(
               children: [
                 Container(

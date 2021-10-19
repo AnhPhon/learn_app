@@ -183,6 +183,19 @@ class SharedPreferenceHelper {
     return _sharedPreference.setString(Preferences.ward, id);
   } 
 
+  // workFlowId: ----------------------------------------------------------
+  Future<String?> get workFlowId async {
+    return _sharedPreference.getString(Preferences.workFlowId);
+  }
+
+  Future<bool> saveWorkFlow({required String id}) async {
+    return _sharedPreference.setString(Preferences.workFlowId, id);
+  }
+
+  Future<bool> removeWorkFlow() async {
+    return _sharedPreference.remove(Preferences.workFlowId);
+  }
+
   //  : ----------------------------------------------------------
   Future<String?> get idTinTuc async {
     return _sharedPreference.getString(Preferences.idTinTuc);
@@ -209,6 +222,7 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.idSanPham);
   }
 
+  //  : ----------------------------------------------------------
   Future<String?> get chamcong async {
     return _sharedPreference.getString(Preferences.isChamCong);
   }
@@ -219,5 +233,31 @@ class SharedPreferenceHelper {
 
   Future<bool> removeChamCongId() async {
     return _sharedPreference.remove(Preferences.isChamCong);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productCategoryId async {
+    return _sharedPreference.getString(Preferences.productCategoryId);
+  }
+
+  Future<bool> saveProductCategoryId(String id) async {
+    return _sharedPreference.setString(Preferences.productCategoryId, id);
+  }
+
+  Future<bool> removeProductCategoryId() async {
+    return _sharedPreference.remove(Preferences.productCategoryId);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productId async {
+    return _sharedPreference.getString(Preferences.productId);
+  }
+
+  Future<bool> saveProductId(String id) async {
+    return _sharedPreference.setString(Preferences.productId, id);
+  }
+
+  Future<bool> removeProductId() async {
+    return _sharedPreference.remove(Preferences.productId);
   }
 }
