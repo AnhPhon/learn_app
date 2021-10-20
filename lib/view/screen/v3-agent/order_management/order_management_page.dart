@@ -7,6 +7,7 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_controller.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V3OrderManagementPage extends GetView<V3OrderManagementController> {
   @override
@@ -14,34 +15,38 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
     return GetBuilder<V3OrderManagementController>(
         init: V3OrderManagementController(),
         builder: (controller) {
-          return DefaultTabController(
-            length: controller.orderList.length,
-            child: Scaffold(
-              appBar: AppBarWithTabBar(
-                title: controller.title,
-                bottom: TabBar(
-                  isScrollable: true,
-                  indicatorColor: ColorResources.PRIMARY,
-                  labelColor: ColorResources.PRIMARY,
-                  unselectedLabelColor: Colors.grey,
-                  tabs: [
-                    ...List.generate(
-                      controller.orderList.length,
-                      (index) => Tab(
-                          text: controller.statusLabel.values.toList()[index]),
-                    )
-                  ],
-                ),
+          return Scaffold(
+            appBar: AppBarWithTabBar(
+              title: controller.title,
+              bottom: TabBar(
+                controller: controller.tabController,
+                isScrollable: true,
+                indicatorColor: ColorResources.PRIMARY,
+                labelColor: ColorResources.PRIMARY,
+                unselectedLabelColor: Colors.grey,
+                tabs: app_constants.quanLyDonHangMap.keys.toList().map(
+                  (element) {
+                    return Tab(
+                      text: element,
+                    );
+                  },
+                ).toList(),
+
+                // ...List.generate(
+                //   controller.orderList.length,
+                //   (index) => Tab(
+                //       text: controller.statusLabel.values.toList()[index]),
+                // )
               ),
-              body: TabBarView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  ...List.generate(
-                      controller.orderList.length,
-                      (index) => _tabIndex(context, controller,
-                          index: (index).toString())),
-                ],
-              ),
+            ),
+            body: TabBarView(
+              controller: controller.tabController,
+              physics: const BouncingScrollPhysics(),
+              children: List.generate(app_constants.quanLyDonHangMap.length,
+                    (index) => Container()
+                    // _tabIndex(context, index: (index).toString()),
+                    ),
+              
             ),
           );
         });
@@ -50,26 +55,36 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
   ///
   ///tab index
   ///
-  Widget _tabIndex(BuildContext context, V3OrderManagementController controller,
-      {required String index}) {
-    return ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: (BuildContext context, int i) {
-          return GestureDetector(
-            onTap: () {
-              // controller.onOrderWidgetClick(
-              //     i: i, index: (int.parse(index) + 1).toString());
-            },
-            child: _orderWidget(
-              context,
-              controller,
-              status: controller.orderList[int.parse(index)].statusOrder,
-              imgUrl: controller.orderList[int.parse(index)].image,
-              idOrder: controller.orderList[int.parse(index)].id,
-              dateTime: controller.orderList[int.parse(index)].dateTime,
-            ),
-          );
-        });
+  Widget _tabIndex(BuildContext context, {required String index}) {
+    return GetBuilder<V3OrderManagementController>(builder: (controller) {
+      if (controller.isLoading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      return (controller.donHangResponse.isEmpty)
+          ? const Center(
+              child: Text("Chưa có đơn hàng"),
+            )
+          : ListView.builder(
+              itemCount: controller.orderList.length,
+              itemBuilder: (BuildContext context, int i) {
+                return GestureDetector(
+                  onTap: () {
+                    // controller.onOrderWidgetClick(
+                    //     i: i, index: (int.parse(index) + 1).toString());
+                  },
+                  child: _orderWidget(
+                    context,
+                    controller,
+                    status: controller.orderList[int.parse(index)].statusOrder,
+                    imgUrl: controller.orderList[int.parse(index)].image,
+                    idOrder: controller.orderList[int.parse(index)].id,
+                    dateTime: controller.orderList[int.parse(index)].dateTime,
+                  ),
+                );
+              });
+    });
   }
 
   ///
