@@ -116,20 +116,6 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
 
         InputField(
           allowEdit: true,
-          allowMultiline: false,
-          controller: controller.valueController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "100.000.000",
-          hidden: false,
-          label: "Giá trị khách hàng đề xuất (nếu có) : VNĐ",
-          obligatory: false,
-          typeInput: TextInputType.number,
-          width: DeviceUtils.getScaledWidth(context,1),
-        ),
-
-
-        InputField(
-          allowEdit: true,
           allowMultiline: true,
           controller: controller.workDesc,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,

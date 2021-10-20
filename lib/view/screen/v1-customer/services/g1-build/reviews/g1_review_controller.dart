@@ -102,8 +102,6 @@ class V1G1ReviewController extends GetxController{
       dichVuRequest.hinhAnhBanVe  = drawingImages;
       return dichVuRequest;
     });
-    
-    //return dichVuRequest;
   }
 
   void addMass({required String idDon}){

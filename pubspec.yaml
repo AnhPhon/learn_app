@@ -53,6 +53,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   pin_code_fields: ^7.3.0
   multi_select_flutter: ^4.0.0
+  pinch_zoom_image_last: ^0.4.1
 
 
 dev_dependencies:

@@ -97,17 +97,6 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
               controller.thongSo = results;
             },
           ),
-          // BoxShadowWidget(
-          //   child: SizedBox(
-          //     height: 200,
-          //     child: ListView.builder(
-          //       itemBuilder: (context, index) {
-          //         return CheckBoxCustom(title: "Thông số kỹ thuật", onChanged: (bool? val) {  },status: false,);
-          //       },
-          //       itemCount: 10,
-          //     ),
-          //   ),
-          // ),
         ),
 
         // Thời gian làm việc trong ngày

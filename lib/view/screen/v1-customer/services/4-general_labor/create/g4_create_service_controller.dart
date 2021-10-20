@@ -16,11 +16,8 @@ import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 class V1G4CreateServiceController extends GetxController{
  
   final workTitleController = TextEditingController();
-  final descController = TextEditingController();
   final startTime = TextEditingController();
   final endTime = TextEditingController();
-  final amountController = TextEditingController(text: '0');
-  final valueController = TextEditingController();
 
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final ThoiGianLamViecProvider thoiGianLamViecProvider = GetIt.I.get<ThoiGianLamViecProvider>();
@@ -73,7 +70,7 @@ class V1G4CreateServiceController extends GetxController{
 
   void onSelectedAfternoon({required bool val}){
     afternoon = val;
-    if(tommorow){
+    if(afternoon){
       afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('11h30 - 17h30'));
     }else{
       afternoonReponse = null;
@@ -83,7 +80,7 @@ class V1G4CreateServiceController extends GetxController{
   
   void onSelectedTonight({required bool val}){
     tonight = val;
-    if(tommorow){
+    if(tonight){
       tonightReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('18h30 - 22h30'));
     }else{
       tonightReponse = null;
@@ -112,22 +109,21 @@ class V1G4CreateServiceController extends GetxController{
   /// Nhấn tiếp tục tới trang báo giá đơn hàng
   ///
   void onClickContinueButton(){
-    if(tommorow == false & afternoon & false || tonight & false){
+    if(tommorow == false && afternoon == false && tonight == false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
-    }else if(amountController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
-    }else if(int.parse(amountController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
+      return;
     }else if(startTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+      return;
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      return;
     }else if(endTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
-    }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+      return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
       showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      return;
     }else{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);
        Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE, arguments: request());
@@ -153,11 +149,11 @@ class V1G4CreateServiceController extends GetxController{
       dichVuRequest.idThoiGianLamViecs = workTime;
       dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startTime.text.toString());
       dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());//.isEmpty ? endTime.text.toString() : '';
-      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString().isEmpty ? '' : valueController.text.toString();
-      dichVuRequest.moTa = descController.text.toString();
-      if(amountController.text.toString().isNotEmpty){
-        dichVuRequest.soLuongYeuCau = amountController.text.toString();
-      }
+      // dichVuRequest.giaTriKhachDeXuat = valueController.text.toString().isEmpty ? '' : valueController.text.toString();
+      // dichVuRequest.moTa = descController.text.toString();
+      // if(amountController.text.toString().isNotEmpty){
+      //   dichVuRequest.soLuongYeuCau = amountController.text.toString();
+      // }
       dichVuRequest.gioiTinh = getGender();
       return dichVuRequest;
   }
@@ -179,11 +175,8 @@ class V1G4CreateServiceController extends GetxController{
   void onClose() {
     onClose();
     workTitleController.dispose();
-    descController.dispose();
     startTime.dispose();
     endTime.dispose();
-    amountController.dispose();
-    valueController.dispose();
   }
 }
 

@@ -656,7 +656,7 @@ class AppPages {
     // Hình thức thanh toán
     GetPage(
         name: AppRoutes.V1_FORMAL_PAYMENT,
-        page: () => const V1FormalPaymentPage(),
+        page: () => V1FormalPaymentPage(),
         binding: V1FormalPaymentBinding()),
 
     // Tạo thành công

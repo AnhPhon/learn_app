@@ -167,10 +167,10 @@ class V1G6CreateServiceController extends GetxController{
       showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
     }else if(startTimeController.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
-    }else if(endTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày kết thức dự kiến");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+    }else if(endTimeController.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày kết thức dự kiến");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
       showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
     }else if(workDescController.text.toString().isEmpty){

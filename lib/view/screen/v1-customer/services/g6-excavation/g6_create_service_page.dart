@@ -75,7 +75,10 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
-        // Thông số kỹ thuật
+        /// Thông số kỹ thuật
+        ///
+        ///
+
         const Label(label: "Thông số kỹ thuật", obligatory: true),
         Padding(
           padding: const EdgeInsets.symmetric(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
@@ -8,17 +9,27 @@ class V1FormalPaymentController extends GetxController{
   
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRequest? dichVuRequest;
+
+  int formalPaymentGroup = 0;
+
   @override
   void onInit() {
-    final data = Get.arguments as Map<String, dynamic>;
-    if(data['idNhom'] == 3){
-      dichVuRequest = data['don'] as DonDichVuRequest;
-    }
+    dichVuRequest = Get.arguments as DonDichVuRequest;
     super.onInit();
   }
 
-  void onNextPage(){
-    Get.toNamed(AppRoutes.V1_ORDER_INFORAMTION);
+  ///
+  /// change formal payment
+  ///
+  void onChangedFormalPayment(int val){
+    formalPaymentGroup = val;
+    update();
+  }
+
+  void onClickPayment(){
+    // Đên tài khoản của tôi để thanh toán
+    //Get.toNamed(AppRoutes.V1_ORDER_INFORAMTION);
+    Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
   }
 
 }

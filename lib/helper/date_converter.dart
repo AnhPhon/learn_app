@@ -22,10 +22,6 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
-  static String formatYYYYMMDD(String dateTime) { //dd mm yyyy
-    final date = DateFormat('dd-MM-yyyy').parse(dateTime);
-    return DateFormat('yyyy-MM-dd').format(date);
-  }
 
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);

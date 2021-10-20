@@ -18,6 +18,9 @@ const String COUNTRY_CODE = 'country_code';
 const String LANGUAGE_CODE = 'language_code';
 const String THEME = 'theme';
 
+// Enum
+enum SERVICES {WORK, REGULARLY}
+
 // sharePreference
 const String TOKEN = 'token';
 

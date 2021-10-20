@@ -164,12 +164,8 @@ class DonDichVuRequest {
     if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
 
     // check null idTrangThaiDonDichVu
-<<<<<<< HEAD
     if (idTrangThaiDonDichVu != null)
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
-=======
-    if (idTrangThaiDonDichVu != null) data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu; 
->>>>>>> 4ca5df4 (create 6)
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)
@@ -181,10 +177,6 @@ class DonDichVuRequest {
 
     // check null idThoiGianLamViec
     if (idThoiGianLamViecs != null) data['idThoiGianLamViecs'] = idThoiGianLamViecs!.map((e) => e).toList(); 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4ca5df4 (create 6)
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
 

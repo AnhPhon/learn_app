@@ -24,6 +24,7 @@ class V1G4OrderDetailController extends GetxController{
     dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
       showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể");
       EasyLoading.dismiss();
+      Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest);//{'don': donDichVuRequest,'idNhom':4}
     }, onError: (onError){
       EasyLoading.dismiss();
       print("V1G3OrderDetailController onSave $onError");
@@ -33,7 +34,6 @@ class V1G4OrderDetailController extends GetxController{
   void onNextPage(){
     onSave();
     // Chuyển qua thanh toán rồi save database
-    Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: {'don': donDichVuRequest,'idNhom':4});
   }
 
 }

@@ -23,7 +23,6 @@ class V1G2CreateWorkController extends GetxController {
   final workTitleController = TextEditingController();
   final startTime = TextEditingController();
   final endTime = TextEditingController();
-  final valueController = TextEditingController();
   final massDesc = TextEditingController();
   final workDesc = TextEditingController();
 
@@ -151,40 +150,48 @@ class V1G2CreateWorkController extends GetxController {
   /// Nhấn tiếp tục hoàn thành tạo đơn
   ///
   void onClickContinueButton()async{
+    if(validate()){
+      onSaveService();
+    }
+  }
+
+
+  ///
+  /// Check validate
+  ///
+  bool validate(){
     if(tommorow == false && afternoon == false && tonight == false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
-      return;
+      return false;
     }else if(startTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
-      return;
+      return false;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
-      return;
-    }else if(workDesc.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
-      return;
+      return false;
     }else if(endTime.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
         showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-        return;
-      }else{
-        onSaveService();
-        return;
+        return false;
+      }else if(workDesc.text.toString().isEmpty){
+        showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+        return false;
       }
+      return true;
+    }else if(workDesc.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+      return false;
     }else{
-      onSaveService();
+      return true;
     }
   }
 
   ///
   /// save services
   ///
-  void onSaveService() async{
+  Future<void> onSaveService() async{
     EasyLoading.show(status:"Loading ...");
-      DonDichVuRequest data = await request();
-      Future.delayed(const Duration(seconds: 2)).then((value){
-        
-      });
+      final DonDichVuRequest data = await request();
       donDichVuProvider.add(data: data, onSuccess: (data){
         EasyLoading.dismiss();
         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
@@ -222,7 +229,6 @@ class V1G2CreateWorkController extends GetxController {
       if(endTime.text.toString().isNotEmpty){
         dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());
       }
-      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
       dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
       dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
 
@@ -294,7 +300,6 @@ class V1G2CreateWorkController extends GetxController {
     workTitleController.dispose();
     startTime.dispose();
     endTime.dispose();
-    valueController.dispose();
     massDesc.dispose();
     workDesc.dispose();
   }

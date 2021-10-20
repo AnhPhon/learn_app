@@ -16,11 +16,10 @@ class V1G3CreateServiceController extends GetxController {
       GetIt.I.get<ThoiGianLamViecProvider>();
 
   final workTitleController = TextEditingController();
-  final descController = TextEditingController();
+  // final descController = TextEditingController();
   final startTime = TextEditingController();
   final endTime = TextEditingController();
-  final amountController = TextEditingController(text: '0');
-  final valueController = TextEditingController();
+  // final valueController = TextEditingController();
 
   // 1 nam 2 nữ 3 khác
   GENDER gender = GENDER.Nam;
@@ -109,18 +108,20 @@ class V1G3CreateServiceController extends GetxController {
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
-    } else if (amountController.text.toString().isEmpty) {
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
-    } else if (int.parse(amountController.text.toString()) <= 0) {
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
-    }else if(startTime.text.toString().isEmpty){
+      return;
+    } else if(startTime.text.toString().isEmpty){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
-    }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
-    }else if(endTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
+      return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      return;
+    }else if(endTime.text.toString().isNotEmpty){
+      if(endTime.text.toString().isEmpty){
+        showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
+        return;
+      }else{
+        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
+      }
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
     }
@@ -147,11 +148,6 @@ class V1G3CreateServiceController extends GetxController {
       if(endTime.text.toString().isNotEmpty){
         dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());
       }
-      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
-      dichVuRequest.moTa = descController.text.toString();
-      if(amountController.text.toString().isNotEmpty){
-        dichVuRequest.soLuongYeuCau = amountController.text.toString();
-      }
       dichVuRequest.gioiTinh = getGender();
       return dichVuRequest;
   }
@@ -172,11 +168,8 @@ class V1G3CreateServiceController extends GetxController {
   void onClose() {
     onClose();
     workTitleController.dispose();
-    descController.dispose();
     startTime.dispose();
     endTime.dispose();
-    amountController.dispose();
-    valueController.dispose();
   }
 }
 
