@@ -79,7 +79,7 @@ class V1G2CreateWorkController extends GetxController {
     afternoon = val;
     if (tommorow) {
       afternoonReponse = thoiGianLamViecList
-          .firstWhere((element) => element.tieuDe!.contains('1h30 - 5h30'));
+          .firstWhere((element) => element.tieuDe!.contains('11h30 - 17h30'));
     } else {
       afternoonReponse = null;
     }
@@ -97,7 +97,7 @@ class V1G2CreateWorkController extends GetxController {
     update();
   }
 
-  void addFile()async{
+  void pickerFile()async{
     final FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       file = File(result.files.single.path!);
@@ -202,23 +202,23 @@ class V1G2CreateWorkController extends GetxController {
   /// Tạo đối tượng request
   ///
   Future<DonDichVuRequest> request() {
-    final List<ThoiGianLamViecResponse> workTime = [];
+    final List<String> workTime = [];
     String massImagesLink = '';
     String productImagesLink = '';
     String currentStatusimages = '';
     DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest = serviceApplication!;
     if (tommorow == true) {
-      workTime.add(tommowReponse!);
+      workTime.add(tommowReponse!.id!);
     }
     if (afternoon == true) {
-      workTime.add(afternoonReponse!);
+      workTime.add(afternoonReponse!.id!);
     }
     if (tonight == true) {
-      workTime.add(tonightReponse!);
+      workTime.add(tonightReponse!.id!);
     }
     // Thời gian công việc chọn được nhiều ngày mà đây chỉ lưu được 1 ID
-    dichVuRequest.thoiGianLamViec = workTime;
+    dichVuRequest.idThoiGianLamViecs = workTime;
     ////////////////////////////////////////////////////////////////
     dichVuRequest.ngayBatDau = startTime.text.toString();
     dichVuRequest.ngayKetThuc = endTime.text.toString();

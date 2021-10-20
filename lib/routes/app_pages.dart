@@ -99,6 +99,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_list_page.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
+import 'package:template/view/screen/v1-customer/services/reference_price_list/reference_price_table_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
 import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
@@ -493,7 +494,13 @@ class AppPages {
       name: AppRoutes.V1_BEFORE_RECHARGE,
       page: () => V1BeforeRechargePage(),
     ),
-
+    ///
+    ///Bang giá tham khảo 
+    ///
+    GetPage(
+      name: AppRoutes.V1_REFERENCE_PRICE_TABLE,
+      page: () => V1ReferencePriceTablePage()
+    ),
     ///
     /// Thông báo
     ///

@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/reference_price_list/reference_price_table_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
-class RefenrencePriceTablePage extends GetView<ReferencePriceTableController>{
+class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +51,9 @@ class RefenrencePriceTablePage extends GetView<ReferencePriceTableController>{
                       ],
                     ),
                   ),
-                  const Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text("Chú ý: Khi xem bảng giá bạn phải nhớ tên dịch vụ bạn muốn yêu cầu báo giá"),
-                    )
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text("Chú ý: Khi xem bảng giá bạn phải nhớ tên dịch vụ bạn muốn yêu cầu báo giá"),
                   )
                 ],
               ),
@@ -67,7 +66,9 @@ class RefenrencePriceTablePage extends GetView<ReferencePriceTableController>{
 
 
   Widget imageWidget(BuildContext context){
-    return Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),);
+    String imageNetwork = '';
+    return imageNetwork.isEmpty ?  Image.asset(Images.login_background,fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5))
+     : Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),);
   }
 
 }

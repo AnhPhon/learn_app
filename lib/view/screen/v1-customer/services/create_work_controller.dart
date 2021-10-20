@@ -274,10 +274,9 @@ class CreateWorkController extends GetxController{
           Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
         }else if(dichvu!.nhomDichVu! == '2'){
           // Nhóm 2
-          Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
+          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}/:${dichvu!.nhomDichVu!}", arguments: await request(),);
         }else if(dichvu!.nhomDichVu! == '3'){
-          // Nhóm 3
-          // Tạo đơn dịch vụ có gía
+          // Tạo đơn dịch vụ có gía nhóm 3
           Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
         }else if(dichvu!.nhomDichVu! == '4'){
           // Tạo đơn dich vụ có giá nhóm 4
@@ -286,10 +285,10 @@ class CreateWorkController extends GetxController{
           // Tạo đơn công viẹc và dịch nhóm 5
           Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE, arguments: await request());
         }else if(dichvu!.nhomDichVu! == '6'){
-          // Tạo đơn công viẹc và dịch nhóm 5
+          // Tạo đơn công viẹc và dịch nhóm 6
           Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE, arguments: await request());
         }else if(dichvu!.nhomDichVu! == '7'){
-          // Tạo đơn công viẹc và dịch nhóm 5
+          // Tạo đơn công viẹc và dịch nhóm 7
           Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: await request());
         }
       }

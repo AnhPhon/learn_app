@@ -5,7 +5,7 @@ import 'package:template/utils/dimensions.dart';
 class TextFieldDate extends StatelessWidget {
   const TextFieldDate(
       {this.label,
-      this.isToHour = true,
+      this.isToHour = false,
       required this.holdplacer,
       required this.controller,
       required this.allowEdit,
@@ -62,76 +62,91 @@ class TextFieldDate extends StatelessWidget {
                 ],
               ),
             ),
-          TextField(
-            textInputAction: TextInputAction.done,
-            keyboardType: isDate ? null : typeInput,
-            textAlignVertical: TextAlignVertical.center,
-            maxLines: area! ? 3 : 1,
-            enabled: allowEdit,
-            controller: controller,
-            onTap: (isDate == true)
-                ? () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2001),
-                      lastDate: DateTime(2100),
-                    ).then((value) {
-                      isToHour == true
-                          ? controller.text =
-                              "${value!.year}-${value.month}-${value.day}"
-                          : controller.text =
-                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
-                    });
-                  }
-                : null,
-            cursorColor: ColorResources.PRIMARYCOLOR,
-            decoration: InputDecoration(
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                hintText: holdplacer,
-                filled: true,
-                fillColor:
-                    (allowEdit == false) ? ColorResources.WHITE : Colors.white,
-                suffixIconConstraints: const BoxConstraints(
-                  maxHeight: Dimensions.PADDING_SIZE_LARGE,
-                ),
-                suffixIcon: (isDate == true)
-                    ? const Padding(
-                        padding: EdgeInsets.only(
-                            right: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                        child: Icon(
-                          Icons.date_range,
-                          size: Dimensions.ICON_SIZE_SMALL,
-                          color: ColorResources.PRIMARYCOLOR,
-                        ),
-                      )
-                    : null),
+          GestureDetector(
+            onTap: isDate  ? (){
+              showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2001),
+                lastDate: DateTime(2100),
+              ).then((value) {
+                isToHour! ? controller.text =
+                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
+                    "${value!.day}-${value.month}-${value.year}";
+                    
+              });
+            } : (){},
+            child: TextField(
+              textInputAction: TextInputAction.done,
+              keyboardType: isDate ? null : typeInput,
+              textAlignVertical: TextAlignVertical.center,
+              maxLines: area! ? 3 : 1,
+              enabled: false,
+              controller: controller,
+              // onTap: (isDate == true)
+              //     ? () {
+              //         showDatePicker(
+              //           context: context,
+              //           initialDate: DateTime.now(),
+              //           firstDate: DateTime(2001),
+              //           lastDate: DateTime(2100),
+              //         ).then((value) {
+              //           isToHour == true
+              //               ? controller.text =
+              //                   "${value!.year}-${value.month}-${value.day}"
+              //               : controller.text =
+              //                   "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
+              //         });
+              //       }
+              //     : null,
+              cursorColor: ColorResources.PRIMARYCOLOR,
+              decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  hintText: holdplacer,
+                  filled: true,
+                  fillColor:
+                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  suffixIconConstraints: const BoxConstraints(
+                    maxHeight: Dimensions.PADDING_SIZE_LARGE,
+                  ),
+                  suffixIcon: (isDate == true)
+                      ? const Padding(
+                          padding: EdgeInsets.only(
+                              right: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                          child: Icon(
+                            Icons.date_range,
+                            size: Dimensions.ICON_SIZE_SMALL,
+                            color: ColorResources.PRIMARYCOLOR,
+                          ),
+                        )
+                      : null),
+            ),
           ),
         ],
       ),

@@ -101,13 +101,7 @@ class DonDichVuRequest {
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-<<<<<<< HEAD
-    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
-        .map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
-        .toList();
-=======
     idThoiGianLamViecs = (json['idThoiGianLamViecs'] as List<dynamic>).map((e) => e as String).toList();
->>>>>>> 4ca5df4 (create 6)
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
@@ -169,14 +163,9 @@ class DonDichVuRequest {
     // check null hinhAnhBanVe
     if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
 
-<<<<<<< HEAD
-    // check null idTrangThaiDonHang
-    if (idTrangThaiDonHang != null)
-      data['idTrangThaiDonHang'] = idTrangThaiDonHang;
-=======
     // check null idTrangThaiDonDichVu
-    if (idTrangThaiDonDichVu != null) data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu; 
->>>>>>> 4ca5df4 (create 6)
+    if (idTrangThaiDonDichVu != null)
+      data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)
@@ -187,14 +176,7 @@ class DonDichVuRequest {
       data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
 
     // check null idThoiGianLamViec
-<<<<<<< HEAD
-    if (thoiGianLamViec != null)
-      data['thoiGianLamViec'] =
-          thoiGianLamViec!.map((e) => {'idThoiGianLamViec': e.id!}).toList();
-=======
     if (idThoiGianLamViecs != null) data['idThoiGianLamViecs'] = idThoiGianLamViecs!.map((e) => e).toList(); 
->>>>>>> 4ca5df4 (create 6)
-
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
 
@@ -232,13 +214,8 @@ class DonDichVuRequest {
     // check null gioiTinh
     if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
-<<<<<<< HEAD
-    // check null idThongSoKyThuat
-    if (idThongSoKyThuat != null) data['idThongSoKyThuat'] = idThongSoKyThuat;
-=======
     // check null idThongSoKyThuats
     if (idThongSoKyThuats != null) data['idThongSoKyThuats'] = idThongSoKyThuats!.map((e) => e).toList();
->>>>>>> 4ca5df4 (create 6)
 
     // check null diaDiemBocHang
     if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang;

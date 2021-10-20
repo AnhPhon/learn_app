@@ -141,19 +141,19 @@ class V1G3CreateServiceController extends GetxController {
   /// Tạo đối tượng request
   ///
   DonDichVuRequest request() {
-    final List<ThoiGianLamViecResponse> workTime = [];
+    final List<String> workTime = [];
     DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest = serviceApplication!;
     if (tommorow == true) {
-      workTime.add(tommowReponse!);
+      workTime.add(tommowReponse!.id!);
     }
     if (afternoon == true) {
-      workTime.add(afternoonReponse!);
+      workTime.add(afternoonReponse!.id!);
     }
     if (tonight == true) {
-      workTime.add(tonightReponse!);
+      workTime.add(tonightReponse!.id!);
     }
-    dichVuRequest.thoiGianLamViec = workTime;
+    dichVuRequest.idThoiGianLamViecs = workTime;
     dichVuRequest.ngayBatDau = startTime.text.toString();
     dichVuRequest.ngayKetThuc =
         endTime.text.toString(); //.isEmpty ? endTime.text.toString() : '';
