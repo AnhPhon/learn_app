@@ -257,7 +257,7 @@ class V4HomePage extends GetView<V4HomeController> {
           Row(
             children: [
               const Text(
-                'Thông kê thu chi',
+                'Thống kê thu chi',
                 style: TextStyle(
                     color: Color(Dimensions.COLOR_LABEL_DEFAULT),
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,

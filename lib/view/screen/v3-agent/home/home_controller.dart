@@ -62,7 +62,7 @@ class V3HomeController extends GetxController {
           bindingThreeFeature();
         },
         onError: (error) {
-          print(error);
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -82,7 +82,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -104,7 +104,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }

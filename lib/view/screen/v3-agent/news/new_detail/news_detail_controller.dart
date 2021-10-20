@@ -30,7 +30,7 @@ class V3NewsDetailController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
