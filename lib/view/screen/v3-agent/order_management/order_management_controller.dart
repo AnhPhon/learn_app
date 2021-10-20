@@ -12,14 +12,18 @@ import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V3OrderManagementController extends GetxController
     with SingleGetTickerProviderMixin {
+  //tabController
   TabController? tabController;
 
+  // refresh controller for load more refresh
   List<RefreshController>? refreshController;
 
+  //DonHang
   DonHangProvider donHangProvider = GetIt.I.get<DonHangProvider>();
   DonHangRequest donHangRequest = DonHangRequest();
   List<DonHangResponse> donHangResponse = [];
 
+  //text color
   Map<String, Color> statusColor = {
     "Xác nhận": const Color(0xff0D5BB5),
     "Chuẩn bị hàng": const Color(0xffCC8100),
@@ -29,6 +33,7 @@ class V3OrderManagementController extends GetxController
     "Trả hàng": const Color(0xffc716be),
   };
 
+  //background color
   Map<String, Color> statusBackgroundColor = {
     "Xác nhận": const Color(0x1f0D5BB5),
     "Chuẩn bị hàng": const Color(0x1fCC8100),
@@ -38,24 +43,35 @@ class V3OrderManagementController extends GetxController
     "Trả hàng": const Color(0x1fc716be),
   };
 
+  //CircularProgressIndicator
   bool isLoading = true;
   bool isLoadingOrder = false;
 
+  // page for for load more refresh
   int pageMax = 1;
   int limitMax = 5;
 
+  //user id
   String userId = "";
 
+  //title appbar
   String title = "Quản lý đơn hàng";
 
   @override
   void onInit() {
     super.onInit();
+    //binding tabController
     tabController = TabController(
         length: app_constants.quanLyDonHangMap.length, vsync: this);
+
+    //binding refreshController
     refreshController = List.generate(
         app_constants.quanLyDonHangMap.length, (_) => RefreshController());
+
+    //get load data
     getAllOrder();
+
+    //lstener tabController
     listenerTabController();
   }
 
@@ -63,17 +79,22 @@ class V3OrderManagementController extends GetxController
   void onClose() {
     super.onClose();
     tabController!.dispose();
+    refreshController!.clear();
   }
 
   ///
   ///get all order
   ///
   Future<void> getAllOrder({bool? isRefresh = true}) async {
+    //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
+    //isRefresh
     if (isRefresh!) {
       pageMax = 1;
+      donHangResponse.clear();
     } else {
+      //is load more
       pageMax++;
     }
 
@@ -81,8 +102,9 @@ class V3OrderManagementController extends GetxController
     donHangProvider.paginate(
       page: pageMax,
       limit: limitMax,
-      filter: "&idTaiKhoan=$userId",
+      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
       onSuccess: (orderAll) {
+        //check is empty
         if (orderAll.isEmpty) {
           refreshController![tabController!.index].loadNoData();
           update();
@@ -90,14 +112,15 @@ class V3OrderManagementController extends GetxController
           //remove at idTrangThaiDonHang.tieuDe == Mới tạo
           orderAll.removeWhere((element) =>
               element.idTrangThaiDonHang!.id == "616a39faea30f845b562876d");
+
+          //isRefresh
           if (isRefresh) {
             donHangResponse = orderAll;
             refreshController![tabController!.index].refreshCompleted();
-            update();
           } else {
+            //is load more
             donHangResponse = donHangResponse.toList() + orderAll;
             refreshController![tabController!.index].loadComplete();
-            update();
           }
         }
 
@@ -114,9 +137,12 @@ class V3OrderManagementController extends GetxController
   ///get order by idTaiKhoan & idTrangThaiDonHang
   ///
   void getOrder({required String idTrangThaiDonHang, bool? isRefresh = true}) {
+    //isRefresh
     if (isRefresh!) {
       pageMax = 1;
+      donHangResponse.clear();
     } else {
+      //is load more
       pageMax++;
     }
 
@@ -127,18 +153,18 @@ class V3OrderManagementController extends GetxController
       filter:
           "&idTaiKhoan=$userId&idTrangThaiDonHang=$idTrangThaiDonHang&sortBy=created_at:desc",
       onSuccess: (order) {
+        //check is empty
         if (order.isEmpty) {
           refreshController![tabController!.index].loadNoData();
-          update();
         } else {
+          //isRefresh
           if (isRefresh) {
             donHangResponse = order;
             refreshController![tabController!.index].refreshCompleted();
-            update();
           } else {
+            //is load more
             donHangResponse = donHangResponse.toList() + order;
             refreshController![tabController!.index].loadComplete();
-            update();
           }
         }
 
@@ -159,11 +185,12 @@ class V3OrderManagementController extends GetxController
     tabController!.addListener(() {
       //check call fisrt times
       if (tabController!.indexIsChanging) {
-        donHangResponse.clear();
         isLoadingOrder = true;
         update();
 
+        //check tabController index
         if (tabController!.index == 0) {
+          //get all order
           getAllOrder();
         } else {
           //get product by idCategory
@@ -179,18 +206,25 @@ class V3OrderManagementController extends GetxController
   ///onChanged dropdown
   ///
   void onChangedDropdown({String? value, required int index}) {
+    //set value dropdown
     donHangResponse[index].idTrangThaiDonHang!.tieuDe = value.toString();
-    update();
+
+    //set data
     donHangRequest.id = donHangResponse[index].id;
     donHangRequest.idTrangThaiDonHang =
         app_constants.trangThaiDonHangMap[value];
+
+    //update status order
     donHangProvider.update(
       data: donHangRequest,
       onSuccess: (val) {
+        //check tabController index if != 0 then reload initial tab
         if (tabController!.index != 0) {
           donHangResponse.clear();
           isLoadingOrder = true;
           update();
+
+          //reload initial tab
           getOrder(
               idTrangThaiDonHang: app_constants.quanLyDonHangMap.values
                   .toList()[tabController!.index]);
@@ -203,9 +237,14 @@ class V3OrderManagementController extends GetxController
     );
   }
 
+  ///
+  ///on resfresh
+  ///
   Future onRefresh() async {
+    //reset nodata
     refreshController![tabController!.index].resetNoData();
-    donHangResponse.clear();
+
+    //check tabController index
     if (tabController!.index == 0) {
       getAllOrder();
     } else {
@@ -216,7 +255,11 @@ class V3OrderManagementController extends GetxController
     }
   }
 
+  ///
+  ///on loading
+  ///
   Future onLoading() async {
+    //check tabController index
     if (tabController!.index == 0) {
       getAllOrder(isRefresh: false);
     } else {

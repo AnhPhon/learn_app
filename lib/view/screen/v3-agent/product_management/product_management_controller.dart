@@ -9,28 +9,36 @@ import 'package:template/provider/san_pham_provider.dart';
 
 class V3ProductManagementController extends GetxController
     with SingleGetTickerProviderMixin {
+  //tabController
   TabController? tabController;
 
+  // refresh controller for load more refresh
   List<RefreshController>? refreshControllerList;
 
+  //DanhMucSanPham
   DanhMucSanPhamProvider danhMucSanPhamProvider =
       GetIt.I.get<DanhMucSanPhamProvider>();
   List<DanhMucSanPhamResponse> danhMucSanPhamResponse = [];
 
+  //SanPham
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   List<SanPhamResponse> sanPhamResponse = [];
 
+  // page for for load more refresh
   int pageMax = 1;
   int limitMax = 5;
 
+  //CircularProgressIndicator
   bool isLoading = true;
   bool isLoadingProduct = true;
 
+  // title appbar
   String title = "Quản lý sản phẩm";
 
   @override
   void onInit() {
     super.onInit();
+    //get load data
     getAllCategory();
   }
 
@@ -56,7 +64,6 @@ class V3ProductManagementController extends GetxController
         //listener tabController
         listenerTabController();
 
-        //stop loading
         isLoading = false;
         update();
       },
@@ -74,7 +81,6 @@ class V3ProductManagementController extends GetxController
     tabController!.addListener(() {
       //check call fisrt times
       if (tabController!.indexIsChanging) {
-        sanPhamResponse.clear();
         isLoadingProduct = true;
         update();
 
@@ -88,32 +94,34 @@ class V3ProductManagementController extends GetxController
   ///get product by idCategory
   ///
   void getProductByIdCategory({required bool isRefresh}) {
-    print("object032311");
+    //isRefresh
     if (isRefresh) {
       pageMax = 1;
       sanPhamResponse.clear();
     } else {
+      //is load more
       pageMax++;
     }
-    //paginate by idCategory
+
+    //get product by idDanhMucSanPham
     sanPhamProvider.paginate(
       page: pageMax,
       limit: limitMax,
       filter:
           "&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
       onSuccess: (value) {
+        //check is empty
         if (value.isEmpty) {
           refreshControllerList![tabController!.index].loadNoData();
-          update();
         } else {
+          //isRefresh
           if (isRefresh) {
             sanPhamResponse = value;
             refreshControllerList![tabController!.index].refreshCompleted();
-            update();
           } else {
+            //is load more
             sanPhamResponse = sanPhamResponse.toList() + value;
             refreshControllerList![tabController!.index].loadComplete();
-            update();
           }
         }
 
@@ -126,11 +134,17 @@ class V3ProductManagementController extends GetxController
     );
   }
 
+  ///
+  ///on refresh
+  ///
   Future onRefresh() async {
     refreshControllerList![tabController!.index].resetNoData();
     getProductByIdCategory(isRefresh: true);
   }
 
+  ///
+  ///on loading
+  ///
   Future onLoading() async {
     getProductByIdCategory(isRefresh: false);
   }
