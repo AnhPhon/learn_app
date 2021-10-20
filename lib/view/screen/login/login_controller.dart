@@ -55,18 +55,16 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    // print('phuong ${usernameController.text}');
-    // print('phuong ${passwordController.text}');
-    // // sl.get<SharedPreferenceHelper>().saveUserId("616d99dd7e28e22b158543bb");
-    // // if (usernameController.text == '1') {
-    // //   Get.toNamed(AppRoutes.V1_DASHBOARD);
-    // // } else if (usernameController.text == '2') {
-    // //   Get.toNamed(AppRoutes.V2_DASHBOARD);
-    // // } else if (usernameController.text == '3') {
-    // //   Get.toNamed(AppRoutes.V3_DASHBOARD);
-    // // } else if (usernameController.text == '4') {
-    // //   Get.toNamed(AppRoutes.V4_DASHBOARD);
-    // // } else {}
+    sl.get<SharedPreferenceHelper>().saveUserId("616e240ac48e736e333f1cda");
+    if (usernameController.text == '1') {
+      Get.toNamed(AppRoutes.V1_DASHBOARD);
+    } else if (usernameController.text == '2') {
+      Get.toNamed(AppRoutes.V2_DASHBOARD);
+    } else if (usernameController.text == '3') {
+      Get.toNamed(AppRoutes.V3_DASHBOARD);
+    } else if (usernameController.text == '4') {
+      Get.toNamed(AppRoutes.V4_DASHBOARD);
+    } else {}
 
     // // validate infomation username password
     // if (usernameController.text == '' || passwordController.text == '') {
@@ -120,7 +118,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
@@ -176,7 +174,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }

@@ -46,7 +46,7 @@ class V4NewsController extends GetxController
           update();
         },
         onError: (error) {
-          print(error);
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         });
   }
 }

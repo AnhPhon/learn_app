@@ -42,7 +42,7 @@ class EditInfoController extends GetxController {
     //         update();
     //       },
     //       onError: (error) {
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //       },
     //     );
     //   },
@@ -67,7 +67,7 @@ class EditInfoController extends GetxController {
   //   //         update();
   //   //       },
   //   //       onError: (error) {
-  //   //         print(error);
+  //   //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
   //   //       },
   //   //     );
   //   //   },
@@ -133,7 +133,7 @@ class EditInfoController extends GetxController {
     //         }
     //       },
     //       onError: (error) {
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       },
     //     );
@@ -192,7 +192,7 @@ class EditInfoController extends GetxController {
     //     );
     //   },
     //   onError: (error) {
-    //     print(error);
+    //     print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //   },
     // );
   }

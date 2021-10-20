@@ -54,7 +54,7 @@ class SharedPreferenceHelper {
 
   bool containsKey() {
     return _sharedPreference.containsKey(Preferences.jwt_token);
-  } 
+  }
 
   // General Methods: refresh token
   Future<String?> get refreshToken async {
@@ -181,7 +181,7 @@ class SharedPreferenceHelper {
 
   Future<bool> saveWard(String id) async {
     return _sharedPreference.setString(Preferences.ward, id);
-  } 
+  }
 
   // workFlowId: ----------------------------------------------------------
   Future<String?> get workFlowId async {
