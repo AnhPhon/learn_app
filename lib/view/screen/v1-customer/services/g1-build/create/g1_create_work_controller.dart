@@ -121,6 +121,13 @@ class V1G1CreateWorkController extends GetxController{
   }
 
   ///
+  /// Xoá vật liệu
+  ///
+  void deleteSupplies(VatTuResponse supplies){
+    massList.removeWhere((element) => element.hashCode == supplies.hashCode);
+    update();
+  }
+  ///
   /// Chon file
   ///
   Future<void> pickerFile() async{

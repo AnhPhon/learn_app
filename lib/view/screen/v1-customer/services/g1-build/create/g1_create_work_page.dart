@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -137,7 +138,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowMultiline: false,
           controller: controller.nameTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà",
+          holdplacer: "Lát gạch phòng ngủ 600*600",
           hidden: false,
           label: "Tên công việc",
           obligatory: true,
@@ -150,7 +151,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowMultiline: false,
           controller: controller.specificationController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "vd: Xi măng",
+          holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
           hidden: false,
           label: "Quy cách",
           obligatory: true,
@@ -188,7 +189,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         Padding(
           padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
           child: LongButton(
-             title: '+ Thêm vật liệu', 
+             title: '+ Thêm công việc', 
              color: ColorResources.PRIMARYCOLOR, 
              onPressed: controller.onClickAddMass,
              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -200,14 +201,25 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   }
 
   ///
-  /// Danh sách vật liệu được thêm 
+  /// Danh sách công việc được thêm 
   ///
   Widget materialList(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
       children: controller.massList.map((e) => 
       SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
-        child: MaterialCard(mass: e))).toList()
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Xoá',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: ()=> controller.deleteSupplies(e)
+            ),
+          ],
+          child: MaterialCard(mass: e)))
+      ).toList()
     );
   }
 

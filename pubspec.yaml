@@ -54,6 +54,7 @@ dependencies:
   pin_code_fields: ^7.3.0
   multi_select_flutter: ^4.0.0
   pinch_zoom_image_last: ^0.4.1
+  flutter_slidable: ^0.6.0
 
 
 dev_dependencies:
