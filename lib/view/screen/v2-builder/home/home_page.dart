@@ -167,44 +167,6 @@ class V2HomePage extends GetView<V2HomeController> {
   }
 
   ///
-  /// box
-  ///
-  Widget _box() {
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-          decoration: const BoxDecoration(
-            color: Color(0xff2196F3),
-            borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
-          ),
-          child: Row(
-            children: const [
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Icon(
-                  Icons.work,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-              Text(
-                'Kết quả báo giá',
-                style: TextStyle(
-                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  ///
   /// field widget
   ///
   Widget fieldWidget(String title, Function() onTap, Widget widget) {
@@ -381,6 +343,44 @@ class V2HomePage extends GetView<V2HomeController> {
                 isSpaceBetween: true,
               );
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// box
+  ///
+  Widget _box() {
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          decoration: const BoxDecoration(
+            color: Color(0xff2196F3),
+            borderRadius: BorderRadius.all(
+                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+          ),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.work,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+              Text(
+                'Kết quả báo giá',
+                style: TextStyle(
+                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
+              )
+            ],
           ),
         ),
       ),

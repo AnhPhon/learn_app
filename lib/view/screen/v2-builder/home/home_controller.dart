@@ -7,7 +7,11 @@ import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
+import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
+import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/giay_chung_nhan_suc_khoe_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -15,21 +19,37 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2HomeController extends GetxController {
+  // provider
   final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
   final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
+  DangKyBaoHiemProvider dangKyBaoHiemProvider =
+      GetIt.I.get<DangKyBaoHiemProvider>();
+  DangKyHopDongSBSProvider dangKyHopDongSBSProvider =
+      GetIt.I.get<DangKyHopDongSBSProvider>();
+  GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
+      GetIt.I.get<GiayChungNhanSucKhoeProvider>();
 
   // refresh controller
   RefreshController? refreshController;
 
+  // list
   List<String>? idCongViecDangCanNguoiList = ["1", "2", "5", "6"];
   List<Map<String, dynamic>>? contentGrid;
   List<DonDichVuResponse> donDichVuList = [];
   List<SanPhamResponse> sanPhamList = [];
   List<TinTucResponse> tinTucList = [];
 
-  int number = 0;
+  // bool
+  bool thueValid = false;
+  bool camKetValid = false;
+  bool hopDongValid = false;
+  bool baoHiemValid = false;
+  bool chungNhanValid = false;
+
+  int number = 5 + 2;
 
   String fullname = "Nguyễn Văn A";
 
@@ -50,6 +70,8 @@ class V2HomeController extends GetxController {
   /// init feature
   ///
   void _initFeatures() {
+    number = 5 + 2;
+
     // get user id
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       _taiKhoanProvider.find(
@@ -68,6 +90,21 @@ class V2HomeController extends GetxController {
 
           // load tin tuc
           _loadTinTuc();
+
+          // dang ky thue
+          dangKyThue(id);
+
+          // cam ket thue
+          camKetThue(id);
+
+          // dang ky fss
+          dangKyFSS(id);
+
+          // dang ky bao hiem tai nan
+          dangKyBaoHiemTaiNan(id);
+
+          // chứng nhận sức khỏe
+          chungNhanSucKhoe(id);
 
           // khoi tao three feature
           _initThreeFeatures();
@@ -117,24 +154,6 @@ class V2HomeController extends GetxController {
   }
 
   ///
-  /// load san pham
-  ///
-  void _loadSanPham() {
-    _sanPhamProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "&sortBy=created_at:desc",
-      onSuccess: (value) {
-        sanPhamList = value;
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
   /// load tin tuc
   ///
   void _loadTinTuc() {
@@ -153,7 +172,141 @@ class V2HomeController extends GetxController {
     );
   }
 
+  ///
+  /// load san pham
+  ///
+  void _loadSanPham() {
+    _sanPhamProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (value) {
+        sanPhamList = value;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký thuế
+  ///
+  void dangKyThue(String id) {
+    dangKyThueProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            thueValid = true;
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký thuế
+  ///
+  void camKetThue(String id) {
+    dangKyThueProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            thueValid = true;
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký fss
+  ///
+  void dangKyFSS(String id) {
+    dangKyHopDongSBSProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            hopDongValid = true;
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký bảo hiểm tai nạn
+  ///
+  void dangKyBaoHiemTaiNan(String id) {
+    dangKyBaoHiemProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            baoHiemValid = true;
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// chúng nhận sức khỏe
+  ///
+  void chungNhanSucKhoe(String id) {
+    giayChungNhanSucKhoeProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            chungNhanValid = true;
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
   void _initThreeFeatures() {
+    // private
     // declare content grid
     contentGrid = [
       {
@@ -287,4 +440,6 @@ class V2HomeController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshController!.loadComplete();
   }
+
+  // private
 }

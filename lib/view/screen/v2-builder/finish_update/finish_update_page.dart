@@ -11,6 +11,11 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
     return GetBuilder<V2FinishUpdateController>(
       init: V2FinishUpdateController(),
       builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
@@ -20,43 +25,65 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                 children: [
                   // Đăng ký thuế và cam kết thuế
                   _textOnClick(
-                      "Đăng ký thuế và cam kết thuế (đối với tổ đội/thợ/lao động phổ thông)",
-                      controller.onDangKyVaCamKetClick,
-                      true),
+                    "Đăng ký thuế và cam kết thuế (đối với tổ đội/thợ/lao động phổ thông)",
+                    controller.onDangKyVaCamKetClick,
+                    controller.thueValid == true &&
+                        controller.camKetValid == true,
+                  ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                   // Đăng ký ký hợp đồng nguyên tăc hợp tác với FSS
-                  _textOnClick("Đăng ký ký hợp đồng nguyên tăc hợp tác với FSS",
-                      controller.onDangKyHopDongClick, false),
+                  _textOnClick(
+                    "Đăng ký ký hợp đồng nguyên tăc hợp tác với FSS",
+                    controller.onDangKyHopDongClick,
+                    controller.hopDongValid,
+                  ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                   // bổ sung hoặc đăng ký mua bảo hiểm tai nạn chưa có trước khi làm việc
                   _textOnClick(
-                      "Bổ sung hoặc đăng ký mua bảo hiểm tai nạn chưa có trước khi làm việc",
-                      controller.onBaoHiemTaiNanClick,
-                      false),
+                    "Bổ sung hoặc đăng ký mua bảo hiểm tai nạn chưa có trước khi làm việc",
+                    controller.onBaoHiemTaiNanClick,
+                    controller.baoHiemValid,
+                  ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                   // bổ sung giấy chứng nhận khám sức khỏe đạt đủ điều kiện làm việc
                   _textOnClick(
-                      "Bổ sung Giấy chứng nhận khám sức khỏe đạt đủ điều kiện làm việc",
-                      controller.onGiayChungNhanKhamSucKhoeClick,
-                      false),
+                    "Bổ sung Giấy chứng nhận khám sức khỏe đạt đủ điều kiện làm việc",
+                    controller.onGiayChungNhanKhamSucKhoeClick,
+                    controller.chungNhanValid,
+                  ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                   // bổ sung mã số thuế
-                  _textOnClick("Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                      controller.onMaSoThueClick, false),
+                  _textOnClick(
+                    "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
+                    controller.onMaSoThueClick,
+                    false,
+                  ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                   // cập nhật sản phẩm mẫu
-                  _textOnClick("Cập nhập sản phẩm mẫu",
-                      controller.onCapNhatSanPhamClick, false),
+                  _textOnClick(
+                    "Cập nhập sản phẩm mẫu",
+                    controller.onCapNhatSanPhamClick,
+                    false,
+                  ),
+
+                  const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // cập nhật sản phẩm mẫu
+                  _textOnClick(
+                    "Cập nhập bảng giá",
+                    controller.onCapNhatSanPhamClick,
+                    false,
+                  ),
                 ],
               ),
             ),
@@ -69,7 +96,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
   Widget _textOnClick(String label, Function() onTap, bool isPass) {
     return GestureDetector(
       onTap: () {
-        if (isPass) {
+        if (!isPass) {
           onTap();
         }
       },
