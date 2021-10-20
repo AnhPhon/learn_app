@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 
 class KhoSanPham extends StatelessWidget {
   final String tenSanPham;
   final String maSanPham;
   final String giaSanPham;
+  final String hinhAnh;
   final String quyCach;
 
   const KhoSanPham({
     required this.tenSanPham,
     required this.maSanPham,
+    required this.hinhAnh,
     required this.giaSanPham,
     required this.quyCach,
   });
@@ -19,6 +21,7 @@ class KhoSanPham extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
+      width: DeviceUtils.getScaledWidth(context, 1),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -32,26 +35,25 @@ class KhoSanPham extends StatelessWidget {
         ),
       ),
       margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
-      padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
-            width: 80,
+            width: DeviceUtils.getScaledWidth(context, .2),
             height: 80,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage(Images.V4NewsExample),
+                image: NetworkImage(hinhAnh),
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            width: 270,
+            width: DeviceUtils.getScaledWidth(context, .65),
             child: Column(
               children: [
                 Container(

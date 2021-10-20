@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/register/register_page.dart';
+import 'package:template/view/screen/update_password/update_password_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
@@ -196,6 +200,7 @@ import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_pag
 import 'package:template/view/screen/v4-employee/news/news_page.dart';
 import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_binding.dart';
 import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
@@ -204,8 +209,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_report_on
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 // import 'package:template/view/screen/auth/auth_page.dart';
-// import 'package:template/view/screen/introduction/introduction_page.dart';
-// import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/introduction/introduction_page.dart';
+import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
@@ -219,8 +224,35 @@ import 'app_routes.dart';
 class AppPages {
   static List<GetPage> list = [
     GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => SplashPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.INTRO,
+      page: () => IntroductionPage(),
+    ),
+
+    // auth
+    GetPage(
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
+    ),
+    GetPage(
+      name: AppRoutes.FORGOT_PASSWORD,
+      page: () => ForgotPasswordPage(),
+    ),
+    GetPage(
+      name: AppRoutes.UPDATE_PASSWORD,
+      page: () => UpdatePasswordPage(),
+    ),
+    GetPage(
+      name: AppRoutes.OTP_VERIFIER,
+      page: () => OTPVerifierPage(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER,
+      page: () => RegisterPage(),
     ),
 
     // custommer
@@ -991,6 +1023,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V4_NOTIFICATION,
       page: () => V4NotificationPage(),
+      binding: V4NotificationBinding(),
     ),
     GetPage(
       name: AppRoutes.V4_DETAIL_NOTIFICATION,

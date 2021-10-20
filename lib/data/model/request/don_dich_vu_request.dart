@@ -43,8 +43,8 @@ class DonDichVuRequest {
   String? tienCoc;
   String? diaChiCuThe;
 
-  DonDichVuRequest({
-      this.id,
+  DonDichVuRequest(
+      {this.id,
       this.idTaiKhoan,
       this.idNhomDichVu,
       this.tieuDe,
@@ -82,9 +82,8 @@ class DonDichVuRequest {
       this.tongDon,
       this.taiKhoanNhanDon,
       this.tienCoc,
-      this.diaChiCuThe
-      });
-  
+      this.diaChiCuThe});
+
   ///
   /// From JSON
   ///
@@ -101,7 +100,9 @@ class DonDichVuRequest {
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>).map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>)).toList();
+    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
+        .map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
+        .toList();
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
@@ -136,120 +137,127 @@ class DonDichVuRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null idNhomDichVu
-    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu; 
+    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 
     // check null tieuDe
-    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     // check null moTa
-    if (moTa != null) data['moTa'] = moTa; 
+    if (moTa != null) data['moTa'] = moTa;
 
     // check null ngayBatDau
-    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau; 
+    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau;
 
     // check null ngayKetThuc
-    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc; 
+    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc;
 
     // check null hinhAnhBanKhoiLuong
-    if (hinhAnhBanKhoiLuong != null) data['hinhAnhBanKhoiLuong'] = hinhAnhBanKhoiLuong; 
+    if (hinhAnhBanKhoiLuong != null)
+      data['hinhAnhBanKhoiLuong'] = hinhAnhBanKhoiLuong;
 
     // check null hinhAnhBanVe
-    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe; 
+    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
 
     // check null idTrangThaiDonHang
-    if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+    if (idTrangThaiDonHang != null)
+      data['idTrangThaiDonHang'] = idTrangThaiDonHang;
 
     // check null idHinhThucThanhToan
-    if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 
+    if (idHinhThucThanhToan != null)
+      data['idHinhThucThanhToan'] = idHinhThucThanhToan;
 
     // check null idTrangThaiThanhToan
-    if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
+    if (idTrangThaiThanhToan != null)
+      data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
 
     // check null idThoiGianLamViec
-    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec!.map((e) => {'idThoiGianLamViec':e.id!}).toList(); 
+    if (thoiGianLamViec != null)
+      data['thoiGianLamViec'] =
+          thoiGianLamViec!.map((e) => {'idThoiGianLamViec': e.id!}).toList();
 
     // check null idTinhTp
-    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
 
     // check null idQuanHuyen
-    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen;
 
     // check null idPhuongXa
-    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null giaTriKhachDeXuat
-    if (giaTriKhachDeXuat != null) data['giaTriKhachDeXuat'] = giaTriKhachDeXuat; 
+    if (giaTriKhachDeXuat != null)
+      data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
 
     // check null hinhAnhChiTiet
-    if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet; 
+    if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
 
     // check null moTaChiTiet
-    if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet; 
+    if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
 
     // check null file
-    if (file != null) data['file'] = file; 
+    if (file != null) data['file'] = file;
 
     // check null soLuongYeuCau
-    if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau; 
+    if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau;
 
     // check null soNgay
-    if (soNgay != null) data['soNgay'] = soNgay; 
+    if (soNgay != null) data['soNgay'] = soNgay;
 
     // check null diaDiemLamViec
-    if (diaDiemLamViec != null) data['diaDiemLamViec'] = diaDiemLamViec; 
+    if (diaDiemLamViec != null) data['diaDiemLamViec'] = diaDiemLamViec;
 
     // check null idBangGiaDonHang
-    if (idBangGiaDonHang != null) data['idBangGiaDonHang'] = idBangGiaDonHang; 
+    if (idBangGiaDonHang != null) data['idBangGiaDonHang'] = idBangGiaDonHang;
 
     // check null gioiTinh
-    if (gioiTinh != null) data['gioiTinh'] = gioiTinh; 
+    if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null idThongSoKyThuat
-    if (idThongSoKyThuat != null) data['idThongSoKyThuat'] = idThongSoKyThuat; 
+    if (idThongSoKyThuat != null) data['idThongSoKyThuat'] = idThongSoKyThuat;
 
     // check null diaDiemBocHang
-    if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang; 
+    if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang;
 
     // check null diaDiemTraHang
-    if (diaDiemTraHang != null) data['diaDiemTraHang'] = diaDiemTraHang; 
+    if (diaDiemTraHang != null) data['diaDiemTraHang'] = diaDiemTraHang;
 
     // check null cuLyVanChuyen
-    if (cuLyVanChuyen != null) data['cuLyVanChuyen'] = cuLyVanChuyen; 
+    if (cuLyVanChuyen != null) data['cuLyVanChuyen'] = cuLyVanChuyen;
 
     // check null beRongDiemNhan
-    if (beRongDiemNhan != null) data['beRongDiemNhan'] = beRongDiemNhan; 
+    if (beRongDiemNhan != null) data['beRongDiemNhan'] = beRongDiemNhan;
 
     // check null beRongDiemTra
-    if (beRongDiemTra != null) data['beRongDiemTra'] = beRongDiemTra; 
+    if (beRongDiemTra != null) data['beRongDiemTra'] = beRongDiemTra;
 
     // check null hinhAnhBaoGia
-    if (hinhAnhBaoGia != null) data['hinhAnhBaoGia'] = hinhAnhBaoGia; 
+    if (hinhAnhBaoGia != null) data['hinhAnhBaoGia'] = hinhAnhBaoGia;
 
     // check null phiDichVu
-    if (phiDichVu != null) data['phiDichVu'] = phiDichVu; 
+    if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
 
     // check null khuyenMai
-    if (khuyenMai != null) data['khuyenMai'] = khuyenMai; 
+    if (khuyenMai != null) data['khuyenMai'] = khuyenMai;
 
     // check null soTien
-    if (soTien != null) data['soTien'] = soTien; 
+    if (soTien != null) data['soTien'] = soTien;
 
     // check null tongDon
-    if (tongDon != null) data['tongDon'] = tongDon; 
+    if (tongDon != null) data['tongDon'] = tongDon;
 
     // check null taiKhoanNhanDon
-    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon; 
+    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon;
 
     // check null tienCoc
-    if (tienCoc != null) data['tienCoc'] = tienCoc; 
+    if (tienCoc != null) data['tienCoc'] = tienCoc;
     // check dịa chi cụ the
-    if(diaChiCuThe != null) data['diaChiCuThe'] = diaChiCuThe;
+    if (diaChiCuThe != null) data['diaChiCuThe'] = diaChiCuThe;
     return data;
   }
 }

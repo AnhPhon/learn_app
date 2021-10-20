@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
@@ -21,6 +22,9 @@ class V4HomeController extends GetxController {
 
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
+  // refresh controller
+  RefreshController? refreshController;
+
   //khai báo thời gian báo cáo
   TimeOfDay reportTimekeeping = const TimeOfDay(hour: 17, minute: 0);
 
@@ -39,10 +43,10 @@ class V4HomeController extends GetxController {
   double? expenditure; // chi
 
   // số lượng các tiến độ
-  int moiTaoQuality = 0;
-  int dangLamQuality = 0;
-  int hoanThanhQuality = 0;
-  int chamTreQuality = 0;
+  int? moiTaoQuality;
+  int? dangLamQuality;
+  int? hoanThanhQuality;
+  int? chamTreQuality;
 
   // isloading
   bool isLoading = true;
@@ -52,9 +56,25 @@ class V4HomeController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
+    // init refreshController
+    refreshController ??= RefreshController();
+
+    // init program run
+    initProgramRun();
+  }
+
+  ///
+  /// init program run
+  ///
+  void initProgramRun() {
     total = 0;
     revenue = 0;
     expenditure = 0;
+
+    moiTaoQuality = 0;
+    dangLamQuality = 0;
+    hoanThanhQuality = 0;
+    chamTreQuality = 0;
 
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       taiKhoanProvider.find(
@@ -63,45 +83,43 @@ class V4HomeController extends GetxController {
           fullname = taiKhoanResponse.hoTen!;
           avatar = taiKhoanResponse.hinhDaiDien!;
           // load thu chi
-          _readRevenueAndExpenditure();
+          _readRevenueAndExpenditure(id);
 
           // xử lý tiến độ công việc
           _theoDoiTienDo();
         },
         onError: (error) {
-          print(error);
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         },
       );
     });
-
-    update();
   }
 
   ///
   /// set user
   ///
-  void _readRevenueAndExpenditure() {
+  void _readRevenueAndExpenditure(String id) {
     // set name of user
     thuChiNhanVienProvider.paginate(
       page: 1,
       limit: 50,
-      filter: "",
+      filter: "&idNhanVien=$id",
       onSuccess: (models) {
         for (final model in models) {
           final String type = model.loai.toString().toLowerCase();
           final double money = double.parse(model.soTien!);
-          if (type == "loai 1") {
+          if (type == "1") {
             revenue = revenue! + money;
           } else {
             expenditure = expenditure! + money;
           }
-          total = total! + revenue!;
-          total = total! - expenditure!;
         }
+        total = total! + revenue!;
+        total = total! - expenditure!;
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -118,13 +136,13 @@ class V4HomeController extends GetxController {
         for (final model in models) {
           final String status = model.trangThai!.toLowerCase();
           if (status == "moi tao") {
-            moiTaoQuality = moiTaoQuality + 1;
+            moiTaoQuality = moiTaoQuality! + 1;
           } else if (status == "dang lam") {
-            dangLamQuality = dangLamQuality + 1;
+            dangLamQuality = dangLamQuality! + 1;
           } else if (status == "hoan thanh") {
-            hoanThanhQuality = hoanThanhQuality + 1;
+            hoanThanhQuality = hoanThanhQuality! + 1;
           } else {
-            chamTreQuality = chamTreQuality + 1;
+            chamTreQuality = chamTreQuality! + 1;
           }
           _resetContenGrid();
           isLoading = false;
@@ -132,7 +150,7 @@ class V4HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -145,33 +163,33 @@ class V4HomeController extends GetxController {
       {
         "title": "Mới tạo",
         "quality": moiTaoQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff79B4B8),
-        ])
+        "color": RadialGradient(colors: [
+          const Color(0xffE7C550).withOpacity(.78),
+          const Color(0xffBE8542).withOpacity(.78),
+        ]),
       },
       {
         "title": "Đang làm",
         "quality": dangLamQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00B4D8),
+        "color": RadialGradient(colors: [
+          const Color(0xffC1E6EE).withOpacity(.78),
+          const Color(0xff00B4D8).withOpacity(.78),
         ]),
       },
       {
         "title": "Hoàn Thành",
         "quality": hoanThanhQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xff00A676),
+        "color": RadialGradient(colors: [
+          const Color(0xff97DBAE).withOpacity(.78),
+          const Color(0xff3FA963).withOpacity(.78),
         ]),
       },
       {
         "title": "Chậm trễ",
         "quality": chamTreQuality,
-        "color": const RadialGradient(colors: [
-          Color(0xffC1E6EE),
-          Color(0xffD00000),
+        "color": RadialGradient(colors: [
+          const Color(0xffEE7B7B).withOpacity(.78),
+          const Color(0xffF81818).withOpacity(.78),
         ]),
       }
     ];
@@ -236,10 +254,12 @@ class V4HomeController extends GetxController {
     final double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
 
-    if (_reportTimekeeping < _timeNow && _timeNow < _timekeeping) {
-      return onClickToReportTimeKeeping(context);
+    if (_reportTimekeeping < _timeNow) {
+      onClickToReportTimeKeeping(context);
+    } else if (_timeNow < _timekeeping) {
+      onClickToReportTimeKeeping(context);
     } else {
-      return onClickToTimeKeeping(context);
+      onClickToTimeKeeping(context);
     }
   }
 
@@ -298,5 +318,22 @@ class V4HomeController extends GetxController {
         update();
       }
     });
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    initProgramRun();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

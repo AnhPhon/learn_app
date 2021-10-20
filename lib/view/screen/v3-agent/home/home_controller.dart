@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/response/san_pham_response.dart';
-import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
@@ -17,6 +16,9 @@ class V3HomeController extends GetxController {
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
 
+  // refresh controller
+  RefreshController? refreshController;
+
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
@@ -29,8 +31,19 @@ class V3HomeController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
+    // init refreshController
+    refreshController ??= RefreshController();
+
+    // init run
+    initProgramRun();
+  }
+
+  ///
+  /// initProgramRun
+  ///
+  void initProgramRun() {
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       // tìm kiếm tài khoản theo id user được login
       taiKhoanProvider.find(
@@ -43,13 +56,13 @@ class V3HomeController extends GetxController {
           _readTinTuc();
 
           // read Kho san Pham
-          _readKhosanPham();
+          readKhosanPham();
 
           // binding three feature
-          _bindingThreeFeature();
+          bindingThreeFeature();
         },
         onError: (error) {
-          print(error);
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -69,7 +82,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -77,7 +90,7 @@ class V3HomeController extends GetxController {
   ///
   /// read kho san pham
   ///
-  void _readKhosanPham() {
+  void readKhosanPham() {
     sanPhamProvider.paginate(
       page: 1,
       limit: 2,
@@ -91,7 +104,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -99,11 +112,11 @@ class V3HomeController extends GetxController {
   ///
   /// binding three feature
   ///
-  void _bindingThreeFeature() {
+  void bindingThreeFeature() {
     threeFeatures = [
       {
         "icon": Icons.shop,
-        "label": "Cửa hàng \ncủa bạn",
+        "label": ["Cửa hàng", "của bạn"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff8CE3E9),
@@ -115,19 +128,19 @@ class V3HomeController extends GetxController {
       },
       {
         "icon": Icons.chat,
-        "label": "Phản hồi \nbáo giá",
+        "label": ["Phản hồi", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xffC1E6EE),
           Color(0xffC1E6EE),
         ]),
         "onTap": () {
-          //onClickQuoteReponse();
+          onClickQuoteReponse();
         }
       },
       {
         "icon": Icons.request_page,
-        "label": "Yêu cầu \nbáo giá",
+        "label": ["Yêu cầu", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff79B4B8),
@@ -161,12 +174,36 @@ class V3HomeController extends GetxController {
     Get.toNamed(AppRoutes.V3_QUOTE_LIST);
   }
 
-  // ///
-  // /// Phản hòi báo giá
-  // ///
-  // void onClickQuoteReponse() {
-  //   Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
-  // }
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews() {
+    Get.toNamed(AppRoutes.V2_NEWS);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNewsDetail(String id) {
+    // goto detail news
+    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+  }
+
+  ///
+  /// Nhấn nút sản phẩm
+  ///
+  void onClickHotProductDetail(String id) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
+    // goto detail news
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  }
+
+  ///
+  /// Phản hòi báo giá
+  ///
+  void onClickQuoteReponse() {
+    Get.toNamed(AppRoutes.V3_PHAN_HOI_BAO_GIA);
+  }
 
   ///
   /// Cửa hàng
@@ -179,6 +216,30 @@ class V3HomeController extends GetxController {
   /// on Need Update Click
   ///
   void onNeedUpdateClick() {
-    Get.toNamed(AppRoutes.V3_FINISH_UPDATE);
+    Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
+  }
+
+  ///
+  ///go to news detail page
+  ///
+  void onNewsDetailClick({required int index}) {
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    initProgramRun();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

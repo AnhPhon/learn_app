@@ -7,12 +7,14 @@ class TaskNeedWorker extends StatelessWidget {
   final String tenTask;
   final String maTask;
   final String trangThai;
+  String? imageURL;
 
-  const TaskNeedWorker({
+  TaskNeedWorker({
     required this.nhanTask,
     required this.tenTask,
     required this.maTask,
     required this.trangThai,
+    this.imageURL,
   });
 
   @override
@@ -40,15 +42,15 @@ class TaskNeedWorker extends StatelessWidget {
           Container(
             width: height,
             height: height,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage(Images.V4NewsExample),
+                image: NetworkImage(imageURL!),
                 fit: BoxFit.fill,
               ),
             ),
@@ -61,7 +63,7 @@ class TaskNeedWorker extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "$nhanTask: $tenTask",
+                    tenTask,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
