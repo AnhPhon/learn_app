@@ -122,9 +122,9 @@ class InputField extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_LARGE,
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
-                  fillColor: (isColorFieldWhite == true)
-                      ? ColorResources.NOT_ALLOW_EDIT
-                      : ColorResources.WHITE,
+                  fillColor: (isColorFieldWhite == false)
+                      ? ColorResources.WHITE
+                      : ColorResources.NOT_ALLOW_EDIT,
                   suffixIcon: suffixIcon),
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -20,7 +21,7 @@ class V4HomeController extends GetxController {
   CongViecNhanVienProvider congViecNhanVienProvider =
       GetIt.I.get<CongViecNhanVienProvider>();
 
-  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
 
   // refresh controller
   RefreshController? refreshController;
@@ -77,7 +78,7 @@ class V4HomeController extends GetxController {
     chamTreQuality = 0;
 
     sl.get<SharedPreferenceHelper>().userId.then((id) {
-      taiKhoanProvider.find(
+      nhanVienProvider.find(
         id: id!,
         onSuccess: (taiKhoanResponse) {
           fullname = taiKhoanResponse.hoTen!;
