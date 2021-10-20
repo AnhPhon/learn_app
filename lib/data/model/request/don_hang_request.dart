@@ -12,6 +12,7 @@ class DonHangRequest {
   String? soTien;
   String? tongTien;
   String? idTrangThaiDonHang;
+  String? idTrangThaiThanhToan;
   String? idHinhThucThanhToan;
 
   DonHangRequest({
@@ -28,6 +29,7 @@ class DonHangRequest {
       this.soTien,
       this.tongTien,
       this.idTrangThaiDonHang,
+      this.idTrangThaiThanhToan,
       this.idHinhThucThanhToan});
   
   ///
@@ -47,6 +49,7 @@ class DonHangRequest {
     soTien = json['soTien'].toString();
     tongTien = json['tongTien'].toString();
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
+    idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
   }
 
@@ -93,6 +96,9 @@ class DonHangRequest {
 
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+
+    // check null idTrangThaiThanhToan
+    if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 

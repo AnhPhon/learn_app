@@ -88,6 +88,7 @@ class V3ProductManagementController extends GetxController
   ///get product by idCategory
   ///
   void getProductByIdCategory({required bool isRefresh}) {
+    print("object032311");
     if (isRefresh) {
       pageMax = 1;
       sanPhamResponse.clear();
@@ -101,19 +102,19 @@ class V3ProductManagementController extends GetxController
       filter:
           "&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
       onSuccess: (value) {
-        if (isRefresh) {
-          sanPhamResponse = value;
-          refreshControllerList![tabController!.index].refreshCompleted();
-          update();
-        } else {
-          sanPhamResponse = sanPhamResponse.toList() + value;
-          refreshControllerList![tabController!.index].loadComplete();
-          update();
-        }
-
         if (value.isEmpty) {
           refreshControllerList![tabController!.index].loadNoData();
           update();
+        } else {
+          if (isRefresh) {
+            sanPhamResponse = value;
+            refreshControllerList![tabController!.index].refreshCompleted();
+            update();
+          } else {
+            sanPhamResponse = sanPhamResponse.toList() + value;
+            refreshControllerList![tabController!.index].loadComplete();
+            update();
+          }
         }
 
         isLoadingProduct = false;
