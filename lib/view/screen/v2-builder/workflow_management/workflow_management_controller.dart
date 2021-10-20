@@ -43,7 +43,7 @@ class V2WorkflowManagementController extends GetxController
             _readCongViecNhanVien();
           },
           onError: (error) {
-            print(error);
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
           },
         );
       },
@@ -55,6 +55,7 @@ class V2WorkflowManagementController extends GetxController
   ///
   void _readCongViecNhanVien() {
     sl.get<SharedPreferenceHelper>().userId.then((id) {
+      print("URL: &idTaiKhoan=$id");
       donDichVuProvider.paginate(
         page: 1,
         limit: 30,

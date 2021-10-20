@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+
 class EditInfoController extends GetxController {
   GetIt sl = GetIt.instance;
 
@@ -39,7 +40,7 @@ class EditInfoController extends GetxController {
     //         update();
     //       },
     //       onError: (error) {
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //       },
     //     );
     //   },
@@ -64,7 +65,7 @@ class EditInfoController extends GetxController {
   //   //         update();
   //   //       },
   //   //       onError: (error) {
-  //   //         print(error);
+  //   //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
   //   //       },
   //   //     );
   //   //   },
@@ -131,7 +132,7 @@ class EditInfoController extends GetxController {
     //         }
     //       },
     //       onError: (error) {
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       },
     //     );
@@ -190,7 +191,7 @@ class EditInfoController extends GetxController {
     //     );
     //   },
     //   onError: (error) {
-    //     print(error);
+    //     print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //   },
     // );
   }

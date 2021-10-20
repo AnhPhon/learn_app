@@ -24,6 +24,8 @@ class Images {
 
   // login
   static const String login_background = 'assets/images/login_background.png';
+  static const String icon_photo = 'assets/images/icon_photo.png';
+  static const String icon_camera = 'assets/images/icon_camera.png';
 
   // v1-customer
   static const String V1Product1Home = 'assets/images/product1.png';

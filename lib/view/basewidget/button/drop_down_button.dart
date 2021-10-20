@@ -44,7 +44,7 @@ class DropDownButton<T> extends StatelessWidget {
                   Text(
                     label!,
                     style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
                         fontWeight: FontWeight.bold,
                         color: ColorResources.BLACK.withOpacity(0.7)),
                   ),
@@ -52,7 +52,7 @@ class DropDownButton<T> extends StatelessWidget {
                     const Text(
                       '*',
                       style: TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.bold,
                           color: Colors.red),
                     )
