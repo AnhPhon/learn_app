@@ -24,9 +24,8 @@ class UpdatePasswordController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    // Get.removeRoute();
-    Get.offAllNamed(AppRoutes.LOGIN); 
+    // remove all route but not login.
+    Get.offAllNamed(AppRoutes.LOGIN,
+        predicate: ModalRoute.withName(AppRoutes.LOGIN));
   }
 }
-
-// A -> B -> C -> D -> A
