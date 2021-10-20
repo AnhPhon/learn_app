@@ -267,15 +267,43 @@ class V4HomeController extends GetxController {
   ///
   ///click to export page
   ///
-  void onClickToExprot() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true");
+  void onClickToExprot(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true")!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Xuất kho thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   ///click to import page
   ///
-  void onClickToImport() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase");
+  void onClickToImport(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase")!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Nhập kho thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   /// click to Revenue page

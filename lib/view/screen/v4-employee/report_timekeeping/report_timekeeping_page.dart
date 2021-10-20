@@ -63,6 +63,7 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
 InputField _reportContent(
     V4ReportTimekeepingControllter controller, BuildContext context) {
   return InputField(
+    isColorFieldWhite: false,
     line: 10,
     allowEdit: true,
     allowMultiline: true,

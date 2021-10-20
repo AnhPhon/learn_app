@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
@@ -69,43 +70,34 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                     height: Dimensions.PADDING_SIZE_SMALL,
                   ),
 
+                  //đơn vị cung cấp
+                  _supplier(controller, context),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_SMALL,
+                  ),
+
                   //Tên vật tư/thiết bị
                   _supplies(controller, context),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //Số lượng
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_LARGE,
-                        ),
-                        child: _customSoLuong(controller, context),
-                      ),
-                      InputField(
-                        label: "Đơn vị",
-                        holdplacer: "",
-                        controller: controller.utils,
-                        allowEdit: false,
-                        allowMultiline: false,
-                        typeInput: TextInputType.number,
-                        width: DeviceUtils.getScaledWidth(context, 0.3),
-                        hidden: false,
-                        obligatory: false,
-                        fontSize: Dimensions.FONT_SIZE_LARGE,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //Số lượng
+                        _customSoLuong(controller, context),
+
+                        _customDonVi(controller, context),
+                      ],
+                    ),
                   ),
                   Container(
                     height: DeviceUtils.getScaledHeight(context, 0.03),
-                  ),
-                  InputWidget(
-                    label: "Đơn vị",
-                    obligatory: true,
-                    isColorFieldWhite: true,
-                    allowEdit: false,
-                    textEditingController: controller.utils,
-                    width: DeviceUtils.getScaledWidth(context, 0.3),
                   ),
 
                   //Nội dung khác(nếu có)
@@ -225,6 +217,23 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
 }
 
 ///
+///Tên kho theo dự án
+///
+Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
+  return DropDownButton1<DonViCungCapResponse>(
+    isColorFieldWhite: true,
+    labelBold: true,
+    hint: 'Vui lòng chọn đơn vị cung cấp',
+    label: 'Đơn vị cung cấp',
+    data: controller.donViCungCapModelList,
+    obligatory: true,
+    onChanged: (value) => controller.onChangedDonViCungCap(value!),
+    value: controller.donViCungCap,
+    width: DeviceUtils.getScaledWidth(context, 1),
+  );
+}
+
+///
 ///Tên vật tư/ thiết bị
 ///
 Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
@@ -282,7 +291,9 @@ Widget _btnXuat(V4ExportImportControleer controller) {
 Widget _btnNhap(V4ExportImportControleer controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.nhap();
+    },
     title: 'Nhập',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );
@@ -294,153 +305,249 @@ Widget _btnNhap(V4ExportImportControleer controller) {
 
 Widget _customSoLuong(
     V4ExportImportControleer controller, BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(
-      left: Dimensions.PADDING_SIZE_DEFAULT,
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(
-            bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          ),
-          alignment: Alignment.centerLeft,
-          child: Wrap(
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text(
-                'Số lượng',
-                style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
-                  fontWeight: FontWeight.w600,
-                  color: ColorResources.BLACK,
-                ),
-              ),
-              const Text(
-                '*',
-                style: TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red),
-              )
-            ],
-          ),
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        margin: const EdgeInsets.only(
+          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
         ),
-        Row(
+        alignment: Alignment.centerLeft,
+        child: Wrap(
+          // ignore: prefer_const_literals_to_create_immutables
           children: [
-            GestureDetector(
-              onTap: () {
-                controller.tru();
-              },
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: ColorResources.PRIMARY,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, 2),
-                      blurRadius: 2,
-                      color: ColorResources.BLACK.withAlpha(60),
-                    )
-                  ],
-                ),
-                child: const Icon(
-                  Icons.remove,
-                  color: ColorResources.WHITE,
-                ),
+            const Text(
+              'Số lượng',
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
+                fontWeight: FontWeight.w600,
+                color: ColorResources.BLACK,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-              ),
-              width: DeviceUtils.getScaledWidth(context, 0.2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                    child: TextField(
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      textAlignVertical: TextAlignVertical.center,
-                      enabled: true,
-                      controller: controller.countController,
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                          vertical: Dimensions.PADDING_SIZE_DEFAULT + 2,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: ColorResources.PRIMARYCOLOR),
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: ColorResources.PRIMARYCOLOR),
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: ColorResources.PRIMARYCOLOR),
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        ),
-                        filled: true,
-                        isDense: true,
-                        hintText: '',
-                        hintStyle: const TextStyle(
-                          color: ColorResources.BLACK,
-                          fontSize: Dimensions.FONT_SIZE_LARGE,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        fillColor: ColorResources.WHITE,
-                      ),
-                    ),
-                  ),
+            const Text(
+              '*',
+              style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red),
+            )
+          ],
+        ),
+      ),
+      const SizedBox(
+        width: 5,
+      ),
+      Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              controller.tru();
+            },
+            child: Container(
+              height: 25,
+              width: 25,
+              decoration: BoxDecoration(
+                color: ColorResources.PRIMARY,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 2),
+                    blurRadius: 2,
+                    color: ColorResources.BLACK.withAlpha(60),
+                  )
                 ],
               ),
+              child: const Icon(
+                Icons.remove,
+                color: ColorResources.WHITE,
+              ),
             ),
-            GestureDetector(
-              onTap: () {
-                controller.cong();
-              },
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: ColorResources.PRIMARY,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, 2),
-                      blurRadius: 2,
-                      color: ColorResources.BLACK.withAlpha(60),
-                    )
-                  ],
+          ),
+          Container(
+            padding: const EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
+            width: DeviceUtils.getScaledWidth(context, 0.2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: TextField(
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    textAlignVertical: TextAlignVertical.center,
+                    enabled: true,
+                    controller: controller.countController,
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                        vertical: Dimensions.PADDING_SIZE_DEFAULT + 2,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      filled: true,
+                      isDense: true,
+                      hintText: '0',
+                      hintStyle: const TextStyle(
+                        color: ColorResources.BLACK,
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      fillColor: ColorResources.WHITE,
+                    ),
+                  ),
                 ),
-                child: const Icon(
-                  Icons.add,
-                  color: ColorResources.WHITE,
-                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              controller.cong();
+            },
+            child: Container(
+              height: 25,
+              width: 25,
+              decoration: BoxDecoration(
+                color: ColorResources.PRIMARY,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 2),
+                    blurRadius: 2,
+                    color: ColorResources.BLACK.withAlpha(60),
+                  )
+                ],
+              ),
+              child: const Icon(
+                Icons.add,
+                color: ColorResources.WHITE,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+///
+/// Số lượng
+///
+
+Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
+  return Row(
+    children: [
+      Container(
+        margin: const EdgeInsets.only(
+          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+        ),
+        alignment: Alignment.centerLeft,
+        child: Wrap(
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Text(
+              'Đơn vị',
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
+                fontWeight: FontWeight.w600,
+                color: ColorResources.BLACK,
               ),
             ),
           ],
         ),
-      ],
-    ),
+      ),
+      const SizedBox(
+        width: 5,
+      ),
+      Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
+            width: DeviceUtils.getScaledWidth(context, 0.2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: TextField(
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    textAlignVertical: TextAlignVertical.center,
+                    enabled: true,
+                    controller: controller.utils,
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL,
+                        vertical: Dimensions.PADDING_SIZE_DEFAULT + 2,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: ColorResources.PRIMARYCOLOR),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      ),
+                      filled: true,
+                      isDense: true,
+                      hintText: '',
+                      hintStyle: const TextStyle(
+                        color: ColorResources.BLACK,
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      fillColor: ColorResources.NOT_ALLOW_EDIT,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
   );
 }

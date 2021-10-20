@@ -423,7 +423,7 @@ class V4HomePage extends GetView<V4HomeController> {
             children: [
               GestureDetector(
                 onTap: () {
-                  controller.onClickToExprot();
+                  controller.onClickToExprot(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -451,7 +451,7 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  controller.onClickToImport();
+                  controller.onClickToImport(context);
                 },
                 child: Container(
                   alignment: Alignment.center,

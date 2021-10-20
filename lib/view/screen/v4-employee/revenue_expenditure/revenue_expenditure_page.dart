@@ -149,6 +149,7 @@ Widget _timeRevenueExpenditure(
 Widget _contentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
+    isColorFieldWhite: false,
     line: 7,
     allowEdit: true,
     allowMultiline: true,
@@ -169,6 +170,7 @@ Widget _contentRevenue(
 Widget _contentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
+    isColorFieldWhite: false,
     line: 7,
     allowEdit: true,
     allowMultiline: true,
@@ -207,6 +209,7 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
 Widget _detailContentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
+    isColorFieldWhite: false,
     line: 7,
     allowEdit: true,
     allowMultiline: true,
@@ -228,6 +231,7 @@ Widget _detailContentRevenue(
 Widget _detailContentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
+    isColorFieldWhite: false,
     line: 7,
     allowEdit: true,
     allowMultiline: true,
