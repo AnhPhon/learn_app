@@ -28,7 +28,6 @@ class V2FinishUpdateController extends GetxController {
   bool chungNhanValid = false;
   bool sanPhamMauValid = false;
   bool bangGiaValid = false;
-  bool isLoading = true;
 
   @override
   void onInit() {
@@ -142,7 +141,6 @@ class V2FinishUpdateController extends GetxController {
         if (models.isNotEmpty) {
           if (models[0].trangThai == '1') {
             chungNhanValid = true;
-            isLoading = false;
             update();
           }
         }
@@ -178,13 +176,6 @@ class V2FinishUpdateController extends GetxController {
   /// on Giay Chung Nhan Kham Suc Khoe Click
   ///
   void onGiayChungNhanKhamSucKhoeClick() {
-    print("1");
-  }
-
-  ///
-  /// on Ma So Thue Click
-  ///
-  void onMaSoThueClick() {
     print("1");
   }
 

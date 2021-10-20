@@ -11,11 +11,6 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
     return GetBuilder<V2FinishUpdateController>(
       init: V2FinishUpdateController(),
       builder: (controller) {
-        if (controller.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
@@ -63,7 +58,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   // bổ sung mã số thuế
                   _textOnClick(
                     "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                    controller.onMaSoThueClick,
+                    controller.onDangKyHopDongClick,
                     controller.maSoThueValid,
                   ),
 
