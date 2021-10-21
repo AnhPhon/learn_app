@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
@@ -29,8 +30,23 @@ class V4InfoPage extends GetView<V4InfoController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _avatar(context),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_SMALL,
+                      ),
                       //Họ và tên
                       _name(controller, context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      ),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,6 +63,9 @@ class V4InfoPage extends GetView<V4InfoController> {
                           _sex(context),
                         ],
                       ),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -57,23 +76,36 @@ class V4InfoPage extends GetView<V4InfoController> {
                           _dateIndentityCard(controller, context),
                         ],
                       ),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
 
                       // nơi cấp CMND/Căn cước
                       _addresssIndentityCard(controller, context),
-                      Row(
-                        children: [
-                          //Số điện thoại
-                          _phoneNumber(controller, context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
 
-                          // Email
-                          _email(controller, context),
-                        ],
+                      //Số điện thoại
+                      _phoneNumber(controller, context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
+
+                      // Email
+                      _email(controller, context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
                       ),
 
                       // địa chỉ thường trú hiện tại
                       _addresss(controller, context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
 
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Tinhr /Tp
                           _city(context),
@@ -82,9 +114,15 @@ class V4InfoPage extends GetView<V4InfoController> {
                           _district(context),
                         ],
                       ),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
 
                       //Phường/ xã
                       _ward(context),
+                      const SizedBox(
+                        height: Dimensions.PADDING_SIZE_LARGE,
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.all(
@@ -153,10 +191,65 @@ class V4InfoPage extends GetView<V4InfoController> {
   }
 
   ///
+  /// Avatar
+  ///
+  Widget _avatar(BuildContext context) {
+    return Container(
+      width: DeviceUtils.getScaledWidth(context, 0.3),
+      height: DeviceUtils.getScaledHeight(context, 0.14),
+      child: Stack(
+        children: [
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: CircleAvatar(
+              radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+              backgroundColor: ColorResources.WHITE,
+              child: CircleAvatar(
+                radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
+                backgroundImage: AssetImage(
+                  Images.V4AvatarHome,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            child: Container(
+              width: DeviceUtils.getScaledWidth(context, 0.1),
+              height: DeviceUtils.getScaledWidth(context, 0.1),
+              decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      // ignore: prefer_const_constructors
+                      offset: Offset(0, 1),
+                      blurRadius: 2,
+                      color: ColorResources.BLACK.withAlpha(20),
+                    )
+                  ]),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.add_a_photo_outlined,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
   /// Full name
   ///
   Widget _name(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      textInputType: TextInputType.name,
       isShadow: true,
       isColorFieldWhite: true,
       labelBold: true,
@@ -236,6 +329,8 @@ Widget _identityCard(V4InfoController controller, BuildContext context) {
 ///
 Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
   return InputWidget(
+    isShadow: true,
+    isBorder: false,
     isDate: true,
     allowEdit: false,
     label: "Ngày cấp",
@@ -251,6 +346,14 @@ Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
 Widget _addresssIndentityCard(
     V4InfoController controller, BuildContext context) {
   return InputWidget(
+    textInputType: TextInputType.streetAddress,
+    suffixIcon: const Icon(
+      Icons.edit_outlined,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+    isShadow: true,
+    isBorder: false,
     isColorFieldWhite: true,
     label: 'Nơi cấp CMND/Căn cước',
     obligatory: true,
@@ -263,17 +366,20 @@ Widget _addresssIndentityCard(
 /// Số điện thoại
 ///
 Widget _phoneNumber(V4InfoController controller, BuildContext context) {
-  return InputField(
-    allowEdit: false,
-    allowMultiline: false,
-    controller: controller.phoneNumberController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: "0899461113",
+  return InputWidget(
+    suffixIcon: const Icon(
+      Icons.edit_outlined,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+    textInputType: TextInputType.number,
+    isShadow: true,
+    isBorder: false,
+    isColorFieldWhite: true,
     label: 'Số điện thoại',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 0.5),
+    textEditingController: controller.phoneNumberController,
   );
 }
 
@@ -281,17 +387,19 @@ Widget _phoneNumber(V4InfoController controller, BuildContext context) {
 /// Email
 ///
 Widget _email(V4InfoController controller, BuildContext context) {
-  return InputField(
-    allowEdit: false,
-    allowMultiline: false,
-    controller: controller.emailController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: "ngotrananhphon.flutter.dev@gmail.com",
+  return InputWidget(
+    textInputType: TextInputType.emailAddress,
+    suffixIcon: const Icon(
+      Icons.edit_outlined,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+    isShadow: true,
+    isBorder: false,
+    isColorFieldWhite: true,
     label: 'Email(nếu có)',
-    obligatory: false,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 0.5),
+    textEditingController: controller.emailController,
   );
 }
 
@@ -299,17 +407,20 @@ Widget _email(V4InfoController controller, BuildContext context) {
 /// địa chỉ thường trú hiện tại
 ///
 Widget _addresss(V4InfoController controller, BuildContext context) {
-  return InputField(
-    allowEdit: false,
-    allowMultiline: false,
-    controller: controller.addressController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: "Hòa Thọ Đông, Cẩm Lệ, Đà Nẵng",
+  return InputWidget(
+    suffixIcon: const Icon(
+      Icons.edit_outlined,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+    isShadow: true,
+    isBorder: false,
+    isColorFieldWhite: true,
     label: 'Địa chỉ thường trú hiện tại',
     obligatory: true,
-    typeInput: TextInputType.text,
+    textInputType: TextInputType.streetAddress,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.addressController,
   );
 }
 
@@ -317,13 +428,17 @@ Widget _addresss(V4InfoController controller, BuildContext context) {
 /// Tỉnh /TP
 ///
 Widget _city(BuildContext context) {
-  return DropDownButton<String>(
+  return DropDownButton1<String>(
+    isColorFieldWhite: true,
+    isBorder: false,
+    isShadow: true,
+    hint: '',
     label: 'Tỉnh/Tp',
     data: const ["Đà Nẵng", "Huế"],
     obligatory: true,
     onChanged: (value) {},
     value: "Đà Nẵng",
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    width: 0.4,
   );
 }
 
@@ -331,13 +446,17 @@ Widget _city(BuildContext context) {
 /// Quận / Huyện
 ///
 Widget _district(BuildContext context) {
-  return DropDownButton<String>(
+  return DropDownButton1<String>(
+    isColorFieldWhite: true,
+    isBorder: false,
+    isShadow: true,
+    hint: '',
     label: 'Quận/Huyện',
     data: const ["Cẩm Lệ", "Hải Châu"],
     obligatory: true,
     onChanged: (value) {},
     value: "Cẩm Lệ",
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    width: 0.4,
   );
 }
 
@@ -345,13 +464,17 @@ Widget _district(BuildContext context) {
 /// Phường / xã
 ///
 Widget _ward(BuildContext context) {
-  return DropDownButton<String>(
+  return DropDownButton1<String>(
+    isColorFieldWhite: true,
+    isBorder: false,
+    isShadow: true,
+    hint: '',
     label: 'Phường/Xã',
     data: const ["Hòa Thọ Đông", "Thanh Khê"],
     obligatory: true,
     onChanged: (value) {},
     value: "Hòa Thọ Đông",
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    width: 0.4,
   );
 }
 
