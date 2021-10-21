@@ -111,6 +111,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -123,6 +124,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );

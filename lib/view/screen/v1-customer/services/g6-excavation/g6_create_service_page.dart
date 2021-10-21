@@ -150,6 +150,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         // Ngày kết thúc dự kiến
@@ -163,6 +164,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
 

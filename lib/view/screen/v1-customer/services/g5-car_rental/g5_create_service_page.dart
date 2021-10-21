@@ -143,6 +143,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         // Địa điểm bốc hàng

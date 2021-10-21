@@ -100,6 +100,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -112,6 +113,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         InputField(

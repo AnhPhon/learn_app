@@ -70,6 +70,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn nhóm công việc phù hợp",
             hint: "Chọn nhóm công việc",
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           ),
           DropDownButton<LoaiCongViecResponse>(
             data: controller.loaiCongViecResponseList,
@@ -79,6 +80,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn công việc phù hợp",
             hint: 'Chọn nhóm công việc',
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
           ),
       ],
     );

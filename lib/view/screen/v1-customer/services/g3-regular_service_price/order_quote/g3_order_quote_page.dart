@@ -77,6 +77,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn chi tiết dịch vụ theo bảng giá mà bạn cần sử dụng (thật chính xác)",
             hint: "Chọn dịch vụ phù hợp",
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         InputField(

@@ -15,6 +15,7 @@ class TextFieldDate extends StatelessWidget {
       required this.obligatory,
       this.area = false,
       required this.fontSize,
+      this.padding,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
   final String holdplacer;
   final String? label;
@@ -26,13 +27,11 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
+  final EdgeInsetsGeometry ? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.only(
-      //     left: Dimensions.PADDING_SIZE_DEFAULT,
-      //     right: Dimensions.PADDING_SIZE_DEFAULT,
-      //     top: paddingTop!),
+      padding: padding ?? const EdgeInsets.all(0),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

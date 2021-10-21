@@ -105,6 +105,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -117,6 +118,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );
@@ -181,6 +183,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,0.5),
             label: "Đơn vị",
             hint: 'Chọn đơn vị',
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           ),
           ],
          ),
