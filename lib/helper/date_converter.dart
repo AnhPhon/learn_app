@@ -43,6 +43,14 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
 
+  static DateTime isoStringDateTimeToDateTime(String dateTime) {
+    return DateTime.parse(dateTime).toLocal();
+  }
+  static String isoStringToddMMYYYY(String dateTime) {
+    return DateFormat('dd/MM/yyyy').format(isoStringDateTimeToDateTime(dateTime));
+  }
+
+
   static String isoStringToLocalTimeOnly(String dateTime) {
     return DateFormat('HH:mm').format(isoStringToLocalDate(dateTime));
   }

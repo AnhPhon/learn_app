@@ -70,6 +70,8 @@ class DuAnKhachHangRepository {
         uri = '/du-an-khach-hangs/paginate?page=$page&limit=$limit$filter';
       }
 
+      print(uri);
+
       final response = await dioClient!.get(uri);
       return ApiResponse.withSuccess(response);
     } catch (e) {
