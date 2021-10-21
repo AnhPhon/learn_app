@@ -16,7 +16,7 @@ class V1G3OrderQuoteController extends GetxController{
   final LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
   
   final priceController = TextEditingController();
-  final personNumberContrller = TextEditingController();
+  final personNumberController = TextEditingController();
   final descController = TextEditingController();
 
 
@@ -109,12 +109,12 @@ class V1G3OrderQuoteController extends GetxController{
     if(validate()){
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
-      request!.soLuongYeuCau = personNumberContrller.text.toString();
+      request!.soLuongYeuCau = personNumberController.text.toString();
       request!.soTien = priceController.text.toString().replaceAll(",", '');//work.giaTien;
       request!.phiDichVu = '0';
       request!.khuyenMai = '0';
       request!.tongDon = priceController.text.toString().replaceAll(",", '');//work.money;
-      Get.toNamed(AppRoutes.V1_G3_ORDER_DETAIL, arguments: request);
+      Get.toNamed("${AppRoutes.V1_G3_ORDER_DETAIL}?unit=${subServices!.donViTinh!}", arguments: request);
     }
   }
 
@@ -122,11 +122,11 @@ class V1G3OrderQuoteController extends GetxController{
   /// Check validate
   ///
   bool validate(){
-    if(personNumberContrller.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập lượng người yêu cầu");
+    if(personNumberController.text.toString().isEmpty){
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập nội dung miêu tả");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;
@@ -136,7 +136,7 @@ class V1G3OrderQuoteController extends GetxController{
   void onClose() {
     super.onClose();
     priceController.dispose();
-    personNumberContrller.dispose();
+    personNumberController.dispose();
     descController.dispose();
   }
 

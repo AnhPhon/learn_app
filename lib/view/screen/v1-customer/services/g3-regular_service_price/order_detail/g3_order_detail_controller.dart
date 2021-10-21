@@ -9,11 +9,13 @@ import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 class V1G3OrderDetailController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRequest? donDichVuRequest;
-
+  String unit = 'VNĐ';
+//unit
   @override
   void onInit() {
     super.onInit();
     donDichVuRequest = Get.arguments as DonDichVuRequest;
+    unit = Get.parameters['unit'].toString();
   }
 
   ///

@@ -110,19 +110,19 @@ class V1G4CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian làm việc không được để trống");
       return;
     }else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian bắt đầu không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return;
     }else if(endTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian kết thúc không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
       return;
     }else{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);
@@ -149,11 +149,6 @@ class V1G4CreateServiceController extends GetxController{
       dichVuRequest.idThoiGianLamViecs = workTime;
       dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startTime.text.toString());
       dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());//.isEmpty ? endTime.text.toString() : '';
-      // dichVuRequest.giaTriKhachDeXuat = valueController.text.toString().isEmpty ? '' : valueController.text.toString();
-      // dichVuRequest.moTa = descController.text.toString();
-      // if(amountController.text.toString().isNotEmpty){
-      //   dichVuRequest.soLuongYeuCau = amountController.text.toString();
-      // }
       dichVuRequest.gioiTinh = getGender();
       return dichVuRequest;
   }

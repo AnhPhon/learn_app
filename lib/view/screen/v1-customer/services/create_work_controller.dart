@@ -52,6 +52,7 @@ class CreateWorkController extends GetxController {
   String idUser = '';
   // Get param (idType) nếu là dịch vụ thường xuyên 2 và tạo đơn dich vụ là 1
   SERVICES services = SERVICES.REGULARLY;
+  String titleAppBar = 'Tạo đơn dịch vụ';
   @override
   void onInit() {
     super.onInit();
@@ -64,7 +65,11 @@ class CreateWorkController extends GetxController {
     getTinhThanh();
     getUserId();
     /// Change Title App bar
-    
+    if(services == SERVICES.REGULARLY){
+      titleAppBar = "Dịch vụ thường xuyên";
+    }else if(services == SERVICES.WORK){
+      titleAppBar = 'Tạo đơn công việc';
+    }
   }
 
 
@@ -280,23 +285,29 @@ class CreateWorkController extends GetxController {
   ///
   void onClickContinue() async{
       if(dichvu == null){
-        return Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
+        Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
+        return; 
       }else if(tinh == null){
-        return Get.snackbar("Tỉnh","Vui lòng chọn tỉnh");
+        Get.snackbar("Trường tỉnh bắt buộc","Vui lòng chọn tỉnh");
+        return; 
       }else if(quanHuyen == null){
-        return Get.snackbar("Trường quận huyện bắt buộc","Vui lòng quận huyện");
+        Get.snackbar("Trường quận huyện bắt buộc","Vui lòng chọn quận huyện");
+        return; 
       }else if(phuongXa == null){
-        return Get.snackbar("Trường phường xã bắt buộc","Vui lòng phường xã");
+        Get.snackbar("Trường phường xã bắt buộc","Vui lòng phường xã");
+        return; 
       }else if(loaiCongViec == null){
-        return  Get.snackbar("Trường công việc bắt buộc","Vui lòng chọn công việc");
+         Get.snackbar("Trường công việc bắt buộc","Vui lòng chọn công việc");
+        return; 
       }else if(addressController.text.toString().isEmpty){
-        return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
+        Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
+        return; 
       }else{
         if(dichvu!.nhomDichVu! == '1'){
          // Nhóm 1
           Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
         }else {
-          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}", arguments: await request(),);
+          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),);
         }
       }
   }

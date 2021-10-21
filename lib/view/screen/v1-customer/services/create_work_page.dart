@@ -18,13 +18,12 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_controller.dart';
 
 class CreateWorkPage extends GetView<CreateWorkController>{
-  // final CreateWorkController _controller = Get.put(CreateWorkController());
+  final CreateWorkController _controller = Get.put(CreateWorkController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn công việc",),
+      appBar: AppBarWidget(title: _controller.titleAppBar,),
       body: GetBuilder(
-        init: CreateWorkController(),
         builder: (CreateWorkController controller) {
           if(controller.isLoadingNhomDichVu || controller.isLoading){
             return const Center(child: CircularProgressIndicator());

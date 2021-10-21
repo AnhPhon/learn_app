@@ -103,7 +103,7 @@ class V1G2CreateWorkController extends GetxController {
       update();
       // return fileName;
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -117,7 +117,7 @@ class V1G2CreateWorkController extends GetxController {
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -161,25 +161,25 @@ class V1G2CreateWorkController extends GetxController {
   ///
   bool validate(){
     if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc trong ngày");
       return false;
     }else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu dự kiến");
       return false;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     }else if(endTime.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-        showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return false;
       }else if(workDesc.text.toString().isEmpty){
-        showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+        showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
         return false;
       }
       return true;
     }else if(workDesc.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
       return false;
     }else{
       return true;
@@ -198,7 +198,7 @@ class V1G2CreateWorkController extends GetxController {
         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){
         EasyLoading.dismiss();
-        showSnackBar(title: "Lỗi", message: onError.toString());
+        showSnackBar(title: "Vui lòng kiểm tra lại!", message: onError.toString());
         print("V1G2CreateWorkController onClickContinueButton $onError");
       });
   }

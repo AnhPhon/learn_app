@@ -54,11 +54,14 @@ class V1G6CreateServiceController extends GetxController{
 
   // Danh sách hình san pham mau
   List<File> productImages = [];
-
+  // app bar title
+  String appBarTitle = 'Tạo đơn công việc';
   @override
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
+    appBarTitle = Get.parameters['title'].toString();
+    print("fasfasdfasfsdfsfsfsa${appBarTitle}");
     getWorkTime();
     getAllThongSo();
     super.onInit();
@@ -140,7 +143,7 @@ class V1G6CreateServiceController extends GetxController{
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -158,23 +161,23 @@ class V1G6CreateServiceController extends GetxController{
   ///
   Future<void> onClickContinueButton() async{
     if(thongSo.isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thông số kỹ thuật");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thông số kỹ thuật");
     }else if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời làm việc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời làm việc");
     }else if(amountController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không được để trống");
     }else if(int.parse(amountController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không hợp lệ");
     }else if(startTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(endTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày kết thức dự kiến");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thức dự kiến không được để trống");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
     }else if(workDescController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả yêu cầu cụ thể");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{
       EasyLoading.show(status: "Loading ...");
       request().then((value){

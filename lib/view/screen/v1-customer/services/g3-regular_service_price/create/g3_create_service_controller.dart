@@ -107,21 +107,20 @@ class V1G3CreateServiceController extends GetxController {
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc");
       return;
     } else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return;
-    }else if(endTime.text.toString().isNotEmpty){
-      if(endTime.text.toString().isEmpty){
-        showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
-        return;
-      }else{
-        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
-      }
+    }else if(endTime.text.toString().isEmpty){
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian kết thúc không được để trống");
+      return;
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      return;
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
     }

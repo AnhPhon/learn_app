@@ -88,13 +88,13 @@ class V1G4OrderQuoteController extends GetxController{
   ///
   bool validate(){
     if(timeNumberContrller.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập thời gian yêu cầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thời gian yêu cầu");
       return false;
     }else if(personNumberContrller.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập lượng người yêu cầu");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập nội dung miêu tả");
+      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;
