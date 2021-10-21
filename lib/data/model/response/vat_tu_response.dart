@@ -1,4 +1,3 @@
-
 class VatTuResponse {
   String? id;
   String? tenVatTu;
@@ -10,15 +9,15 @@ class VatTuResponse {
   String? createdAt;
   String? updatedAt;
 
-  VatTuResponse({
-      this.id,
+  VatTuResponse(
+      {this.id,
       this.tenVatTu,
       this.quyCach,
       this.donVi,
       this.donGia,
       this.createdAt,
       this.updatedAt});
-  
+
   ///
   /// From JSON
   ///
@@ -40,24 +39,28 @@ class VatTuResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tenVatTu
-    if (tenVatTu != null) data['tenVatTu'] = tenVatTu; 
+    if (tenVatTu != null) data['tenVatTu'] = tenVatTu;
 
     // check null quyCach
-    if (quyCach != null) data['quyCach'] = quyCach; 
+    if (quyCach != null) data['quyCach'] = quyCach;
 
     // check null donVi
-    if (donVi != null) data['donVi'] = donVi; 
+    if (donVi != null) data['donVi'] = donVi;
 
     // check null donGia
-    if (donGia != null) data['donGia'] = donGia; 
+    if (donGia != null) data['donGia'] = donGia;
 
     // check null donGia
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
-
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tenVatTu!;
   }
 }

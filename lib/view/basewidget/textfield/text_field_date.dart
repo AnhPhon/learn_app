@@ -5,12 +5,12 @@ import 'package:template/utils/dimensions.dart';
 class TextFieldDate extends StatelessWidget {
   const TextFieldDate(
       {this.label,
-      this.isToHour = true,
+      this.isddMMyyyy = true,
       required this.holdplacer,
       required this.controller,
       required this.allowEdit,
       required this.isDate,
-      required this.typeInput,
+      this.typeInput,
       required this.width,
       required this.obligatory,
       this.area = false,
@@ -20,12 +20,12 @@ class TextFieldDate extends StatelessWidget {
   final String? label;
   final TextEditingController controller;
   final bool allowEdit, isDate;
-  final TextInputType typeInput;
+  final TextInputType? typeInput;
   final double width, fontSize;
   final bool obligatory;
   final bool? area;
   final double? paddingTop;
-  final bool? isToHour;
+  final bool? isddMMyyyy;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +47,7 @@ class TextFieldDate extends StatelessWidget {
                   Text(
                     label!,
                     style: TextStyle(
-                        fontSize: fontSize, fontWeight: FontWeight.bold),
+                        fontSize: fontSize, fontWeight: FontWeight.w600),
                   ),
                   if (obligatory)
                     Text(
@@ -63,8 +63,8 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           TextField(
-            textInputAction: TextInputAction.done,
-            keyboardType: isDate ? null : typeInput,
+            textInputAction: TextInputAction.none,
+            keyboardType: (isDate == true) ? null : typeInput,
             textAlignVertical: TextAlignVertical.center,
             maxLines: area! ? 3 : 1,
             enabled: allowEdit,
@@ -77,11 +77,11 @@ class TextFieldDate extends StatelessWidget {
                       firstDate: DateTime(2001),
                       lastDate: DateTime(2100),
                     ).then((value) {
-                      isToHour == true
+                      isddMMyyyy == true
                           ? controller.text =
                               "${value!.year}-${value.month}-${value.day}"
                           : controller.text =
-                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
+                              "${value!.day}-${value.month}-${value.year}";
                     });
                   }
                 : null,
@@ -116,8 +116,9 @@ class TextFieldDate extends StatelessWidget {
                 ),
                 hintText: holdplacer,
                 filled: true,
-                fillColor:
-                    (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                fillColor: (allowEdit == false)
+                    ? ColorResources.NOT_ALLOW_EDIT
+                    : ColorResources.WHITE,
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: Dimensions.PADDING_SIZE_LARGE,
                 ),

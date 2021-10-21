@@ -7,15 +7,13 @@ import 'package:template/utils/color_resources.dart';
 // ignore: unused_import
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 
 import 'package:template/view/screen/v4-employee/notification/notification_controller.dart';
 
 class V4NotificationPage extends GetView<V4NotificationController> {
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
     return Scaffold(
       backgroundColor: ColorResources.HOME_BG,
       appBar: const AppBarWidget(
@@ -48,14 +46,10 @@ class V4NotificationPage extends GetView<V4NotificationController> {
   ///
   Widget _listViewNotification() {
     return SmartRefresher(
-      footer: const ClassicFooter(
-        loadStyle: LoadStyle.ShowWhenLoading,
-      ),
-      physics: const BouncingScrollPhysics(),
       enablePullUp: true,
       onLoading: controller.onLoading,
       onRefresh: controller.onRefresh,
-      controller: controller.refreshController,
+      controller: controller.refreshController!,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: controller.thongbaoModelList.length,
@@ -70,7 +64,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
               },
               child: Container(
                 width: DeviceUtils.getScaledWidth(context, 1),
-                height: DeviceUtils.getScaledHeight(context, 0.15),
+                height: DeviceUtils.getScaledHeight(context, 0.13),
                 decoration: BoxDecoration(
                   color: ColorResources.WHITE,
                   borderRadius: BorderRadius.circular(
@@ -87,40 +81,10 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                 child: Stack(
                   alignment: Alignment.centerRight,
                   children: [
-                    //HÌNH ẢNH THÔNG BÁO
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Hero(
-                        tag: controller.thongbaoModelList[index].hinhDaiDien!,
-                        child: Container(
-                          height: DeviceUtils.getScaledHeight(context, 0.15),
-                          width: DeviceUtils.getScaledWidth(context, 0.28),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(
-                                Dimensions.BORDER_RADIUS_DEFAULT,
-                              ),
-                              bottomLeft: Radius.circular(
-                                Dimensions.BORDER_RADIUS_DEFAULT,
-                              ),
-                            ),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                controller.thongbaoModelList[index].hinhDaiDien
-                                    .toString(),
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
                     //IÊU ĐỀ THÔNG BÁO
                     Container(
                       padding: const EdgeInsets.fromLTRB(
-                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
                         Dimensions.PADDING_SIZE_LARGE,
                         Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         Dimensions.PADDING_SIZE_LARGE,
@@ -134,7 +98,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                               Text(
                                 controller.thongbaoModelList[index].tieuDe!,
                                 style: const TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 maxLines: 2,
@@ -170,6 +134,35 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    //HÌNH ẢNH THÔNG BÁO
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Hero(
+                        tag: controller.thongbaoModelList[index].hinhDaiDien!,
+                        child: Container(
+                          height: DeviceUtils.getScaledHeight(context, 0.15),
+                          width: DeviceUtils.getScaledWidth(context, 0.28),
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT,
+                              ),
+                              bottomLeft: Radius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT,
+                              ),
+                            ),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                controller.thongbaoModelList[index].hinhDaiDien
+                                    .toString(),
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

@@ -30,9 +30,11 @@ class DropDownButton1<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_SMALL,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +66,8 @@ class DropDownButton1<T> extends StatelessWidget {
             ),
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
-            margin: EdgeInsets.symmetric(
-              vertical: DeviceUtils.getScaledSize(context, .025),
+            margin: const EdgeInsets.only(
+              top: Dimensions.PADDING_SIZE_SMALL,
             ),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)

@@ -39,13 +39,13 @@ class V4ReportTimekeepingControllter extends GetxController {
   bool validate() {
     if (reportContent.text.toString().isEmpty) {
       Get.snackbar(
-        "Nội dung không hợp lệ!",
-        "Vui lòng nội dung hợp lệ!",
-        duration: const Duration(seconds: 2),
+        "Nội dung không hợp lệ!", // title
+        "Vui lòng nội dung hợp lệ!", // message
         backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
       return false;
     }
@@ -55,7 +55,7 @@ class V4ReportTimekeepingControllter extends GetxController {
   ///
   /// Button báo cáo
   ///
-  void report() {
+  Future<void> report() async {
     if (validate()) {
       final DateTime report = DateTime.parse(DateFormat('dd-MM-yyyy')
           .parse(reportTimekeeping.text)
@@ -63,6 +63,8 @@ class V4ReportTimekeepingControllter extends GetxController {
           .substring(0, 10));
       chamCongProvider.update(
         data: ChamCongRequest(
+          idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
+          idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
           id: idChamCong,
           thoiGianKetThuc: report.toString(),
           noiDungBaoCao: reportContent.text,

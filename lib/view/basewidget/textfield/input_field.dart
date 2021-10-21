@@ -54,9 +54,10 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
-                      color: ColorResources.BLACK.withOpacity(0.7)),
+                    fontSize: fontSize, // * 2.1,
+                    fontWeight: FontWeight.w600,
+                    color: ColorResources.BLACK,
+                  ),
                 ),
                 if (obligatory)
                   Text(
@@ -122,8 +123,8 @@ class InputField extends StatelessWidget {
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
                   fillColor: (isColorFieldWhite == false)
-                      ? ColorResources.GREY
-                      : ColorResources.WHITE,
+                      ? ColorResources.WHITE
+                      : ColorResources.NOT_ALLOW_EDIT,
                   suffixIcon: suffixIcon),
             ),
           ),
