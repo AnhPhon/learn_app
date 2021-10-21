@@ -64,7 +64,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           allowMultiline: false,
           controller: controller.workTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà",
+          holdplacer: "Tiêu đề",
           hidden: false,
           label: "Tiêu đề công việc",
           obligatory: true,
@@ -80,7 +80,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
               CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
                 controller.onSelectedTommorow(val: val!);
                },status: controller.tommorow,),
-              CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+              CheckBoxCustom(title: "Chiều: từ 13h30 - 17h30", onChanged: (bool? val) { 
                 controller.onSelectedAfternoon(val: val!);
                },status: controller.afternoon,),
               CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  
@@ -92,48 +92,34 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
 
         TextFieldDate(
           isDate: true,
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.startTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
           label: "Thời gian bắt đầu dự kiến",
           obligatory: true,
-          typeInput: TextInputType.text,
+          typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
         TextFieldDate(
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.endTime,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
           label: "Thời gian kết thúc dự kiến",
           obligatory: false,
-          typeInput: TextInputType.text,
+          typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
         ),
 
         InputField(
           allowEdit: true,
-          allowMultiline: false,
-          controller: controller.valueController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "100.000.000",
-          hidden: false,
-          label: "Giá trị khách hàng đề xuất (nếu có) : VNĐ",
-          obligatory: false,
-          typeInput: TextInputType.text,
-          width: DeviceUtils.getScaledWidth(context,1),
-        ),
-
-
-        InputField(
-          allowEdit: true,
           allowMultiline: true,
           controller: controller.workDesc,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà lầu",
+          holdplacer: "Mô tả nội dung công việc",
           hidden: false,
           label: "Mô tả công việc",
           obligatory: true,
@@ -151,7 +137,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           allowMultiline: true,
           controller: controller.massDesc,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà lầu",
+          holdplacer: "Mô khối lượng công việc của bạn",
           hidden: false,
           label: "Mô tả khối lượng công việc (nếu có)",
           obligatory: false,

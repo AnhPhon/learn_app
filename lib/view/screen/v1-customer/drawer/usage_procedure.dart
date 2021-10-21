@@ -17,8 +17,10 @@ class UsageProcedure extends GetView<UsageProcedureController> {
           if(controller.isLoading){
             return const Center(child: CircularProgressIndicator());
           }
-          return Center(
-            child: Text(controller.fss.first.quyTrinhSuDungGiaoDich!),
+          return SingleChildScrollView(
+            child: Center(
+              child: Text(controller.fss.first.quyTrinhSuDungGiaoDich!),
+            ),
           );
         },
       )

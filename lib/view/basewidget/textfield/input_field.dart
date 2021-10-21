@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/format/format_currency.dart';
+import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class InputField extends StatelessWidget {
   InputField(
@@ -13,6 +16,7 @@ class InputField extends StatelessWidget {
       this.onChanged,
       this.boldHinText,
       this.errorText,
+      this.isFormatCurrency = false,
       required this.typeInput,
       required this.width,
       this.height = 50,
@@ -35,6 +39,7 @@ class InputField extends StatelessWidget {
   final Function(String value)? onChanged;
   bool? boldHinText;
   final bool? isColorFieldWhite;
+  final bool? isFormatCurrency;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +81,7 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
+              inputFormatters: typeInput == TextInputType.number ? isFormatCurrency! ? [ThousandsSeparatorInputFormatterCurrency(),]  : [FilteringTextInputFormatter.digitsOnly] : null,
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,
@@ -122,9 +128,9 @@ class InputField extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_LARGE,
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
-                  fillColor: (isColorFieldWhite == false)
-                      ? ColorResources.WHITE
-                      : ColorResources.NOT_ALLOW_EDIT,
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.LIGHT_GREY.withOpacity(0.4)
+                      : ColorResources.WHITE,
                   suffixIcon: suffixIcon),
             ),
           ),

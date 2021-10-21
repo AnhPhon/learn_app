@@ -19,8 +19,10 @@ class AboutPage extends GetView<AboutController> {
               child: CircularProgressIndicator(),
             );
           }
-          return Center(
-            child: Text(controller.conent)
+          return SingleChildScrollView(
+            child: Center(
+              child: Text(controller.conent)
+            ),
           );
         },
       )

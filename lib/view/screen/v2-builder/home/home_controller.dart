@@ -135,7 +135,7 @@ class V2HomeController extends GetxController {
           }
 
           // check trang thai don hang
-          if (value.idTrangThaiDonHang == null) {
+          if (value.idTrangThaiDonDichVu == null) {
             isLoadValid = false;
           }
 
