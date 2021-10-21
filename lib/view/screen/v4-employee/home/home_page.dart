@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -34,7 +35,7 @@ class V4HomePage extends GetView<V4HomeController> {
             child: HomeWidget(
               fullname: "NV, ${controller.fullname}!",
               imageNetwork: Images.V4AvatarHome,
-              notificationURL: controller.avatar,
+              notificationURL: AppRoutes.V4_NOTIFICATION,
               soThongBao: 5,
               content: Column(
                 children: [

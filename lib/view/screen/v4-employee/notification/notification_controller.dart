@@ -16,112 +16,55 @@ class V4NotificationController extends GetxController
   ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   //Khai báo model thông báo
-  RxList<ThongBaoResponse> thongbaoModelList = <ThongBaoResponse>[].obs;
+  List<ThongBaoResponse> thongbaoModelList = [];
 
   // khai báo is loading
   bool isLoading = true;
 
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  // refresh controller for load more refresh
+  RefreshController refreshController = RefreshController(initialRefresh: true);
 
+  // page for for load more refresh
   int pageMax = 1;
-  int currentMax = 10;
+  int limitMax = 5;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    Future.delayed(Duration.zero, () {
-      getNotification();
-    });
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    refreshController.dispose();
+    getNotification(isRefresh: true);
   }
 
   ///
   /// lấy danh sách thông báo
   ///
-  void getNotification() {
-    pageMax = 1;
-    currentMax = 10;
-    thongbaoModelList.clear();
-    update();
-    thongBaoProvider.paginate(
-        page: 1,
-        limit: 10,
-        filter: '&doiTuong=1&sortBy=created_at:desc',
-        onSuccess: (value) {
-          thongbaoModelList.value = value;
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
-        });
-  }
-
-  ///
-  /// Set refresh List
-  ///
-
-  Future<void> onRefresh() async {
-    reloadNotifications();
-  }
-
-  ///
-  /// Set loading List
-  ///
-  Future<void> onLoading() async {
-    loadMoreNotification();
-  }
-
-  ///
-  ///reload
-  ///
-  void reloadNotifications() {
-    print('reloadNotifications');
-    pageMax = 1;
-    currentMax = 10;
-    update();
+  void getNotification({required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      thongbaoModelList.clear();
+    } else {
+      //is load more
+      pageMax++;
+    }
     thongBaoProvider.paginate(
         page: pageMax,
-        limit: currentMax,
+        limit: limitMax,
         filter: '&doiTuong=1&sortBy=created_at:desc',
         onSuccess: (value) {
-          thongbaoModelList.value = value;
-          refreshController.refreshCompleted();
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
-        });
-  }
-
-  ///
-  ///load more
-  ///
-  void loadMoreNotification() {
-    pageMax += 1;
-    print(pageMax);
-    currentMax = currentMax;
-    thongBaoProvider.paginate(
-        page: pageMax,
-        limit: currentMax,
-        filter: '&doiTuong=1&sortBy=created_at:desc',
-        onSuccess: (value) {
-          if (value.isNotEmpty) {
-            thongbaoModelList.value = value.toList() + value;
-            refreshController.loadComplete();
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshController!.loadNoData();
           } else {
-            refreshController.loadNoData();
+            //is Refresh
+            if (isRefresh) {
+              thongbaoModelList = value;
+              refreshController!.refreshCompleted();
+            } else {
+              //is load more
+              thongbaoModelList = thongbaoModelList.toList() + value;
+              refreshController!.loadComplete();
+            }
           }
 
           isLoading = false;
@@ -129,8 +72,22 @@ class V4NotificationController extends GetxController
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
         });
+  }
+
+  ///
+  ///on refresh
+  ///
+  Future onRefresh() async {
+    refreshController!.resetNoData();
+    getNotification(isRefresh: true);
+  }
+
+  ///
+  ///on loading
+  ///
+  Future onLoading() async {
+    getNotification(isRefresh: false);
   }
 
   ///
