@@ -48,7 +48,8 @@ class V1NotificationController extends GetxController{
 
 
   void onClickItem(ThongBaoResponse notification){
-    int id = 1;//notification.idDonDichVu.idNhomDichVu  Đợi bên server thêm số của nhóm dịch vụ
+    String id = '1';//notification.idDonDichVu!;//notification.idDonDichVu.idNhomDichVu  Đợi bên server thêm số của nhóm dịch vụ
+    print("ID nhóm dich vụ : ${notification.toJson()}");
     if(id == 1){
       // phản hồi nhóm 1
       Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: notification.idDonDichVu);

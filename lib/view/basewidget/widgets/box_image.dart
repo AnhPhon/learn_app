@@ -1,16 +1,5 @@
 import 'dart:io';
 
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-
-import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/widgets/image_card.dart';
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:template/utils/color_resources.dart';
@@ -23,12 +12,14 @@ class BoxImage extends StatelessWidget {
     Key? key,
     this.isAddImage = false,
     this.onPress,
-    required this.images,
+     this.images,
+    this.imagesUrl,
     this.onDelete,
   }) : super(key: key);
   final bool? isAddImage;
   final Function()? onPress;
-  final List<File> images;
+  final List<File>? images;
+  final List<String>? imagesUrl;
   final Function(File file, List<File> files)? onDelete;
   @override
   Widget build(BuildContext context) {
@@ -46,10 +37,10 @@ class BoxImage extends StatelessWidget {
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: isAddImage! ?  images.length + 1 : images.length,
+            itemCount:imagesUrl != null ? imagesUrl!.length : isAddImage! ?  images!.length + 1 : images!.length,
             itemBuilder: (context, index) {
               if(isAddImage!){
-                if(index == images.length){ // == images.length
+                if(index == images!.length){ // == images.length
                   return GestureDetector(
                     onTap: onPress,
                     child: Padding(
@@ -73,9 +64,9 @@ class BoxImage extends StatelessWidget {
                     )),
                   );
                 }
-                return ImageCard(image: images[index], isAddImage: isAddImage!,onDelete:()=> onDelete!(images[index],images),);
+                return ImageCard(image: images![index], isAddImage: isAddImage!,onDelete:()=> onDelete!(images![index],images!),);
               }else{
-                return ImageCard(image: images[index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images[index],images),);
+                return imagesUrl != null ? ImageCard(image:imagesUrl![index], isAddImage: isAddImage!) : ImageCard(image:images![index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images![index],images!),);
               }
             },
           ),
