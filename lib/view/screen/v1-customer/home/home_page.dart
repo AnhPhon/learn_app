@@ -262,20 +262,26 @@ class V1HomePage extends GetView<V1HomeController> {
             BuildContext ctx,
             index,
           ) {
-            return ItemListWidget(
-              urlImage: controller.tinTucList[index].hinhAnh.toString(),
-              onTap: () {
-                controller.goToNewPageClick(controller.tinTucList[index].id!);
-              },
-              title: controller.tinTucList[index].tieuDe.toString(),
-              colorRowText2: ColorResources.GREY,
-              icon1: const Icon(Icons.remove_red_eye_sharp),
-              rowText1: controller.tinTucList[index].luotXem,
-              icon2: const Icon(Icons.calendar_today),
-              rowText2: DateConverter.readMongoToString(
-                controller.tinTucList[index].createdAt!,
-              ),
-              isSpaceBetween: true,
+            return Column(
+              children: [
+                ItemListWidget(
+                  urlImage: controller.tinTucList[index].hinhAnh.toString(),
+                  onTap: () {
+                    controller
+                        .goToNewPageClick(controller.tinTucList[index].id!);
+                  },
+                  title: controller.tinTucList[index].tieuDe.toString(),
+                  colorRowText2: ColorResources.GREY,
+                  icon1: const Icon(Icons.remove_red_eye_sharp),
+                  rowText1: controller.tinTucList[index].luotXem,
+                  icon2: const Icon(Icons.calendar_today),
+                  rowText2: DateConverter.readMongoToString(
+                    controller.tinTucList[index].createdAt!,
+                  ),
+                  isSpaceBetween: true,
+                ),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL)
+              ],
             );
           },
         ),

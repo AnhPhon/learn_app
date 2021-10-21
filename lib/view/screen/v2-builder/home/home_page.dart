@@ -203,42 +203,45 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget fieldWidget(String title, Function() onTap, Widget widget) {
     const double _fontSize = Dimensions.FONT_SIZE_LARGE;
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: _fontSize,
-                color: Color(0xff040404),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_DEFAULT),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: _fontSize,
+                  color: Color(0xff040404),
+                ),
               ),
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: onTap,
-              child: Row(
-                children: const [
-                  Text(
-                    "Xem thêm",
-                    style: TextStyle(
-                      color: Color(0xff2196f3),
-                      fontSize: _fontSize,
+              const Spacer(),
+              GestureDetector(
+                onTap: onTap,
+                child: Row(
+                  children: const [
+                    Text(
+                      "Xem thêm",
+                      style: TextStyle(
+                        color: Color(0xff2196f3),
+                        fontSize: _fontSize,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Color(0xff2196f3),
-                    size: _fontSize,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-        widget
-      ],
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Color(0xff2196f3),
+                      size: _fontSize,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          widget
+        ],
+      ),
     );
   }
 
@@ -350,22 +353,27 @@ class V2HomePage extends GetView<V2HomeController> {
             BuildContext ctx,
             index,
           ) {
-            return ItemListWidget(
-              onTap: () {
-                controller.onNewsDetailClick(index: index);
-              },
-              title: "Biệt thự 170 Nguyễn Đình Thi",
-              icon1: const Icon(Icons.remove_red_eye),
-              rowText1: controller.tinTucList[index].luotXem,
-              colorRowText1: ColorResources.BLACKGREY,
-              icon2: const Icon(Icons.monetization_on_outlined),
-              rowText2: controller.tinTucList[index].createdAt
-                  .toString()
-                  .substring(0, 10),
-              colorRowText2: ColorResources.BLACKGREY,
-              isStart: true,
-              urlImage: controller.tinTucList[index].hinhAnh!,
-              isSpaceBetween: true,
+            return Column(
+              children: [
+                ItemListWidget(
+                  onTap: () {
+                    controller.onNewsDetailClick(index: index);
+                  },
+                  title: controller.tinTucList[index].tieuDe!,
+                  icon1: const Icon(Icons.remove_red_eye),
+                  rowText1: controller.tinTucList[index].luotXem,
+                  colorRowText1: ColorResources.BLACKGREY,
+                  icon2: const Icon(Icons.monetization_on_outlined),
+                  rowText2: controller.tinTucList[index].createdAt
+                      .toString()
+                      .substring(0, 10),
+                  colorRowText2: ColorResources.BLACKGREY,
+                  isStart: true,
+                  urlImage: controller.tinTucList[index].hinhAnh!,
+                  isSpaceBetween: true,
+                ),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+              ],
             );
           },
         ),
