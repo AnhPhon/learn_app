@@ -84,7 +84,7 @@ class InputField extends StatelessWidget {
               inputFormatters: typeInput == TextInputType.number ? isFormatCurrency! ? [ThousandsSeparatorInputFormatterCurrency(),]  : [FilteringTextInputFormatter.digitsOnly] : null,
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
-              maxLines: (allowMultiline == true) ? line : 1,
+              maxLines: (allowMultiline == true) ? line : null,
               textAlignVertical: TextAlignVertical.top,
               enabled: allowEdit,
               controller: controller,

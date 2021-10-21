@@ -6,8 +6,13 @@ import 'package:template/utils/images.dart';
 class AppBarWithTabBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final TabBar bottom;
-  const AppBarWithTabBar({Key? key, required this.title, required this.bottom})
-      : super(key: key);
+  final bool? automaticallyImplyLeading;
+  const AppBarWithTabBar({
+    Key? key,
+    required this.title,
+    required this.bottom,
+    this.automaticallyImplyLeading = true,
+  }) : super(key: key);
 
   @override
   Size get preferredSize =>
@@ -16,15 +21,17 @@ class AppBarWithTabBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-            color: ColorResources.WHITE,
-          )),
-      elevation: 1,
+      leading: (automaticallyImplyLeading == true)
+          ? GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: ColorResources.WHITE,
+              ))
+          : null,
+      automaticallyImplyLeading: false,
       centerTitle: true,
       backgroundColor: ColorResources.WHITE,
       iconTheme: const IconThemeData(color: Colors.black),
