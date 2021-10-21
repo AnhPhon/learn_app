@@ -206,7 +206,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChucVuRepository());
   sl.registerLazySingleton(() => ChuyenMonRepository());
   sl.registerLazySingleton(() => ChuyenNganhChinhRepository());
-  sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => DangKyBaoHiemRepository());
   sl.registerLazySingleton(() => HangMucXayDungRepository());
   sl.registerLazySingleton(() => LoaiCongViecRepository());
@@ -216,8 +215,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => PhuongXaRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => DonDichVuRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
-  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());

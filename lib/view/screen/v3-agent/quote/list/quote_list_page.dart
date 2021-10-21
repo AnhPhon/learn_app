@@ -29,14 +29,17 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                 return BaoGiaCard(
                   donHangName: _donDichVuResponse.tieuDe.toString(),
                   donHangId: "ĐH123456",
-                  time: _donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
-                  date: _donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  time: _donDichVuResponse.ngayKetThuc
+                      .toString()
+                      .substring(0, 10),
+                  date: _donDichVuResponse.ngayKetThuc
+                      .toString()
+                      .substring(0, 10),
                   label: "Thợ ốp lát".toString(),
                   content: "Công trình khách 5 sao".toString(),
                   locationName: _donDichVuResponse.diaDiemBocHang.toString(),
                   image: Images.location_example,
-                  onTap: () {
-                  },
+                  onTap: () {},
                 );
               },
             ),
@@ -47,5 +50,4 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
   }
 }
 
-mixin V3_QUOTE_REQUEST {
-}
+mixin V3_QUOTE_REQUEST {}
