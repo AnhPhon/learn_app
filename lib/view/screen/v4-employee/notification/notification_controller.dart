@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+import 'package:get_it/get_it.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:template/data/model/response/thong_bao_response.dart';
@@ -54,16 +53,16 @@ class V4NotificationController extends GetxController
         onSuccess: (value) {
           //check isEmpty
           if (value.isEmpty) {
-            refreshController!.loadNoData();
+            refreshController.loadNoData();
           } else {
             //is Refresh
             if (isRefresh) {
               thongbaoModelList = value;
-              refreshController!.refreshCompleted();
+              refreshController.refreshCompleted();
             } else {
               //is load more
               thongbaoModelList = thongbaoModelList.toList() + value;
-              refreshController!.loadComplete();
+              refreshController.loadComplete();
             }
           }
 
@@ -79,7 +78,7 @@ class V4NotificationController extends GetxController
   ///on refresh
   ///
   Future onRefresh() async {
-    refreshController!.resetNoData();
+    refreshController.resetNoData();
     getNotification(isRefresh: true);
   }
 
