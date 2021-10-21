@@ -5,6 +5,9 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:template/data/model/body/menu.dart';
 import 'package:template/provider/lien_he_cong_ty_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+
+import '../../../di_container.dart';
 class DrawerController extends GetxController{
   LienHeCongTyProvider contactProvider = GetIt.I.get<LienHeCongTyProvider>();
   List<Menu> menu = [];
@@ -21,7 +24,7 @@ class DrawerController extends GetxController{
       Menu(title: 'Điều khoản và chính sách', onPress: ()=> onPushName(AppRoutes.V1_TERM_AND_POLICY)),
       Menu(title: 'Lợi ích khi tham gia FSS', onPress: ()=> onPushName(AppRoutes.V1_BENEFITS)),
       Menu(title: 'Đánh giá', onPress: rating),
-      Menu(title: 'Đăng xuất', onPress: ()=> onPushName(AppRoutes.LOGIN)),
+      Menu(title: 'Đăng xuất', onPress: ()=> logout()),
     ];
     
     // contact = const [
@@ -33,6 +36,16 @@ class DrawerController extends GetxController{
 
   }
 
+  ///
+  /// Logout
+  ///
+  void logout() {
+    sl.get<SharedPreferenceHelper>().removeIsLogin();
+    sl.get<SharedPreferenceHelper>().removeJwtToken();
+    sl.get<SharedPreferenceHelper>().removePassword();
+    sl.get<SharedPreferenceHelper>().removeUserId();
+    onPushName(AppRoutes.LOGIN);
+  }
 
   void getContact(){
     contactProvider.all(onSuccess: (data){

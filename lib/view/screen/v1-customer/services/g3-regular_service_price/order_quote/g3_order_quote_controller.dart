@@ -9,6 +9,7 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bang_gia_don_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G3OrderQuoteController extends GetxController{
@@ -123,10 +124,10 @@ class V1G3OrderQuoteController extends GetxController{
   ///
   bool validate(){
     if(personNumberController.text.toString().isEmpty){
-      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;
