@@ -5,12 +5,13 @@ import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V3QuoteListController extends GetxController {
-  String title = "Danh sách báo giá đơn hàng";
   final DanhSachBaoGiaDonDichVuProvider _danhSachBaoGiaDonDichVuProvider =
       GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
-
   List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVuResponse = [];
 
+  bool isLoading = true;
+
+  String title = "Danh sách báo giá đơn hàng";
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +34,9 @@ class V3QuoteListController extends GetxController {
       limit: 10,
       filter: "",
       onSuccess: (models) {
+        print(models);
         danhSachBaoGiaDonDichVuResponse = models;
+        isLoading = false;
         update();
       },
       onError: (error) {

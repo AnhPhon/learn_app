@@ -31,7 +31,7 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
                     context,
                     controller
                         .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!,
-                        index,
+                    index,
                   ),
                 )
               ],
@@ -45,18 +45,24 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
   ///
   /// item list
   ///
-  Widget _itemList(BuildContext context, DonDichVuResponse donDichVu, int index) {
+  Widget _itemList(
+    BuildContext context,
+    DonDichVuResponse donDichVu,
+    int index,
+  ) {
     return BaoGiaCard(
       donHangName: donDichVu.tieuDe.toString(),
       donHangId: "",
       // controller.quanHuyenNameList[index]
       time: donDichVu.ngayKetThuc.toString().substring(11, 16),
       date: donDichVu.ngayKetThuc.toString().substring(0, 10),
-      label: "Thợ ốp lát",
-      content: "Công trình khách 5 sao",
+      label: donDichVu.tieuDe!,
+      content: donDichVu.moTa!,
       locationName: donDichVu.diaDiemBocHang.toString(),
-      image: Images.location_example,
-      onTap: controller.toReponse,
+      image: donDichVu.hinhAnhBaoGia == null
+          ? Images.location_example
+          : donDichVu.hinhAnhBaoGia!,
+      onTap: controller.toResponse,
     );
   }
 

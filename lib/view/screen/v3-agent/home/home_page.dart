@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -186,14 +188,16 @@ class V3HomePage extends GetView<V3HomeController> {
                       // call detail
                       controller.onNewsDetailClick(index: index);
                     },
-                    title: "Biệt thự 170 Nguyễn Đình Thi",
+                    title: controller.tinTucList[index].tieuDe!,
                     icon1: const Icon(Icons.remove_red_eye),
                     rowText1: controller.tinTucList[index].luotXem,
                     colorRowText1: ColorResources.BLACKGREY,
-                    icon2: const Icon(Icons.monetization_on_outlined),
-                    rowText2: controller.tinTucList[index].createdAt
-                        .toString()
-                        .substring(0, 10),
+                    icon2: const Icon(Icons.date_range),
+                    rowText2: DateFormat("dd/MM/yyy").format(
+                      DateTime.parse(controller.tinTucList[index].createdAt
+                          .toString()
+                          .substring(0, 10)),
+                    ),
                     colorRowText2: ColorResources.BLACKGREY,
                     isStart: true,
                     urlImage: controller.tinTucList[index].hinhAnh!,

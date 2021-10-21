@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -11,10 +12,15 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
+      appBar: AppBarWidget(title: controller.title),
       body: GetBuilder<V3QuoteListController>(
         init: V3QuoteListController(),
         builder: (V3QuoteListController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SizedBox(
             height: double.infinity,
             child: ListView.builder(
@@ -24,21 +30,28 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                 BuildContext ctx,
                 index,
               ) {
-                final DonDichVuResponse _donDichVuResponse = controller
-                    .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!;
+                final DanhSachBaoGiaDonDichVuResponse responseIndex =
+                    controller.danhSachBaoGiaDonDichVuResponse[index];
+
+                final DonDichVuResponse _donDichVuResponse =
+                    responseIndex.idDonDichVu!;
+
                 return BaoGiaCard(
                   donHangName: _donDichVuResponse.tieuDe.toString(),
-                  donHangId: "ĐH123456",
+                  donHangId:
+                      "BH${responseIndex.idDonDichVu!.id!.substring(0, 6)}",
                   time: _donDichVuResponse.ngayKetThuc
                       .toString()
                       .substring(0, 10),
                   date: _donDichVuResponse.ngayKetThuc
                       .toString()
                       .substring(0, 10),
-                  label: "Thợ ốp lát".toString(),
-                  content: "Công trình khách 5 sao".toString(),
-                  locationName: _donDichVuResponse.diaDiemBocHang.toString(),
-                  image: Images.location_example,
+                  label: responseIndex.idDonDichVu!.tieuDe!,
+                  content: responseIndex.idDonDichVu!.moTa!,
+                  locationName: _donDichVuResponse.diaDiemBocHang!,
+                  image: _donDichVuResponse.hinhAnhBaoGia == null
+                      ? Images.location_example
+                      : _donDichVuResponse.hinhAnhBaoGia!,
                   onTap: () {},
                 );
               },

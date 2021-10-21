@@ -182,7 +182,10 @@ import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_binding.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
@@ -417,7 +420,6 @@ class AppPages {
       name: AppRoutes.V1_ACCOUNT,
       page: () => V1AccountPage(),
     ),
-
 
     //builder
     GetPage(
@@ -817,6 +819,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_QUOTE_LIST,
       page: () => V3QuoteListPage(),
+      binding: V3QuoteListBinding(),
     ),
     // v3 - quote check
     // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
@@ -870,7 +873,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.V3_PHAN_HOI_BAO_GIA,
-      page: () => V3QuoteResponsePage(),
+      page: () => V3QuotePhanHoiBaoGiaPage(),
+      binding: V3QuotePhanHoiBaoGiaBinding(),
     ),
     GetPage(
       name: AppRoutes.V3_FINISH_UPDATE,

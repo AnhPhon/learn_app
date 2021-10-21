@@ -8,8 +8,6 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V3QuotePhanHoiBaoGiaController extends GetxController {
-  String title = "Danh sách phản hồi đơn giá";
-
   final DanhSachBaoGiaDonDichVuProvider _danhSachBaoGiaDonDichVuProvider =
       GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
   final QuanHuyenProvider _quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
@@ -26,6 +24,7 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
   List<String> quanHuyenNameList = [];
   int currentIndex = 0;
 
+  String title = "Danh sách phản hồi đơn giá";
   @override
   void onInit() {
     // TODO: implement onInit
@@ -51,7 +50,7 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
   ///
   /// go to reponse page
   ///
-  void toReponse() {
+  void toResponse() {
     Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
   }
 
@@ -78,28 +77,15 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
     );
   }
 
+  ///
+  /// loai don dich vu
+  ///
   void _loadDonDichVu(String id) {
     _donDichVuProvider.find(
       id: id,
       onSuccess: (model) {
         print(model);
         // _quanHuyen(model.idQuanHuyen)
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
-  }
-
-  ///
-  /// lấy tên quận huyện
-  ///
-  void _quanHuyen(String id) {
-    _quanHuyenProvider.find(
-      id: id,
-      onSuccess: (value) {
-        quanHuyenNameList.add(value.ten!);
         update();
       },
       onError: (error) {
