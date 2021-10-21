@@ -5,21 +5,22 @@ class DangKyThueResponse {
   TaiKhoanResponse? idTaiKhoan;
   String? file;
   String? trangThai;
+  List<dynamic>? hinhAnhs;
   String? loai;
 
   String? createdAt;
   String? updatedAt;
 
   DangKyThueResponse({
-    this.id,
-    this.idTaiKhoan,
-    this.file,
-    this.trangThai,
-    this.loai,
-    this.createdAt,
-    this.updatedAt,
-  });
-
+      this.id,
+      this.idTaiKhoan,
+      this.file,
+      this.trangThai,
+      this.hinhAnhs,
+      this.loai,
+      this.createdAt,
+      this.updatedAt});
+  
   ///
   /// From JSON
   ///
@@ -36,6 +37,7 @@ class DangKyThueResponse {
     }
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();
+    hinhAnhs = json['hinhAnhs'] as List<dynamic>;
     loai = json['loai'].toString();
 
     createdAt = json['created_at'].toString();
@@ -59,8 +61,12 @@ class DangKyThueResponse {
     // check null trangThai
     if (trangThai != null) data['trangThai'] = trangThai;
 
+    // check null hinhAnh
+    if (hinhAnhs != null) data['hinhAnh'] = hinhAnhs; 
+
     // check null loai
-    if (loai != null) data['loai'] = loai;
+    if (loai != null) data['loai'] = loai; 
+
 
     return data;
   }
