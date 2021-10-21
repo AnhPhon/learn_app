@@ -117,9 +117,11 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
             style: Dimensions.fontSizeStyle18w600(),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-              vertical: Dimensions.PADDING_SIZE_DEFAULT,
+            padding: const EdgeInsets.fromLTRB(
+              0,
+              0,
+              0,
+              Dimensions.PADDING_SIZE_SMALL,
             ),
             decoration: const BoxDecoration(
               color: ColorResources.WHITE,
@@ -142,6 +144,12 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                           horizontal: Dimensions.PADDING_SIZE_SMALL,
                           vertical: Dimensions.PADDING_SIZE_SMALL,
                         ),
+                        margin: const EdgeInsets.fromLTRB(
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          0,
+                        ),
                         child: Text(
                           e.tieuDe.toString(),
                           textAlign: TextAlign.left,
@@ -152,12 +160,20 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                       );
                     }).toList()
                   : [
-                      const Center(
-                        child: Text(
-                          'Không có',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          0,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Không có',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                            ),
                           ),
                         ),
                       ),

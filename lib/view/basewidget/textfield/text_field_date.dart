@@ -1,21 +1,27 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class TextFieldDate extends StatelessWidget {
-  const TextFieldDate(
-      {this.label,
-      this.isToHour = false,
-      required this.holdplacer,
-      required this.controller,
-      required this.allowEdit,
-      required this.isDate,
-      this.typeInput,
-      required this.width,
-      required this.obligatory,
-      this.area = false,
-      required this.fontSize,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
+  const TextFieldDate({
+    this.label,
+    this.isToHour = false,
+    required this.holdplacer,
+    required this.controller,
+    required this.allowEdit,
+    required this.isDate,
+    this.typeInput,
+    required this.width,
+    required this.obligatory,
+    this.area = false,
+    required this.fontSize,
+    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+    this.onDateTimeChanged,
+  });
+
+  final Function(String)? onDateTimeChanged;
   final String holdplacer;
   final String? label;
   final TextEditingController controller;
@@ -26,6 +32,7 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,23 +46,18 @@ class TextFieldDate extends StatelessWidget {
         children: [
           if (label != null)
             Container(
-              padding: const EdgeInsets.only(
-                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
               alignment: Alignment.centerLeft,
               child: Wrap(
                 children: [
                   Text(
                     label!,
-                    style: TextStyle(
-                        fontSize: fontSize, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600),
                   ),
                   if (obligatory)
                     Text(
                       '*',
-                      style: TextStyle(
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
+                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: Colors.red),
                     )
                   else
                     Container()
@@ -63,19 +65,21 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           GestureDetector(
-            onTap: isDate  ? (){
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2100),
-              ).then((value) {
-                isToHour! ? controller.text =
-                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
-                    "${value!.day}-${value.month}-${value.year}";
-                    
-              });
-            } : (){},
+            onTap: isDate
+                ? () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2001),
+                      lastDate: DateTime(2100),
+                    ).then((value) {
+                      if(onDateTimeChanged != null && value != null){
+                        onDateTimeChanged!(value.toIso8601String());
+                      }
+                      isToHour! ? controller.text = "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text = "${value!.day}-${value.month}-${value.year}";
+                    });
+                  }
+                : () {},
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: isDate ? null : typeInput,
@@ -107,38 +111,29 @@ class TextFieldDate extends StatelessWidget {
                     vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   hintText: holdplacer,
                   filled: true,
-                  fillColor:
-                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  fillColor: (allowEdit == false) ? ColorResources.WHITE : Colors.white,
                   suffixIconConstraints: const BoxConstraints(
                     maxHeight: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   suffixIcon: (isDate == true)
                       ? const Padding(
-                          padding: EdgeInsets.only(
-                              right: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                          padding: EdgeInsets.only(right: Dimensions.FONT_SIZE_EXTRA_SMALL),
                           child: Icon(
                             Icons.date_range,
                             size: Dimensions.ICON_SIZE_SMALL,
