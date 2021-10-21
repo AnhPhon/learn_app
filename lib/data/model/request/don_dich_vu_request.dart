@@ -13,6 +13,7 @@ class DonDichVuRequest {
   String? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
   String? idTrangThaiDonHang;
+  String? idTrangThaiDonDichVu;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
   List<ThoiGianLamViecResponse>? thoiGianLamViec;
@@ -54,6 +55,7 @@ class DonDichVuRequest {
       this.hinhAnhBanKhoiLuong,
       this.hinhAnhBanVe,
       this.idTrangThaiDonHang,
+      this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.thoiGianLamViec,
@@ -98,6 +100,7 @@ class DonDichVuRequest {
     hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
+    idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
     thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
@@ -167,6 +170,10 @@ class DonDichVuRequest {
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null)
       data['idTrangThaiDonHang'] = idTrangThaiDonHang;
+
+    // check null idTrangThaiDonHang
+    if (idTrangThaiDonDichVu != null)
+      data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)
