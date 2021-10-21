@@ -81,10 +81,16 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
-              inputFormatters: typeInput == TextInputType.number ? isFormatCurrency! ? [ThousandsSeparatorInputFormatterCurrency(),]  : [FilteringTextInputFormatter.digitsOnly] : null,
+              inputFormatters: typeInput == TextInputType.number
+                  ? isFormatCurrency!
+                      ? [
+                          ThousandsSeparatorInputFormatterCurrency(),
+                        ]
+                      : [FilteringTextInputFormatter.digitsOnly]
+                  : null,
               textInputAction: TextInputAction.done,
               keyboardType: typeInput,
-              maxLines: (allowMultiline == true) ? line : null,
+              maxLines: (allowMultiline == true) ? line : 1,
               textAlignVertical: TextAlignVertical.top,
               enabled: allowEdit,
               controller: controller,
