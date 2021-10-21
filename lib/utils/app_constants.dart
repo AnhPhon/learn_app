@@ -25,14 +25,14 @@ enum SERVICES {WORK, REGULARLY}
 const String TOKEN = 'token';
 
 List<LanguageModel> languages = [
-  LanguageModel(
-      imageUrl: '',
-      languageName: 'Việt Nam',
-      countryCode: 'VI',
-      languageCode: 'vi'),
-  LanguageModel(
-      imageUrl: '',
-      languageName: 'English',
-      countryCode: 'US',
-      languageCode: 'en'),
+  LanguageModel(imageUrl: '', languageName: 'Việt Nam', countryCode: 'VI', languageCode: 'vi'),
+  LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),
 ];
+
+// sharePreference
+const dynamic TRANG_THAI_DU_AN = {
+  'CHUA_TRIEN_KHAI': {'tieuDe': 'Chưa triển khai', 'id': '616a7b1d06a577482e02958b'},
+  'SAP_TRIEN_KHAI': {'tieuDe': 'Sắp triển khai', 'id': '616a7b4606a577482e02959c'},
+  'DANG_TRIEN_KHAI': {'tieuDe': 'Đang triển khai', 'id': '616ce9647aade64ebae7c93f'},
+  'DA_TRIEN_KHAI': {'tieuDe': 'Đã triển khai', 'id': '616ce9687aade64ebae7c941'},
+};
