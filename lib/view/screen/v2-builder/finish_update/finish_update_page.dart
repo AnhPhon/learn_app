@@ -11,11 +11,6 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
     return GetBuilder<V2FinishUpdateController>(
       init: V2FinishUpdateController(),
       builder: (controller) {
-        if (controller.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
@@ -63,8 +58,8 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   // bổ sung mã số thuế
                   _textOnClick(
                     "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                    controller.onMaSoThueClick,
-                    false,
+                    controller.onDangKyHopDongClick,
+                    controller.maSoThueValid,
                   ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
@@ -73,7 +68,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   _textOnClick(
                     "Cập nhập sản phẩm mẫu",
                     controller.onCapNhatSanPhamClick,
-                    false,
+                    controller.sanPhamMauValid,
                   ),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
@@ -82,7 +77,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   _textOnClick(
                     "Cập nhập bảng giá",
                     controller.onCapNhatSanPhamClick,
-                    false,
+                    controller.bangGiaValid,
                   ),
                 ],
               ),
