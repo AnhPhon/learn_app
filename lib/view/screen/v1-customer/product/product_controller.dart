@@ -18,7 +18,7 @@ class V1ProductController extends GetxController {
 
   // refresh controller
   RefreshController refreshController = RefreshController();
-  final searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   // list
   List<SanPhamResponse> sanPhamList = [];
@@ -128,7 +128,7 @@ class V1ProductController extends GetxController {
   ///
   /// on refresh
   ///
-  void onRefresh() async {
+  Future<void> onRefresh() async {
     loadInit();
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshController.refreshCompleted();
@@ -137,7 +137,7 @@ class V1ProductController extends GetxController {
   ///
   /// on loading
   ///
-  void onLoading() async {
+  Future<void> onLoading() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshController.loadComplete();
   }

@@ -4,10 +4,7 @@ import 'package:template/view/screen/v1-customer/account/account_controller.dart
 import 'package:template/view/screen/v1-customer/entertainment/entertainment_controller.dart';
 import 'package:template/view/screen/v1-customer/home/home_controller.dart';
 import 'package:template/view/screen/v1-customer/news/news_controller.dart';
-import 'package:template/view/screen/v1-customer/product/cart/cart_controller.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
-import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_controller.dart';
-import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_controller.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_method/shipping_method_controller.dart';
 import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
@@ -19,10 +16,6 @@ class V1DashboardBinding extends Bindings {
     Get.lazyPut<V1NewsController>(() => V1NewsController());
     Get.lazyPut<V1AccountController>(() => V1AccountController());
     Get.lazyPut<V1ProductController>(() => V1ProductController());
-    Get.lazyPut<V1ProductDetailController>(() => V1ProductDetailController());
-    Get.lazyPut<V1CartController>(() => V1CartController());
-    Get.lazyPut<V1ShippingAddressController>(
-        () => V1ShippingAddressController());
     Get.lazyPut<V1ShippingMethodController>(() => V1ShippingMethodController());
     Get.lazyPut<V1ProjectController>(() => V1ProjectController());
     Get.lazyPut<RefreshController>(() => RefreshController());
