@@ -1,7 +1,14 @@
 import 'package:get/get.dart';
+import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
+import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1ProfileController extends GetxController {
+  //DangKyBaoHiem
+  DangKyBaoHiemProvider dangKyBaoHiemProvider = DangKyBaoHiemProvider();
+  DangKyBaoHiemResponse dangKyBaoHiemResponse = DangKyBaoHiemResponse();
+
+  //tile appbar
   String title = "Hồ sơ cá nhân";
 
   ///

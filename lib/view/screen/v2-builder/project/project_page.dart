@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/getx_smart_refresh/getx_smart_refresh_page.dart';
 import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 import 'package:template/view/screen/v2-builder/component_builder/tab_bar_widget.dart';
 import 'package:template/view/screen/v2-builder/project/project_controller.dart';
@@ -26,10 +28,10 @@ class V2ProjectPage extends GetView<V2ProjectController> {
                   height: Dimensions.MARGIN_SIZE_LARGE,
                 ),
 
-                //tab bar
+                //tab bar button
                 _tabBarWidget(context: context, controller: controller),
 
-                //items list
+                //tab view list
                 _itemList(controller),
               ],
             ),
@@ -38,62 +40,82 @@ class V2ProjectPage extends GetView<V2ProjectController> {
   }
 
   ///
-  /// tab
+  /// tab bar button
   ///
-  Widget _tabBarWidget(
-      {required BuildContext context,
-      required V2ProjectController controller}) {
+  Widget _tabBarWidget({required BuildContext context, required V2ProjectController controller}) {
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
-      height: DeviceUtils.getScaledHeight(context, .07),
+      height: DeviceUtils.getScaledHeight(context, .06),
       child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.titleTabBar.length,
-          itemBuilder: (BuildContext context, int index) {
-            return TabBarWidget(
-                onTap: () => controller.onChangeTab(index),
-                index: index,
-                currentIndex: controller.currentIndex,
-                title: controller.titleTabBar[index].toString());
-          }),
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.titleTabBar.length,
+        itemBuilder: (BuildContext context, int index) {
+          return TabBarWidget(
+            onTap: () => controller.onChangeTab(index),
+            index: index,
+            currentIndex: controller.currentIndex.value,
+            title: controller.titleTabBar[index]['tieuDe'].toString(),
+          );
+        },
+      ),
     );
   }
 
   ///
-  ///item list
+  ///tab view list
   ///
+
   Widget _itemList(V2ProjectController controller) {
     return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_LARGE,
+      child: DefaultTabController(
+        length: controller.titleTabBar.length,
+        child: Scaffold(
+          body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(), // add
+            controller: controller.tabController,
+            children: List.generate(
+              controller.titleTabBar.length,
+                  (index) {
+                return GetXSmartRefreshPage(
+                  key: Key('GetXSmartRefreshPageTinTuc_$index'),
+                  enablePullUp: true,
+                  enablePullDown: true,
+                  onLoading: controller.onLoading,
+                  onRefresh: controller.onRefresh,
+                  child: Obx(
+                        () => listViewItemBuilder(controller),
+                  ),
+                );
+              },
             ),
-            ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return ItemListWidget(
-                    urlImage: "",
-                    onTap: (){},//controller.onProjectDetailClick(),
-                    title: "Thợ ốp lát: Công trình khách hàng 5 sao",
-                    icon1: const Icon(Icons.location_on),
-                    rowText1: "Ngũ Hàng Sơn",
-                    colorRowText1: ColorResources.GREY,
-                    icon2: const Icon(Icons.calendar_today),
-                    rowText2: "30/09/2021",
-                    colorRowText2: ColorResources.GREY,
-                    isSpaceBetween: true,
-                  );
-                }),
-          ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget listViewItemBuilder(V2ProjectController controller) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'].length as int,
+      itemBuilder: (BuildContext ctx, int index) {
+        return ItemListWidget(
+          urlImage: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].hinhAnhDaiDien.toString(),
+          onTap: () => controller.onProjectDetailClick(controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index]),
+          title: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].ten.toString(),
+          icon1: const Icon(Icons.location_on),
+          rowText1: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].idQuanHuyen != null ? controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].idQuanHuyen!.ten.toString() : '',
+          colorRowText1: ColorResources.GREY,
+          icon2: const Icon(Icons.calendar_today),
+          rowText2: DateConverter.isoStringToddMMYYYY(controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].ngayBatDau!.toString()),
+          colorRowText2: ColorResources.GREY,
+          isSpaceBetween: true,
+        );
+      },
     );
   }
 }

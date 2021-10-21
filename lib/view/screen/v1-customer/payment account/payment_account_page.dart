@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -14,6 +15,11 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
     return GetBuilder<V1PaymentAccountController>(
         init: V1PaymentAccountController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Container(
@@ -34,7 +40,8 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                   ),
                 ],
                 color: ColorResources.WHITE,
-                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -46,23 +53,38 @@ class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {
                     ),
 
                     //detail
-                    const RowText(
+                    RowText(
                       text1: "Số dư của bạn",
-                      text2: "0đ",
+                      text2: "${PriceConverter.convertPrice(
+                        context,
+                        double.parse(
+                          controller.viTienResponse.tongTien.toString(),
+                        ),
+                      )} đ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,
                     ),
-                    const RowText(
+                    RowText(
                       text1: "Số tiền cần thanh toán",
-                      text2: "7.500đ",
+                      text2: "${PriceConverter.convertPrice(
+                        context,
+                        double.parse(
+                          controller.price,
+                        ),
+                      )} đ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,
                     ),
-                    const RowText(
+                    RowText(
                       text1: "Còn dư/còn thiếu",
-                      text2: "7.500đ",
+                      text2: "${PriceConverter.convertPrice(
+                        context,
+                        double.parse(
+                          controller.amountOfPrice.toString(),
+                        ),
+                      )} đ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,

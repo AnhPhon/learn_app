@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
 import 'package:template/view/screen/register/register_page.dart';
 import 'package:template/view/screen/update_password/update_password_page.dart';
@@ -18,7 +19,6 @@ import 'package:template/view/screen/v1-customer/account/profile/insurance_regis
 import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
-import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
@@ -133,6 +133,8 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
@@ -393,10 +395,6 @@ class AppPages {
       page: () => V1InsuranceRegisterPage(),
     ),
     GetPage(
-      name: AppRoutes.V1_YOUR_INSURANCE,
-      page: () => V1YourInsurancePage(),
-    ),
-    GetPage(
       name: AppRoutes.V1_INSURANCE_DETAIL,
       page: () => V1InsuranceDetailPage(),
     ),
@@ -413,6 +411,12 @@ class AppPages {
       name: AppRoutes.V1_PROJECT_DETAIL,
       page: () => V1ProjectDetailPage(),
     ),
+    GetPage(
+      name: AppRoutes.V1_ACCOUNT,
+      page: () => V1AccountPage(),
+    ),
+
+
     //builder
     GetPage(
       name: AppRoutes.V2_PRODUCT_DETAIL,
@@ -947,6 +951,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_PROJECT_DETAIL,
       page: () => V2ProjectDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DETAIL_TRIEN_KHAI,
+      page: () => V2ProjectDetailTrienKhaiPage(),
+    ),
+    // GetPage(
+    //   name: AppRoutes.V2_PROJECT_DA_TRIEN_KHAI,
+    //   page: () => V2ProjectDaTrienKhaiPage(),
+    // ),
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DANG_KY_TRIEN_KHAI,
+      page: () => V2ProjectDangKyTrienKhaiPage(),
     ),
     GetPage(
       name: AppRoutes.V2_INURANCE_REGISTER,

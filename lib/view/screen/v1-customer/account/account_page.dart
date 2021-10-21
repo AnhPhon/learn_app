@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -14,6 +15,11 @@ class V1AccountPage extends GetView<V1AccountController> {
     return GetBuilder<V1AccountController>(
         init: V1AccountController(),
         builder: (V1AccountController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
@@ -52,28 +58,28 @@ class V1AccountPage extends GetView<V1AccountController> {
                         ),
 
                         // avatar
-                        _avatar(context, controller),
+                        _avatar(context, controller: controller),
 
                         // profile
                         _items(
                           icon: const Icon(Icons.account_circle_outlined),
-                          text: "Hồ sơ cá nhân (thuế, sức khoẻ, bảo hiểm, HĐ)",
+                          text: "Hồ sơ cá nhân",
                           onTap: () => controller.onProfileClick(),
                         ),
 
                         // personal information
                         _items(
                           icon: const Icon(Icons.person_outlined),
-                          text: "Thông tin cá nhân (chỉnh sửa nếu có thể)",
+                          text: "Thông tin cá nhân",
                           onTap: () => controller.onPersonalInfoClick(),
                         ),
 
                         // point-based
-                        _items(
-                          icon: const Icon(Icons.monetization_on_outlined),
-                          text: "Tổng đơn và tích điểm",
-                          onTap: () => controller.onPointBasedPageClick(),
-                        ),
+                        // _items(
+                        //   icon: const Icon(Icons.monetization_on_outlined),
+                        //   text: "Tổng đơn và tích điểm",
+                        //   onTap: () => controller.onPointBasedPageClick(),
+                        // ),
 
                         // wallet
                         _items(
@@ -97,13 +103,6 @@ class V1AccountPage extends GetView<V1AccountController> {
                           onTap: () => controller.showDialogRating(context),
                         ),
 
-                        // history
-                        // _items(
-                        //   icon: const Icon(Icons.history),
-                        //   text: "Lịch sử",
-                        //   onTap: () {},
-                        // ),
-
                         // support
                         _items(
                           icon: const Icon(Icons.account_circle_outlined),
@@ -122,7 +121,8 @@ class V1AccountPage extends GetView<V1AccountController> {
                         _items(
                           icon: const Icon(Icons.groups),
                           text: "Mời bạn, giới thiệu bạn tích luỹ",
-                          onTap: () => controller.onIntroducePageClick(),
+                          onTap: () => Share.share('http://izisoft.io/'),
+                          // onTap: () => controller.onIntroducePageClick(),
                         ),
 
                         // mail
@@ -138,13 +138,6 @@ class V1AccountPage extends GetView<V1AccountController> {
                           text: "Đơn hàng của tôi",
                           onTap: () => controller.onMyOrderClick(),
                         ),
-
-                        // image update
-                        // _items(
-                        //   icon: const Icon(Icons.image),
-                        //   text: "Cập nhật hình ảnh",
-                        //   onTap: () {},
-                        // ),
 
                         const SizedBox(
                           height: Dimensions.SIZE_BOX_BOTTOM_NAV,
@@ -162,69 +155,44 @@ class V1AccountPage extends GetView<V1AccountController> {
   ///
   ///avatar
   ///
-  Widget _avatar(BuildContext context, V1AccountController controller) {
-    return Stack(
+  Widget _avatar(BuildContext context,
+      {required V1AccountController controller}) {
+    return Column(
       children: [
-        Column(
-          children: [
-            //image
-            Container(
-              margin:
-                  const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
-              height: DeviceUtils.getScaledSize(context, .2),
-              width: DeviceUtils.getScaledSize(context, .2),
-              child: ClipOval(
-                child: FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.urlImage,
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                        backgroundImage: AssetImage(Images.placeholder))),
-              ),
-            ),
-
-            //full name
-            Text(
-              controller.name,
-              style: Dimensions.fontSizeStyle16w600(),
-            ),
-
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .01),
-            ),
-
-            //email
-            Text(
-              controller.email,
-              style: Dimensions.fontSizeStyle16w600(),
-            ),
-
-            SizedBox(
-              height: DeviceUtils.getScaledHeight(context, .01),
-            ),
-          ],
-        ),
-        Positioned(
-          right: Dimensions.PADDING_SIZE_LARGE,
-          top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-          child: GestureDetector(
-            onTap: () {
-              // controller.onEditInfoClick();
-            },
-            child: Container(
-              padding:
-                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              decoration: const BoxDecoration(
-                  color: ColorResources.WHITE,
-                  borderRadius: BorderRadius.all(Radius.circular(50))),
-              child: const Icon(
-                Icons.add_a_photo_outlined,
-                color: ColorResources.PRIMARY,
-                size: Dimensions.ICON_SIZE_SMALL,
-              ),
-            ),
+        //image
+        Container(
+          margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+          height: DeviceUtils.getScaledSize(context, .2),
+          width: DeviceUtils.getScaledSize(context, .2),
+          child: ClipOval(
+            child: FadeInImage.assetNetwork(
+                placeholder: Images.placeholder,
+                image: controller.taiKhoanResponse.hinhDaiDien.toString(),
+                fit: BoxFit.cover,
+                imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                    backgroundImage: AssetImage(Images.placeholder))),
           ),
-        )
+        ),
+
+        //full name
+        Text(
+          controller.taiKhoanResponse.hoTen.toString(),
+          style: Dimensions.fontSizeStyle16w600(),
+        ),
+
+        SizedBox(
+          height: DeviceUtils.getScaledHeight(context, .01),
+        ),
+
+        //email
+        Text(
+          controller.taiKhoanResponse.email.toString(),
+          style: Dimensions.fontSizeStyle16w600(),
+        ),
+
+        SizedBox(
+          height: DeviceUtils.getScaledHeight(context, .01),
+        ),
       ],
     );
   }

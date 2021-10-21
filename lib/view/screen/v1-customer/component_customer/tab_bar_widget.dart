@@ -8,6 +8,7 @@ class TabBarWidget extends StatelessWidget {
   final int index;
   final int currentIndex;
   final String title;
+
   const TabBarWidget({
     Key? key,
     required this.onTap,
@@ -38,23 +39,19 @@ class TabBarWidget extends StatelessWidget {
                 )
               : const BorderRadius.only(
                   topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                  bottomRight:
-                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                 ),
-          color: currentIndex == index
-              ? ColorResources.PRIMARY
-              : ColorResources.WHITE,
-          border: currentIndex == index
-              ? null
-              : Border.all(color: ColorResources.PRIMARY),
+          color: currentIndex == index ? ColorResources.PRIMARY : ColorResources.WHITE,
+          border: currentIndex == index ? null : Border.all(color: ColorResources.PRIMARY),
         ),
         child: Text(
           title,
           style: TextStyle(
-            color: currentIndex == index
-                ? ColorResources.WHITE
-                : ColorResources.BLACK,
+            color: currentIndex == index ? ColorResources.WHITE : ColorResources.BLACK,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
