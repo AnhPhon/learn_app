@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/currency_covert.dart';
@@ -16,7 +14,8 @@ import 'package:template/view/screen/v4-employee/notification/components/appbar_
 
 class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
   V1G3OrderDetailPage({Key? key}) : super(key: key);
-  final V1G3OrderDetailController _controller = Get.find<V1G3OrderDetailController>();
+  final V1G3OrderDetailController _controller =
+      Get.find<V1G3OrderDetailController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,37 +29,38 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
             padding: const EdgeInsets.all(
               Dimensions.PADDING_SIZE_DEFAULT,
             ),
-            child: BillWidget(
-              isHasDeposit: false,
-              title: "Chi tiết đơn hàng",
-              orderContents: [
-              OrderContentStringValue(title:"Gội đầu tại nhà" , value:"${CurrencyConverter.currencyConverterVND(100000)} đ/công", boldValue: true,),
-              OrderContentStringValue(title:"Số giờ làm việc/ngày" , value:"${CurrencyConverter.currencyConverterVND(8000)} VNĐ", boldValue: true,),
-              const OrderContentStringValue(title:"Số lượng" , value:"8 người", boldValue: true,),
-              const OrderContentStringValue(title:"Số ngày làm việc dự kiến" , value:"10 giờ", boldValue: true,),
-              OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(300000)} VNĐ", boldValue: true,),
-              OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(0)} VNĐ", boldValue: true,),
-              OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(5000)} VNĐ", boldValue: true,),
-              OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(11050000)} VNĐ", boldValue: true,),
-            ]),
+            child: GetBuilder(
+              builder: (V1G3OrderDetailController controller) {
+                return BillWidget(
+                  isHasDeposit: false,
+                  title: "Chi tiết đơn hàng",
+                  orderContents: [
+                  OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.phiDichVu!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.khuyenMai!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.tongDon!))} VNĐ", boldValue: true,),
+                ]);
+              },
+            )
           ),
           
           // Khoản cách bottomSheet
-          const SizedBox(height: BOTTOMSHEET,)
+          const SizedBox(
+            height: BOTTOMSHEET + Dimensions.SIZE_LARGE,
+          )
         ],
       ),
       bottomSheet: OrderBottomSheet(
-        mainAxisAlignment: MainAxisAlignment.center, 
-        itemValue: 10000,
+        mainAxisAlignment: MainAxisAlignment.center,
+        itemValue: double.parse(controller.donDichVuRequest!.tongDon!),
         child: Center(
           child: LongButton(
             color: ColorResources.PRIMARYCOLOR,
-            onPressed: ()=> _controller.onNextPage(),
+            onPressed: () => _controller.onNextPage(),
             title: "Tiếp tục",
           ),
         ),
       ),
     );
   }
-
 }

@@ -1,14 +1,14 @@
-
 class BangGiaLocHoSoResponse {
   String? id;
   String? tieuDe;
   String? donGia;
 
-  BangGiaLocHoSoResponse({
-      this.id,
-      this.tieuDe,
-      this.donGia});
-  
+  String? createdAt;
+  String? updatedAt;
+
+  BangGiaLocHoSoResponse(
+      {this.id, this.tieuDe, this.donGia, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
@@ -17,6 +17,8 @@ class BangGiaLocHoSoResponse {
     tieuDe = json['tieuDe'].toString();
     donGia = json['donGia'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -25,15 +27,19 @@ class BangGiaLocHoSoResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tieuDe
-    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     // check null donGia
-    if (donGia != null) data['donGia'] = donGia; 
-
+    if (donGia != null) data['donGia'] = donGia;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tieuDe!;
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/card/product_card.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
-import 'package:template/view/basewidget/news/news.dart';
 import 'package:template/view/basewidget/task_need_worker.dart';
+import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -24,31 +24,39 @@ class V2HomePage extends GetView<V2HomeController> {
       body: GetBuilder<V2HomeController>(
         init: V2HomeController(),
         builder: (V2HomeController controller) {
-          return HomeWidget(
-            fullname: "KH, ${controller.fullname}!",
-            content: Column(
-              children: [
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+          if (controller.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
+            child: HomeWidget(
+              fullname: "NT, ${controller.fullname}",
+              content: Column(
+                children: [
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // need update widget
-                _needUpdateWidget(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  // need update widget
+                  _needUpdateWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                // category box widget
-                _categoryBoxWidget(),
+                  // category box widget
+                  _categoryBoxWidget(),
 
-                // box
-                _box(),
+                  // box
+                  _box(),
 
-                // need people widget
-                _needPeopleWidget(controller),
+                  // need people widget
+                  _needPeopleWidget(),
 
-                // san pham widget
-                _sanPhamWidget(context),
+                  // san pham widget
+                  _sanPhamWidget(context),
 
-                // news
-                _newsWidget(controller:controller)
-              ],
+                  // news
+                  _newsWidget()
+                ],
+              ),
             ),
           );
         },
@@ -73,13 +81,33 @@ class V2HomePage extends GetView<V2HomeController> {
             boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
         child: Row(
           children: [
-            const Text(
-              'Bạn cần hoàn thiện hồ sơ',
-              style: TextStyle(
-                color: Color(0xff4D4D4D),
-                fontWeight: FontWeight.bold,
-                fontSize: Dimensions.FONT_SIZE_SMALL,
-              ),
+            Row(
+              children: [
+                const Text(
+                  "Bạn cần hoàn thiện ",
+                  style: TextStyle(
+                    color: Color(0xff4D4D4D),
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                  ),
+                ),
+                Text(
+                  controller.number.toString(),
+                  style: const TextStyle(
+                    color: ColorResources.RED,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                  ),
+                ),
+                const Text(
+                  " hồ sơ",
+                  style: TextStyle(
+                    color: Color(0xff4D4D4D),
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                  ),
+                ),
+              ],
             ),
             const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
             const Spacer(),
@@ -127,51 +155,13 @@ class V2HomePage extends GetView<V2HomeController> {
           return GestureDetector(
             onTap: controller.contentGrid![index]["onTap"] as Function(),
             child: BtnCategory(
-              label: controller.contentGrid![index]["label"].toString(),
+              label: controller.contentGrid![index]["label"] as List<String>,
               gradient:
                   controller.contentGrid![index]["gradient"] as RadialGradient,
               icon: controller.contentGrid![index]["icon"] as IconData,
             ),
           );
         },
-      ),
-    );
-  }
-
-  ///
-  /// box
-  ///
-  Widget _box() {
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-          decoration: const BoxDecoration(
-            color: Color(0xff2196F3),
-            borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
-          ),
-          child: Row(
-            children: const [
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Icon(
-                  Icons.work,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-              Text(
-                'Kết quả báo giá',
-                style: TextStyle(
-                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
-              )
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -226,23 +216,30 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// need people widget
   ///
-  Widget _needPeopleWidget(V2HomeController controller) {
+  Widget _needPeopleWidget() {
+    final int length = controller.donDichVuList.length > 2
+        ? 2
+        : controller.donDichVuList.length;
+    final double len = length * 1.0;
+
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
         onTap: () => controller.onShortHandedPageClick(),
         title: "Công việc đang cần người",
         widget: SizedBox(
-          height: 220,
+          height: (len > 0) ? 140 * len : 0,
           child: ListView.builder(
-            itemCount: 2,
+            itemCount: length,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
-              return const TaskNeedWorker(
-                nhanTask: "Thợ ốp lát",
-                tenTask: "Công trình khách 5 sao tại TP Đà Nẵng",
-                maTask: "DH123456",
-                trangThai: "Đang tuyển",
+              return TaskNeedWorker(
+                nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
+                tenTask: controller.donDichVuList[index].tieuDe!,
+                maTask:
+                    "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
+                trangThai:
+                    controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
               );
             },
           ),
@@ -255,6 +252,8 @@ class V2HomePage extends GetView<V2HomeController> {
   /// _sanPhamWidget
   ///
   Widget _sanPhamWidget(BuildContext context) {
+    final int length =
+        controller.sanPhamList.length > 2 ? 2 : controller.sanPhamList.length;
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: FieldWidget(
@@ -266,26 +265,32 @@ class V2HomePage extends GetView<V2HomeController> {
         widget: SizedBox(
           height: 280,
           child: GridView.builder(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+            padding: const EdgeInsets.all(0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisExtent: 270,
+              mainAxisExtent: 280,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount: length,
             itemBuilder: (BuildContext ctx, index) {
-              return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              return GestureDetector(
+                onTap: () {
+                  controller
+                      .onClickProductDetail(controller.sanPhamList[index].id!);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    ),
                   ),
-                ),
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: ProductCard(
-                  title: "Ke chữ thập màu vàng cho ...",
-                  image: Images.example,
-                  cost: PriceConverter.convertPrice(context, 100000),
+                  padding:
+                      const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: ProductCard(
+                    title: controller.sanPhamList[index].ten!,
+                    image: controller.sanPhamList[index].hinhAnhSanPham!,
+                    cost: PriceConverter.convertPrice(context, 100000),
+                  ),
                 ),
               );
             },
@@ -298,31 +303,83 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   /// news widget
   ///
-  Widget _newsWidget({required V2HomeController controller}) {
+  Widget _newsWidget() {
+    final int length =
+        controller.tinTucList.length > 2 ? 2 : controller.tinTucList.length;
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: FieldWidget(
         title: "Tin tức",
         onTap: () {
           controller.onClickHotNews();
         },
         widget: SizedBox(
-          height: 250,
+          height: 140 * length + 50,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            padding: const EdgeInsets.all(0),
+            itemCount: length,
             itemBuilder: (
               BuildContext ctx,
               index,
             ) {
-              return const Padding(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: NewsBox(
-                  title: "Tin nóng tóm tắt tổng hợp",
-                  describe: "Việt Nam sắp có vắc xin điều trị Covid 20/09/2021",
-                ),
+              return ItemListWidget(
+                onTap: () {
+                  controller.onNewsDetailClick(index: index);
+                },
+                title: "Biệt thự 170 Nguyễn Đình Thi",
+                icon1: const Icon(Icons.remove_red_eye),
+                rowText1: controller.tinTucList[index].luotXem,
+                colorRowText1: ColorResources.BLACKGREY,
+                icon2: const Icon(Icons.monetization_on_outlined),
+                rowText2: controller.tinTucList[index].createdAt
+                    .toString()
+                    .substring(0, 10),
+                colorRowText2: ColorResources.BLACKGREY,
+                isStart: true,
+                urlImage: controller.tinTucList[index].hinhAnh!,
+                isSpaceBetween: true,
               );
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// box
+  ///
+  Widget _box() {
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+          decoration: const BoxDecoration(
+            color: Color(0xff2196F3),
+            borderRadius: BorderRadius.all(
+                Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+          ),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.work,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+              Text(
+                'Kết quả báo giá',
+                style: TextStyle(
+                    color: Colors.white, fontSize: Dimensions.FONT_SIZE_LARGE),
+              )
+            ],
           ),
         ),
       ),

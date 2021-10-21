@@ -5,118 +5,135 @@ import 'package:template/utils/dimensions.dart';
 
 class DropDownButton1<T> extends StatelessWidget {
   const DropDownButton1({
-    required this.hint,
+    this.hint,
     required this.onChanged,
     required this.data,
     this.value,
-    this.isColorFieldWhite = false,
     this.obligatory = false,
     this.label,
     this.labelBold = false,
     required this.width,
+    this.isBorder = true,
+    this.isShadow = false,
+    this.padding,
+    this.margin,
+    this.fillColor,
+    this.colorText,
+    this.isColorFieldWhite,
   });
 
-  final String hint;
+  final String? hint;
   final Function(T? i) onChanged;
   final List<T> data;
   final T? value;
-  final bool? isColorFieldWhite;
-  final bool? obligatory, labelBold;
+  final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
   final String? label;
+  final Color? colorText;
+  final Color? fillColor;
   final double width;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                children: [
-                  Text(
-                    label.toString(),
-                    style: labelBold == true
-                        ? Dimensions.fontSizeStyle16w600().copyWith(
-                            color: ColorResources.BLACK,
-                          )
-                        : Dimensions.fontSizeStyle16().copyWith(
-                            color: ColorResources.BLACK,
-                          ),
-                  ),
-                  if (obligatory == true)
-                    const Text(
-                      "*",
-                      style: TextStyle(
-                        color: ColorResources.RED,
-                      ),
+            Wrap(
+              children: [
+                Text(
+                  label.toString(),
+                  style: labelBold == true
+                      ? Dimensions.fontSizeStyle16w600().copyWith(
+                          color: ColorResources.BLACK,
+                        )
+                      : Dimensions.fontSizeStyle16().copyWith(
+                          color: ColorResources.BLACK,
+                        ),
+                ),
+                if (obligatory == true)
+                  const Text(
+                    "*",
+                    style: TextStyle(
+                      color: ColorResources.RED,
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
-            margin: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledSize(context, .025)),
+            margin: margin ?? EdgeInsets.zero,
+            decoration: BoxDecoration(
+              boxShadow: (isShadow == true)
+                  ? [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: ColorResources.BLACK.withOpacity(.2),
+                          offset: const Offset(0, 2)),
+                    ]
+                  : [],
+            ),
             child: FormField(
               builder: (field) {
                 return InputDecorator(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: (isColorFieldWhite == true)
-                        ? ColorResources.WHITE
-                        : Colors.transparent,
+                    fillColor: fillColor ?? Colors.transparent,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                     disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),
                         vertical: DeviceUtils.getScaledSize(context, 0.038)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      borderSide: const BorderSide(
-                        color: ColorResources.PRIMARY,
-                        width: 2,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        borderSide: (isBorder == true)
+                            ? const BorderSide(
+                                color: ColorResources.PRIMARY,
+                                width: 2,
+                              )
+                            : BorderSide.none),
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
-                        hint: Text(hint),
+                        hint: hint.toString().isNotEmpty
+                            ? Text(hint.toString())
+                            : null,
                         isDense: true,
                         isExpanded: true,
-                        // value: getCutContent(value),
-                        // onChanged: onChanged,
+                        value: value,
                         onChanged: onChanged,
                         items: data
                             .map((e) => DropdownMenuItem<T>(
                                 value: e,
                                 child: Text(
                                   e.toString(),
-                                  style: const TextStyle(
-                                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                                      color: ColorResources.BLACK),
+                                  style: TextStyle(
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    color: colorText ?? ColorResources.BLACK,
+                                  ),
                                   overflow: TextOverflow.ellipsis,
                                 )))
                             .toList()),

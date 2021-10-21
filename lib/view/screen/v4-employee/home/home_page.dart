@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
@@ -22,46 +23,55 @@ class V4HomePage extends GetView<V4HomeController> {
       body: GetBuilder<V4HomeController>(
         init: V4HomeController(),
         builder: (V4HomeController controller) {
-          return HomeWidget(
-            image: Images.example,
-            fullname: "Hi, ${controller.fullname}!",
-            notificationURL: AppRoutes.V4_NOTIFICATION,
-            content: Column(
-              children: [
-                // notificate label
-                _notificateLabel(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SmartRefresher(
+            controller: controller.refreshController!,
+            onLoading: controller.onLoading,
+            onRefresh: controller.onRefresh,
+            child: HomeWidget(
+              fullname: "NV, ${controller.fullname}!",
+              imageNetwork: Images.V4AvatarHome,
+              notificationURL: AppRoutes.V4_NOTIFICATION,
+              soThongBao: 5,
+              content: Column(
+                children: [
+                  // notificate label
+                  _notificateLabel(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // time keeping
-                _btnTimekeeping(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // time keeping
+                  _btnTimekeeping(context),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _followWorkProgressWidget
-                _followWorkProgressWidget(),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // _followWorkProgressWidget
+                  _followWorkProgressWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _splitWidget
-                _splitWidget(context),
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  // _splitWidget
+                  _splitWidget(context),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _revenueStatistic
-                _revenueStatistic(context),
+                  // _revenueStatistic
+                  _revenueStatistic(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _splitWidget
-                _splitWidget(context),
+                  // _splitWidget
+                  _splitWidget(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
-                // _inputWarehouse
-                _inputWarehouse(context),
+                  // _inputWarehouse
+                  _inputWarehouse(context),
 
-                const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-
-                // _splitWidget
-                _splitWidget(context)
-              ],
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+                ],
+              ),
             ),
           );
         },
@@ -89,10 +99,10 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   /// button time keeping
   ///
-  Widget _btnTimekeeping() {
+  Widget _btnTimekeeping(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.onClick();
+        controller.onBtnTimeKeepingClick(context);
       },
       child: Container(
         width: 150,
@@ -100,7 +110,8 @@ class V4HomePage extends GetView<V4HomeController> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: const Color(0xff2196F3),
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
         ),
         child: Center(
           child: Text(
@@ -124,7 +135,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -138,7 +150,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: 250,
+            height: 280,
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
             child: GridView.builder(
@@ -236,7 +248,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -245,7 +258,7 @@ class V4HomePage extends GetView<V4HomeController> {
           Row(
             children: [
               const Text(
-                'Thông kê thu chi',
+                'Thống kê thu chi',
                 style: TextStyle(
                     color: Color(Dimensions.COLOR_LABEL_DEFAULT),
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -253,30 +266,18 @@ class V4HomePage extends GetView<V4HomeController> {
               ),
               const Spacer(),
               Container(
-                alignment: Alignment.center,
-                width: DeviceUtils.getScaledWidth(context, .33333),
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                decoration: BoxDecoration(
-                  color: controller.total! > 0
-                      ? ColorResources.THEME_DEFAULT
-                      : Colors.red,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                    )
-                  ],
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                  ),
-                ),
+                alignment: Alignment.centerRight,
+                width: DeviceUtils.getScaledWidth(context, .4),
                 child: Text(
-                  "${(controller.total! > 0 ? "+" : "-") + PriceConverter.convertPrice(
+                  "${(controller.total! > 0 ? "+" : (controller.total! == 0) ? "" : "-") + PriceConverter.convertPrice(
                         context,
                         controller.total!.toDouble(),
-                      )} Đ",
-                  style: const TextStyle(color: Colors.white),
+                      )} VND",
+                  style: TextStyle(
+                    color: controller.total! > 0
+                        ? ColorResources.REVENUE_COLOR
+                        : ColorResources.EXPENDITURE_COLOR,
+                  ),
                 ),
               )
             ],
@@ -297,9 +298,9 @@ class V4HomePage extends GetView<V4HomeController> {
                 "${PriceConverter.convertPrice(
                   context,
                   controller.revenue!,
-                )} Đ",
+                )} VND",
                 style: const TextStyle(
-                  color: ColorResources.THEME_DEFAULT,
+                  color: ColorResources.REVENUE_COLOR,
                 ),
               )
             ],
@@ -320,9 +321,9 @@ class V4HomePage extends GetView<V4HomeController> {
                 "${PriceConverter.convertPrice(
                   context,
                   controller.expenditure!,
-                )} Đ",
+                )} VND",
                 style: const TextStyle(
-                  color: Colors.red,
+                  color: ColorResources.EXPENDITURE_COLOR,
                 ),
               )
             ],
@@ -332,14 +333,14 @@ class V4HomePage extends GetView<V4HomeController> {
             children: [
               GestureDetector(
                 onTap: () {
-                  controller.onClickRevenue();
+                  controller.onClickRevenue(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: DeviceUtils.getScaledWidth(context, .333333333),
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   decoration: const BoxDecoration(
-                    color: ColorResources.THEME_DEFAULT,
+                    color: ColorResources.REVENUE_COLOR,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -360,14 +361,14 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  controller.onClickExpenditure();
+                  controller.onClickExpenditure(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: DeviceUtils.getScaledWidth(context, .333333333),
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   decoration: const BoxDecoration(
-                    color: Colors.red,
+                    color: ColorResources.EXPENDITURE_COLOR,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -400,7 +401,8 @@ class V4HomePage extends GetView<V4HomeController> {
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
           boxShadow: [
             BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 2),
           ]),
@@ -422,14 +424,14 @@ class V4HomePage extends GetView<V4HomeController> {
             children: [
               GestureDetector(
                 onTap: () {
-                  controller.onClickToExprot();
+                  controller.onClickToExprot(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: DeviceUtils.getScaledWidth(context, 1) / 3,
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   decoration: const BoxDecoration(
-                    color: ColorResources.THEME_DEFAULT,
+                    color: ColorResources.REVENUE_COLOR,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -450,14 +452,14 @@ class V4HomePage extends GetView<V4HomeController> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  controller.onClickToImport();
+                  controller.onClickToImport(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: DeviceUtils.getScaledWidth(context, 1) / 3,
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   decoration: const BoxDecoration(
-                    color: Colors.red,
+                    color: ColorResources.EXPENDITURE_COLOR,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -487,7 +489,7 @@ class V4HomePage extends GetView<V4HomeController> {
   /// split widget
   ///
   Widget _splitWidget(BuildContext context) {
-    const double square = 4.0;
+    const double square = 2.0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

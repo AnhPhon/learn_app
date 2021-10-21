@@ -10,14 +10,15 @@ import 'package:template/utils/images.dart';
 class HomeWidget extends StatelessWidget {
   final String fullname;
   final Widget content;
-  String? image;
   String? notificationURL;
-  HomeWidget({
-    required this.fullname,
-    required this.content,
-    this.notificationURL,
-    this.image,
-  });
+  String? imageNetwork;
+  int? soThongBao;
+  HomeWidget(
+      {required this.fullname,
+      required this.content,
+      this.notificationURL,
+      this.imageNetwork,
+      this.soThongBao});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              top: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
               width: DeviceUtils.getScaledWidth(context, 1),
               child: Container(
                 padding:
@@ -86,21 +87,17 @@ class HomeWidget extends StatelessWidget {
                                 Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                             margin: const EdgeInsets.only(
                                 right: Dimensions.MARGIN_SIZE_SMALL),
-                            child: (image != null)
-                                ? ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
-                                    child: FadeInImage.assetNetwork(
-                                      placeholder: Images.placeholder,
-                                      image: image!,
-                                      width: DeviceUtils.getScaledWidth(
-                                        context,
-                                        .1,
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(
+                            child: (imageNetwork == null)
+                                ? const Icon(
                                     Icons.menu,
                                     color: ColorResources.WHITE,
+                                  )
+                                : FadeInImage.assetNetwork(
+                                    placeholder: Images.logo,
+                                    image: imageNetwork!,
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
                                   ),
                           ),
                         );
@@ -127,9 +124,43 @@ class HomeWidget extends StatelessWidget {
                             Get.toNamed(notificationURL!);
                           }
                         },
-                        child: const Icon(
-                          CupertinoIcons.bell_fill,
-                          color: Colors.white,
+                        child: Stack(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.bell_fill,
+                              color: Colors.white,
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(1),
+                                width: Dimensions.MARGIN_SIZE_DEFAULT,
+                                height: Dimensions.MARGIN_SIZE_DEFAULT,
+                                decoration: const BoxDecoration(
+                                  color: ColorResources.RED,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  (soThongBao == null
+                                          ? "0"
+                                          : (soThongBao! > 9)
+                                              ? "+9"
+                                              : soThongBao)
+                                      .toString(),
+                                  style: const TextStyle(
+                                    color: ColorResources.WHITE,
+                                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -143,7 +174,7 @@ class HomeWidget extends StatelessWidget {
 
         // white
         Positioned(
-          top: 100,
+          top: 140,
           child: Container(
             alignment: Alignment.topLeft,
             height: DeviceUtils.getScaledHeight(context, 1) - 180,

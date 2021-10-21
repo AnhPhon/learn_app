@@ -104,15 +104,19 @@ class DrawerWidget extends GetView<dr.DrawerController> {
       height: DeviceUtils.getScaledHeight(context, 0.25),
       decoration: const BoxDecoration(
         color: ColorResources.GREEN,
-        image: DecorationImage(image: AssetImage(Images.admin_background),fit: BoxFit.fill)
+        image: DecorationImage(image: AssetImage(Images.background_draw),fit: BoxFit.fill)
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaY: 10),
         child: Row(
           children: [
-            const CircleAvatar(
-              radius: 40,
-              backgroundImage: AssetImage(Images.logo_image),
+            SizedBox(
+              height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
+              width:  Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(Images.logo_fss, fit: BoxFit.cover),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
@@ -120,7 +124,7 @@ class DrawerWidget extends GetView<dr.DrawerController> {
                 children: [
                   DefaultTextStyle(
                     style: TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                       fontWeight: FontWeight.w500,
                       foreground: Paint()
                         ..strokeWidth = 3
@@ -131,15 +135,13 @@ class DrawerWidget extends GetView<dr.DrawerController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text("KH, Phạm Văn Tuấn"),
-                        Text("MS: 0987321223"),
-                        Text("Ceo: Công ty tiến lợi")
+                        Text("Five Star System "),
                       ],
                     ),
                   ),
                   DefaultTextStyle(
                     style: const TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                       fontWeight: FontWeight.w500,
                       color: ColorResources.BLACK
                     ),
@@ -147,9 +149,7 @@ class DrawerWidget extends GetView<dr.DrawerController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text("KH, Phạm Văn Tuấn"),
-                        Text("MS: 0987321223"),
-                        Text("Ceo: Công ty tiến lợi")
+                        Text("Five Star System "),
                       ],
                     ),
                   ),

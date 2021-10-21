@@ -9,8 +9,7 @@ class V3QuoteListController extends GetxController {
   final DanhSachBaoGiaDonDichVuProvider _danhSachBaoGiaDonDichVuProvider =
       GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
 
-  List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVuResponse = [];  
-
+  List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVuResponse = [];
 
   @override
   void onInit() {

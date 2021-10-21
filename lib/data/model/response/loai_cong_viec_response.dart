@@ -4,11 +4,18 @@ class LoaiCongViecResponse {
   String? id;
   NhomDichVuResponse? idNhomDichVu;
   String? tenCongViec;
+  String? giaCongViec;
+
+  String? createdAt;
+  String? updatedAt;
 
   LoaiCongViecResponse({
       this.id,
       this.idNhomDichVu,
-      this.tenCongViec});
+      this.tenCongViec,
+      this.giaCongViec,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -23,7 +30,10 @@ class LoaiCongViecResponse {
       idNhomDichVu = null;                                                               
     }                                                                                  
     tenCongViec = json['tenCongViec'].toString();
+    giaCongViec = json['giaCongViec'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -39,8 +49,15 @@ class LoaiCongViecResponse {
 
     // check null tenCongViec
     if (tenCongViec != null) data['tenCongViec'] = tenCongViec; 
+    // check null giaCongViec
+    if (giaCongViec != null) data['giaCongViec'] = giaCongViec; 
 
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tenCongViec!;
   }
 }

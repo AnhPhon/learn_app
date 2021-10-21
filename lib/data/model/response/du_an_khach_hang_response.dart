@@ -15,7 +15,7 @@ class DuAnKhachHangResponse {
   String? diaDiem;
   String? gioiThieu;
   String? giaDuyet;
-  HangMucXayDungResponse? idHangMucXayDung;
+  List<HangMucXayDungResponse>? idHangMucXayDungs;
   String? ngayBatDau;
   String? ngayKetThuc;
   String? thoiGianYeuCau;
@@ -23,6 +23,9 @@ class DuAnKhachHangResponse {
   String? hinhAnhDaiDien;
   TrangThaiDuAnResponse? idTrangThaiDuAn;
   String? taiKhoanTrungThau;
+
+  String? createdAt;
+  String? updatedAt;
 
   DuAnKhachHangResponse({
       this.id,
@@ -34,14 +37,16 @@ class DuAnKhachHangResponse {
       this.diaDiem,
       this.gioiThieu,
       this.giaDuyet,
-      this.idHangMucXayDung,
+      this.idHangMucXayDungs,
       this.ngayBatDau,
       this.ngayKetThuc,
       this.thoiGianYeuCau,
       this.file,
       this.hinhAnhDaiDien,
       this.idTrangThaiDuAn,
-      this.taiKhoanTrungThau});
+      this.taiKhoanTrungThau,
+      this.createdAt,
+      this.updatedAt});
   
   ///
   /// From JSON
@@ -82,11 +87,14 @@ class DuAnKhachHangResponse {
     giaDuyet = json['giaDuyet'].toString();
 
     // mapping idHangMucXayDung                                                              
-    if (json['idHangMucXayDung'] != null && json['idHangMucXayDung'].toString().length!=24) {                                                  
-      idHangMucXayDung = HangMucXayDungResponse.fromJson(json['idHangMucXayDung'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idHangMucXayDung = null;                                                               
-    }                                                                                  
+    if (json['idHangMucXayDungs'] != null && json['idHangMucXayDungs'].toString().length!=24) {
+      idHangMucXayDungs = <HangMucXayDungResponse>[];
+      json['idHangMucXayDungs'].forEach((v) {
+        idHangMucXayDungs!.add(HangMucXayDungResponse.fromJson(v as Map<String, dynamic>));
+      });
+    } else {
+      idHangMucXayDungs = <HangMucXayDungResponse>[];
+    }
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     thoiGianYeuCau = json['thoiGianYeuCau'].toString();
@@ -101,6 +109,8 @@ class DuAnKhachHangResponse {
     }                                                                                  
     taiKhoanTrungThau = json['taiKhoanTrungThau'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -136,7 +146,7 @@ class DuAnKhachHangResponse {
     if (giaDuyet != null) data['giaDuyet'] = giaDuyet; 
 
     // check null idHangMucXayDung
-    if (idHangMucXayDung != null) data['idHangMucXayDung'] = idHangMucXayDung; 
+    if (idHangMucXayDungs != null) data['idHangMucXayDung'] = idHangMucXayDungs;
 
     // check null ngayBatDau
     if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau; 

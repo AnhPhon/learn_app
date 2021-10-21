@@ -120,6 +120,7 @@ class V1CartController extends GetxController {
           ],
         ),
       ),
-    ));
+    ),
+    );
   }
 }

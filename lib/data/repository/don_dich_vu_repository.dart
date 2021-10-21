@@ -26,7 +26,8 @@ class DonDichVuRepository {
   ///
   Future<ApiResponse> add(DonDichVuRequest data) async {
     try {
-      final response = await dioClient!.post('/don-dich-vus', data: data.toJson());
+      final response =
+          await dioClient!.post('/don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class DonDichVuRepository {
   ///
   Future<ApiResponse> update(DonDichVuRequest data) async {
     try {
-      final response = await dioClient!.put('/don-dich-vus', data: data.toJson());
+      final response =
+          await dioClient!.put('/don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -50,8 +52,7 @@ class DonDichVuRepository {
   ///
   Future<ApiResponse> delete(String id) async {
     try {
-      final response =
-          await dioClient!.delete('/don-dich-vus/$id');
+      final response = await dioClient!.delete('/don-dich-vus/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,7 +60,7 @@ class DonDichVuRepository {
   }
 
   ///
-  /// Get paginate don-dich-vus "page": 1, "limit": 10, filter 
+  /// Get paginate don-dich-vus "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {

@@ -1,31 +1,122 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3HomeController extends GetxController {
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
+  SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+
+  // refresh controller
+  RefreshController? refreshController;
+
   String fullname = "Nguyễn Văn A";
   List<Map<String, dynamic>>? threeFeatures;
-
-  final SanPhamProvider _sanPhamProvider = GetIt.I.get<SanPhamProvider>();
-  final TinTucProvider _tinTucProvider = GetIt.I.get<TinTucProvider>();
-
   List<TinTucResponse> tinTucList = [];
   List<SanPhamResponse> sanPhamList = [];
 
+  int number = 0;
+
+  // khai báo is loading
+  bool isLoading = true;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
+    // init refreshController
+    refreshController ??= RefreshController();
+
+    // init run
+    initProgramRun();
+  }
+
+  ///
+  /// initProgramRun
+  ///
+  void initProgramRun() {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      // tìm kiếm tài khoản theo id user được login
+      taiKhoanProvider.find(
+        id: id!,
+        onSuccess: (taiKhoanResponse) {
+          // set lại full name theo tài khoản
+          fullname = taiKhoanResponse.hoTen!;
+
+          // read tin tuc
+          _readTinTuc();
+
+          // read Kho san Pham
+          readKhosanPham();
+
+          // binding three feature
+          bindingThreeFeature();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
+  }
+
+  ///
+  /// read tin tuc
+  ///
+  void _readTinTuc() {
+    tinTucProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (tinTucResponses) {
+        // get tin tuc list
+        tinTucList = tinTucResponses;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// read kho san pham
+  ///
+  void readKhosanPham() {
+    sanPhamProvider.paginate(
+      page: 1,
+      limit: 2,
+      filter: "&sortBy=created_at:desc",
+      onSuccess: (sanPhamModels) {
+        // get san pham list
+        sanPhamList = sanPhamModels;
+
+        // set is loading
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// binding three feature
+  ///
+  void bindingThreeFeature() {
     threeFeatures = [
       {
         "icon": Icons.shop,
-        "label": "Cửa hàng \ncủa bạn",
+        "label": ["Cửa hàng", "của bạn"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff8CE3E9),
@@ -37,7 +128,7 @@ class V3HomeController extends GetxController {
       },
       {
         "icon": Icons.chat,
-        "label": "Phản hồi \nbáo giá",
+        "label": ["Phản hồi", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xffC1E6EE),
@@ -49,7 +140,7 @@ class V3HomeController extends GetxController {
       },
       {
         "icon": Icons.request_page,
-        "label": "Yêu cầu \nbáo giá",
+        "label": ["Yêu cầu", "báo giá"],
         "image": null,
         "gradient": const RadialGradient(colors: [
           Color(0xff79B4B8),
@@ -60,20 +151,17 @@ class V3HomeController extends GetxController {
         }
       },
     ];
-
-    // read tin tuc
-    _readTinTuc();
-
-    // read Kho san Pham
-    _readKhosanPham();
   }
 
+  ///
+  /// on Click News
+  ///
   void onClickNews() {
     Get.toNamed(AppRoutes.V3_NEWS);
   }
 
-  /// Tơi màn hình quản lý sản phẩm
   ///
+  /// Tơi màn hình quản lý sản phẩm
   ///
   void onClickWareHouse() {
     Get.toNamed(AppRoutes.V3_WAREHOUSE);
@@ -84,6 +172,30 @@ class V3HomeController extends GetxController {
   ///
   void onClickQuoteRequest() {
     Get.toNamed(AppRoutes.V3_QUOTE_LIST);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNews() {
+    Get.toNamed(AppRoutes.V2_NEWS);
+  }
+
+  ///
+  /// Nhấn nút xem thêm tin nóng
+  ///
+  void onClickHotNewsDetail(String id) {
+    // goto detail news
+    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+  }
+
+  ///
+  /// Nhấn nút sản phẩm
+  ///
+  void onClickHotProductDetail(String id) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
+    // goto detail news
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
   ///
@@ -104,42 +216,30 @@ class V3HomeController extends GetxController {
   /// on Need Update Click
   ///
   void onNeedUpdateClick() {
-    Get.toNamed(AppRoutes.V3_FINISH_UPDATE);
+    Get.toNamed(AppRoutes.V2_FINISH_UPDATE);
   }
 
   ///
-  /// read kho san pham
+  ///go to news detail page
   ///
-  void _readKhosanPham() {
-    _sanPhamProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "",
-      onSuccess: (sanPhamModels) {
-        sanPhamList = sanPhamModels;
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
+  void onNewsDetailClick({required int index}) {
+    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
   }
 
   ///
-  /// read tin tuc
+  /// on refresh
   ///
-  void _readTinTuc() {
-    _tinTucProvider.paginate(
-      page: 1,
-      limit: 2,
-      filter: "",
-      onSuccess: (tinTucResponses) {
-        tinTucList = tinTucResponses;
-        update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
+  Future<void> onRefresh() async {
+    initProgramRun();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.refreshCompleted();
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController!.loadComplete();
   }
 }

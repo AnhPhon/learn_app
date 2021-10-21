@@ -11,6 +11,9 @@ class DuAnNhanVienResponse {
   String? diaChi;
   String? moTa;
 
+  String? createdAt;
+  String? updatedAt;
+
   DuAnNhanVienResponse(
       {this.id,
       this.idTinhTp,
@@ -18,7 +21,9 @@ class DuAnNhanVienResponse {
       this.idPhuongXa,
       this.tieuDe,
       this.diaChi,
-      this.moTa});
+      this.moTa,
+      this.createdAt,
+      this.updatedAt});
 
   ///
   /// From JSON
@@ -54,6 +59,9 @@ class DuAnNhanVienResponse {
     tieuDe = json['tieuDe'].toString();
     diaChi = json['diaChi'].toString();
     moTa = json['moTa'].toString();
+
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -83,5 +91,10 @@ class DuAnNhanVienResponse {
     if (moTa != null) data['moTa'] = moTa;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tieuDe!;
   }
 }

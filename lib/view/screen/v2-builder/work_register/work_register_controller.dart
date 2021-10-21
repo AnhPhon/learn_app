@@ -26,7 +26,8 @@ class V2WorkRegisterController extends GetxController {
   String? firstSelect;
 
   // radio
-  List<SelectProvinceCustomModel>? provinceData;
+  //List<SelectProvinceCustomModel>? provinceData;
+  // List<SelectProvinceCustomModel>? provinceData;
   List<bool>? checkList;
 
   @override
@@ -47,32 +48,32 @@ class V2WorkRegisterController extends GetxController {
     fromDate = TextEditingController();
     toDate = TextEditingController();
 
-    provinceData = [
-      SelectProvinceCustomModel(
-        value: "TP.HCM",
-        onChanged: (val) {
-          onChange(0, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Hà Nội",
-        onChanged: (val) {
-          onChange(1, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Đà Nẵng",
-        onChanged: (val) {
-          onChange(2, val as bool);
-        },
-      ),
-      SelectProvinceCustomModel(
-        value: "Tỉnh khác",
-        onChanged: (val) {
-          onChange(3, val as bool);
-        },
-      ),
-    ];
+    // provinceData = [
+    //   SelectProvinceCustomModel(
+    //     value: "TP.HCM",
+    //     onChanged: (val) {
+    //       onChange(0, val as bool);
+    //     },
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Hà Nội",
+    //     onChanged: (val) {
+    //       onChange(1, val as bool);
+    //     },
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Đà Nẵng",
+    //     onChanged: (val) {
+    //       onChange(2, val as bool);
+    //     },
+    //   ),
+    //   SelectProvinceCustomModel(
+    //     value: "Tỉnh khác",
+    //     onChanged: (val) {
+    //       onChange(3, val as bool);
+    //     },
+    //   ),
+    // ];
   }
 
   ///

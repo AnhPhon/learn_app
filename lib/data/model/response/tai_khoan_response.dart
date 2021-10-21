@@ -41,8 +41,11 @@ class TaiKhoanResponse {
   String? lamChieuThuBay;
   String? lamNgayChuNhat;
 
-  TaiKhoanResponse({
-      this.id,
+  String? createdAt;
+  String? updatedAt;
+
+  TaiKhoanResponse(
+      {this.id,
       this.idLoaiTaiKhoan,
       this.tinhTpHoatDong,
       this.idTinhTp,
@@ -75,42 +78,51 @@ class TaiKhoanResponse {
       this.diaChiKhoHang,
       this.thoiGianLamViec,
       this.lamChieuThuBay,
-      this.lamNgayChuNhat});
-  
+      this.lamNgayChuNhat,
+      this.createdAt,
+      this.updatedAt});
+
   ///
   /// From JSON
   ///
   TaiKhoanResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
 
-    // mapping idLoaiTaiKhoan                                                              
-    if (json['idLoaiTaiKhoan'] != null && json['idLoaiTaiKhoan'].toString().length!=24) {                                                  
-      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(json['idLoaiTaiKhoan'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idLoaiTaiKhoan = null;                                                               
-    }                                                                                  
+    // mapping idLoaiTaiKhoan
+    if (json['idLoaiTaiKhoan'] != null &&
+        json['idLoaiTaiKhoan'].toString().length != 24) {
+      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(
+          json['idLoaiTaiKhoan'] as Map<String, dynamic>);
+    } else {
+      idLoaiTaiKhoan = null;
+    }
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();
 
-    // mapping idTinhTp                                                              
-    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length!=24) {                                                  
-      idTinhTp = TinhTpResponse.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idTinhTp = null;                                                               
-    }                                                                                  
+    // mapping idTinhTp
+    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {
+      idTinhTp =
+          TinhTpResponse.fromJson(json['idTinhTp'] as Map<String, dynamic>);
+    } else {
+      idTinhTp = null;
+    }
 
-    // mapping idQuanHuyen                                                              
-    if (json['idQuanHuyen'] != null && json['idQuanHuyen'].toString().length!=24) {                                                  
-      idQuanHuyen = QuanHuyenResponse.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idQuanHuyen = null;                                                               
-    }                                                                                  
+    // mapping idQuanHuyen
+    if (json['idQuanHuyen'] != null &&
+        json['idQuanHuyen'].toString().length != 24) {
+      idQuanHuyen = QuanHuyenResponse.fromJson(
+          json['idQuanHuyen'] as Map<String, dynamic>);
+    } else {
+      idQuanHuyen = null;
+    }
 
-    // mapping idPhuongXa                                                              
-    if (json['idPhuongXa'] != null && json['idPhuongXa'].toString().length!=24) {                                                  
-      idPhuongXa = PhuongXaResponse.fromJson(json['idPhuongXa'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idPhuongXa = null;                                                               
-    }                                                                                  
+    // mapping idPhuongXa
+    if (json['idPhuongXa'] != null &&
+        json['idPhuongXa'].toString().length != 24) {
+      idPhuongXa =
+          PhuongXaResponse.fromJson(json['idPhuongXa'] as Map<String, dynamic>);
+    } else {
+      idPhuongXa = null;
+    }
     loaiPhapLy = json['loaiPhapLy'].toString();
     tenPhapLy = json['tenPhapLy'].toString();
     mST = json['mST'].toString();
@@ -134,24 +146,30 @@ class TaiKhoanResponse {
     hinhCMNDTruoc = json['hinhCMNDTruoc'].toString();
     hinhCMNDSau = json['hinhCMNDSau'].toString();
 
-    // mapping idNhomCuaHang                                                              
-    if (json['idNhomCuaHang'] != null && json['idNhomCuaHang'].toString().length!=24) {                                                  
-      idNhomCuaHang = NhomCuaHangResponse.fromJson(json['idNhomCuaHang'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idNhomCuaHang = null;                                                               
-    }                                                                                  
+    // mapping idNhomCuaHang
+    if (json['idNhomCuaHang'] != null &&
+        json['idNhomCuaHang'].toString().length != 24) {
+      idNhomCuaHang = NhomCuaHangResponse.fromJson(
+          json['idNhomCuaHang'] as Map<String, dynamic>);
+    } else {
+      idNhomCuaHang = null;
+    }
 
-    // mapping idMatHangDacTrung                                                              
-    if (json['idMatHangDacTrung'] != null && json['idMatHangDacTrung'].toString().length!=24) {                                                  
-      idMatHangDacTrung = MatHangDacTrungResponse.fromJson(json['idMatHangDacTrung'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idMatHangDacTrung = null;                                                               
-    }                                                                                  
+    // mapping idMatHangDacTrung
+    if (json['idMatHangDacTrung'] != null &&
+        json['idMatHangDacTrung'].toString().length != 24) {
+      idMatHangDacTrung = MatHangDacTrungResponse.fromJson(
+          json['idMatHangDacTrung'] as Map<String, dynamic>);
+    } else {
+      idMatHangDacTrung = null;
+    }
     diaChiKhoHang = json['diaChiKhoHang'].toString();
     thoiGianLamViec = json['thoiGianLamViec'].toString();
     lamChieuThuBay = json['lamChieuThuBay'].toString();
     lamNgayChuNhat = json['lamNgayChuNhat'].toString();
 
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -160,107 +178,107 @@ class TaiKhoanResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idLoaiTaiKhoan
-    if (idLoaiTaiKhoan != null) data['idLoaiTaiKhoan'] = idLoaiTaiKhoan; 
+    if (idLoaiTaiKhoan != null) data['idLoaiTaiKhoan'] = idLoaiTaiKhoan;
 
     // check null tinhTpHoatDong
-    if (tinhTpHoatDong != null) data['tinhTpHoatDong'] = tinhTpHoatDong; 
+    if (tinhTpHoatDong != null) data['tinhTpHoatDong'] = tinhTpHoatDong;
 
     // check null idTinhTp
-    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
 
     // check null idQuanHuyen
-    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen;
 
     // check null idPhuongXa
-    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null loaiPhapLy
-    if (loaiPhapLy != null) data['loaiPhapLy'] = loaiPhapLy; 
+    if (loaiPhapLy != null) data['loaiPhapLy'] = loaiPhapLy;
 
     // check null tenPhapLy
-    if (tenPhapLy != null) data['tenPhapLy'] = tenPhapLy; 
+    if (tenPhapLy != null) data['tenPhapLy'] = tenPhapLy;
 
     // check null mST
-    if (mST != null) data['mST'] = mST; 
+    if (mST != null) data['mST'] = mST;
 
     // check null hoTen
-    if (hoTen != null) data['hoTen'] = hoTen; 
+    if (hoTen != null) data['hoTen'] = hoTen;
 
     // check null ngaySinh
-    if (ngaySinh != null) data['ngaySinh'] = ngaySinh; 
+    if (ngaySinh != null) data['ngaySinh'] = ngaySinh;
 
     // check null gioiTinh
-    if (gioiTinh != null) data['gioiTinh'] = gioiTinh; 
+    if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null cMND
-    if (cMND != null) data['cMND'] = cMND; 
+    if (cMND != null) data['cMND'] = cMND;
 
     // check null ngayCap
-    if (ngayCap != null) data['ngayCap'] = ngayCap; 
+    if (ngayCap != null) data['ngayCap'] = ngayCap;
 
     // check null noiCap
-    if (noiCap != null) data['noiCap'] = noiCap; 
+    if (noiCap != null) data['noiCap'] = noiCap;
 
     // check null soDienThoai
-    if (soDienThoai != null) data['soDienThoai'] = soDienThoai; 
+    if (soDienThoai != null) data['soDienThoai'] = soDienThoai;
 
     // check null email
-    if (email != null) data['email'] = email; 
+    if (email != null) data['email'] = email;
 
     // check null diaChi
-    if (diaChi != null) data['diaChi'] = diaChi; 
+    if (diaChi != null) data['diaChi'] = diaChi;
 
     // check null viTien
-    if (viTien != null) data['viTien'] = viTien; 
+    if (viTien != null) data['viTien'] = viTien;
 
     // check null hinhDaiDien
-    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien; 
+    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien;
 
     // check null matKhau
-    if (matKhau != null) data['matKhau'] = matKhau; 
+    if (matKhau != null) data['matKhau'] = matKhau;
 
     // check null tokenDevice
-    if (tokenDevice != null) data['tokenDevice'] = tokenDevice; 
+    if (tokenDevice != null) data['tokenDevice'] = tokenDevice;
 
     // check null soLuongNguoi
-    if (soLuongNguoi != null) data['soLuongNguoi'] = soLuongNguoi; 
+    if (soLuongNguoi != null) data['soLuongNguoi'] = soLuongNguoi;
 
     // check null chuyenMon
-    if (chuyenMon != null) data['chuyenMon'] = chuyenMon; 
+    if (chuyenMon != null) data['chuyenMon'] = chuyenMon;
 
     // check null gioiThieu
-    if (gioiThieu != null) data['gioiThieu'] = gioiThieu; 
+    if (gioiThieu != null) data['gioiThieu'] = gioiThieu;
 
     // check null noiLamViec
-    if (noiLamViec != null) data['noiLamViec'] = noiLamViec; 
+    if (noiLamViec != null) data['noiLamViec'] = noiLamViec;
 
     // check null hinhCMNDTruoc
-    if (hinhCMNDTruoc != null) data['hinhCMNDTruoc'] = hinhCMNDTruoc; 
+    if (hinhCMNDTruoc != null) data['hinhCMNDTruoc'] = hinhCMNDTruoc;
 
     // check null hinhCMNDSau
-    if (hinhCMNDSau != null) data['hinhCMNDSau'] = hinhCMNDSau; 
+    if (hinhCMNDSau != null) data['hinhCMNDSau'] = hinhCMNDSau;
 
     // check null idNhomCuaHang
-    if (idNhomCuaHang != null) data['idNhomCuaHang'] = idNhomCuaHang; 
+    if (idNhomCuaHang != null) data['idNhomCuaHang'] = idNhomCuaHang;
 
     // check null idMatHangDacTrung
-    if (idMatHangDacTrung != null) data['idMatHangDacTrung'] = idMatHangDacTrung; 
+    if (idMatHangDacTrung != null)
+      data['idMatHangDacTrung'] = idMatHangDacTrung;
 
     // check null diaChiKhoHang
-    if (diaChiKhoHang != null) data['diaChiKhoHang'] = diaChiKhoHang; 
+    if (diaChiKhoHang != null) data['diaChiKhoHang'] = diaChiKhoHang;
 
     // check null thoiGianLamViec
-    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec; 
+    if (thoiGianLamViec != null) data['thoiGianLamViec'] = thoiGianLamViec;
 
     // check null lamChieuThuBay
-    if (lamChieuThuBay != null) data['lamChieuThuBay'] = lamChieuThuBay; 
+    if (lamChieuThuBay != null) data['lamChieuThuBay'] = lamChieuThuBay;
 
     // check null lamNgayChuNhat
-    if (lamNgayChuNhat != null) data['lamNgayChuNhat'] = lamNgayChuNhat; 
-
+    if (lamNgayChuNhat != null) data['lamNgayChuNhat'] = lamNgayChuNhat;
 
     return data;
   }
