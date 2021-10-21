@@ -7,10 +7,12 @@ import 'package:template/utils/dimensions.dart';
 
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v4-employee/account/component/add_indentity_card.dart';
 import 'info_controller.dart';
 
@@ -31,11 +33,12 @@ class V4InfoPage extends GetView<V4InfoController> {
                       _name(controller, context),
 
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //Ngày sinh
                           Padding(
                             padding: const EdgeInsets.only(
-                              top: Dimensions.PADDING_SIZE_DEFAULT,
+                              top: Dimensions.PADDING_SIZE_SMALL - 2,
                             ),
                             child: _birthday(controller, context),
                           ),
@@ -45,17 +48,13 @@ class V4InfoPage extends GetView<V4InfoController> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //CMND/Căn cước
                           _identityCard(controller, context),
 
                           // Ngày cấp
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: Dimensions.PADDING_SIZE_DEFAULT,
-                            ),
-                            child: _dateIndentityCard(controller, context),
-                          ),
+                          _dateIndentityCard(controller, context),
                         ],
                       ),
 
@@ -157,17 +156,20 @@ class V4InfoPage extends GetView<V4InfoController> {
   /// Full name
   ///
   Widget _name(V4InfoController controller, BuildContext context) {
-    return InputField(
-      allowEdit: false,
-      allowMultiline: false,
-      controller: controller.nameController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      hidden: false,
-      holdplacer: "Ngô Trần Anh Phôn",
+    return InputWidget(
+      isShadow: true,
+      isColorFieldWhite: true,
+      labelBold: true,
+      isBorder: false,
       label: 'Họ và tên',
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.nameController,
+      suffixIcon: const Icon(
+        Icons.edit_outlined,
+        size: Dimensions.ICON_SIZE_SMALL,
+        color: ColorResources.PRIMARYCOLOR,
+      ),
     );
   }
 }
@@ -176,17 +178,22 @@ class V4InfoPage extends GetView<V4InfoController> {
 ///Birthday
 ///
 Widget _birthday(V4InfoController controller, BuildContext context) {
-  return TextFieldDate(
+  return InputWidget(
+    suffixIcon: const Icon(
+      Icons.date_range,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+    isBorder: false,
+    isShadow: true,
+    isColorFieldWhite: true,
     paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
     isDate: true,
-    allowEdit: true,
-    controller: controller.birthdayController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: "1999-10-09",
-    label: "Ngày",
+    allowEdit: false,
+    label: "Ngày sinh",
     obligatory: true,
-    typeInput: TextInputType.text,
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    width: 0.5,
+    textEditingController: controller.birthdayController,
   );
 }
 
@@ -194,13 +201,18 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
 /// Giới tính
 ///
 Widget _sex(BuildContext context) {
-  return DropDownButton<String>(
+  return DropDownButton1<String>(
+    isBorder: false,
+    isShadow: true,
+    isColorFieldWhite: true,
+    labelBold: true,
+    hint: '',
     label: 'Giới tính',
     data: const ["Nam", "Nữ"],
     obligatory: true,
     onChanged: (value) {},
     value: "Nam",
-    width: DeviceUtils.getScaledWidth(context, 0.5),
+    width: 0.3,
   );
 }
 
@@ -208,17 +220,14 @@ Widget _sex(BuildContext context) {
 /// CMND
 ///
 Widget _identityCard(V4InfoController controller, BuildContext context) {
-  return InputField(
+  return InputWidget(
+    isBorder: false,
+    isShadow: true,
     allowEdit: false,
-    allowMultiline: false,
-    controller: controller.indentityCardController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: "191998122",
     label: 'Số CMND/Căn cước',
     obligatory: true,
-    typeInput: TextInputType.text,
-    width: DeviceUtils.getScaledWidth(context, 0.52),
+    width: 0.4,
+    textEditingController: controller.indentityCardController,
   );
 }
 
@@ -226,17 +235,13 @@ Widget _identityCard(V4InfoController controller, BuildContext context) {
 ///Ngày cấp
 ///
 Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
-  return TextFieldDate(
-    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+  return InputWidget(
     isDate: true,
-    allowEdit: true,
-    controller: controller.dateIndentityController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: "2018-02-09",
+    allowEdit: false,
     label: "Ngày cấp",
     obligatory: true,
-    typeInput: TextInputType.text,
-    width: DeviceUtils.getScaledWidth(context, 0.48),
+    width: 0.4,
+    textEditingController: controller.dateIndentityController,
   );
 }
 
@@ -245,17 +250,12 @@ Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
 ///
 Widget _addresssIndentityCard(
     V4InfoController controller, BuildContext context) {
-  return InputField(
-    allowEdit: false,
-    allowMultiline: false,
-    controller: controller.addressIndentityController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: "Thừa Thiên Huế",
-    label: 'Nơi cấp',
+  return InputWidget(
+    isColorFieldWhite: true,
+    label: 'Nơi cấp CMND/Căn cước',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.addressIndentityController,
   );
 }
 

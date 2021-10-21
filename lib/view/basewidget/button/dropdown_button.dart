@@ -86,7 +86,7 @@ class DropDownButton1<T> extends StatelessWidget {
                     filled: true,
                     fillColor: (isColorFieldWhite == true)
                         ? ColorResources.WHITE
-                        : Colors.transparent,
+                        : ColorResources.NOT_ALLOW_EDIT,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
