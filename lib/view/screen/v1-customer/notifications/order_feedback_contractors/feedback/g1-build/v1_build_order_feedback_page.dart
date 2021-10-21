@@ -103,11 +103,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-<<<<<<< HEAD
-          //BoxImage(imagesUrl: controller.dichVuResponse!.hinhAnhBanKhoiLuong!.split(',')),
-=======
           BoxImage(imagesUrl: controller.dichVuResponse!.hinhAnhBaoGia!.split(',')),
->>>>>>> cd06cc9 (update)
         ],
       ),
     );

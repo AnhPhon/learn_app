@@ -21,10 +21,10 @@ class V1NotificationController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    getAll();
+    getNotifications();
   }
 
-  void getAll(){
+  void getNotifications(){
     thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
@@ -39,13 +39,54 @@ class V1NotificationController extends GetxController{
 
   Future<void> onRefresh() async{
     pageMax = 1;
-    getNotification();
+    refreshNotification();
   }
 
   Future<void> moreData()async{
     getMoreNotification();
   }
 
+  ///
+  /// lấy danh sách thông báo
+  ///
+  void refreshNotification(){
+    thongBaoProvider.paginate(page: pageMax, limit: 5, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+      notifications.clear();
+      notifications = data;
+      print(data);
+      refreshController.refreshCompleted();
+      isLoading = false;
+      update();
+    }, onError: (onError){
+      print("Notification: ${onError.toString()}");
+      isLoading = false;
+      update();
+    });
+  }
+
+
+  ///
+  /// more data
+  ///
+  void getMoreNotification(){
+    pageMax += 1;
+    limit = 5;
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+      print("Dài: ${data.length}");
+      if(data.isEmpty){
+        refreshController.loadNoData();
+      }else{
+        notifications.addAll(data);
+        refreshController.loadComplete();
+      }
+      isLoading = false;
+      update();
+    }, onError: (onError){
+      print("Notification: ${onError.toString()}");
+      isLoading = false;
+      update();
+    });
+  }
 
   void onClickItem(ThongBaoResponse notification){
     String id = notification.idDonDichVu!.idNhomDichVu!.nhomDichVu!;
@@ -76,49 +117,6 @@ class V1NotificationController extends GetxController{
     }
   }
   
-
- 
-
-
-
-  ///
-  /// lấy danh sách thông báo
-  ///
-  void getNotification() {
-    thongBaoProvider.paginate(page: pageMax, limit: 5, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
-      notifications.clear();
-      notifications = data;
-      print(data);
-      refreshController.refreshCompleted();
-      isLoading = false;
-      update();
-    }, onError: (onError){
-      print("Notification: ${onError.toString()}");
-      isLoading = false;
-      update();
-    });
-  }
-
-
-  void getMoreNotification(){
-    pageMax += 1;
-    limit = 5;
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
-      print("Dài: ${data.length}");
-      if(data.isEmpty){
-        refreshController.loadNoData();
-      }else{
-        notifications.addAll(data);
-        refreshController.loadComplete();
-      }
-      isLoading = false;
-      update();
-    }, onError: (onError){
-      print("Notification: ${onError.toString()}");
-      isLoading = false;
-      update();
-    });
-  }
 
   @override
   void onClose() {
