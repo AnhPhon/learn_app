@@ -11,69 +11,74 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1ProjectDetailController>(
-        init: V1ProjectDetailController(),
-        builder: (controller) {
-          return Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                controller.title,
-                style: const TextStyle(
-                  shadows: [
-                    Shadow(
-                        // bottomLeft
-                        offset: Offset(-1.5, -1.5),
-                        color: ColorResources.PRIMARY),
-                    Shadow(
-                        // bottomRight
-                        offset: Offset(1.5, -1.5),
-                        color: ColorResources.PRIMARY),
-                    Shadow(
-                        // topRight
-                        offset: Offset(1.5, 1.5),
-                        color: ColorResources.PRIMARY),
-                    Shadow(
-                        // topLeft
-                        offset: Offset(-1.5, 1.5),
-                        color: ColorResources.PRIMARY),
-                  ],
+      init: V1ProjectDetailController(),
+      builder: (controller) {
+        return controller.duAnKhachHangResponse == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Scaffold(
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                  centerTitle: true,
+                  // title: Text(
+                  //   controller.duAnKhachHangResponse!.ten.toString(),
+                  //   style: const TextStyle(
+                  //     shadows: [
+                  //       Shadow(
+                  //           // bottomLeft
+                  //           offset: Offset(-1.5, -1.5),
+                  //           color: ColorResources.PRIMARY),
+                  //       Shadow(
+                  //           // bottomRight
+                  //           offset: Offset(1.5, -1.5),
+                  //           color: ColorResources.PRIMARY),
+                  //       Shadow(
+                  //           // topRight
+                  //           offset: Offset(1.5, 1.5),
+                  //           color: ColorResources.PRIMARY),
+                  //       Shadow(
+                  //           // topLeft
+                  //           offset: Offset(-1.5, 1.5),
+                  //           color: ColorResources.PRIMARY),
+                  //     ],
+                  //   ),
+                  // ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
                 ),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //image
-                  _imgProject(context, controller),
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //image
+                      _imgProject(context, controller),
 
-                  //title
-                  _textTitle(context, title: "Vinpearl Land Làng Vân"),
+                      //title
+                      _textTitle(context, title: "Vinpearl Land Làng Vân"),
 
-                  //content
-                  _content(),
-                ],
-              ),
-            ),
-          );
-        });
+                      //content
+                      _content(),
+                    ],
+                  ),
+                ),
+              );
+      },
+    );
   }
 
   ///
   ///img product
   ///
-  Widget _imgProject(
-      BuildContext context, V1ProjectDetailController controller) {
+  Widget _imgProject(BuildContext context, V1ProjectDetailController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
-        itemCount: 5,
+        itemCount: 1,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           return FadeInImage.assetNetwork(
             placeholder: Images.placeholder,
-            image: controller.urlImage,
+            image: controller.duAnKhachHangResponse!.hinhAnhDaiDien.toString(),
             width: double.infinity,
             height: DeviceUtils.getScaledHeight(context, .3),
             fit: BoxFit.fill,
@@ -97,12 +102,12 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
   ///text title
   ///
   Widget _textTitle(BuildContext context, {required String title}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE,
-      ),
+    return Container(
+      // color: Colors.red,
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Text(
-        title,
+        controller.duAnKhachHangResponse!.ten.toString(),
         style: Dimensions.fontSizeStyle22w600(),
       ),
     );
@@ -113,39 +118,38 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
   ///
   Widget _content() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Địa điểm:",
-            style: Dimensions.fontSizeStyle20w600(),
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          Text(
-            controller.place,
-            textAlign: TextAlign.justify,
-            style: Dimensions.fontSizeStyle18().copyWith(height: 1.5),
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          Text(
-            "Giới thiệu:",
-            style: Dimensions.fontSizeStyle20w600(),
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          Text(
-            controller.introduce,
-            textAlign: TextAlign.justify,
-            style: Dimensions.fontSizeStyle18().copyWith(height: 1.5),
-          ),
-        ],
+      // color: Colors.red,
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      // margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
+      child: Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Địa điểm:",
+              textAlign: TextAlign.left,
+              style: Dimensions.fontSizeStyle18w600(),
+            ),
+            Text(
+              controller.duAnKhachHangResponse!.diaDiem.toString(),
+              textAlign: TextAlign.left,
+              style: Dimensions.fontSizeStyle18(),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+            Text(
+              "Giới thiệu:",
+              textAlign: TextAlign.left,
+              style: Dimensions.fontSizeStyle18w600(),
+            ),
+            Text(
+              controller.duAnKhachHangResponse!.gioiThieu.toString(),
+              textAlign: TextAlign.left,
+              style: Dimensions.fontSizeStyle18(),
+            ),
+          ],
+        ),
       ),
     );
   }

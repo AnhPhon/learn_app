@@ -75,7 +75,7 @@ class V3HomeController extends GetxController {
     tinTucProvider.paginate(
       page: 1,
       limit: 2,
-      filter: "&sortBy=create_at:desc",
+      filter: "&sortBy=created_at:desc",
       onSuccess: (tinTucResponses) {
         // get tin tuc list
         tinTucList = tinTucResponses;
@@ -94,7 +94,7 @@ class V3HomeController extends GetxController {
     sanPhamProvider.paginate(
       page: 1,
       limit: 2,
-      filter: "&sortBy=create_at:desc",
+      filter: "&sortBy=created_at:desc",
       onSuccess: (sanPhamModels) {
         // get san pham list
         sanPhamList = sanPhamModels;

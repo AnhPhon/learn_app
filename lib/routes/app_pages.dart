@@ -133,6 +133,8 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
@@ -947,6 +949,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_PROJECT_DETAIL,
       page: () => V2ProjectDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DETAIL_TRIEN_KHAI,
+      page: () => V2ProjectDetailTrienKhaiPage(),
+    ),
+    // GetPage(
+    //   name: AppRoutes.V2_PROJECT_DA_TRIEN_KHAI,
+    //   page: () => V2ProjectDaTrienKhaiPage(),
+    // ),
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DANG_KY_TRIEN_KHAI,
+      page: () => V2ProjectDangKyTrienKhaiPage(),
     ),
     GetPage(
       name: AppRoutes.V2_INURANCE_REGISTER,
