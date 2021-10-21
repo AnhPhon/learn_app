@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -26,7 +27,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
     return GetBuilder(
       builder: (V1BuildOrderFeedBackController controller) {
         return Scaffold(
-          backgroundColor: const Color(0xffF6F6F7),
+          backgroundColor: ColorResources.BACKGROUND,
           appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
           body: SizedBox(
             //padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -38,23 +39,22 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
                     
                   // Tiêu đề báo giá
-                  header(),
+                  header(controller:controller),
                   // list Hình ảnh
-                  image(context),
+                  image(context,controller:controller),
                   // List vật liệu
-                  materialList(context),
+                  materialList(context,controller:controller),
                   // Khoản cách bottom sheet
-                  const SizedBox(height:150),
+                  const SizedBox(height:BOTTOMSHEET),
                 ],
               ),
             ),
           ),
           bottomSheet: OrderBottomSheet(
-            itemValue: 100000000,
+            itemValue: double.parse(controller.dichVuResponse!.tongDon!),
             children: [
               SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
               SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){
-                print("aaa");
                 controller.onClickAgreeButton();
               }),
             ],
@@ -67,7 +67,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// Nội dung tiêu đề
   ///
-  Widget header(){
+  Widget header({required V1BuildOrderFeedBackController controller}){
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -76,10 +76,10 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           TextHighlight(
             title: "Tiêu đề:",
-            content: "Thợ ốp lót công trình 5 sao",
+            content: controller.dichVuResponse!.tieuDe!,
           ),
         ],
       ),
@@ -89,7 +89,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context){
+  Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -98,12 +98,12 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text("Đơn giá bằng hình ảnh",style: TextStyle(
+        children:  [
+          const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(images: []),
+          //BoxImage(imagesUrl: controller.dichVuResponse!.hinhAnhBanKhoiLuong!.split(',')),
         ],
       ),
     );
@@ -127,7 +127,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(BuildContext context){
+  Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
       child: Column(

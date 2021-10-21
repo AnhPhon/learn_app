@@ -1,9 +1,11 @@
 
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_controller.dart';
@@ -13,66 +15,97 @@ class V1NotificationPage extends GetView<V1NotificationController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (V1NotificationController controller) {
-        return Scaffold(
-          appBar: const AppBarWidget(title: "Thông báo"),
-          body: ListView.builder(
-            itemCount: 6,
+    return Scaffold(
+      appBar: const AppBarWidget(title: "Thông báo"),
+      body: GetBuilder(
+        builder: (V1NotificationController controller) {
+          if(controller.isLoading){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          return RefreshIndicator(
+            onRefresh: controller.onRefresh,
+            child: ListView.builder(
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            controller: controller.scrollController,
+            itemCount: controller.notifications.length > (DeviceUtils.getScaledHeight(context, 1)/ 150) ? controller.notifications.length + 1 : controller.notifications.length,
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: (){
-                  controller.onClickItem(index);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  height: 140,
-                  color: index % 2 == 0 ?  ColorResources.PRIMARYCOLOR.withOpacity(0.3) : ColorResources.WHITE,
-                  child: Column(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: "Đã có một thông báo phản hồi từ",
-                          style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                            color: ColorResources.BLACK.withOpacity(0.8),
-                          ),
-                          children: const [
-                            TextSpan(
-                              text: " Thợ ốp lát: công trình khách 5",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )
-                            ),
-                            TextSpan(
-                              text: " mã số"
-                            ),
-                            TextSpan(
-                              text: " ĐH12353",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              )
-                            ),
-                          ]
+              if(index == controller.notifications.length){
+                 if(controller.notifications.length > (DeviceUtils.getScaledHeight(context, 1)/ 150)){
+                    if(controller.status == 0){
+                      return  Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                          child: Text("Không có dự liệu", style: TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                            color: ColorResources.BLACK.withOpacity(0.4)
+                          )),
                         ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text("a moment ago", style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_LARGE,
-                            color: ColorResources.BLACK.withOpacity(0.5)
-                          ),)
-                        ),
-                      )
-                    ],
-                  )
-                ),
-              );
+                      );
+                    }
+                    return const Padding(
+                      padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                      child: Center(child: CupertinoActivityIndicator()),
+                    );
+                  }
+                }
+              return itemNotification(index: index);
             },
-          )
-        );
+          ),
+          );
+        },
+      )
+    );
+  }
+
+  Widget itemNotification({required int index}){
+    return GestureDetector(
+      onTap: (){
+        controller.onClickItem(controller.notifications[index]);
       },
+      child: Container(
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        height: 120,
+        color: index % 2 == 0 ?  ColorResources.PRIMARYCOLOR.withOpacity(0.3) : ColorResources.WHITE,
+        child: Column(
+          children: [
+            RichText(
+              text: TextSpan(
+                text: controller.notifications[index].tieuDe,
+                style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                  color: ColorResources.BLACK.withOpacity(0.8),
+                ),
+                children: [
+                  TextSpan(
+                    text: controller.notifications[index].noiDung,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )
+                  ),
+                  const TextSpan(
+                    text: " mã số"
+                  ),
+                  const TextSpan(
+                    text: " ĐH12353",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                ]
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text("a moment ago", style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  color: ColorResources.BLACK.withOpacity(0.5)
+                ),)
+              ),
+            )
+          ],
+        )
+      ),
     );
   }
 }
