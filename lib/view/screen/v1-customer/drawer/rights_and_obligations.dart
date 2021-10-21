@@ -17,10 +17,12 @@ class RightsAndObligations extends GetView<RightsAndObligationsController> {
           if (controller.isLoading){
             return const Center(child: CircularProgressIndicator(),);
           }
-          return Center(
-            child: Text(
-              controller.fss.first.quyenNghiaVuFSS!
-            )
+          return SingleChildScrollView(
+            child: Center(
+              child: Text(
+                controller.fss.first.quyenNghiaVuFSS!
+              )
+            ),
           );
         },
       )

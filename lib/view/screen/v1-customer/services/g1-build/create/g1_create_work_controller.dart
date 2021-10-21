@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
@@ -46,29 +47,44 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onClickContinueButton(){
     if(descController.text.toString().isEmpty){
-      return showSnackBar(title: "Lỗi", message:"Vui lòng nhập mô tả công việc");
+      showSnackBar(title: "Lỗi", message:"Vui lòng nhập mô tả công việc");
     }else if(startTimeController.text.toString().isEmpty){
-      return showSnackBar(title: "Lỗi",message:"Vui lòng chọn thời gian bắt đầu");
-    }else{
-      final PreviewServiceRequest previewServiceRequest = PreviewServiceRequest();
-      previewServiceRequest.moTa = descController.text.toString();
-      previewServiceRequest.ngayBatDau = startTimeController.text.toString();
-      previewServiceRequest.ngayKetThuc = endTimeController.text.toString();
-      previewServiceRequest.idTinhTp = serviceApplication!.idTinhTp;
-      previewServiceRequest.idQuanHuyen = serviceApplication!.idQuanHuyen;
-      previewServiceRequest.idPhuongXa = serviceApplication!.idPhuongXa;
-      previewServiceRequest.idNhomDichVu = serviceApplication!.idNhomDichVu;
-      previewServiceRequest.idTaiKhoan = serviceApplication!.idTaiKhoan;
-      previewServiceRequest.tieuDe = serviceApplication!.tieuDe;
-      previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
-      previewServiceRequest.hinhAnhBanKhoiLuong = images;
-      previewServiceRequest.bangKhoiLuong = massList;
-      previewServiceRequest.hinhAnhBanVe  = drawingImages;
-      if(file != null){
-        previewServiceRequest.file = file ;
+      showSnackBar(title: "Lỗi",message:"Vui lòng chọn thời gian bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+    }else if(endTimeController.text.toString().isNotEmpty){
+      if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
+        showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      }else{
+        saveServices();
+        return;
       }
-      Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
+    }else{
+      saveServices();
     }
+  }
+
+  void saveServices(){
+    final PreviewServiceRequest previewServiceRequest = PreviewServiceRequest();
+    previewServiceRequest.moTa = descController.text.toString();
+    previewServiceRequest.ngayBatDau = startTimeController.text.toString();
+    if(endTimeController.text.toString().isNotEmpty){
+      previewServiceRequest.ngayKetThuc = endTimeController.text.toString();
+    }
+    previewServiceRequest.idTinhTp = serviceApplication!.idTinhTp;
+    previewServiceRequest.idQuanHuyen = serviceApplication!.idQuanHuyen;
+    previewServiceRequest.idPhuongXa = serviceApplication!.idPhuongXa;
+    previewServiceRequest.idNhomDichVu = serviceApplication!.idNhomDichVu;
+    previewServiceRequest.idTaiKhoan = serviceApplication!.idTaiKhoan;
+    previewServiceRequest.tieuDe = serviceApplication!.tieuDe;
+    previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
+    previewServiceRequest.hinhAnhBanKhoiLuong = images;
+    previewServiceRequest.bangKhoiLuong = massList;
+    previewServiceRequest.hinhAnhBanVe  = drawingImages;
+    if(file != null){
+      previewServiceRequest.file = file ;
+    }
+    Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
   }
 
   ///
@@ -104,6 +120,13 @@ class V1G1CreateWorkController extends GetxController{
     }
   }
 
+  ///
+  /// Xoá vật liệu
+  ///
+  void deleteSupplies(VatTuResponse supplies){
+    massList.removeWhere((element) => element.hashCode == supplies.hashCode);
+    update();
+  }
   ///
   /// Chon file
   ///

@@ -77,21 +77,6 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           },
         ),
 
-        // Số lượng yêu cầu
-        InputField(
-          paddingTop: 0,
-          allowEdit: true,
-          allowMultiline: false,
-          controller: controller.amountController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "10",
-          hidden: false,
-          label: "Số lượng yêu cầu",
-          obligatory: true,
-          typeInput: TextInputType.number,
-          width: DeviceUtils.getScaledWidth(context,1),
-        ),
-
         // Thời gian làm việc
         const Label(label: "Thời gian làm trong ngày", obligatory: true, paddingTitle: 0,),
         GetBuilder(
@@ -103,7 +88,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
                   CheckBoxCustom(title: "Sáng: từ 7h30 - 11h30", onChanged: (bool? val) { 
                     controller.onSelectedTommorow(val: val!);
                   },status: controller.tommorow,),
-                  CheckBoxCustom(title: "Chiều: từ 1h30 - 5h30", onChanged: (bool? val) { 
+                  CheckBoxCustom(title: "Chiều: từ 13h30 - 17h30", onChanged: (bool? val) { 
                     controller.onSelectedAfternoon(val: val!);
                   },status: controller.afternoon,),
                   CheckBoxCustom(title: "Tối: từ 18h30 - 22h30", onChanged: (bool? val) {  
@@ -139,34 +124,6 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
         ),
-
-        InputField(
-          allowEdit: true,
-          allowMultiline: false,
-          controller: controller.valueController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "100.000.000",
-          hidden: false,
-          label: "Giá trị khách hàng đề xuất (nếu có) : VNĐ",
-          obligatory: false,
-          typeInput: TextInputType.number,
-          width: DeviceUtils.getScaledWidth(context,1),
-        ),
-
-
-        InputField(
-          allowEdit: true,
-          allowMultiline: true,
-          controller: controller.descController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Khách nhập",
-          hidden: false,
-          label: "Mô tả yêu cầu công việc",
-          obligatory: true,
-          typeInput: TextInputType.text,
-          width: DeviceUtils.getScaledWidth(context,1),
-        ),
-
       ],
     );
   }

@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/request/vat_tu_request.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
@@ -28,7 +30,7 @@ class V1G1ReviewController extends GetxController{
   /// 
   void onClickButton(){
     onSave();
-    Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
+    
   }
 
   ///
@@ -40,7 +42,7 @@ class V1G1ReviewController extends GetxController{
 
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
-
+      Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
       showSnackBar(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất");
     }, onError: (error){
       EasyLoading.dismiss();
@@ -54,8 +56,10 @@ class V1G1ReviewController extends GetxController{
     String drawingImages = '';
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
-    dichVuRequest.ngayBatDau = previewServiceRequest!.ngayBatDau;
-    dichVuRequest.ngayKetThuc = previewServiceRequest!.ngayKetThuc;
+    dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayBatDau!);
+    if(previewServiceRequest!.ngayKetThuc != null){
+      dichVuRequest.ngayKetThuc =  DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayKetThuc!);
+    }
     dichVuRequest.idTinhTp = previewServiceRequest!.idTinhTp;
     dichVuRequest.idQuanHuyen = previewServiceRequest!.idQuanHuyen;
     dichVuRequest.idPhuongXa = previewServiceRequest!.idPhuongXa;
@@ -98,8 +102,6 @@ class V1G1ReviewController extends GetxController{
       dichVuRequest.hinhAnhBanVe  = drawingImages;
       return dichVuRequest;
     });
-    
-    //return dichVuRequest;
   }
 
   void addMass({required String idDon}){

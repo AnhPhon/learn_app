@@ -23,7 +23,6 @@ class V1G2CreateWorkController extends GetxController {
   final workTitleController = TextEditingController();
   final startTime = TextEditingController();
   final endTime = TextEditingController();
-  final valueController = TextEditingController();
   final massDesc = TextEditingController();
   final workDesc = TextEditingController();
 
@@ -77,10 +76,9 @@ class V1G2CreateWorkController extends GetxController {
 
   void onSelectedAfternoon({required bool val}) {
     afternoon = val;
-    if (tommorow) {
-      afternoonReponse = thoiGianLamViecList
-          .firstWhere((element) => element.tieuDe!.contains('1h30 - 5h30'));
-    } else {
+    if(afternoon){
+      afternoonReponse = thoiGianLamViecList.firstWhere((element) => element.tieuDe!.contains('13h30 - 17h30'));
+    }else{
       afternoonReponse = null;
     }
     update();
@@ -88,7 +86,7 @@ class V1G2CreateWorkController extends GetxController {
 
   void onSelectedTonight({required bool val}) {
     tonight = val;
-    if (tommorow) {
+    if (tonight) {
       tonightReponse = thoiGianLamViecList
           .firstWhere((element) => element.tieuDe!.contains('18h30 - 22h30'));
     } else {
@@ -97,7 +95,7 @@ class V1G2CreateWorkController extends GetxController {
     update();
   }
 
-  Future<void> pickerFile() async {
+  void pickerFile()async{
     final FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       file = File(result.files.single.path!);
@@ -151,81 +149,88 @@ class V1G2CreateWorkController extends GetxController {
   ///
   /// Nhấn tiếp tục hoàn thành tạo đơn
   ///
-  void onClickContinueButton() async {
-    if (tommorow == false & afternoon & false || tonight & false) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
-    } else if (startTime.text.toString().isEmpty) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
-    } else if (endTime.text.toString().isEmpty) {
-      showSnackBar(
-          title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc dự kiến");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: endTime.text.toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-    } else if (DateConverter.differenceDate(
-            startDate: startTime.text.toString(),
-            endDate: DateTime.now().toString()) <=
-        0) {
-      showSnackBar(
-          title: "Lỗi",
-          message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
-    } else if (workDesc.text.toString().isEmpty) {
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
-    } else if (valueController.text.toString().isEmpty) {
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập giá trị đề xuất");
-    } else if (productImages.isEmpty) {
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ảnh sản phẩm mẫu");
-    } else {
-      EasyLoading.show(status: "Loading ...");
-      DonDichVuRequest data = await request();
-      Future.delayed(const Duration(seconds: 2)).then((value) {});
-      donDichVuProvider.add(
-          data: data,
-          onSuccess: (data) {
-            EasyLoading.dismiss();
-            Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
-          },
-          onError: (onError) {
-            EasyLoading.dismiss();
-            showSnackBar(title: "Lỗi", message: onError.toString());
-            print("V1G2CreateWorkController onClickContinueButton $onError");
-          });
+  void onClickContinueButton()async{
+    if(validate()){
+      onSaveService();
     }
+  }
+
+
+  ///
+  /// Check validate
+  ///
+  bool validate(){
+    if(tommorow == false && afternoon == false && tonight == false){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
+      return false;
+    }else if(startTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
+      return false;
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
+      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      return false;
+    }else if(endTime.text.toString().isNotEmpty){
+      if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+        showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        return false;
+      }else if(workDesc.text.toString().isEmpty){
+        showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+        return false;
+      }
+      return true;
+    }else if(workDesc.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  ///
+  /// save services
+  ///
+  Future<void> onSaveService() async{
+    EasyLoading.show(status:"Loading ...");
+      final DonDichVuRequest data = await request();
+      donDichVuProvider.add(data: data, onSuccess: (data){
+        EasyLoading.dismiss();
+        Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
+        //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
+      }, onError: (onError){
+        EasyLoading.dismiss();
+        showSnackBar(title: "Lỗi", message: onError.toString());
+        print("V1G2CreateWorkController onClickContinueButton $onError");
+      });
   }
 
   ///
   /// Tạo đối tượng request
   ///
-  Future<DonDichVuRequest> request() {
-    final List<ThoiGianLamViecResponse> workTime = [];
-    String massImagesLink = '';
-    String productImagesLink = '';
-    String currentStatusimages = '';
-    DonDichVuRequest dichVuRequest = DonDichVuRequest();
-    dichVuRequest = serviceApplication!;
-    if (tommorow == true) {
-      workTime.add(tommowReponse!);
-    }
-    if (afternoon == true) {
-      workTime.add(afternoonReponse!);
-    }
-    if (tonight == true) {
-      workTime.add(tonightReponse!);
-    }
-    // Thời gian công việc chọn được nhiều ngày mà đây chỉ lưu được 1 ID
-    dichVuRequest.thoiGianLamViec = workTime;
-    ////////////////////////////////////////////////////////////////
-    dichVuRequest.ngayBatDau = startTime.text.toString();
-    dichVuRequest.ngayKetThuc = endTime.text.toString();
-    dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
-    dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
-    dichVuRequest.moTaChiTiet =
-        massDesc.text.toString(); // Mô tả khói lượng công việc
+  Future<DonDichVuRequest> request(){
+      final List<String> workTime = [];
+      String massImagesLink = '';
+      String productImagesLink = '';
+      String currentStatusimages ='';
+      DonDichVuRequest dichVuRequest = DonDichVuRequest();
+      dichVuRequest = serviceApplication!;
+      if(tommorow == true){
+        workTime.add(tommowReponse!.id!);
+      }
+      if(afternoon == true){
+        workTime.add(afternoonReponse!.id!); 
+      }
+      if(tonight == true){
+        workTime.add(tonightReponse!.id!);
+      }
+      dichVuRequest.idThoiGianLamViecs = workTime;
+      ////////////////////////////////////////////////////////////////
+      print(startTime.text.toString());
+      dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startTime.text.toString());
+      if(endTime.text.toString().isNotEmpty){
+        dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());
+      }
+      dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
+      dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
 
     // Tải hình ảnh hiên trạng
     images.forEach((element) {
@@ -295,7 +300,6 @@ class V1G2CreateWorkController extends GetxController {
     workTitleController.dispose();
     startTime.dispose();
     endTime.dispose();
-    valueController.dispose();
     massDesc.dispose();
     workDesc.dispose();
   }

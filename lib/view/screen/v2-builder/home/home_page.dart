@@ -239,8 +239,7 @@ class V2HomePage extends GetView<V2HomeController> {
                 maTask:
                     "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
                 trangThai:
-                    controller.donDichVuList[index].idTrangThaiDonHang!.tieuDe!,
-                imageURL: controller.donDichVuList[index].hinhAnhBanVe,
+                    controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
               );
             },
           ),

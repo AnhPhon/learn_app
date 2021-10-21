@@ -271,7 +271,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
           controller.onClickContinue();
         },
         title: "Tiếp tục",
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
     );
   }

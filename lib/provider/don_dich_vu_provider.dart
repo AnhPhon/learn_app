@@ -37,6 +37,7 @@ class DonDichVuProvider {
     required Function(DonDichVuRequest donDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
+    print(data.toJson());
     final ApiResponse apiResponse = await repository!.add(data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {

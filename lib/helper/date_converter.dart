@@ -17,6 +17,12 @@ mixin DateConverter {
     return DateFormat('dd/MM/yyyy').format(dateTime);
   }
 
+  static String formatYYYYMMDD(String dateTime) { //dd mm yyyy
+    final date = DateFormat('dd-MM-yyyy').parse(dateTime);
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
+
+
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }
@@ -30,7 +36,7 @@ mixin DateConverter {
   }
 
   static DateTime convertStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd').parse(dateTime);
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
