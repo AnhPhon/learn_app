@@ -4,6 +4,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -22,35 +23,18 @@ class V1NotificationPage extends GetView<V1NotificationController> {
           if(controller.isLoading){
             return const Center(child: CircularProgressIndicator(),);
           }
-          return RefreshIndicator(
+          return SmartRefresher(
+            controller: controller.refreshController,
+            enablePullUp: true,
+            onLoading: controller.moreData,
             onRefresh: controller.onRefresh,
             child: ListView.builder(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            controller: controller.scrollController,
-            itemCount: controller.notifications.length > (DeviceUtils.getScaledHeight(context, 1)/ 150) ? controller.notifications.length + 1 : controller.notifications.length,
-            itemBuilder: (context, index) {
-              if(index == controller.notifications.length){
-                 if(controller.notifications.length > (DeviceUtils.getScaledHeight(context, 1)/ 150)){
-                    if(controller.status == 0){
-                      return  Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                          child: Text("Không có dự liệu", style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                            color: ColorResources.BLACK.withOpacity(0.4)
-                          )),
-                        ),
-                      );
-                    }
-                    return const Padding(
-                      padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                      child: Center(child: CupertinoActivityIndicator()),
-                    );
-                  }
-                }
-              return itemNotification(index: index);
-            },
-          ),
+              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              itemCount: controller.notifications.length ,
+              itemBuilder: (context, index) {
+                return itemNotification(index: index);
+              },
+            ),
           );
         },
       )
