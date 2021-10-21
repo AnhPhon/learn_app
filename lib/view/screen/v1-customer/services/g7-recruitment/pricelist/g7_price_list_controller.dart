@@ -159,6 +159,9 @@ class V1G7PriceListController extends GetxController {
     //set value tuyendung
     tuyenDungRequest.soTien = tongTien.toStringAsFixed(0);
     tuyenDungRequest.tongDon = tongTien.toStringAsFixed(0);
+    tuyenDungRequest.phiDichVu = '0';
+    tuyenDungRequest.khuyenMai = '0';
+    tuyenDungRequest.tienCoc = '0';
     tuyenDungRequest.idTrangThaiTuyenDung = '6162b79bd3d3e9825095fb20';
 
     EasyLoading.show(status: 'loading...');
