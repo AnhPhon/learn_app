@@ -5,7 +5,6 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 
 class V1NewsDetailController extends GetxController {
-
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
   TinTucResponse tinTucModel = TinTucResponse();
 
@@ -31,12 +30,12 @@ class V1NewsDetailController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
 
-    ///
+  ///
   ///format date time
   ///
   String formatDateTime({required String dateTime}) {

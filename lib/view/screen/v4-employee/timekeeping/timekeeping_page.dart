@@ -10,7 +10,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
+
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -33,11 +33,15 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_SMALL,
+                  ),
+
                   // chọn thời gian chấm công
                   _timekeeping(controller, context),
 
                   const SizedBox(
-                    height: 25,
+                    height: Dimensions.PADDING_SIZE_EXTRA_SMALL + 4,
                   ),
                   //dự án
                   _project(controller, context),
@@ -45,7 +49,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   //địa chỉ
                   _address(controller, context),
                   const SizedBox(
-                    height: 25,
+                    height: Dimensions.PADDING_SIZE_SMALL,
                   ),
 
                   Row(
@@ -58,13 +62,21 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                       _district(controller, context),
                     ],
                   ),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_SMALL,
+                  ),
 
                   //Phường/xã
                   _wards(controller, context),
+
                   Container(
-                    height: DeviceUtils.getScaledHeight(context, .04),
+                    height: DeviceUtils.getScaledHeight(context, .1),
                   ),
                   _btnTimekeeping(controller),
+
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
                 ],
               ),
             );
@@ -79,7 +91,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       V4TimekeepingController controller, BuildContext context) {
     return TextFieldDate(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: false,
+      isDate: true,
       allowEdit: false,
       controller: controller.timekeeping,
       fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -99,9 +111,9 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
       isColorFieldWhite: true,
       labelBold: true,
       hint: 'Vui lòng chọn dự án',
-      label: 'Dự án(nếu có)',
+      label: 'Dự án',
       data: controller.duAnNhanVienList,
-      obligatory: false,
+      obligatory: true,
       onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
       value: controller.duAnNhanVien,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -113,7 +125,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   Widget _address(V4TimekeepingController controller, BuildContext context) {
     return InputField(
-      isColorFieldWhite: true,
+      isColorFieldWhite: false,
       allowEdit: true,
       allowMultiline: false,
       controller: controller.addressController,

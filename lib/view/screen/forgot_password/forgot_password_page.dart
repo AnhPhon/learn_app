@@ -49,20 +49,11 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       // logo
                       _logoWidget(context),
 
-                      // input username
+                      // input number phone
                       _usernameEnterWidget(context),
 
-                      // input password
-                      _passwordEnterWidget(context),
-
-                      // remember password
-                      _rememberAndForgotPasswordWidget(context),
-
-                      // login button
-                      _onBtnLoginTap(context),
-
-                      // register arial
-                      _registerWidget(context),
+                      // _on Btn OTP Verifier Tap
+                      _onBtnOTPVerifierTap(context),
                     ],
                   ),
                 ),
@@ -78,52 +69,47 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   Widget _logoWidget(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
-      width: 251,
+      width: DeviceUtils.getScaledWidth(context, 1),
       height: 79,
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Positioned(
-            left: 104,
-            top: 20,
-            child: Text(
-              "KẾT NỐI TINH HOA",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff3275ad),
-                fontSize: 16,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
+          Container(
+              width: 96,
+              height: 79,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Images.logo_removebg),
+                  fit: BoxFit.cover,
+                ),
+              )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                "KẾT NỐI TINH HOA",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xff3275ad),
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontFamily: "Nunito Sans",
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-          ),
-          const Positioned(
-            left: 101,
-            top: 47,
-            child: Text(
-              "HỘI TỤ PHÁT TRIỂN",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xffc82e3e),
-                fontSize: 16,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
+              Container(
+                child: const Text(
+                  "HỘI TỤ PHÁT TRIỂN",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xffc82e3e),
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                    fontFamily: "Nunito Sans",
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                  width: 96,
-                  height: 79,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Images.logo_removebg),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-            ),
-          ),
+            ],
+          )
         ],
       ),
     );
@@ -161,7 +147,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 decoration: const InputDecoration(
                   isDense: true,
                   border: InputBorder.none,
-                  hintText: "Nhập tên đăng nhập",
+                  hintText: "Nhập số điện thoại",
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
@@ -172,116 +158,12 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   }
 
   ///
-  /// _passwordEnterWidget
+  /// _on Btn OTP Verifier Tap
   ///
-  Widget _passwordEnterWidget(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
-      width: DeviceUtils.getScaledWidth(context, 0.7),
-      height: 48,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              width: DeviceUtils.getScaledWidth(context, 0.7),
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              padding: const EdgeInsets.only(
-                left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                top: 13,
-                bottom: 7,
-              ),
-              child: TextField(
-                obscureText: true,
-                textInputAction: TextInputAction.done,
-                textAlignVertical: TextAlignVertical.center,
-                controller: controller.passwordController,
-                cursorColor: ColorResources.PRIMARY,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: "Nhập mật khẩu",
-                  filled: true,
-                  fillColor: Colors.transparent,
-                ),
-              )),
-        ],
-      ),
-    );
-  }
-
-  ///
-  /// _remember And Forgot Password Widget
-  ///
-  Widget _rememberAndForgotPasswordWidget(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
-      width: DeviceUtils.getScaledWidth(context, 0.7),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            height: 25,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    value: controller.isRemember,
-                    onChanged: (bool? value) {
-                      // onCheckBoxRememberClick
-                      controller.onCheckBoxRememberClick(value);
-                    },
-                  ),
-                ),
-                const SizedBox(width: 2),
-                const Text(
-                  "Nhớ mật khẩu",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xff2a3547),
-                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // link forgot password
-          const Text(
-            "Quên mật khẩu?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff0f90f3),
-              fontSize: Dimensions.FONT_SIZE_DEFAULT,
-              decoration: TextDecoration.underline,
-              fontFamily: "Nunito Sans",
-              fontWeight: FontWeight.w700,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  ///
-  /// _on Btn Login Tap
-  ///
-  Widget _onBtnLoginTap(BuildContext context) {
+  Widget _onBtnOTPVerifierTap(BuildContext context) {
     return GestureDetector(
-      // onLoginBtnClick
-      onTap: () => controller.onLoginBtnClick(),
+      // onOTPVerifierTap
+      onTap: () => controller.onOTPVerifierTap(),
       child: Container(
         margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
         width: DeviceUtils.getScaledWidth(context, 0.7),
@@ -302,7 +184,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 bottom: 9,
               ),
               child: const Text(
-                "Đăng nhập",
+                "Xác thực",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xff0d5da0),
@@ -314,48 +196,6 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  ///
-  /// _on Btn Login Tap
-  ///
-  Widget _registerWidget(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
-      width: DeviceUtils.getScaledWidth(context, 0.7),
-      height: 25,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const Text(
-            "Bạn chưa có tài khoản?",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff2a3547),
-              fontSize: Dimensions.FONT_SIZE_LARGE,
-            ),
-          ),
-
-          const SizedBox(width: 4),
-
-          // ignore: prefer_const_literals_to_create_immutables
-          const Text(
-            "Đăng ký",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xff0f90f3),
-              fontSize: Dimensions.FONT_SIZE_LARGE,
-              decoration: TextDecoration.underline,
-              fontFamily: "Nunito Sans",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
       ),
     );
   }

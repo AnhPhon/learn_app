@@ -32,16 +32,21 @@ class V1NewsController extends GetxController
   ///get all categoryNews
   ///
   void getAllCategoryNews() {
-    danhMucTinTucProvider.all(onSuccess: (value) {
-      danhMucTinTucList = value;
+    danhMucTinTucProvider.paginate(
+        page: 1,
+        limit: 30,
+        filter: "&sortBy=created_at:desc",
+        onSuccess: (value) {
+          danhMucTinTucList = value;
 
-      // binding data tab
-      tabController = TabController(vsync: this, length: value.length);
+          // binding data tab
+          tabController = TabController(vsync: this, length: value.length);
 
-      isLoading = false;
-      update();
-    }, onError: (error) {
-      print(error);
-    });
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        });
   }
 }

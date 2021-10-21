@@ -12,6 +12,33 @@ class SharedPreferenceHelper {
   SharedPreferenceHelper(this._sharedPreference);
 
   // General Methods: ----------------------------------------------------------
+
+  // Login: ----------------------------------------------------------
+  Future<bool?> get isLogin async {
+    return _sharedPreference.getBool(Preferences.isLogin);
+  }
+
+  Future<bool> saveIsLogin({required bool id}) async {
+    return _sharedPreference.setBool(Preferences.isLogin, id);
+  }
+
+  Future<bool> removeIsLogin() async {
+    return _sharedPreference.remove(Preferences.isLogin);
+  }
+
+  // First: ----------------------------------------------------------
+  Future<bool?> get isFirst async {
+    return _sharedPreference.getBool(Preferences.isFirst);
+  }
+
+  Future<bool> saveIsFirst({required bool id}) async {
+    return _sharedPreference.setBool(Preferences.isFirst, id);
+  }
+
+  Future<bool> removeIsFirst() async {
+    return _sharedPreference.remove(Preferences.isFirst);
+  }
+
   // General Methods: Access token
   Future<String?> get jwtToken async {
     return _sharedPreference.getString(Preferences.jwt_token);
@@ -156,29 +183,93 @@ class SharedPreferenceHelper {
     return _sharedPreference.setString(Preferences.ward, id);
   }
 
-  // Login: ----------------------------------------------------------
-  Future<bool?> get isLogin async {
-    return _sharedPreference.getBool(Preferences.isLogin);
+  // workFlowId: ----------------------------------------------------------
+  Future<String?> get workFlowId async {
+    return _sharedPreference.getString(Preferences.workFlowId);
   }
 
-  Future<bool> saveIsLogin({required bool id}) async {
-    return _sharedPreference.setBool(Preferences.isLogin, id);
+  Future<bool> saveWorkFlow({required String id}) async {
+    return _sharedPreference.setString(Preferences.workFlowId, id);
   }
 
-  Future<bool> removeIsLogin() async {
-    return _sharedPreference.remove(Preferences.isLogin);
+  Future<bool> removeWorkFlow() async {
+    return _sharedPreference.remove(Preferences.workFlowId);
   }
 
-  // First: ----------------------------------------------------------
-  Future<bool?> get isFirst async {
-    return _sharedPreference.getBool(Preferences.isFirst);
+  //  : ----------------------------------------------------------
+  Future<String?> get idTinTuc async {
+    return _sharedPreference.getString(Preferences.idTinTuc);
   }
 
-  Future<bool> saveIsFirst({required bool id}) async {
-    return _sharedPreference.setBool(Preferences.isFirst, id);
+  Future<bool> saveTinTuc({required String id}) async {
+    return _sharedPreference.setString(Preferences.idTinTuc, id);
   }
 
-  Future<bool> removeIsFirst() async {
-    return _sharedPreference.remove(Preferences.isFirst);
+  Future<bool> removeTinTuc() async {
+    return _sharedPreference.remove(Preferences.idTinTuc);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get idSanPham async {
+    return _sharedPreference.getString(Preferences.idSanPham);
+  }
+
+  Future<bool> saveSanPham({required String id}) async {
+    return _sharedPreference.setString(Preferences.idSanPham, id);
+  }
+
+  Future<bool> removeSanPham() async {
+    return _sharedPreference.remove(Preferences.idSanPham);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get chamcong async {
+    return _sharedPreference.getString(Preferences.isChamCong);
+  }
+
+  Future<bool> saveChamCongId(String id) async {
+    return _sharedPreference.setString(Preferences.isChamCong, id);
+  }
+
+  Future<bool> removeChamCongId() async {
+    return _sharedPreference.remove(Preferences.isChamCong);
+  }
+
+  Future<String?> get duAnNhanVien async {
+    return _sharedPreference.getString(Preferences.idDuAn);
+  }
+
+  Future<bool> saveIdDuAnNhanVien(String id) async {
+    return _sharedPreference.setString(Preferences.idDuAn, id);
+  }
+
+  Future<bool> removeIdDuAnNhanVien() async {
+    return _sharedPreference.remove(Preferences.idDuAn);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productCategoryId async {
+    return _sharedPreference.getString(Preferences.productCategoryId);
+  }
+
+  Future<bool> saveProductCategoryId(String id) async {
+    return _sharedPreference.setString(Preferences.productCategoryId, id);
+  }
+
+  Future<bool> removeProductCategoryId() async {
+    return _sharedPreference.remove(Preferences.productCategoryId);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get productId async {
+    return _sharedPreference.getString(Preferences.productId);
+  }
+
+  Future<bool> saveProductId(String id) async {
+    return _sharedPreference.setString(Preferences.productId, id);
+  }
+
+  Future<bool> removeProductId() async {
+    return _sharedPreference.remove(Preferences.productId);
   }
 }

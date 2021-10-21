@@ -1,11 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2WorkflowManagementController extends GetxController
     with SingleGetTickerProviderMixin {
-  //set model để thiết kế UI Quản lý công việc
-  List<Map<String, dynamic>>? uiWorkflowManagement;
+  DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  // cong viec dang lam
+  List<DonDichVuResponse> dangLam = [];
+
+  // cong viec hoan thanh
+  List<DonDichVuResponse> hoanThanh = [];
 
   //khai báo isLoading
   bool isLoading = true;
@@ -13,71 +24,101 @@ class V2WorkflowManagementController extends GetxController
   //Khai báo isRecruiting
   bool isRecruiting = true;
 
+  final String dangTuyenKey = "đang tuyển";
+  final String dangXuLyKey = "đang xử lý";
+  final String dangGiaoKey = "đang giao";
+  final String hoanThanhKey = "hoàn thành";
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
-    //List model thiết kế UI
-    uiWorkflowManagement = [
-      {
-        "job": "Thợ ốp lát",
-        "title": "Công trình khách hàng 4 sao tại Đà Nẵng",
-        "city": "Đà Nẵng",
-        "address": "Ngũ Hành Sơn",
-        "status": "Còn 35 ngày",
-        "isStatus": false,
-        "result": "Chưa nghiệm thu",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
+    // get data theo id người dùng
+    sl.get<SharedPreferenceHelper>().userId.then(
+      (id) {
+        taiKhoanProvider.find(
+          id: id!,
+          onSuccess: (values) {
+            // read cong viec nhan vien
+            _readCongViecNhanVien();
+          },
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
       },
-      {
-        "job": "Thợ xây tường",
-        "title": "Công trình khách hàng 5 sao tại Đà Nẵng",
-        "city": "Đà Nẵng",
-        "address": "Ngũ Hành Sơn",
-        "status": "Đang tuyển",
-        "isStatus": true,
-        "result": "Đã nghiệm thu",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-      {
-        "job": "Thợ lót nền",
-        "title": "Công trình khách hàng 4 sao tại Hồ Chí Minh",
-        "city": "Hồ Chí Minh",
-        "address": "Ngũ Hành Sơn",
-        "status": "Còn 20 ngày",
-        "isStatus": false,
-        "result": "Đã quyết toán",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-      {
-        "job": "Thợ xây tường",
-        "title": "Công trình khách hàng 3 sao tại Hồ Chí Minh",
-        "city": "Hồ Chí Minh",
-        "address": "Ngũ Hành Sơn",
-        "status": "Đang tuyển",
-        "isStatus": true,
-        "result": "20/08/2021",
-        "rate":
-            "Delight your users with Flutter's built-in beautiful Material Design & Cupertino widgets. Quickly ship features with a focus on native end-user experiences. Install Flutter today. Null Safe Code. Native Performance. Flexible UI. Fast Development. Open Source.",
-      },
-    ];
+    );
+  }
+
+  ///
+  /// get cong viec
+  ///
+  void _readCongViecNhanVien() {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      print("URL: &idTaiKhoan=$id");
+      donDichVuProvider.paginate(
+        page: 1,
+        limit: 30,
+        filter: "&idTaiKhoan=$id",
+        onSuccess: (values) {
+          for (final value in values) {
+            if (value.idTrangThaiDonDichVu != null &&
+                value.idNhomDichVu != null) {
+              final String tieuDe = value.idTrangThaiDonDichVu!.tieuDe.toString();
+              final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
+
+              if (nhomDichVu == "3" || nhomDichVu == "4") {
+                if (tieuDe.toLowerCase() == dangXuLyKey ||
+                    tieuDe.toLowerCase() == dangTuyenKey ||
+                    tieuDe.toLowerCase() == dangGiaoKey) {
+                  dangLam.add(value);
+                } else {
+                  hoanThanh.add(value);
+                }
+              }
+            }
+          }
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
   }
 
   ///
   ///Click to Work done page
   ///
-  void onClickToWorkDonePage() {
-    Get.toNamed(AppRoutes.V2_WORK_DONE);
+  void onClickToWorkDonePage(String idDonDichVu) {
+    sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
+    Get.toNamed(AppRoutes.V2_WORK_DONE)!.then((value) {
+      if (value == true) {
+        EasyLoading.showSuccess("Gửi thành công");
+      }
+    });
   }
 
   ///
   ///Click to Work in progress
   ///
-  void onClickToWorkInProgressPage() {
-    Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS);
+  void onClickToWorkInProgressPage(String idDonDichVu) {
+    sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
+    Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS)!.then((value) {
+      if (value == true) {
+        EasyLoading.showSuccess("Gửi thành công");
+      }
+    });
+  }
+
+  ///
+  /// format date
+  ///
+  String getDeadline(String end) {
+    final DateTime current = DateTime.now();
+    final DateTime dateEnd = DateTime.parse(end);
+
+    return "${current.difference(dateEnd).inDays} ngày";
   }
 }

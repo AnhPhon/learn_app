@@ -18,26 +18,28 @@ class TermsAndPolicy extends GetView<TermsAndPolicyController> {
           if(controller.isLoading){
             return const Center(child: CircularProgressIndicator());
           }
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(
-                Dimensions.PADDING_SIZE_SMALL
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_LARGE
+          return SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(
+                  Dimensions.PADDING_SIZE_SMALL
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Dimensions.PADDING_SIZE_LARGE
+                      ),
+                      child: Text(controller.fss.first.tieuDe!, style: const TextStyle(
+                        fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                        fontWeight: FontWeight.bold
+                      ),),
                     ),
-                    child: Text(controller.fss.first.tieuDe!, style: const TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                      fontWeight: FontWeight.bold
-                    ),),
-                  ),
-                  Text(controller.fss.first.noiDung!),
-                ],
-              ),
-            )
+                    Text(controller.fss.first.noiDung!),
+                  ],
+                ),
+              )
+            ),
           );
         },
       )

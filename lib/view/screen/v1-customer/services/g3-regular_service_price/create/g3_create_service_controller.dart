@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -13,16 +10,16 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
-class V1G3CreateServiceController extends GetxController{
+class V1G3CreateServiceController extends GetxController {
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-  final ThoiGianLamViecProvider thoiGianLamViecProvider = GetIt.I.get<ThoiGianLamViecProvider>();
-  
+  final ThoiGianLamViecProvider thoiGianLamViecProvider =
+      GetIt.I.get<ThoiGianLamViecProvider>();
+
   final workTitleController = TextEditingController();
-  final descController = TextEditingController();
+  // final descController = TextEditingController();
   final startTime = TextEditingController();
   final endTime = TextEditingController();
-  final amountController = TextEditingController(text: '0');
-  final valueController = TextEditingController();
+  // final valueController = TextEditingController();
 
   // 1 nam 2 nữ 3 khác
   GENDER gender = GENDER.Nam;
@@ -34,8 +31,8 @@ class V1G3CreateServiceController extends GetxController{
   ThoiGianLamViecResponse? afternoonReponse;
   ThoiGianLamViecResponse? tonightReponse;
   List<ThoiGianLamViecResponse> thoiGianLamViecList = [];
-  // loading 
-  bool isLoading = true;  
+  // loading
+  bool isLoading = true;
   // Dịch vụ resquest
   DonDichVuRequest? serviceApplication;
 
@@ -50,7 +47,7 @@ class V1G3CreateServiceController extends GetxController{
   ///
   /// Thay đổi giới tính
   ///
-  void onChangedGender(GENDER gender){
+  void onChangedGender(GENDER gender) {
     this.gender = gender;
     update();
   }
@@ -58,29 +55,30 @@ class V1G3CreateServiceController extends GetxController{
   ///
   ///// Chọn thời gian làm việc
   ///
-  void onSelectedTommorow({required bool val}){
+  void onSelectedTommorow({required bool val}) {
     tommorow = val;
-    if(tommorow){
-      tommowReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('7h30 - 11h30'));
-    }else{
+    if (tommorow) {
+      tommowReponse = thoiGianLamViecList.firstWhereOrNull(
+          (element) => element.tieuDe!.contains('7h30 - 11h30'));
+    } else {
       tommowReponse = null;
     }
     update();
   }
 
-  void onSelectedAfternoon({required bool val}){
+  void onSelectedAfternoon({required bool val}) {
     afternoon = val;
-    if(tommorow){
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('1h30 - 5h30'));
+    if(afternoon){
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('13h30 - 17h30'));
     }else{
       afternoonReponse = null;
     }
     update();
   }
-  
-  void onSelectedTonight({required bool val}){
+
+  void onSelectedTonight({required bool val}) {
     tonight = val;
-    if(tommorow){
+    if(tonight){
       tonightReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('18h30 - 22h30'));
     }else{
       tonightReponse = null;
@@ -88,16 +86,16 @@ class V1G3CreateServiceController extends GetxController{
     update();
   }
 
-  /// 
+  ///
   /// lấy thời gian làm việc db
-  /// 
-  void getWorkTime(){
-    thoiGianLamViecProvider.all(onSuccess: (data){
+  ///
+  void getWorkTime() {
+    thoiGianLamViecProvider.all(onSuccess: (data) {
       thoiGianLamViecList.clear();
       thoiGianLamViecList.addAll(data);
       isLoading = false;
       update();
-    }, onError: (error){
+    }, onError: (error) {
       isLoading = false;
       update();
       print("V1G3CreateServiceController getWorkTime Error $error");
@@ -108,20 +106,22 @@ class V1G3CreateServiceController extends GetxController{
   /// Nhấn tiếp tục tới trang báo giá đơn hàng
   ///
   void onClickContinueButton(){
-    if(tommorow == false & afternoon & false || tonight & false){
+    if(tommorow == false && afternoon == false && tonight == false){
       showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
-    }else if(amountController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
-    }else if(int.parse(amountController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
-    }else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
-    }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
-    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateTime.now().toString()) <= 0){
+      return;
+    } else if(startTime.text.toString().isEmpty){
+      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+      return;
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
       showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      return;
+    }else if(endTime.text.toString().isNotEmpty){
+      if(endTime.text.toString().isEmpty){
+        showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
+        return;
+      }else{
+        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
+      }
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
     }
@@ -131,38 +131,34 @@ class V1G3CreateServiceController extends GetxController{
   /// Tạo đối tượng request
   ///
   DonDichVuRequest request(){
-      final List<ThoiGianLamViecResponse> workTime = [];
+      final List<String> workTime = [];
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
-        workTime.add(tommowReponse!);
+        workTime.add(tommowReponse!.id!);
       }
       if(afternoon == true){
-        workTime.add(afternoonReponse!); 
+        workTime.add(afternoonReponse!.id!); 
       }
       if(tonight == true){
-        workTime.add(tonightReponse!);
+        workTime.add(tonightReponse!.id!);
       }
-      dichVuRequest.thoiGianLamViec = workTime;
-      dichVuRequest.ngayBatDau = startTime.text.toString();
-      dichVuRequest.ngayKetThuc = endTime.text.toString();//.isEmpty ? endTime.text.toString() : '';
-      dichVuRequest.giaTriKhachDeXuat = valueController.text.toString();
-      dichVuRequest.moTa = descController.text.toString();
-      if(amountController.text.toString().isNotEmpty){
-        dichVuRequest.soLuongYeuCau = amountController.text.toString();
+      dichVuRequest.idThoiGianLamViecs= workTime;
+      dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startTime.text.toString());
+      if(endTime.text.toString().isNotEmpty){
+        dichVuRequest.ngayKetThuc = DateConverter.formatYYYYMMDD(endTime.text.toString());
       }
       dichVuRequest.gioiTinh = getGender();
       return dichVuRequest;
   }
 
-
   ///
   /// Get giới tính
   ///
-  String getGender(){
-    if(GENDER.Nam == gender){
+  String getGender() {
+    if (GENDER.Nam == gender) {
       return "Nam";
-    }else if(GENDER.Nu == gender){
+    } else if (GENDER.Nu == gender) {
       return "Nữ";
     }
     return 'Khác';
@@ -172,13 +168,9 @@ class V1G3CreateServiceController extends GetxController{
   void onClose() {
     onClose();
     workTitleController.dispose();
-    descController.dispose();
     startTime.dispose();
     endTime.dispose();
-    amountController.dispose();
-    valueController.dispose();
   }
-
 }
 
 // Kế thừa extension để tạo hàm firstWhereOrNull

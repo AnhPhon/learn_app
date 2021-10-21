@@ -20,7 +20,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // usernameController.text = 'ytp3001';
+    // usernameController.text = '1';
     // passwordController.text = 'password';
     super.onInit();
   }
@@ -38,17 +38,25 @@ class LoginController extends GetxController {
   }
 
   ///
-  /// on checkbox remember click
+  /// on button forgot password tap
   ///
   void onBtnForgotPasswordTap() {
-    Get.toNamed(AppRoutes.V1_DASHBOARD);
+    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+  }
+
+  ///
+  /// on button register tap
+  ///
+  void onBtnRegisterTap() {
+    Get.toNamed(AppRoutes.REGISTER);
   }
 
   ///
   /// on login click
   ///
-  void onLoginBtnClick() { 
-    sl.get<SharedPreferenceHelper>().saveUserId("616a8b65000118120619d644");
+  void onLoginBtnClick() {
+    sl.get<SharedPreferenceHelper>().saveUserId("616d99dd7e28e22b158543bb");
+
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {
@@ -111,7 +119,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
@@ -167,7 +175,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }

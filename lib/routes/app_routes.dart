@@ -4,8 +4,8 @@ class AppRoutes {
   // auth
   static const String AUTH = '/auth';
   static const String FORGOT_PASSWORD = '/forgot_password';
-  static const String UPDATE_PASSWORD = '/update_password';
   static const String OTP_VERIFIER = '/otp_verifier';
+  static const String UPDATE_PASSWORD = '/update_password';
   static const String REGISTER = '/register';
 
   static const String DASHBOARD = '/dashboard';
@@ -136,6 +136,7 @@ class AppRoutes {
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
+  static const String V1_REFERENCE_PRICE_TABLE = '/v1_reference_price_table';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -221,6 +222,7 @@ class AppRoutes {
   static const String V4_REVENUE_EXPENDITURE = '/v4_revenue_expenditure';
   static const String V4_NEWS_DETAIL = '/v4_news_detail';
   static const String V4_NEWS = '/v4_news';
+
   static const String V4_NOTIFICATION = '/v4_notification';
   static const String V4_DETAIL_NOTIFICATION = '/v4_detail_notification';
 

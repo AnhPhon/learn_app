@@ -179,8 +179,6 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => AuthRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
-  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   sl.registerLazySingleton(() => BangBangCapRepository());
   sl.registerLazySingleton(() => BangGiaDangTinRepository());
   sl.registerLazySingleton(() => BangGiaDonHangRepository());
@@ -194,7 +192,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChucVuRepository());
   sl.registerLazySingleton(() => ChuyenMonRepository());
   sl.registerLazySingleton(() => ChuyenNganhChinhRepository());
-  sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => DangKyBaoHiemRepository());
   sl.registerLazySingleton(() => HangMucXayDungRepository());
   sl.registerLazySingleton(() => LoaiCongViecRepository());
@@ -204,6 +201,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => PhuongXaRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => DonDichVuRepository());
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => DanhMucTinTucRepository());
+  sl.registerLazySingleton(() => CongViecNhanVienRepository());
+
+  // Provider
+  // sl.registerFactory(() => RegionProvider());
+  // Tạo đơn công việc
+  
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
   sl.registerLazySingleton(() => ThongBaoRepository());
@@ -336,4 +341,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => TrinhDoProvider());
   sl.registerLazySingleton(() => TuyenDungProvider());
   sl.registerLazySingleton(() => XuatNhapKhoProvider());
+
 }

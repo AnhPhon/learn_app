@@ -3,13 +3,17 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/image_url.dart';
+import 'package:template/utils/images.dart';
 
-class ImageCardInWorkDonePage extends StatelessWidget {
+class ImageCardInWorkPage extends StatelessWidget {
   final String title;
-
   final bool isRequired;
-  const ImageCardInWorkDonePage(
-      {required this.title, required this.isRequired});
+  List<String>? urlList;
+  ImageCardInWorkPage({
+    required this.title,
+    required this.isRequired,
+    this.urlList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +63,35 @@ class ImageCardInWorkDonePage extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 3,
             itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () {},
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                  child: FadeInImage.assetNetwork(
-                    image: ImageURL.location_example,
-                    height: 90,
-                    fit: BoxFit.fill,
-                    placeholder: '',
+              if (index < urlList!.length) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+                    child: FadeInImage.assetNetwork(
+                      image: urlList![index],
+                      height: 90,
+                      fit: BoxFit.fill,
+                      placeholder: Images.logo,
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                return GestureDetector(
+                  onTap: () {},
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+                    child: FadeInImage.assetNetwork(
+                      image: ImageURL.location_example,
+                      height: 90,
+                      fit: BoxFit.fill,
+                      placeholder: Images.logo,
+                    ),
+                  ),
+                );
+              }
             },
           ),
         ),

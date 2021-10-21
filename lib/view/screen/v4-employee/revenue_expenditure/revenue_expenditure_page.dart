@@ -9,6 +9,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_controller.dart';
 
@@ -22,23 +23,20 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
           builder: (V4RevenueExpenditureController controller) {
             return SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      //chọn thời gian thêm thu/chi
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: _timeRevenueExpenditure(controller, context),
-                      ),
+                  //thu hoặc chi
+                  if (controller.isRevenue == true)
+                    _revenue(controller, context)
+                  else
+                    _expenditure(controller, context),
 
-                      //thu hoặc chi
-                      if (controller.isRevenue == true)
-                        _revenue(controller, context)
-                      else
-                        _expenditure(controller, context),
-                    ],
+                  //chọn thời gian thêm thu/chi
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    child: _timeRevenueExpenditure(controller, context),
                   ),
 
                   //nội dung thu/chi
@@ -46,6 +44,9 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                     _contentRevenue(controller, context)
                   else
                     _contentExpenditure(controller, context),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
 
                   //số tiền
                   _money(controller, context),
@@ -65,29 +66,14 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                     _btnAddThu(controller)
                   else
                     _btnAddChi(controller),
+
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                  ),
                 ],
               ),
             );
           }),
-    );
-  }
-
-  ///
-  /// Chọn thời gian thu chi
-  ///
-  Widget _timeRevenueExpenditure(
-      V4RevenueExpenditureController controller, BuildContext context) {
-    return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
-      controller: controller.timeRevenueExpenditure,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: controller.timeNow,
-      label: "Ngày",
-      obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
     );
   }
 
@@ -97,16 +83,17 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   Widget _revenue(
       V4RevenueExpenditureController controller, BuildContext context) {
     return InputField(
+      isColorFieldWhite: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.revenueController,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       hidden: false,
       holdplacer: 'Thu',
-      label: 'Loại thu',
+      label: 'Loại thêm',
       obligatory: true,
       typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
 
@@ -116,18 +103,43 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   Widget _expenditure(
       V4RevenueExpenditureController controller, BuildContext context) {
     return InputField(
+      isColorFieldWhite: true,
       allowEdit: false,
       allowMultiline: false,
       controller: controller.expenditureController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       hidden: false,
       holdplacer: 'Chi',
-      label: 'Loại chi',
+      label: 'Loại thêm',
       obligatory: true,
       typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
+}
+
+///
+/// Chọn thời gian thu chi
+///
+Widget _timeRevenueExpenditure(
+    V4RevenueExpenditureController controller, BuildContext context) {
+  return InputWidget(
+    isColorFieldWhite: true,
+    isddMMyyyy: true,
+    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+    isDate: true,
+    allowEdit: false,
+    label: "Thời gian",
+    obligatory: true,
+    width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.timeRevenueExpenditure,
+    hintText: controller.timeNow,
+    suffixIcon: const Icon(
+      Icons.date_range,
+      size: Dimensions.ICON_SIZE_SMALL,
+      color: ColorResources.PRIMARYCOLOR,
+    ),
+  );
 }
 
 ///
@@ -137,12 +149,12 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
 Widget _contentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    isColorFieldWhite: false,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.contentRevenueController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    fontSize: Dimensions.FONT_SIZE_LARGE,
     hidden: false,
     holdplacer: 'Nhập nội dung thu chính',
     label: 'Nội dung thu chính',
@@ -158,12 +170,12 @@ Widget _contentRevenue(
 Widget _contentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    isColorFieldWhite: false,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.contentExpenditureController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    fontSize: Dimensions.FONT_SIZE_LARGE,
     hidden: false,
     holdplacer: 'Nhập nội dung chi chính',
     label: 'Nội dung chi chính',
@@ -177,17 +189,16 @@ Widget _contentExpenditure(
 /// Số tiền
 ///
 Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
-  return InputField(
-    allowEdit: true,
-    allowMultiline: false,
-    controller: controller.moneyController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập số tiền',
+  return InputWidget(
+    isColorFieldWhite: true,
+    labelBold: true,
+    thousandsSeparator: true,
+    textInputType: TextInputType.number,
+    hintText: "Vui lòng nhập số tiền",
     label: 'Số tiền',
     obligatory: true,
-    typeInput: TextInputType.number,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.moneyController,
   );
 }
 
@@ -198,12 +209,12 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
 Widget _detailContentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    isColorFieldWhite: false,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.detailContentRevenueController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    fontSize: Dimensions.FONT_SIZE_LARGE,
     hidden: false,
     holdplacer: 'Nhập nội dung thu chi tiết',
     label: 'Nội dung thu chi tiết',
@@ -220,12 +231,12 @@ Widget _detailContentRevenue(
 Widget _detailContentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
+    isColorFieldWhite: false,
+    line: 7,
     allowEdit: true,
     allowMultiline: true,
     controller: controller.detailContentExpenditureController,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+    fontSize: Dimensions.FONT_SIZE_LARGE,
     hidden: false,
     holdplacer: 'Nhập nội dung chi chi tiết',
     label: 'Nội dung chi chi tiết',

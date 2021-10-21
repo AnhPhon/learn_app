@@ -43,16 +43,17 @@ class DropDownButton<T> extends StatelessWidget {
                 children: [
                   Text(
                     label!,
-                    style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                        fontWeight: FontWeight.bold,
-                        color: ColorResources.BLACK.withOpacity(0.7)),
+                    style: const TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.w600,
+                      color: ColorResources.BLACK,
+                    ),
                   ),
                   if (obligatory == true)
                     const Text(
                       '*',
                       style: TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.bold,
                           color: Colors.red),
                     )
@@ -95,7 +96,7 @@ class DropDownButton<T> extends StatelessWidget {
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_SMALL - 3,
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT,
                       horizontal: Dimensions.PADDING_SIZE_SMALL),
                 ),
                 child: DropdownButtonHideUnderline(
@@ -110,7 +111,7 @@ class DropDownButton<T> extends StatelessWidget {
                     onChanged: onChanged,
                     items: data
                         .map((e) => DropdownMenuItem<T>(
-                            value: e, child: Text(e.toString())))
+                            value: e, child: Text(e.toString(), overflow: TextOverflow.ellipsis)))
                         .toList(),
                   ),
                 ),

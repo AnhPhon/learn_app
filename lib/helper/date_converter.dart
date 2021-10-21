@@ -14,11 +14,21 @@ mixin DateConverter {
   }
 
   static String estimatedDateMonthYear(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd').format(dateTime);
+    return DateFormat('dd/MM/yyyy').format(dateTime);
   }
+
+  static String formatYYYYMMDD(String dateTime) { //dd mm yyyy
+    final date = DateFormat('dd-MM-yyyy').parse(dateTime);
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
+
 
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
+  }
+
+  static DateTime convertStringToDatetimeddMMyyyy(String dateTime) {
+    return DateFormat('HH:mm dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime convertStringToddMMyyyyDatetime(String dateTime) {
@@ -26,7 +36,7 @@ mixin DateConverter {
   }
 
   static DateTime convertStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd').parse(dateTime);
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
@@ -62,6 +72,14 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime.toUtc());
   }
 
+  static String localDateToIsoStringHaveHour(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime.toUtc());
+  }
+
+  static String localDateToIsoStringyyyyMMdd(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime.toUtc());
+  }
+
   static int differenceDate(
       {required String startDate, required String endDate}) {
     return int.parse(convertStringToDate(endDate)
@@ -79,6 +97,13 @@ mixin DateConverter {
   static String readMongoToString(String dateTimeStr) {
     final String first10letter = dateTimeStr.substring(0, 10);
     return DateFormat('dd/MM/yyyy').format(
+      DateFormat('yyyy-MM-dd').parse(first10letter),
+    );
+  }
+
+  static String readMongoToStringyyyyMMdd(String dateTimeStr) {
+    final String first10letter = dateTimeStr.substring(0, 10);
+    return DateFormat('yyyy-MM-dd').format(
       DateFormat('yyyy-MM-dd').parse(first10letter),
     );
   }
