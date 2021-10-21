@@ -111,6 +111,13 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
                   padding: const EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_DEFAULT),
                   child: TextHighlight(
+                      title: "Chuyên ngành phụ: ",
+                      content: controller.chuyenNganhPhuController.text),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
                       title: "Số năm kinh nghiệm: ",
                       content: controller.soNamKinhNghiemController.text),
                 ),
@@ -127,6 +134,13 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
                   child: TextHighlight(
                       title: "Nơi làm việc: ",
                       content: controller.noiLamViecController.text),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: TextHighlight(
+                      title: "Thời gian thử việc: ",
+                      content: controller.thoiGianThucTapController.text),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(

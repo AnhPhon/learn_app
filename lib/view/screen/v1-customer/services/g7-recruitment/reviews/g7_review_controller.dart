@@ -39,12 +39,16 @@ class V1G7ReviewController extends GetxController {
   final chuyenNganhChinhController = TextEditingController();
   //Số năm kinh nghiệm
   final soNamKinhNghiemController = TextEditingController();
-  //Số năm kinh nghiệm
+  //mức lương dự kiến
   final mucLuongDuKienController = TextEditingController();
-  //Số năm kinh nghiệm
+  //Nơi làm việc
   final noiLamViecController = TextEditingController();
-  //Số năm kinh nghiệm
+  //Thời gian làm việc
   final thoiGianLamViecController = TextEditingController();
+  //Thơi gian thử việc
+  final thoiGianThucTapController = TextEditingController();
+  //Chuyên ngành phụ
+  final chuyenNganhPhuController = TextEditingController();
 
   //Hạn nội hồ sơ
   String? hanNopHoSo;
@@ -64,6 +68,8 @@ class V1G7ReviewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    //get data parameter
     request = Get.arguments;
     if (request != null) {
       //set value review
@@ -89,6 +95,8 @@ class V1G7ReviewController extends GetxController {
       phoneController.text = request['SoDienThoaiLienHe'].toString();
       contactAddressController.text = request['DiaChiLienHe'].toString();
       emailController.text = request['EmailLienHe'].toString();
+      thoiGianThucTapController.text = '${request['ThoiGianThuViec']} tháng';
+      chuyenNganhPhuController.text = request['TenChuyenNganhPhu'].toString();
 
       //isLoading
       isLoading = false;
@@ -125,6 +133,8 @@ class V1G7ReviewController extends GetxController {
           request['SoDienThoaiLienHe'].toString();
       tuyenDungRequest.diaChiLienHe = request['DiaChiLienHe'].toString();
       tuyenDungRequest.emailLienHe = request['EmailLienHe'].toString();
+      tuyenDungRequest.thoiGianThuViec = request['ThoiGianThuViec'].toString();
+      tuyenDungRequest.idChuyenNganhPhus = request['IdChuyenNganhPhus'] as List;
     }
     update();
   }
@@ -153,6 +163,8 @@ class V1G7ReviewController extends GetxController {
     mucLuongDuKienController.dispose();
     noiLamViecController.dispose();
     thoiGianLamViecController.dispose();
+    thoiGianThucTapController.dispose();
+    chuyenNganhPhuController.dispose();
   }
 
   ///

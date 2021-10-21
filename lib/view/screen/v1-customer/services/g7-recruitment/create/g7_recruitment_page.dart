@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
@@ -91,11 +92,12 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
         //Địa chỉ
         InputField(
           allowEdit: false,
-          allowMultiline: false,
+          allowMultiline: true,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Nhập địa chỉ",
           hidden: false,
+          line: 2,
           label: "Địa chỉ",
           obligatory: false,
           typeInput: TextInputType.text,
@@ -178,6 +180,42 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           hint: "Chọn chuyên ngành chính",
         ),
 
+        //Chuyên ngàng phụ
+        const Label(label: "Chuyên ngành phụ", obligatory: true),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          child: MultiSelectBottomSheetField(
+            decoration: BoxDecoration(
+                border: Border.all(color: ColorResources.PRIMARYCOLOR),
+                borderRadius: BorderRadius.circular(
+                    Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
+            confirmText: const Text('Đồng ý'),
+            cancelText: const Text('Hủy'),
+            initialChildSize: 0.4,
+            listType: MultiSelectListType.CHIP,
+            searchable: true,
+            buttonText: const Text(
+              "Chọn chuyên ngành phụ",
+              style: TextStyle(color: ColorResources.GREY),
+            ),
+            title: const Text("Chuyên ngành phụ"),
+            items: controller.chuyenNganhPhuModel
+                .map((item) => MultiSelectItem<ChuyenNganhChinhResponse>(
+                    item, '${item.tieuDe}'))
+                .toList(),
+            onConfirm: (values) {
+              controller.chuyenNganhPhus = values;
+            },
+            chipDisplay: MultiSelectChipDisplay(
+              onTap: (value) {
+                controller.removerChuyenNganhPhu(value);
+              },
+            ),
+          ),
+        ),
+
         // Số năm kinh nghiệm
         DropDownButton<SoNamKinhNghiemResponse>(
           onChanged: (item) => controller.onChangeSoNamKinhNghiem(item!),
@@ -228,7 +266,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowMultiline: true,
           controller: controller.descController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Vui lòng nhập vô tả công việc",
+          holdplacer: "Vui lòng nhập mô tả công việc",
           hidden: false,
           label: "Mô tả công việc",
           obligatory: true,
@@ -347,6 +385,20 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           ),
         ),
 
+        // thời gian thực tập
+        InputField(
+          allowEdit: true,
+          allowMultiline: false,
+          controller: controller.thoiGianThucTapController,
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          holdplacer: "Nhập thời gian thực tập (tháng)",
+          hidden: false,
+          label: "Thời gian thực tập (tháng)",
+          obligatory: true,
+          typeInput: TextInputType.number,
+          width: DeviceUtils.getScaledWidth(context, 1),
+        ),
+
         const Label(
           label: "Liên hệ nộp hồ sơ:",
           obligatory: false,
@@ -388,12 +440,13 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
         //Địa chỉ
         InputField(
           allowEdit: true,
-          allowMultiline: false,
+          allowMultiline: true,
           controller: controller.contactAddressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Nhập địa chỉ người liên hệ",
           hidden: false,
           label: "Địa chỉ",
+          line: 2,
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),

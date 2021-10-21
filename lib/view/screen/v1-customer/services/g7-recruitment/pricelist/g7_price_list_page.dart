@@ -226,7 +226,7 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController> {
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
-        onPressed: controller.onClickContinueButton,
+        onPressed: controller.showDialogAccept,
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         vertical: Dimensions.PADDING_SIZE_DEFAULT,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -104,6 +103,9 @@ class V1G7RecruitmentController extends GetxController {
   // số người
   final amountController = TextEditingController();
 
+  //thời gian thực tập
+  final thoiGianThucTapController = TextEditingController();
+
   //chọn ngày nộp hồ sơ
   DateTime selectedDate = DateTime.now();
   DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -111,7 +113,9 @@ class V1G7RecruitmentController extends GetxController {
   // isloading
   bool isLoading = true;
 
-  //value idTaiKhoan
+  //value listChuyenNganhPhu
+  List chuyenNganhPhus = [];
+  List<ChuyenNganhChinhResponse> chuyenNganhPhuModel = [];
 
   @override
   void onInit() {
@@ -126,19 +130,13 @@ class V1G7RecruitmentController extends GetxController {
           onSuccess: (value) {
             // set user
             taiKhoanResponse = value;
-            print('taikhoan ${taiKhoanResponse.toJson()}');
 
             //set data công ty
             companyController.text = taiKhoanResponse.tenPhapLy.toString();
 
             //set địa chỉ
-            addressController.text = taiKhoanResponse.diaChi.toString() +
-                ', ' +
-                taiKhoanResponse.idPhuongXa.toString() +
-                ', ' +
-                taiKhoanResponse.idQuanHuyen.toString() +
-                ', ' +
-                taiKhoanResponse.idTinhTp.toString();
+            addressController.text =
+                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
 
             //set thông tin người liên hệ
             nameController.text = taiKhoanResponse.hoTen.toString();
@@ -156,6 +154,7 @@ class V1G7RecruitmentController extends GetxController {
             getDataThoiGianLamViec();
           },
           onError: (error) {
+            print('V1G7RecruitmentController onInit $error');
             update();
             SnackBar(
               content: Text(error.message.toString()),
@@ -183,6 +182,7 @@ class V1G7RecruitmentController extends GetxController {
     contactAddressController.dispose();
     emailController.dispose();
     amountController.dispose();
+    thoiGianThucTapController.dispose();
   }
 
   ///
@@ -197,7 +197,8 @@ class V1G7RecruitmentController extends GetxController {
           // isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataHinhThucLamViec $error'));
   }
 
   ///
@@ -212,7 +213,8 @@ class V1G7RecruitmentController extends GetxController {
           // isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataTrinhDoHocVan $error'));
   }
 
   ///
@@ -227,7 +229,8 @@ class V1G7RecruitmentController extends GetxController {
           // isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataChuyenNangChinh $error'));
   }
 
   ///
@@ -242,7 +245,8 @@ class V1G7RecruitmentController extends GetxController {
           // isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataSoNamKinhNghiem $error'));
   }
 
   ///
@@ -257,7 +261,8 @@ class V1G7RecruitmentController extends GetxController {
           // isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataMucLuongDuKien $error'));
   }
 
   ///
@@ -283,7 +288,8 @@ class V1G7RecruitmentController extends GetxController {
 
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataTinhTp $error'));
   }
 
   ///
@@ -304,7 +310,8 @@ class V1G7RecruitmentController extends GetxController {
             getDataPhuongXa(idHuyen: idHuyenFind.toString());
           }
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataQuanHuyen $error'));
   }
 
   ///
@@ -322,7 +329,8 @@ class V1G7RecruitmentController extends GetxController {
                   element.ten!.contains(taiKhoanResponse.idPhuongXa.toString()))
               .id;
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataPhuongXa $error'));
   }
 
   ///
@@ -337,7 +345,8 @@ class V1G7RecruitmentController extends GetxController {
           isLoading = false;
           update();
         },
-        onError: (error) => print(error));
+        onError: (error) =>
+            print('V1G7RecruitmentController getDataThoiGianLamViec $error'));
   }
 
   ///
@@ -368,7 +377,11 @@ class V1G7RecruitmentController extends GetxController {
   ///chọn chuyên ngành chính
   ///
   void onChangeChuyenNganhChinh(ChuyenNganhChinhResponse item) {
+    chuyenNganhPhuModel = [];
     chuyenNgangChinh = item;
+    chuyenNganhPhuModel = chuyenNganhChinhModel
+        .where((element) => element.id != item.id)
+        .toList();
     update();
   }
 
@@ -437,15 +450,39 @@ class V1G7RecruitmentController extends GetxController {
   ///So sánh ngày
   ///
   int daysBetween(DateTime from, DateTime to) {
+    // ignore: parameter_assignments
     from = DateTime(from.year, from.month, from.day);
+    // ignore: parameter_assignments
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inHours / 24).round();
+  }
+
+  ///
+  ///xóa chip chuyên ngành phụ
+  ///
+  void removerChuyenNganhPhu(dynamic value) {
+    chuyenNganhPhus.remove(value);
+    update();
   }
 
   ///
   /// Nhấn tiếp tục
   ///
   void onClickContinueButton() async {
+    final List chuyenNganhPhuSend = [];
+    String tenChuyenNganhPhu = '';
+
+    if (chuyenNganhPhus.isNotEmpty) {
+      for (int i = 0; i < chuyenNganhPhus.length; i++) {
+        chuyenNganhPhuSend.add(chuyenNganhPhus[i].id);
+        if (i == 0) {
+          tenChuyenNganhPhu = chuyenNganhPhus[i].tieuDe.toString();
+        } else {
+          tenChuyenNganhPhu += ', ${chuyenNganhPhus[i].tieuDe}';
+        }
+      }
+    }
+
     //check validate
     if (titleController.text.isEmpty) {
       return Get.snackbar("Tiêu đề bắt buộc", "Vui lòng nhập tiêu đề");
@@ -462,6 +499,9 @@ class V1G7RecruitmentController extends GetxController {
     } else if (chuyenNgangChinh == null) {
       return Get.snackbar(
           "Chuyên ngành chính bắt buộc", "Vui lòng chọn chuyên ngành chính");
+    } else if (chuyenNganhPhuSend.isEmpty) {
+      return Get.snackbar(
+          "Chuyên ngành phụ bắt buộc", "Vui lòng chọn chuyên ngành phụ");
     } else if (soNamKinhNghiem == null) {
       return Get.snackbar(
           "Số năm kinh nghiệm bắt buộc", "Vui lòng chọn số năm kinh nghiệm");
@@ -487,7 +527,10 @@ class V1G7RecruitmentController extends GetxController {
       return Get.snackbar("Ưu tiên bắt buộc", "Vui lòng nhập ưu tiên");
     } else if (daysBetween(DateTime.now(), selectedDate) < 0) {
       return Get.snackbar("Hạn nộp bắt buộc", "Vui lòng chọn hạn nộp");
-    } else if (nameController.text.isEmail) {
+    } else if (thoiGianThucTapController.text.isEmpty) {
+      return Get.snackbar(
+          "Thời gian thực tập bắt buộc", "Vui lòng nhập thời gian thực tập");
+    } else if (nameController.text.isEmpty) {
       return Get.snackbar(
           "Tên người liên hệ bắt buộc", "Vui lòng nhập tên người liên hệ");
     } else if (phoneController.text.isEmpty) {
@@ -500,7 +543,6 @@ class V1G7RecruitmentController extends GetxController {
       return Get.snackbar(
           "Email người liên hệ bắt buộc", "Vui lòng nhập email");
     } else {
-      // EasyLoading.show(status: 'loading...');
       ///gán data tuyển dụng
       Map<String, dynamic> param = {
         "IdTaiKhoan": taiKhoanResponse.id,
@@ -519,6 +561,8 @@ class V1G7RecruitmentController extends GetxController {
         "TenTrinhDoHocVan": trinhDoHocVan!.tieuDe,
         "IdChuyenNganhChinh": chuyenNgangChinh!.id,
         "TenChuyenNganhChinh": chuyenNgangChinh!.tieuDe,
+        "IdChuyenNganhPhus": chuyenNganhPhuSend,
+        "TenChuyenNganhPhu": tenChuyenNganhPhu,
         "IdSoNamKinhNghiem": soNamKinhNghiem!.id,
         "TenSoNamKinhNghiem": soNamKinhNghiem!.tieuDe,
         "IdMucLuongDuKien": mucLuongDuKien!.id,
@@ -527,6 +571,7 @@ class V1G7RecruitmentController extends GetxController {
         "TenNoiLamViec": tinhTp!.ten,
         "IdThoiGianLamViec": thoiGianLamViec!.id,
         "TenThoiGianLamViec": thoiGianLamViec!.tieuDe,
+        "ThoiGianThuViec": thoiGianThucTapController.text,
         "MoTaCongViec": descController.text.trim(),
         "YeuCauCongViec": requiredController.text.trim(),
         "QuyenLoi": benifitController.text.trim(),
