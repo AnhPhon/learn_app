@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:template/data/model/request/danh_sach_tho_thau_bao_gia_request.dart';
 import 'package:template/data/model/response/du_an_khach_hang_response.dart';
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/nhom_dich_vu_response.dart';
@@ -31,7 +34,15 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
   LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
   List<LoaiCongViecResponse>? loaiCongViecResponse;
-  LoaiCongViecResponse currentLoaiCongViecResponse = LoaiCongViecResponse.fromJson({});
+  List<LoaiCongViecResponse>? currentLoaiCongViecResponseList = [];
+  List<MultiSelectItem<LoaiCongViecResponse?>> loaiCongViecMultiSelectItem = [];
+
+  DanhSachThoThauBaoGiaRequest danhSachThoThauBaoGiaRequest = DanhSachThoThauBaoGiaRequest.fromJson({});
+
+  final DateTime _currDate = DateTime.now();
+
+  TextEditingController textEditingController = TextEditingController();
+  TextEditingController soLuongNguoiLamController = TextEditingController();
 
   @override
   void onInit() {
@@ -98,12 +109,15 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
       limit: 100,
       page: 1,
       onSuccess: (data) {
+        currentLoaiCongViecResponseList  = [];
+        loaiCongViecResponse = [];
+        loaiCongViecMultiSelectItem = [];
         if(data.isNotEmpty){
-          currentLoaiCongViecResponse  = data[0];
+          loaiCongViecResponse = data;
+          loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e, e.tenCongViec.toString())).toList();
         }
-        loaiCongViecResponse = data;
         print('loaiCongViecResponse $loaiCongViecResponse');
-        print('currentLoaiCongViecProvider $currentLoaiCongViecResponse');
+        print('currentLoaiCongViecProvider $currentLoaiCongViecResponseList');
         update();
       },
       onError: (error) {
