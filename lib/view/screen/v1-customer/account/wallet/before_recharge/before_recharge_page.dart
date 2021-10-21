@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
+import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
@@ -22,6 +24,15 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
 
                 //box input
                 _boxInput(context, controller: controller),
+
+                const Spacer(),
+
+                //btn recharge
+                btnRecharge(context, controller: controller),
+
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                ),
               ],
             ),
           );
@@ -65,7 +76,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
 
               //balance
               Text(
-                ' ${(controller.isShow) ? "7.000.000" : "*********"} vnđ',
+                ' ${(controller.isShow) ? controller.balance : "*********"} vnđ',
                 style: Dimensions.fontSizeStyle18w600(),
               ),
             ],
@@ -95,6 +106,8 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
             hintText: "Số tiền (vnđ)",
             textEditingController: controller.amountOfMoneyController,
             width: 1,
+            thousandsSeparator: true,
+            textInputType: TextInputType.number,
             onChanged: (val) {
               controller.onChanged(context, val);
             },
@@ -153,6 +166,19 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
           ),
         ],
       ),
+    );
+  }
+
+  ///
+  ///btn
+  ///
+  Widget btnRecharge(BuildContext context,
+      {required V1BeforeRechargeController controller}) {
+    return BtnCustom(
+      onTap: () => controller.onBtnRechargeClick(),
+      color: ColorResources.PRIMARY,
+      text: "Tiếp tục",
+      width: DeviceUtils.getScaledWidth(context, .9),
     );
   }
 }

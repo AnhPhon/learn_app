@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:template/data/model/request/trang_thai_don_dich_vu_request.dart';
-import 'package:template/data/model/request/trang_thai_du_an_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class TrangThaiDonDichVuRepository {
@@ -23,7 +22,7 @@ class TrangThaiDonDichVuRepository {
   }
 
   ///
-  /// Insert trang-thai-du-an to database
+  /// Insert trang-thai-don-dich-vu to database
   ///
   Future<ApiResponse> add(TrangThaiDonDichVuRequest data) async {
     try {
@@ -36,7 +35,7 @@ class TrangThaiDonDichVuRepository {
   }
 
   ///
-  /// Update trang-thai-du-an to database
+  /// Update trang-thai-don-dich-vu to database
   ///
   Future<ApiResponse> update(TrangThaiDonDichVuRequest data) async {
     try {
@@ -49,7 +48,7 @@ class TrangThaiDonDichVuRepository {
   }
 
   ///
-  /// Update trang-thai-du-an to database
+  /// Update trang-thai-don-dich-vu to database
   ///
   Future<ApiResponse> delete(String id) async {
     try {
@@ -82,7 +81,7 @@ class TrangThaiDonDichVuRepository {
   }
 
   ///
-  /// Find trang-thai-du-an by id
+  /// Find trang-thai-don-dich-vu by id
   ///
   Future<ApiResponse> find(String id) async {
     try {

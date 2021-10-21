@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/trang_thai_don_dich_vu_request.dart';
-import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
+import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/trang_thai_don_dich_vu_repository.dart';
 
 class TrangThaiDonDichVuProvider {
