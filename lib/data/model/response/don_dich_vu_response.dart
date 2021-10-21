@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
+
 import 'tai_khoan_response.dart';
 import 'nhom_dich_vu_response.dart';
 import 'trang_thai_don_hang_response.dart';
@@ -21,6 +23,7 @@ class DonDichVuResponse {
   String? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
+  TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
   TrangThaiThanhToanResponse? idTrangThaiThanhToan;
   List<ThoiGianLamViecResponse>? thoiGianLamViec;
@@ -64,6 +67,7 @@ class DonDichVuResponse {
       this.hinhAnhBanKhoiLuong,
       this.hinhAnhBanVe,
       this.idTrangThaiDonHang,
+      this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.thoiGianLamViec,
@@ -130,6 +134,15 @@ class DonDichVuResponse {
         json['idTrangThaiDonHang'].toString().length != 24) {
       idTrangThaiDonHang = TrangThaiDonHangResponse.fromJson(
           json['idTrangThaiDonHang'] as Map<String, dynamic>);
+    } else {
+      idTrangThaiDonHang = null;
+    }
+
+    // mapping idTrangThaiDonDichVu
+    if (json['idTrangThaiDonDichVu'] != null &&
+        json['idTrangThaiDonDichVu'].toString().length != 24) {
+      idTrangThaiDonDichVu = TrangThaiDonDichVuResponse.fromJson(
+          json['idTrangThaiDonDichVu'] as Map<String, dynamic>);
     } else {
       idTrangThaiDonHang = null;
     }
@@ -267,6 +280,10 @@ class DonDichVuResponse {
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null)
       data['idTrangThaiDonHang'] = idTrangThaiDonHang;
+
+    // check null idTrangThaiDonDichVu
+    if (idTrangThaiDonDichVu != null)
+      data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)
