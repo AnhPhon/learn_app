@@ -7,14 +7,14 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
+
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
+
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v4-employee/account/component/add_indentity_card.dart';
+import 'package:template/view/screen/v4-employee/account/component/drop_dow_map_button.dart';
 import 'info_controller.dart';
 
 class V4InfoPage extends GetView<V4InfoController> {
@@ -26,6 +26,11 @@ class V4InfoPage extends GetView<V4InfoController> {
           child: GetBuilder<V4InfoController>(
               init: V4InfoController(),
               builder: (V4InfoController controller) {
+                if (controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +65,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                           ),
 
                           //Giới tính
-                          _sex(context),
+                          _sex(controller, context),
                         ],
                       ),
                       const SizedBox(
@@ -293,19 +298,16 @@ Widget _birthday(V4InfoController controller, BuildContext context) {
 ///
 /// Giới tính
 ///
-Widget _sex(BuildContext context) {
-  return DropDownButton1<String>(
-    isBorder: false,
-    isShadow: true,
-    isColorFieldWhite: true,
-    labelBold: true,
-    hint: '',
-    label: 'Giới tính',
-    data: const ["Nam", "Nữ"],
+Widget _sex(V4InfoController controller, BuildContext context) {
+  return V4DropDownMapButton<String>(
+    label: "Giới tính",
     obligatory: true,
-    onChanged: (value) {},
-    value: "Nam",
+    colorText: ColorResources.BLACK,
+    fillColor: ColorResources.WHITE,
+    onChanged: controller.onChangedSex,
+    data: controller.sexMap,
     width: 0.3,
+    value: controller.sex!,
   );
 }
 
