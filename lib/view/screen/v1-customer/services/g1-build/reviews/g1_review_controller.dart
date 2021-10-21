@@ -30,7 +30,7 @@ class V1G1ReviewController extends GetxController{
   /// 
   void onClickButton(){
     onSave();
-    Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
+    
   }
 
   ///
@@ -42,7 +42,7 @@ class V1G1ReviewController extends GetxController{
 
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
-
+      Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
       showSnackBar(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất");
     }, onError: (error){
       EasyLoading.dismiss();
