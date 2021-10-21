@@ -6,6 +6,7 @@ import 'package:template/data/model/body/menu.dart';
 import 'package:template/provider/lien_he_cong_ty_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/screen/v1-customer/account/account_rating_dialog.dart';
 
 import '../../../di_container.dart';
 class DrawerController extends GetxController{
@@ -62,11 +63,7 @@ class DrawerController extends GetxController{
   }
 
   void rating()async{
-    final InAppReview inAppReview = InAppReview.instance;
-    print("Show");
-    if (await inAppReview.isAvailable()) {
-        inAppReview.requestReview();
-    }
+    Get.dialog(const V1RatingPage());
   }
 
   void onPushName(String name){
