@@ -59,9 +59,10 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
-                      color: ColorResources.BLACK.withOpacity(0.7)),
+                    fontSize: fontSize, // * 2.1,
+                    fontWeight: FontWeight.w600,
+                    color: ColorResources.BLACK,
+                  ),
                 ),
                 if (obligatory)
                   Text(

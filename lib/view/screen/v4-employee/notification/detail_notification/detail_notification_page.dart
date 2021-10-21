@@ -51,6 +51,12 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        const Icon(
+                          Icons.watch_later_outlined,
+                        ),
+                        const SizedBox(
+                          width: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        ),
                         Text(
                           controller.formatDateTime(
                             dateTime:
@@ -63,7 +69,6 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_LARGE,
-                      vertical: Dimensions.PADDING_SIZE_LARGE,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +78,7 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                           style: const TextStyle(
                             color: ColorResources.BLACK,
                             fontWeight: FontWeight.bold,
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                           ),
                         ),
                         const SizedBox(
