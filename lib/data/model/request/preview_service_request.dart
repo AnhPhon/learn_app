@@ -13,7 +13,7 @@ class PreviewServiceRequest {
   List<VatTuResponse>? bangKhoiLuong;
   List<File>? hinhAnhBanKhoiLuong;
   List<File>? hinhAnhBanVe;
-  String? idTrangThaiDonHang;
+  String? idTrangThaiDonDichVu;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
   String? idThoiGianLamViec;
@@ -54,7 +54,7 @@ class PreviewServiceRequest {
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuong,
       this.hinhAnhBanVe,
-      this.idTrangThaiDonHang,
+      this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViec,
@@ -100,7 +100,7 @@ class PreviewServiceRequest {
     ngayKetThuc = json['ngayKetThuc'].toString();
     hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<File>;
     hinhAnhBanVe = json['hinhAnhBanVe'].toString() as List<File>;
-    idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
+    idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
     idThoiGianLamViec = json['idThoiGianLamViec'].toString();
@@ -166,7 +166,7 @@ class PreviewServiceRequest {
     if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe; 
 
     // check null idTrangThaiDonHang
-    if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+    if (idTrangThaiDonDichVu != null) data['idTrangThaiDonHang'] = idTrangThaiDonDichVu; 
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 

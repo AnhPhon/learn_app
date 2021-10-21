@@ -44,6 +44,8 @@ class SuccessfullyPage extends StatelessWidget {
                   color: ColorResources.PRIMARYCOLOR, 
                   onPressed: (){
                     Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                    
+                    //Get.offAllNamed(AppRoutes.V1_G1_CREATE_WORK);
                   }
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -23,7 +24,7 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
                   _image(context),
 
                   //introduce
-                  _introduce(context),
+                  _introduce(context, controller: controller),
 
                   const SizedBox(
                     height: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -59,7 +60,8 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
   ///
   ///link
   ///
-  Widget _link(BuildContext context) {
+  Widget _link(BuildContext context,
+      {required V1IntroduceController controller}) {
     return Column(
       children: [
         //title
@@ -98,7 +100,7 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
               children: [
                 const Spacer(),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () => controller.onBtnCopyClick(),
                   child: Container(
                     alignment: Alignment.center,
                     height: DeviceUtils.getScaledHeight(context, .07),
@@ -185,7 +187,9 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
         Row(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Share.share('http://izisoft.io/');
+              },
               child: const Icon(
                 Icons.share,
                 color: ColorResources.PRIMARY,
@@ -195,7 +199,9 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
               width: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Share.share('http://izisoft.io/');
+              },
               child: const Icon(
                 Icons.share,
                 color: ColorResources.PRIMARY,
@@ -210,7 +216,8 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
   ///
   ///introduce
   ///
-  Widget _introduce(BuildContext context) {
+  Widget _introduce(BuildContext context,
+      {required V1IntroduceController controller}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -223,7 +230,7 @@ class V1IntroducePage extends GetView<V1IntroduceController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //link
-          _link(context),
+          _link(context, controller: controller),
 
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,

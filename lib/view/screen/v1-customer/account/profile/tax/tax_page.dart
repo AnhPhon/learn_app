@@ -15,6 +15,11 @@ class V1TaxPage extends GetView<V1TaxController> {
     return GetBuilder<V1TaxController>(
         init: V1TaxController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
@@ -31,6 +36,7 @@ class V1TaxPage extends GetView<V1TaxController> {
                     width: double.infinity,
                     textEditingController: controller.taxController,
                     hintText: "Nhập mã số thuế",
+                    allowEdit: controller.dangKyThueResponse == null,
                   ),
 
                   const SizedBox(
@@ -45,7 +51,9 @@ class V1TaxPage extends GetView<V1TaxController> {
                 ],
               ),
             ),
-            bottomNavigationBar: _btnBottomSheet(controller),
+            bottomNavigationBar: (controller.dangKyThueResponse == null)
+                ? _btnBottomSheet(context, controller: controller)
+                : null,
           );
         });
   }
@@ -82,40 +90,69 @@ class V1TaxPage extends GetView<V1TaxController> {
       child: Align(
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ListView.builder(
+          child: (controller.dangKyThueResponse != null)
+              ? ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.taxImageList.length,
-                  itemBuilder: (BuildContext context, index) {
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.dangKyThueResponse!.hinhAnhs!.length,
+                  itemBuilder: (BuildContext ctx, int index) {
                     return Padding(
-                      padding: const EdgeInsets.only(
-                          right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        child: Image.file(
-                          controller.taxImageList[index],
-                          fit: BoxFit.fill,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder,
+                        image: controller.dangKyThueResponse!.hinhAnhs![index]
+                            .toString(),
+                        height: DeviceUtils.getScaledHeight(context, .122),
+                        width: DeviceUtils.getScaledWidth(context, .254),
+                        fit: BoxFit.fill,
+                        imageErrorBuilder: (c, o, s) => Image.asset(
+                          Images.placeholder,
                           height: DeviceUtils.getScaledHeight(context, .122),
                           width: DeviceUtils.getScaledWidth(context, .254),
+                          fit: BoxFit.fill,
                         ),
                       ),
                     );
-                  }),
-              GestureDetector(
-                onTap: () => controller.pickImage(),
-                child: Image.asset(
-                  Images.add_image,
-                  height: DeviceUtils.getScaledHeight(context, .122),
-                  width: DeviceUtils.getScaledWidth(context, .254),
-                  fit: BoxFit.fill,
-                  color: ColorResources.PRIMARY,
+                  },
+                )
+              : Row(
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.taxImageList.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                              child: Image.file(
+                                controller.taxImageList[index],
+                                fit: BoxFit.fill,
+                                height:
+                                    DeviceUtils.getScaledHeight(context, .122),
+                                width:
+                                    DeviceUtils.getScaledWidth(context, .254),
+                              ),
+                            ),
+                          );
+                        }),
+                    GestureDetector(
+                      onTap: () => controller.pickImage(),
+                      child: Image.asset(
+                        Images.add_image,
+                        height: DeviceUtils.getScaledHeight(context, .122),
+                        width: DeviceUtils.getScaledWidth(context, .254),
+                        fit: BoxFit.fill,
+                        color: ColorResources.PRIMARY,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -124,9 +161,10 @@ class V1TaxPage extends GetView<V1TaxController> {
   ///
   ///btn bottom sheet
   ///
-  Widget _btnBottomSheet(V1TaxController controller) {
+  Widget _btnBottomSheet(BuildContext context,
+      {required V1TaxController controller}) {
     return BtnCustom(
-      onTap: () => controller.onBtnDoneClick(),
+      onTap: () => controller.onBtnDoneClick(context),
       color: ColorResources.PRIMARY,
       text: "Hoàn thành",
       width: double.infinity,

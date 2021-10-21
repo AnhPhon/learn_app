@@ -104,13 +104,13 @@ class DrawerWidget extends GetView<dr.DrawerController> {
       height: DeviceUtils.getScaledHeight(context, 0.25),
       decoration: const BoxDecoration(
         color: ColorResources.GREEN,
-        image: DecorationImage(image: AssetImage(Images.admin_background),fit: BoxFit.fill)
+        image: DecorationImage(image: AssetImage(Images.background_draw),fit: BoxFit.fill)
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaY: 10),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
               width:  Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
               child: ClipRRect(

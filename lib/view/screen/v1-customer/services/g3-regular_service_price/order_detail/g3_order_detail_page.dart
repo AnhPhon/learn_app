@@ -25,66 +25,25 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
           const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
 
           // Bảng thông tin đơn hàng
-          Padding(
-              padding: const EdgeInsets.all(
-                Dimensions.PADDING_SIZE_DEFAULT,
-              ),
-              child: GetBuilder(
-                builder: (V1G3OrderDetailController controller) {
-                  return BillWidget(
-                      isHasDeposit: false,
-                      title: "Chi tiết đơn hàng",
-                      orderContents: [
-                        OrderContentStringValue(
-                          title: controller.donDichVuRequest!.tieuDe!,
-                          value:
-                              "${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} đ/công",
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Số giờ làm việc/ngày",
-                          value:
-                              "${controller.donDichVuRequest!.thoiGianLamViec!.length * 4}",
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Số lượng",
-                          value: controller.donDichVuRequest!.soLuongYeuCau!,
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Số ngày làm việc dự kiến",
-                          value: controller.donDichVuRequest!.soNgay!,
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Giá trị đơn hàng",
-                          value:
-                              "${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} VNĐ",
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Phí dịch vụ App",
-                          value:
-                              "${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.phiDichVu!))} VNĐ",
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Khuyến mãi của App",
-                          value:
-                              "${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.khuyenMai!))} VNĐ",
-                          boldValue: true,
-                        ),
-                        OrderContentStringValue(
-                          title: "Tổng tiền đơn hàng",
-                          value:
-                              "${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.tongDon!))} VNĐ",
-                          boldValue: true,
-                        ),
-                      ]);
-                },
-              )),
-
+           Padding(
+            padding: const EdgeInsets.all(
+              Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: GetBuilder(
+              builder: (V1G3OrderDetailController controller) {
+                return BillWidget(
+                  isHasDeposit: false,
+                  title: "Chi tiết đơn hàng",
+                  orderContents: [
+                  OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.phiDichVu!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.khuyenMai!))} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.tongDon!))} VNĐ", boldValue: true,),
+                ]);
+              },
+            )
+          ),
+          
           // Khoản cách bottomSheet
           const SizedBox(
             height: BOTTOMSHEET + Dimensions.SIZE_LARGE,

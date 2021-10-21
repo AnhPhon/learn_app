@@ -18,6 +18,9 @@ const String COUNTRY_CODE = 'country_code';
 const String LANGUAGE_CODE = 'language_code';
 const String THEME = 'theme';
 
+// Enum
+enum SERVICES { WORK, REGULARLY }
+
 // sharePreference
 const String TOKEN = 'token';
 
@@ -51,4 +54,23 @@ Map<String, String> quanLyDonHangMap = {
   "Đã giao": "616979663391622ae9203551",
   "Huỷ đơn": "6169796e3391622ae9203553",
   "Trả hàng": "616979743391622ae9203555",
+};
+// sharePreference
+const dynamic TRANG_THAI_DU_AN = {
+  'CHUA_TRIEN_KHAI': {
+    'tieuDe': 'Chưa triển khai',
+    'id': '616a7b1d06a577482e02958b'
+  },
+  'SAP_TRIEN_KHAI': {
+    'tieuDe': 'Sắp triển khai',
+    'id': '616a7b4606a577482e02959c'
+  },
+  'DANG_TRIEN_KHAI': {
+    'tieuDe': 'Đang triển khai',
+    'id': '616ce9647aade64ebae7c93f'
+  },
+  'DA_TRIEN_KHAI': {
+    'tieuDe': 'Đã triển khai',
+    'id': '616ce9687aade64ebae7c941'
+  },
 };

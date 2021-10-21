@@ -20,6 +20,7 @@ class DonHangResponse {
   String? phiDichVu;
   String? soTien;
   String? tongTien;
+  String? hinhAnh;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiThanhToanResponse? idTrangThaiThanhToan;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
@@ -40,6 +41,7 @@ class DonHangResponse {
       this.phiDichVu,
       this.soTien,
       this.tongTien,
+      this.hinhAnh,
       this.idTrangThaiDonHang,
       this.idTrangThaiThanhToan,
       this.idHinhThucThanhToan,
@@ -100,33 +102,28 @@ class DonHangResponse {
     phiDichVu = json['phiDichVu'].toString();
     soTien = json['soTien'].toString();
     tongTien = json['tongTien'].toString();
+    hinhAnh = json['hinhAnh'].toString();
 
-    // mapping idTrangThaiDonHang
-    if (json['idTrangThaiDonHang'] != null &&
-        json['idTrangThaiDonHang'].toString().length != 24) {
-      idTrangThaiDonHang = TrangThaiDonHangResponse.fromJson(
-          json['idTrangThaiDonHang'] as Map<String, dynamic>);
-    } else {
-      idTrangThaiDonHang = null;
-    }
+    // mapping idTrangThaiDonHang                                                              
+    if (json['idTrangThaiDonHang'] != null && json['idTrangThaiDonHang'].toString().length!=24) {                                                  
+      idTrangThaiDonHang = TrangThaiDonHangResponse.fromJson(json['idTrangThaiDonHang'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiDonHang = null;                                                               
+    }    
 
-    // mapping idTrangThaiThanhToan
-    if (json['idTrangThaiThanhToan'] != null &&
-        json['idTrangThaiThanhToan'].toString().length != 24) {
-      idTrangThaiThanhToan = TrangThaiThanhToanResponse.fromJson(
-          json['idTrangThaiThanhToan'] as Map<String, dynamic>);
-    } else {
-      idTrangThaiThanhToan = null;
-    }
+    // mapping idTrangThaiThanhToan                                                              
+    if (json['idTrangThaiThanhToan'] != null && json['idTrangThaiThanhToan'].toString().length!=24) {                                                  
+      idTrangThaiThanhToan = TrangThaiThanhToanResponse.fromJson(json['idTrangThaiThanhToan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiThanhToan = null;                                                               
+    }                                                                                  
 
-    // mapping idHinhThucThanhToan
-    if (json['idHinhThucThanhToan'] != null &&
-        json['idHinhThucThanhToan'].toString().length != 24) {
-      idHinhThucThanhToan = HinhThucThanhToanResponse.fromJson(
-          json['idHinhThucThanhToan'] as Map<String, dynamic>);
-    } else {
-      idHinhThucThanhToan = null;
-    }
+    // mapping idHinhThucThanhToan                                                              
+    if (json['idHinhThucThanhToan'] != null && json['idHinhThucThanhToan'].toString().length!=24) {                                                  
+      idHinhThucThanhToan = HinhThucThanhToanResponse.fromJson(json['idHinhThucThanhToan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idHinhThucThanhToan = null;                                                               
+    }                                                                                  
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -174,13 +171,18 @@ class DonHangResponse {
     // check null tongTien
     if (tongTien != null) data['tongTien'] = tongTien;
 
+    // check null hinhAnh
+    if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
+
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null)
       data['idTrangThaiDonHang'] = idTrangThaiDonHang;
 
     // check null idTrangThaiThanhToan
-    if (idTrangThaiThanhToan != null)
-      data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
+    if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
+
+    // check null idHinhThucThanhToan
+    if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)

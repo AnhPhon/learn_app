@@ -45,6 +45,7 @@ class V1MailPage extends GetView<V1MailController> {
                     hintText: "Số điện thoại",
                     textEditingController: controller.phoneController,
                     width: 1,
+                    textInputType: TextInputType.number,
                   ),
 
                   //content
@@ -52,7 +53,7 @@ class V1MailPage extends GetView<V1MailController> {
                     hintText: "Nội dung cần tư vấn",
                     textEditingController: controller.contentController,
                     width: 1,
-                    isMaxLine: true,
+                    maxLine: 5,
                   ),
 
                   const SizedBox(
@@ -60,7 +61,7 @@ class V1MailPage extends GetView<V1MailController> {
                   ),
 
                   BtnCustom(
-                    onTap: () {},
+                    onTap: () => controller.onBtnSendClick(context),
                     color: ColorResources.PRIMARY,
                     text: "Gửi liên hệ",
                     width: DeviceUtils.getScaledWidth(context, .8),

@@ -110,10 +110,10 @@ class V2WorkInProgressController extends GetxController {
 
           // set icon and color
           isStatus =
-              model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
+              model.idTrangThaiDonDichVu!.tieuDe!.toLowerCase() == dangTuyenKey;
 
           // set status
-          result = model.idTrangThaiDonHang!.tieuDe!;
+          result = model.idTrangThaiDonDichVu!.tieuDe!;
 
           isLoading = false;
           update();
@@ -170,7 +170,7 @@ class V2WorkInProgressController extends GetxController {
                 donDichVuProvider.update(
                   data: DonDichVuRequest(
                     id: workFlowId,
-                    idTrangThaiDonHang: keyIndex,
+                    idTrangThaiDonDichVu: keyIndex,
                   ),
                   onSuccess: (success) {
                     Get.back(result: true);

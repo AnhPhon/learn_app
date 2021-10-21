@@ -15,6 +15,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 
 import '../../../../di_container.dart';
 
@@ -49,19 +50,26 @@ class CreateWorkController extends GetxController {
   PhuongXaResponse? phuongXa;
   // Id User
   String idUser = '';
+  // Get param (idType) nếu là dịch vụ thường xuyên 2 và tạo đơn dich vụ là 1
+  SERVICES services = SERVICES.REGULARLY;
   @override
   void onInit() {
     super.onInit();
     // Nếu dich vụ thì chỉ có nhóm 3, 4, 5, 6, 7
-    // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6
+    // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6 
+    if(Get.arguments != null){
+      services = Get.arguments as SERVICES;
+    }
     getNhomDichVu();
     getTinhThanh();
     getUserId();
   }
 
-  Future<void> getUserId() async {
-    final idUser = await sl.get<SharedPreferenceHelper>().userId;
-    this.idUser = idUser!;
+
+  Future<void> getUserId()async{
+    await sl.get<SharedPreferenceHelper>().userId.then((value){
+      idUser = value!;
+    });
   }
 
   ///
@@ -123,8 +131,12 @@ class CreateWorkController extends GetxController {
     nhomDichVuProvider.all(onSuccess: (data) {
       isLoadingNhomDichVu = true;
       nhomDichVuResponseList.clear();
-      if (data.isNotEmpty) {
-        nhomDichVuResponseList.addAll(data);
+      if(data.isNotEmpty){
+        if(services == SERVICES.WORK){
+          nhomDichVuResponseList.addAll(data.where((element) => element.nhomDichVu!.contains('1')|| element.nhomDichVu!.contains('2') || element.nhomDichVu!.contains('5') || element.nhomDichVu!.contains('6')));
+        }else if(services == SERVICES.REGULARLY){
+          nhomDichVuResponseList.addAll(data.where((element) => element.nhomDichVu!.contains('3')|| element.nhomDichVu!.contains('4') || element.nhomDichVu!.contains('5') || element.nhomDichVu!.contains('6') || element.nhomDichVu!.contains('7')));
+        }
         dichvu = nhomDichVuResponseList.first;
       }
       isLoadingNhomDichVu = false;
@@ -264,59 +276,39 @@ class CreateWorkController extends GetxController {
   ///
   /// Nhấn vào nút tiếp tục
   ///
-  void onClickContinue() async {
-    if (dichvu == null) {
-      return Get.snackbar("Nhóm dich vụ bắt buộc", "Vui lòng chọn dịch vụ");
-    } else if (tinh == null) {
-      return Get.snackbar("Tỉnh", "Vui lòng chọn tỉnh");
-    } else if (quanHuyen == null) {
-      return Get.snackbar("Trường quận huyện bắt buộc", "Vui lòng quận huyện");
-    } else if (phuongXa == null) {
-      return Get.snackbar("Trường phường xã bắt buộc", "Vui lòng phường xã");
-    } else if (loaiCongViec == null) {
-      return Get.snackbar(
-          "Trường công việc bắt buộc", "Vui lòng chọn công việc");
-    } else if (addressController.text.toString().isEmpty) {
-      return Get.snackbar(
-          "Trường địa chỉ bắt buộc", "Vui lòng điền địa chỉ cụ thể");
-    } else {
-      if (dichvu!.nhomDichVu! == '1') {
-        // Nhóm 1
-        Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
-      } else if (dichvu!.nhomDichVu! == '2') {
-        // Nhóm 2
-        Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
-      } else if (dichvu!.nhomDichVu! == '3') {
-        // Nhóm 3
-        // Tạo đơn dịch vụ có gía
-        Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
-      } else if (dichvu == 4) {
-        // Tạo đơn dich vụ có giá nhóm 4
-        Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE);
-      } else if (dichvu == 5) {
-        // Tạo đơn công viẹc và dịch nhóm 5
-        Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE);
-      } else if (dichvu == 6) {
-        // Tạo đơn công viẹc và dịch nhóm 5
-        Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE);
-      } else if (dichvu == 7) {
-        // Tạo đơn công viẹc và dịch nhóm 5
-        Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
+  void onClickContinue() async{
+      if(dichvu == null){
+        return Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
+      }else if(tinh == null){
+        return Get.snackbar("Tỉnh","Vui lòng chọn tỉnh");
+      }else if(quanHuyen == null){
+        return Get.snackbar("Trường quận huyện bắt buộc","Vui lòng quận huyện");
+      }else if(phuongXa == null){
+        return Get.snackbar("Trường phường xã bắt buộc","Vui lòng phường xã");
+      }else if(loaiCongViec == null){
+        return  Get.snackbar("Trường công việc bắt buộc","Vui lòng chọn công việc");
+      }else if(addressController.text.toString().isEmpty){
+        return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
+      }else{
+        if(dichvu!.nhomDichVu! == '1'){
+         // Nhóm 1
+          Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
+        }else {
+          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}", arguments: await request(),);
+        }
       }
-    }
   }
 
-  Future<DonDichVuRequest> request() async {
-    final DonDichVuRequest serviceApplication = DonDichVuRequest();
-    serviceApplication.idTinhTp = tinh!.id;
-    serviceApplication.idQuanHuyen = quanHuyen!.id;
-    serviceApplication.idPhuongXa = phuongXa!.id;
-    serviceApplication.idNhomDichVu = dichvu!.id;
-    serviceApplication.idTaiKhoan =
-        await sl.get<SharedPreferenceHelper>().userId;
-    serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
-    serviceApplication.diaChiCuThe = addressController.text.toString();
-    return serviceApplication;
+  Future<DonDichVuRequest> request()async {
+      final DonDichVuRequest serviceApplication = DonDichVuRequest();
+      serviceApplication.idTinhTp = tinh!.id;
+      serviceApplication.idQuanHuyen = quanHuyen!.id;
+      serviceApplication.idPhuongXa = phuongXa!.id;
+      serviceApplication.idNhomDichVu = dichvu!.id;
+      serviceApplication.idTaiKhoan = idUser;//await sl.get<SharedPreferenceHelper>().userId;
+      serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
+      serviceApplication.diaChiCuThe = addressController.text.toString();
+      return serviceApplication;
   }
 
   @override
@@ -324,4 +316,5 @@ class CreateWorkController extends GetxController {
     super.onClose();
     addressController.dispose();
   }
+  
 }

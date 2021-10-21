@@ -5,44 +5,51 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_controller.dart';
+import 'package:template/view/screen/v1-customer/account/profile/contract/contract_specification.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 
 class V1ContractPage extends GetView<V1ContractController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1ContractController>(
-        init: V1ContractController(),
-        builder: (controller) {
-          return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //title
-                    _textTitle(context, title: "Hợp đồng nguyên tắc"),
-
-                    //content
-                    _content(),
-                  ],
-                ),
-              ),
-            ),
-            bottomNavigationBar: _bottomContract(context, controller),
+      init: V1ContractController(),
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        });
+        }
+        return Scaffold(
+          appBar: AppBarWidget(title: controller.title),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                //title
+                _textTitle(context, title: "Hợp đồng nguyên tắc"),
+
+                //content
+                _content(controller: controller),
+              ],
+            ),
+          ),
+          bottomNavigationBar: (controller.dangKyHopDongSBSResponse == null)
+              ? _bottomContract(context, controller: controller)
+              : (controller.dangKyHopDongSBSResponse!.trangThai == "0")
+                  ? _bottomContract(context, controller: controller)
+                  : null,
+        );
+      },
+    );
   }
 
   ///
   ///text title
   ///
   Widget _textTitle(BuildContext context, {required String title}) {
-    return Padding(
+    return Container(
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
+        vertical: Dimensions.PADDING_SIZE_LARGE,
       ),
       child: Text(
         title,
@@ -54,19 +61,18 @@ class V1ContractPage extends GetView<V1ContractController> {
   ///
   ///content
   ///
-  Widget _content() {
-    return Text(
-      controller.content,
-      textAlign: TextAlign.justify,
-      style: Dimensions.fontSizeStyle16(),
+  Widget _content({required V1ContractController controller}) {
+    return ContractSpecification(
+      contractSpecification:
+          controller.thongTinDangKyHopDongResponse!.noiDung.toString(),
     );
   }
 
   ///
   ///bottom contract
   ///
-  Widget _bottomContract(
-      BuildContext context, V1ContractController controller) {
+  Widget _bottomContract(BuildContext context,
+      {required V1ContractController controller}) {
     return Container(
       height: DeviceUtils.getScaledHeight(context, .25),
       color: ColorResources.WHITE,
@@ -80,7 +86,7 @@ class V1ContractPage extends GetView<V1ContractController> {
             title: const Text(
                 "Tôi đồng ý và hiểu rõ nội dung hợp đồng nguyên tắc số 0989539292"),
             value: controller.isChecked1,
-            onChanged: (bool? val)=>controller.setSeletedCheckBox1(value: val),
+            onChanged: (val) => controller.setSeletedCheckBox1(value: val),
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
@@ -91,13 +97,13 @@ class V1ContractPage extends GetView<V1ContractController> {
             title:
                 const Text("Tôi đồng ý giao kết hợp đồng thông qua appweb này"),
             value: controller.isChecked2,
-            onChanged:(bool?val)=> controller.setSeletedCheckBox2(value: val),
+            onChanged: (val) => controller.setSeletedCheckBox2(value: val),
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
           //btn accept
           BtnCustom(
-            onTap: () {},
+            onTap: () => controller.onBtnAceptClick(context),
             color: ColorResources.PRIMARY,
             text: "Tôi đồng ý",
             width: double.infinity,

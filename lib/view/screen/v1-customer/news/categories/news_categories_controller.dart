@@ -43,13 +43,13 @@ class V1NewsCategoriesController extends GetxController
     tinTucProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucModelList.value = value;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print('V1NewsCategoriesController getNewsByIdCategory $error');
       },
     );
   }
@@ -66,7 +66,7 @@ class V1NewsCategoriesController extends GetxController
   ///reload
   ///
   void reloadNews() {
-    print('reloadNews');
+    print('V1NewsCategoriesController reloadNews');
     pageMax = 1;
     currentMax = 5;
     update();
@@ -74,14 +74,14 @@ class V1NewsCategoriesController extends GetxController
         page: 1,
         limit: 5,
         filter:
-            "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+            "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
         onSuccess: (value) {
           tinTucModelList.value = value;
           refreshController.refreshCompleted();
           update();
         },
         onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          print('V1NewsCategoriesController reloadNews $error');
         });
   }
 
@@ -90,12 +90,12 @@ class V1NewsCategoriesController extends GetxController
   ///
   void loadMoreNews() {
     pageMax += 1;
-    print(pageMax);
+    print('V1NewsCategoriesController loadMoreNews $pageMax');
     currentMax = currentMax;
     tinTucProvider.paginate(
       page: pageMax,
       limit: currentMax,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (data) {
         if (data.isEmpty) {
           refreshController.loadNoData();
@@ -107,7 +107,7 @@ class V1NewsCategoriesController extends GetxController
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print('V1NewsCategoriesController loadMoreNews $error');
       },
     );
   }
