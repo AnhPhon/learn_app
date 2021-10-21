@@ -1,19 +1,21 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/request/don_dich_vu_request.dart';
-import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/data/model/request/trang_thai_don_dich_vu_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
-import 'package:template/data/repository/don_dich_vu_repository.dart';
+import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
+import 'package:template/data/repository/trang_thai_don_dich_vu_repository.dart';
 
-class DonDichVuProvider {
-  DonDichVuRepository? repository = GetIt.I.get<DonDichVuRepository>();
+class TrangThaiDonDichVuProvider {
+  TrangThaiDonDichVuRepository? repository =
+      GetIt.I.get<TrangThaiDonDichVuRepository>();
 
-  DonDichVuProvider();
+  TrangThaiDonDichVuProvider();
 
   ///
-  /// Get all donDichVus
+  /// Get all trangThaiDonDichVus
   ///
   Future<void> all({
-    required Function(List<DonDichVuResponse> donDichVus) onSuccess,
+    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class DonDichVuProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DonDichVuResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -30,31 +33,31 @@ class DonDichVuProvider {
   }
 
   ///
-  /// Insert donDichVu to database
+  /// Insert trangThaiDonDichVu to database
   ///
   Future<void> add({
-    required DonDichVuRequest data,
-    required Function(DonDichVuRequest donDichVu) onSuccess,
+    required TrangThaiDonDichVuRequest data,
+    required Function(TrangThaiDonDichVuRequest trangThaiDonDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    print(data.toJson());
     final ApiResponse apiResponse = await repository!.add(data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Update donDichVu to database
+  /// Update trangThaiDonDichVu to database
   ///
   Future<void> update({
-    required DonDichVuRequest data,
-    required Function(DonDichVuRequest donDichVu) onSuccess,
+    required TrangThaiDonDichVuRequest data,
+    required Function(TrangThaiDonDichVuRequest trangThaiDonDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -62,18 +65,19 @@ class DonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Delete donDichVu to database
+  /// Delete trangThaiDonDichVu to database
   ///
   Future<void> delete({
     required String id,
-    required Function(DonDichVuRequest donDichVu) onSuccess,
+    required Function(TrangThaiDonDichVuRequest trangThaiDonDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.delete(id);
@@ -81,20 +85,22 @@ class DonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Get paginate donDichVus "page": 1, "limit": 10
+  /// Get paginate trangThaiDonDichVus "page": 1, "limit": 10
   ///
   Future<void> paginate({
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DonDichVuResponse> donDichVus) onSuccess,
+    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,20 +109,21 @@ class DonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
-      onSuccess(results.map((e) {
-        return DonDichVuResponse.fromJson(e as Map<String, dynamic>);
-      }).toList());
+      onSuccess(results
+          .map((e) =>
+              TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
+          .toList());
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Delete donDichVu to database
+  /// Delete trangThaiDonDichVu to database
   ///
   Future<void> find({
     required String id,
-    required Function(DonDichVuResponse donDichVu) onSuccess,
+    required Function(TrangThaiDonDichVuResponse trangThaiDonDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -124,7 +131,8 @@ class DonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DonDichVuResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

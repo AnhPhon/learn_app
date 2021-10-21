@@ -1,20 +1,19 @@
-class DanhMucSanPhamResponse {
+class TrangThaiDonDichVuResponse {
   String? id;
-  String? ten;
-  String? hinhAnh;
+  String? tieuDe;
 
   String? createdAt;
   String? updatedAt;
 
-  DanhMucSanPhamResponse({this.id, this.ten, this.createdAt, this.updatedAt});
+  TrangThaiDonDichVuResponse(
+      {this.id, this.tieuDe, this.createdAt, this.updatedAt});
 
   ///
   /// From JSON
   ///
-  DanhMucSanPhamResponse.fromJson(Map<String, dynamic> json) {
+  TrangThaiDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
-    ten = json['ten'].toString();
-    hinhAnh = json['hinhAnh'].toString();
+    tieuDe = json['tieuDe'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -28,11 +27,8 @@ class DanhMucSanPhamResponse {
     // check null id
     if (id != null) data['id'] = id;
 
-    // check null ten
-    if (ten != null) data['ten'] = ten;
-
-    // check null ten
-    if (hinhAnh != null) data['hinhAnh'] = ten;
+    // check null tieuDe
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     return data;
   }

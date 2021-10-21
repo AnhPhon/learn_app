@@ -34,7 +34,7 @@ class V1HomeController extends GetxController {
   List<DanhMucSanPhamResponse> danhMucList = [];
 
   // declare string
-  String fullname = "KH, Nguyễn Văn A";
+  String fullname = "Nguyễn Văn A";
 
   // declare boolean
   bool isLoading = true;
@@ -63,7 +63,7 @@ class V1HomeController extends GetxController {
             Color(0xffBE8542),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.add_circle_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.WORK);
         }
@@ -77,7 +77,7 @@ class V1HomeController extends GetxController {
             Color(0xff3FA963),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.request_quote_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_CREATE_WORK);
         }
@@ -91,7 +91,7 @@ class V1HomeController extends GetxController {
             Color(0xffCEBB76),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.room_service_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.REGULARLY);
         }
@@ -105,7 +105,7 @@ class V1HomeController extends GetxController {
             Color(0xffA27DBF),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.widgets_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_FORM_MANAGEMENT);
         }
@@ -119,7 +119,7 @@ class V1HomeController extends GetxController {
             Color(0xff73AF4E),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.work_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
         }
@@ -133,7 +133,7 @@ class V1HomeController extends GetxController {
             Color(0xffBE8542),
           ],
         ),
-        "icon": Icons.add_circle,
+        "icon": Icons.drive_file_rename_outline_outlined,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_CANDICATE);
         }
@@ -156,7 +156,7 @@ class V1HomeController extends GetxController {
             Color(0xffB4DDFD),
           ],
         ),
-        "icon": CupertinoIcons.bag_fill,
+        "icon": Icons.image,
         "onTap": () {}
       },
       {
@@ -168,22 +168,10 @@ class V1HomeController extends GetxController {
             Color(0xffB4DDFD),
           ],
         ),
-        "icon": Icons.image,
+        "icon": CupertinoIcons.bag_fill,
         "onTap": () {
           Get.toNamed(AppRoutes.V1_JOB_MANAGEMENT);
         }
-      },
-      {
-        "label": ["Sản phẩm", "mẫu"],
-        "gradient": const RadialGradient(
-          radius: 1,
-          colors: [
-            Color(0xffB4DDFD),
-            Color(0xffB4DDFD),
-          ],
-        ),
-        "icon": Icons.image,
-        "onTap": () {}
       },
     ];
   }
