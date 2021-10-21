@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:template/data/model/body/menu.dart';
 import 'package:template/provider/lien_he_cong_ty_provider.dart';
 import 'package:template/routes/app_routes.dart';
