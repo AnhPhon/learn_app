@@ -39,6 +39,7 @@ class V1NotificationController extends GetxController{
 
   Future<void> onRefresh() async{
     pageMax = 1;
+    limit = 5;
     refreshNotification();
   }
 
@@ -50,10 +51,11 @@ class V1NotificationController extends GetxController{
   /// lấy danh sách thông báo
   ///
   void refreshNotification(){
-    thongBaoProvider.paginate(page: pageMax, limit: 5, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+    print("PageMax 2 : $pageMax");
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
-      print(data);
+      refreshController.resetNoData();
       refreshController.refreshCompleted();
       isLoading = false;
       update();
@@ -71,6 +73,7 @@ class V1NotificationController extends GetxController{
   void getMoreNotification(){
     pageMax += 1;
     limit = 5;
+    print("pageMax : $pageMax");
     thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
       print("Dài: ${data.length}");
       if(data.isEmpty){
@@ -89,7 +92,7 @@ class V1NotificationController extends GetxController{
   }
 
   void onClickItem(ThongBaoResponse notification){
-    String id = notification.idDonDichVu!.idNhomDichVu!.nhomDichVu!;
+    final String id = notification.idDonDichVu!.idNhomDichVu!.nhomDichVu!;
     if(id.contains('1')){
       // phản hồi nhóm 1
       Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: notification.idDonDichVu);
