@@ -103,9 +103,13 @@ class DonDichVuRequest {
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
-    thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
-        .map((e) => ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
-        .toList();
+    if (json['thoiGianLamViec'] != null) {
+      thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
+          .map((e) =>
+              ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
+    }
+
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();

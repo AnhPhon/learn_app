@@ -68,7 +68,7 @@ class V2WorkInProgressController extends GetxController {
         selectList = [];
         for (final element in models) {
           final String tieuDe = element.tieuDe!.toLowerCase();
-          if (tieuDe == 'hoàn thành' || tieuDe == 'đang làm') {
+          if (tieuDe == 'đã làm' || tieuDe == 'đang làm') {
             selectList.add(element);
           }
         }
@@ -163,7 +163,7 @@ class V2WorkInProgressController extends GetxController {
         onSuccess: (models) {
           if (models.isNotEmpty) {
             final String id = models[0].id!;
-            print(keyIndex);
+            print(workFlowId);
             // update y kien tho thau
             phanHoiDonDichVuProvider.update(
               data: PhanHoiDonDichVuRequest(
@@ -171,6 +171,8 @@ class V2WorkInProgressController extends GetxController {
                 id: id,
               ),
               onSuccess: (value) {
+                print(workFlowId);
+                print(keyIndex);
                 // set trang thái
                 donDichVuProvider.update(
                   data: DonDichVuRequest(

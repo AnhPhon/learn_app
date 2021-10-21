@@ -35,6 +35,7 @@ class V2WorkflowManagementController extends GetxController
   final String dangTuyenKey = "đang tuyển";
   final String dangXuLyKey = "đang xử lý";
   final String dangLamKey = "đang làm";
+  final String daLamKey = "đã làm";
   final String dangGiaoKey = "đang giao";
   final String hoanThanhKey = "hoàn thành";
 
