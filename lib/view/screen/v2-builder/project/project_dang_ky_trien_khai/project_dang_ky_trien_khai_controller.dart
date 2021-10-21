@@ -118,6 +118,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         }
         print('loaiCongViecResponse $loaiCongViecResponse');
         print('currentLoaiCongViecProvider $currentLoaiCongViecResponseList');
+
         update();
       },
       onError: (error) {
