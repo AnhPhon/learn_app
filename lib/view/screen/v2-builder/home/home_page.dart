@@ -217,10 +217,15 @@ class V2HomePage extends GetView<V2HomeController> {
   /// need people widget
   ///
   Widget _needPeopleWidget() {
+    if (controller.canNguoiLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
-    final double len = length * 1.0;
 
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -228,18 +233,19 @@ class V2HomePage extends GetView<V2HomeController> {
         onTap: () => controller.onShortHandedPageClick(),
         title: "Công việc đang cần người",
         widget: SizedBox(
-          height: (len > 0) ? 140 * len : 0,
+          height: (length > 0) ? 120.0 * length : 0,
           child: ListView.builder(
             itemCount: length,
+            padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext ctx, index) {
               return TaskNeedWorker(
-                nhanTask: controller.donDichVuList[index].taiKhoanNhanDon!,
                 tenTask: controller.donDichVuList[index].tieuDe!,
                 maTask:
                     "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
-                trangThai:
-                    controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
+                trangThai: controller
+                    .donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
+                imageURL: controller.donDichVuList[index].hinhAnhChiTiet,
               );
             },
           ),
@@ -263,7 +269,7 @@ class V2HomePage extends GetView<V2HomeController> {
         },
         title: "Sản phẩm",
         widget: SizedBox(
-          height: 280,
+          height: (length > 0) ? 140.0 * length : 0,
           child: GridView.builder(
             padding: const EdgeInsets.all(0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -315,7 +321,7 @@ class V2HomePage extends GetView<V2HomeController> {
           controller.onClickHotNews();
         },
         widget: SizedBox(
-          height: 140 * length + 50,
+          height: ((length > 0) ? 120.0 * length : 0) + 50,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(0),
