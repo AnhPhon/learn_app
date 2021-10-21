@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -41,7 +42,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _avatar(context),
+                          _avatar(controller, context),
                         ],
                       ),
                       const SizedBox(
@@ -113,7 +114,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Tinhr /Tp
-                          _city(context),
+                          _city(controller, context),
 
                           //Quận/Huyện
                           _district(context),
@@ -198,13 +199,18 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   /// Avatar
   ///
-  Widget _avatar(BuildContext context) {
+  Widget _avatar(V4InfoController controller, BuildContext context) {
+    if (controller.isLoadingImage) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Container(
       width: DeviceUtils.getScaledWidth(context, 0.3),
       height: DeviceUtils.getScaledHeight(context, 0.14),
       child: Stack(
         children: [
-          const Positioned(
+          Positioned(
             top: 0,
             left: 0,
             right: 0,
@@ -213,9 +219,8 @@ class V4InfoPage extends GetView<V4InfoController> {
               backgroundColor: ColorResources.WHITE,
               child: CircleAvatar(
                 radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
-                backgroundImage: AssetImage(
-                  Images.V4AvatarHome,
-                ),
+                backgroundImage: NetworkImage(
+                    controller.nhanVienResponse.hinhDaiDien.toString()),
               ),
             ),
           ),
@@ -237,7 +242,9 @@ class V4InfoPage extends GetView<V4InfoController> {
                     )
                   ]),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.printImage();
+                },
                 icon: const Icon(
                   Icons.add_a_photo_outlined,
                 ),
@@ -429,17 +436,17 @@ Widget _addresss(V4InfoController controller, BuildContext context) {
 ///
 /// Tỉnh /TP
 ///
-Widget _city(BuildContext context) {
-  return DropDownButton1<String>(
+Widget _city(V4InfoController controller, BuildContext context) {
+  return DropDownButton1<TinhTpResponse>(
     isColorFieldWhite: true,
     isBorder: false,
     isShadow: true,
-    hint: '',
+    hint: controller.hintTextTinhTp,
     label: 'Tỉnh/Tp',
-    data: const ["Đà Nẵng", "Huế"],
+    data: controller.tinhTpModelList,
     obligatory: true,
-    onChanged: (value) {},
-    value: "Đà Nẵng",
+    onChanged: (value) => controller.onChangedTinhTp(value!),
+    value: controller.tinhTp,
     width: 0.4,
   );
 }

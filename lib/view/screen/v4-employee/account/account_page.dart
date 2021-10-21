@@ -204,7 +204,7 @@ class V4AccountPage extends GetView<V4AccountController> {
               child: CircleAvatar(
                 radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
                 backgroundImage: AssetImage(
-                  Images.V4AvatarHome,
+                  Images.V4NewsExample,
                 ),
               ),
             ),
