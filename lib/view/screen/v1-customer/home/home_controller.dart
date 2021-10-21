@@ -14,6 +14,7 @@ import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
+import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
 class V1HomeController extends GetxController {
   // declare provider
@@ -254,6 +255,9 @@ class V1HomeController extends GetxController {
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
+  ///
+  /// xem thêm category sản phẩm
+  ///
   void onMoreCategoryProduct(String id) {
     sl.get<SharedPreferenceHelper>().saveProductCategoryId(id);
     Get.toNamed(AppRoutes.V1_PRODUCT);

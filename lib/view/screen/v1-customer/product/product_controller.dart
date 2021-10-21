@@ -18,12 +18,12 @@ class V1ProductController extends GetxController {
 
   // refresh controller
   RefreshController refreshController = RefreshController();
+  final searchController = TextEditingController();
 
   // list
   List<SanPhamResponse> sanPhamList = [];
   List<DanhMucSanPhamResponse> danhMucList = [];
 
-  final searchController = TextEditingController();
   String title = "Sản phẩm";
   String selectIndex = "";
 
