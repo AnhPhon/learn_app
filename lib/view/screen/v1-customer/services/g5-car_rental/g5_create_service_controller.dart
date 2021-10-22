@@ -15,6 +15,8 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G5CreateServiceController extends GetxController{
@@ -50,11 +52,15 @@ class V1G5CreateServiceController extends GetxController{
   // Thông số kỹ thuât
   List<MultiSelectItem<ThongSoKyThuatResponse?>> thongSoKyThuatList = [];
   List<ThongSoKyThuatResponse?> thongSo = [];
+  // app bar title
+  String appBarTitle = 'Tạo đơn công việc';
 
   @override
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
+    appBarTitle = Get.parameters['title'].toString();
+    print(appBarTitle);
     getWorkTime();
     getAllThongSo();
     super.onInit();
@@ -132,30 +138,30 @@ class V1G5CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(thongSo.isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thông số kỹ thuật");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thông số kỹ thuật");
     }else if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời làm việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời làm việc không được để trống");
     }else if(amountController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không được để trống");
     }else if(int.parse(amountController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng không hợp lệ");
     }else if(startWorkController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập địa điểm bốc hàng dự kiến");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Địa điểm bốc hàng dự kiến không được để trống");
     }else if(estimatedDeliveryLocation.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập địa điểm trả hàng");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Địa điểm trả hàng dự kiến không được để trống");
     }else if(distanceController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập cự ly vận chuyển tương đối");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Cự ly vận chuyển tương đối không được để trống");
     }else if(workDescController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả yêu cầu cụ thể");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{
       EasyLoading.show(status: "Loading ...");
       donDichVuProvider.add(data: request(), onSuccess: (data){
          EasyLoading.dismiss();
-         showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất");
+         SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất", backgroundColor: ColorResources.PRIMARYCOLOR);
          Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),arguments: request());
          //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
       }, onError: (onError){

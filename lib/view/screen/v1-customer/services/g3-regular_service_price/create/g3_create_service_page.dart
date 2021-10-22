@@ -56,6 +56,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           hidden: false,
           label: "Tiêu đề công việc",
           obligatory: true,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
@@ -111,6 +112,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -119,10 +121,11 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
           label: "Ngày kết thúc",
-          obligatory: false,
+          obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );
