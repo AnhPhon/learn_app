@@ -64,24 +64,24 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController> {
                     groupValue: controller.chooseDangTin.toString(),
                     value: controller.bangGiaDangTinModel[index].id.toString()))
           ]),
-          Padding(
-            padding:
-                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-            child: priceListFilter(children: [
-              ...List.generate(
-                  controller.bangGiaLocHoSoModel.length,
-                  (index) => priceTypeLocHoSo(
-                      controller: controller,
-                      title: controller.bangGiaLocHoSoModel[index].tieuDe
-                          .toString(),
-                      price: double.parse(controller
-                          .bangGiaLocHoSoModel[index].donGia
-                          .toString()),
-                      groupValue: controller.chooseLocHoSo.toString(),
-                      value:
-                          controller.bangGiaLocHoSoModel[index].id.toString()))
-            ]),
-          ),
+          // Padding(
+          //   padding:
+          //       const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+          //   child: priceListFilter(children: [
+          //     ...List.generate(
+          //         controller.bangGiaLocHoSoModel.length,
+          //         (index) => priceTypeLocHoSo(
+          //             controller: controller,
+          //             title: controller.bangGiaLocHoSoModel[index].tieuDe
+          //                 .toString(),
+          //             price: double.parse(controller
+          //                 .bangGiaLocHoSoModel[index].donGia
+          //                 .toString()),
+          //             groupValue: controller.chooseLocHoSo.toString(),
+          //             value:
+          //                 controller.bangGiaLocHoSoModel[index].id.toString()))
+          //   ]),
+          // ),
         ],
       ),
     );
@@ -226,7 +226,7 @@ class V1G7PriceListPage extends GetView<V1G7PriceListController> {
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
-        onPressed: controller.showDialogAccept,
+        onPressed: controller.onClickContinueButton,
         title: "Tiếp tục",
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         vertical: Dimensions.PADDING_SIZE_DEFAULT,

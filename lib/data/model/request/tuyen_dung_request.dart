@@ -36,6 +36,7 @@ class TuyenDungRequest {
   List<dynamic>? idChuyenNganhPhus;
   String? phiDichVu;
   String? tienCoc;
+  String? idTrangThaiThanhToan;
 
   TuyenDungRequest(
       {this.id,
@@ -74,7 +75,8 @@ class TuyenDungRequest {
       this.thoiGianThuViec,
       this.idChuyenNganhPhus,
       this.phiDichVu,
-      this.tienCoc});
+      this.tienCoc,
+      this.idTrangThaiThanhToan});
 
   ///
   /// From JSON
@@ -117,6 +119,7 @@ class TuyenDungRequest {
     idChuyenNganhPhus = json['idChuyenNganhPhus'] as List<dynamic>;
     phiDichVu = json['phiDichVu'].toString();
     tienCoc = json['tienCoc'].toString();
+    idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
   }
 
   ///
@@ -240,6 +243,9 @@ class TuyenDungRequest {
     if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
     // check null tienCoc
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null idTrangThaiThanhToan
+    if (idTrangThaiThanhToan != null)
+      data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
 
     return data;
   }

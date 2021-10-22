@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/data/model/response/tuyen_dung_response.dart';
+import 'package:template/data/repository/tuyen_dung_repository.dart';
 import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class OrderInformationController extends GetxController {
   // Provider
@@ -22,6 +27,8 @@ class OrderInformationController extends GetxController {
   TuyenDungResponse tuyenDungResponse = TuyenDungResponse();
   DonHangResponse donHangResponse = DonHangResponse();
   DangKyBaoHiemResponse dangKyBaoHiemResponse = DangKyBaoHiemResponse();
+
+  TuyenDungRepository tuyenDungRepository = TuyenDungRepository();
 
   //isLoading
   bool isLoading = true;
@@ -39,119 +46,22 @@ class OrderInformationController extends GetxController {
   //value parameter
   String? type;
   String? idFind;
+  TuyenDungRequest? tuyenDungRequest;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     //set value frist
-    result = Get.arguments;
-    if (result != null) {
-      type = result['type'].toString();
-      idFind = result['id'].toString();
-      if (type == '1') {
-        //load data đơn dịch vụ
-        getDataDonDichVu(id: idFind!);
-      } else if (type == '2') {
-        //load data tuyển dụng
-        getDataTuyenDung(id: idFind!);
-      } else {
-        //load data đơn hàng
-        getDataDonHang(id: idFind!);
-      }
+    tuyenDungRequest = Get.arguments as TuyenDungRequest;
+    if (tuyenDungRequest != null) {
+      soTien = double.parse(tuyenDungRequest!.soTien.toString());
+      phiDichVu = double.parse(tuyenDungRequest!.phiDichVu.toString());
+      khuyenMai = double.parse(tuyenDungRequest!.khuyenMai.toString());
+      tongTien = double.parse(tuyenDungRequest!.tongDon.toString());
+      isLoading = false;
     }
   }
-
-  ///
-  ///get data đơn dịch vụ
-  ///
-  void getDataDonDichVu({required String id}) {
-    donDichVuProvider.find(
-        id: id,
-        onSuccess: (value) {
-          //add value
-          donDichVuResponse = value;
-
-          //set số tiền đơn hàng
-          soTien = double.parse(donDichVuResponse.soTien.toString());
-          phiDichVu = double.parse(donDichVuResponse.phiDichVu.toString());
-          khuyenMai = double.parse(donDichVuResponse.khuyenMai.toString());
-          tongTien = double.parse(donDichVuResponse.tongDon.toString());
-          tienCoc = double.parse(donDichVuResponse.tienCoc.toString());
-          isLoading = false;
-          update();
-        },
-        onError: (error) =>
-            print('OrderInformationController getDataDonDichVu $error'));
-  }
-
-  ///
-  ///get data tuyen dung
-  ///
-  void getDataTuyenDung({required String id}) {
-    tuyenDungProvider.find(
-        id: id,
-        onSuccess: (value) {
-          //add value
-          tuyenDungResponse = value;
-          print('bbbb ${tuyenDungResponse.toJson()}');
-
-          //set số tiền đơn hàng
-          soTien = double.parse(tuyenDungResponse.soTien.toString());
-          phiDichVu = double.parse(tuyenDungResponse.phiDichVu.toString());
-          khuyenMai = double.parse(tuyenDungResponse.khuyenMai.toString());
-          tongTien = double.parse(tuyenDungResponse.tongDon.toString());
-          tienCoc = double.parse(tuyenDungResponse.tienCoc.toString());
-          isLoading = false;
-          update();
-        },
-        onError: (error) =>
-            print('OrderInformationController getDataTuyenDung $error'));
-  }
-
-  ///
-  ///get data đơn hàng
-  ///
-  void getDataDonHang({required String id}) {
-    donHangProvider.find(
-        id: id,
-        onSuccess: (value) {
-          //add value
-          donHangResponse = value;
-
-          //set số tiền đơn hàng
-          soTien = double.parse(donHangResponse.soTien.toString());
-          phiDichVu = double.parse(donHangResponse.phiDichVu.toString());
-          khuyenMai = double.parse(donHangResponse.khuyenMai.toString());
-          tongTien = double.parse(donHangResponse.tongTien.toString());
-          isLoading = false;
-          update();
-        },
-        onError: (error) =>
-            print('OrderInformationController getDataDonHang $error'));
-  }
-
-  ///
-  ///get data bảo hiểm (xem lại đã)
-  ///
-  // void getDataBaoHiem({required String id}) {
-  //   dangKyBaoHiemProvider.find(
-  //       id: id,
-  //       onSuccess: (value) {
-  //         //add value
-  //         dangKyBaoHiemResponse = value;
-
-  //         //set số tiền đơn hàng
-  //         soTien = double.parse(dangKyBaoHiemResponse.toString());
-  //         phiDichVu = double.parse(donDichVuResponse.phiDichVu.toString());
-  //         khuyenMai = double.parse(donDichVuResponse.khuyenMai.toString());
-  //         tongTien = double.parse(donDichVuResponse.tongDon.toString());
-  //         isLoading = false;
-  //         update();
-  //       },
-  //       onError: (error) =>
-  //           print('OrderInformationController getDataBaoHiem $error'));
-  // }
 
   ///
   ///onBtnGoHome
@@ -162,9 +72,73 @@ class OrderInformationController extends GetxController {
   }
 
   ///
+  ///  Hiển thị xác nhận
+  ///
+  void showDialogAccept() {
+    Get.defaultDialog(
+        title: "Xác nhận thông tin",
+        content: DialogContentPriceAccept(
+          textContent:
+              'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
+          price: tongTien,
+        ),
+        confirm: ElevatedButton(
+            onPressed: () {
+              onNextPage();
+            },
+            child: const Text("Đồng ý")),
+        cancel: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: ColorResources.GREY,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("Hủy")));
+  }
+
+  ///
   /// Nhấn vào đông ý đơn hàng
   ///
-  void onNextPage() {
-    Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT);
+  void onNextPage() async {
+    await Get.toNamed(
+            '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}')!
+        .then((value) {
+      if (value == true) {
+        print('bbb đã thanh toán');
+        EasyLoading.showSuccess('Đăng tin thành công');
+        tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
+        //insert db
+        tuyenDungRepository.add(tuyenDungRequest!).then((value) => {
+              if (value.response.data != null)
+                {
+                  Get.offAllNamed(AppRoutes.V1_CANDICATE,
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
+                }
+            });
+      } else {
+        print('bbb chưa thanh toán');
+        EasyLoading.showSuccess('Đăng tin thành công');
+        tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
+        //insert db
+        tuyenDungRepository.add(tuyenDungRequest!).then((value) => {
+              if (value.response.data != null)
+                {
+                  Get.offAllNamed(AppRoutes.V1_CANDICATE,
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
+                }
+            });
+      }
+    });
   }
 }

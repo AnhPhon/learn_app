@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -10,9 +8,6 @@ import 'package:template/data/repository/tuyen_dung_repository.dart';
 import 'package:template/provider/bang_gia_dang_tin_provider.dart';
 import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/color_resources.dart';
-
-import 'g7_price_dialog_accept.dart';
 
 class V1G7PriceListController extends GetxController {
   //provider
@@ -52,7 +47,7 @@ class V1G7PriceListController extends GetxController {
 
     //get load data bảng giá
     getDataBangGiaDangTin();
-    getDataBangGiaLocHoSo();
+    // getDataBangGiaLocHoSo();
   }
 
   ///
@@ -67,7 +62,7 @@ class V1G7PriceListController extends GetxController {
 
           //set chọn đầu tiên
           getChangeDangTin(value.first.id.toString());
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -125,37 +120,39 @@ class V1G7PriceListController extends GetxController {
   }
 
   ///
-  ///  Hiẻn thị bộ lọc
+  ///  Hiển thị xác nhận
   ///
-  void showDialogAccept() {
-    tongTien = 0;
-    tongTien = tienDangTin + tienLocHoSo;
-    Get.defaultDialog(
-        title: "Xác nhận thông tin",
-        content: DialogContentPriceAccept(
-          textContent:
-              'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
-          price: tongTien,
-        ),
-        confirm: ElevatedButton(
-            onPressed: () {
-              onClickContinueButton(tongTien: tongTien);
-            },
-            child: const Text("Đồng ý")),
-        cancel: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: ColorResources.GREY,
-            ),
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text("Hủy")));
-  }
+  // void showDialogAccept() {
+  //   tongTien = 0;
+  //   tongTien = tienDangTin;
+  //   Get.defaultDialog(
+  //       title: "Xác nhận thông tin",
+  //       content: DialogContentPriceAccept(
+  //         textContent:
+  //             'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
+  //         price: tongTien,
+  //       ),
+  //       confirm: ElevatedButton(
+  //           onPressed: () {
+  //             onClickContinueButton(tongTien: tongTien);
+  //           },
+  //           child: const Text("Đồng ý")),
+  //       cancel: ElevatedButton(
+  //           style: ElevatedButton.styleFrom(
+  //             primary: ColorResources.GREY,
+  //           ),
+  //           onPressed: () {
+  //             Get.back();
+  //           },
+  //           child: const Text("Hủy")));
+  // }
 
   ///
   /// Nhấn tiếp tục
   ///
-  void onClickContinueButton({required double tongTien}) {
+  void onClickContinueButton() {
+    tongTien = 0;
+    tongTien = tienDangTin;
     //set value tuyendung
     tuyenDungRequest.soTien = tongTien.toStringAsFixed(0);
     tuyenDungRequest.tongDon = tongTien.toStringAsFixed(0);
@@ -164,22 +161,26 @@ class V1G7PriceListController extends GetxController {
     tuyenDungRequest.tienCoc = '0';
     tuyenDungRequest.idTrangThaiTuyenDung = '6162b79bd3d3e9825095fb20';
 
-    EasyLoading.show(status: 'loading...');
+    Get.toNamed(
+      AppRoutes.V1_ORDER_INFORAMTION,
+      arguments: tuyenDungRequest,
+    );
 
     //insert db
-    tuyenDungRepository.add(tuyenDungRequest).then((value) {
-      if (value.response.data != null) {
-        EasyLoading.dismiss();
-        final Map<String, dynamic> param = {
-          'type': '2',
-          'id': value.response.data['id']
-        };
-        Get.offAllNamed(AppRoutes.V1_ORDER_INFORAMTION,
-            arguments: param,
-            predicate: ModalRoute.withName(AppRoutes.V1_ORDER_INFORAMTION));
-      } else {
-        EasyLoading.showError('Vui lòng thử lại');
-      }
-    });
+    // tuyenDungRepository.add(tuyenDungRequest).then((value) {
+    //   if (value.response.data != null) {
+    //     EasyLoading.dismiss();
+    //     final Map<String, dynamic> param = {
+    //       'type': '2',
+    //       'id': value.response.data['id']
+    //     };
+    //     print(param);
+    //     Get.offAllNamed(AppRoutes.V1_ORDER_INFORAMTION,
+    //         arguments: param,
+    //         predicate: ModalRoute.withName(AppRoutes.V1_ORDER_INFORAMTION));
+    //   } else {
+    //     EasyLoading.showError('Vui lòng thử lại');
+    //   }
+    // });
   }
 }

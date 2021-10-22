@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_controller.dart';
@@ -21,16 +22,7 @@ class OrderInformationPage extends GetView<OrderInformationController> {
             );
           }
           return Scaffold(
-            appBar: AppBar(
-              title: const Text("Thông tin đơn hàng"),
-              centerTitle: true,
-              leading: IconButton(
-                  icon: const Icon(
-                    Icons.home,
-                    color: ColorResources.WHITE,
-                  ),
-                  onPressed: () => controller.onBtnGoHome()),
-            ),
+            appBar: const AppBarWidget(title: "Thông tin đơn hàng"),
             body: Container(
               padding: const EdgeInsets.all(
                 Dimensions.PADDING_SIZE_DEFAULT,
@@ -42,9 +34,7 @@ class OrderInformationPage extends GetView<OrderInformationController> {
                     BillWidget(
                       orderContents: [
                         OrderContent(
-                          title: controller.type == "2"
-                              ? "Phí đăng tin"
-                              : "Giá trị đơn hàng",
+                          title: 'Phí đăng tin',
                           value: controller.soTien,
                           boldValue: true,
                         ),
@@ -83,7 +73,7 @@ class OrderInformationPage extends GetView<OrderInformationController> {
                   child: LongButton(
                 title: "Đồng ý đơn giá",
                 onPressed: () {
-                  controller.onNextPage();
+                  controller.showDialogAccept();
                 },
                 color: ColorResources.PRIMARYCOLOR,
               )),
