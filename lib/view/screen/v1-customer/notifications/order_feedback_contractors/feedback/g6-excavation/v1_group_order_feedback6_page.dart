@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -15,7 +16,7 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g6-excavation/v1_group_order_feedback6_controller.dart';
 
 class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller> {
-  const V1GroupOrderFeedBack6Page({Key? key}) : super(key: key);
+  final V1GroupOrderFeedBack6Controller _controller = Get.find<V1GroupOrderFeedBack6Controller>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +32,37 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
                 header(),
 
                 // Bảng thông tin đơn hàng
-                const Padding(
-                  padding: EdgeInsets.all(
+                Padding(
+                  padding: const EdgeInsets.all(
                     Dimensions.PADDING_SIZE_DEFAULT,
                   ),
                   child: BillWidget(
                     orderContents: [
-                    OrderContent(title:"Giá trị đơn hàng" , value:100000000,boldValue: true,),
-                    OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:8000 ,boldValue: true),
-                    OrderContent(title:"Phí dịch vụ app" , value:0 , boldValue: true,),
-                    OrderContent(title:"Khuyến mãi của App" , value:50000, boldValue: true,),
-                    OrderContent(title:"Tổng tiền đơn hàng" , value:11050000 , boldValue: true,)
-                  ], deposit: 50000),
+                    OrderContent(title:"Giá trị đơn hàng" , value:double.parse(_controller.donPhanHoi!.idDonDichVu!.soTien!, (e)=> 1000000000), boldValue: true,),
+                    // const OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:0 ,boldValue: true),
+                    const OrderContent(title:"Phí dịch vụ app" , value:50000 , boldValue: true,),
+                    const OrderContent(title:"Khuyến mãi của App" , value:0, boldValue: true,),
+                    OrderContent(title:"Tổng tiền đơn hàng" , value: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000), boldValue: true,)
+                  ], deposit: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000) * 10 / 100,),
                 ),
                 
                 // Text Field Nội dung báo cáo
                 textField(context),
 
                 // Khoản cách bottomSheet
-                const SizedBox(height: 150,)
+                const SizedBox(height: BOTTOMSHEET + Dimensions.PADDING_SIZE_LARGE,)
               ],
             ),
           );
         },
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: 100000000,
+        itemValue: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000),
         children: [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
-          SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){})
+          SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){
+            _controller.onClickAgreeButton();
+          })
         ],
       )
     );
@@ -69,20 +72,21 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
   Widget header(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         // Tiêu đề nhóm
-        GroupTitle(title: "Dịch vụ xe đào,cầu nặng, máy khá"),
+        const GroupTitle(title: "Dịch vụ xe đào,cầu nặng, máy khá"),
+        //GroupTitle(title: _controller.donPhanHoi!.idDonDichVu!.tieuDe!),
   
         //Công việc: Thuê xe tải thùng 1,5 tấn
-        Padding(
-          padding: EdgeInsets.only(
+         Padding(
+         padding: const EdgeInsets.only(
             top: Dimensions.PADDING_SIZE_DEFAULT,
             left: Dimensions.PADDING_SIZE_DEFAULT,
             right: Dimensions.PADDING_SIZE_DEFAULT,
           ),
           child: TextHighlight(
             title: "Công việc: ",
-            content: " Thuê xe đào móng nhà gầu 0,3m",
+            content: _controller.donPhanHoi!.idDonDichVu!.tieuDe!,//" Thuê xe đào móng nhà gầu 0,3m",
           ),
         ),
       ],

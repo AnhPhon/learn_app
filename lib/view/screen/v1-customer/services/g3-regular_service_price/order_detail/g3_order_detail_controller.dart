@@ -21,14 +21,15 @@ class V1G3OrderDetailController extends GetxController{
   ///
   void onSave(){
     EasyLoading.show(status:"Loading ...");
-    dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
-      showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể");
-      Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
-      EasyLoading.dismiss();
-    }, onError: (onError){
-      EasyLoading.dismiss();
-      print("V1G3OrderDetailController onSave $onError");
-    });
+    Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
+    // dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
+    //   showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể");
+    //   Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
+    //   EasyLoading.dismiss();
+    // }, onError: (onError){
+    //   EasyLoading.dismiss();
+    //   print("V1G3OrderDetailController onSave $onError");
+    // });
   }
 
   void onNextPage(){
