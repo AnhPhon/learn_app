@@ -12,7 +12,7 @@ class V1G4OrderQuoteController extends GetxController{
 
   final LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
   final priceController = TextEditingController();
-  final timeNumberContrller = TextEditingController();
+  final personNumberController = TextEditingController();
   final personNumberContrller = TextEditingController();
   final descController = TextEditingController();
 
@@ -73,12 +73,12 @@ class V1G4OrderQuoteController extends GetxController{
     if(validate()){
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
-      request!.soLuongYeuCau = personNumberContrller.text.toString();
-      request!.soNgay = timeNumberContrller.text.toString();
-      request!.soTien = priceController.text.toString().replaceAll(',', '');//work.giaTien;
-      request!.phiDichVu = '0';
+      request!.soLuongYeuCau = personNumberController.text.toString();
+      request!.soNgay = personNumberController.text.toString();
+      request!.soTien = (double.parse(work!.giaCongViec!.replaceAll(",", '')) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();//priceController.text.toString().replaceAll(',', '');//work.giaTien;
+      request!.phiDichVu = '50000';
       request!.khuyenMai = '0';
-      request!.tongDon = work!.giaCongViec!.replaceAll(",", '');
+      request!.tongDon = (double.parse(work!.giaCongViec!.replaceAll(",", '')) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();
       Get.toNamed(AppRoutes.V1_G4_ORDER_DETAIL, arguments: request);
     }
   }
@@ -87,7 +87,7 @@ class V1G4OrderQuoteController extends GetxController{
   /// Check validate
   ///
   bool validate(){
-    if(timeNumberContrller.text.toString().isEmpty){
+    if(personNumberController.text.toString().isEmpty){
       SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thời gian yêu cầu");
       return false;
     }else if(personNumberContrller.text.toString().isEmpty){
@@ -104,7 +104,7 @@ class V1G4OrderQuoteController extends GetxController{
   void onClose() {
     super.onClose();
     priceController.dispose();
-    timeNumberContrller.dispose();
+    personNumberController.dispose();
     personNumberContrller.dispose();
     descController.dispose();
   }

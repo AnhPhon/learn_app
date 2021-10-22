@@ -75,7 +75,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.timeNumberContrller,
+          controller: controller.personNumberController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "10",
           hidden: false,

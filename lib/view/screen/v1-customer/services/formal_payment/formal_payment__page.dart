@@ -13,7 +13,6 @@ import 'package:template/view/screen/v1-customer/services/formal_payment/formal_
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
-  final V1FormalPaymentController _controller = Get.find<V1FormalPaymentController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,30 +24,33 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT,),
 
               formalPaymentItem(title: "Tự thanh toán cho bên cung cấp dịch vụ",value: 1  ,content:[
-                "Thanh toán trước phí dịch vụ 50.000 VNĐ và tiền cọc 1.000.000 VNĐ",
-                "Tự thanh toán sau cho Bên cung cấp dịch vụ 10.000.000 VNĐ (đã khấu trừ tiền cọc)",
+                "Thanh toán trước phí dịch vụ 50.000 VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND((double.parse(controller.dichVuRequest!.tongDon!)*10)/100)} VNĐ",
+                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.dichVuRequest!.tongDon!) - (double.parse(controller.dichVuRequest!.tongDon!)*10)/100)} VNĐ (đã khấu trừ tiền cọc)",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
               formalPaymentItem(title: "Ủy quyền",value:0,content:[
-                'Tự thanh toán sau cho "Bên cung cấp dịch vụ" 10.000.000 VNĐ (đã khấu trừ tiền cọc)',
-                "Ủy quyền thì bạn không phải cọc tiền dịch vụ",
-                "FSS sẽ hoàn tiền chênh lệch nếu có"
+                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(double.parse(controller.dichVuRequest!.tongDon!))}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
+                "FSS sẽ hoàn tiền chênh lệch nếu có",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
             ],
           );
         },
       ),
-      bottomSheet: OrderBottomSheet(
-        itemValue: double.parse(_controller.dichVuRequest!.tongDon!.toString()),
-        title: "Cần thanh toán",
-        child: Center(
-          child: LongButton(
-            minWidth: DeviceUtils.getScaledWidth(context, 1),
-            title: "Tiếp tục",
-            color: ColorResources.PRIMARYCOLOR,
-            onPressed: _controller.onClickPayment,
-          ),
-        ),
-      ),
+      bottomSheet: GetBuilder(
+        builder: (V1FormalPaymentController controller) {
+          return OrderBottomSheet(
+            itemValue: controller.formalPaymentGroup == 1 ?  (double.parse(controller.dichVuRequest!.tongDon!)*10)/100 + 50000: double.parse(controller.dichVuRequest!.tongDon!.toString()),
+            title: "Cần thanh toán",
+            child: Center(
+              child: LongButton(
+                minWidth: DeviceUtils.getScaledWidth(context, 1),
+                title: "Tiếp tục",
+                color: ColorResources.PRIMARYCOLOR,
+                onPressed: controller.onClickPayment,
+              ),
+            ),
+          );
+        },
+      )
     );
   }
 

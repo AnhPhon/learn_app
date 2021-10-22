@@ -111,10 +111,10 @@ class V1G3OrderQuoteController extends GetxController{
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
       request!.soLuongYeuCau = personNumberController.text.toString();
-      request!.soTien = priceController.text.toString().replaceAll(",", '');//work.giaTien;
-      request!.phiDichVu = '0';
+      request!.soTien = (double.parse(priceController.text.toString().replaceAll(",", '')) * double.parse(personNumberController.text.toString())).toString();//priceController.text.toString().replaceAll(",", '');//work.giaTien;
+      request!.phiDichVu = '50000';
       request!.khuyenMai = '0';
-      request!.tongDon = priceController.text.toString().replaceAll(",", '');//work.money;
+      request!.tongDon = (double.parse(priceController.text.toString().replaceAll(",", '')) * double.parse(personNumberController.text.toString())).toString();
       Get.toNamed("${AppRoutes.V1_G3_ORDER_DETAIL}?unit=${subServices!.donViTinh!}", arguments: request);
     }
   }
