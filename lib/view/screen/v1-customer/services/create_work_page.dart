@@ -209,7 +209,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
               onChanged: (int? val)=> onChanged(val),
             ),
             DropDownButtonHideUnderLineWidget<TinhTpResponse>(
-              data: !(value == groupValue) ? [] : tinhList!,
+              data: tinhList!,
               onChanged: value == groupValue ?  (TinhTpResponse? val)=> onChangedProvince!(val): null,
               value: tinh,
               hint: "Chọn tỉnh khác",

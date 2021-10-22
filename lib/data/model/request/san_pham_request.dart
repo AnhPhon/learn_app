@@ -6,7 +6,7 @@ class SanPhamRequest {
   String? thuongHieu;
   String? moTa;
   String? hinhAnhDaiDien;
-  String? hinhAnhSanPham;
+  List<dynamic>? hinhAnhSanPhams;
   String? quyCach;
   String? gia;
   String? maSanPham;
@@ -21,7 +21,7 @@ class SanPhamRequest {
       this.thuongHieu,
       this.moTa,
       this.hinhAnhDaiDien,
-      this.hinhAnhSanPham,
+      this.hinhAnhSanPhams,
       this.quyCach,
       this.gia,
       this.maSanPham,
@@ -39,7 +39,7 @@ class SanPhamRequest {
     thuongHieu = json['thuongHieu'].toString();
     moTa = json['moTa'].toString();
     hinhAnhDaiDien = json['hinhAnhDaiDien'].toString();
-    hinhAnhSanPham = json['hinhAnhSanPham'].toString();
+    hinhAnhSanPhams = json['hinhAnhSanPhams'] as List<dynamic>;
     quyCach = json['quyCach'].toString();
     gia = json['gia'].toString();
     maSanPham = json['maSanPham'].toString();
@@ -73,8 +73,8 @@ class SanPhamRequest {
     // check null hinhAnhDaiDien
     if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien; 
 
-    // check null hinhAnhSanPham
-    if (hinhAnhSanPham != null) data['hinhAnhSanPham'] = hinhAnhSanPham; 
+    // check null hinhAnhSanPhams
+    if (hinhAnhSanPhams != null) data['hinhAnhSanPhams'] = hinhAnhSanPhams; 
 
     // check null quyCach
     if (quyCach != null) data['quyCach'] = quyCach; 

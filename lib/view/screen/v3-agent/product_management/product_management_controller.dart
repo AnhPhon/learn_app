@@ -68,7 +68,7 @@ class V3ProductManagementController extends GetxController
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3ProductManagementController getAllCategory onError $error");
       },
     );
   }

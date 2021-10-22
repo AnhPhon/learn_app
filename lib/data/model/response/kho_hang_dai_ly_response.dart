@@ -13,7 +13,7 @@ class KhoHangDaiLyResponse {
   PhuongXaResponse? idPhuongXa;
   String? diaChi;
   SanPhamResponse? idSanPham;
-  String? soluong;
+  String? soLuong;
 
   String? createdAt;
   String? updatedAt;
@@ -27,7 +27,7 @@ class KhoHangDaiLyResponse {
       this.idPhuongXa,
       this.diaChi,
       this.idSanPham,
-      this.soluong,
+      this.soLuong,
       this.createdAt,
       this.updatedAt});
 
@@ -82,7 +82,7 @@ class KhoHangDaiLyResponse {
     } else {
       idSanPham = null;
     }
-    soluong = json['soLuong'].toString();
+    soLuong = json['soLuong'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -117,9 +117,14 @@ class KhoHangDaiLyResponse {
     // check null idSanPham
     if (idSanPham != null) data['idSanPham'] = idSanPham;
 
-    // check null soluong
-    if (soluong != null) data['soLuong'] = soluong;
+    // check null soLuong
+    if (soLuong != null) data['soLuong'] = soLuong;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return ten.toString();
   }
 }

@@ -18,6 +18,8 @@ class InputWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLine;
+  final DateTime? firstDate, lastDate;
+  final Color? fillColor;
   final bool? isDate,
       isddMMyyyy,
       isTime,
@@ -51,6 +53,9 @@ class InputWidget extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.textInputType = TextInputType.text,
     this.maxLine,
+    this.firstDate,
+    this.lastDate,
+    this.fillColor,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -119,11 +124,11 @@ class InputWidget extends StatelessWidget {
                         },
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(1800),
-                        lastDate: DateTime(2100),
+                        firstDate: firstDate ?? DateTime(2000),
+                        lastDate: lastDate ?? DateTime(2200),
                       ).then((value) {
                         textEditingController.text =
-                            DateConverter.formatDate(value!);
+                            DateConverter.estimatedDateOnly(value!);
                       });
                     }
                   : (isTime == true)
@@ -139,7 +144,7 @@ class InputWidget extends StatelessWidget {
                                     // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
                                     child: childWidget!);
                               }).then((value) {
-                            textEditingController.text = value!.toString();
+                            textEditingController.text = value!.format(context);
                           });
                         }
                       : () {},
@@ -186,9 +191,7 @@ class InputWidget extends StatelessWidget {
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: (isColorFieldWhite == true)
-                      ? ColorResources.WHITE
-                      : Colors.transparent,
+                  fillColor: fillColor ?? Colors.transparent,
                 ),
               ),
             ),

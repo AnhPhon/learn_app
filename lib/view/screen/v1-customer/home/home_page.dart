@@ -272,7 +272,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 child: _imageWidget(
                   controller.danhMucList[index].ten!,
                   Images.location_example,
-                  // controller.danhMucList[index].hinhAnhSanPham!,
+                  // controller.danhMucList[index].hinhAnhSanPhams!,
                 ),
               );
             },

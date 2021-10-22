@@ -125,10 +125,11 @@ class V3OrderManagementController extends GetxController
         }
 
         isLoading = false;
+        isLoadingOrder = false;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3OrderManagementController getAllOrder onError $error");
       },
     );
   }
@@ -172,7 +173,7 @@ class V3OrderManagementController extends GetxController
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3OrderManagementController getOrder onError $error");
       },
     );
   }
@@ -208,6 +209,7 @@ class V3OrderManagementController extends GetxController
   void onChangedDropdown({String? value, required int index}) {
     //set value dropdown
     donHangResponse[index].idTrangThaiDonHang!.tieuDe = value.toString();
+    update();
 
     //set data
     donHangRequest.id = donHangResponse[index].id;
@@ -232,7 +234,7 @@ class V3OrderManagementController extends GetxController
         print("=================Chuyển trạng thái thành công=================");
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3OrderManagementController onChangedDropdown onError $error");
       },
     );
   }

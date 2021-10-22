@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -44,11 +43,8 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
 
                 //item
                 Expanded(
-                  child: SmartRefresher(
-                    controller: controller.refreshController,
-                    child: _item(context, controller: controller),
-                  ),
-                )
+                  child: _item(context, controller: controller),
+                ),
               ],
             ),
           );
@@ -60,122 +56,137 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
   ///
   Widget _item(BuildContext context,
       {required V3WarehouseController controller}) {
-    return ListView.builder(
-        itemCount: controller.khoHangDaiLyResponse.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.MARGIN_SIZE_SMALL,
-                horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            decoration: BoxDecoration(
-              color: ColorResources.WHITE,
-              borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 2,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: FadeInImage.assetNetwork(
-                        placeholder: Images.placeholder,
-                        image: controller.khoHangDaiLyResponse[index].idSanPham!
-                            .hinhAnhDaiDien
-                            .toString(),
-                        height: DeviceUtils.getScaledHeight(context, .08),
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                        imageErrorBuilder: (c, o, s) => Image.asset(
-                          Images.placeholder,
+    return SmartRefresher(
+      controller: controller.refreshController,
+      enablePullUp: true,
+      onRefresh: controller.onRefresh,
+      onLoading: controller.onLoading,
+      footer: const ClassicFooter(
+        loadingText: "Đang tải...",
+        noDataText: "Không có dữ liệu",
+        canLoadingText: "Kéo lên để tải thêm dữ liệu",
+      ),
+      child: ListView.builder(
+          itemCount: controller.nhapKhoHangDaiLyResponse.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(
+                  vertical: Dimensions.MARGIN_SIZE_SMALL,
+                  horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              decoration: BoxDecoration(
+                color: ColorResources.WHITE,
+                borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    blurRadius: 2,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: FadeInImage.assetNetwork(
+                          placeholder: Images.placeholder,
+                          image: controller.nhapKhoHangDaiLyResponse[index]
+                              .idSanPham!.hinhAnhDaiDien
+                              .toString(),
+                          height: DeviceUtils.getScaledHeight(context, .08),
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                          imageErrorBuilder: (c, o, s) => Image.asset(
+                            Images.placeholder,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: SizedBox(
-                        height: DeviceUtils.getScaledHeight(context, .08),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller
-                                  .khoHangDaiLyResponse[index].idSanPham!.ten
-                                  .toString(),
-                              maxLines: 2,
-                              style: Dimensions.fontSizeStyle16w600(),
-                            ),
-                            const SizedBox(
-                              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                            ),
-                            IntrinsicHeight(
-                              child: Row(
-                                children: [
-                                  Text((controller.khoHangDaiLyResponse[index]
-                                              .soluong ==
-                                          "0")
-                                      ? "Hết hàng"
-                                      : "${controller.khoHangDaiLyResponse[index].soluong} sản phẩm"),
-                                  VerticalDivider(
-                                    color: ColorResources.BLACK.withOpacity(.7),
-                                  ),
-                                  Text(
-                                    "${PriceConverter.convertPrice(
-                                      context,
-                                      double.parse(
-                                        controller.khoHangDaiLyResponse[index]
-                                            .idSanPham!.gia
-                                            .toString(),
-                                      ),
-                                    )} đ",
-                                  ),
-                                ],
+                      const SizedBox(
+                        width: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
+                      Expanded(
+                        flex: 7,
+                        child: SizedBox(
+                          height: DeviceUtils.getScaledHeight(context, .08),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                controller.nhapKhoHangDaiLyResponse[index]
+                                    .idSanPham!.ten
+                                    .toString(),
+                                maxLines: 2,
+                                style: Dimensions.fontSizeStyle16w600(),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                              ),
+                              IntrinsicHeight(
+                                child: Row(
+                                  children: [
+                                    Text((controller
+                                                .nhapKhoHangDaiLyResponse[index]
+                                                .soLuong ==
+                                            "0")
+                                        ? "Hết hàng"
+                                        : "${controller.nhapKhoHangDaiLyResponse[index].soLuong} sản phẩm"),
+                                    VerticalDivider(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.7),
+                                    ),
+                                    Text(
+                                      "${PriceConverter.convertPrice(
+                                        context,
+                                        double.parse(
+                                          controller
+                                              .nhapKhoHangDaiLyResponse[index]
+                                              .idSanPham!
+                                              .gia
+                                              .toString(),
+                                        ),
+                                      )} đ",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                Divider(
-                  height: 20,
-                  color: ColorResources.BLACK.withOpacity(.7),
-                ),
+                  Divider(
+                    height: 20,
+                    color: ColorResources.BLACK.withOpacity(.7),
+                  ),
 
-                //product code
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Nhập kho: ${DateConverter.formatDateTime(
-                        controller.khoHangDaiLyResponse[index].createdAt
-                            .toString(),
-                      )}",
-                    ),
-                    Text(
-                      "Quy cách: ${controller.khoHangDaiLyResponse[index].idSanPham!.quyCach}",
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  //product code
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Nhập kho: ${DateConverter.formatDateTime(
+                          controller.nhapKhoHangDaiLyResponse[index].createdAt
+                              .toString(),
+                        )}",
+                      ),
+                      Text(
+                        "Quy cách: ${controller.nhapKhoHangDaiLyResponse[index].idSanPham!.quyCach}",
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
   }
 }

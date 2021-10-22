@@ -238,8 +238,8 @@ class V2HomePage extends GetView<V2HomeController> {
                 tenTask: controller.donDichVuList[index].tieuDe!,
                 maTask:
                     "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
-                trangThai:
-                    controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
+                trangThai: controller
+                    .donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
               );
             },
           ),
@@ -288,7 +288,8 @@ class V2HomePage extends GetView<V2HomeController> {
                       const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: ProductCard(
                     title: controller.sanPhamList[index].ten!,
-                    image: controller.sanPhamList[index].hinhAnhSanPham!,
+                    image: controller.sanPhamList[index].hinhAnhSanPhams![0]
+                        .toString(),
                     cost: PriceConverter.convertPrice(context, 100000),
                   ),
                 ),

@@ -241,7 +241,8 @@ class V3HomePage extends GetView<V3HomeController> {
                 },
                 child: KhoSanPham(
                   tenSanPham: controller.sanPhamList[index].ten!,
-                  hinhAnh: controller.sanPhamList[index].hinhAnhSanPham!,
+                  hinhAnh: controller.sanPhamList[index].hinhAnhSanPhams![0]
+                      .toString(),
                   maSanPham: "${controller.sanPhamList[index].maSanPham}",
                   giaSanPham: "${PriceConverter.convertPrice(
                     ctx,

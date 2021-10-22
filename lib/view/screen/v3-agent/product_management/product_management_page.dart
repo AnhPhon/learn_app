@@ -67,6 +67,11 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
             enablePullUp: true,
             onRefresh: controller.onRefresh,
             onLoading: controller.onLoading,
+            footer: const ClassicFooter(
+              loadingText: "Đang tải...",
+              noDataText: "Không có dữ liệu",
+              canLoadingText: "Kéo lên để tải thêm dữ liệu",
+            ),
             child: (controller.sanPhamResponse.isEmpty)
                 ? const Center(
                     child: Text("Không có sản phẩm"),

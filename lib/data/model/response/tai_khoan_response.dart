@@ -35,11 +35,14 @@ class TaiKhoanResponse {
   String? hinhCMNDTruoc;
   String? hinhCMNDSau;
   NhomCuaHangResponse? idNhomCuaHang;
-  MatHangDacTrungResponse? idMatHangDacTrung;
+  List<MatHangDacTrungResponse>? idMatHangDacTrungs;
   String? diaChiKhoHang;
   String? thoiGianLamViec;
   String? lamChieuThuBay;
   String? lamNgayChuNhat;
+  String? diaDiemCuaHangChinh;
+  List<dynamic>? hinhAnhCuaHangs;
+  String? diaDiemCuThe;
 
   String? createdAt;
   String? updatedAt;
@@ -74,11 +77,14 @@ class TaiKhoanResponse {
       this.hinhCMNDTruoc,
       this.hinhCMNDSau,
       this.idNhomCuaHang,
-      this.idMatHangDacTrung,
+      this.idMatHangDacTrungs,
       this.diaChiKhoHang,
       this.thoiGianLamViec,
       this.lamChieuThuBay,
       this.lamNgayChuNhat,
+      this.diaDiemCuaHangChinh,
+      this.hinhAnhCuaHangs,
+      this.diaDiemCuThe,
       this.createdAt,
       this.updatedAt});
 
@@ -155,18 +161,28 @@ class TaiKhoanResponse {
       idNhomCuaHang = null;
     }
 
-    // mapping idMatHangDacTrung
-    if (json['idMatHangDacTrung'] != null &&
-        json['idMatHangDacTrung'].toString().length != 24) {
-      idMatHangDacTrung = MatHangDacTrungResponse.fromJson(
-          json['idMatHangDacTrung'] as Map<String, dynamic>);
+    // mapping idMatHangDacTrungs
+    if (json['idMatHangDacTrungs'] != null &&
+        json['idMatHangDacTrungs'].toString().length != 24) {
+      idMatHangDacTrungs = [];
+      final results = json['idMatHangDacTrungs'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idMatHangDacTrungs!.add(MatHangDacTrungResponse.fromJson(
+              element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idMatHangDacTrung = null;
+      idMatHangDacTrungs = null;
     }
+
     diaChiKhoHang = json['diaChiKhoHang'].toString();
     thoiGianLamViec = json['thoiGianLamViec'].toString();
     lamChieuThuBay = json['lamChieuThuBay'].toString();
     lamNgayChuNhat = json['lamNgayChuNhat'].toString();
+    diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
+    hinhAnhCuaHangs = json['hinhAnhCuaHangs'] as List<dynamic>;
+    diaDiemCuThe = json['diaDiemCuThe'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -264,9 +280,10 @@ class TaiKhoanResponse {
     // check null idNhomCuaHang
     if (idNhomCuaHang != null) data['idNhomCuaHang'] = idNhomCuaHang;
 
-    // check null idMatHangDacTrung
-    if (idMatHangDacTrung != null)
-      data['idMatHangDacTrung'] = idMatHangDacTrung;
+    // check null idMatHangDacTrungs
+    if (idMatHangDacTrungs != null) {
+      data['idMatHangDacTrungs'] = idMatHangDacTrungs;
+    }
 
     // check null diaChiKhoHang
     if (diaChiKhoHang != null) data['diaChiKhoHang'] = diaChiKhoHang;
@@ -279,6 +296,17 @@ class TaiKhoanResponse {
 
     // check null lamNgayChuNhat
     if (lamNgayChuNhat != null) data['lamNgayChuNhat'] = lamNgayChuNhat;
+
+    // check null diaDiemCuaHangChinh
+    if (diaDiemCuaHangChinh != null) {
+      data['diaDiemCuaHangChinh'] = diaDiemCuaHangChinh;
+    }
+
+    // check null hinhAnhCuaHangs
+    if (hinhAnhCuaHangs != null) data['hinhAnhCuaHangs'] = hinhAnhCuaHangs;
+
+    // check null diaDiemCuThe
+    if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
 
     return data;
   }
