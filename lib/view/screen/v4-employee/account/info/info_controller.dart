@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/nhan_vien_request.dart';
 import 'package:template/data/model/response/nhan_vien_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
@@ -100,7 +103,11 @@ class V4InfoController extends GetxController {
           nameController = TextEditingController(text: value.hoTen);
 
           //Ngày sinh
-          // birthdayController = TextEditingController(text: value.ngaySinh);
+          birthdayController = TextEditingController(
+            text: DateConverter.formatDateTime(
+              value.ngaySinh.toString(),
+            ),
+          );
 
           //Giới tính
           sex = value.gioiTinh;
@@ -123,8 +130,8 @@ class V4InfoController extends GetxController {
           phoneNumberController =
               TextEditingController(text: value.soDienThoai);
 
-          //Email
-          // emailController = TextEditingController(text: value.email);
+          // Email
+          emailController = TextEditingController(text: value.email);
 
           //Địa chỉ thường trú
           addressController = TextEditingController(text: value.diaChi);
@@ -256,5 +263,117 @@ class V4InfoController extends GetxController {
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
         });
+  }
+
+  ///
+  ///pick image
+  ///
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      avatarFile = imageTemporary;
+      uploadImage(image: imageTemporary);
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
+
+  ///
+  ///upload image
+  ///
+  void uploadImage({required File image}) {
+    imageUpdateProvider.add(
+      file: image,
+      onSuccess: (value) {
+        nhanVienRequest.hinhDaiDien = value.data;
+        print(value.data);
+      },
+      onError: (error) {
+        print("V1PersonalInfoController uploadImage onError $error");
+      },
+    );
+  }
+
+  ///
+  ///update account
+  ///
+  void updateAccount(BuildContext context) {
+    //show loading
+    EasyLoading.show(status: 'loading...');
+
+    //validate
+    if (nameController.text.isEmpty) {
+      EasyLoading.dismiss();
+
+      //show snackbar
+      Get.snackbar(
+        "Họ và tên không hợp lệ!",
+        "Vui lòng nhập họ và tên hợp lệ!",
+      );
+    } else if (birthdayController.text.isEmpty) {
+      EasyLoading.dismiss();
+
+      //show snackbar
+      Get.snackbar(
+        "Ngày sinh không hợp lệ!",
+        "Vui lòng chọn ngày sinh hợp hợp lệ!",
+      );
+    } else if (sex == null) {
+      EasyLoading.dismiss();
+
+      //show snackbar
+      Get.snackbar(
+        "Giới tính khôn",
+        "Vui lòng nhập số điện thoại",
+      );
+    } else if (indentityCardController.text.isEmpty) {
+      EasyLoading.dismiss();
+
+      //show snackbar
+      Get.snackbar(
+        "Lỗi",
+        "Vui lòng nhập email",
+      );
+    } else {
+      //set data
+      taiKhoanRequest.id = idUser;
+      taiKhoanRequest.tenPhapLy = nameCompanyController!.text;
+      taiKhoanRequest.hoTen = fullNameController!.text;
+      taiKhoanRequest.gioiTinh = sex ?? taiKhoanResponse.gioiTinh;
+      taiKhoanRequest.ngaySinh = DateConverter.formatDate(
+        DateConverter.convertStringddMMyyyyToDate(
+          bornController!.text.toString(),
+        ),
+      );
+      taiKhoanRequest.soDienThoai = phoneController!.text;
+      taiKhoanRequest.email = emailController!.text;
+
+      //update
+      taiKhoanProvider.update(
+        data: taiKhoanRequest,
+        onSuccess: (value) {
+          EasyLoading.dismiss();
+          Get.back(result: true);
+
+          //show dialog
+          showAnimatedDialog(
+            context,
+            const MyDialog(
+              icon: Icons.check,
+              title: "Hoàn tất",
+              description: "Cập nhật thông tin thành công",
+            ),
+            dismissible: false,
+            isFlip: true,
+          );
+        },
+        onError: (error) {
+          print("V1PersonalInfoController updateAccount onError $error");
+        },
+      );
+    }
   }
 }
