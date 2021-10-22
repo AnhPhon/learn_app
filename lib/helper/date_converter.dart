@@ -17,11 +17,11 @@ mixin DateConverter {
     return DateFormat('dd/MM/yyyy').format(dateTime);
   }
 
-  static String formatYYYYMMDD(String dateTime) { //dd mm yyyy
+  static String formatYYYYMMDD(String dateTime) {
+    //dd mm yyyy
     final date = DateFormat('dd-MM-yyyy').parse(dateTime);
     return DateFormat('yyyy-MM-dd').format(date);
   }
-
 
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
@@ -34,7 +34,7 @@ mixin DateConverter {
   static DateTime convertStringddMMyyyyToDate(String dateTime) {
     return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
-  
+
   static DateTime convertStringToDatetimeddMMyyyy(String dateTime) {
     return DateFormat('HH:mm dd-MM-yyyy').parse(dateTime);
   }
@@ -54,10 +54,11 @@ mixin DateConverter {
   static DateTime isoStringDateTimeToDateTime(String dateTime) {
     return DateTime.parse(dateTime).toLocal();
   }
-  static String isoStringToddMMYYYY(String dateTime) {
-    return DateFormat('dd/MM/yyyy').format(isoStringDateTimeToDateTime(dateTime));
-  }
 
+  static String isoStringToddMMYYYY(String dateTime) {
+    return DateFormat('dd/MM/yyyy')
+        .format(isoStringDateTimeToDateTime(dateTime));
+  }
 
   static String isoStringToLocalTimeOnly(String dateTime) {
     return DateFormat('HH:mm').format(isoStringToLocalDate(dateTime));
@@ -110,12 +111,11 @@ mixin DateConverter {
         .toString();
   }
 
-    static String formatDateTimeFull({required String dateTime}) {
+  static String formatDateTimeFull({required String dateTime}) {
     return DateConverter.isoStringToLocalFullDateOnly(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }
-
 
   static String readMongoToString(String dateTimeStr) {
     final String first10letter = dateTimeStr.substring(0, 10);
@@ -129,5 +129,12 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd').format(
       DateFormat('yyyy-MM-dd').parse(first10letter),
     );
+  }
+
+  static String isoStringToFullVNDateOnly(String dateTime) {
+    final String dd = DateFormat('dd').format(isoStringToLocalDate(dateTime));
+    final String mm = DateFormat('MM').format(isoStringToLocalDate(dateTime));
+    final String yy = DateFormat('yyy').format(isoStringToLocalDate(dateTime));
+    return "Ngày $dd tháng $mm năm $yy";
   }
 }

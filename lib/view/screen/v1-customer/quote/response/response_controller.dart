@@ -1,84 +1,48 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1ResponseController extends GetxController {
-  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-
-  RefreshController refreshDaPhanHoiController = RefreshController();
-  RefreshController refreshChuaPhanHoiController = RefreshController();
-
-  Map<String, String> titleTabBar = {
-    "DPH": "Đã phản hồi",
-    "CPH": "Chưa phản hồi",
-  };
-
-  List<DonDichVuResponse> daPhanHoiDDV = [];
-  List<DonDichVuResponse> chuaPhanHoiDDV = [];
-
-  int currentIndex = 0;
-
-  bool isLoading = true;
+  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
 
   String title = "Phản hồi đơn giá vật tư";
+  String tenDonDichVu = "Cần báo giá vật liệu cát xi măng đá, gạch";
+  String ngayBatDau = "";
+  String ngayKetThuc = "";
 
-  String chuaPhanHoiKey = "chưa phản hồi";
-  String daPhanHoiKey = "đã phản hồi";
+  Map<String, List<Map<String, dynamic>>> infoCard = {};
 
   @override
   void onInit() {
     super.onInit();
+    infoCard = {};
 
-    // loadDaPhanHoi
-    loadDaPhanHoi();
+    // load thong tin don dich vu
+    loadThongTinDonDichVU();
 
-    // loadChuaPhanHoi
-    loadChuaPhanHoi();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    refreshDaPhanHoiController.dispose();
-    refreshChuaPhanHoiController.dispose();
+    // load thong tin vat tu
+    loadThongTinVatTu();
   }
 
   ///
-  /// changed tab
+  /// load thong tin don dich vu
   ///
-  void onChangeTab(int index) {
-    currentIndex = index;
-    update();
-  }
-
-  ///
-  /// load da phan hoi
-  ///
-  void loadDaPhanHoi() {
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      donDichVuProvider.paginate(
-        page: 1,
-        limit: 10,
-        filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (donDichVuList) {
-          // run don dich vu list
-          for (final donDichVu in donDichVuList) {
-            // check trang thai
-            if (donDichVu.idTrangThaiDonDichVu!.tieuDe
-                    .toString()
-                    .toLowerCase() ==
-                daPhanHoiKey) {
-              daPhanHoiDDV.add(donDichVu);
-            }
-          }
-          isLoading = false;
+  void loadThongTinDonDichVU() {
+    sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+      donDichVuProvider.find(
+        id: workFlowId!,
+        onSuccess: (donDichVu) {
+          tenDonDichVu = donDichVu.tieuDe!;
+          ngayBatDau = DateConverter.isoStringToVNDateOnly(
+              donDichVu.ngayBatDau!.replaceAll("T", " "));
+          ngayKetThuc = DateConverter.isoStringToFullVNDateOnly(
+              donDichVu.ngayKetThuc!.replaceAll("T", " "));
           update();
         },
         onError: (error) {
@@ -89,23 +53,51 @@ class V1ResponseController extends GetxController {
   }
 
   ///
-  /// load chua phan hoi
+  /// load thong tin vat tu
   ///
-  void loadChuaPhanHoi() {
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      donDichVuProvider.paginate(
+  void loadThongTinVatTu() {
+    infoCard = {};
+    sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+      print("&idDonDichVu=$workFlowId&sortBy=created_by:desc");
+      vatTuProvider.paginate(
         page: 1,
         limit: 10,
-        filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (donDichVuList) {
-          // run don dich vu list
-          for (final donDichVu in donDichVuList) {
-            // check trang thai
-            if (donDichVu.idTrangThaiDonDichVu!.tieuDe
-                    .toString()
-                    .toLowerCase() ==
-                chuaPhanHoiKey) {
-              chuaPhanHoiDDV.add(donDichVu);
+        filter: "&idDonDichVu=$workFlowId&sortBy=created_by:desc",
+        onSuccess: (vatTuList) {
+          for (final vatTu in vatTuList) {
+            if (infoCard[vatTu.tenVatTu] == null) {
+              infoCard[vatTu.tenVatTu!] = [
+                {
+                  "label": "Tên vật liệu",
+                  "value": vatTu.tenVatTu,
+                  "input": false,
+                },
+                {
+                  "label": "Quy cách",
+                  "value": vatTu.quyCach,
+                  "input": false,
+                },
+                {
+                  "label": "Số lượng",
+                  "value": "1",
+                  "input": false,
+                },
+                {
+                  "label": "Đơn vị",
+                  "value": vatTu.donVi,
+                  "input": false,
+                },
+                {
+                  "label": "Đơn giá",
+                  "value": vatTu.donGia,
+                  "input": false,
+                },
+              ];
+            } else {
+              infoCard[vatTu.tenVatTu!]![2]["value"] = (int.parse(
+                          infoCard[vatTu.tenVatTu!]![2]["value"].toString()) +
+                      1)
+                  .toString();
             }
           }
           update();
@@ -118,41 +110,16 @@ class V1ResponseController extends GetxController {
   }
 
   ///
-  /// go to Product Response
+  /// xác nhận
   ///
-  void onProductResponseClick() {}
-
-  ///
-  /// on da phan hoi refresh
-  ///
-  Future<void> onDaPhanHoiRefresh() async {
-    loadDaPhanHoi();
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshDaPhanHoiController.refreshCompleted();
+  void onxacNhanClick() {
+    Get.toNamed(AppRoutes.V1_QUOTE_DONE);
   }
 
   ///
-  /// on da phan hoi loading
+  /// không đồng ý
   ///
-  Future<void> onDaPhanHoiLoading() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshDaPhanHoiController.loadComplete();
-  }
-
-  ///
-  /// on chua phan hoi refresh
-  ///
-  Future<void> onChuaPhanHoiRefresh() async {
-    loadChuaPhanHoi();
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshChuaPhanHoiController.refreshCompleted();
-  }
-
-  ///
-  /// on chua phan hoi loading
-  ///
-  Future<void> onChuaPhanHoiLoading() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshChuaPhanHoiController.loadComplete();
+  void khongDongY() {
+    Get.back();
   }
 }
