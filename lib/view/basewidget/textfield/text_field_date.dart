@@ -29,10 +29,10 @@ class TextFieldDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.only(
-      //     left: Dimensions.PADDING_SIZE_DEFAULT,
-      //     right: Dimensions.PADDING_SIZE_DEFAULT,
-      //     top: paddingTop!),
+      padding: EdgeInsets.only(
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          top: paddingTop!),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,19 +63,22 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           GestureDetector(
-            onTap: isDate  ? (){
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2100),
-              ).then((value) {
-                isToHour! ? controller.text =
-                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
-                    "${value!.day}-${value.month}-${value.year}";
-                    
-              });
-            } : (){},
+            onTap: isDate
+                ? () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2001),
+                      lastDate: DateTime(2100),
+                    ).then((value) {
+                      isToHour!
+                          ? controller.text =
+                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value!.day}-${value.month}-${value.year}";
+                    });
+                  }
+                : () {},
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: isDate ? null : typeInput,
@@ -130,8 +133,9 @@ class TextFieldDate extends StatelessWidget {
                   ),
                   hintText: holdplacer,
                   filled: true,
-                  fillColor:
-                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.WHITE
+                      : Colors.white,
                   suffixIconConstraints: const BoxConstraints(
                     maxHeight: Dimensions.PADDING_SIZE_LARGE,
                   ),

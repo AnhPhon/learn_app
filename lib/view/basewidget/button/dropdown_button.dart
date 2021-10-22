@@ -63,6 +63,9 @@ class DropDownButton1<T> extends StatelessWidget {
                   ),
               ],
             ),
+          const SizedBox(
+            height: Dimensions.PADDING_SIZE_SMALL,
+          ),
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
             margin: margin ?? EdgeInsets.zero,

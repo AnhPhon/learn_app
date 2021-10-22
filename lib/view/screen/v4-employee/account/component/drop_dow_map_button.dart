@@ -31,7 +31,7 @@ class V4DropDownMapButton<T> extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
-        Dimensions.PADDING_SIZE_SMALL,
+        0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
@@ -57,8 +57,11 @@ class V4DropDownMapButton<T> extends StatelessWidget {
                 ],
               ),
             ),
+          const SizedBox(
+            height: Dimensions.PADDING_SIZE_SMALL,
+          ),
           Container(
-              height: DeviceUtils.getScaledHeight(context, 0.075),
+              height: DeviceUtils.getScaledHeight(context, 0.071),
               width: DeviceUtils.getScaledWidth(context, width),
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(

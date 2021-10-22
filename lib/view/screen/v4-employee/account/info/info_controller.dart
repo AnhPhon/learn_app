@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/nhan_vien_request.dart';
-
 import 'package:template/data/model/response/nhan_vien_response.dart';
-import 'package:template/data/model/response/phuong_xa_response_REMOTE_1763.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/helper/date_converter.dart';
@@ -30,20 +28,20 @@ class V4InfoController extends GetxController {
 
   //Tỉnh/Tp
   TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
-  List<TinhTpResponse> tinhTpModelList = [];
+  List<TinhTpResponse> tinhTpList = [];
   TinhTpResponse? tinhTp;
   String hintTextTinhTp = '';
 
   //Quận/Huyện
   QuanHuyenProvider quuanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
-  List<QuanHuyenResponse> quanHuyenModelList = [];
-  TinhTpResponse? quanHuyen;
+  List<QuanHuyenResponse> quanHuyenList = [];
+  QuanHuyenResponse? quanHuyen;
   String hintTextQuanHuyen = '';
 
   //Phường/Xã
   PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
-  List<PhuongXaResponse> phuongXaModelList = [];
-  TinhTpResponse? phuongXa;
+  List<PhuongXaResponse> phuongXaList = [];
+  PhuongXaResponse? phuongXa;
   String hintTextPhuongXa = '';
 
   //value of dropdown sex
@@ -80,8 +78,8 @@ class V4InfoController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getAccountInformation();
     getTinhTp();
+    getAccountInformation();
   }
 
   ///
@@ -125,16 +123,33 @@ class V4InfoController extends GetxController {
           phoneNumberController =
               TextEditingController(text: value.soDienThoai);
 
+          //Email
+          // emailController = TextEditingController(text: value.email);
+
           //Địa chỉ thường trú
           addressController = TextEditingController(text: value.diaChi);
 
           //Tỉnh/Tp
-          hintTextTinhTp = value.idTinhTp!.ten.toString();
-          print(value.idTinhTp!.id);
-          print(value.idTinhTp!.ten);
+          final int indexTinhTp =
+              tinhTpList.map((e) => e.id).toList().indexOf(value.idTinhTp!.id);
+          if (indexTinhTp != -1) {
+            tinhTp = tinhTpList[indexTinhTp];
+          }
+
+          //Quận/Huyện
+          final int indexQuanHuyen = quanHuyenList
+              .map((e) => e.id)
+              .toList()
+              .indexOf(value.idQuanHuyen!.id);
+          if (indexQuanHuyen != -1) {
+            quanHuyen = quanHuyenList[indexQuanHuyen];
+            getPhuongXa(id: quanHuyen!.id);
+          }
+
+          print(quanHuyenList);
+          print(value.idQuanHuyen);
 
           isLoading = false;
-
           isLoadingImage = false;
           update();
         },
@@ -143,10 +158,6 @@ class V4InfoController extends GetxController {
         },
       );
     });
-  }
-
-  void printImage() {
-    print(nhanVienResponse.hinhDaiDien.toString());
   }
 
   ///
@@ -158,10 +169,29 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///On change Tinh/Tp
+  ///Thay đổi tỉnh thành
   ///
-  void onChangedTinhTp(TinhTpResponse tinhTp) {
+  void onChangedTinhThanh(TinhTpResponse tinhTp) {
     this.tinhTp = tinhTp;
+    getQuanHuyen(id: tinhTp.id);
+    phuongXaList.clear();
+    update();
+  }
+
+  ///
+  ///Thay đổi quận huyện
+  ///
+  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen) {
+    this.quanHuyen = quanHuyen;
+    getPhuongXa(id: quanHuyen.id);
+    update();
+  }
+
+  ///
+  ///Thay đổi phường xã
+  ///
+  void onChangedPhuongXa(PhuongXaResponse phuongXa) {
+    this.phuongXa = phuongXa;
     update();
   }
 
@@ -171,9 +201,9 @@ class V4InfoController extends GetxController {
   void getTinhTp() {
     tinhTpProvider.all(
       onSuccess: (value) {
-        tinhTpModelList.clear();
+        tinhTpList.clear();
         if (value.isNotEmpty) {
-          tinhTpModelList.addAll(value);
+          tinhTpList.addAll(value);
         }
         isLoading = false;
         update();
@@ -182,5 +212,49 @@ class V4InfoController extends GetxController {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
+  }
+
+  ///
+  /// Lấy tất cả quận huyện
+  ///
+  void getQuanHuyen({String? id}) {
+    quuanHuyenProvider.paginate(
+        filter: '&idTinhTp=$id',
+        limit: 100,
+        page: 1,
+        onSuccess: (data) {
+          quanHuyenList.clear();
+          if (data.isNotEmpty) {
+            quanHuyenList.addAll(data);
+            quanHuyen = quanHuyenList.first;
+          }
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        });
+  }
+
+  ///
+  /// Lấy tất cả phường xã
+  ///
+  void getPhuongXa({String? id}) {
+    phuongXaProvider.paginate(
+        filter: '&idQuanHuyen=$id',
+        limit: 100,
+        page: 1,
+        onSuccess: (value) {
+          phuongXaList.clear();
+          if (value.isNotEmpty) {
+            phuongXaList.addAll(value);
+            phuongXa = phuongXaList.first;
+          }
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        });
   }
 }

@@ -1,18 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-
 import 'package:template/view/basewidget/button/long_button.dart';
-
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v4-employee/account/component/add_indentity_card.dart';
 import 'package:template/view/screen/v4-employee/account/component/drop_dow_map_button.dart';
@@ -58,12 +55,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //Ngày sinh
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: Dimensions.PADDING_SIZE_SMALL - 2,
-                            ),
-                            child: _birthday(controller, context),
-                          ),
+                          _birthday(controller, context),
 
                           //Giới tính
                           _sex(controller, context),
@@ -117,7 +109,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                           _city(controller, context),
 
                           //Quận/Huyện
-                          _district(context),
+                          _district(controller, context),
                         ],
                       ),
                       const SizedBox(
@@ -125,7 +117,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                       ),
 
                       //Phường/ xã
-                      _ward(context),
+                      _ward(controller, context),
                       const SizedBox(
                         height: Dimensions.PADDING_SIZE_LARGE,
                       ),
@@ -242,9 +234,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                     )
                   ]),
               child: IconButton(
-                onPressed: () {
-                  controller.printImage();
-                },
+                onPressed: () {},
                 icon: const Icon(
                   Icons.add_a_photo_outlined,
                 ),
@@ -438,14 +428,20 @@ Widget _addresss(V4InfoController controller, BuildContext context) {
 ///
 Widget _city(V4InfoController controller, BuildContext context) {
   return DropDownButton1<TinhTpResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      0,
+      0,
+    ),
     isColorFieldWhite: true,
     isBorder: false,
     isShadow: true,
     hint: controller.hintTextTinhTp,
     label: 'Tỉnh/Tp',
-    data: controller.tinhTpModelList,
+    data: controller.tinhTpList,
     obligatory: true,
-    onChanged: (value) => controller.onChangedTinhTp(value!),
+    onChanged: (value) => controller.onChangedTinhThanh(value!),
     value: controller.tinhTp,
     width: 0.4,
   );
@@ -454,17 +450,23 @@ Widget _city(V4InfoController controller, BuildContext context) {
 ///
 /// Quận / Huyện
 ///
-Widget _district(BuildContext context) {
-  return DropDownButton1<String>(
+Widget _district(V4InfoController controller, BuildContext context) {
+  return DropDownButton1<QuanHuyenResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      0,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     isBorder: false,
     isShadow: true,
     hint: '',
     label: 'Quận/Huyện',
-    data: const ["Cẩm Lệ", "Hải Châu"],
+    data: controller.quanHuyenList,
     obligatory: true,
-    onChanged: (value) {},
-    value: "Cẩm Lệ",
+    onChanged: (value) => controller.onChangedQuanHuyen(value!),
+    value: controller.quanHuyen,
     width: 0.4,
   );
 }
@@ -472,17 +474,23 @@ Widget _district(BuildContext context) {
 ///
 /// Phường / xã
 ///
-Widget _ward(BuildContext context) {
-  return DropDownButton1<String>(
+Widget _ward(V4InfoController controller, BuildContext context) {
+  return DropDownButton1<PhuongXaResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      0,
+      0,
+    ),
     isColorFieldWhite: true,
     isBorder: false,
     isShadow: true,
     hint: '',
     label: 'Phường/Xã',
-    data: const ["Hòa Thọ Đông", "Thanh Khê"],
+    data: controller.phuongXaList,
     obligatory: true,
-    onChanged: (value) {},
-    value: "Hòa Thọ Đông",
+    onChanged: (value) => controller.onChangedPhuongXa(value!),
+    value: controller.phuongXa,
     width: 0.4,
   );
 }
