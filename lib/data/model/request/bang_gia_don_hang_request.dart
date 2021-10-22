@@ -3,6 +3,8 @@ class BangGiaDonHangRequest {
   String? tieuDe;
   String? giaTien;
   String? donViTinh;
+  String? idLoaiCongViec;
+
 
   BangGiaDonHangRequest({
       this.id,
@@ -18,6 +20,7 @@ class BangGiaDonHangRequest {
     tieuDe = json['tieuDe'].toString();
     giaTien = json['giaTien'].toString();
     donViTinh = json['donViTinh'].toString();
+    idLoaiCongViec = json['idLoaiCongViec'].toString();
   }
 
   ///
@@ -36,6 +39,9 @@ class BangGiaDonHangRequest {
 
     // check null donViTinh
     if (donViTinh != null) data['donViTinh'] = donViTinh; 
+    
+    // check null idLoaiCongViec
+    if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec; 
 
 
     return data;

@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/trang_thai_thanh_toan_response.dart';
+
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
 import 'quan_huyen_response.dart';
@@ -18,7 +20,9 @@ class DonHangResponse {
   String? phiDichVu;
   String? soTien;
   String? tongTien;
+  String? hinhAnh;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
+  TrangThaiThanhToanResponse? idTrangThaiThanhToan;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
 
   String? createdAt;
@@ -37,7 +41,9 @@ class DonHangResponse {
       this.phiDichVu,
       this.soTien,
       this.tongTien,
+      this.hinhAnh,
       this.idTrangThaiDonHang,
+      this.idTrangThaiThanhToan,
       this.idHinhThucThanhToan,
       this.createdAt,
       this.updatedAt});
@@ -82,12 +88,20 @@ class DonHangResponse {
     phiDichVu = json['phiDichVu'].toString();
     soTien = json['soTien'].toString();
     tongTien = json['tongTien'].toString();
+    hinhAnh = json['hinhAnh'].toString();
 
     // mapping idTrangThaiDonHang                                                              
     if (json['idTrangThaiDonHang'] != null && json['idTrangThaiDonHang'].toString().length!=24) {                                                  
       idTrangThaiDonHang = TrangThaiDonHangResponse.fromJson(json['idTrangThaiDonHang'] as Map<String, dynamic>); 
     } else {                                                                           
       idTrangThaiDonHang = null;                                                               
+    }    
+
+    // mapping idTrangThaiThanhToan                                                              
+    if (json['idTrangThaiThanhToan'] != null && json['idTrangThaiThanhToan'].toString().length!=24) {                                                  
+      idTrangThaiThanhToan = TrangThaiThanhToanResponse.fromJson(json['idTrangThaiThanhToan'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTrangThaiThanhToan = null;                                                               
     }                                                                                  
 
     // mapping idHinhThucThanhToan                                                              
@@ -142,8 +156,14 @@ class DonHangResponse {
     // check null tongTien
     if (tongTien != null) data['tongTien'] = tongTien; 
 
+    // check null hinhAnh
+    if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
+
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null) data['idTrangThaiDonHang'] = idTrangThaiDonHang; 
+
+    // check null idTrangThaiThanhToan
+    if (idTrangThaiThanhToan != null) data['idTrangThaiThanhToan'] = idTrangThaiThanhToan; 
 
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null) data['idHinhThucThanhToan'] = idHinhThucThanhToan; 

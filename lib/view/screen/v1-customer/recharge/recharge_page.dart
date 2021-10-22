@@ -15,6 +15,11 @@ class V1RechargePage extends GetView<V1RechargeController> {
     return GetBuilder<V1RechargeController>(
         init: V1RechargeController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
@@ -41,25 +46,26 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
 
                     //bank info
-                    const RowText(
+                    RowText(
                       text1: "Ngân hàng nhận",
-                      text2: "MB",
+                      text2: controller.thongTinNganHangResponse.tenNganHang!,
                       notFontWeight: true,
                       notFontSize: true,
                     ),
                     _row3Widget(
                       context,
                       text1: "Số tài khoản",
-                      text2: "8000.111.68.68.68",
-                      onTap: () {},
+                      text2: controller.thongTinNganHangResponse.soTaiKhoan!,
+                      onTap: () => controller.onBtnCopyClick(content: false),
                       icon: const Icon(
                         Icons.copy_outlined,
                         color: ColorResources.GREY,
                       ),
                     ),
-                    const RowText(
+                    RowText(
                       text1: "Người nhận",
-                      text2: "Công ty FIve Star System",
+                      text2:
+                          controller.thongTinNganHangResponse.tenChuTaiKhoan!,
                       notFontWeight: true,
                       notFontSize: true,
                     ),
@@ -75,7 +81,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                     ),
 
                     //content
-                    _content(context),
+                    _content(context, controller: controller),
 
                     const SizedBox(
                       height: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -87,11 +93,21 @@ class V1RechargePage extends GetView<V1RechargeController> {
 
                     //upload image
                     _uploadImage(context, controller),
+
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+                    ),
+
+                    //btn
+                    _btnAccept(controller: controller),
+
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    ),
                   ],
                 ),
               ),
             ),
-            bottomNavigationBar: _btnBottomSheet(controller),
           );
         });
   }
@@ -162,7 +178,8 @@ class V1RechargePage extends GetView<V1RechargeController> {
   ///
   ///content
   ///
-  Widget _content(BuildContext context) {
+  Widget _content(BuildContext context,
+      {required V1RechargeController controller}) {
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -206,7 +223,7 @@ class V1RechargePage extends GetView<V1RechargeController> {
                 width: Dimensions.MARGIN_SIZE_SMALL,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () => controller.onBtnCopyClick(content: true),
                 child: const Icon(
                   Icons.copy_outlined,
                   color: ColorResources.GREY,
@@ -258,9 +275,9 @@ class V1RechargePage extends GetView<V1RechargeController> {
   }
 
   ///
-  ///btn bottomsheet
+  ///btn accept
   ///
-  Widget _btnBottomSheet(V1RechargeController controller) {
+  Widget _btnAccept({required V1RechargeController controller}) {
     return BtnCustom(
       onTap: () => controller.onCheckoutClick(),
       color: ColorResources.PRIMARY,

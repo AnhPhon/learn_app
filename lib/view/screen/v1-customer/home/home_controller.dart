@@ -13,6 +13,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V1HomeController extends GetxController {
   // declare provider
@@ -64,7 +65,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.add_circle,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_CREATE_WORK);
+          Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.WORK);
         }
       },
       {
@@ -92,7 +93,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.add_circle,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_CREATE_WORK);
+          Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.REGULARLY);
         }
       },
       {
@@ -208,7 +209,7 @@ class V1HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print(error);
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }

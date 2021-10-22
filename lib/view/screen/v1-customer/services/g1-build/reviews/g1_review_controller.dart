@@ -1,14 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/request/vat_tu_request.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
+
 
 class V1G1ReviewController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -28,7 +32,7 @@ class V1G1ReviewController extends GetxController{
   /// 
   void onClickButton(){
     onSave();
-    Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
+    
   }
 
   ///
@@ -40,11 +44,11 @@ class V1G1ReviewController extends GetxController{
 
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
-
-      showSnackBar(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất");
+      Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
+      SnackBarUtils.showSnackBar(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất", backgroundColor: ColorResources.PRIMARYCOLOR);
     }, onError: (error){
       EasyLoading.dismiss();
-      showSnackBar(title: "Lỗi", message: error.toString());
+      SnackBarUtils.showSnackBar(title: "Lỗi", message: error.toString());
       print("V1G1ReviewController onSave $error");
     });
   }
@@ -54,8 +58,10 @@ class V1G1ReviewController extends GetxController{
     String drawingImages = '';
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
-    dichVuRequest.ngayBatDau = previewServiceRequest!.ngayBatDau;
-    dichVuRequest.ngayKetThuc = previewServiceRequest!.ngayKetThuc;
+    dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayBatDau!);
+    if(previewServiceRequest!.ngayKetThuc != null){
+      dichVuRequest.ngayKetThuc =  DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayKetThuc!);
+    }
     dichVuRequest.idTinhTp = previewServiceRequest!.idTinhTp;
     dichVuRequest.idQuanHuyen = previewServiceRequest!.idQuanHuyen;
     dichVuRequest.idPhuongXa = previewServiceRequest!.idPhuongXa;
@@ -87,7 +93,7 @@ class V1G1ReviewController extends GetxController{
       imageUpdateProvider.add(file: previewServiceRequest!.file!, onSuccess: (data){
         dichVuRequest.file = data.data;
       }, onError: (onError){
-        showSnackBar(title: "Lỗi", message: "Tải file thất bại");
+        SnackBarUtils.showSnackBar(title: "Lỗi", message: "Tải file thất bại");
         print("V1G1ReviewController request  tải file $onError");
       });
     }
@@ -98,8 +104,6 @@ class V1G1ReviewController extends GetxController{
       dichVuRequest.hinhAnhBanVe  = drawingImages;
       return dichVuRequest;
     });
-    
-    //return dichVuRequest;
   }
 
   void addMass({required String idDon}){

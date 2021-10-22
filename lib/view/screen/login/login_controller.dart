@@ -55,9 +55,9 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    // print('phuong ${usernameController.text}');
-    // print('phuong ${passwordController.text}');
-    sl.get<SharedPreferenceHelper>().saveUserId("616c1b2307809c5435dac950");
+
+    sl.get<SharedPreferenceHelper>().saveUserId("616d7c0dc48e736e333ef26b");
+
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);
     } else if (usernameController.text == '2') {
@@ -120,7 +120,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
@@ -176,7 +176,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
