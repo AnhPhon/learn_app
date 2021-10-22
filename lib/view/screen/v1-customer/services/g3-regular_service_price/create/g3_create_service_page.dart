@@ -71,7 +71,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
                 children: [
                   RadioButton<GENDER>(title: "Nam", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nam, groupValue: controller.gender),
                   RadioButton<GENDER>(title: "Nữ", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nu, groupValue: controller.gender),
-                  RadioButton<GENDER>(title: "Khác", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Không yêu cầu", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
                 ],
               ),
             );
