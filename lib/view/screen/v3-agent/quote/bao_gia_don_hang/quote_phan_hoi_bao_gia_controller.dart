@@ -63,6 +63,7 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
       page: 1,
       filter: "",
       onSuccess: (models) {
+        print(models);
         danhSachBaoGiaDonDichVuResponse = models;
 
         models.forEach((model) {
