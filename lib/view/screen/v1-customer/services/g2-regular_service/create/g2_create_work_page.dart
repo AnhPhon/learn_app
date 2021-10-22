@@ -100,6 +100,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -112,6 +113,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         InputField(
@@ -121,6 +123,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Mô tả nội dung công việc",
           hidden: false,
+          textInputAction: TextInputAction.next,
           label: "Mô tả công việc",
           obligatory: true,
           typeInput: TextInputType.text,
@@ -141,6 +144,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           hidden: false,
           label: "Mô tả khối lượng công việc (nếu có)",
           obligatory: false,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),

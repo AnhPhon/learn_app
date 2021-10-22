@@ -77,6 +77,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -91,6 +92,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           hidden: false,
           label: "Mô tả công việc",
           obligatory: true,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
@@ -105,6 +107,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -117,6 +120,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );
@@ -143,6 +147,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           label: "Tên công việc",
           obligatory: true,
           typeInput: TextInputType.text,
+          textInputAction: TextInputAction.next,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
@@ -154,6 +159,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
           hidden: false,
           label: "Quy cách",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -169,6 +175,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               holdplacer: "VD: 100",
               hidden: false,
               label: "Khối lượng",
+              textInputAction: TextInputAction.next,
               obligatory: true,
               typeInput: TextInputType.number,
               width: DeviceUtils.getScaledWidth(context,0.5),
@@ -181,6 +188,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,0.5),
             label: "Đơn vị",
             hint: 'Chọn đơn vị',
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           ),
           ],
          ),

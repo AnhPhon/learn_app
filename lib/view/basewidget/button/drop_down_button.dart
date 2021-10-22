@@ -14,6 +14,7 @@ class DropDownButton<T> extends StatelessWidget {
     required this.obligatory,
     this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
     this.isColorFieldWhite = false,
+    this.padding
   }) : super(key: key);
   final String? hint;
   final double width;
@@ -24,12 +25,13 @@ class DropDownButton<T> extends StatelessWidget {
   final double? paddingTop;
   final bool? isColorFieldWhite;
   final T? value;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      // padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT, right: Dimensions.PADDING_SIZE_DEFAULT, top: paddingTop ?? 0),
+      padding: padding ?? const EdgeInsets.all(0),
       child: Column(
         children: [
           if (label != null)
