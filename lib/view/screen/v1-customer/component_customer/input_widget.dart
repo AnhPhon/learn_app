@@ -188,7 +188,7 @@ class InputWidget extends StatelessWidget {
                   filled: true,
                   fillColor: (isColorFieldWhite == true)
                       ? ColorResources.WHITE
-                      : ColorResources.NOT_ALLOW_EDIT,
+                      : ColorResources.LIGHT_GREY.withOpacity(0.8),
                 ),
               ),
             ),

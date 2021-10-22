@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/utils/color_resources.dart';
-
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 import 'package:template/view/screen/v4-employee/export_import/export_import_controller.dart';
 
@@ -484,7 +480,7 @@ Widget _customSoLuong(
 }
 
 ///
-/// Số lượng
+///  Đơn vị
 ///
 
 Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
@@ -568,7 +564,7 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
                         fontSize: Dimensions.FONT_SIZE_LARGE,
                         fontWeight: FontWeight.w600,
                       ),
-                      fillColor: ColorResources.NOT_ALLOW_EDIT,
+                      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
                     ),
                   ),
                 ),

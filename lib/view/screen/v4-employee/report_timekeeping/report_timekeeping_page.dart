@@ -6,7 +6,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_controller.dart';
 
 class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
@@ -18,6 +18,9 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
         return SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(
+                height: Dimensions.PADDING_SIZE_DEFAULT,
+              ),
               //chọn thời gian reprot chấm công
               _reportTimekeeping(controller, context),
 
@@ -42,17 +45,18 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
   ///
   Widget _reportTimekeeping(
       V4ReportTimekeepingControllter controller, BuildContext context) {
-    return TextFieldDate(
+    return InputWidget(
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
       allowEdit: false,
-      controller: controller.reportTimekeeping,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: '',
       label: "Thời gian",
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.reportTimekeeping,
+      suffixIcon: const Icon(
+        Icons.date_range,
+        size: Dimensions.ICON_SIZE_SMALL,
+        color: ColorResources.PRIMARYCOLOR,
+      ),
     );
   }
 }
