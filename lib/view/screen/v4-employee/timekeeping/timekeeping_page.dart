@@ -90,7 +90,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   Widget _timekeeping(
       V4TimekeepingController controller, BuildContext context) {
     return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
       isDate: true,
       allowEdit: false,
       controller: controller.timekeeping,

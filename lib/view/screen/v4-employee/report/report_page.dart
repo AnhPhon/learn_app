@@ -25,11 +25,11 @@ class V4ReportPage extends GetView<V4ReportController> {
       body: GetBuilder<V4ReportController>(
           init: V4ReportController(),
           builder: (V4ReportController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
