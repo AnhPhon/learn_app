@@ -17,6 +17,9 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4InfoController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -57,9 +60,14 @@ class V4InfoController extends GetxController {
   //user id
   String idUser = "";
 
-  // avatar file
+  // Avatar file
   File? avatarFile;
-  String? avatarPath;
+
+  // Image Indentity Front File
+  File? imageIndentityFront;
+
+  // Image Indentity After File
+  File? imageIndentityAfter;
 
   // khai báo is loading
   bool isLoading = true;
@@ -81,8 +89,8 @@ class V4InfoController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getTinhTp();
     getAccountInformation();
+    getTinhTp();
   }
 
   ///
@@ -137,24 +145,11 @@ class V4InfoController extends GetxController {
           addressController = TextEditingController(text: value.diaChi);
 
           //Tỉnh/Tp
-          final int indexTinhTp =
-              tinhTpList.map((e) => e.id).toList().indexOf(value.idTinhTp!.id);
-          if (indexTinhTp != -1) {
-            tinhTp = tinhTpList[indexTinhTp];
-          }
-
-          //Quận/Huyện
-          final int indexQuanHuyen = quanHuyenList
-              .map((e) => e.id)
-              .toList()
-              .indexOf(value.idQuanHuyen!.id);
-          if (indexQuanHuyen != -1) {
-            quanHuyen = quanHuyenList[indexQuanHuyen];
-            getPhuongXa(id: quanHuyen!.id);
-          }
-
-          print(quanHuyenList);
-          print(value.idQuanHuyen);
+          hintTextTinhTp = value.idTinhTp!.ten.toString();
+          //Quận/huyện
+          hintTextQuanHuyen = value.idQuanHuyen!.ten.toString();
+          //Phường/Xã
+          hintTextPhuongXa = value.idPhuongXa!.ten.toString();
 
           isLoading = false;
           isLoadingImage = false;
@@ -266,7 +261,7 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///pick image
+  ///Pick Image Avatar
   ///
   Future pickImage() async {
     try {
@@ -282,7 +277,7 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///upload image
+  ///Upload Image Avatar
   ///
   void uploadImage({required File image}) {
     imageUpdateProvider.add(
@@ -290,9 +285,79 @@ class V4InfoController extends GetxController {
       onSuccess: (value) {
         nhanVienRequest.hinhDaiDien = value.data;
         print(value.data);
+        update();
       },
       onError: (error) {
-        print("V1PersonalInfoController uploadImage onError $error");
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  ///Pick CMND mặt trước
+  ///
+  Future pickIndentiryFront() async {
+    try {
+      final imageFront =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (imageFront == null) return;
+      final imageTemporaryFront = File(imageFront.path);
+      imageIndentityFront = imageTemporaryFront;
+      uploadImage(image: imageTemporaryFront);
+      print("done");
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
+
+  ///
+  ///Upload CMND mặt trước
+  ///
+  void uploadIndentiryFront({required File image}) {
+    imageUpdateProvider.add(
+      file: image,
+      onSuccess: (value) {
+        nhanVienRequest.anhMTCMND = value.data;
+        print(value.data);
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  ///Pick CMND mặt sau
+  ///
+  Future pickIndentiryAfter() async {
+    try {
+      final imageAfter =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (imageAfter == null) return;
+      final imageTemporaryAfter = File(imageAfter.path);
+      imageIndentityAfter = imageTemporaryAfter;
+      uploadImage(image: imageTemporaryAfter);
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
+
+  ///
+  ///Upload CMND mặt sau
+  ///
+  void uploadIndentiryAfter({required File image}) {
+    imageUpdateProvider.add(
+      file: image,
+      onSuccess: (value) {
+        nhanVienRequest.anhMSCMND = value.data;
+        print(value.data);
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -301,61 +366,118 @@ class V4InfoController extends GetxController {
   ///update account
   ///
   void updateAccount(BuildContext context) {
-    //show loading
-    EasyLoading.show(status: 'loading...');
-
     //validate
     if (nameController.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
+      //show snackbar check họ và tên
       Get.snackbar(
         "Họ và tên không hợp lệ!",
         "Vui lòng nhập họ và tên hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
     } else if (birthdayController.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
+      //show snackbar check ngày sinh
       Get.snackbar(
         "Ngày sinh không hợp lệ!",
         "Vui lòng chọn ngày sinh hợp hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
     } else if (sex == null) {
-      EasyLoading.dismiss();
-
-      //show snackbar
+      //show snackbar check giới tính
       Get.snackbar(
-        "Giới tính khôn",
-        "Vui lòng nhập số điện thoại",
+        "Giới tính không hợp lệ",
+        "Vui lòng chọn giới tính hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
-    } else if (indentityCardController.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
+    } else if (phoneNumberController.text.isEmpty) {
+      //show snackbar check số điện thoại
       Get.snackbar(
-        "Lỗi",
-        "Vui lòng nhập email",
+        "Số điện thoại không hợp lệ!",
+        "Vui lòng nhập số điện thoại hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (addressController.text.isEmpty) {
+      //show snackbar check địa chỉ
+      Get.snackbar(
+        "Địa chỉ thường trú không hợp lệ!",
+        "Vui lòng nhập địa chỉ thường trú hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (tinhTp == null) {
+      //show snackbar check địa chỉ
+      Get.snackbar(
+        "Tỉnh/Tp không hợp lệ!",
+        "Vui lòng chọn Tỉnh/Tp hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (quanHuyen == null) {
+      //show snackbar check địa chỉ
+      Get.snackbar(
+        "Quận/Huyện không hợp lệ!",
+        "Vui lòng chọn Quận/Huyện hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+    } else if (phuongXa == null) {
+      //show snackbar check địa chỉ
+      Get.snackbar(
+        "Phường/Xã không hợp lệ!",
+        "Vui lòng chọn Phường/Xã hợp lệ!",
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
       );
     } else {
       //set data
-      taiKhoanRequest.id = idUser;
-      taiKhoanRequest.tenPhapLy = nameCompanyController!.text;
-      taiKhoanRequest.hoTen = fullNameController!.text;
-      taiKhoanRequest.gioiTinh = sex ?? taiKhoanResponse.gioiTinh;
-      taiKhoanRequest.ngaySinh = DateConverter.formatDate(
+      nhanVienRequest.id = idUser;
+      nhanVienRequest.hoTen = nameController.text;
+      nhanVienRequest.ngaySinh = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
-          bornController!.text.toString(),
+          birthdayController.text.toString(),
         ),
       );
-      taiKhoanRequest.soDienThoai = phoneController!.text;
-      taiKhoanRequest.email = emailController!.text;
+      nhanVienRequest.gioiTinh = sex ?? nhanVienRequest.gioiTinh;
+      nhanVienRequest.soDienThoai = phoneNumberController.text;
+      nhanVienRequest.email = emailController.text;
+      nhanVienRequest.diaChi = addressController.text;
+      nhanVienRequest.idTinhTp = tinhTp!.id;
+      nhanVienRequest.idQuanHuyen = quanHuyen!.id;
+      nhanVienRequest.idPhuongXa = phuongXa!.id;
 
       //update
-      taiKhoanProvider.update(
-        data: taiKhoanRequest,
+      nhanVienProvider.update(
+        data: nhanVienRequest,
         onSuccess: (value) {
-          EasyLoading.dismiss();
+          print(nhanVienRequest.hinhDaiDien.toString());
+          print(nhanVienRequest.anhMTCMND.toString());
           Get.back(result: true);
 
           //show dialog
@@ -371,7 +493,7 @@ class V4InfoController extends GetxController {
           );
         },
         onError: (error) {
-          print("V1PersonalInfoController updateAccount onError $error");
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
         },
       );
     }

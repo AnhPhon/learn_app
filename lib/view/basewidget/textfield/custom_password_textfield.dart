@@ -71,7 +71,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
             isDense: true,
             filled: true,
-            fillColor: Theme.of(context).primaryColor ,
+            fillColor: Theme.of(context).primaryColor,
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor)),
             hintStyle:

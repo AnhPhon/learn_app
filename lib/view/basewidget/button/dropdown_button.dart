@@ -20,13 +20,19 @@ class DropDownButton1<T> extends StatelessWidget {
     this.fillColor,
     this.colorText,
     this.isColorFieldWhite,
+    this.isBoldHintText = false,
   });
 
   final String? hint;
   final Function(T? i) onChanged;
   final List<T> data;
   final T? value;
-  final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
+  final bool? obligatory,
+      labelBold,
+      isBorder,
+      isShadow,
+      isColorFieldWhite,
+      isBoldHintText;
   final String? label;
   final Color? colorText;
   final Color? fillColor;
@@ -124,7 +130,18 @@ class DropDownButton1<T> extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
                         hint: hint.toString().isNotEmpty
-                            ? Text(hint.toString())
+                            ? Text(
+                                hint.toString(),
+                                style: TextStyle(
+                                  color: isBoldHintText == true
+                                      ? ColorResources.BLACK
+                                      : null,
+                                  fontSize: isBoldHintText == true
+                                      ? Dimensions.FONT_SIZE_LARGE
+                                      : null,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )
                             : null,
                         isDense: true,
                         isExpanded: true,

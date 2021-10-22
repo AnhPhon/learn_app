@@ -7,6 +7,7 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -127,26 +128,22 @@ class V4InfoPage extends GetView<V4InfoController> {
                           Dimensions.PADDING_SIZE_DEFAULT,
                         ),
                         child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text:
+                                    'Hình ảnh mặt trước và mặt sau của CMND/Căn cước',
+                                style:
+                                    Dimensions.fontSizeStyle16w600().copyWith(
+                                  color: ColorResources.BLACK,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const TextSpan(
+                              text: '*',
                               style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                fontWeight: FontWeight.bold,
+                                color: ColorResources.RED,
                               ),
-                              children: [
-                                TextSpan(
-                                  text:
-                                      'Hình ảnh mặt trước và mặt sau của CMND/Căn cước',
-                                  style: TextStyle(
-                                    color: ColorResources.BLACK,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '*',
-                                  style: TextStyle(
-                                    color: ColorResources.RED,
-                                  ),
-                                ),
-                              ]),
+                            ),
+                          ]),
                         ),
                       ),
 
@@ -172,7 +169,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                       ),
 
                       //Button cập nhập
-                      _btnUpdate(),
+                      _btnUpdate(controller, context),
 
                       const SizedBox(
                         height: Dimensions.PADDING_SIZE_LARGE,
@@ -181,6 +178,28 @@ class V4InfoPage extends GetView<V4InfoController> {
                   ),
                 );
               })),
+    );
+  }
+
+  ///
+  /// Full name
+  ///
+  Widget _name(V4InfoController controller, BuildContext context) {
+    return InputWidget(
+      textInputType: TextInputType.name,
+      isShadow: true,
+      isColorFieldWhite: true,
+      labelBold: true,
+      isBorder: false,
+      label: 'Họ và tên',
+      obligatory: true,
+      width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.nameController,
+      suffixIcon: const Icon(
+        Icons.edit_outlined,
+        size: Dimensions.ICON_SIZE_SMALL,
+        color: ColorResources.PRIMARYCOLOR,
+      ),
     );
   }
 
@@ -194,6 +213,7 @@ class V4InfoPage extends GetView<V4InfoController> {
         size: Dimensions.ICON_SIZE_SMALL,
         color: ColorResources.PRIMARYCOLOR,
       ),
+      isddMMyyyy: true,
       isBorder: false,
       isShadow: true,
       isColorFieldWhite: true,
@@ -219,7 +239,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       onChanged: controller.onChangedSex,
       data: controller.sexMap,
       width: 0.3,
-      value: controller.sex!,
+      value: controller.sex,
     );
   }
 
@@ -260,6 +280,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   Widget _addresssIndentityCard(
       V4InfoController controller, BuildContext context) {
     return InputWidget(
+      allowEdit: false,
       textInputType: TextInputType.streetAddress,
       suffixIcon: const Icon(
         Icons.edit_outlined,
@@ -268,7 +289,6 @@ class V4InfoPage extends GetView<V4InfoController> {
       ),
       isShadow: true,
       isBorder: false,
-      isColorFieldWhite: true,
       label: 'Nơi cấp CMND/Căn cước',
       obligatory: true,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -358,7 +378,8 @@ class V4InfoPage extends GetView<V4InfoController> {
       obligatory: true,
       onChanged: (value) => controller.onChangedTinhThanh(value!),
       value: controller.tinhTp,
-      width: 0.4,
+      width: 0.42,
+      isBoldHintText: true,
     );
   }
 
@@ -376,13 +397,14 @@ class V4InfoPage extends GetView<V4InfoController> {
       isColorFieldWhite: true,
       isBorder: false,
       isShadow: true,
-      hint: '',
+      hint: controller.hintTextQuanHuyen,
       label: 'Quận/Huyện',
       data: controller.quanHuyenList,
       obligatory: true,
       onChanged: (value) => controller.onChangedQuanHuyen(value!),
       value: controller.quanHuyen,
-      width: 0.4,
+      width: 0.42,
+      isBoldHintText: true,
     );
   }
 
@@ -400,27 +422,30 @@ class V4InfoPage extends GetView<V4InfoController> {
       isColorFieldWhite: true,
       isBorder: false,
       isShadow: true,
-      hint: '',
+      hint: controller.hintTextPhuongXa,
       label: 'Phường/Xã',
       data: controller.phuongXaList,
       obligatory: true,
       onChanged: (value) => controller.onChangedPhuongXa(value!),
       value: controller.phuongXa,
-      width: 0.4,
+      width: 0.42,
+      isBoldHintText: true,
     );
   }
 
   ///
   /// Button cập nhập
   ///
-  Widget _btnUpdate() {
+  Widget _btnUpdate(V4InfoController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_LARGE,
       ),
       child: LongButton(
         color: ColorResources.PRIMARY,
-        onPressed: () {},
+        onPressed: () {
+          controller.updateAccount(context);
+        },
         title: 'Cập nhập',
       ),
     );
@@ -430,47 +455,66 @@ class V4InfoPage extends GetView<V4InfoController> {
   /// CMND mặt trước
   ///
   Widget _indetityCardFront(BuildContext context, V4InfoController controller) {
-    return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.16),
-      width: DeviceUtils.getScaledWidth(context, 0.38),
-      decoration: BoxDecoration(
-        color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(
-          Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: ColorResources.BLACK.withAlpha(40),
-            blurRadius: 2,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        image: DecorationImage(
-          image: NetworkImage(
-            controller.nhanVienResponse.anhMTCMND.toString(),
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_photo_alternate_outlined,
-              size: Dimensions.ICON_SIZE_EXTRA_LARGE,
+    if (controller.isLoadingImage) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            controller.pickIndentiryFront();
+          },
+          child: Container(
+            height: DeviceUtils.getScaledHeight(context, 0.16),
+            width: DeviceUtils.getScaledWidth(context, 0.38),
+            decoration: BoxDecoration(
+              color: ColorResources.WHITE,
+              borderRadius: BorderRadius.circular(
+                Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorResources.BLACK.withAlpha(40),
+                  blurRadius: 2,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
+            child: controller.imageIndentityFront != null
+                ? Image.file(
+                    controller.imageIndentityFront!,
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage.assetNetwork(
+                    placeholder: Images.placeholder,
+                    image: controller.nhanVienResponse.anhMTCMND.toString(),
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (c, o, s) => Container(
+                      height: DeviceUtils.getScaledHeight(context, 0.16),
+                      width: DeviceUtils.getScaledWidth(context, 0.38),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(Images.placeholder),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
           ),
-          const SizedBox(
-            height: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        const SizedBox(
+          height: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        Text(
+          'Mặt trước',
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            color: ColorResources.BLACK.withOpacity(.6),
           ),
-          Text(
-            'Mặt trước',
-            style: Dimensions.fontSizeStyle16w600(),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -479,47 +523,65 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _indentiryCardAfter(
       BuildContext context, V4InfoController controller) {
-    return Container(
-      height: DeviceUtils.getScaledHeight(context, 0.16),
-      width: DeviceUtils.getScaledWidth(context, 0.38),
-      decoration: BoxDecoration(
-        color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(
-          Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: ColorResources.BLACK.withAlpha(40),
-            blurRadius: 2,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        image: DecorationImage(
-          image: NetworkImage(
-            controller.nhanVienResponse.anhMSCMND.toString(),
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.add_photo_alternate_outlined,
-              size: Dimensions.ICON_SIZE_EXTRA_LARGE,
+    if (controller.isLoadingImage) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            controller.pickIndentiryAfter();
+          },
+          child: Container(
+            height: DeviceUtils.getScaledHeight(context, 0.16),
+            width: DeviceUtils.getScaledWidth(context, 0.38),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorResources.BLACK.withAlpha(40),
+                  blurRadius: 2,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
+            child: controller.imageIndentityAfter != null
+                ? Image.file(
+                    controller.imageIndentityAfter!,
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage.assetNetwork(
+                    placeholder: Images.placeholder,
+                    image: controller.nhanVienResponse.anhMSCMND.toString(),
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (c, o, s) => Container(
+                      height: DeviceUtils.getScaledHeight(context, 0.16),
+                      width: DeviceUtils.getScaledWidth(context, 0.38),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(Images.placeholder),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
           ),
-          const SizedBox(
-            height: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        const SizedBox(
+          height: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        Text(
+          'Mặt sau',
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            color: ColorResources.BLACK.withOpacity(.6),
           ),
-          Text(
-            'Mặt sau',
-            style: Dimensions.fontSizeStyle16w600(),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -532,76 +594,48 @@ class V4InfoPage extends GetView<V4InfoController> {
         child: CircularProgressIndicator(),
       );
     }
-    return Container(
-      width: DeviceUtils.getScaledWidth(context, 0.3),
-      height: DeviceUtils.getScaledHeight(context, 0.14),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: CircleAvatar(
-              radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE,
-              backgroundColor: ColorResources.WHITE,
-              child: CircleAvatar(
-                radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
-                backgroundImage: NetworkImage(
-                    controller.nhanVienResponse.hinhDaiDien.toString()),
-              ),
-            ),
+    return Stack(
+      children: [
+        //image
+        Container(
+          height: DeviceUtils.getScaledSize(context, .2),
+          width: DeviceUtils.getScaledSize(context, .2),
+          child: ClipOval(
+            child: controller.avatarFile != null
+                ? Image.file(
+                    controller.avatarFile!,
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage.assetNetwork(
+                    placeholder: Images.placeholder,
+                    image: controller.nhanVienResponse.hinhDaiDien.toString(),
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                        backgroundImage: AssetImage(Images.placeholder))),
           ),
-          Positioned(
-            bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            child: Container(
-              width: DeviceUtils.getScaledWidth(context, 0.1),
-              height: DeviceUtils.getScaledWidth(context, 0.1),
-              decoration: BoxDecoration(
-                  color: ColorResources.WHITE,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      // ignore: prefer_const_constructors
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                      color: ColorResources.BLACK.withAlpha(20),
-                    )
-                  ]),
-              child: IconButton(
-                onPressed: () {
-                  controller.pickImage();
-                },
-                icon: const Icon(
-                  Icons.add_a_photo_outlined,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
 
-  ///
-  /// Full name
-  ///
-  Widget _name(V4InfoController controller, BuildContext context) {
-    return InputWidget(
-      textInputType: TextInputType.name,
-      isShadow: true,
-      isColorFieldWhite: true,
-      labelBold: true,
-      isBorder: false,
-      label: 'Họ và tên',
-      obligatory: true,
-      width: DeviceUtils.getScaledWidth(context, 1),
-      textEditingController: controller.nameController,
-      suffixIcon: const Icon(
-        Icons.edit_outlined,
-        size: Dimensions.ICON_SIZE_SMALL,
-        color: ColorResources.PRIMARYCOLOR,
-      ),
+        //edit
+        Positioned(
+          right: 0,
+          top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+          child: GestureDetector(
+            onTap: () => controller.pickImage(),
+            child: Container(
+              padding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              decoration: const BoxDecoration(
+                  color: ColorResources.WHITE,
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: const Icon(
+                Icons.add_a_photo_outlined,
+                color: ColorResources.PRIMARY,
+                size: Dimensions.ICON_SIZE_SMALL,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -10,7 +10,7 @@ class V4RulesPage extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorResources.HOME_BG,
-      appBar: const AppBarWidget(title: "Điều khoản"),
+      appBar: const AppBarWidget(title: "Nội quy, quy chế"),
       body: GetBuilder<V4RulesController>(
           init: V4RulesController(),
           builder: (V4RulesController controller) {

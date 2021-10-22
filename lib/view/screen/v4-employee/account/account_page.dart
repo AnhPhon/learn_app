@@ -91,7 +91,7 @@ class V4AccountPage extends GetView<V4AccountController> {
                 Positioned(
                   top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 3,
                   child: Container(
-                    height: DeviceUtils.getScaledHeight(context, 0.8),
+                    height: DeviceUtils.getScaledHeight(context, 0.9),
                     width: DeviceUtils.getScaledWidth(context, 1),
                     padding: const EdgeInsets.all(
                       Dimensions.PADDING_SIZE_DEFAULT,
@@ -107,6 +107,9 @@ class V4AccountPage extends GetView<V4AccountController> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          const SizedBox(
+                            height: Dimensions.PADDING_SIZE_DEFAULT,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             // ignore: prefer_const_literals_to_create_immutables
@@ -115,24 +118,18 @@ class V4AccountPage extends GetView<V4AccountController> {
                               _avatar(context),
                             ],
                           ),
+                          const SizedBox(
+                            height: Dimensions.PADDING_SIZE_SMALL,
+                          ),
                           Column(
                             children: [
                               // Tên tài khoản
                               Text(
-                                controller.title,
+                                controller.nhanVienResponse.hoTen.toString(),
                                 style: Dimensions.fontSizeStyle18w600(),
                               ),
                               const SizedBox(
-                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                              ),
-
-                              //Tên email
-                              Text(
-                                controller.email,
-                                style: Dimensions.fontSizeStyle16(),
-                              ),
-                              const SizedBox(
-                                height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL * 6,
                               ),
 
                               //Thông tin cá nhân
@@ -154,7 +151,7 @@ class V4AccountPage extends GetView<V4AccountController> {
                                   color: ColorResources.BLACK,
                                 ),
                                 press: () {
-                                  controller.onClickToSalarypage();
+                                  controller.onClickToSalarypage(context);
                                 },
                                 title: 'Bảng lương',
                               ),
@@ -168,7 +165,7 @@ class V4AccountPage extends GetView<V4AccountController> {
                                 press: () {
                                   controller.onClickToRulesPage();
                                 },
-                                title: 'Quy phạm quy chế công ty',
+                                title: 'Vi phạm quy chế công ty',
                               ),
                             ],
                           )
@@ -187,54 +184,24 @@ class V4AccountPage extends GetView<V4AccountController> {
   /// Custom Avatar
   ///
   Widget _avatar(BuildContext context) {
-    // ignore: sized_box_for_whitespace
-    return Container(
-      width: DeviceUtils.getScaledWidth(context, 0.3),
-      height: DeviceUtils.getScaledHeight(context, 0.14),
-      child: Stack(
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: CircleAvatar(
-              radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE,
-              backgroundColor: ColorResources.WHITE,
-              child: CircleAvatar(
-                radius: Dimensions.BORDER_RADIUS_EXTRA_LARGE - 2,
-                backgroundImage: AssetImage(
-                  Images.V4NewsExample,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            child: Container(
-              width: DeviceUtils.getScaledWidth(context, 0.1),
-              height: DeviceUtils.getScaledWidth(context, 0.1),
-              decoration: BoxDecoration(
-                  color: ColorResources.WHITE,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      // ignore: prefer_const_constructors
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                      color: ColorResources.BLACK.withAlpha(20),
-                    )
-                  ]),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.add_a_photo_outlined,
-                ),
-              ),
-            ),
-          ),
-        ],
+    if (controller.isLoadingImage) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return
+        //image
+        Container(
+      height: DeviceUtils.getScaledSize(context, .25),
+      width: DeviceUtils.getScaledSize(context, .25),
+      child: ClipOval(
+        child: FadeInImage.assetNetwork(
+            placeholder: Images.placeholder,
+            image: controller.nhanVienResponse.hinhDaiDien.toString(),
+            fit: BoxFit.cover,
+            imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                backgroundImage: AssetImage(Images.placeholder))),
       ),
     );
   }

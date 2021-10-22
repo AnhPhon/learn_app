@@ -31,7 +31,7 @@ class InputWidget extends StatelessWidget {
   const InputWidget({
     Key? key,
     required this.textEditingController,
-    this.isddMMyyyy,
+    this.isddMMyyyy = false,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -122,8 +122,11 @@ class InputWidget extends StatelessWidget {
                         firstDate: DateTime(1800),
                         lastDate: DateTime(2100),
                       ).then((value) {
-                        textEditingController.text =
-                            DateConverter.formatDate(value!);
+                        isddMMyyyy == true
+                            ? textEditingController.text =
+                                DateConverter.estimatedDateOnly(value!)
+                            : textEditingController.text =
+                                DateConverter.formatDate(value!);
                       });
                     }
                   : (isTime == true)

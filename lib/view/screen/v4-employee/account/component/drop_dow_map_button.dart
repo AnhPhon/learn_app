@@ -23,7 +23,7 @@ class V4DropDownMapButton<T> extends StatelessWidget {
   final Color? colorText;
   final Function(T? value) onChanged;
   final Map<T, String> data;
-  final T value;
+  final T? value;
   final String? label;
   final bool obligatory;
   @override
