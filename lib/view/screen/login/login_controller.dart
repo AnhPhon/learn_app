@@ -57,16 +57,16 @@ class LoginController extends GetxController {
   void onLoginBtnClick() {
     // print('phuong ${usernameController.text}');
     // print('phuong ${passwordController.text}');
-    // // sl.get<SharedPreferenceHelper>().saveUserId("616d99dd7e28e22b158543bb");
-    // // if (usernameController.text == '1') {
-    // //   Get.toNamed(AppRoutes.V1_DASHBOARD);
-    // // } else if (usernameController.text == '2') {
-    // //   Get.toNamed(AppRoutes.V2_DASHBOARD);
-    // // } else if (usernameController.text == '3') {
-    // //   Get.toNamed(AppRoutes.V3_DASHBOARD);
-    // // } else if (usernameController.text == '4') {
-    // //   Get.toNamed(AppRoutes.V4_DASHBOARD);
-    // // } else {}
+    sl.get<SharedPreferenceHelper>().saveUserId("616c1b2307809c5435dac950");
+    if (usernameController.text == '1') {
+      Get.toNamed(AppRoutes.V1_DASHBOARD);
+    } else if (usernameController.text == '2') {
+      Get.toNamed(AppRoutes.V2_DASHBOARD);
+    } else if (usernameController.text == '3') {
+      Get.toNamed(AppRoutes.V3_DASHBOARD);
+    } else if (usernameController.text == '4') {
+      Get.toNamed(AppRoutes.V4_DASHBOARD);
+    } else {}
 
     // // validate infomation username password
     // if (usernameController.text == '' || passwordController.text == '') {

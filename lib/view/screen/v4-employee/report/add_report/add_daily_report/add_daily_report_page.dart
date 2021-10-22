@@ -40,7 +40,7 @@ class V4AddDailyReportPage extends GetView<V4AddDailyReportController> {
                     height: DeviceUtils.getScaledWidth(context, 0.6),
                   ),
                   //button báo cáo theo yêu cầu
-                  _btnReport(),
+                  _btnReport(controller, context),
                 ],
               ),
             );
@@ -112,10 +112,12 @@ InputField _contentReportOnRequest(
 /// Button báo cáo
 ///
 
-Widget _btnReport() {
+Widget _btnReport(V4AddDailyReportController controller, BuildContext context) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.dailyReport();
+    },
     title: 'Báo cáo',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );

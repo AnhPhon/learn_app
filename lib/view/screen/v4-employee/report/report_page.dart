@@ -36,8 +36,8 @@ class V4ReportPage extends GetView<V4ReportController> {
               ),
               child:
 
-                  //danh sách báo cáo
-                  _listReport(controller),
+              //danh sách báo cáo
+              _listReport(controller),
             );
           }),
 
@@ -66,7 +66,7 @@ class V4ReportPage extends GetView<V4ReportController> {
 ///
 Widget _listReport(V4ReportController controller) {
   return ListView.builder(
-    itemCount: controller.uiReport!.length,
+    itemCount: controller.baocaonhanvienModelList.length,
     itemBuilder: (BuildContext context, int index) {
       return Column(
         children: [
@@ -78,7 +78,7 @@ Widget _listReport(V4ReportController controller) {
             height: DeviceUtils.getScaledHeight(context, 0.18),
             decoration: BoxDecoration(
               borderRadius:
-                  BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
               color: ColorResources.WHITE,
               boxShadow: [
                 BoxShadow(
@@ -103,7 +103,7 @@ Widget _listReport(V4ReportController controller) {
                       children: [
                         //Tiêu đề báo cáo công việc theo yêu cầu
                         Text(
-                          controller.uiReport![index]["title"].toString(),
+                          controller.baocaonhanvienModelList[index].idDuAnNhanVien!.tieuDe!,
                           style: Dimensions.fontSizeStyle16w600(),
                         ),
                         const SizedBox(
@@ -112,7 +112,7 @@ Widget _listReport(V4ReportController controller) {
 
                         //phụ đề báo cáo công việc
                         Text(
-                          controller.uiReport![index]["subtitle"].toString(),
+                          controller.baocaonhanvienModelList[index].idDuAnNhanVien!.moTa!,
                           style: Dimensions.fontSizeStyle14(),
                         ),
                         const SizedBox(
@@ -121,7 +121,7 @@ Widget _listReport(V4ReportController controller) {
 
                         //chi tiết báo cáo
                         Text(
-                          controller.uiReport![index]["description"].toString(),
+                          controller.baocaonhanvienModelList[index].noiDung!,
                           style: Dimensions.fontSizeStyle14(),
                         ),
                         const SizedBox(
@@ -143,15 +143,15 @@ Widget _listReport(V4ReportController controller) {
                                     color: ColorResources.PRIMARY,
                                   ),
                                   Text(
-                                    controller.uiReport![index]["address"]
-                                        .toString(),
+                                    // địa chỉ
+                                    controller.baocaonhanvienModelList[index].idDuAnNhanVien!.diaChi!,
                                     style: Dimensions.fontSizeStyle14w600(),
                                   ),
                                 ],
                               ),
                               Text(
-                                controller.uiReport![index]["daysReport"]
-                                    .toString(),
+                                // ngày báo cáo
+                                controller.baocaonhanvienModelList[index].createdAt!,
                                 style: Dimensions.fontSizeStyle14w600(),
                               )
                             ],

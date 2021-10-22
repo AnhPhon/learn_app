@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_controller.dart';
+import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_controller.dart';
 
 class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
   @override
@@ -38,7 +41,7 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
                     height: DeviceUtils.getScaledWidth(context, 0.6),
                   ),
                   //button báo cáo theo yêu cầu
-                  _btnReport(),
+                  _btnReport(controller),
                 ],
               ),
             );
@@ -71,16 +74,15 @@ Widget _timeReportOnRequest(
 ///
 Widget _projectReportOnRequest(
     V4AddReportOnRequestController controller, BuildContext context) {
-  return InputField(
-    allowEdit: true,
-    allowMultiline: false,
-    controller: controller.projectReportOnRequest,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: 'Dự án A',
-    label: 'Tên dự án/văn phòng',
+  return DropDownButton1<DuAnNhanVienResponse>(
+    isColorFieldWhite: true,
+    labelBold: true,
+    hint: 'Vui lòng chọn dự án',
+    label: 'Dự án',
+    data: controller.duAnNhanVienList,
     obligatory: true,
-    typeInput: TextInputType.text,
+    onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
+    value: controller.duAnNhanVien,
     width: DeviceUtils.getScaledWidth(context, 1),
   );
 }
@@ -110,10 +112,12 @@ InputField _contentReportOnRequest(
 /// Button báo cáo
 ///
 
-Widget _btnReport() {
+Widget _btnReport(V4AddReportOnRequestController controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.onBaoCao();
+    },
     title: 'Báo cáo',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );

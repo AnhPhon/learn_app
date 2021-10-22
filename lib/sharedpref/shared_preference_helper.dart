@@ -260,4 +260,5 @@ class SharedPreferenceHelper {
   Future<bool> removeProductId() async {
     return _sharedPreference.remove(Preferences.productId);
   }
+
 }
