@@ -27,7 +27,7 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
-  final EdgeInsetsGeometry ? padding;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,19 +62,22 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           GestureDetector(
-            onTap: isDate  ? (){
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2100),
-              ).then((value) {
-                isToHour! ? controller.text =
-                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
-                    "${value!.day}-${value.month}-${value.year}";
-                    
-              });
-            } : (){},
+            onTap: isDate
+                ? () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2001),
+                      lastDate: DateTime(2100),
+                    ).then((value) {
+                      isToHour!
+                          ? controller.text =
+                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value!.day}-${value.month}-${value.year}";
+                    });
+                  }
+                : () {},
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: isDate ? null : typeInput,
@@ -129,8 +132,9 @@ class TextFieldDate extends StatelessWidget {
                   ),
                   hintText: holdplacer,
                   filled: true,
-                  fillColor:
-                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.WHITE
+                      : Colors.white,
                   suffixIconConstraints: const BoxConstraints(
                     maxHeight: Dimensions.PADDING_SIZE_LARGE,
                   ),
