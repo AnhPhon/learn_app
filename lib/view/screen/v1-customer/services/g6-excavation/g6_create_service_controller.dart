@@ -19,7 +19,8 @@ import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V1G6CreateServiceController extends GetxController{
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -54,11 +55,14 @@ class V1G6CreateServiceController extends GetxController{
 
   // Danh sách hình san pham mau
   List<File> productImages = [];
-
+  // app bar title
+  String appBarTitle = 'Tạo đơn công việc';
   @override
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
+    appBarTitle = Get.parameters['title'].toString();
+    print("fasfasdfasfsdfsfsfsa${appBarTitle}");
     getWorkTime();
     getAllThongSo();
     super.onInit();
@@ -140,7 +144,7 @@ class V1G6CreateServiceController extends GetxController{
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -149,7 +153,7 @@ class V1G6CreateServiceController extends GetxController{
   ///
   void onDeleteImage({required File file, required List<File> files}){
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    showSnackBar(title: "Xoá", message: "Xoá ảnh thành công");
+    SnackBarUtils.showSnackBar(title: "Xoá", message: "Xoá ảnh thành công");
     update();
   }
 
@@ -158,29 +162,29 @@ class V1G6CreateServiceController extends GetxController{
   ///
   Future<void> onClickContinueButton() async{
     if(thongSo.isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thông số kỹ thuật");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thông số kỹ thuật");
     }else if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời làm việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời làm việc");
     }else if(amountController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập số lượng yêu cầu");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không được để trống");
     }else if(int.parse(amountController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Số lượng không hợp lệ");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không hợp lệ");
     }else if(startTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày làm việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(endTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn ngày kết thức dự kiến");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thức dự kiến không được để trống");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
-      showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
     }else if(workDescController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả yêu cầu cụ thể");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{
       EasyLoading.show(status: "Loading ...");
       request().then((value){
         donDichVuProvider.add(data: value, onSuccess: (data){
           EasyLoading.dismiss();
-          showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất");
+          SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất", backgroundColor: ColorResources.PRIMARYCOLOR);
           Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
         }, onError: (onError){
           EasyLoading.dismiss();
@@ -228,7 +232,7 @@ class V1G6CreateServiceController extends GetxController{
             productImagesLink = "$productImagesLink${data.data},";
           }, onError: (onError){
             print("V1G2CreateWorkController request ảnh sản phẩm mẫu $onError");
-            showSnackBar(title: "Upload hình ảnh thất bại", message: "Vui lòng thử lại");
+            SnackBarUtils.showSnackBar(title: "Upload hình ảnh thất bại", message: "Vui lòng thử lại");
             EasyLoading.dismiss();
           });
         });

@@ -15,6 +15,7 @@ class TextFieldDate extends StatelessWidget {
       required this.obligatory,
       this.area = false,
       required this.fontSize,
+      this.padding,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
   final String holdplacer;
   final String? label;
@@ -26,13 +27,11 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
+      padding: padding ?? const EdgeInsets.all(0),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,22 +85,22 @@ class TextFieldDate extends StatelessWidget {
               maxLines: area! ? 3 : 1,
               enabled: false,
               controller: controller,
-              // onTap: (isDate == true)
-              //     ? () {
-              //         showDatePicker(
-              //           context: context,
-              //           initialDate: DateTime.now(),
-              //           firstDate: DateTime(2001),
-              //           lastDate: DateTime(2100),
-              //         ).then((value) {
-              //           isToHour == true
-              //               ? controller.text =
-              //                   "${value!.year}-${value.month}-${value.day}"
-              //               : controller.text =
-              //                   "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
-              //         });
-              //       }
-              //     : null,
+              onTap: (isDate == true)
+                  ? () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2001),
+                        lastDate: DateTime(2100),
+                      ).then((value) {
+                        isToHour == true
+                            ? controller.text =
+                                "${value!.year}-${value.month}-${value.day}"
+                            : controller.text =
+                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
+                      });
+                    }
+                  : null,
               cursorColor: ColorResources.PRIMARYCOLOR,
               decoration: InputDecoration(
                   isDense: true,

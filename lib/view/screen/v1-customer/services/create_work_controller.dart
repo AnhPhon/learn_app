@@ -16,6 +16,8 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
+import 'package:template/utils/snack_bar.dart';
+import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 import '../../../../di_container.dart';
 
@@ -52,6 +54,7 @@ class CreateWorkController extends GetxController {
   String idUser = '';
   // Get param (idType) nếu là dịch vụ thường xuyên 2 và tạo đơn dich vụ là 1
   SERVICES services = SERVICES.REGULARLY;
+  String titleAppBar = 'Tạo đơn dịch vụ';
   @override
   void onInit() {
     super.onInit();
@@ -63,6 +66,12 @@ class CreateWorkController extends GetxController {
     getNhomDichVu();
     getTinhThanh();
     getUserId();
+    /// Change Title App bar
+    if(services == SERVICES.REGULARLY){
+      titleAppBar = "Dịch vụ thường xuyên";
+    }else if(services == SERVICES.WORK){
+      titleAppBar = 'Tạo đơn công việc';
+    }
   }
 
 
@@ -145,9 +154,9 @@ class CreateWorkController extends GetxController {
     }, onError: (error) {
       isLoadingNhomDichVu = false;
       update();
-      Get.snackbar(
-        "Error",
-        error.message.toString(),
+      SnackBarUtils.showSnackBar(
+        title:"Error",
+        message:error.message.toString(),
       );
     });
   }
@@ -172,9 +181,9 @@ class CreateWorkController extends GetxController {
         onError: (error) {
           print("CreateWorkController getLoaiCongViec onError $error");
           update();
-          Get.snackbar(
-            "Error",
-            error.message.toString(),
+          SnackBarUtils.showSnackBar(
+            title:"Error",
+            message:error.message.toString(),
           );
         });
   }
@@ -278,23 +287,29 @@ class CreateWorkController extends GetxController {
   ///
   void onClickContinue() async{
       if(dichvu == null){
-        return Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
+        SnackBarUtils.showSnackBar(title:"Nhóm dich vụ bắt buộc",message:"Vui lòng chọn dịch vụ");
+        return; 
       }else if(tinh == null){
-        return Get.snackbar("Tỉnh","Vui lòng chọn tỉnh");
+        SnackBarUtils.showSnackBar(title:"Trường tỉnh bắt buộc",message:"Vui lòng chọn tỉnh");
+        return; 
       }else if(quanHuyen == null){
-        return Get.snackbar("Trường quận huyện bắt buộc","Vui lòng quận huyện");
+        SnackBarUtils.showSnackBar(title:"Trường quận huyện bắt buộc",message:"Vui lòng chọn quận huyện");
+        return; 
       }else if(phuongXa == null){
-        return Get.snackbar("Trường phường xã bắt buộc","Vui lòng phường xã");
+        SnackBarUtils.showSnackBar(title:"Trường phường xã bắt buộc",message:"Vui lòng phường xã");
+        return; 
       }else if(loaiCongViec == null){
-        return  Get.snackbar("Trường công việc bắt buộc","Vui lòng chọn công việc");
+         SnackBarUtils.showSnackBar(title:"Trường công việc bắt buộc",message:"Vui lòng chọn công việc");
+        return; 
       }else if(addressController.text.toString().isEmpty){
-        return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
+        SnackBarUtils.showSnackBar(title:"Trường địa chỉ bắt buộc",message:"Vui lòng điền địa chỉ cụ thể");
+        return; 
       }else{
         if(dichvu!.nhomDichVu! == '1'){
          // Nhóm 1
           Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
         }else {
-          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}", arguments: await request(),);
+          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),);
         }
       }
   }

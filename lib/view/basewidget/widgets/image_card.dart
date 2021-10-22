@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,8 +11,10 @@ class ImageCard extends StatelessWidget {
     required this.image,
     required this.isAddImage,
     this.onDelete,
+    //this.imageUrl
   }) : super(key: key);
-  final File image;
+  final dynamic image;
+  // final String? imageUrl;
   final bool isAddImage;
   final Function? onDelete;
   @override
@@ -36,9 +36,9 @@ class ImageCard extends StatelessWidget {
               width: double.infinity,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                child: Image.file(
-                  image, fit: BoxFit.cover,
-                )
+                child: image is File ? Image.file(
+                  image as File, fit: BoxFit.cover,
+                ) : Image.network(image as String, fit: BoxFit.cover)
               ),
             ),
             if(isAddImage)

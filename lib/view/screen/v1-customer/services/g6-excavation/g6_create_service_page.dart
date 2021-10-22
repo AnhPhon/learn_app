@@ -19,12 +19,12 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_controller.dart';
 
 class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
-
+  final V1G6CreateServiceController _controller = Get.find<V1G6CreateServiceController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: AppBarWidget(title: _controller.appBarTitle),
       body: GetBuilder(
         builder: (V1G6CreateServiceController controller) {
           if(controller.isLoading || controller.isThongSo){
@@ -85,6 +85,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
             horizontal: Dimensions.PADDING_SIZE_DEFAULT,
           ),
           child: MultiSelectDialogField(
+            buttonIcon: const Icon(Icons.arrow_drop_down),
             listType: MultiSelectListType.CHIP,
             items: controller.thongSoKyThuatList,
             title: const Text("Thông số kỹ thuật"),
@@ -150,6 +151,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         // Ngày kết thúc dự kiến
@@ -163,6 +165,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
 
