@@ -87,7 +87,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       allowEdit: false,
       allowMultiline: false,
       controller: controller.revenueController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       hidden: false,
       holdplacer: 'Thu',
       label: 'Loại thêm',

@@ -42,7 +42,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                       // chọn ngày xuất nhập kho
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_DEFAULT,
+                          top: Dimensions.PADDING_SIZE_LARGE,
                         ),
                         child: _timeExportImport(controller, context),
                       ),
@@ -129,7 +129,12 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   Widget _timeExportImport(
       V4ExportImportControleer controller, BuildContext context) {
     return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        0,
+        0,
+      ),
       isDate: true,
       allowEdit: false,
       controller: controller.timeExportImport,
@@ -186,6 +191,12 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _project(V4ExportImportControleer controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isColorFieldWhite: true,
       labelBold: true,
       hint: 'Vui lòng chọn tên dự án',
@@ -204,6 +215,12 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
 ///
 Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<KhoHangResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     labelBold: true,
     hint: 'Vui lòng chọn kho hàng',
@@ -221,6 +238,12 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<DonViCungCapResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     labelBold: true,
     hint: 'Vui lòng chọn đơn vị cung cấp',
@@ -238,6 +261,12 @@ Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<VatTuResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     labelBold: true,
     hint: 'Vui lòng chọn vật tư',

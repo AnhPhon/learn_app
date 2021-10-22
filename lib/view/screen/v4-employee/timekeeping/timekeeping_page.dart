@@ -90,7 +90,12 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   Widget _timekeeping(
       V4TimekeepingController controller, BuildContext context) {
     return TextFieldDate(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isDate: true,
       allowEdit: false,
       controller: controller.timekeeping,
@@ -108,6 +113,12 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   ///
   Widget _project(V4TimekeepingController controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isColorFieldWhite: true,
       labelBold: true,
       hint: 'Vui lòng chọn dự án',
@@ -145,6 +156,12 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
 ///
 Widget _city(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton1<TinhTpResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      0,
+    ),
     labelBold: true,
     label: 'Tỉnh/Tp',
     isColorFieldWhite: true,
@@ -162,6 +179,12 @@ Widget _city(V4TimekeepingController controller, BuildContext context) {
 ///
 Widget _district(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton1<QuanHuyenResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     labelBold: true,
     label: 'Quận/Huyện',
     isColorFieldWhite: true,
@@ -179,6 +202,12 @@ Widget _district(V4TimekeepingController controller, BuildContext context) {
 ///
 Widget _wards(V4TimekeepingController controller, BuildContext context) {
   return DropDownButton1<PhuongXaResponse>(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      0,
+    ),
     labelBold: true,
     label: 'Phường/Xã',
     isColorFieldWhite: true,

@@ -66,7 +66,7 @@ class V4ExportImportControleer extends GetxController {
   final exportController = TextEditingController(text: "Xuất");
   final importController = TextEditingController(text: "Nhập");
 
-  final countController = TextEditingController();
+  final countController = TextEditingController(text: "${0}");
   TextEditingController utils = TextEditingController(text: "Tấn");
   final contentController = TextEditingController();
 

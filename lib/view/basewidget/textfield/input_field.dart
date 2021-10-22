@@ -78,6 +78,9 @@ class InputField extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          ),
           Container(
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
