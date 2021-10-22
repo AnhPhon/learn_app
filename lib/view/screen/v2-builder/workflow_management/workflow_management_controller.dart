@@ -62,9 +62,9 @@ class V2WorkflowManagementController extends GetxController
         filter: "&idTaiKhoan=$id",
         onSuccess: (values) {
           for (final value in values) {
-            if (value.idTrangThaiDonHang != null &&
+            if (value.idTrangThaiDonDichVu != null &&
                 value.idNhomDichVu != null) {
-              final String tieuDe = value.idTrangThaiDonHang!.tieuDe.toString();
+              final String tieuDe = value.idTrangThaiDonDichVu!.tieuDe.toString();
               final String nhomDichVu = value.idNhomDichVu!.nhomDichVu!;
 
               if (nhomDichVu == "3" || nhomDichVu == "4") {

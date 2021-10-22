@@ -176,14 +176,14 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             Row(
                               children: [
                                 Icon(
-                                  controller.dangLam[index].idTrangThaiDonHang!
+                                  controller.dangLam[index].idTrangThaiDonDichVu!
                                               .tieuDe!
                                               .toLowerCase() ==
                                           controller.dangTuyenKey
                                       ? Icons.person_add_outlined
                                       : Icons.watch_later_outlined,
                                   color: controller.dangLam[index]
-                                              .idTrangThaiDonHang!.tieuDe!
+                                              .idTrangThaiDonDichVu!.tieuDe!
                                               .toLowerCase() ==
                                           controller.dangTuyenKey
                                       ? ColorResources.GREEN
@@ -192,12 +192,12 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
 
                                 //Trạng thái
                                 Text(
-                                  controller.dangLam[index].idTrangThaiDonHang!
+                                  controller.dangLam[index].idTrangThaiDonDichVu!
                                               .tieuDe!
                                               .toLowerCase() ==
                                           controller.dangTuyenKey
                                       ? controller.dangLam[index]
-                                          .idTrangThaiDonHang!.tieuDe!
+                                          .idTrangThaiDonDichVu!.tieuDe!
                                       : controller.getDeadline(controller
                                           .dangLam[index].ngayKetThuc!),
                                   style: Dimensions.fontSizeStyle14(),
@@ -355,7 +355,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             //Trang thái kết quả công việc đã làm
                             Text(
                               controller
-                                  .hoanThanh[index].idTrangThaiDonHang!.tieuDe!,
+                                  .hoanThanh[index].idTrangThaiDonDichVu!.tieuDe!,
                               style: Dimensions.fontSizeStyle14w600(),
                             )
                           ],

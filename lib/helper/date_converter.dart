@@ -17,10 +17,24 @@ mixin DateConverter {
     return DateFormat('dd/MM/yyyy').format(dateTime);
   }
 
+  static String formatYYYYMMDD(String dateTime) { //dd mm yyyy
+    final date = DateFormat('dd-MM-yyyy').parse(dateTime);
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
+
+
   static DateTime convertStringToDatetime(String dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss').parse(dateTime);
   }
 
+  static DateTime convertStringToDateOnly(String dateTime) {
+    return DateFormat('yyyy-MM-dd').parse(dateTime);
+  }
+
+  static DateTime convertStringddMMyyyyToDate(String dateTime) {
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
+  }
+  
   static DateTime convertStringToDatetimeddMMyyyy(String dateTime) {
     return DateFormat('HH:mm dd-MM-yyyy').parse(dateTime);
   }
@@ -30,12 +44,20 @@ mixin DateConverter {
   }
 
   static DateTime convertStringToDate(String dateTime) {
-    return DateFormat('yyyy-MM-dd').parse(dateTime);
+    return DateFormat('dd-MM-yyyy').parse(dateTime);
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
+
+  static DateTime isoStringDateTimeToDateTime(String dateTime) {
+    return DateTime.parse(dateTime).toLocal();
+  }
+  static String isoStringToddMMYYYY(String dateTime) {
+    return DateFormat('dd/MM/yyyy').format(isoStringDateTimeToDateTime(dateTime));
+  }
+
 
   static String isoStringToLocalTimeOnly(String dateTime) {
     return DateFormat('HH:mm').format(isoStringToLocalDate(dateTime));
@@ -46,7 +68,7 @@ mixin DateConverter {
   }
 
   static String isoStringToLocalFullDateOnly(String dateTime) {
-    return DateFormat('dd/MM/yyyy').format(isoStringToLocalDate(dateTime));
+    return DateFormat('dd-MM-yyyy').format(isoStringToLocalDate(dateTime));
   }
 
   static String isoStringToLocalDateHMS(String dateTime) {
@@ -87,6 +109,13 @@ mixin DateConverter {
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }
+
+    static String formatDateTimeFull({required String dateTime}) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
+  }
+
 
   static String readMongoToString(String dateTimeStr) {
     final String first10letter = dateTimeStr.substring(0, 10);

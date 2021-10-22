@@ -4,6 +4,7 @@ class BangGiaDonHangResponse {
   String? tieuDe;
   String? giaTien;
   String? donViTinh;
+  String? idLoaiCongViec;
 
   String? createdAt;
   String? updatedAt;
@@ -13,6 +14,7 @@ class BangGiaDonHangResponse {
       this.tieuDe,
       this.giaTien,
       this.donViTinh,
+      this.idLoaiCongViec,
       this.createdAt,
       this.updatedAt});
   
@@ -24,7 +26,8 @@ class BangGiaDonHangResponse {
     tieuDe = json['tieuDe'].toString();
     giaTien = json['giaTien'].toString();
     donViTinh = json['donViTinh'].toString();
-
+    idLoaiCongViec = json['idLoaiCongViec'].toString();
+    
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
   }
@@ -45,8 +48,17 @@ class BangGiaDonHangResponse {
 
     // check null donViTinh
     if (donViTinh != null) data['donViTinh'] = donViTinh; 
+    
+    // check null idLoaiCongViec
+    if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec; 
 
 
     return data;
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return tieuDe!;
   }
 }

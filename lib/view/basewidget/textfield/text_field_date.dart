@@ -5,7 +5,7 @@ import 'package:template/utils/dimensions.dart';
 class TextFieldDate extends StatelessWidget {
   const TextFieldDate(
       {this.label,
-      this.isddMMyyyy = true,
+      this.isToHour = false,
       required this.holdplacer,
       required this.controller,
       required this.allowEdit,
@@ -15,6 +15,7 @@ class TextFieldDate extends StatelessWidget {
       required this.obligatory,
       this.area = false,
       required this.fontSize,
+      this.padding,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
   final String holdplacer;
   final String? label;
@@ -25,14 +26,12 @@ class TextFieldDate extends StatelessWidget {
   final bool obligatory;
   final bool? area;
   final double? paddingTop;
-  final bool? isddMMyyyy;
+  final bool? isToHour;
+  final EdgeInsetsGeometry ? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
+      padding: padding ?? const EdgeInsets.all(0),
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,77 +61,91 @@ class TextFieldDate extends StatelessWidget {
                 ],
               ),
             ),
-          TextField(
-            textInputAction: TextInputAction.none,
-            keyboardType: (isDate == true) ? null : typeInput,
-            textAlignVertical: TextAlignVertical.center,
-            maxLines: area! ? 3 : 1,
-            enabled: allowEdit,
-            controller: controller,
-            onTap: (isDate == true)
-                ? () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2001),
-                      lastDate: DateTime(2100),
-                    ).then((value) {
-                      isddMMyyyy == true
-                          ? controller.text =
-                              "${value!.year}-${value.month}-${value.day}"
-                          : controller.text =
-                              "${value!.day}-${value.month}-${value.year}";
-                    });
-                  }
-                : null,
-            cursorColor: ColorResources.PRIMARYCOLOR,
-            decoration: InputDecoration(
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                hintText: holdplacer,
-                filled: true,
-                fillColor: (allowEdit == false)
-                    ? ColorResources.NOT_ALLOW_EDIT
-                    : ColorResources.WHITE,
-                suffixIconConstraints: const BoxConstraints(
-                  maxHeight: Dimensions.PADDING_SIZE_LARGE,
-                ),
-                suffixIcon: (isDate == true)
-                    ? const Padding(
-                        padding: EdgeInsets.only(
-                            right: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                        child: Icon(
-                          Icons.date_range,
-                          size: Dimensions.ICON_SIZE_SMALL,
-                          color: ColorResources.PRIMARYCOLOR,
-                        ),
-                      )
-                    : null),
+          GestureDetector(
+            onTap: isDate  ? (){
+              showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2001),
+                lastDate: DateTime(2100),
+              ).then((value) {
+                isToHour! ? controller.text =
+                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
+                    "${value!.day}-${value.month}-${value.year}";
+                    
+              });
+            } : (){},
+            child: TextField(
+              textInputAction: TextInputAction.done,
+              keyboardType: isDate ? null : typeInput,
+              textAlignVertical: TextAlignVertical.center,
+              maxLines: area! ? 3 : 1,
+              enabled: false,
+              controller: controller,
+              // onTap: (isDate == true)
+              //     ? () {
+              //         showDatePicker(
+              //           context: context,
+              //           initialDate: DateTime.now(),
+              //           firstDate: DateTime(2001),
+              //           lastDate: DateTime(2100),
+              //         ).then((value) {
+              //           isToHour == true
+              //               ? controller.text =
+              //                   "${value!.year}-${value.month}-${value.day}"
+              //               : controller.text =
+              //                   "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
+              //         });
+              //       }
+              //     : null,
+              cursorColor: ColorResources.PRIMARYCOLOR,
+              decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  ),
+                  hintText: holdplacer,
+                  filled: true,
+                  fillColor:
+                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  suffixIconConstraints: const BoxConstraints(
+                    maxHeight: Dimensions.PADDING_SIZE_LARGE,
+                  ),
+                  suffixIcon: (isDate == true)
+                      ? const Padding(
+                          padding: EdgeInsets.only(
+                              right: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                          child: Icon(
+                            Icons.date_range,
+                            size: Dimensions.ICON_SIZE_SMALL,
+                            color: ColorResources.PRIMARYCOLOR,
+                          ),
+                        )
+                      : null),
+            ),
           ),
         ],
       ),

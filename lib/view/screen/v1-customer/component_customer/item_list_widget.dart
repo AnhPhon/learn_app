@@ -17,6 +17,7 @@ class ItemListWidget extends StatelessWidget {
   final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
+
   const ItemListWidget({
     Key? key,
     required this.title,
@@ -43,14 +44,10 @@ class ItemListWidget extends StatelessWidget {
         ),
         height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 2)),
+            BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 2)),
           ],
         ),
         child: Row(
@@ -67,12 +64,12 @@ class ItemListWidget extends StatelessWidget {
                   image: urlImage,
                   height: double.infinity,
                   width: double.infinity,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
                     height: double.infinity,
                     width: double.infinity,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -88,8 +85,7 @@ class ItemListWidget extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(
-                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: Text(
                         title,
                         maxLines: 2,
@@ -119,46 +115,61 @@ class ItemListWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     ),
-                    child: Row(
-                      mainAxisAlignment: isSpaceBetween == true
-                          ? MainAxisAlignment.spaceBetween
-                          : isStart == true
-                              ? MainAxisAlignment.start
-                              : MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            if (icon1 != null) icon1!,
-                            if (icon1 != null && rowText1 != null)
-                              const SizedBox(
-                                  width: Dimensions.MARGIN_SIZE_SMALL),
-                            if (rowText1 != null)
-                              Text(
-                                rowText1!,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  color: colorRowText1,
-                                ),
-                              ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            if (icon2 != null) icon2!,
-                            if (icon2 != null && rowText2 != null)
-                              const SizedBox(
-                                  width: Dimensions.MARGIN_SIZE_SMALL),
-                            if (rowText2 != null)
-                              Text(
-                                rowText2!,
-                                style: TextStyle(
-                                    color: colorRowText2,
-                                    fontSize: Dimensions.FONT_SIZE_SMALL),
-                              ),
-                          ],
-                        ),
-                      ],
+                    child: Container(
+                      // color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: isSpaceBetween == true
+                            ? MainAxisAlignment.spaceBetween
+                            : isStart == true
+                                ? MainAxisAlignment.start
+                                : MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Row(
+                              children: [
+                                if (icon1 != null) icon1!,
+                                if (icon1 != null && rowText1 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                if (rowText1 != null)
+                                  Expanded(
+                                    child: Text(
+                                      rowText1!,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: colorRowText1,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: Row(
+                              children: [
+                                if (icon2 != null) icon2!,
+                                if (icon2 != null && rowText2 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                if (rowText2 != null)
+                                  Expanded(
+                                    child: Text(
+                                      rowText2!,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: colorRowText2,
+                                        fontSize: Dimensions.FONT_SIZE_SMALL,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

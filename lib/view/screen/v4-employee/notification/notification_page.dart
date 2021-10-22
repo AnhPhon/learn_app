@@ -49,7 +49,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
       enablePullUp: true,
       onLoading: controller.onLoading,
       onRefresh: controller.onRefresh,
-      controller: controller.refreshController!,
+      controller: controller.refreshController,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: controller.thongbaoModelList.length,

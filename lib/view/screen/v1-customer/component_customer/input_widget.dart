@@ -4,7 +4,7 @@ import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
+import 'package:template/utils/thousands_separator_input_formatter.dart';
 
 class InputWidget extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -17,6 +17,7 @@ class InputWidget extends StatelessWidget {
   final Icon? suffixIcon;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
+  final int? maxLine;
   final bool? isDate,
       isddMMyyyy,
       isTime,
@@ -26,7 +27,6 @@ class InputWidget extends StatelessWidget {
       obligatory,
       isBorder,
       isShadow,
-      isMaxLine,
       thousandsSeparator;
   const InputWidget({
     Key? key,
@@ -46,11 +46,11 @@ class InputWidget extends StatelessWidget {
     this.paddingTop,
     this.isBorder = true,
     this.isShadow = false,
-    this.isMaxLine = false,
     this.onChanged,
     this.thousandsSeparator = false,
     this.textInputAction = TextInputAction.done,
     this.textInputType = TextInputType.text,
+    this.maxLine,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -122,11 +122,8 @@ class InputWidget extends StatelessWidget {
                         firstDate: DateTime(1800),
                         lastDate: DateTime(2100),
                       ).then((value) {
-                        isddMMyyyy == false
-                            ? textEditingController.text =
-                                DateConverter.formatDate(value!)
-                            : textEditingController.text =
-                                DateConverter.estimatedDateOnly(value!);
+                        textEditingController.text =
+                            DateConverter.formatDate(value!);
                       });
                     }
                   : (isTime == true)
@@ -151,7 +148,7 @@ class InputWidget extends StatelessWidget {
                     ? [ThousandsSeparatorInputFormatter()]
                     : null,
                 onChanged: onChanged,
-                maxLines: (isMaxLine == true) ? 5 : 1,
+                maxLines: maxLine ?? 1,
                 textInputAction: textInputAction,
                 keyboardType: textInputType,
                 textAlignVertical: TextAlignVertical.center,

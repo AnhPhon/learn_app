@@ -22,8 +22,7 @@ class LoggingInterceptor extends InterceptorsWrapper {
         if (endingIndex > responseAsString.length) {
           endingIndex = responseAsString.length;
         }
-        print(
-            responseAsString.substring(i * maxCharactersPerLine, endingIndex));
+        // print( responseAsString.substring(i * maxCharactersPerLine, endingIndex));
       }
     } else {
       // print('Data ${response.data}');

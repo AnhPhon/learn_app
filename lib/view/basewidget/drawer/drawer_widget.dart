@@ -104,60 +104,57 @@ class DrawerWidget extends GetView<dr.DrawerController> {
       height: DeviceUtils.getScaledHeight(context, 0.25),
       decoration: const BoxDecoration(
         color: ColorResources.GREEN,
-        image: DecorationImage(image: AssetImage(Images.admin_background),fit: BoxFit.fill)
+        image: DecorationImage(image: AssetImage(Images.background_draw),fit: BoxFit.fill)
       ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaY: 10),
-        child: Row(
-          children: [
-            Container(
-              height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
-              width:  Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.asset(Images.logo_fss, fit: BoxFit.cover),
-              ),
+      child: Row(
+        children: [
+          SizedBox(
+            height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
+            width:  Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset(Images.logo_fss, fit: BoxFit.cover),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
-              child: Stack(
-                children: [
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                      fontWeight: FontWeight.w500,
-                      foreground: Paint()
-                        ..strokeWidth = 3
-                        ..color = ColorResources.WHITE
-                        ..style = PaintingStyle.stroke,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("Five Star System "),
-                      ],
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
+            child: Stack(
+              children: [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                    fontWeight: FontWeight.w500,
+                    foreground: Paint()
+                      ..strokeWidth = 3
+                      ..color = ColorResources.WHITE
+                      ..style = PaintingStyle.stroke,
                   ),
-                  DefaultTextStyle(
-                    style: const TextStyle(
-                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                      fontWeight: FontWeight.w500,
-                      color: ColorResources.BLACK
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("Five Star System "),
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("Five Star System "),
+                    ],
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                    fontWeight: FontWeight.w500,
+                    color: ColorResources.BLACK
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("Five Star System "),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       )
     );
   }
