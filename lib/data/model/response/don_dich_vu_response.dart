@@ -162,6 +162,10 @@ class DonDichVuResponse {
     } else {
       idThoiGianLamViecs = null;
     }
+    // final results = apiResponse.response.data as List<dynamic>;
+    //   onSuccess(results
+    //       .map((e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
+    //       .toList());
 
     // mapping idTinhTp
     if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {

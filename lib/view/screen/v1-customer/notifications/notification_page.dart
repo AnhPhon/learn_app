@@ -43,7 +43,6 @@ class V1NotificationPage extends GetView<V1NotificationController> {
   }
 
   Widget itemNotification({required int index}){
-    print(controller.notifications[index].createdAt!);
     return GestureDetector(
       onTap: (){
         controller.onClickItem(controller.notifications[index]);
@@ -56,7 +55,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
           children: [
             RichText(
               text: TextSpan(
-                text: controller.notifications[index].tieuDe,
+                text: '${controller.notifications[index].tieuDe} ',
                 style: TextStyle(
                   fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
                   color: ColorResources.BLACK.withOpacity(0.8),
