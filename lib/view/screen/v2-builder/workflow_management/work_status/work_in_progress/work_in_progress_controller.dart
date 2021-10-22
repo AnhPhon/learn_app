@@ -163,7 +163,6 @@ class V2WorkInProgressController extends GetxController {
         onSuccess: (models) {
           if (models.isNotEmpty) {
             final String id = models[0].id!;
-            print(workFlowId);
             // update y kien tho thau
             phanHoiDonDichVuProvider.update(
               data: PhanHoiDonDichVuRequest(
@@ -171,8 +170,6 @@ class V2WorkInProgressController extends GetxController {
                 id: id,
               ),
               onSuccess: (value) {
-                print(workFlowId);
-                print(keyIndex);
                 // set trang thái
                 donDichVuProvider.update(
                   data: DonDichVuRequest(
@@ -245,7 +242,7 @@ class V2WorkInProgressController extends GetxController {
           ),
     );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   bool _validate() {

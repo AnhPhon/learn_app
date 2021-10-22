@@ -3,25 +3,26 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class InputField extends StatelessWidget {
-  InputField(
-      {required this.label,
-      required this.holdplacer,
-      required this.controller,
-      required this.allowEdit,
-      required this.allowMultiline,
-      this.suffixIcon,
-      this.onChanged,
-      this.boldHinText,
-      this.errorText,
-      required this.typeInput,
-      required this.width,
-      this.height = 50,
-      required this.hidden,
-      required this.obligatory,
-      this.line = 5,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
-      this.isColorFieldWhite,
-      required this.fontSize});
+  InputField({
+    required this.label,
+    required this.holdplacer,
+    required this.controller,
+    required this.allowEdit,
+    required this.allowMultiline,
+    this.suffixIcon,
+    this.onChanged,
+    this.boldHinText,
+    this.errorText,
+    required this.typeInput,
+    required this.width,
+    this.height = 50,
+    required this.hidden,
+    required this.obligatory,
+    this.line = 5,
+    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+    this.isColorFieldWhite,
+    required this.fontSize,
+  });
   final String label, holdplacer;
   final TextEditingController controller;
   final bool allowEdit, allowMultiline, hidden, obligatory;
@@ -90,23 +91,33 @@ class InputField extends StatelessWidget {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),

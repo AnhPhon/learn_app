@@ -140,7 +140,7 @@ class V2WorkflowManagementController extends GetxController
           ),
     );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   ///
