@@ -127,6 +127,7 @@ class V1ResponseController extends GetxController {
   /// xác nhận
   ///
   void onxacNhanClick() {
+    sl.get<SharedPreferenceHelper>().saveGiaTriDonHang(tongTien);
     Get.toNamed(AppRoutes.V1_BILL_DETAIL);
   }
 
