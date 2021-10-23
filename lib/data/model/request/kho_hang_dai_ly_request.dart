@@ -6,8 +6,6 @@ class KhoHangDaiLyRequest {
   String? idQuanHuyen;
   String? idPhuongXa;
   String? diaChi;
-  String? idSanPham;
-  String? soluong;
 
   KhoHangDaiLyRequest({
       this.id,
@@ -16,9 +14,7 @@ class KhoHangDaiLyRequest {
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
-      this.diaChi,
-      this.idSanPham,
-      this.soluong});
+      this.diaChi,});
   
   ///
   /// From JSON
@@ -31,8 +27,6 @@ class KhoHangDaiLyRequest {
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
     diaChi = json['diaChi'].toString();
-    idSanPham = json['idSanPham'].toString();
-    soluong = json['soluong'].toString();
   }
 
   ///
@@ -59,14 +53,7 @@ class KhoHangDaiLyRequest {
     if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
 
     // check null diaChi
-    if (diaChi != null) data['diaChi'] = diaChi; 
-
-    // check null idSanPham
-    if (idSanPham != null) data['idSanPham'] = idSanPham; 
-
-    // check null soluong
-    if (soluong != null) data['soluong'] = soluong; 
-
+    if (diaChi != null) data['diaChi'] = diaChi;
 
     return data;
   }

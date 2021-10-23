@@ -46,6 +46,16 @@ Map<String, String> trangThaiDonHangMap = {
   "Huỷ đơn": "6169796e3391622ae9203553",
   "Trả hàng": "616979743391622ae9203555",
 };
+
+Map<String, String> quanLyDonHangMap = {
+  "Tất cả": "",
+  "Xác nhận": "6169794b3391622ae920354b",
+  "Chuẩn bị hàng": "616979573391622ae920354d",
+  "Đang giao": "6169795f3391622ae920354f",
+  "Đã giao": "616979663391622ae9203551",
+  "Huỷ đơn": "6169796e3391622ae9203553",
+  "Trả hàng": "616979743391622ae9203555",
+};
 // sharePreference
 const dynamic TRANG_THAI_DU_AN = {
   'CHUA_TRIEN_KHAI': {
