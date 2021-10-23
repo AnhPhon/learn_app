@@ -7,6 +7,8 @@ import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G1CreateWorkController extends GetxController{
@@ -47,14 +49,14 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onClickContinueButton(){
     if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message:"Vui lòng nhập mô tả công việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message:"Trường mô công việc không được để trống");
     }else if(startTimeController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi",message:"Vui lòng chọn thời gian bắt đầu");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!",message:"Trường thời gian bắt đầu không được để trống");
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
     }else if(endTimeController.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
-        showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
       }else{
         saveServices();
         return;
@@ -101,13 +103,13 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onClickAddMass(){
     if(nameTitleController.text.toString().isEmpty){
-      return showSnackBar(title: "Lỗi", message: "Vui lòng nhập tên công việc");
+      return SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Tên công việc không được để trống");
     }else if(specificationController.text.toString().isEmpty){
-      return showSnackBar(title: "Lỗi", message:"Vui lòng nhập quy cách");
+      return SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message:"Quy cách không được để trống");
     }else if(unit == null || unit!.isEmpty){
-      return showSnackBar(title: "Lỗi",message: 'Vui lòng chọn đơn vị');
+      return SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!",message: 'Đơn vị không được để trống');
     }else if(massController.text.toString().isEmpty){
-      return showSnackBar(title: "Lỗi",message: "Vui lòng khối lượng");
+      return SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!",message: "Khối lượng không được để trống");
     }else{
       final VatTuResponse supplies = VatTuResponse(
         donGia: massController.text.toString(),
@@ -138,7 +140,7 @@ class V1G1CreateWorkController extends GetxController{
       update();
       // return fileName;
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -151,7 +153,7 @@ class V1G1CreateWorkController extends GetxController{
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
   ///
@@ -159,7 +161,7 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onDeleteImage({required File file, required List<File> files}){
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    showSnackBar(title: "Xoá", message: "Xoá ảnh thành công");
+    SnackBarUtils.showSnackBar(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 

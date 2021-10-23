@@ -10,7 +10,7 @@ class SanPhamResponse {
   String? thuongHieu;
   String? moTa;
   String? hinhAnhDaiDien;
-  List<dynamic>? hinhAnhSanPhams;
+  List<String>? hinhAnhSanPhams;
   String? quyCach;
   String? gia;
   String? donVi;
@@ -66,7 +66,9 @@ class SanPhamResponse {
     thuongHieu = json['thuongHieu'].toString();
     moTa = json['moTa'].toString();
     hinhAnhDaiDien = json['hinhAnhDaiDien'].toString();
-    hinhAnhSanPhams = json['hinhAnhSanPhams'] as List<dynamic>;
+    hinhAnhSanPhams = (json['hinhAnhSanPhams'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     quyCach = json['quyCach'].toString();
     gia = json['gia'].toString();
     donVi = json['donVi'].toString();

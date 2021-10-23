@@ -12,6 +12,8 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G2CreateWorkController extends GetxController {
@@ -103,7 +105,7 @@ class V1G2CreateWorkController extends GetxController {
       update();
       // return fileName;
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -117,7 +119,7 @@ class V1G2CreateWorkController extends GetxController {
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(title: "Lỗi", message: "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
@@ -126,7 +128,7 @@ class V1G2CreateWorkController extends GetxController {
   ///
   void onDeleteImage({required File file, required List<File> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    showSnackBar(title: "Xoá", message: "Xoá ảnh thành công");
+    SnackBarUtils.showSnackBar(title: "Xoá", message: "Xoá ảnh thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 
@@ -161,25 +163,25 @@ class V1G2CreateWorkController extends GetxController {
   ///
   bool validate(){
     if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc trong ngày");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc trong ngày");
       return false;
     }else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu dự kiến");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu dự kiến");
       return false;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     }else if(endTime.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-        showSnackBar(title: "Lỗi", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return false;
       }else if(workDesc.text.toString().isEmpty){
-        showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
         return false;
       }
       return true;
     }else if(workDesc.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng mô tả công việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
       return false;
     }else{
       return true;
@@ -198,7 +200,7 @@ class V1G2CreateWorkController extends GetxController {
         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){
         EasyLoading.dismiss();
-        showSnackBar(title: "Lỗi", message: onError.toString());
+        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: onError.toString());
         print("V1G2CreateWorkController onClickContinueButton $onError");
       });
   }

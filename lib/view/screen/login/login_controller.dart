@@ -17,12 +17,38 @@ class LoginController extends GetxController {
   AuthModel? auth;
   bool isLoading = true;
 
-  // @override
-  // void onInit() {
-  //   // usernameController.text = 'ytp3001';
-  //   // passwordController.text = 'password';
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    usernameController.text = '4';
+    // passwordController.text = 'password';
+    super.onInit();
+  }
+
+  ///
+  /// on checkbox remember click
+  ///
+  void onCheckBoxRememberClick() {
+    if (isRemember) {
+      isRemember = false;
+    } else {
+      isRemember = true;
+    }
+    update();
+  }
+
+  ///
+  /// on button forgot password tap
+  ///
+  void onBtnForgotPasswordTap() {
+    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+  }
+
+  ///
+  /// on button register tap
+  ///
+  void onBtnRegisterTap() {
+    Get.toNamed(AppRoutes.REGISTER);
+  }
 
   ///
   /// on login click

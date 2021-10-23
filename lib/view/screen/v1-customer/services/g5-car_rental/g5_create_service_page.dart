@@ -16,11 +16,11 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
 
-
+  final V1G5CreateServiceController _controller = Get.find<V1G5CreateServiceController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: AppBarWidget(title: _controller.appBarTitle),
       body: GetBuilder(
         builder: (V1G5CreateServiceController controller) {
           if(controller.isLoading || controller.isThongSo){
@@ -79,6 +79,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           ),
           child: MultiSelectDialogField(
             listType: MultiSelectListType.CHIP,
+            buttonIcon: const Icon(Icons.arrow_drop_down),
             items: controller.thongSoKyThuatList,
             title: const Text("Thông số kỹ thuật"),
             selectedColor: Colors.blue,
@@ -143,6 +144,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         // Địa điểm bốc hàng
@@ -179,7 +181,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowMultiline: false,
           controller: controller.distanceController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Thanh Khê - Đà Nẵng",
+          holdplacer: "100km",
           hidden: false,
           label: "Cự ly vận chuyển đương đối(km)",
           obligatory: true,
@@ -193,7 +195,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowMultiline: false,
           controller: controller.receivingWidthController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "100 km",
+          holdplacer: "100m",
           hidden: false,
           label: "Bề rộng mặt đường nhận hàng(m)",
           obligatory: false,
@@ -207,7 +209,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowMultiline: false,
           controller: controller.returnWidthController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "200km",
+          holdplacer: "100m",
           hidden: false,
           label: "Bề rộng mặt đường trả hàng (m)",
           obligatory: false,
@@ -223,7 +225,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowMultiline: true,
           controller: controller.workDescController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà lầu",
+          holdplacer: "Bốc hàng",
           hidden: false,
           label: "Miêu tả yêu cầu công việc cụ thể",
           obligatory: true,

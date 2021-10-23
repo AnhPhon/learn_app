@@ -1,6 +1,7 @@
 class DanhMucSanPhamResponse {
   String? id;
   String? ten;
+  String? hinhAnh;
 
   String? createdAt;
   String? updatedAt;
@@ -13,6 +14,7 @@ class DanhMucSanPhamResponse {
   DanhMucSanPhamResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     ten = json['ten'].toString();
+    hinhAnh = json['hinhAnh'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -28,6 +30,9 @@ class DanhMucSanPhamResponse {
 
     // check null ten
     if (ten != null) data['ten'] = ten;
+
+    // check null ten
+    if (hinhAnh != null) data['hinhAnh'] = ten;
 
     return data;
   }

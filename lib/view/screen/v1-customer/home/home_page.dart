@@ -40,6 +40,8 @@ class V1HomePage extends GetView<V1HomeController> {
                   // _categoryBoxWidget
                   _categoryBoxWidget(),
 
+                  const SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+
                   // _threeFeatureWidget
                   _threeFeatureWidget(),
 
@@ -96,7 +98,7 @@ class V1HomePage extends GetView<V1HomeController> {
       child: GridView.builder(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           mainAxisExtent: 100,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
@@ -114,53 +116,6 @@ class V1HomePage extends GetView<V1HomeController> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  ///
-  /// field widget
-  ///
-  Widget _fieldWidget(String title, Function() onTap, Widget widget) {
-    const double _fontSize = Dimensions.FONT_SIZE_LARGE;
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: _fontSize,
-                  color: Color(0xff040404),
-                ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: onTap,
-                child: Row(
-                  children: const [
-                    Text(
-                      "Xem thêm",
-                      style: TextStyle(
-                        color: Color(0xff2196f3),
-                        fontSize: _fontSize,
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xff2196f3),
-                      size: _fontSize,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          widget
-        ],
       ),
     );
   }
@@ -190,7 +145,7 @@ class V1HomePage extends GetView<V1HomeController> {
                 ),
                 boxShadow: const [
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.20000000298023224),
+                    color: Color.fromRGBO(0, 0, 0, 0.2),
                     offset: Offset(2, 2),
                     blurRadius: 10,
                   )
@@ -271,8 +226,10 @@ class V1HomePage extends GetView<V1HomeController> {
                 },
                 child: _imageWidget(
                   controller.danhMucList[index].ten!,
-                  Images.location_example,
-                  // controller.danhMucList[index].hinhAnhSanPhams!,
+                  (controller.danhMucList[index].hinhAnh == null)
+                      ? Images.location_example
+                      : controller.danhMucList[index].hinhAnh!,
+                  // controller.danhMucList[index].hinhAnhSanPhams[0]!,
                 ),
               );
             },
@@ -305,20 +262,26 @@ class V1HomePage extends GetView<V1HomeController> {
             BuildContext ctx,
             index,
           ) {
-            return ItemListWidget(
-              urlImage: controller.tinTucList[index].hinhAnh.toString(),
-              onTap: () {
-                controller.goToNewPageClick(controller.tinTucList[index].id!);
-              },
-              title: controller.tinTucList[index].tieuDe.toString(),
-              colorRowText2: ColorResources.GREY,
-              icon1: const Icon(Icons.remove_red_eye_sharp),
-              rowText1: controller.tinTucList[index].luotXem,
-              icon2: const Icon(Icons.calendar_today),
-              rowText2: DateConverter.readMongoToString(
-                controller.tinTucList[index].createdAt!,
-              ),
-              isSpaceBetween: true,
+            return Column(
+              children: [
+                ItemListWidget(
+                  urlImage: controller.tinTucList[index].hinhAnh.toString(),
+                  onTap: () {
+                    controller
+                        .goToNewPageClick(controller.tinTucList[index].id!);
+                  },
+                  title: controller.tinTucList[index].tieuDe.toString(),
+                  colorRowText2: ColorResources.GREY,
+                  icon1: const Icon(Icons.remove_red_eye_sharp),
+                  rowText1: controller.tinTucList[index].luotXem,
+                  icon2: const Icon(Icons.calendar_today),
+                  rowText2: DateConverter.readMongoToString(
+                    controller.tinTucList[index].createdAt!,
+                  ),
+                  isSpaceBetween: true,
+                ),
+                const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL)
+              ],
             );
           },
         ),

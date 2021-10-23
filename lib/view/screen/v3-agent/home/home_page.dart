@@ -38,13 +38,15 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // need update widget
                   _needUpdateWidget(),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // feature widget
                   _featuresWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // news widget
                   _newsWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // product widget
                   _productWidget(controller: controller)
@@ -126,9 +128,9 @@ class V3HomePage extends GetView<V3HomeController> {
   ///
   Widget _featuresWidget() {
     return SizedBox(
-      height: 150,
+      height: 120,
       child: GridView.builder(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+        padding: const EdgeInsets.all(0),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -159,47 +161,49 @@ class V3HomePage extends GetView<V3HomeController> {
     final int length =
         controller.tinTucList.length > 2 ? 2 : controller.tinTucList.length;
     final double len = length * 1.0;
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-      child: FieldWidget(
-        title: "Tin tức",
-        onTap: () {
-          controller.onClickHotNews();
-        },
-        widget: SizedBox(
-          height: (len > 0) ? 140 * len : 0,
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(0),
-            itemCount: length,
-            itemBuilder: (
-              BuildContext ctx,
-              index,
-            ) {
-              return Padding(
-                padding:
-                    const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: ItemListWidget(
-                  onTap: () {
-                    // call detail
-                    controller.onNewsDetailClick(index: index);
-                  },
-                  title: "Biệt thự 170 Nguyễn Đình Thi",
-                  icon1: const Icon(Icons.remove_red_eye),
-                  rowText1: controller.tinTucList[index].luotXem,
-                  colorRowText1: ColorResources.BLACKGREY,
-                  icon2: const Icon(Icons.monetization_on_outlined),
-                  rowText2: controller.tinTucList[index].createdAt
-                      .toString()
-                      .substring(0, 10),
-                  colorRowText2: ColorResources.BLACKGREY,
-                  isStart: true,
-                  urlImage: controller.tinTucList[index].hinhAnh!,
-                  isSpaceBetween: true,
-                ),
-              );
-            },
-          ),
+    return FieldWidget(
+      title: "Tin tức",
+      onTap: () {
+        controller.onClickHotNews();
+      },
+      widget: SizedBox(
+        height: (len > 0) ? 130 * len : 0,
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(0),
+          itemCount: length,
+          itemBuilder: (
+            BuildContext ctx,
+            index,
+          ) {
+            return Padding(
+              padding:
+                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              child: Column(
+                children: [
+                  ItemListWidget(
+                    onTap: () {
+                      // call detail
+                      controller.onNewsDetailClick(index: index);
+                    },
+                    title: "Biệt thự 170 Nguyễn Đình Thi",
+                    icon1: const Icon(Icons.remove_red_eye),
+                    rowText1: controller.tinTucList[index].luotXem,
+                    colorRowText1: ColorResources.BLACKGREY,
+                    icon2: const Icon(Icons.monetization_on_outlined),
+                    rowText2: controller.tinTucList[index].createdAt
+                        .toString()
+                        .substring(0, 10),
+                    colorRowText2: ColorResources.BLACKGREY,
+                    isStart: true,
+                    urlImage: controller.tinTucList[index].hinhAnh!,
+                    isSpaceBetween: true,
+                  ),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -217,11 +221,8 @@ class V3HomePage extends GetView<V3HomeController> {
       onTap: () {
         controller.onClickWareHouse();
       },
-      widget: Container(
-        height: 110 * size + 50,
-        padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_SMALL,
-        ),
+      widget: SizedBox(
+        height: 110 * size + 20,
         child: ListView.builder(
           itemCount: size,
           padding: const EdgeInsets.all(0),

@@ -41,7 +41,7 @@ class TaiKhoanResponse {
   String? lamChieuThuBay;
   String? lamNgayChuNhat;
   String? diaDiemCuaHangChinh;
-  List<dynamic>? hinhAnhCuaHangs;
+  List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
 
   String? createdAt;
@@ -181,7 +181,9 @@ class TaiKhoanResponse {
     lamChieuThuBay = json['lamChieuThuBay'].toString();
     lamNgayChuNhat = json['lamNgayChuNhat'].toString();
     diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
-    hinhAnhCuaHangs = json['hinhAnhCuaHangs'] as List<dynamic>;
+    hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
 
     createdAt = json['created_at'].toString();
