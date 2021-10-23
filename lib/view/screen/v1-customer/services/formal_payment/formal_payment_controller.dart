@@ -6,6 +6,7 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class V1FormalPaymentController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -31,7 +32,7 @@ class V1FormalPaymentController extends GetxController{
   ///
   /// change formal payment
   ///
-  void onChangedFormalPayment(int val){
+  void onChangedFormalPayment(int val) {
     formalPaymentGroup = val;
     update();
   }

@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/payment/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/payment/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/payment/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
 import 'package:template/view/screen/register/register_page.dart';
@@ -57,6 +60,7 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
+import 'package:template/view/screen/v1-customer/product/product_binding.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
@@ -297,6 +301,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PRODUCT,
       page: () => V1ProductPage(),
+      binding: V1ProductBinding(),
     ),
     GetPage(
       name: AppRoutes.V1_NEWS,
@@ -416,7 +421,6 @@ class AppPages {
       page: () => V1AccountPage(),
     ),
 
-
     //builder
     GetPage(
       name: AppRoutes.V2_PRODUCT_DETAIL,
@@ -498,13 +502,14 @@ class AppPages {
       name: AppRoutes.V1_BEFORE_RECHARGE,
       page: () => V1BeforeRechargePage(),
     ),
+
     ///
-    ///Bang giá tham khảo 
+    ///Bang giá tham khảo
     ///
     GetPage(
-      name: AppRoutes.V1_REFERENCE_PRICE_TABLE,
-      page: () => V1ReferencePriceTablePage()
-    ),
+        name: AppRoutes.V1_REFERENCE_PRICE_TABLE,
+        page: () => V1ReferencePriceTablePage()),
+
     ///
     /// Thông báo
     ///
@@ -1087,6 +1092,20 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_FINISH_UPDATE,
       page: () => V2FinishUpdatePage(),
+    ),
+
+    //payment
+    GetPage(
+      name: AppRoutes.PAYMENT_ACCOUNT,
+      page: () => PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_SUCCESS,
+      page: () => PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_RECHARGE,
+      page: () => RechargePage(),
     ),
   ];
 }

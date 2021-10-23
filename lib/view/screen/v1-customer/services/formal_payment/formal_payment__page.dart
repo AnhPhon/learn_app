@@ -54,36 +54,46 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
     );
   }
 
-  Widget formalPaymentItem({required String title, required int value, required int groupValue, required List<String> content, required V1FormalPaymentController controller}){
+  Widget formalPaymentItem(
+      {required String title,
+      required int value,
+      required int groupValue,
+      required List<String> content,
+      required V1FormalPaymentController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: BoxShadowWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RadioButton<int>(title: title, 
-            onChanged: (val)=> controller.onChangedFormalPayment(val!), value: value, groupValue: groupValue
-            ),
+            RadioButton<int>(
+                title: title,
+                onChanged: (val) => controller.onChangedFormalPayment(val!),
+                value: value,
+                groupValue: groupValue),
             Padding(
-              padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2),
+              padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...content.map((e) => Padding(
-                    padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_SMALL,
-                      bottom: Dimensions.PADDING_SIZE_DEFAULT
+                  ...content.map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(
+                          top: Dimensions.PADDING_SIZE_SMALL,
+                          bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const DotWidget(
+                            height: 10,
+                            width: 10,
+                          ),
+                          Flexible(child: Text(e))
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const DotWidget(height: 10,width: 10,),
-                        Flexible(
-                          child: Text(e)
-                        )
-                      ],
-                    ),
-                  ),)
+                  )
                 ],
               ),
             )
@@ -92,5 +102,4 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
       ),
     );
   }
-
 }
