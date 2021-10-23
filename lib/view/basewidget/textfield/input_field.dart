@@ -89,7 +89,7 @@ class InputField extends StatelessWidget {
                         ]
                       : [FilteringTextInputFormatter.digitsOnly]
                   : null,
-              textInputAction: TextInputAction.done,
+              textInputAction: textInputAction,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,
               textAlignVertical: TextAlignVertical.top,
