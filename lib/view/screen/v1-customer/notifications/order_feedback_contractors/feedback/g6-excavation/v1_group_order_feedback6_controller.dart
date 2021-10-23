@@ -40,11 +40,12 @@ class V1GroupOrderFeedBack6Controller extends GetxController{
       //Nội dung chi tiết giá
       request.khachHangDanhGia = desController.text.toString();
     }
+    if(donPhanHoi!.idDonDichVu!.idTaiKhoan != null){
+      // Tài khoản nhận đơn
+      request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
+    }
     // if(donPhanHoi!.idTaiKhoan!.id != null){
     //   request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
-    // }
-    // if(donPhanHoi!.taiKhoanNhanDon != null){
-    //   request.taiKhoanNhanDon = donPhanHoi!.taiKhoanNhanDon;
     // }
     return request;
   }

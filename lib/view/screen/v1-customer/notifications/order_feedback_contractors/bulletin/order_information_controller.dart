@@ -28,11 +28,12 @@ class OrderInformationController extends GetxController{
     if(donPhanHoi!.idDonDichVu!.id != null){
       request.idDonDichVu = donPhanHoi!.idDonDichVu!.id;
     }
+    if(donPhanHoi!.idDonDichVu!.idTaiKhoan != null){
+      // Tài khoản nhận đơn
+      request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
+    }
     // if(donPhanHoi!.idTaiKhoan!.id != null){
     //   request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
-    // }
-    // if(donPhanHoi!.taiKhoanNhanDon != null){
-    //   request.taiKhoanNhanDon = donPhanHoi!.taiKhoanNhanDon;
     // }
     return request;
   }

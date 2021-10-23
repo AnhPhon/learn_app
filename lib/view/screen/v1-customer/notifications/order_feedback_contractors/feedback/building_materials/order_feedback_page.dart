@@ -101,10 +101,8 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
-    controller.donPhanHoi!.idDonDichVu!.hinhAnhBaoGia!.split(',').forEach((element) {
-        print("ảnh ${element}");
-    });
-    return Padding(
+    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.replaceAll(',', '').isEmpty ?  const SizedBox() :
+    Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
