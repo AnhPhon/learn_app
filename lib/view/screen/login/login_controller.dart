@@ -13,6 +13,7 @@ class LoginController extends GetxController {
   // UserProvider userProvider = GetIt.I.get<UserProvider>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isRemember = false;
 
   AuthModel? auth;
   bool isLoading = true;
@@ -118,7 +119,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
@@ -174,7 +175,7 @@ class LoginController extends GetxController {
     //           isDismissible: true,
     //           duration: const Duration(seconds: 3),
     //         );
-    //         print(error);
+    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
     //         update();
     //       });
     // }
