@@ -37,10 +37,10 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
                     isHasDeposit: false,
                     title: "Chi tiết đơn hàng",
                     orderContents: [
-                    OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.soTien!))} VNĐ", boldValue: true,),
-                    OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.phiDichVu!))} VNĐ", boldValue: true,),
-                    OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.khuyenMai!))} VNĐ", boldValue: true,),
-                    OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(double.parse(controller.donDichVuRequest!.tongDon!))} VNĐ", boldValue: true,),
+                    OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.soTien)} VNĐ", boldValue: true,),
+                    OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ", boldValue: true,),
+                    OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(controller.khuyenMai)} VNĐ", boldValue: true,),
+                    OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.tongTien)} VNĐ", boldValue: true,),
                   ]);
                 },
               )
@@ -53,7 +53,7 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
       ),
       bottomSheet: OrderBottomSheet(
         mainAxisAlignment: MainAxisAlignment.center, 
-        itemValue: double.parse(_controller.donDichVuRequest!.tongDon!),
+        itemValue: _controller.tongTien,
         child: Center(
           child: LongButton(
             color: ColorResources.PRIMARYCOLOR,

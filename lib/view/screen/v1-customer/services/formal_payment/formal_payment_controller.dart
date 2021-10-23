@@ -20,9 +20,9 @@ class V1FormalPaymentController extends GetxController{
 
     if(dichVuRequest != null){
       if(formalPaymentGroup == 0){
-        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 1000000000);
+        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 0);
       }else{
-        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 1000000000) * 10 /100;
+        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 0) * 10 /100;
       }
     }  
 
