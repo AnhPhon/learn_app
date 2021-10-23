@@ -48,12 +48,14 @@ class V2HomeController extends GetxController {
   bool hopDongValid = false;
   bool baoHiemValid = false;
   bool chungNhanValid = false;
+  bool maSoThueValid = false;
 
-  int number = 5 + 2;
+  int number = 3 + 2;
 
   String fullname = "Nguyễn Văn A";
 
   bool isLoading = true;
+  bool canNguoiLoading = true;
 
   @override
   void onInit() {
@@ -88,14 +90,8 @@ class V2HomeController extends GetxController {
           // load san pham
           _loadSanPham();
 
-          // load tin tuc
-          _loadTinTuc();
-
           // dang ky thue
           dangKyThue(id);
-
-          // cam ket thue
-          camKetThue(id);
 
           // dang ky fss
           dangKyFSS(id);
@@ -120,6 +116,7 @@ class V2HomeController extends GetxController {
   /// load công việc đang cần người
   ///
   void _loadCongViecDangCanNguoi(String idNguoiDung) {
+    donDichVuList = [];
     _donDichVuProvider.paginate(
       page: 1,
       limit: 30,
@@ -128,23 +125,33 @@ class V2HomeController extends GetxController {
         for (final value in values) {
           final int index = idCongViecDangCanNguoiList!
               .indexOf(value.idNhomDichVu!.nhomDichVu!);
-
           bool isLoadValid = true;
 
-          // check tai khoan nhan don
-          if (value.taiKhoanNhanDon == null) {
+          // check trang thai don hang
+          if (value.idTrangThaiDonDichVu == null) {
             isLoadValid = false;
           }
 
           // check trang thai don hang
-          if (value.idTrangThaiDonHang == null) {
+          if (value.id == null) {
             isLoadValid = false;
           }
 
-          if (isLoadValid && index != -1) {
+          // check trang thai don hang
+          if (value.tieuDe == null) {
+            isLoadValid = false;
+          }
+
+          // check hình ảnh
+          if (value.hinhAnhChiTiet == null) {
+            isLoadValid = false;
+          }
+
+          if (isLoadValid == true && index != -1) {
             donDichVuList.add(value);
           }
         }
+        canNguoiLoading = false;
         update();
       },
       onError: (error) {
@@ -200,32 +207,16 @@ class V2HomeController extends GetxController {
       filter: "&idTaiKhoan=$id",
       onSuccess: (models) {
         if (models.isNotEmpty) {
-          if (models[0].trangThai == '1') {
+          if (models[0].trangThai == '1' && models[0].loai == '1') {
             thueValid = true;
-            number -= 1;
             update();
           }
-        }
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
 
-  ///
-  /// đăng ký thuế
-  ///
-  void camKetThue(String id) {
-    dangKyThueProvider.paginate(
-      page: 1,
-      limit: 30,
-      filter: "&idTaiKhoan=$id",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          if (models[0].trangThai == '1') {
+          if (models[0].trangThai == '1' && models[0].loai == '2') {
             thueValid = true;
-            number -= 1;
+            maSoThueValid = true;
+            camKetValid = true;
+            number -= 2;
             update();
           }
         }
@@ -305,6 +296,9 @@ class V2HomeController extends GetxController {
     );
   }
 
+  ///
+  /// init three features
+  ///
   void _initThreeFeatures() {
     // private
     // declare content grid

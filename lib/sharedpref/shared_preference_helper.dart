@@ -235,6 +235,18 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.isChamCong);
   }
 
+  Future<String?> get duAnNhanVien async {
+    return _sharedPreference.getString(Preferences.idDuAn);
+  }
+
+  Future<bool> saveIdDuAnNhanVien(String id) async {
+    return _sharedPreference.setString(Preferences.idDuAn, id);
+  }
+
+  Future<bool> removeIdDuAnNhanVien() async {
+    return _sharedPreference.remove(Preferences.idDuAn);
+  }
+
   //  : ----------------------------------------------------------
   Future<String?> get productCategoryId async {
     return _sharedPreference.getString(Preferences.productCategoryId);
@@ -272,5 +284,18 @@ class SharedPreferenceHelper {
 
   Future<bool> removePhanHoiDonDichVuId() async {
     return _sharedPreference.remove(Preferences.phanHoiDonDichVuId);
+  }
+
+  // giaTriDonHang : -----------------------------------------------
+  Future<double?> get giaTriDonHang async {
+    return _sharedPreference.getDouble(Preferences.giaTriDonHang);
+  }
+
+  Future<bool> saveGiaTriDonHang(double tongTien) async {
+    return _sharedPreference.setDouble(Preferences.giaTriDonHang, tongTien);
+  }
+
+  Future<bool> removeGiaTriDonHang() async {
+    return _sharedPreference.remove(Preferences.giaTriDonHang);
   }
 }

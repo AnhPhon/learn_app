@@ -21,12 +21,13 @@ class V2FinishUpdateController extends GetxController {
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
 
   bool thueValid = false;
+  bool maSoThueValid = false;
   bool camKetValid = false;
   bool hopDongValid = false;
   bool baoHiemValid = false;
   bool chungNhanValid = false;
-
-  bool isLoading = true;
+  bool sanPhamMauValid = false;
+  bool bangGiaValid = false;
 
   @override
   void onInit() {
@@ -43,9 +44,6 @@ class V2FinishUpdateController extends GetxController {
     sl.get<SharedPreferenceHelper>().userId.then((idUser) {
       // dang ky thue
       dangKyThue(idUser!);
-
-      // cam ket thue
-      camKetThue(idUser);
 
       // dang ky fss
       dangKyFSS(idUser);
@@ -68,29 +66,14 @@ class V2FinishUpdateController extends GetxController {
       filter: "&idTaiKhoan=$id",
       onSuccess: (models) {
         if (models.isNotEmpty) {
-          if (models[0].trangThai == '1') {
+          if (models[0].trangThai == '1' && models[0].loai == '1') {
             thueValid = true;
             update();
           }
-        }
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
 
-  ///
-  /// đăng ký thuế
-  ///
-  void camKetThue(String id) {
-    dangKyThueProvider.paginate(
-      page: 1,
-      limit: 30,
-      filter: "&idTaiKhoan=$id",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          if (models[0].trangThai == '1') {
+          if (models[0].trangThai == '1' && models[0].loai == '2') {
+            thueValid = true;
+            maSoThueValid = true;
             camKetValid = true;
             update();
           }
@@ -158,7 +141,6 @@ class V2FinishUpdateController extends GetxController {
         if (models.isNotEmpty) {
           if (models[0].trangThai == '1') {
             chungNhanValid = true;
-            isLoading = false;
             update();
           }
         }
@@ -194,13 +176,6 @@ class V2FinishUpdateController extends GetxController {
   /// on Giay Chung Nhan Kham Suc Khoe Click
   ///
   void onGiayChungNhanKhamSucKhoeClick() {
-    print("1");
-  }
-
-  ///
-  /// on Ma So Thue Click
-  ///
-  void onMaSoThueClick() {
     print("1");
   }
 

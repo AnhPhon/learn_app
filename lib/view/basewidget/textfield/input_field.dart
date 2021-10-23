@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/format/format_currency.dart';
 
 class InputField extends StatelessWidget {
-  InputField({
-    required this.label,
-    required this.holdplacer,
-    required this.controller,
-    required this.allowEdit,
-    required this.allowMultiline,
-    this.suffixIcon,
-    this.onChanged,
-    this.boldHinText,
-    this.errorText,
-    required this.typeInput,
-    required this.width,
-    this.height = 50,
-    required this.hidden,
-    required this.obligatory,
-    this.line = 5,
-    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
-    this.isColorFieldWhite,
-    required this.fontSize,
-  });
+  InputField(
+      {required this.label,
+      required this.holdplacer,
+      required this.controller,
+      required this.allowEdit,
+      required this.allowMultiline,
+      this.suffixIcon,
+      this.onChanged,
+      this.boldHinText,
+      this.errorText,
+      this.isFormatCurrency = false,
+      required this.typeInput,
+      required this.width,
+      this.height = 50,
+      required this.hidden,
+      required this.obligatory,
+      this.line = 5,
+      this.textInputAction,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.isColorFieldWhite,
+      required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
   final bool allowEdit, allowMultiline, hidden, obligatory;
@@ -33,9 +36,11 @@ class InputField extends StatelessWidget {
   final double? paddingTop;
   final String? errorText;
   final int? line;
+  final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   bool? boldHinText;
   final bool? isColorFieldWhite;
+  final bool? isFormatCurrency;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +60,10 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
-                      color: ColorResources.BLACK.withOpacity(0.7)),
+                    fontSize: fontSize, // * 2.1,
+                    fontWeight: FontWeight.w600,
+                    color: ColorResources.BLACK,
+                  ),
                 ),
                 if (obligatory)
                   Text(
@@ -76,7 +82,14 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
-              textInputAction: TextInputAction.done,
+              inputFormatters: typeInput == TextInputType.number
+                  ? isFormatCurrency!
+                      ? [
+                          ThousandsSeparatorInputFormatterCurrency(),
+                        ]
+                      : [FilteringTextInputFormatter.digitsOnly]
+                  : null,
+              textInputAction: textInputAction,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,
               textAlignVertical: TextAlignVertical.top,
@@ -132,8 +145,8 @@ class InputField extends StatelessWidget {
                     fontSize: Dimensions.FONT_SIZE_LARGE,
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
-                  fillColor: (isColorFieldWhite == false)
-                      ? ColorResources.GREY
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.LIGHT_GREY.withOpacity(0.4)
                       : ColorResources.WHITE,
                   suffixIcon: suffixIcon),
             ),

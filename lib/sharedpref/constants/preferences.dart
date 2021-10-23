@@ -19,7 +19,9 @@ class Preferences {
   static const String idTinTuc = "news";
   static const String idSanPham = "product";
   static const String isChamCong = "idChamCong";
+  static const String idDuAn = "idDuAn";
   static const String productCategoryId = "product_category_id";
   static const String productId = "productId";
   static const String phanHoiDonDichVuId = "phanHoiDonDichVuId";
+  static const String giaTriDonHang = "giaTriDonHang";
 }

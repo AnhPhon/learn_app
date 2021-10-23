@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -76,7 +77,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                     builder: (context) {
                       return IconButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Get.back();
                           },
                           icon: const Icon(
                             Icons.arrow_back_ios,
@@ -103,10 +104,11 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.action!.isNotEmpty)
                   ...widget.action!.map((e) => e).toList()
                 else
-                widget.isNotBack == true ? const SizedBox.shrink() :
-                const SizedBox(
-                  width: 30,
-                )
+                  widget.isNotBack == true
+                      ? const SizedBox.shrink()
+                      : const SizedBox(
+                          width: 30,
+                        )
               ],
             ),
           ),

@@ -24,7 +24,6 @@ class V4DashboardPage extends StatelessWidget {
             index: controller.tabIndex,
             children: [
               V4HomePage(),
-              V4NotificationPage(),
               V4NewsPage(),
               V4ReportPage(),
               V4AccountPage(),
@@ -42,10 +41,6 @@ class V4DashboardPage extends StatelessWidget {
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.home,
                 label: 'Trang chủ',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.bell,
-                label: 'Thông báo',
               ),
               _bottomNavigationBarItem(
                 icon: CupertinoIcons.news,

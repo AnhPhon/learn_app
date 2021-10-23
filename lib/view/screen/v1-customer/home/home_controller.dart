@@ -13,6 +13,10 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
+import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
+import 'package:template/view/screen/v1-customer/product/product_controller.dart';
+import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
 class V1HomeController extends GetxController {
   // declare provider
@@ -64,7 +68,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.add_circle_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_CREATE_WORK);
+          Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.WORK);
         }
       },
       {
@@ -92,7 +96,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.room_service_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_CREATE_WORK);
+          Get.toNamed(AppRoutes.V1_CREATE_WORK, arguments: SERVICES.REGULARLY);
         }
       },
       {
@@ -120,7 +124,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.work_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+          Get.toNamed(AppRoutes.V1_QUOTE_LIST);
         }
       },
       {
@@ -253,6 +257,9 @@ class V1HomeController extends GetxController {
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
+  ///
+  /// xem thêm category sản phẩm
+  ///
   void onMoreCategoryProduct(String id) {
     sl.get<SharedPreferenceHelper>().saveProductCategoryId(id);
     Get.toNamed(AppRoutes.V1_PRODUCT);

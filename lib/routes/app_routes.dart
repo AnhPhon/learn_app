@@ -123,7 +123,6 @@ class AppRoutes {
   static const String V1_RECHARGE = '/v1_recharge';
   static const String V1_PAYMENT_SUCCESS = '/v1_payment_success';
   static const String V1_INURANCE_REGISTER = '/v1_insurance_register';
-  static const String V1_YOUR_INSURANCE = '/v1_your_insurance';
   static const String V1_INSURANCE_DETAIL = '/v1_insurance_detail';
 
   static const String V1_NEWS_DETAIL = '/v1_news_detail';
@@ -134,8 +133,11 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_QUOTE_LIST = '/V1_QUOTE_LIST';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
+  static const String V1_ACCOUNT = '/v1_account_page';
+  static const String V1_REFERENCE_PRICE_TABLE = '/v1_reference_price_table';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -168,6 +170,10 @@ class AppRoutes {
   static const String V2_RECHARGE = '/v2_recharge';
   static const String V2_NEWS_DETAIL = '/v2_news_detail';
   static const String V2_PROJECT_DETAIL = '/v2_project_detail';
+  static const String V2_PROJECT_DETAIL_TRIEN_KHAI =
+      '/v2_project_detail_trien_khai';
+  static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
+      '/v2_project_dang_ky_trien_khai';
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -277,4 +283,9 @@ class AppRoutes {
       '/v2_detail_work_in_progress';
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+
+  ///payment
+  static const String PAYMENT_ACCOUNT = '/payment_account';
+  static const String PAYMENT_SUCCESS = '/payment_success';
+  static const String PAYMENT_RECHARGE = '/payment_recharge';
 }

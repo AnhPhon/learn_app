@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
-import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -20,7 +20,7 @@ class V4HomeController extends GetxController {
   CongViecNhanVienProvider congViecNhanVienProvider =
       GetIt.I.get<CongViecNhanVienProvider>();
 
-  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
 
   // refresh controller
   RefreshController? refreshController;
@@ -77,7 +77,7 @@ class V4HomeController extends GetxController {
     chamTreQuality = 0;
 
     sl.get<SharedPreferenceHelper>().userId.then((id) {
-      taiKhoanProvider.find(
+      nhanVienProvider.find(
         id: id!,
         onSuccess: (taiKhoanResponse) {
           fullname = taiKhoanResponse.hoTen!;
@@ -266,15 +266,43 @@ class V4HomeController extends GetxController {
   ///
   ///click to export page
   ///
-  void onClickToExprot() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true");
+  void onClickToExprot(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true")!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Xuất kho thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   ///click to import page
   ///
-  void onClickToImport() {
-    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase");
+  void onClickToImport(BuildContext context) {
+    Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase")!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành Công",
+            description: "Nhập kho thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   /// click to Revenue page

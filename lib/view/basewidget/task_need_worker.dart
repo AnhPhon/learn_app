@@ -3,14 +3,12 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 class TaskNeedWorker extends StatelessWidget {
-  final String nhanTask;
   final String tenTask;
   final String maTask;
   final String trangThai;
   String? imageURL;
 
   TaskNeedWorker({
-    required this.nhanTask,
     required this.tenTask,
     required this.maTask,
     required this.trangThai,

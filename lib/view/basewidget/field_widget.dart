@@ -20,12 +20,16 @@ class FieldWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: _fontSize,
-                color: Color(0xff040404),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: _fontSize,
+                  color: Color(0xff040404),
+                ),
               ),
             ),
             const Spacer(),

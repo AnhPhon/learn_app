@@ -14,6 +14,7 @@ class AppBinding extends Bindings {
     Get.lazyPut<V1ProductController>(() => V1ProductController());
     Get.lazyPut<V1NewsController>(() => V1NewsController());
     Get.lazyPut<V1AccountController>(() => V1AccountController());
+    Get.lazyPut<V1ProductController>(() => V1ProductController());
     // Get.lazyPut<AuthController>(() => AuthController());
   }
 }

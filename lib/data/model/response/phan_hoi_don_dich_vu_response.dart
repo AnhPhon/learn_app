@@ -110,9 +110,12 @@ class PhanHoiDonDichVuResponse {
     // check null tinhTrangThanhToan
     if (tinhTrangThanhToan != null)
       data['tinhTrangThanhToan'] = tinhTrangThanhToan;
+<<<<<<< HEAD
 
     // check null kichHoatBaoHanh
     if (kichHoatBaoHanh != null) data['kichHoatBaoHanh'] = kichHoatBaoHanh;
+=======
+>>>>>>> origin/feature/app/26_quan_ly_bao_gia
 
     return data;
   }

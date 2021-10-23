@@ -142,7 +142,8 @@ class V2ProductPage extends GetView<V2ProductController> {
                 onTap: () => controller
                     .onProductDetailClick(controller.sanPhamList[index].id!),
                 child: ProductWidget(
-                  imgUrl: controller.sanPhamList[index].hinhAnhSanPham!,
+                  imgUrl: controller.sanPhamList[index].hinhAnhSanPhams![0]
+                      .toString(),
                   name: controller.sanPhamList[index].ten!,
                   price: "${PriceConverter.convertPrice(
                     context,

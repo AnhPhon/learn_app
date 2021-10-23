@@ -5,68 +5,71 @@ import 'package:template/utils/dimensions.dart';
 
 class DropDownButton1<T> extends StatelessWidget {
   const DropDownButton1({
-    required this.hint,
+    this.hint,
     required this.onChanged,
     required this.data,
     this.value,
-    this.isColorFieldWhite = false,
     this.obligatory = false,
     this.label,
     this.labelBold = false,
     required this.width,
     this.isBorder = true,
     this.isShadow = false,
+    this.padding,
+    this.margin,
+    this.fillColor,
+    this.colorText,
+    this.isColorFieldWhite,
   });
 
-  final String hint;
-  final Function(T? i) onChanged;
+  final String? hint;
+  final Function(T? i)? onChanged;
   final List<T> data;
   final T? value;
-  final bool? isColorFieldWhite;
-  final bool? obligatory, labelBold, isBorder, isShadow;
+  final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
   final String? label;
+  final Color? colorText;
+  final Color? fillColor;
   final double width;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                children: [
-                  Text(
-                    label.toString(),
-                    style: labelBold == true
-                        ? Dimensions.fontSizeStyle16w600().copyWith(
-                            color: ColorResources.BLACK,
-                          )
-                        : Dimensions.fontSizeStyle16().copyWith(
-                            color: ColorResources.BLACK,
-                          ),
-                  ),
-                  if (obligatory == true)
-                    const Text(
-                      "*",
-                      style: TextStyle(
-                        color: ColorResources.RED,
-                      ),
+            Wrap(
+              children: [
+                Text(
+                  label.toString(),
+                  style: labelBold == true
+                      ? Dimensions.fontSizeStyle16w600().copyWith(
+                          color: ColorResources.BLACK,
+                        )
+                      : Dimensions.fontSizeStyle16().copyWith(
+                          color: ColorResources.BLACK,
+                        ),
+                ),
+                if (obligatory == true)
+                  const Text(
+                    "*",
+                    style: TextStyle(
+                      color: ColorResources.RED,
                     ),
-                ],
-              ),
+                  ),
+              ],
+            ),
+          if (label != null)
+            const SizedBox(
+              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
-            margin: EdgeInsets.symmetric(
-              vertical: DeviceUtils.getScaledSize(context, .025),
-            ),
+            margin: margin ?? EdgeInsets.zero,
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)
                   ? [
@@ -82,9 +85,7 @@ class DropDownButton1<T> extends StatelessWidget {
                 return InputDecorator(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: (isColorFieldWhite == true)
-                        ? ColorResources.WHITE
-                        : Colors.transparent,
+                    fillColor: fillColor ?? Colors.transparent,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -121,7 +122,9 @@ class DropDownButton1<T> extends StatelessWidget {
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
-                        hint: Text(hint),
+                        hint: hint.toString().isNotEmpty
+                            ? Text(hint.toString())
+                            : null,
                         isDense: true,
                         isExpanded: true,
                         value: value,
@@ -131,9 +134,10 @@ class DropDownButton1<T> extends StatelessWidget {
                                 value: e,
                                 child: Text(
                                   e.toString(),
-                                  style: const TextStyle(
-                                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                                      color: ColorResources.BLACK),
+                                  style: TextStyle(
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    color: colorText ?? ColorResources.BLACK,
+                                  ),
                                   overflow: TextOverflow.ellipsis,
                                 )))
                             .toList()),

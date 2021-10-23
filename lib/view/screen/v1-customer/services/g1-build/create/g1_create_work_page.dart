@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -76,6 +77,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -86,17 +88,18 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowMultiline: true,
           controller: controller.descController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà lầu",
+          holdplacer: "Miêu tả",
           hidden: false,
           label: "Mô tả công việc",
           obligatory: true,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
         TextFieldDate(
           isDate: true,
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.startTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-11-2021",
@@ -104,10 +107,11 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
-          allowEdit: true,
+          allowEdit: false,
           controller: controller.endTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "22-11-2021",
@@ -116,6 +120,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );
@@ -137,11 +142,12 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowMultiline: false,
           controller: controller.nameTitleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà",
+          holdplacer: "Lát gạch phòng ngủ 600*600",
           hidden: false,
           label: "Tên công việc",
           obligatory: true,
           typeInput: TextInputType.text,
+          textInputAction: TextInputAction.next,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
 
@@ -150,9 +156,10 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           allowMultiline: false,
           controller: controller.specificationController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Xây nhà lầu",
+          holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
           hidden: false,
           label: "Quy cách",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -165,21 +172,23 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               allowMultiline: false,
               controller: controller.massController,
               fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-              holdplacer: "Dùng keo, gạch thạch bàn mã TB123",
+              holdplacer: "VD: 100",
               hidden: false,
               label: "Khối lượng",
+              textInputAction: TextInputAction.next,
               obligatory: true,
-              typeInput: TextInputType.text,
+              typeInput: TextInputType.number,
               width: DeviceUtils.getScaledWidth(context,0.5),
             ),
           DropDownButton<String>(
-            data: const ["m2","m3",'Tấn','Tạ','KG'],
+            data: const ["m2","m3",'Tấn','Tạ','Kg'],
             obligatory: true,
             onChanged: (unit)=> controller.onChangedUnit(unit!),
             value: controller.unit,
             width: DeviceUtils.getScaledSize(context,0.5),
             label: "Đơn vị",
             hint: 'Chọn đơn vị',
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           ),
           ],
          ),
@@ -188,7 +197,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         Padding(
           padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
           child: LongButton(
-             title: '+ Thêm vật liệu', 
+             title: '+ Thêm công việc', 
              color: ColorResources.PRIMARYCOLOR, 
              onPressed: controller.onClickAddMass,
              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -200,14 +209,25 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   }
 
   ///
-  /// Danh sách vật liệu được thêm 
+  /// Danh sách công việc được thêm 
   ///
   Widget materialList(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
       children: controller.massList.map((e) => 
       SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
-        child: MaterialCard(mass: e))).toList()
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Xoá',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: ()=> controller.deleteSupplies(e)
+            ),
+          ],
+          child: MaterialCard(mass: e)))
+      ).toList()
     );
   }
 
