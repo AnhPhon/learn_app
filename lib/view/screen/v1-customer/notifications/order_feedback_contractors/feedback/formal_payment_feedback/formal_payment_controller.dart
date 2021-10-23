@@ -10,8 +10,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class V1FormalPaymentFeedbackController extends GetxController{
-  
-  PhanHoiDonDichVuProvider dichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
+  PhanHoiDonDichVuProvider phanHoiDonDichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
   PhanHoiDonDichVuResponse? phanHoiDonDichVuResponse;
 
   int formalPaymentGroup = 0;
@@ -79,19 +78,52 @@ class V1FormalPaymentFeedbackController extends GetxController{
 
   void onClickPayment()async{
     // Đên tài khoản của tôi để thanh toán
+    PhanHoiDonDichVuRequest donPhanHoi = onRequest(); 
     await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
         if(value == true){
-            EasyLoading.show(status: "Phản hồi thành công!");
-            dichVuProvider.add(data: onRequest(), onSuccess: (data){
-              // show snackBar 
-              EasyLoading.dismiss();
-              Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: phanHoiDonDichVuResponse);
+          EasyLoading.show(status: "Phản hồi đơn dịch vụ thành công!");
+          donPhanHoi.tinhTrangThanhToan = "61604f4cc8e6fa122227e29f";
+          phanHoiDonDichVuProvider.add(data: donPhanHoi, onSuccess: (data){
+            if (value.response.data != null)
+                {
+                   EasyLoading.dismiss();
+                  Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
+                }
+          }, onError: (onError){
+            EasyLoading.dismiss();
+            print("V1FormalPaymentFeedbackController onClickPayment onError $onError");
+          });
+        }else{
+
+            EasyLoading.showSuccess('Phản hồi đơn dich vụ thành công');
+            //set trạng thái chưa thanh toán
+            donPhanHoi.tinhTrangThanhToan= "61615180e87a9124404abe82";
+            //insert db
+            phanHoiDonDichVuProvider.add(data: donPhanHoi, onSuccess: (data){
+                if (value.response.data != null)
+                {
+                  EasyLoading.dismiss();
+                  Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
+                }
             }, onError: (onError){
               EasyLoading.dismiss();
-              print("OrderInformationController onNextPage onError $onError");
+              print("V1FormalPaymentFeedbackController onClickPayment onError $onError");
             });
+
         }
       });
   }
+
+  
 
 }
