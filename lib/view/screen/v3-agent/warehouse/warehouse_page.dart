@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
@@ -8,6 +9,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_controller.dart';
 
@@ -26,24 +28,51 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
             appBar: AppBarWidget(title: controller.title),
             body: Column(
               children: [
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+
                 //search
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: InputWidget(
-                    width: double.infinity,
-                    textEditingController: controller.searchController,
-                    hintText: "Tìm kiếm",
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      size: Dimensions.ICON_SIZE_DEFAULT,
-                    ),
-                    isColorFieldWhite: true,
+                InputWidget(
+                  width: double.infinity,
+                  textEditingController: controller.searchController,
+                  hintText: "Tìm kiếm",
+                  suffixIcon: const Icon(
+                    Icons.search,
+                    size: Dimensions.ICON_SIZE_DEFAULT,
                   ),
+                  fillColor: ColorResources.WHITE,
+                ),
+
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+
+                //dropdown warehouse
+                DropDownButton1<KhoHangDaiLyResponse>(
+                  hint: "Chọn kho hàng",
+                  value: controller.khoHangDaiLyResponse,
+                  onChanged: (val) => controller.onChangedKhoHang(val!),
+                  data: controller.khoHangDaiLyList,
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
+                  fillColor: ColorResources.WHITE,
                 ),
 
                 //item
+
                 Expanded(
-                  child: _item(context, controller: controller),
+                  child: (controller.khoHangDaiLyList.isEmpty)
+                      ? Center(
+                          child: Text(
+                            "Bạn chưa có kho hàng, vui lòng vào mục thông tin cửa hàng để tạo kho!",
+                            textAlign: TextAlign.center,
+                            style: Dimensions.fontSizeStyle18w600(),
+                          ),
+                        )
+                      : _item(context, controller: controller),
                 ),
               ],
             ),
@@ -67,7 +96,7 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
         canLoadingText: "Kéo lên để tải thêm dữ liệu",
       ),
       child: ListView.builder(
-          itemCount: controller.nhapKhoHangDaiLyResponse.length,
+          itemCount: controller.nhapKhoHangDaiLyList.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
               margin: const EdgeInsets.symmetric(
@@ -96,7 +125,7 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                         flex: 2,
                         child: FadeInImage.assetNetwork(
                           placeholder: Images.placeholder,
-                          image: controller.nhapKhoHangDaiLyResponse[index]
+                          image: controller.nhapKhoHangDaiLyList[index]
                               .idSanPham!.hinhAnhDaiDien
                               .toString(),
                           height: DeviceUtils.getScaledHeight(context, .08),
@@ -119,8 +148,8 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                controller.nhapKhoHangDaiLyResponse[index]
-                                    .idSanPham!.ten
+                                controller
+                                    .nhapKhoHangDaiLyList[index].idSanPham!.ten
                                     .toString(),
                                 maxLines: 2,
                                 style: Dimensions.fontSizeStyle16w600(),
@@ -131,12 +160,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                               IntrinsicHeight(
                                 child: Row(
                                   children: [
-                                    Text((controller
-                                                .nhapKhoHangDaiLyResponse[index]
+                                    Text((controller.nhapKhoHangDaiLyList[index]
                                                 .soLuong ==
                                             "0")
                                         ? "Hết hàng"
-                                        : "${controller.nhapKhoHangDaiLyResponse[index].soLuong} sản phẩm"),
+                                        : "${controller.nhapKhoHangDaiLyList[index].soLuong} sản phẩm"),
                                     VerticalDivider(
                                       color:
                                           ColorResources.BLACK.withOpacity(.7),
@@ -145,10 +173,8 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                                       "${PriceConverter.convertPrice(
                                         context,
                                         double.parse(
-                                          controller
-                                              .nhapKhoHangDaiLyResponse[index]
-                                              .idSanPham!
-                                              .gia
+                                          controller.nhapKhoHangDaiLyList[index]
+                                              .idSanPham!.gia
                                               .toString(),
                                         ),
                                       )} đ",
@@ -174,12 +200,12 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                     children: [
                       Text(
                         "Nhập kho: ${DateConverter.formatDateTime(
-                          controller.nhapKhoHangDaiLyResponse[index].createdAt
+                          controller.nhapKhoHangDaiLyList[index].createdAt
                               .toString(),
                         )}",
                       ),
                       Text(
-                        "Quy cách: ${controller.nhapKhoHangDaiLyResponse[index].idSanPham!.quyCach}",
+                        "Quy cách: ${controller.nhapKhoHangDaiLyList[index].idSanPham!.quyCach}",
                       ),
                     ],
                   ),

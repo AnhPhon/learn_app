@@ -102,6 +102,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: MultiSelectDialogField<MatHangDacTrungResponse?>(
+                      initialValue: controller.matHangDacTrungResponse,
                       listType: MultiSelectListType.CHIP,
                       items: controller.matHangDacTrungList
                           .map((e) => MultiSelectItem(e, e!.tieuDe!))
@@ -192,6 +193,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     itemBuilder: (BuildContext ctx, int index) {
                       if (controller.isLoadingAdd &&
                           index == controller.warehouseList.length - 1) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (controller.isLoadingAdd) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

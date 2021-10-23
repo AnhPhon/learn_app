@@ -1,5 +1,3 @@
-import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
-
 class TaiKhoanRequest {
   String? id;
   String? idLoaiTaiKhoan;
@@ -30,13 +28,13 @@ class TaiKhoanRequest {
   String? hinhCMNDTruoc;
   String? hinhCMNDSau;
   String? idNhomCuaHang;
-  List<MatHangDacTrungResponse>? idMatHangDacTrungs;
+  List<String>? idMatHangDacTrungs;
   String? diaChiKhoHang;
   String? thoiGianLamViec;
   String? lamChieuThuBay;
   String? lamNgayChuNhat;
   String? diaDiemCuaHangChinh;
-  List<dynamic>? hinhAnhCuaHangs;
+  List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
 
   TaiKhoanRequest({
@@ -112,28 +110,17 @@ class TaiKhoanRequest {
     hinhCMNDTruoc = json['hinhCMNDTruoc'].toString();
     hinhCMNDSau = json['hinhCMNDSau'].toString();
     idNhomCuaHang = json['idNhomCuaHang'].toString();
-
-    // mapping idMatHangDacTrungs
-    if (json['idMatHangDacTrungs'] != null &&
-        json['idMatHangDacTrungs'].toString().length != 24) {
-      idMatHangDacTrungs = [];
-      final results = json['idMatHangDacTrungs'] as List<dynamic>;
-      for (final element in results) {
-        if (element != null && element.toString().length != 24) {
-          idMatHangDacTrungs!.add(MatHangDacTrungResponse.fromJson(
-              element as Map<String, dynamic>));
-        }
-      }
-    } else {
-      idMatHangDacTrungs = null;
-    }
-
+    idMatHangDacTrungs = (json['idMatHangDacTrungs'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     diaChiKhoHang = json['diaChiKhoHang'].toString();
     thoiGianLamViec = json['thoiGianLamViec'].toString();
     lamChieuThuBay = json['lamChieuThuBay'].toString();
     lamNgayChuNhat = json['lamNgayChuNhat'].toString();
     diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
-    hinhAnhCuaHangs = json['hinhAnhCuaHangs'] as List<dynamic>;
+    hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
   }
 

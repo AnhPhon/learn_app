@@ -16,7 +16,6 @@ import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/mat_hang_dac_trung_provider.dart';
 import 'package:template/provider/nhom_cua_hang_provider.dart';
@@ -25,6 +24,7 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
@@ -170,7 +170,11 @@ class V3StoreInfomationController extends GetxController {
         emailController.text = value.email ?? "";
         addressController.text = value.diaChi.toString();
 
-        // matHangDacTrungResponse = value.idMatHangDacTrungs;
+        matHangDacTrungResponse =
+            value.idMatHangDacTrungs!.map((e) => e).toList();
+        print(matHangDacTrungResponse);
+        // update();
+        // print(matHangDacTrungResponse[0]!.tieuDe);
 
         //getNhomCuaHang
         getNhomCuaHang();
@@ -179,14 +183,15 @@ class V3StoreInfomationController extends GetxController {
         getMatHangDacTrung();
 
         //getTinhTp
-        getTinhTp();
         getTinhTp(isWarehouse: true);
+        getTinhTp();
 
         //getKhoHangDaiLy
         // getKhoHangDaiLy();
 
         //getKhoHang
-        getKhoHang();
+        // getKhoHang();
+        getKhoHangDaiLy();
       },
       onError: (error) {
         print("V3StoreInfomationController getUserInfomation onError $error");
@@ -203,27 +208,47 @@ class V3StoreInfomationController extends GetxController {
   ///
   ///get kho hang
   ///
-  // void getKhoHangDaiLy() {
-  //   khoHangDaiLyProvider.paginate(
-  //     page: 1,
-  //     limit: 100,
-  //     filter: "&idTaiKhoan=$userId",
-  //     onSuccess: (value) {
-  //       if (value.isNotEmpty) {
-  //         for (var i = 0; i < value.length; i++) {
-  //           tinhTpWarehouse.add(tinhTpListIsWareHouse[tinhTpListIsWareHouse
-  //               .indexWhere((element) => element.id == value[i].idTinhTp!.id)]);
-  //           quanHuyenListIsWareHouse.add([]);
-  //         }
-  //       }
+  void getKhoHangDaiLy() {
+    isLoadingAdd = true;
+    khoHangDaiLyProvider.paginate(
+      page: 1,
+      limit: 100,
+      filter: "&idTaiKhoan=$userId",
+      onSuccess: (value) {
+        if (value.isNotEmpty) {
+          khoHangDaiLyList = value;
+          for (var i = 0; i < value.length; i++) {
+            // tinhTpWarehouse.add(tinhTpListIsWareHouse[tinhTpListIsWareHouse
+            //     .indexWhere((element) => element.id == value[i].idTinhTp!.id)]);
+            // quanHuyenListIsWareHouse.add([]);
 
-  //       update();
-  //     },
-  //     onError: (error) {
-  //       print("V3StoreInfomationController getKhoHangDaiLy onError $error");
-  //     },
-  //   );
-  // }
+            tinhTpWarehouse.add(null);
+            tinhTpWarehouse[i] = tinhTpListIsWareHouse[tinhTpListIsWareHouse
+                .indexWhere((element) => element.id == value[i].idTinhTp!.id)];
+            quanHuyenWarehouse.add(null);
+            phuongXaWarehouse.add(null);
+            warehouseController.add(TextEditingController());
+            warehouseController[i].text = value[i].diaChi.toString();
+            quanHuyenListIsWareHouse.add([]);
+            getQuanHuyen(
+                idTinhTp: value[i].idTinhTp!.id.toString(),
+                indexWarehouse: i,
+                isWarehouse: true);
+            phuongXaListIsWareHouse.add([]);
+            getPhuongXa(
+                idQuanHuyen: value[i].idQuanHuyen!.id.toString(),
+                indexWarehouse: i,
+                isWarehouse: true);
+          }
+        }
+        isLoadingAdd = false;
+        update();
+      },
+      onError: (error) {
+        print("V3StoreInfomationController getKhoHangDaiLy onError $error");
+      },
+    );
+  }
 
   ///
   ///get NhomCuaHang
@@ -310,6 +335,7 @@ class V3StoreInfomationController extends GetxController {
     required String idTinhTp,
     bool? isWarehouse = false,
     int? index = -1,
+    int? indexWarehouse = -1,
   }) {
     quanHuyenProvider.paginate(
       page: 1,
@@ -328,8 +354,19 @@ class V3StoreInfomationController extends GetxController {
         } else {
           if (index != -1) {
             //isWarehouse
-            quanHuyenListIsWareHouse[index!] = value;
+            quanHuyenWarehouse[index!] = null;
+            quanHuyenListIsWareHouse[index].clear();
+            quanHuyenListIsWareHouse[index] = value;
           }
+        }
+        if (indexWarehouse != -1) {
+          quanHuyenListIsWareHouse[indexWarehouse!] = value;
+          quanHuyenWarehouse[indexWarehouse] =
+              quanHuyenListIsWareHouse[indexWarehouse][
+                  quanHuyenListIsWareHouse[indexWarehouse].indexWhere(
+                      (element) =>
+                          element.id ==
+                          khoHangDaiLyList[indexWarehouse].idQuanHuyen!.id)];
         }
 
         update();
@@ -347,6 +384,7 @@ class V3StoreInfomationController extends GetxController {
     required String idQuanHuyen,
     bool? isWarehouse = false,
     int? index = -1,
+    int? indexWarehouse = -1,
   }) {
     phuongXaProvider.paginate(
       page: 1,
@@ -359,8 +397,19 @@ class V3StoreInfomationController extends GetxController {
         } else {
           if (index != -1) {
             //isWarehouse
-            phuongXaListIsWareHouse[index!] = value;
+            phuongXaWarehouse[index!] = null;
+            phuongXaListIsWareHouse[index].clear();
+            phuongXaListIsWareHouse[index] = value;
           }
+        }
+        if (indexWarehouse != -1) {
+          phuongXaListIsWareHouse[indexWarehouse!] = value;
+          phuongXaWarehouse[indexWarehouse] =
+              phuongXaListIsWareHouse[indexWarehouse][
+                  phuongXaListIsWareHouse[indexWarehouse].indexWhere(
+                      (element) =>
+                          element.id ==
+                          khoHangDaiLyList[indexWarehouse].idPhuongXa!.id)];
         }
 
         update();
@@ -458,7 +507,6 @@ class V3StoreInfomationController extends GetxController {
     warehouseController.add(TextEditingController());
     quanHuyenListIsWareHouse.add([]);
     phuongXaListIsWareHouse.add([]);
-    // warehouseList.add(widget);
     isLoadingAdd = false;
     update();
   }
@@ -529,7 +577,6 @@ class V3StoreInfomationController extends GetxController {
   ///btn update
   ///
   void btnUpdate(BuildContext context) {
-    print("${timeDiff(startController.text, endController.text)} giờ");
     //validate
     if (nameController.text.isEmpty) {
       SnackBarUtils.showSnackBar(
@@ -592,6 +639,7 @@ class V3StoreInfomationController extends GetxController {
           );
         }
       }
+      print("V3StoreInfomationController  onError ");
     } else {
       //set data
       taiKhoanRequest.id = userId;
@@ -600,11 +648,8 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.soDienThoai = phoneController.text;
       taiKhoanRequest.email = emailController.text;
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
-      // matHangDacTrungResponse.map((e) {
-      //   taiKhoanRequest.idMatHangDacTrungs!.add(e!);
-      // }).toList();
       taiKhoanRequest.idMatHangDacTrungs =
-          matHangDacTrungResponse.cast<MatHangDacTrungResponse>();
+          matHangDacTrungResponse.map((e) => e!.id!).toList();
       taiKhoanRequest.diaDiemCuaHangChinh =
           "$phuongXaStore, $quanHuyenStore, $tinhTpStore";
       taiKhoanRequest.diaDiemCuThe = addressController.text;
@@ -614,7 +659,7 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.lamChieuThuBay = taiKhoanResponse.lamChieuThuBay;
       taiKhoanRequest.lamNgayChuNhat = taiKhoanResponse.lamNgayChuNhat;
       taiKhoanRequest.hinhAnhCuaHangs = urlImage;
-
+      print("V3StoreInfomationController btnUpdate trong20 ");
       //update taiKhoan
       taiKhoanProvider.update(
         data: taiKhoanRequest,
@@ -622,7 +667,9 @@ class V3StoreInfomationController extends GetxController {
           //set data
           khoHangDaiLyRequest.idTaiKhoan = userId;
 
-          for (var i = 0; i < warehouseList.length; i++) {
+          print("V3StoreInfomationController btnUpdate trong21 ");
+          for (var i = 0; i < tinhTpWarehouse.length; i++) {
+            print("V3StoreInfomationController btnUpdate trong22 ");
             //set data
             khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
             khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
@@ -633,17 +680,21 @@ class V3StoreInfomationController extends GetxController {
             khoHangDaiLyProvider.add(
               data: khoHangDaiLyRequest,
               onSuccess: (khoHang) {
+                print("V3StoreInfomationController btnUpdate trong ");
                 ////show dialog
-                showAnimatedDialog(
-                  context,
-                  const MyDialog(
-                    icon: Icons.check,
-                    title: "Hoàn tất",
-                    description: "Cập nhật thông tin thành công",
-                  ),
-                  dismissible: false,
-                  isFlip: true,
-                );
+                if (i == tinhTpWarehouse.length - 1) {
+                  Get.offNamed(AppRoutes.V3_STORE);
+                  showAnimatedDialog(
+                    context,
+                    const MyDialog(
+                      icon: Icons.check,
+                      title: "Hoàn tất",
+                      description: "Cập nhật thông tin thành công",
+                    ),
+                    dismissible: false,
+                    isFlip: true,
+                  );
+                }
               },
               onError: (error) {
                 print("V3StoreInfomationController btnUpdate onError $error");
@@ -665,7 +716,8 @@ class V3StoreInfomationController extends GetxController {
     final format = DateFormat.jm(); //"6:00 AM"
     final timeFormat0 = TimeOfDay.fromDateTime(format.parse(tod0));
     final timeFormat1 = TimeOfDay.fromDateTime(format.parse(tod1));
-    return (abc(timeFormat1) - abc(timeFormat0)).toString();
+    return ((abc(timeFormat1) - abc(timeFormat0)).toStringAsFixed(2))
+        .toString();
   }
 
   double abc(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;

@@ -31,9 +31,4 @@ class MatHangDacTrungResponse {
 
     return data;
   }
-
-  @override
-  String toString() {
-    return tieuDe.toString();
-  }
 }
