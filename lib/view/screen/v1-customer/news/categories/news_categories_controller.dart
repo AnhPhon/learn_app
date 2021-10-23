@@ -33,8 +33,8 @@ class V1NewsCategoriesController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
     refreshController!.dispose();
+    super.onClose();
   }
 
   ///
