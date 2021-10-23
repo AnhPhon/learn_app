@@ -116,17 +116,17 @@ class V2HomeController extends GetxController {
   /// load công việc đang cần người
   ///
   void _loadCongViecDangCanNguoi(String idNguoiDung) {
-    donDichVuList = [];
+    print("&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc");
+    donDichVuList.clear();
     _donDichVuProvider.paginate(
       page: 1,
       limit: 30,
-      filter: "&idTaiKhoan=$idNguoiDung",
+      filter: "&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc",
       onSuccess: (values) {
         for (final value in values) {
           final int index = idCongViecDangCanNguoiList!
               .indexOf(value.idNhomDichVu!.nhomDichVu!);
           bool isLoadValid = true;
-
           // check trang thai don hang
           if (value.idTrangThaiDonDichVu == null) {
             isLoadValid = false;
