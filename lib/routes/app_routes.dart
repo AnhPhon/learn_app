@@ -169,8 +169,10 @@ class AppRoutes {
   static const String V2_RECHARGE = '/v2_recharge';
   static const String V2_NEWS_DETAIL = '/v2_news_detail';
   static const String V2_PROJECT_DETAIL = '/v2_project_detail';
-  static const String V2_PROJECT_DETAIL_TRIEN_KHAI = '/v2_project_detail_trien_khai';
-  static const String V2_PROJECT_DANG_KY_TRIEN_KHAI = '/v2_project_dang_ky_trien_khai';
+  static const String V2_PROJECT_DETAIL_TRIEN_KHAI =
+      '/v2_project_detail_trien_khai';
+  static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
+      '/v2_project_dang_ky_trien_khai';
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -280,4 +282,9 @@ class AppRoutes {
       '/v2_detail_work_in_progress';
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
+
+  ///payment
+  static const String PAYMENT_ACCOUNT = '/payment_account';
+  static const String PAYMENT_SUCCESS = '/payment_success';
+  static const String PAYMENT_RECHARGE = '/payment_recharge';
 }
