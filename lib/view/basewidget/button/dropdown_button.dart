@@ -137,7 +137,7 @@ class DropDownButton1<T> extends StatelessWidget {
                                       ? ColorResources.BLACK
                                       : null,
                                   fontSize: isBoldHintText == true
-                                      ? Dimensions.FONT_SIZE_LARGE
+                                      ? Dimensions.FONT_SIZE_DEFAULT
                                       : null,
                                 ),
                                 overflow: TextOverflow.ellipsis,

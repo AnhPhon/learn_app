@@ -59,6 +59,7 @@ class V4SalaryPage extends GetView<V4SalaryController> {
   ///
   Widget _timeSalary(V4SalaryController controller, BuildContext context) {
     return InputWidget(
+      isddMMyyyy: true,
       paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       isDate: true,
       allowEdit: false,

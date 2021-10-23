@@ -79,7 +79,11 @@ class V4AccountController extends GetxController {
   ///Click to personal information
   ///
   void onClickToInformation() {
-    Get.toNamed(AppRoutes.V4_INFO);
+    Get.toNamed(AppRoutes.V4_INFO)!.then((value) {
+      nhanVienResponse.hinhDaiDien = value.toString();
+      print(value);
+      update();
+    });
   }
 
   ///

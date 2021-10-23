@@ -354,7 +354,6 @@ class V4InfoController extends GetxController {
       onSuccess: (value) {
         nhanVienRequest.anhMSCMND = value.data;
         print(value.data);
-        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -476,9 +475,10 @@ class V4InfoController extends GetxController {
       nhanVienProvider.update(
         data: nhanVienRequest,
         onSuccess: (value) {
-          print(nhanVienRequest.hinhDaiDien.toString());
-          print(nhanVienRequest.anhMTCMND.toString());
-          Get.back(result: true);
+          print(nhanVienResponse.hinhDaiDien);
+          print(nhanVienResponse.anhMSCMND);
+
+          Get.back(result: nhanVienResponse.hinhDaiDien);
 
           //show dialog
           showAnimatedDialog(
@@ -497,5 +497,9 @@ class V4InfoController extends GetxController {
         },
       );
     }
+  }
+
+  void backHome() {
+    Get.back(result: nhanVienResponse.hinhDaiDien);
   }
 }

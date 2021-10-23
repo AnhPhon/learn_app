@@ -8,12 +8,14 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final bool? isNotBack;
   final List<Widget>? action;
+  final Widget? leading;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
     this.isNotBack = false,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -74,14 +76,15 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.isNotBack == false)
                   Builder(
                     builder: (context) {
-                      return IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorResources.WHITE,
-                          ));
+                      return widget.leading ??
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: ColorResources.WHITE,
+                              ));
                     },
                   ),
                 Expanded(
@@ -103,10 +106,11 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.action!.isNotEmpty)
                   ...widget.action!.map((e) => e).toList()
                 else
-                widget.isNotBack == true ? const SizedBox.shrink() :
-                const SizedBox(
-                  width: 30,
-                )
+                  widget.isNotBack == true
+                      ? const SizedBox.shrink()
+                      : const SizedBox(
+                          width: 30,
+                        )
               ],
             ),
           ),
