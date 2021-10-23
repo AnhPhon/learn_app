@@ -97,12 +97,19 @@ class V2DetailWorkInProgressController extends GetxController {
         }
         for (final element in models) {
           // lấy hình ảnh báo giá
-          urlHinhAnhKhoiLuongList.add(
-            element.idDonDichVu!.hinhAnhBanKhoiLuong!,
-          );
-          urlHinhAnhBangVeList.add(
-            element.idDonDichVu!.hinhAnhBanVe!,
-          );
+          for (final khoiLuong
+              in element.idDonDichVu!.hinhAnhBanKhoiLuong!.split(",")) {
+            if (khoiLuong.trim().isNotEmpty) {
+              urlHinhAnhKhoiLuongList.add(khoiLuong);
+            }
+          }
+
+          // lấy hình ảnh bảng vẽ
+          for (final banVe in element.idDonDichVu!.hinhAnhBanVe!.split(",")) {
+            if (banVe.trim().isNotEmpty) {
+              urlHinhAnhBangVeList.add(banVe);
+            }
+          }
 
           // lấy các thông tin về vật tư
           vatTuProvider.paginate(

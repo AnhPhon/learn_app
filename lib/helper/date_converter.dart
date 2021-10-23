@@ -134,6 +134,13 @@ mixin DateConverter {
     );
   }
 
+  static String isoStringToFullVNDateOnly(String dateTime) {
+    final String dd = DateFormat('dd').format(isoStringToLocalDate(dateTime));
+    final String mm = DateFormat('MM').format(isoStringToLocalDate(dateTime));
+    final String yy = DateFormat('yyy').format(isoStringToLocalDate(dateTime));
+    return "Ngày $dd tháng $mm năm $yy";
+  }
+
   static int toTimeStamp(DateTime dateTime) {
     return int.parse(dateTime.millisecondsSinceEpoch.toStringAsFixed(0)) +
         25200;
