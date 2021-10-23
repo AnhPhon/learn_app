@@ -44,6 +44,6 @@ class V1BuildOrderFeedBackController extends GetxController{
 
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
-    Get.toNamed(AppRoutes.V1_ORDER_INFORAMTION, arguments: donPhanHoi);
+    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donPhanHoi);
   }
 }

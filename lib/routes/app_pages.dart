@@ -46,6 +46,8 @@ import 'package:template/view/screen/v1-customer/notifications/notification_bind
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment__page.dart';
@@ -669,6 +671,11 @@ class AppPages {
         name: AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT,
         page: () => V1FormalPaymentFeedbackPage(),
         binding: V1FormalPaymentFeedbackBinding()),
+    // Thông tin đơn hàng phản hồi
+    GetPage(
+        name: AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION,
+        page: () => OrderFeedbackInformationPage(),
+        binding: OrderFeedbackInformationBinding()),
 
     // Tạo thành công
     GetPage(

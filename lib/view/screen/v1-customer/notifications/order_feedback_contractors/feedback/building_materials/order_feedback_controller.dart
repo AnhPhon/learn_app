@@ -40,6 +40,6 @@ class V1OrderFeedBackController extends GetxController{
   }
 
   void onClickAgreeButton(){
-    Get.toNamed(AppRoutes.V1_ORDER_INFORAMTION, arguments: donPhanHoi);
+    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donPhanHoi);
   }
 }
