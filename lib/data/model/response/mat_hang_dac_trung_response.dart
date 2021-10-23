@@ -1,4 +1,3 @@
-
 class MatHangDacTrungResponse {
   String? id;
   String? tieuDe;
@@ -6,19 +5,15 @@ class MatHangDacTrungResponse {
   String? createdAt;
   String? updatedAt;
 
-  MatHangDacTrungResponse({
-      this.id,
-      this.tieuDe,
-      this.createdAt,
-      this.updatedAt});
-  
+  MatHangDacTrungResponse(
+      {this.id, this.tieuDe, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
   MatHangDacTrungResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tieuDe = json['tieuDe'].toString();
-
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
   }
@@ -29,11 +24,10 @@ class MatHangDacTrungResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tieuDe
-    if (tieuDe != null) data['tieuDe'] = tieuDe; 
-
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     return data;
   }
