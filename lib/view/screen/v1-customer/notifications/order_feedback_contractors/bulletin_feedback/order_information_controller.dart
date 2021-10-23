@@ -13,10 +13,23 @@ class OrderFeedbackInformationController extends GetxController{
   final PhanHoiDonDichVuProvider phanHoiDonDichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
     PhanHoiDonDichVuResponse? donPhanHoi;
 
+    double soTien = 0;
+    double phiDichVu = 0;
+    double khuyenMai = 0;
+    double tongTien = 0;
+    double tienCoc = 0;
+
+
     @override
   void onInit() {
     super.onInit();
     donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 1000000000);
+    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 1000000000);
+    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 1000000000);
+    tongTien = soTien + phiDichVu + khuyenMai;
+    tienCoc = double.parse(donPhanHoi!.idDonDichVu!.tienCoc!,(e)=> 1000000000);
+    donPhanHoi!.idDonDichVu!.tongDon = tongTien.toString();
   }
 
   ////////////////////////////////////////////////////////////////

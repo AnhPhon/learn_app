@@ -56,7 +56,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         },
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: 0,//controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
+        itemValue: controller.tongTien,//controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
         children: [
           SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
           SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){

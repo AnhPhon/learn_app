@@ -4,13 +4,13 @@ import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/dot_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackController> {
   @override
@@ -24,7 +24,7 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT,),
 
               formalPaymentItem(title: "Tự thanh toán cho bên cung cấp dịch vụ",value: 1  ,content:[
-                "Thanh toán trước phí dịch vụ 50.000 VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND((double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000)*10)/100)} VNĐ",
+                "Thanh toán trước phí dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000))} VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND((double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000)*10)/100)} VNĐ",
                 "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000) - (double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000)*10)/100)} VNĐ (đã khấu trừ tiền cọc)",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
               formalPaymentItem(title: "Ủy quyền",value:0,content:[
@@ -38,7 +38,14 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
       bottomSheet: GetBuilder(
         builder: (V1FormalPaymentFeedbackController controller) {
           return OrderBottomSheet(
-            itemValue: controller.formalPaymentGroup == 1 ?  (double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000)*10)/100 + 50000: double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!.toString(),(e)=> 1000000000),
+            itemValue: controller.formalPaymentGroup == 1 ?  
+            (
+              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000)*10)/100 
+              + 
+              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000)
+              : 
+              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!.toString(),(e)=> 1000000000
+            ),
             title: "Cần thanh toán",
             child: Center(
               child: LongButton(

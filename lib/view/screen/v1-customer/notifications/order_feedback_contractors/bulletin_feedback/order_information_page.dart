@@ -25,11 +25,11 @@ class OrderFeedbackInformationPage extends GetView<OrderFeedbackInformationContr
             children: [
               // Thông tin đơn hàng
               BillWidget(orderContents: [
-                  OrderContent(title:"Giá trị đơn hàng" , value: double.parse(controller.donPhanHoi!.idDonDichVu!.soTien!, (onError)=> 10000000000), boldValue: true,),
-                  const OrderContent(title:"Khuyến mãi của App" , value:0, boldValue: true,),
-                  const OrderContent(title:"Phí dịch vụ app" , value:50000, boldValue: true,),
-                  OrderContent(title:"Tổng tiền đơn hàng" , value: double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000), boldValue: true,)
-              ],deposit: double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000) * 10/100,),
+                  OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
+                  OrderContent(title:"Khuyến mãi của App" , value: controller.khuyenMai, boldValue: true,),
+                  OrderContent(title:"Phí dịch vụ app" , value:controller.phiDichVu, boldValue: true,),
+                  OrderContent(title:"Tổng tiền đơn hàng" , value: controller.tongTien, boldValue: true,)
+              ],deposit: controller.tienCoc),//double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000) * 10/100,),
               // Khoảng cách bottom sheet
               const SizedBox(
                 height: BOTTOMSHEET,
@@ -39,7 +39,7 @@ class OrderFeedbackInformationPage extends GetView<OrderFeedbackInformationContr
         ),
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000),
+        itemValue: _controller.tongTien,
         child: Center(child: LongButton(title: "Đồng ý đơn giá",onPressed: (){
           _controller.onNextPage();
         },color: ColorResources.PRIMARYCOLOR,)),

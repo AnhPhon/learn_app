@@ -95,6 +95,7 @@ class V1NotificationController extends GetxController{
     print(notification.idPhanHoiDonDichVu!.idDonDichVu!.toJson());
 
     donDichVuProvider.find(id: notification.idPhanHoiDonDichVu!.idDonDichVu!.id!, onSuccess: (data){
+      print("Data: $data");
       String id = data.idNhomDichVu!.nhomDichVu!;
       print("Nhóm dịch vụ : $id");
       if(id.contains('1')){

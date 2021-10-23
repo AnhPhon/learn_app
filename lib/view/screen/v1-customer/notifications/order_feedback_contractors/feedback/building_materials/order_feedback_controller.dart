@@ -14,10 +14,18 @@ class V1OrderFeedBackController extends GetxController{
   // Khối lương công việc
   List<VatTuResponse> workMass = [];
   bool isLoading = true;
+  double soTien = 0;
+  double phiDichVu = 0;
+  double khuyenMai = 0;
+  double tongTien = 0;
   @override
   void onInit() {
     if(Get.arguments != null){
       donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 1000000000);
+      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 1000000000);
+      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 1000000000);
+      tongTien = soTien + phiDichVu + khuyenMai;
     }
     super.onInit();
     getJobMass();

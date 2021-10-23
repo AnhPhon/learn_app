@@ -15,13 +15,17 @@ class V1FormalPaymentFeedbackController extends GetxController{
 
   int formalPaymentGroup = 0;
   double tongTien = 0;
+  double phi = 0;
+  double khuyenMai = 0;
+
   @override
   void onInit() {
     phanHoiDonDichVuResponse = Get.arguments as PhanHoiDonDichVuResponse;
     if(formalPaymentGroup == 0){
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000);
+      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) + phi + khuyenMai;
     }else{
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) * 10 /100;
+      phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000);
+      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) * 10 /100 + phi;
     }
     super.onInit();
   }
@@ -31,6 +35,12 @@ class V1FormalPaymentFeedbackController extends GetxController{
   ///
   void onChangedFormalPayment(int val){
     formalPaymentGroup = val;
+    if(formalPaymentGroup == 0){
+      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000);
+    }else{
+      phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000);
+      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) * 10 /100 + phi;
+    }
     update();
   }
 
@@ -87,7 +97,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
             if (value.response.data != null)
                 {
                    EasyLoading.dismiss();
-                  Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                   Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
                 }
               else
                 {
