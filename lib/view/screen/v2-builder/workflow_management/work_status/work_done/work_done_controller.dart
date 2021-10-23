@@ -284,8 +284,7 @@ class V2WorkDoneController extends GetxController {
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      showSnackBar(
-          title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
+      Get.snackbar("Vui lòng kiểm tra lại!", "Thêm file thất bại");
     }
   }
 
@@ -294,7 +293,7 @@ class V2WorkDoneController extends GetxController {
   ///
   void onDeleteImage({required File file, required List<File> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    showSnackBar(title: "Xoá", message: "Xoá ảnh thành công");
+    Get.snackbar("Xoá", "Xoá ảnh thành công");
     update();
   }
 
