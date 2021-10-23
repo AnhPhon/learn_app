@@ -20,7 +20,7 @@ class DonDichVuResponse {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
+  List<dynamic>? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
@@ -126,7 +126,7 @@ class DonDichVuResponse {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
+    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<dynamic>;
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
 
     // mapping idTrangThaiDonDichVu
