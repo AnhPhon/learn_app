@@ -17,16 +17,12 @@ class V1FormalPaymentFeedbackController extends GetxController{
   double tongTien = 0;
   double phi = 0;
   double khuyenMai = 0;
+  double soTien = 0;
 
   @override
   void onInit() {
     phanHoiDonDichVuResponse = Get.arguments as PhanHoiDonDichVuResponse;
-    if(formalPaymentGroup == 0){
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) + phi + khuyenMai;
-    }else{
-      phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000);
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) * 10 /100 + phi;
-    }
+    tinhTien();
     super.onInit();
   }
 
@@ -35,13 +31,22 @@ class V1FormalPaymentFeedbackController extends GetxController{
   ///
   void onChangedFormalPayment(int val){
     formalPaymentGroup = val;
-    if(formalPaymentGroup == 0){
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000);
-    }else{
-      phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000);
-      tongTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000) * 10 /100 + phi;
-    }
+    tinhTien();
     update();
+  }
+
+  void tinhTien(){
+      khuyenMai = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.khuyenMai!,(e)=> 0);
+      phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 0);
+      soTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.soTien!);
+      tongTien =  soTien + phi - khuyenMai;
+
+
+    // if(formalPaymentGroup == 0){
+    // }else{
+    //   phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 0);
+    //   tongTien = (double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 0) - khuyenMai)  * 10 /100;
+    // }
   }
 
   ////////////////////////////////////////////////////////////////
@@ -133,7 +138,5 @@ class V1FormalPaymentFeedbackController extends GetxController{
         }
       });
   }
-
-  
 
 }

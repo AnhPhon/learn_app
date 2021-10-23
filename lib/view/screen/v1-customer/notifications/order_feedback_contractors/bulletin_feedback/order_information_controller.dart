@@ -19,17 +19,25 @@ class OrderFeedbackInformationController extends GetxController{
     double tongTien = 0;
     double tienCoc = 0;
 
-
+    bool isLoading = true;
     @override
   void onInit() {
     super.onInit();
+    tinhTien();
+    //donPhanHoi!.idDonDichVu!.tongDon = tongTien.toString();
+  }
+
+  void tinhTien(){
     donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
-    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 1000000000);
-    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 1000000000);
-    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 1000000000);
-    tongTien = soTien + phiDichVu + khuyenMai;
-    tienCoc = double.parse(donPhanHoi!.idDonDichVu!.tienCoc!,(e)=> 1000000000);
-    donPhanHoi!.idDonDichVu!.tongDon = tongTien.toString();
+    if(donPhanHoi != null){
+      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+      tongTien = soTien + phiDichVu - khuyenMai;
+      tienCoc = double.parse(donPhanHoi!.idDonDichVu!.tienCoc!,(e)=> 0);
+      isLoading = false;
+      update();
+    }
   }
 
   ////////////////////////////////////////////////////////////////
@@ -54,18 +62,6 @@ class OrderFeedbackInformationController extends GetxController{
     /// Nhấn vào đông ý đơn hàng
     ///
     void onNextPage(){
-      /// Phản hồi lại bên thợ thầu là có đồng ý với giá đó không
-      // EasyLoading.show(status: "Phản hồi đơn dich vụ thành công");
-      // phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
-      //   // show snackBar 
-      //   EasyLoading.dismiss();
-        
-      // }, onError: (onError){
-      //   EasyLoading.dismiss();
-      //   print("OrderInformationController onNextPage onError $onError");
-      // });
       Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
-
-      
     }
 }

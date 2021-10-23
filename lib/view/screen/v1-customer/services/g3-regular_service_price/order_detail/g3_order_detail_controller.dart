@@ -12,12 +12,22 @@ class V1G3OrderDetailController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRequest? donDichVuRequest;
   String unit = 'VNĐ';
+  double soTien = 0;
+  double phiDichVu = 0;
+  double khuyenMai = 0;
+  double tongTien = 0;
 //unit
   @override
   void onInit() {
     super.onInit();
     donDichVuRequest = Get.arguments as DonDichVuRequest;
     unit = Get.parameters['unit'].toString();
+    if(donDichVuRequest != null) {
+      soTien = double.parse(donDichVuRequest!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donDichVuRequest!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donDichVuRequest!.khuyenMai!,(e)=> 0);
+      tongTien = soTien + phiDichVu + khuyenMai;
+    }
   }
 
   ///
@@ -26,14 +36,6 @@ class V1G3OrderDetailController extends GetxController{
   void onSave(){
     EasyLoading.show(status:"Loading ...");
     Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
-    // dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
-    //   showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể");
-    //   Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
-    //   EasyLoading.dismiss();
-    // }, onError: (onError){
-    //   EasyLoading.dismiss();
-    //   print("V1G3OrderDetailController onSave $onError");
-    // });
   }
 
   void onNextPage(){

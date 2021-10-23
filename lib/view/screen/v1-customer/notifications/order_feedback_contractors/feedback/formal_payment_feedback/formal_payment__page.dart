@@ -24,11 +24,11 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT,),
 
               formalPaymentItem(title: "Tự thanh toán cho bên cung cấp dịch vụ",value: 1  ,content:[
-                "Thanh toán trước phí dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000))} VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND((double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 1000000000)*10)/100)} VNĐ",
-                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000) - (double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000)*10)/100)} VNĐ (đã khấu trừ tiền cọc)",
+                "Thanh toán trước phí dịch vụ ${CurrencyConverter.currencyConverterVND(controller.phi)} VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND(controller.tongTien*10/100)} VNĐ",
+                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(controller.tongTien - controller.tongTien *10/100)} VNĐ (đã khấu trừ tiền cọc)",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
               formalPaymentItem(title: "Ủy quyền",value:0,content:[
-                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000))}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
+                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(controller.tongTien)}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
                 "FSS sẽ hoàn tiền chênh lệch nếu có",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
             ],
@@ -39,13 +39,7 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
         builder: (V1FormalPaymentFeedbackController controller) {
           return OrderBottomSheet(
             itemValue: controller.formalPaymentGroup == 1 ?  
-            (
-              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!,(e)=> 1000000000)*10)/100 
-              + 
-              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 50000)
-              : 
-              double.parse(controller.phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!.toString(),(e)=> 1000000000
-            ),
+              controller.tongTien *10/100 + controller.phi : controller.tongTien,
             title: "Cần thanh toán",
             child: Center(
               child: LongButton(

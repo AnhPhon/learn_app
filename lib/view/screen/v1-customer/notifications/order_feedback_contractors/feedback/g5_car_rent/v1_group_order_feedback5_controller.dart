@@ -11,11 +11,19 @@ class V1GroupOrderFeedBack5Controller extends GetxController{
   final PhanHoiDonDichVuProvider phanHoiDonDichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
 
   PhanHoiDonDichVuResponse? donPhanHoi;
+  double soTien = 0;
+  double phiDichVu = 0;
+  double khuyenMai = 0;
+  double tongTien = 0;
 
   @override
   void onInit() {
     if(Get.arguments != null){
       donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+      tongTien = soTien + phiDichVu - khuyenMai;
     }
     super.onInit();
   }
@@ -38,15 +46,5 @@ class V1GroupOrderFeedBack5Controller extends GetxController{
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
     Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
-    // EasyLoading.show(status: "Loading...");
-    //   phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
-    //     // show snackBar 
-    //     EasyLoading.dismiss();
-        
-    //   }, onError: (onError){
-    //     EasyLoading.dismiss();
-    //     print("V1GroupOrderFeedBack5Controller onClickAgreeButton onError $onError");
-    //   }
-    // );
   }
 }

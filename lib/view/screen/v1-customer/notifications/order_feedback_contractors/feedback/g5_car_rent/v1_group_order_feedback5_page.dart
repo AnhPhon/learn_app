@@ -45,12 +45,12 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
               child: BillWidget(
                 orderContents: [
-                OrderContent(title:"Giá trị đơn hàng" , value: double.parse(_controller.donPhanHoi!.idDonDichVu!.soTien!, (e)=> 1000000000), boldValue: true,),
-                const OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:0, boldValue: true,),
-                const OrderContent(title:"Phí dịch vụ app" , value: 0, boldValue: true,),
-                const OrderContent(title:"Khuyến mãi của App" , value: 0, boldValue: true,),
-                OrderContent(title:"Tổng tiền đơn hàng" , value: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000), boldValue: true,)
-              ], deposit: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000)* 10 /1000) ,
+                OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
+                // const OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:0 ,boldValue: true),
+                OrderContent(title:"Phí dịch vụ app" , value:controller.phiDichVu , boldValue: true,),
+                OrderContent(title:"Khuyến mãi của App" , value: _controller.khuyenMai, boldValue: true,),
+                OrderContent(title:"Tổng tiền đơn hàng" , value: _controller.tongTien, boldValue: true,)
+              ], deposit: controller.tongTien * 10 /100) ,
             ),
             // Khoản cách bottomSheet
             const SizedBox(height: BOTTOMSHEET + Dimensions.PADDING_SIZE_LARGE,)
@@ -58,7 +58,7 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
         ),
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000),
+        itemValue: controller.tongTien,
         children: [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){

@@ -17,13 +17,20 @@ class V1GroupOrderFeedBack6Controller extends GetxController{
   final desController = TextEditingController();
 
   PhanHoiDonDichVuResponse? donPhanHoi;
-  // Khối lương công việc
-  //bool isLoading = true;
+  double soTien = 0;
+  double phiDichVu = 0;
+  double khuyenMai = 0;
+  double tongTien = 0;
+
 
   @override
   void onInit() {
     if(Get.arguments != null){
       donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+      tongTien = soTien + phiDichVu - khuyenMai;
     }
     super.onInit();
   }
@@ -44,26 +51,12 @@ class V1GroupOrderFeedBack6Controller extends GetxController{
       // Tài khoản nhận đơn
       request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
     }
-    // if(donPhanHoi!.idTaiKhoan!.id != null){
-    //   request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
-    // }
     return request;
   }
 
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
     Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
-    // EasyLoading.show(status: "Loading...");
-    //   phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
-    //     // show snackBar 
-    //     EasyLoading.dismiss();
-        
-    //     // Đến màn hình chọn phương thức thanh toán
-    //   }, onError: (onError){
-    //     EasyLoading.dismiss();
-    //     print("V1GroupOrderFeedBack5Controller onClickAgreeButton onError $onError");
-    //   }
-    // );
   }
   
 }

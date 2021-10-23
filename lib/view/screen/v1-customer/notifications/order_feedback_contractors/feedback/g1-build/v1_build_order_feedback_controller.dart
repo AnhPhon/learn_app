@@ -26,10 +26,10 @@ class V1BuildOrderFeedBackController extends GetxController{
     if(Get.arguments != null){
       donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
     }
-    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 1000000000);
-    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 1000000000);
-    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 1000000000);
-    tongTien = soTien + phiDichVu + khuyenMai;
+    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
+    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
+    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+    tongTien = soTien + phiDichVu - khuyenMai;
     super.onInit();
     getJobMass();
   }

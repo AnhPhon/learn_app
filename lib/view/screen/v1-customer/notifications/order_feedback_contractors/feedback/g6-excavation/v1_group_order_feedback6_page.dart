@@ -38,12 +38,12 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
                   ),
                   child: BillWidget(
                     orderContents: [
-                    OrderContent(title:"Giá trị đơn hàng" , value:double.parse(_controller.donPhanHoi!.idDonDichVu!.soTien!, (e)=> 1000000000), boldValue: true,),
+                    OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
                     // const OrderContent(title:"Tiền phí qua trạm(nếu có)" , value:0 ,boldValue: true),
-                    const OrderContent(title:"Phí dịch vụ app" , value:50000 , boldValue: true,),
-                    const OrderContent(title:"Khuyến mãi của App" , value:0, boldValue: true,),
-                    OrderContent(title:"Tổng tiền đơn hàng" , value: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000), boldValue: true,)
-                  ], deposit: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000) * 10 / 100,),
+                    OrderContent(title:"Phí dịch vụ app" , value:controller.phiDichVu , boldValue: true,),
+                    OrderContent(title:"Khuyến mãi của App" , value: _controller.khuyenMai, boldValue: true,),
+                    OrderContent(title:"Tổng tiền đơn hàng" , value: _controller.tongTien, boldValue: true,)
+                  ], deposit: _controller.tongTien * 10 / 100,),
                 ),
                 
                 // Text Field Nội dung báo cáo
@@ -57,7 +57,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
         },
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!,(e)=> 1000000000),
+        itemValue: controller.tongTien,
         children: [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){

@@ -16,27 +16,38 @@ class OrderFeedbackInformationPage extends GetView<OrderFeedbackInformationContr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Thông tin đơn hàng"),
-      body: Container(
-        padding: const EdgeInsets.all(
-          Dimensions.PADDING_SIZE_DEFAULT,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Thông tin đơn hàng
-              BillWidget(orderContents: [
-                  OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
-                  OrderContent(title:"Khuyến mãi của App" , value: controller.khuyenMai, boldValue: true,),
-                  OrderContent(title:"Phí dịch vụ app" , value:controller.phiDichVu, boldValue: true,),
-                  OrderContent(title:"Tổng tiền đơn hàng" , value: controller.tongTien, boldValue: true,)
-              ],deposit: controller.tienCoc),//double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000) * 10/100,),
-              // Khoảng cách bottom sheet
-              const SizedBox(
-                height: BOTTOMSHEET,
+      body: GetBuilder(
+        builder: (OrderFeedbackInformationController controller) {
+          if(controller.isLoading){
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Container(
+            padding: const EdgeInsets.all(
+              Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Thông tin đơn hàng
+                  BillWidget(orderContents: [
+                      OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
+                      OrderContent(title:"Khuyến mãi của App" , value: controller.khuyenMai, boldValue: true,),
+                      OrderContent(title:"Phí dịch vụ app" , value:controller.phiDichVu, boldValue: true,),
+                      OrderContent(title:"Tổng tiền đơn hàng" , value: controller.tongTien, boldValue: true,)
+                  ],
+                  deposit: controller.tienCoc > 0 ? controller.tienCoc : null,
+                  isHasDeposit: controller.tienCoc > 0 ? true : false,
+                  ),//double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!, (onError)=> 10000000000) * 10/100,),
+                  
+                  // Khoảng cách bottom sheet
+                  const SizedBox(
+                    height: BOTTOMSHEET,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: _controller.tongTien,
