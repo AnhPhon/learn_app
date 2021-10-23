@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
+
 import 'don_dich_vu_response.dart';
 import 'du_an_khach_hang_response.dart';
 import 'tin_tuc_response.dart';
@@ -8,6 +10,7 @@ class ThongBaoResponse {
   String? id;
   String? doiTuong;
   DonDichVuResponse? idDonDichVu;
+  PhanHoiDonDichVuResponse? idPhanHoiDonDichVu;
   DuAnKhachHangResponse? idDuAnKhachHang;
   TinTucResponse? idTinTuc;
   TuyenDungResponse? idTuyenDung;
@@ -15,6 +18,7 @@ class ThongBaoResponse {
   String? noiDung;
   String? hinhDaiDien;
   DuAnNhanVienResponse? idDuAnNhanVien;
+  String? idTaiKhoan;
 
   String? createdAt;
   String? updatedAt;
@@ -30,6 +34,8 @@ class ThongBaoResponse {
       this.noiDung,
       this.hinhDaiDien,
       this.idDuAnNhanVien,
+      this.idTaiKhoan,
+      this.idPhanHoiDonDichVu,
       this.createdAt,
       this.updatedAt});
   
@@ -45,6 +51,13 @@ class ThongBaoResponse {
       idDonDichVu = DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
     } else {                                                                           
       idDonDichVu = null;                                                               
+    }  
+
+    // mapping idDonDichVu                                                              
+    if (json['idPhanHoiDonDichVu'] != null && json['idPhanHoiDonDichVu'].toString().length!=24) {                                                  
+      idPhanHoiDonDichVu = PhanHoiDonDichVuResponse.fromJson(json['idPhanHoiDonDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idPhanHoiDonDichVu = null;                                                               
     }                                                                                  
 
     // mapping idDuAnKhachHang                                                              
@@ -70,6 +83,7 @@ class ThongBaoResponse {
     tieuDe = json['tieuDe'].toString();
     noiDung = json['noiDung'].toString();
     hinhDaiDien = json['hinhDaiDien'].toString();
+    idTaiKhoan = json['idTaiKhoan'].toString();
 
     // mapping idDuAnNhanVien                                                              
     if (json['idDuAnNhanVien'] != null && json['idDuAnNhanVien'].toString().length!=24) {                                                  
@@ -96,6 +110,9 @@ class ThongBaoResponse {
     // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
 
+    // check null idPhanHoiDonDichVu
+    if (idPhanHoiDonDichVu != null) data['idPhanHoiDonDichVu'] = idPhanHoiDonDichVu; 
+
     // check null idDuAnKhachHang
     if (idDuAnKhachHang != null) data['idDuAnKhachHang'] = idDuAnKhachHang; 
 
@@ -107,6 +124,9 @@ class ThongBaoResponse {
 
     // check null tieuDe
     if (tieuDe != null) data['tieuDe'] = tieuDe; 
+
+    // check null idTaiKhoan
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
 
     // check null noiDung
     if (noiDung != null) data['noiDung'] = noiDung; 

@@ -49,8 +49,12 @@ import 'package:template/view/screen/v1-customer/notifications/notification_bind
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment__page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feedback_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feefback_binding.dart.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_binding.dart';
@@ -542,7 +546,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_GROUP_ORDER_FEEDBACK5,
-      page: () => const V1GroupOrderFeedBack5Page(),
+      page: () => V1GroupOrderFeedBack5Page(),
       binding: V1OrderFeedBackGroup5Binding(),
     ),
 
@@ -551,7 +555,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_GROUP_ORDER_FEEDBACK6,
-      page: () => const V1GroupOrderFeedBack6Page(),
+      page: () => V1GroupOrderFeedBack6Page(),
       binding: V1OrderFeedBackGroup6Binding(),
     ),
 
@@ -667,6 +671,16 @@ class AppPages {
         name: AppRoutes.V1_FORMAL_PAYMENT,
         page: () => V1FormalPaymentPage(),
         binding: V1FormalPaymentBinding()),
+    // Hình thức thanh toán
+    GetPage(
+        name: AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT,
+        page: () => V1FormalPaymentFeedbackPage(),
+        binding: V1FormalPaymentFeedbackBinding()),
+    // Thông tin đơn hàng phản hồi
+    GetPage(
+        name: AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION,
+        page: () => OrderFeedbackInformationPage(),
+        binding: OrderFeedbackInformationBinding()),
 
     // Tạo thành công
     GetPage(

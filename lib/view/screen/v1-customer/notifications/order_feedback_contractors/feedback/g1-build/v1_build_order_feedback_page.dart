@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -24,13 +25,15 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (V1BuildOrderFeedBackController controller) {
-        return Scaffold(
-          backgroundColor: ColorResources.BACKGROUND,
-          appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
-          body: SizedBox(
-            //padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+    return Scaffold(
+      backgroundColor: ColorResources.BACKGROUND,
+      appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
+      body: GetBuilder(
+        builder: (V1BuildOrderFeedBackController controller) {
+          if(controller.isLoading){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          return SizedBox(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,18 +52,18 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                 ],
               ),
             ),
-          ),
-          bottomSheet: OrderBottomSheet(
-            itemValue: double.parse(controller.dichVuResponse!.tongDon!),
-            children: [
-              SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
-              SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){
-                controller.onClickAgreeButton();
-              }),
-            ],
-          ),
-        );
-      },
+          );
+        },
+      ),
+      bottomSheet: OrderBottomSheet(
+        itemValue: controller.tongTien,//controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
+        children: [
+          SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
+          SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){
+            controller.onClickAgreeButton();
+          }),
+        ],
+      ),
     );
   }
 
@@ -79,7 +82,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         children: [
           TextHighlight(
             title: "Tiêu đề:",
-            content: controller.dichVuResponse!.tieuDe!,
+            content: controller.donPhanHoi!.idDonDichVu!.tieuDe!,
           ),
         ],
       ),
@@ -96,14 +99,14 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.dichVuResponse!.hinhAnhBanKhoiLuong!.isEmpty ? const SizedBox() : Column(
+      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(imagesUrl: controller.dichVuResponse!.hinhAnhBaoGia!.split(',')),
+          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.split(',')),
         ],
       ),
     );
@@ -141,7 +144,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
           ),),
           Column(
             children: [
-              ...List.generate(10, (index) => Padding(
+              ...List.generate(controller.workMass.length, (index) => Padding(
                 padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
                 child: BoxShadowWidget(
                   child: SizedBox(
@@ -157,15 +160,15 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
-                            TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Khối lượng:" ,content:"20",fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
-                            TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
-                              color: ColorResources.RED,
-                              fontSize: Dimensions.FONT_SIZE_LARGE
-                            ),),
+                          children: [
+                            TextHighlight(title:"Tên công việc:" ,content:controller.workMass[index].tenVatTu!, fontSize: Dimensions.FONT_SIZE_LARGE, ),
+                            TextHighlight(title:"Quy cách:" ,content: controller.workMass[index].quyCach!,fontSize: Dimensions.FONT_SIZE_LARGE ),
+                            TextHighlight(title:"Khối lượng:" ,content: controller.workMass[index].donGia!,fontSize: Dimensions.FONT_SIZE_LARGE ),
+                            TextHighlight(title:"Đơn vị:" ,content:controller.workMass[index].donVi! ,fontSize: Dimensions.FONT_SIZE_LARGE),
+                            // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
+                            //   color: ColorResources.RED,
+                            //   fontSize: Dimensions.FONT_SIZE_LARGE
+                            // ),),
                           ],
                         ),
                       ),
