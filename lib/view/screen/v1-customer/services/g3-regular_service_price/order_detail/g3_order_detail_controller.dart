@@ -24,19 +24,21 @@ class V1G3OrderDetailController extends GetxController{
   /// Lưu đơn
   ///
   void onSave(){
-    EasyLoading.show(status:"Loading ...");
-    dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
-      SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể",backgroundColor: ColorResources.PRIMARYCOLOR);
-      Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
-      EasyLoading.dismiss();
-    }, onError: (onError){
-      EasyLoading.dismiss();
-      print("V1G3OrderDetailController onSave $onError");
-    });
+    //Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
+    // EasyLoading.show(status:"Loading ...");
+    // dichVuProvider.add(data: donDichVuRequest!, onSuccess: (data){
+    //   SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tôi sẽ phản hối sớm nhất có thể",backgroundColor: ColorResources.PRIMARYCOLOR);
+      
+    //   EasyLoading.dismiss();
+    // }, onError: (onError){
+    //   EasyLoading.dismiss();
+    //   print("V1G3OrderDetailController onSave $onError");
+    // });
   }
 
   void onNextPage(){
-    onSave();
+    Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: donDichVuRequest,);
+    //onSave();
   }
 
 }

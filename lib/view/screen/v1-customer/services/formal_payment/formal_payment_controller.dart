@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/color_resources.dart';
 
 class V1FormalPaymentController extends GetxController{
-  
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRequest? dichVuRequest;
 
   int formalPaymentGroup = 0;
-
+  double tongTien = 0;
   @override
   void onInit() {
     dichVuRequest = Get.arguments as DonDichVuRequest;
+
+    if(dichVuRequest != null){
+      if(formalPaymentGroup == 0){
+        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 1000000000);
+      }else{
+        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 1000000000) * 10 /100;
+      }
+    }  
+
     super.onInit();
   }
 
@@ -26,10 +36,77 @@ class V1FormalPaymentController extends GetxController{
     update();
   }
 
-  void onClickPayment(){
+  void onClickPayment()async{
     // Đên tài khoản của tôi để thanh toán
-    //Get.toNamed(AppRoutes.V1_ORDER_INFORAMTION);
-    Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+    await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
+        if(value == true){
+          EasyLoading.show(status: "Tạo đơn thành công!");
+          dichVuRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
+          dichVuProvider.add(data: dichVuRequest!, onSuccess: (data){
+            if (value.response.data != null)
+                {
+                   EasyLoading.dismiss();
+                  Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
+                }
+          }, onError: (onError){
+            EasyLoading.dismiss();
+            print("V1FormalPaymentController onClickPayment onError $onError");
+          });
+        }else{
+
+            EasyLoading.showSuccess('Đăng tin thành công');
+            //set trạng thái chưa thanh toán
+            dichVuRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
+            //insert db
+            dichVuProvider.add(data: dichVuRequest!, onSuccess: (data){
+                if (value.response.data != null)
+                {
+                  EasyLoading.dismiss();
+                  Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                }
+              else
+                {
+                  EasyLoading.showError(
+                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
+                }
+            }, onError: (onError){
+              EasyLoading.dismiss();
+              print("V1FormalPaymentController onClickPayment onError $onError");
+            });
+
+        }
+      });
   }
+
+  
+
+  void showDialogAccept() {
+    Get.defaultDialog(
+        title: "Xác nhận thông tin",
+        content: DialogContentPriceAccept(
+          textContent:
+              'Bạn chắc chắn đồng ý thanh toán',
+          price: tongTien,
+        ),
+        confirm: ElevatedButton(
+            onPressed: () {
+              onClickPayment();
+            },
+            child: const Text("Đồng ý")),
+        cancel: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: ColorResources.GREY,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("Hủy")));
+  }
+
 
 }
