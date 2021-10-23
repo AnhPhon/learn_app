@@ -32,4 +32,9 @@ class TrangThaiDonHangResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return tieuDe!;
+  }
 }
