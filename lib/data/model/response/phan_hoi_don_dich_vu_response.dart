@@ -3,7 +3,7 @@ import 'tai_khoan_response.dart';
 
 class PhanHoiDonDichVuResponse {
   String? id;
-  String? idDonDichVu;
+  DonDichVuResponse? idDonDichVu;
   TaiKhoanResponse? idTaiKhoan;
   String? taiKhoanNhanDon;
   String? yKienThoThau;
@@ -39,12 +39,13 @@ class PhanHoiDonDichVuResponse {
     id = json['id'].toString();
 
     // mapping idDonDichVu
-    // if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {
-    //   idDonDichVu = DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>);
-    // } else {
-    //   idDonDichVu = null;
-    // }
-    idDonDichVu = json["idDonDichVu"]["id"].toString();
+    if (json['idDonDichVu'] != null &&
+        json['idDonDichVu'].toString().length != 24) {
+      idDonDichVu = DonDichVuResponse.fromJson(
+          json['idDonDichVu'] as Map<String, dynamic>);
+    } else {
+      idDonDichVu = null;
+    }
 
     // mapping idTaiKhoan
     if (json['idTaiKhoan'] != null &&
