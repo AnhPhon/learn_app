@@ -535,7 +535,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   controller.onChangedTinhThanhIsWarehouse(value!, index),
               data: controller.tinhTpListIsWareHouse,
               value: controller.tinhTpWarehouse[index],
-              width: .3,
+              width: .35,
               isBorder: false,
             ),
 
@@ -594,7 +594,32 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 ),
                 InputWidget(
                   width: .5,
-                  textEditingController: controller.warehouseController[index],
+                  textEditingController:
+                      controller.warehouseAddressController[index],
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_DEFAULT,
+            ),
+
+            //warehouse name
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "Tên kho hàng",
+                  style: Dimensions.fontSizeStyle18(),
+                ),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+                InputWidget(
+                  width: .5,
+                  textEditingController:
+                      controller.warehouseNameController[index],
                 ),
               ],
             ),

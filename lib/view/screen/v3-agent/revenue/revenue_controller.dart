@@ -6,6 +6,7 @@ import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V3RevenueController extends GetxController {
   //TextEditingController
@@ -121,9 +122,20 @@ class V3RevenueController extends GetxController {
         //set data
         startStamp = convertToTimeStamp(dateTime: startController.text);
         endStamp = convertToTimeStamp(dateTime: endController.text);
-
-        //reset chart
-        getAllOrderInRange();
+        print(DateConverter.differenceDate(
+            startDate: startController.text, endDate: endController.text));
+        //check time diff
+        if (DateConverter.differenceDate(
+                startDate: startController.text, endDate: endController.text) <
+            0) {
+          SnackBarUtils.showSnackBar(
+            title: "Vui lòng kiểm tra lại",
+            message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+          );
+        } else {
+          //reset chart
+          getAllOrderInRange();
+        }
       }
     });
 
@@ -134,9 +146,20 @@ class V3RevenueController extends GetxController {
         //set data
         startStamp = convertToTimeStamp(dateTime: startController.text);
         endStamp = convertToTimeStamp(dateTime: endController.text);
-
-        //reset chart
-        getAllOrderInRange();
+        print(DateConverter.differenceDate(
+            startDate: startController.text, endDate: endController.text));
+        //check time diff
+        if (DateConverter.differenceDate(
+                startDate: startController.text, endDate: endController.text) <
+            0) {
+          SnackBarUtils.showSnackBar(
+            title: "Vui lòng kiểm tra lại",
+            message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+          );
+        } else {
+          //reset chart
+          getAllOrderInRange();
+        }
       }
     });
   }

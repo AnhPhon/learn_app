@@ -270,6 +270,7 @@ class V3ProductAddController extends GetxController {
     sanPhamRequest.quyCach = quyCach.text;
     sanPhamRequest.moTa = detail.text;
     sanPhamRequest.idDanhMucSanPham = danhMucSanPhamResponse!.id;
+    sanPhamRequest.idTaiKhoan = userId;
 
     nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
     nhapKhoHangDaiLyRequest.idTaiKhoan = userId;

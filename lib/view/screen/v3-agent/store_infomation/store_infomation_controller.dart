@@ -50,7 +50,10 @@ class V3StoreInfomationController extends GetxController {
   //end time range
   final endController = TextEditingController();
   //warehouse address list
-  List<TextEditingController> warehouseController = [];
+  List<TextEditingController> warehouseAddressController = [];
+
+  //warehouse address list
+  List<TextEditingController> warehouseNameController = [];
 
   //user idd
   String userId = "";
@@ -147,7 +150,8 @@ class V3StoreInfomationController extends GetxController {
     addressController.dispose();
     startController.dispose();
     endController.dispose();
-    warehouseController.clear();
+    warehouseAddressController.clear();
+    warehouseNameController.clear();
   }
 
   ///
@@ -172,9 +176,6 @@ class V3StoreInfomationController extends GetxController {
 
         matHangDacTrungResponse =
             value.idMatHangDacTrungs!.map((e) => e).toList();
-        print(matHangDacTrungResponse);
-        // update();
-        // print(matHangDacTrungResponse[0]!.tieuDe);
 
         //getNhomCuaHang
         getNhomCuaHang();
@@ -186,11 +187,7 @@ class V3StoreInfomationController extends GetxController {
         getTinhTp(isWarehouse: true);
         getTinhTp();
 
-        //getKhoHangDaiLy
-        // getKhoHangDaiLy();
-
         //getKhoHang
-        // getKhoHang();
         getKhoHangDaiLy();
       },
       onError: (error) {
@@ -226,10 +223,12 @@ class V3StoreInfomationController extends GetxController {
             //add index
             quanHuyenWarehouse.add(null);
             phuongXaWarehouse.add(null);
-            warehouseController.add(TextEditingController());
+            warehouseAddressController.add(TextEditingController());
+            warehouseNameController.add(TextEditingController());
 
             //mapping warehouse address
-            warehouseController[i].text = value[i].diaChi.toString();
+            warehouseAddressController[i].text = value[i].diaChi.toString();
+            warehouseNameController[i].text = value[i].ten.toString();
 
             //mapping quanHuyenWareHouse
             quanHuyenListIsWareHouse.add([]);
@@ -509,7 +508,8 @@ class V3StoreInfomationController extends GetxController {
     tinhTpWarehouse.add(null);
     quanHuyenWarehouse.add(null);
     phuongXaWarehouse.add(null);
-    warehouseController.add(TextEditingController());
+    warehouseAddressController.add(TextEditingController());
+    warehouseNameController.add(TextEditingController());
     quanHuyenListIsWareHouse.add([]);
     phuongXaListIsWareHouse.add([]);
     isLoadingAdd = false;
@@ -637,7 +637,7 @@ class V3StoreInfomationController extends GetxController {
         if (tinhTpWarehouse[i] == null ||
             quanHuyenWarehouse[i] == null ||
             phuongXaWarehouse[i] == null ||
-            warehouseController[i].text.isEmpty) {
+            warehouseAddressController[i].text.isEmpty ||warehouseNameController[i].text.isEmpty) {
           SnackBarUtils.showSnackBar(
             title: "Vui lòng kiểm tra lại",
             message: "Trường địa điểm kho hàng $i không được để trống",
@@ -679,7 +679,8 @@ class V3StoreInfomationController extends GetxController {
             khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
             khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
             khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
-            khoHangDaiLyRequest.diaChi = warehouseController[i].text;
+            khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
+            khoHangDaiLyRequest.ten= warehouseNameController[i].text;
 
             //add khoHang
             khoHangDaiLyProvider.add(

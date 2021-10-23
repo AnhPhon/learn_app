@@ -25,7 +25,6 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
               title: controller.title,
               bottom: TabBar(
                 controller: controller.tabController,
-                physics: const NeverScrollableScrollPhysics(),
                 isScrollable: true,
                 indicatorColor: ColorResources.PRIMARY,
                 labelColor: ColorResources.PRIMARY,
@@ -40,6 +39,7 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
             backgroundColor: Colors.transparent,
             body: TabBarView(
               controller: controller.tabController,
+              physics: const NeverScrollableScrollPhysics(),
               children: List.generate(controller.danhMucSanPhamResponse.length,
                   (index) {
                 return _item(context, indexRefreshController: index);

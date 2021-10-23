@@ -33,16 +33,16 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 ),
 
                 //search
-                InputWidget(
-                  width: double.infinity,
-                  textEditingController: controller.searchController,
-                  hintText: "Tìm kiếm",
-                  suffixIcon: const Icon(
-                    Icons.search,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  fillColor: ColorResources.WHITE,
-                ),
+                // InputWidget(
+                //   width: double.infinity,
+                //   textEditingController: controller.searchController,
+                //   hintText: "Tìm kiếm",
+                //   suffixIcon: const Icon(
+                //     Icons.search,
+                //     size: Dimensions.ICON_SIZE_DEFAULT,
+                //   ),
+                //   fillColor: ColorResources.WHITE,
+                // ),
 
                 const SizedBox(
                   height: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -51,6 +51,8 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 //dropdown warehouse
                 DropDownButton1<KhoHangDaiLyResponse>(
                   hint: "Chọn kho hàng",
+                  label: "Chọn kho hàng",
+                  obligatory: true,
                   value: controller.khoHangDaiLyResponse,
                   onChanged: (val) => controller.onChangedKhoHang(val!),
                   data: controller.khoHangDaiLyList,
