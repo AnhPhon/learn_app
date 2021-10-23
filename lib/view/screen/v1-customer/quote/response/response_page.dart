@@ -20,6 +20,11 @@ class V1ResponsePage extends GetView<V1ResponseController> {
     return GetBuilder<V1ResponseController>(
       init: V1ResponseController(),
       builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: SingleChildScrollView(
@@ -148,7 +153,7 @@ class V1ResponsePage extends GetView<V1ResponseController> {
                             Container(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "${PriceConverter.convertPrice(context, 11050000)} VND",
+                                "${PriceConverter.convertPrice(context, controller.tongTien)} VND",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -287,15 +292,11 @@ class V1ResponsePage extends GetView<V1ResponseController> {
   /// hinh anh khoi luong
   ///
   Widget _hinhAnhKhoiLuong() {
-    return const LabelContent(
+    return LabelContent(
       title: "Hình ảnh bảng khối lượng",
       isRequired: false,
       content: ThreeImageBox(
-        images: [
-          Images.location_example,
-          Images.location_example,
-          Images.location_example,
-        ],
+        images: controller.images,
         allowPicker: false,
       ),
     );

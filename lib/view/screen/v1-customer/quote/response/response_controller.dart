@@ -17,6 +17,10 @@ class V1ResponseController extends GetxController {
   String ngayKetThuc = "";
 
   Map<String, List<Map<String, dynamic>>> infoCard = {};
+  List<String> images = [];
+  double tongTien = 0;
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -43,6 +47,14 @@ class V1ResponseController extends GetxController {
               donDichVu.ngayBatDau!.replaceAll("T", " "));
           ngayKetThuc = DateConverter.isoStringToFullVNDateOnly(
               donDichVu.ngayKetThuc!.replaceAll("T", " "));
+
+          // xử lý trường dữ liệu image
+          for (final image in donDichVu.hinhAnhBanKhoiLuong!.split(',')) {
+            if (image.trim().isNotEmpty) {
+              images.add(image);
+            }
+          }
+
           update();
         },
         onError: (error) {
@@ -58,7 +70,6 @@ class V1ResponseController extends GetxController {
   void loadThongTinVatTu() {
     infoCard = {};
     sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
-      print("&idDonDichVu=$workFlowId&sortBy=created_by:desc");
       vatTuProvider.paginate(
         page: 1,
         limit: 10,
@@ -99,7 +110,10 @@ class V1ResponseController extends GetxController {
                       1)
                   .toString();
             }
+
+            tongTien += double.parse(vatTu.donGia!);
           }
+          isLoading = false;
           update();
         },
         onError: (error) {
@@ -113,7 +127,7 @@ class V1ResponseController extends GetxController {
   /// xác nhận
   ///
   void onxacNhanClick() {
-    Get.toNamed(AppRoutes.V1_QUOTE_DONE);
+    Get.toNamed(AppRoutes.V1_BILL_DETAIL);
   }
 
   ///

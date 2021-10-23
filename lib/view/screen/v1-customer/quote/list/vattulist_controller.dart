@@ -51,9 +51,9 @@ class V1VatTuListController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     refreshDaPhanHoiController!.dispose();
     refreshChuaPhanHoiController!.dispose();
+    super.onClose();
   }
 
   ///
@@ -68,6 +68,7 @@ class V1VatTuListController extends GetxController {
   /// load da phan hoi
   ///
   void loadDaPhanHoi() {
+    daPhanHoiDDV.clear();
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
       phanHoiDonDichVuProvider.paginate(
         page: 1,
@@ -83,6 +84,7 @@ class V1VatTuListController extends GetxController {
                   id: phanHoi.idDonDichVu!,
                   onSuccess: (data) {
                     daPhanHoiDDV.add(data);
+                    update();
                   },
                   onError: (error) {
                     print(
@@ -93,7 +95,6 @@ class V1VatTuListController extends GetxController {
             }
           }
           isLoading = false;
-          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -106,6 +107,7 @@ class V1VatTuListController extends GetxController {
   /// load chua phan hoi
   ///
   void loadChuaPhanHoi() {
+    chuaPhanHoiDDV.clear();
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
       phanHoiDonDichVuProvider.paginate(
         page: 1,
@@ -120,6 +122,7 @@ class V1VatTuListController extends GetxController {
                 id: phanHoi.idDonDichVu!,
                 onSuccess: (data) {
                   chuaPhanHoiDDV.add(data);
+                  update();
                 },
                 onError: (error) {
                   print(
@@ -128,8 +131,6 @@ class V1VatTuListController extends GetxController {
               );
             }
           }
-          isLoading = false;
-          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -159,6 +160,7 @@ class V1VatTuListController extends GetxController {
   /// on da phan hoi loading
   ///
   Future<void> onDaPhanHoiLoading() async {
+    loadDaPhanHoi();
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshDaPhanHoiController!.loadComplete();
   }
@@ -176,6 +178,7 @@ class V1VatTuListController extends GetxController {
   /// on chua phan hoi loading
   ///
   Future<void> onChuaPhanHoiLoading() async {
+    loadChuaPhanHoi();
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshChuaPhanHoiController!.loadComplete();
   }
