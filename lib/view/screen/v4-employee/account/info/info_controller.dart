@@ -28,7 +28,7 @@ class V4InfoController extends GetxController {
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
 
   //Nhân viên
-  NhanVienProvider nhanVienProvider = NhanVienProvider();
+  NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
   NhanVienResponse nhanVienResponse = NhanVienResponse();
   NhanVienRequest nhanVienRequest = NhanVienRequest();
 

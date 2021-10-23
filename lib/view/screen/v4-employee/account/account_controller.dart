@@ -17,7 +17,7 @@ class V4AccountController extends GetxController {
   GetIt sl = GetIt.instance;
 
   //Nhân viên
-  NhanVienProvider nhanVienProvider = NhanVienProvider();
+  NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
   NhanVienResponse nhanVienResponse = NhanVienResponse();
   NhanVienRequest nhanVienRequest = NhanVienRequest();
 
