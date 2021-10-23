@@ -50,6 +50,9 @@ mixin DateConverter {
   static DateTime isoStringToLocalDate(String dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
+  static DateTime stringToLocalDate(String dateTime) {
+    return DateTime.parse(dateTime).toLocal();
+  }
 
   static DateTime isoStringDateTimeToDateTime(String dateTime) {
     return DateTime.parse(dateTime).toLocal();
