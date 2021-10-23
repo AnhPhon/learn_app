@@ -3,6 +3,9 @@ import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/payment/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/payment/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/payment/recharge/recharge_page.dart';
 import 'package:template/view/screen/register/register_page.dart';
 import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/update_password/update_password_page.dart';
@@ -1097,6 +1100,20 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_FINISH_UPDATE,
       page: () => V2FinishUpdatePage(),
+    ),
+
+    //payment
+    GetPage(
+      name: AppRoutes.PAYMENT_ACCOUNT,
+      page: () => PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_SUCCESS,
+      page: () => PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_RECHARGE,
+      page: () => RechargePage(),
     ),
   ];
 }

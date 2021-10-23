@@ -137,4 +137,9 @@ mixin DateConverter {
     final String yy = DateFormat('yyy').format(isoStringToLocalDate(dateTime));
     return "Ngày $dd tháng $mm năm $yy";
   }
+
+  static int toTimeStamp(DateTime dateTime) {
+    return int.parse(dateTime.millisecondsSinceEpoch.toStringAsFixed(0)) +
+        25200;
+  }
 }

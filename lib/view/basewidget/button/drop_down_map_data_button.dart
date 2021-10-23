@@ -38,6 +38,7 @@ class DropDownMapButton<T> extends StatelessWidget {
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
             Wrap(
@@ -81,9 +82,7 @@ class DropDownMapButton<T> extends StatelessWidget {
                   return InputDecorator(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: (isColorFieldWhite == true)
-                          ? ColorResources.WHITE
-                          : Colors.transparent,
+                      fillColor: fillColor ?? Colors.transparent,
                       isDense: true,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(

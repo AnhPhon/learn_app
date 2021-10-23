@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,8 @@ import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
@@ -25,6 +28,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V1G7RecruitmentController extends GetxController {
   //Providers
@@ -53,6 +57,8 @@ class V1G7RecruitmentController extends GetxController {
   List<MucLuongDuKienResponse> mucLuongDuKienModel = [];
   List<ThoiGianLamViecResponse> thoiGianLamViecModel = [];
   List<TinhTpResponse> tinhTpModel = [];
+  List<QuanHuyenResponse> quanHuyenModel = [];
+  List<PhuongXaResponse> phuongXaModel = [];
 
   TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
 
@@ -64,6 +70,9 @@ class V1G7RecruitmentController extends GetxController {
   MucLuongDuKienResponse? mucLuongDuKien;
   ThoiGianLamViecResponse? thoiGianLamViec;
   TinhTpResponse? tinhTp;
+  TinhTpResponse? tinhTpDiaChi;
+  QuanHuyenResponse? quanHuyenResponse;
+  PhuongXaResponse? phuongXaResponse;
 
   //value giới tính
   int chooseSex = 0;
@@ -135,13 +144,13 @@ class V1G7RecruitmentController extends GetxController {
             companyController.text = taiKhoanResponse.tenPhapLy.toString();
 
             //set địa chỉ
-            addressController.text =
-                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
+            addressController.text = taiKhoanResponse.diaChi.toString();
 
             //set thông tin người liên hệ
             nameController.text = taiKhoanResponse.hoTen.toString();
             phoneController.text = taiKhoanResponse.soDienThoai.toString();
-            contactAddressController.text = addressController.text;
+            contactAddressController.text =
+                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
             emailController.text = taiKhoanResponse.email.toString();
 
             //load data frist
@@ -150,7 +159,7 @@ class V1G7RecruitmentController extends GetxController {
             getDataChuyenNangChinh();
             getDataSoNamKinhNghiem();
             getDataMucLuongDuKien();
-            getDataTinhTp();
+            getDataTinhTp(isLoadFrist: true);
             getDataThoiGianLamViec();
           },
           onError: (error) {
@@ -266,9 +275,35 @@ class V1G7RecruitmentController extends GetxController {
   }
 
   ///
+  ///Thay đổi tỉnh thành
+  ///
+  void onChangedTinhThanh(TinhTpResponse tinhTp) {
+    tinhTpDiaChi = tinhTp;
+    getDataQuanHuyen(idTinh: tinhTp.id.toString(), isLoadFrist: false);
+    update();
+  }
+
+  ///
+  ///Thay đổi quận huyện
+  ///
+  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen) {
+    quanHuyenResponse = quanHuyen;
+    getDataPhuongXa(idHuyen: quanHuyen.id.toString(), isLoadFrist: false);
+    update();
+  }
+
+  ///
+  ///Thay đổi tỉnh thành
+  ///
+  void onChangedPhuongXa(PhuongXaResponse phuongXa) {
+    phuongXaResponse = phuongXa;
+    update();
+  }
+
+  ///
   /// load data tỉnh Tp
   ///
-  void getDataTinhTp() {
+  void getDataTinhTp({required bool isLoadFrist}) {
     //list hinh thuc lam iec
     tinhTpProvider.all(
         onSuccess: (value) {
@@ -276,14 +311,13 @@ class V1G7RecruitmentController extends GetxController {
           tinhTpModel = value;
           // isLoading = false;
 
-          //set idTinh
-          idTinhFind = value
-              .firstWhere((element) =>
-                  element.ten!.contains(taiKhoanResponse.idTinhTp.toString()))
-              .id;
+          if (isLoadFrist) {
+            //set idTinh
+            tinhTpDiaChi = value.firstWhere((element) =>
+                element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
 
-          if (idTinhFind != null) {
-            getDataQuanHuyen(idTinh: idTinhFind.toString());
+            getDataQuanHuyen(
+                idTinh: tinhTpDiaChi!.id.toString(), isLoadFrist: true);
           }
 
           update();
@@ -295,20 +329,35 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data quận huyện
   ///
-  void getDataQuanHuyen({required String idTinh}) {
+  void getDataQuanHuyen({required String idTinh, required bool isLoadFrist}) {
     quanHuyenProvider.paginate(
         page: 1,
         limit: 100,
         filter: '&idTinhTp=$idTinh',
         onSuccess: (value) {
-          //set id huyện
-          idHuyenFind = value
-              .firstWhere((element) => element.ten!
-                  .contains(taiKhoanResponse.idQuanHuyen.toString()))
-              .id;
-          if (idHuyenFind != null) {
-            getDataPhuongXa(idHuyen: idHuyenFind.toString());
+          quanHuyenResponse = null;
+          phuongXaResponse = null;
+          quanHuyenModel.clear();
+          phuongXaModel.clear();
+          if (value.isNotEmpty) {
+            quanHuyenModel.addAll(value);
+            quanHuyenResponse = quanHuyenModel.first;
+
+            //mapping quận huyện lần đầu
+            if (isLoadFrist) {
+              quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
+                  .ten!
+                  .contains(taiKhoanResponse.idQuanHuyen.toString()));
+              // xã khi chon huỵen
+              getDataPhuongXa(
+                  idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: true);
+            }
+            // xã khi chon huỵen
+            getDataPhuongXa(
+                idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: false);
           }
+
+          update();
         },
         onError: (error) =>
             print('V1G7RecruitmentController getDataQuanHuyen $error'));
@@ -317,17 +366,27 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data phường xã
   ///
-  void getDataPhuongXa({required String idHuyen}) {
+  void getDataPhuongXa({required String idHuyen, required bool isLoadFrist}) {
     phuongXaProvider.paginate(
         page: 1,
         limit: 100,
         filter: '&idQuanHuyen=$idHuyen',
         onSuccess: (value) {
-          //set id xã
-          idXaFind = value
-              .firstWhere((element) =>
-                  element.ten!.contains(taiKhoanResponse.idPhuongXa.toString()))
-              .id;
+          phuongXaResponse = null;
+          phuongXaModel.clear();
+          if (value.isNotEmpty) {
+            phuongXaModel.addAll(value);
+            phuongXaResponse = phuongXaModel.first;
+
+            //mapping xã phường lần đầu
+            if (isLoadFrist) {
+              phuongXaResponse = phuongXaModel.firstWhere((element) => element
+                  .ten!
+                  .contains(taiKhoanResponse.idPhuongXa.toString()));
+            }
+          }
+
+          update();
         },
         onError: (error) =>
             print('V1G7RecruitmentController getDataPhuongXa $error'));
@@ -485,74 +544,111 @@ class V1G7RecruitmentController extends GetxController {
 
     //check validate
     if (titleController.text.isEmpty) {
-      return Get.snackbar("Tiêu đề bắt buộc", "Vui lòng nhập tiêu đề");
+      return SnackBarUtils.showSnackBar(
+          title: "Tiêu đề bắt buộc", message: "Vui lòng nhập tiêu đề");
+    } else if (companyController.text.isEmpty) {
+      return SnackBarUtils.showSnackBar(
+          title: "Tên công ty bắt buộc", message: "Vui lòng nhập tên công ty");
+    } else if (tinhTpDiaChi == null) {
+      return SnackBarUtils.showSnackBar(
+          title: "Tỉnh/Tp bắt buộc", message: "Vui lòng chọn tỉnh/tp");
+    } else if (quanHuyenResponse == null) {
+      return SnackBarUtils.showSnackBar(
+          title: "Quận/Huyện bắt buộc", message: "Vui lòng chọn quận/huyện");
+    } else if (phuongXaResponse == null) {
+      return SnackBarUtils.showSnackBar(
+          title: "Phường/Xã bắt buộc", message: "Vui lòng chọn phường/xã");
+    } else if (addressController.text.isEmpty) {
+      return SnackBarUtils.showSnackBar(
+          title: "Địa chỉ bắt buộc", message: "Vui lòng nhập địa chỉ");
     } else if (chooseSex == 0) {
-      return Get.snackbar("Giới tính bắt buộc", "Vui lòng chọn giới tính");
+      return SnackBarUtils.showSnackBar(
+          title: "Giới tính bắt buộc", message: "Vui lòng chọn giới tính");
     } else if (amountController.text.isEmpty) {
-      return Get.snackbar("Số lượng bắt buộc", "Vui lòng nhập số lượng");
+      return SnackBarUtils.showSnackBar(
+          title: "Số lượng bắt buộc", message: "Vui lòng nhập số lượng");
     } else if (hinhThucLamViec == null) {
-      return Get.snackbar(
-          "Hình thức làm việc bắt buộc", "Vui lòng chọn hình thức làm việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Hình thức làm việc bắt buộc",
+          message: "Vui lòng chọn hình thức làm việc");
     } else if (trinhDoHocVan == null) {
-      return Get.snackbar(
-          "Trình độ học vấn bắt buộc", "Vui lòng chọn trình độ học vấn");
+      return SnackBarUtils.showSnackBar(
+          title: "Trình độ học vấn bắt buộc",
+          message: "Vui lòng chọn trình độ học vấn");
     } else if (chuyenNgangChinh == null) {
-      return Get.snackbar(
-          "Chuyên ngành chính bắt buộc", "Vui lòng chọn chuyên ngành chính");
+      return SnackBarUtils.showSnackBar(
+          title: "Chuyên ngành chính bắt buộc",
+          message: "Vui lòng chọn chuyên ngành chính");
     } else if (chuyenNganhPhuSend.isEmpty) {
-      return Get.snackbar(
-          "Chuyên ngành phụ bắt buộc", "Vui lòng chọn chuyên ngành phụ");
+      return SnackBarUtils.showSnackBar(
+          title: "Chuyên ngành phụ bắt buộc",
+          message: "Vui lòng chọn chuyên ngành phụ");
     } else if (soNamKinhNghiem == null) {
-      return Get.snackbar(
-          "Số năm kinh nghiệm bắt buộc", "Vui lòng chọn số năm kinh nghiệm");
+      return SnackBarUtils.showSnackBar(
+          title: "Số năm kinh nghiệm bắt buộc",
+          message: "Vui lòng chọn số năm kinh nghiệm");
     } else if (mucLuongDuKien == null) {
-      return Get.snackbar(
-          "Mức lương dự kiến bắt buộc", "Vui lòng chọn mức lương dự kiến");
+      return SnackBarUtils.showSnackBar(
+          title: "Mức lương dự kiến bắt buộc",
+          message: "Vui lòng chọn mức lương dự kiến");
     } else if (tinhTp == null) {
-      return Get.snackbar(
-          "Nơi làm việc bắt buộc", "Vui lòng chọn nơi làm việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Nơi làm việc bắt buộc",
+          message: "Vui lòng chọn nơi làm việc");
     } else if (thoiGianLamViec == null) {
-      return Get.snackbar(
-          "Thời gian làm việc bắt buộc", "Vui lòng chọn thời gian làm việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Thời gian làm việc bắt buộc",
+          message: "Vui lòng chọn thời gian làm việc");
     } else if (descController.text.isEmpty) {
-      return Get.snackbar(
-          "Mô tả công việc bắt buộc", "Vui lòng nhập mô tả công việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Mô tả công việc bắt buộc",
+          message: "Vui lòng nhập mô tả công việc");
     } else if (requiredController.text.isEmpty) {
-      return Get.snackbar(
-          "Yêu cầu công việc bắt buộc", "Vui lòng nhập yêu cầu công việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Yêu cầu công việc bắt buộc",
+          message: "Vui lòng nhập yêu cầu công việc");
     } else if (benifitController.text.isEmpty) {
-      return Get.snackbar("Chế độ quyền lợi bắt buộc",
-          "Vui lòng nhập chế đô quyền lợi công việc");
+      return SnackBarUtils.showSnackBar(
+          title: "Chế độ quyền lợi bắt buộc",
+          message: "Vui lòng nhập chế đô quyền lợi công việc");
     } else if (prioritizedController.text.isEmpty) {
-      return Get.snackbar("Ưu tiên bắt buộc", "Vui lòng nhập ưu tiên");
+      return SnackBarUtils.showSnackBar(
+          title: "Ưu tiên bắt buộc", message: "Vui lòng nhập ưu tiên");
     } else if (daysBetween(DateTime.now(), selectedDate) < 0) {
-      return Get.snackbar("Hạn nộp bắt buộc", "Vui lòng chọn hạn nộp");
+      return SnackBarUtils.showSnackBar(
+          title: "Hạn nộp bắt buộc", message: "Vui lòng chọn hạn nộp");
     } else if (thoiGianThucTapController.text.isEmpty) {
-      return Get.snackbar(
-          "Thời gian thực tập bắt buộc", "Vui lòng nhập thời gian thực tập");
+      return SnackBarUtils.showSnackBar(
+          title: "Thời gian thực tập bắt buộc",
+          message: "Vui lòng nhập thời gian thực tập");
     } else if (nameController.text.isEmpty) {
-      return Get.snackbar(
-          "Tên người liên hệ bắt buộc", "Vui lòng nhập tên người liên hệ");
+      return SnackBarUtils.showSnackBar(
+          title: "Tên người liên hệ bắt buộc",
+          message: "Vui lòng nhập tên người liên hệ");
     } else if (phoneController.text.isEmpty) {
-      return Get.snackbar("Số điện thoại người liên hệ bắt buộc",
-          "Vui lòng nhập số điện thoại");
+      return SnackBarUtils.showSnackBar(
+          title: "Số điện thoại người liên hệ bắt buộc",
+          message: "Vui lòng nhập số điện thoại");
     } else if (contactAddressController.text.isEmpty) {
-      return Get.snackbar(
-          "Địa chỉ người liên hệ bắt buộc", "Vui lòng nhập địa chỉ");
+      return SnackBarUtils.showSnackBar(
+          title: "Địa chỉ người liên hệ bắt buộc",
+          message: "Vui lòng nhập địa chỉ");
     } else if (emailController.text.isEmpty) {
-      return Get.snackbar(
-          "Email người liên hệ bắt buộc", "Vui lòng nhập email");
+      return SnackBarUtils.showSnackBar(
+          title: "Email người liên hệ bắt buộc",
+          message: "Vui lòng nhập email");
     } else {
       ///gán data tuyển dụng
       Map<String, dynamic> param = {
         "IdTaiKhoan": taiKhoanResponse.id,
         "TieuDe": titleController.text.trim(),
         "CongTy": companyController.text,
-        'TenDiaChiCongTy': addressController.text,
-        "DiaChi": taiKhoanResponse.diaChi,
-        "IdTinhTp": idTinhFind,
-        "IdQuanHuyen": idHuyenFind,
-        "IdPhuongXa": idXaFind,
+        'TenDiaChiCongTy':
+            '${addressController.text}, ${phuongXaResponse!.ten}, ${quanHuyenResponse!.ten}, ${tinhTpDiaChi!.ten}',
+        "DiaChi": addressController.text,
+        "IdTinhTp": tinhTpDiaChi!.id,
+        "IdQuanHuyen": quanHuyenResponse!.id,
+        "IdPhuongXa": phuongXaResponse!.id,
         "GioiTinh": chooseSex,
         "SoLuong": amountController.text,
         "IdHinhThucLamViec": hinhThucLamViec!.id,
