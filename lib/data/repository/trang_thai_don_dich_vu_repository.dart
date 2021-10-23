@@ -26,7 +26,8 @@ class TrangThaiDonDichVuRepository {
   ///
   Future<ApiResponse> add(TrangThaiDonDichVuRequest data) async {
     try {
-      final response = await dioClient!.post('/trang-thai-don-dich-vus', data: data.toJson());
+      final response = await dioClient!
+          .post('/trang-thai-don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class TrangThaiDonDichVuRepository {
   ///
   Future<ApiResponse> update(TrangThaiDonDichVuRequest data) async {
     try {
-      final response = await dioClient!.put('/trang-thai-don-dich-vus', data: data.toJson());
+      final response =
+          await dioClient!.put('/trang-thai-don-dich-vus', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -50,8 +52,7 @@ class TrangThaiDonDichVuRepository {
   ///
   Future<ApiResponse> delete(String id) async {
     try {
-      final response =
-          await dioClient!.delete('/trang-thai-don-dich-vus/$id');
+      final response = await dioClient!.delete('/trang-thai-don-dich-vus/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,15 +60,17 @@ class TrangThaiDonDichVuRepository {
   }
 
   ///
-  /// Get paginate trang-thai-don-dich-vus "page": 1, "limit": 10, filter 
+  /// Get paginate trang-thai-don-dich-vus "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/trang-thai-don-dich-vus/paginate?page=$page&limit=$limit'.toString();
+      String uri = '/trang-thai-don-dich-vus/paginate?page=$page&limit=$limit'
+          .toString();
 
       // add condition filter
       if (filter != '') {
-        uri = '/trang-thai-don-dich-vus/paginate?page=$page&limit=$limit$filter';
+        uri =
+            '/trang-thai-don-dich-vus/paginate?page=$page&limit=$limit$filter';
       }
 
       final response = await dioClient!.get(uri);
