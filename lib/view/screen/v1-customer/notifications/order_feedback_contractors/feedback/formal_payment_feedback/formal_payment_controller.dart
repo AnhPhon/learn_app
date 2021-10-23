@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
+import 'package:template/data/repository/phan_hoi_don_dich_vu_repository.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
@@ -11,6 +12,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 
 class V1FormalPaymentFeedbackController extends GetxController{
   PhanHoiDonDichVuProvider phanHoiDonDichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
+  PhanHoiDonDichVuRepository phanHoiDonDichVuRepository = GetIt.I.get<PhanHoiDonDichVuRepository>();
   PhanHoiDonDichVuResponse? phanHoiDonDichVuResponse;
 
   int formalPaymentGroup = 0;
@@ -41,15 +43,9 @@ class V1FormalPaymentFeedbackController extends GetxController{
       soTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.soTien!);
       tongTien =  soTien + phi - khuyenMai;
 
-
-    // if(formalPaymentGroup == 0){
-    // }else{
-    //   phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 0);
-    //   tongTien = (double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.tongDon!, (e)=> 0) - khuyenMai)  * 10 /100;
-    // }
   }
 
-  ////////////////////////////////////////////////////////////////
+  ///
   /// Tạo request
   /// 
   PhanHoiDonDichVuRequest onRequest(){
@@ -62,9 +58,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
       // Tài khoản nhận đơn
       request.idTaiKhoan = phanHoiDonDichVuResponse!.idTaiKhoan!.id;
     }
-    // if(phanHoiDonDichVuResponse!.idTaiKhoan!.id != null){
-    //   request.idTaiKhoan = phanHoiDonDichVuResponse!.idTaiKhoan!.id;
-    // }
+   
     return request;
   }
 
@@ -98,7 +92,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
         if(value == true){
           EasyLoading.show(status: "Phản hồi đơn dịch vụ thành công!");
           donPhanHoi.tinhTrangThanhToan = "61604f4cc8e6fa122227e29f";
-          phanHoiDonDichVuProvider.add(data: donPhanHoi, onSuccess: (data){
+          phanHoiDonDichVuRepository.add(donPhanHoi).then((value){
             if (value.response.data != null)
                 {
                    EasyLoading.dismiss();
@@ -119,7 +113,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
             //set trạng thái chưa thanh toán
             donPhanHoi.tinhTrangThanhToan= "61615180e87a9124404abe82";
             //insert db
-            phanHoiDonDichVuProvider.add(data: donPhanHoi, onSuccess: (data){
+            phanHoiDonDichVuRepository.add(donPhanHoi).then((value){
                 if (value.response.data != null)
                 {
                   EasyLoading.dismiss();
