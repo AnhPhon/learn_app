@@ -73,6 +73,21 @@ class V2DetailWorkInProgressController extends GetxController {
         // set end time
         endTime = formatDate(model.ngayKetThuc!);
         description = model.moTaChiTiet ?? model.moTa!;
+
+        // xử lý trường dữ liệu image
+        for (final image in model.hinhAnhBanKhoiLuong!) {
+          if (image.toString().trim().isNotEmpty) {
+            urlHinhAnhKhoiLuongList.add(image.toString());
+          }
+        }
+
+        // lấy hình ảnh bảng vẽ
+        for (final banVe in model.hinhAnhBanVe!.split(",")) {
+          if (banVe.trim().isNotEmpty) {
+            urlHinhAnhBangVeList.add(banVe);
+          }
+        }
+        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -96,20 +111,6 @@ class V2DetailWorkInProgressController extends GetxController {
           fileName = models[0].file ?? "";
         }
         for (final element in models) {
-          // xử lý trường dữ liệu image
-          for (final image in element.idDonDichVu!.hinhAnhBanKhoiLuong!) {
-            if (image.toString().trim().isNotEmpty) {
-              urlHinhAnhKhoiLuongList.add(image.toString());
-            }
-          }
-
-          // lấy hình ảnh bảng vẽ
-          for (final banVe in element.idDonDichVu!.hinhAnhBanVe!.split(",")) {
-            if (banVe.trim().isNotEmpty) {
-              urlHinhAnhBangVeList.add(banVe);
-            }
-          }
-
           // lấy các thông tin về vật tư
           vatTuProvider.paginate(
             page: 1,

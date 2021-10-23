@@ -13,7 +13,6 @@ import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V2WorkDoneController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -23,9 +22,9 @@ class V2WorkDoneController extends GetxController {
   //Khai báo isLoading
   bool isLoading = true;
 
-  final paymentRequest = TextEditingController();
-  final customerReviews = TextEditingController();
-  final warrantyContents = TextEditingController();
+  TextEditingController? paymentRequest;
+  TextEditingController? customerReviews;
+  TextEditingController? warrantyContents;
 
   bool isKhachHangDisable = true;
   bool isBaoHanhDisable = true;
@@ -43,12 +42,17 @@ class V2WorkDoneController extends GetxController {
   int radioIndex = 1;
 
   List<String> noiDungYeuCauBaoHanhList = [];
+  List<String> yeuCauImages = [];
+
   List<File> images = [];
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
+    paymentRequest = TextEditingController(text: "");
+    customerReviews = TextEditingController(text: "");
+    warrantyContents = TextEditingController(text: "");
 
     // load thông tin viec da lam
     loadThongTinViecDaLam();
@@ -76,11 +80,6 @@ class V2WorkDoneController extends GetxController {
           if (model.idQuanHuyen != null) {
             address += model.idQuanHuyen!.ten!;
           }
-
-          if (model.idQuanHuyen != null) {
-            address += model.idQuanHuyen!.ten!;
-          }
-
           // set title
           title = model.tieuDe!;
 
@@ -127,25 +126,28 @@ class V2WorkDoneController extends GetxController {
   /// load y kien khach hang
   ///
   void getYKienKhachHang() {
-    // get nội dung theo id đơn dịch vụ
-    sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
-      phanHoiDonDichVuProvider.paginate(
-        page: 1,
-        limit: 10,
-        filter: "&idDonDichVu=$workFlowId&sortBy=created_at:desc",
-        onSuccess: (values) {
-          for (final value in values) {
-            sl.get<SharedPreferenceHelper>().phanHoiDonDichVuId.then(
-              (phanHoiDonDichVuId) {
-                if (value.id == phanHoiDonDichVuId) {
-                  customerReviews.text = value.khachHangDanhGia!;
-                  isKhachHangDisable = value.khachHangDanhGia == null ||
-                      value.khachHangDanhGia!.isEmpty;
-                  update();
-                }
-              },
-            );
+    sl
+        .get<SharedPreferenceHelper>()
+        .phanHoiDonDichVuId
+        .then((phanHoiDonDichVuId) {
+      phanHoiDonDichVuProvider.find(
+        id: phanHoiDonDichVuId!,
+        onSuccess: (data) {
+          for (final url in data.hinhAnhHuHai!.split(",")) {
+            if (url.toString().trim().isNotEmpty) {
+              yeuCauImages.add(url.toString().trim());
+            }
           }
+
+          if (data.khachHangDanhGia.toString() == "null" ||
+              data.khachHangDanhGia!.isEmpty) {
+            isKhachHangDisable = true;
+            customerReviews = TextEditingController(text: "");
+          } else {
+            customerReviews =
+                TextEditingController(text: data.khachHangDanhGia);
+          }
+          print(yeuCauImages);
           update();
         },
         onError: (error) {
@@ -160,25 +162,25 @@ class V2WorkDoneController extends GetxController {
   ///
   void getBaoHanh() {
     // get nội dung theo id đơn dịch vụ
-    sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
-      phanHoiDonDichVuProvider.paginate(
-        page: 1,
-        limit: 10,
-        filter: "&idDonDichVu=$workFlowId&sortBy=created_at:desc",
-        onSuccess: (values) {
-          for (final value in values) {
-            sl.get<SharedPreferenceHelper>().phanHoiDonDichVuId.then(
-              (phanHoiDonDichVuId) {
-                if (value.id == phanHoiDonDichVuId) {
-                  warrantyContents.text = value.yeuCauBaoHanh!;
-                  isBaoHanhDisable = value.kichHoatBaoHanh == null ||
-                      value.kichHoatBaoHanh == '0' ||
-                      value.kichHoatBaoHanh!.isEmpty;
-                  print(isBaoHanhDisable);
-                  update();
-                }
-              },
-            );
+    sl
+        .get<SharedPreferenceHelper>()
+        .phanHoiDonDichVuId
+        .then((phanHoiDonDichVuId) {
+      phanHoiDonDichVuProvider.find(
+        id: phanHoiDonDichVuId!,
+        onSuccess: (data) {
+          if (data.kichHoatBaoHanh.toString() == '1') {
+            if (data.danhGiaBaoHanh.toString() == 'null' ||
+                data.danhGiaBaoHanh.toString().isNotEmpty) {
+              // isKhachHangDisable = true;
+              warrantyContents = TextEditingController(text: "");
+            } else {
+              warrantyContents =
+                  TextEditingController(text: data.danhGiaBaoHanh);
+            }
+            isBaoHanhDisable = false;
+          } else {
+            isBaoHanhDisable = true;
           }
           update();
         },
@@ -215,11 +217,11 @@ class V2WorkDoneController extends GetxController {
             data: PhanHoiDonDichVuRequest(
               idTaiKhoan: userId,
               idDonDichVu: workFlowId,
-              yKienThoThau: paymentRequest.text,
+              yKienThoThau: paymentRequest!.text,
             ),
             onSuccess: (data) {
-              paymentRequest.clear();
               sl.get<SharedPreferenceHelper>().savePhanHoiDonDichVuId(data.id!);
+              getYKienKhachHang();
             },
             onError: (error) {
               print(
@@ -247,7 +249,7 @@ class V2WorkDoneController extends GetxController {
           phanHoiDonDichVuProvider.update(
             data: PhanHoiDonDichVuRequest(
               idTaiKhoan: userId,
-              khachHangDanhGia: customerReviews.text,
+              khachHangDanhGia: customerReviews!.text,
               id: phanHoiDonDichVuId,
             ),
             onSuccess: (data) {
@@ -270,7 +272,23 @@ class V2WorkDoneController extends GetxController {
   ///
   void onWarrantyContentSubmit() {
     if (_warrantyContentValidate()) {
-      Get.snackbar("Thông báo", "Gửi yêu cầu bảo hành thành công");
+      sl
+          .get<SharedPreferenceHelper>()
+          .phanHoiDonDichVuId
+          .then((phanHoiDonDichVuId) {
+        phanHoiDonDichVuProvider.update(
+          data: PhanHoiDonDichVuRequest(
+            id: phanHoiDonDichVuId,
+            danhGiaBaoHanh: warrantyContents!.text,
+          ),
+          onSuccess: (data) {
+            Get.snackbar("Thông báo", "Gửi yêu cầu bảo hành thành công");
+          },
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      });
     }
   }
 
@@ -311,7 +329,7 @@ class V2WorkDoneController extends GetxController {
   ///
   bool _paymentRequestValidate() {
     // payment request validate
-    if (paymentRequest.text.isEmpty) {
+    if (paymentRequest!.text.isEmpty) {
       Get.snackbar("Thông báo", "Yêu cầu thanh toán đang rỗng");
       return false;
     }
@@ -324,7 +342,7 @@ class V2WorkDoneController extends GetxController {
   ///
   bool _customerReviewValidate() {
     // customer review validate
-    if (customerReviews.text.isEmpty) {
+    if (customerReviews!.text.isEmpty) {
       Get.snackbar("Thông báo", "Ý kiến khách hàng đang rỗng");
       return false;
     }
@@ -337,7 +355,7 @@ class V2WorkDoneController extends GetxController {
   ///
   bool _warrantyContentValidate() {
     // warranty content validate
-    if (warrantyContents.text.isEmpty) {
+    if (warrantyContents!.text.isEmpty) {
       Get.snackbar("Thông báo", "Nội dung bảo hành đang rỗng");
       return false;
     }
