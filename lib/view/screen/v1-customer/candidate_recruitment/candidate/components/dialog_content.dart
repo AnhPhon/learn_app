@@ -41,6 +41,8 @@ class DialogContent extends GetView<V1CandidateController> {
                         Slider(
                             max: 100000000,
                             value: controller.salary.toDouble(),
+                            onChangeEnd: (val) =>
+                                controller.onChangedEndSalary(val),
                             onChanged: (val) {
                               controller.onChangedSalary(val);
                             }),

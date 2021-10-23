@@ -58,6 +58,7 @@ dependencies:
   multi_select_flutter: ^4.0.0
 
   html_unescape: ^2.0.0
+  tiengviet: ^0.5.0
 
 
 dev_dependencies:
