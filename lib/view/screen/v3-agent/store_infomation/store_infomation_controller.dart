@@ -218,22 +218,27 @@ class V3StoreInfomationController extends GetxController {
         if (value.isNotEmpty) {
           khoHangDaiLyList = value;
           for (var i = 0; i < value.length; i++) {
-            // tinhTpWarehouse.add(tinhTpListIsWareHouse[tinhTpListIsWareHouse
-            //     .indexWhere((element) => element.id == value[i].idTinhTp!.id)]);
-            // quanHuyenListIsWareHouse.add([]);
-
+            //mapping tinhTpWarehouse
             tinhTpWarehouse.add(null);
             tinhTpWarehouse[i] = tinhTpListIsWareHouse[tinhTpListIsWareHouse
                 .indexWhere((element) => element.id == value[i].idTinhTp!.id)];
+
+            //add index
             quanHuyenWarehouse.add(null);
             phuongXaWarehouse.add(null);
             warehouseController.add(TextEditingController());
+
+            //mapping warehouse address
             warehouseController[i].text = value[i].diaChi.toString();
+
+            //mapping quanHuyenWareHouse
             quanHuyenListIsWareHouse.add([]);
             getQuanHuyen(
                 idTinhTp: value[i].idTinhTp!.id.toString(),
                 indexWarehouse: i,
                 isWarehouse: true);
+
+            //mapping phuongXaWareHouse
             phuongXaListIsWareHouse.add([]);
             getPhuongXa(
                 idQuanHuyen: value[i].idQuanHuyen!.id.toString(),
