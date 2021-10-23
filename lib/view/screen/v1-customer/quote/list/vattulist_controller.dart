@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -11,6 +12,8 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V1VatTuListController extends GetxController {
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  PhanHoiDonDichVuProvider phanHoiDonDichVuProvider =
+      GetIt.I.get<PhanHoiDonDichVuProvider>();
 
   RefreshController? refreshDaPhanHoiController;
   RefreshController? refreshChuaPhanHoiController;
@@ -66,19 +69,27 @@ class V1VatTuListController extends GetxController {
   ///
   void loadDaPhanHoi() {
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      donDichVuProvider.paginate(
+      phanHoiDonDichVuProvider.paginate(
         page: 1,
         limit: 10,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (donDichVuList) {
+        onSuccess: (phanHoiDonDichVuList) {
           // run don dich vu list
-          for (final donDichVu in donDichVuList) {
-            // check trang thai
-            if (donDichVu.idTrangThaiDonDichVu!.tieuDe
-                    .toString()
-                    .toLowerCase() ==
-                daPhanHoiKey) {
-              daPhanHoiDDV.add(donDichVu);
+          for (final phanHoi in phanHoiDonDichVuList) {
+            if (phanHoi.idDonDichVu != null) {
+              // check trang thai
+              if (phanHoi.yKienThoThau.toString().isNotEmpty) {
+                donDichVuProvider.find(
+                  id: phanHoi.idDonDichVu!,
+                  onSuccess: (data) {
+                    daPhanHoiDDV.add(data);
+                  },
+                  onError: (error) {
+                    print(
+                        "TermsAndPolicyController getTermsAndPolicy onError $error");
+                  },
+                );
+              }
             }
           }
           isLoading = false;
@@ -96,21 +107,28 @@ class V1VatTuListController extends GetxController {
   ///
   void loadChuaPhanHoi() {
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      donDichVuProvider.paginate(
+      phanHoiDonDichVuProvider.paginate(
         page: 1,
         limit: 10,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (donDichVuList) {
+        onSuccess: (phanHoiDonDichVuList) {
           // run don dich vu list
-          for (final donDichVu in donDichVuList) {
+          for (final phanHoi in phanHoiDonDichVuList) {
             // check trang thai
-            if (donDichVu.idTrangThaiDonDichVu!.tieuDe
-                    .toString()
-                    .toLowerCase() ==
-                chuaPhanHoiKey) {
-              chuaPhanHoiDDV.add(donDichVu);
+            if (phanHoi.yKienThoThau.toString().isEmpty) {
+              donDichVuProvider.find(
+                id: phanHoi.idDonDichVu!,
+                onSuccess: (data) {
+                  chuaPhanHoiDDV.add(data);
+                },
+                onError: (error) {
+                  print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error");
+                },
+              );
             }
           }
+          isLoading = false;
           update();
         },
         onError: (error) {
