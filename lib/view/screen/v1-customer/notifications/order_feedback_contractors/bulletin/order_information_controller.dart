@@ -105,8 +105,8 @@ class OrderInformationController extends GetxController {
             '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}')!
         .then((value) {
       if (value == true) {
-        print('bbb đã thanh toán');
         EasyLoading.showSuccess('Đăng tin thành công');
+        //set trạng thái đã thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
         //insert db
         tuyenDungRepository.add(tuyenDungRequest!).then((value) => {
@@ -122,8 +122,8 @@ class OrderInformationController extends GetxController {
                 }
             });
       } else {
-        print('bbb chưa thanh toán');
         EasyLoading.showSuccess('Đăng tin thành công');
+        //set trạng thái chưa thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
         //insert db
         tuyenDungRepository.add(tuyenDungRequest!).then((value) => {

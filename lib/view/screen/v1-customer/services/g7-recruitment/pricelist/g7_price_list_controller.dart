@@ -120,34 +120,6 @@ class V1G7PriceListController extends GetxController {
   }
 
   ///
-  ///  Hiển thị xác nhận
-  ///
-  // void showDialogAccept() {
-  //   tongTien = 0;
-  //   tongTien = tienDangTin;
-  //   Get.defaultDialog(
-  //       title: "Xác nhận thông tin",
-  //       content: DialogContentPriceAccept(
-  //         textContent:
-  //             'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
-  //         price: tongTien,
-  //       ),
-  //       confirm: ElevatedButton(
-  //           onPressed: () {
-  //             onClickContinueButton(tongTien: tongTien);
-  //           },
-  //           child: const Text("Đồng ý")),
-  //       cancel: ElevatedButton(
-  //           style: ElevatedButton.styleFrom(
-  //             primary: ColorResources.GREY,
-  //           ),
-  //           onPressed: () {
-  //             Get.back();
-  //           },
-  //           child: const Text("Hủy")));
-  // }
-
-  ///
   /// Nhấn tiếp tục
   ///
   void onClickContinueButton() {
@@ -165,22 +137,5 @@ class V1G7PriceListController extends GetxController {
       AppRoutes.V1_ORDER_INFORAMTION,
       arguments: tuyenDungRequest,
     );
-
-    //insert db
-    // tuyenDungRepository.add(tuyenDungRequest).then((value) {
-    //   if (value.response.data != null) {
-    //     EasyLoading.dismiss();
-    //     final Map<String, dynamic> param = {
-    //       'type': '2',
-    //       'id': value.response.data['id']
-    //     };
-    //     print(param);
-    //     Get.offAllNamed(AppRoutes.V1_ORDER_INFORAMTION,
-    //         arguments: param,
-    //         predicate: ModalRoute.withName(AppRoutes.V1_ORDER_INFORAMTION));
-    //   } else {
-    //     EasyLoading.showError('Vui lòng thử lại');
-    //   }
-    // });
   }
 }

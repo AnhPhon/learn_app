@@ -149,7 +149,8 @@ class V1G7RecruitmentController extends GetxController {
             //set thông tin người liên hệ
             nameController.text = taiKhoanResponse.hoTen.toString();
             phoneController.text = taiKhoanResponse.soDienThoai.toString();
-            contactAddressController.text = addressController.text;
+            contactAddressController.text =
+                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
             emailController.text = taiKhoanResponse.email.toString();
 
             //load data frist

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
 import 'package:template/data/model/request/vi_tien_request.dart';
 import 'package:template/data/model/response/vi_tien_response.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
@@ -12,7 +11,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/snack_bar.dart';
 
 import 'patment_dialog_accept.dart';
 
@@ -25,13 +23,12 @@ class PaymentAccountController extends GetxController {
   //update ví tiền
   ViTienRepository viTienRepository = ViTienRepository();
 
+  //value ViTienRequest
+  ViTienRequest viTienRequest = ViTienRequest();
+
   String title = "Tài khoản của bạn";
 
-  String price = "";
-
-  int amountOfPrice = 0;
-
-//isLoading
+  //isLoading
   bool isLoading = true;
 
   //value tổng tiền thanh toán
@@ -42,9 +39,9 @@ class PaymentAccountController extends GetxController {
   //isShow
   bool isShowSoDu = false;
 
-  //value ViTienRequest
-  ViTienRequest viTienRequest = ViTienRequest();
+  //check urlBlack
 
+  //url Back
   String? urlBack;
 
   @override
@@ -61,8 +58,8 @@ class PaymentAccountController extends GetxController {
     }
     if (Get.parameters['url'] != null) {
       urlBack = Get.parameters['url'].toString();
-      print('urlBack $urlBack');
     }
+    update();
   }
 
   ///
@@ -105,16 +102,15 @@ class PaymentAccountController extends GetxController {
         title: "Bạn có chắc chắn muốn quay lại không?",
         content: PaymentDialogAccept(
           textContent:
-              'Bấm nút đồng ý để hủy tạo đơn, nút tiếp tục để tạo đơn nhưng chưa thanh toán',
+              'Bấm nút hủy tạo đơn để hủy tạo đơn, nút trở lại để thoát',
           price: 0,
           isShowPrice: false,
         ),
         confirm: ElevatedButton(
             onPressed: () {
               Get.back();
-              Get.back(result: false);
             },
-            child: const Text("Tiếp tục")),
+            child: const Text("Trở lại")),
         cancel: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: ColorResources.GREY,
@@ -124,7 +120,7 @@ class PaymentAccountController extends GetxController {
               Get.offAllNamed(urlBack!,
                   predicate: ModalRoute.withName(urlBack!));
             },
-            child: const Text("Hủy")));
+            child: const Text("Hủy tạo đơn")));
   }
 
   ///
