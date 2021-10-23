@@ -42,15 +42,16 @@ class OrderInformationController extends GetxController{
     ///
     void onNextPage(){
       /// Phản hồi lại bên thợ thầu là có đồng ý với giá đó không
-      EasyLoading.show(status: "Loading...");
-      phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
-        // show snackBar 
-        EasyLoading.dismiss();
-        Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
-      }, onError: (onError){
-        EasyLoading.dismiss();
-        print("OrderInformationController onNextPage onError $onError");
-      });
+      // EasyLoading.show(status: "Phản hồi đơn dich vụ thành công");
+      // phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
+      //   // show snackBar 
+      //   EasyLoading.dismiss();
+        
+      // }, onError: (onError){
+      //   EasyLoading.dismiss();
+      //   print("OrderInformationController onNextPage onError $onError");
+      // });
+      Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
 
       
     }

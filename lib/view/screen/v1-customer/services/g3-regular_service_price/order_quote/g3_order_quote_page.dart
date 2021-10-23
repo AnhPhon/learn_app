@@ -7,11 +7,12 @@ import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/g3-regular_service_price/order_quote/g3_order_quote_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
   V1G3OrderQuotePage({Key? key}) : super(key: key);
@@ -28,30 +29,12 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
                 // Tiêu tề nhóm công việc
                 const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
                 form(context, controller: controller),
-                // Bảng giá từng loại
-                const SizedBox(
-                  height: Dimensions.SIZE_SUPER_LARGE + Dimensions.PADDING_SIZE_LARGE,
-                )
+                // Button
+                nextButton(controller: controller)
               ],
             ),
           );
         },
-      ),
-      bottomSheet: BottomAppBar(
-        child: GestureDetector(
-          onTap: ()=> controller.onNextPage(),
-          child: Container(
-            width: DeviceUtils.getScaledWidth(context,1),
-            height: Dimensions.SIZE_SUPER_LARGE,
-            color: ColorResources.PRIMARYCOLOR,
-            alignment: Alignment.center,
-            child: const Text("Tiếp tục", style: TextStyle(
-              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-              fontWeight: FontWeight.bold,
-              color: ColorResources.WHITE
-            ))
-          ),
-        ),
       ),
     );
   }
@@ -88,6 +71,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           holdplacer: "0",
           hidden: false,
           label: "Đơn giá",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.number,
           isFormatCurrency: true,
@@ -98,11 +82,12 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.personNumberContrller,
+          controller: controller.personNumberController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "10",
           hidden: false,
           label: "Số lượng người",
+          textInputAction: TextInputAction.next,
           obligatory: true,
           typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context,1),
@@ -117,11 +102,29 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           hidden: false,
           label: "Mô tả lại dịch vụ yêu cầu của quý khách để chúng tôi nắm rõ và phục vụ tốt hơn (tránh trường hợp nhầm lẫn)",
           obligatory: true,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
         
       ],
+    );
+  }
+
+  ///
+  /// Nút tiếp tục
+  ///
+
+  Widget nextButton({required V1G3OrderQuoteController controller}){
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      child: LongButton(
+        color: ColorResources.PRIMARYCOLOR,
+        onPressed: ()=> controller.onNextPage(),
+        title: "Tiếp tục",
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
     );
   }
 

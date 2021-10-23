@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/format/format_currency.dart';
-import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class InputField extends StatelessWidget {
   InputField(
@@ -23,6 +22,7 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
+      this.textInputAction,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       this.isColorFieldWhite,
       required this.fontSize});
@@ -36,6 +36,7 @@ class InputField extends StatelessWidget {
   final double? paddingTop;
   final String? errorText;
   final int? line;
+  final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   bool? boldHinText;
   final bool? isColorFieldWhite;

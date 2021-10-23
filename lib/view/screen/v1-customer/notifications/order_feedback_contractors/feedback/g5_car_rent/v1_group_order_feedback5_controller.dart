@@ -37,15 +37,16 @@ class V1GroupOrderFeedBack5Controller extends GetxController{
 
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
-    EasyLoading.show(status: "Loading...");
-      phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
-        // show snackBar 
-        EasyLoading.dismiss();
-        Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
-      }, onError: (onError){
-        EasyLoading.dismiss();
-        print("V1GroupOrderFeedBack5Controller onClickAgreeButton onError $onError");
-      }
-    );
+    Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
+    // EasyLoading.show(status: "Loading...");
+    //   phanHoiDonDichVuProvider.add(data: onRequest(), onSuccess: (data){
+    //     // show snackBar 
+    //     EasyLoading.dismiss();
+        
+    //   }, onError: (onError){
+    //     EasyLoading.dismiss();
+    //     print("V1GroupOrderFeedBack5Controller onClickAgreeButton onError $onError");
+    //   }
+    // );
   }
 }
