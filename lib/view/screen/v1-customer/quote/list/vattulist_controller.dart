@@ -81,7 +81,7 @@ class V1VatTuListController extends GetxController {
               // check trang thai
               if (phanHoi.yKienThoThau.toString().isNotEmpty) {
                 donDichVuProvider.find(
-                  id: phanHoi.idDonDichVu!,
+                  id: phanHoi.idDonDichVu!.id!,
                   onSuccess: (data) {
                     daPhanHoiDDV.add(data);
                     update();
@@ -119,7 +119,7 @@ class V1VatTuListController extends GetxController {
             // check trang thai
             if (phanHoi.yKienThoThau.toString().isEmpty) {
               donDichVuProvider.find(
-                id: phanHoi.idDonDichVu!,
+                id: phanHoi.idDonDichVu!.id!,
                 onSuccess: (data) {
                   chuaPhanHoiDDV.add(data);
                   update();

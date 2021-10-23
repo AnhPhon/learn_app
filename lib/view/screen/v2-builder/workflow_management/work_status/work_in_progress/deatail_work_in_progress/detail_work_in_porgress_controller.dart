@@ -96,11 +96,10 @@ class V2DetailWorkInProgressController extends GetxController {
           fileName = models[0].file ?? "";
         }
         for (final element in models) {
-          // lấy hình ảnh báo giá
-          for (final khoiLuong
-              in element.idDonDichVu!.hinhAnhBanKhoiLuong!.split(",")) {
-            if (khoiLuong.trim().isNotEmpty) {
-              urlHinhAnhKhoiLuongList.add(khoiLuong);
+          // xử lý trường dữ liệu image
+          for (final image in element.idDonDichVu!.hinhAnhBanKhoiLuong!) {
+            if (image.toString().trim().isNotEmpty) {
+              urlHinhAnhKhoiLuongList.add(image.toString());
             }
           }
 

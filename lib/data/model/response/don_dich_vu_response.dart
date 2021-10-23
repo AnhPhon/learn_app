@@ -20,7 +20,7 @@ class DonDichVuResponse {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
+  List<dynamic>? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
@@ -126,7 +126,7 @@ class DonDichVuResponse {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
+    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<dynamic>;
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
 
     // mapping idTrangThaiDonDichVu
@@ -168,14 +168,15 @@ class DonDichVuResponse {
     // mapping idThoiGianLamViec
     if (json['idThoiGianLamViecs'] != null &&
         json['idThoiGianLamViecs'].toString().length != 24) {
-          idThoiGianLamViecs = [];
+      idThoiGianLamViecs = [];
       final result = (json['idThoiGianLamViecs'] as List<dynamic>);
-          result.forEach((element) {
-            if(element != null && element.toString().length != 24) {
-              //result.map((e) =>
-                  idThoiGianLamViecs!.add(ThoiGianLamViecResponse.fromJson(element as Map<String, dynamic>));
-            }
-          });
+      result.forEach((element) {
+        if (element != null && element.toString().length != 24) {
+          //result.map((e) =>
+          idThoiGianLamViecs!.add(ThoiGianLamViecResponse.fromJson(
+              element as Map<String, dynamic>));
+        }
+      });
     } else {
       idThoiGianLamViecs = [];
     }
