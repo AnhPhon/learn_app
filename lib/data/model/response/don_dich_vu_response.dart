@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
+
 import 'tai_khoan_response.dart';
 import 'nhom_dich_vu_response.dart';
 import 'trang_thai_don_hang_response.dart';
@@ -20,7 +22,8 @@ class DonDichVuResponse {
   String? ngayKetThuc;
   String? hinhAnhBanKhoiLuong;
   String? hinhAnhBanVe;
-  TrangThaiDonHangResponse? idTrangThaiDonDichVu;
+  TrangThaiDonHangResponse? idTrangThaiDonHang;
+  TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
   TrangThaiThanhToanResponse? idTrangThaiThanhToan;
   List<ThoiGianLamViecResponse>? idThoiGianLamViecs;
@@ -63,6 +66,7 @@ class DonDichVuResponse {
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuong,
       this.hinhAnhBanVe,
+      this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
@@ -128,10 +132,19 @@ class DonDichVuResponse {
     // mapping idTrangThaiDonDichVu
     if (json['idTrangThaiDonDichVu'] != null &&
         json['idTrangThaiDonDichVu'].toString().length != 24) {
-      idTrangThaiDonDichVu = TrangThaiDonHangResponse.fromJson(
+      idTrangThaiDonDichVu = TrangThaiDonDichVuResponse.fromJson(
           json['idTrangThaiDonDichVu'] as Map<String, dynamic>);
     } else {
       idTrangThaiDonDichVu = null;
+    }
+
+    // mapping idTrangThaiDonDichVu
+    if (json['idTrangThaiDonDichVu'] != null &&
+        json['idTrangThaiDonDichVu'].toString().length != 24) {
+      idTrangThaiDonDichVu = TrangThaiDonDichVuResponse.fromJson(
+          json['idTrangThaiDonDichVu'] as Map<String, dynamic>);
+    } else {
+      idTrangThaiDonHang = null;
     }
 
     // mapping idHinhThucThanhToan
@@ -217,7 +230,10 @@ class DonDichVuResponse {
     // mapping idThongSoKyThuats
     if (json['idThongSoKyThuats'] != null &&
         json['idThongSoKyThuats'].toString().length != 24) {
-      idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>).map((e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>)).toList();
+      idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
+          .map(
+              (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
       idThongSoKyThuats = [];
     }
@@ -275,6 +291,10 @@ class DonDichVuResponse {
     if (idTrangThaiDonDichVu != null)
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
 
+    // check null idTrangThaiDonDichVu
+    if (idTrangThaiDonDichVu != null)
+      data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
+
     // check null idHinhThucThanhToan
     if (idHinhThucThanhToan != null)
       data['idHinhThucThanhToan'] = idHinhThucThanhToan;
@@ -284,7 +304,8 @@ class DonDichVuResponse {
       data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
 
     // check null idThoiGianLamViec
-    if (idThoiGianLamViecs != null) data['idThoiGianLamViecs'] = idThoiGianLamViecs;
+    if (idThoiGianLamViecs != null)
+      data['idThoiGianLamViecs'] = idThoiGianLamViecs;
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
@@ -323,7 +344,8 @@ class DonDichVuResponse {
     if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null idThongSoKyThuats
-    if (idThongSoKyThuats != null) data['idThongSoKyThuats'] = idThongSoKyThuats;
+    if (idThongSoKyThuats != null)
+      data['idThongSoKyThuats'] = idThongSoKyThuats;
 
     // check null diaDiemBocHang
     if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang;

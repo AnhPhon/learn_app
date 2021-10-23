@@ -45,7 +45,7 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
                 minWidth: DeviceUtils.getScaledWidth(context, 1),
                 title: "Tiếp tục",
                 color: ColorResources.PRIMARYCOLOR,
-                onPressed: controller.onClickPayment,
+                onPressed: controller.showDialogAccept,
               ),
             ),
           );
