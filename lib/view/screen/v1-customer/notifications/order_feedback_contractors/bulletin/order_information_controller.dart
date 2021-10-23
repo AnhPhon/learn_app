@@ -13,6 +13,7 @@ import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class OrderInformationController extends GetxController {
@@ -84,6 +85,7 @@ class OrderInformationController extends GetxController {
         ),
         confirm: ElevatedButton(
             onPressed: () {
+              Get.back();
               onNextPage();
             },
             child: const Text("Đồng ý")),
@@ -100,12 +102,14 @@ class OrderInformationController extends GetxController {
   ///
   /// Nhấn vào đông ý đơn hàng
   ///
-  void onNextPage() async {
-    await Get.toNamed(
+  void onNextPage() {
+    Get.toNamed(
             '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}')!
         .then((value) {
       if (value == true) {
-        EasyLoading.showSuccess('Đăng tin thành công');
+        SnackBarUtils.showSnackBarSuccess(
+            title: 'Thao tác thành công',
+            message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái đã thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
         //insert db
@@ -116,13 +120,14 @@ class OrderInformationController extends GetxController {
                       predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
                 }
               else
-                {
-                  EasyLoading.showError(
-                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
-                }
+                SnackBarUtils.showSnackBar(
+                    title: 'Thao tác thất bại',
+                    message: 'Vui lòng thực hiện lại')
             });
       } else {
-        EasyLoading.showSuccess('Đăng tin thành công');
+        SnackBarUtils.showSnackBarSuccess(
+            title: 'Thao tác thành công',
+            message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái chưa thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
         //insert db
@@ -134,8 +139,9 @@ class OrderInformationController extends GetxController {
                 }
               else
                 {
-                  EasyLoading.showError(
-                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
+                  SnackBarUtils.showSnackBar(
+                      title: 'Thao tác thất bại',
+                      message: 'Vui lòng thực hiện lại')
                 }
             });
       }

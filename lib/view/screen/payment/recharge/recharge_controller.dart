@@ -142,7 +142,7 @@ class RechargeController extends GetxController {
   ///
   ///on checkout click
   ///
-  void onCheckoutClick() async {
+  void onCheckoutClick() {
     //validate
     if (image == null) {
       SnackBarUtils.showSnackBar(
@@ -166,14 +166,10 @@ class RechargeController extends GetxController {
           //add
           lichSuViTienProvider.add(
             data: lichSuViTienRequest,
-            onSuccess: (value) async {
-              // final Map<String, dynamic> param = {
-              //   'status': true,
-              //   'tongTien': soTienToiThieu
-              // };
+            onSuccess: (value) {
               //go to payment success page
               EasyLoading.dismiss();
-              await Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=1')!
+              Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=1')!
                   .then((value) => {
                         if (value == true) {Get.back(result: true)}
                       });
@@ -184,7 +180,8 @@ class RechargeController extends GetxController {
           );
         },
         onError: (error) {
-          EasyLoading.showError('Vui lòng thực hiện lại');
+          SnackBarUtils.showSnackBar(
+              title: 'Thao tác thất bại', message: 'Vui lòng thực hiện lại');
         },
       );
     }

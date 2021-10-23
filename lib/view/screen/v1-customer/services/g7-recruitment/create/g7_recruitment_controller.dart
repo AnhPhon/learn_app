@@ -28,6 +28,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V1G7RecruitmentController extends GetxController {
@@ -115,6 +116,22 @@ class V1G7RecruitmentController extends GetxController {
   //thời gian thực tập
   final thoiGianThucTapController = TextEditingController();
 
+  //focusNode
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode companyFocusNode = FocusNode();
+  FocusNode addressFocusNode = FocusNode();
+  FocusNode descFocusNode = FocusNode();
+  FocusNode requiredFocusNode = FocusNode();
+  FocusNode benifitFocusNode = FocusNode();
+  FocusNode prioritizedFocusNode = FocusNode();
+  FocusNode endTimeFocusNode = FocusNode();
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode contactFocusNodetroller = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode amountFocusNode = FocusNode();
+  FocusNode thoiGianThucTapFocusNode = FocusNode();
+
   //chọn ngày nộp hồ sơ
   DateTime selectedDate = DateTime.now();
   DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -192,6 +209,22 @@ class V1G7RecruitmentController extends GetxController {
     emailController.dispose();
     amountController.dispose();
     thoiGianThucTapController.dispose();
+
+    //focusNode
+    titleFocusNode.dispose();
+    companyFocusNode.dispose();
+    addressFocusNode.dispose();
+    descFocusNode.dispose();
+    requiredFocusNode.dispose();
+    benifitFocusNode.dispose();
+    prioritizedFocusNode.dispose();
+    endTimeFocusNode.dispose();
+    nameFocusNode.dispose();
+    phoneFocusNode.dispose();
+    contactFocusNodetroller.dispose();
+    emailFocusNode.dispose();
+    amountFocusNode.dispose();
+    thoiGianThucTapFocusNode.dispose();
   }
 
   ///
@@ -491,7 +524,8 @@ class V1G7RecruitmentController extends GetxController {
         builder: (BuildContext? context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: child!,
           );

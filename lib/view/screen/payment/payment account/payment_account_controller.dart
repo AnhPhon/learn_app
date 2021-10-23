@@ -11,6 +11,7 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/snack_bar.dart';
 
 import 'patment_dialog_accept.dart';
 
@@ -56,6 +57,7 @@ class PaymentAccountController extends GetxController {
       tongTienThanhToan = double.parse(Get.parameters['tongTien'].toString());
       getBalance();
     }
+    //check url
     if (Get.parameters['url'] != null) {
       urlBack = Get.parameters['url'].toString();
     }
@@ -75,7 +77,7 @@ class PaymentAccountController extends GetxController {
           viTienResponse = value.first;
           soDuTaiKhoan = double.parse(viTienResponse.tongTien.toString());
 
-          //check so du tài khoản
+          //check số dư tài khoản có đủ không
           if ((soDuTaiKhoan - tongTienThanhToan) < 0) {
             soDuConLai = 0;
             isShowSoDu = true;
@@ -95,6 +97,9 @@ class PaymentAccountController extends GetxController {
     });
   }
 
+  ///
+  ///dialog button back
+  ///
   void showDialogBack() {
     Get.defaultDialog(
         titlePadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -134,7 +139,7 @@ class PaymentAccountController extends GetxController {
           price: tongTienThanhToan,
         ),
         confirm: ElevatedButton(
-            onPressed: () async {
+            onPressed: () {
               //set value viTienRequest
               viTienRequest.id = viTienResponse.id;
               viTienRequest.idTaiKhoan =
@@ -142,17 +147,21 @@ class PaymentAccountController extends GetxController {
               viTienRequest.tongTien = soDuConLai.toString();
               EasyLoading.show(status: 'loading...');
 
-              await viTienRepository.update(viTienRequest).then((value) async {
+              viTienRepository.update(viTienRequest).then((value) {
+                //insert thành công
                 if (value.response.data != null) {
                   EasyLoading.dismiss();
-                  await Get.toNamed(AppRoutes.PAYMENT_SUCCESS)!.then((value) {
+                  Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
+                      .then((value) {
                     if (value == true) {
                       Get.back();
                       Get.back(result: true);
                     }
                   });
                 } else {
-                  EasyLoading.showError('Vui lòng thực hiện lại');
+                  SnackBarUtils.showSnackBar(
+                      title: 'Thao tác thất bại',
+                      message: 'Vui lòng thực hiện lại');
                 }
               });
             },
@@ -168,35 +177,10 @@ class PaymentAccountController extends GetxController {
   }
 
   ///
-  ///on checkout click
-  ///
-  void onCheckoutClick() async {
-    //set value viTienRequest
-    viTienRequest.id = viTienResponse.id;
-    viTienRequest.idTaiKhoan = viTienResponse.idTaiKhoan!.id.toString();
-    viTienRequest.tongTien = soDuConLai.toString();
-    EasyLoading.show(status: 'loading...');
-
-    await viTienRepository.update(viTienRequest).then((value) async {
-      if (value.response.data != null) {
-        EasyLoading.dismiss();
-        await Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
-            .then((value) {
-          if (value == true) {
-            Get.back(result: true);
-          }
-        });
-      } else {
-        EasyLoading.showError('Vui lòng thực hiện lại');
-      }
-    });
-  }
-
-  ///
   ///go to recharge
   ///
-  void onRechargeClick() async {
-    await Get.toNamed(
+  void onRechargeClick() {
+    Get.toNamed(
             '${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=$tongTienThanhToan')!
         .then((value) {
       if (value == true) {
