@@ -18,12 +18,15 @@ class V3RevenuePage extends GetView<V3RevenueController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InputWidget(
                         label: "Từ ngày ",
-                        width: .35,
+                        width: .4,
                         isDate: true,
                         allowEdit: false,
                         textEditingController: controller.startController,
@@ -31,10 +34,11 @@ class V3RevenuePage extends GetView<V3RevenueController> {
                         suffixIcon: const Icon(
                           Icons.calendar_today,
                         ),
+                        lastDate: DateTime.now(),
                       ),
                       InputWidget(
                         label: "Đến ngày ",
-                        width: .35,
+                        width: .4,
                         isDate: true,
                         allowEdit: false,
                         textEditingController: controller.endController,
@@ -42,6 +46,7 @@ class V3RevenuePage extends GetView<V3RevenueController> {
                         suffixIcon: const Icon(
                           Icons.calendar_today,
                         ),
+                        lastDate: DateTime.now(),
                       ),
                     ],
                   ),
@@ -57,8 +62,9 @@ class V3RevenuePage extends GetView<V3RevenueController> {
                       itemBuilder: (BuildContext ctx, int index) {
                         return _legend(
                           context,
-                          color: controller.revenueDataList[index].color,
-                          label: controller.revenueDataList[index].unit,
+                          color: controller.revenueDataList[index].color!,
+                          label:
+                              controller.revenueDataList[index].unit.toString(),
                         );
                       }),
                 ],

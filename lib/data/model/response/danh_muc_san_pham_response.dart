@@ -36,4 +36,9 @@ class DanhMucSanPhamResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten.toString();
+  }
 }

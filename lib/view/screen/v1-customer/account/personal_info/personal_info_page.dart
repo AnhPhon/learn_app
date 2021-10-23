@@ -124,8 +124,8 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                           data: controller.sexMap,
                           width: .35,
                           isShadow: true,
-                          isColorFieldWhite: true,
                           isBorder: false,
+                          fillColor: ColorResources.WHITE,
                         )
                       ],
                     ),
