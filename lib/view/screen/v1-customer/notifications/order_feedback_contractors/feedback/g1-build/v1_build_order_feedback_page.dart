@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/currency_covert.dart';
@@ -19,9 +18,8 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   V1BuildOrderFeedBackPage({Key? key}) : super(key: key);
 
   @override
-  final V1BuildOrderFeedBackController controller = Get.find<V1BuildOrderFeedBackController>();
-
-  
+  final V1BuildOrderFeedBackController controller =
+      Get.find<V1BuildOrderFeedBackController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +28,10 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
       body: GetBuilder(
         builder: (V1BuildOrderFeedBackController controller) {
-          if(controller.isLoading){
-            return const Center(child: CircularProgressIndicator(),);
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
           return SizedBox(
             child: SingleChildScrollView(
@@ -40,15 +40,15 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                 children: [
                   // Tiêu đề của nhóm
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
-                    
+
                   // Tiêu đề báo giá
-                  header(controller:controller),
+                  header(controller: controller),
                   // list Hình ảnh
-                  image(context,controller:controller),
+                  image(context, controller: controller),
                   // List vật liệu
-                  materialList(context,controller:controller),
+                  materialList(context, controller: controller),
                   // Khoản cách bottom sheet
-                  const SizedBox(height:BOTTOMSHEET),
+                  const SizedBox(height: BOTTOMSHEET),
                 ],
               ),
             ),
@@ -56,12 +56,17 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         },
       ),
       bottomSheet: OrderBottomSheet(
-        itemValue: controller.tongTien,//controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
+        itemValue: controller
+            .tongTien, //controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
         children: [
-          SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
-          SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){
-            controller.onClickAgreeButton();
-          }),
+          SmallButton(
+              title: "Huỷ ", color: ColorResources.GREY, onPressed: () {}),
+          SmallButton(
+              title: "Đồng ý đơn giá",
+              color: ColorResources.PRIMARYCOLOR,
+              onPressed: () {
+                controller.onClickAgreeButton();
+              }),
         ],
       ),
     );
@@ -70,13 +75,12 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// Nội dung tiêu đề
   ///
-  Widget header({required V1BuildOrderFeedBackController controller}){
+  Widget header({required V1BuildOrderFeedBackController controller}) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: Dimensions.PADDING_SIZE_DEFAULT,
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT
-      ),
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,35 +96,44 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+  Widget image(BuildContext context,
+      {required V1BuildOrderFeedBackController controller}) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: Dimensions.PADDING_SIZE_DEFAULT,
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT
-      ),
-      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty ? const SizedBox() : Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:  [
-          const Text("Đơn giá bằng hình ảnh",style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
-          ),),
-          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.split(',')),
-        ],
-      ),
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT),
+      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty
+          ? const SizedBox()
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Đơn giá bằng hình ảnh",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                ),
+                BoxImage(
+                    imagesUrl: controller.donPhanHoi!.idDonDichVu!
+                        .hinhAnhBanKhoiLuong! as List<String>),
+              ],
+            ),
     );
   }
 
   ///
-  /// nội dung đơn hàng 
+  /// nội dung đơn hàng
   ///
-  Widget content({required String title, required String value}){
+  Widget content({required String title, required String value}) {
     return Row(
       children: [
-        Text(title, style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),),
+        Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         Text(" $value"),
       ],
     );
@@ -130,52 +143,77 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+  Widget materialList(BuildContext context,
+      {required V1BuildOrderFeedBackController controller}) {
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
+      padding: const EdgeInsets.all(
+        Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Đơn giá phản hồi theo khách hàng cung cấp",
+          const Text(
+            "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
-          ),),
+                fontWeight: FontWeight.bold,
+                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+          ),
           Column(
             children: [
-              ...List.generate(controller.workMass.length, (index) => Padding(
-                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: BoxShadowWidget(
-                  child: SizedBox(
-                    height: 160,
-                    width: DeviceUtils.getScaledWidth(context, 1),
-                    child: Padding(
-                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          color: ColorResources.BLACK,
-                          fontSize: Dimensions.PADDING_SIZE_DEFAULT
+              ...List.generate(
+                  controller.workMass.length,
+                  (index) => Padding(
+                        padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_DEFAULT),
+                        child: BoxShadowWidget(
+                          child: SizedBox(
+                            height: 160,
+                            width: DeviceUtils.getScaledWidth(context, 1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                  Dimensions.PADDING_SIZE_SMALL),
+                              child: DefaultTextStyle(
+                                style: const TextStyle(
+                                    color: ColorResources.BLACK,
+                                    fontSize: Dimensions.PADDING_SIZE_DEFAULT),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextHighlight(
+                                      title: "Tên công việc:",
+                                      content:
+                                          controller.workMass[index].tenVatTu!,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                                    ),
+                                    TextHighlight(
+                                        title: "Quy cách:",
+                                        content:
+                                            controller.workMass[index].quyCach!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    TextHighlight(
+                                        title: "Khối lượng:",
+                                        content:
+                                            controller.workMass[index].donGia!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    TextHighlight(
+                                        title: "Đơn vị:",
+                                        content:
+                                            controller.workMass[index].donVi!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
+                                    //   color: ColorResources.RED,
+                                    //   fontSize: Dimensions.FONT_SIZE_LARGE
+                                    // ),),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextHighlight(title:"Tên công việc:" ,content:controller.workMass[index].tenVatTu!, fontSize: Dimensions.FONT_SIZE_LARGE, ),
-                            TextHighlight(title:"Quy cách:" ,content: controller.workMass[index].quyCach!,fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Khối lượng:" ,content: controller.workMass[index].donGia!,fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Đơn vị:" ,content:controller.workMass[index].donVi! ,fontSize: Dimensions.FONT_SIZE_LARGE),
-                            // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
-                            //   color: ColorResources.RED,
-                            //   fontSize: Dimensions.FONT_SIZE_LARGE
-                            // ),),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ))
+                      ))
             ],
           )
         ],
