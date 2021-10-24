@@ -15,7 +15,6 @@ class V1G3OrderDetailController extends GetxController{
   double phiDichVu = 0;
   double khuyenMai = 0;
   double tongTien = 0;
-
 //unit
   @override
   void onInit() {

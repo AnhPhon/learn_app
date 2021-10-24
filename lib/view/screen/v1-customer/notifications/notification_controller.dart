@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1NotificationController extends GetxController{
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
+  final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
@@ -25,7 +27,7 @@ class V1NotificationController extends GetxController{
   }
 
   void getNotifications(){
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
       isLoading = false;
@@ -39,6 +41,7 @@ class V1NotificationController extends GetxController{
 
   Future<void> onRefresh() async{
     pageMax = 1;
+    limit = 5;
     refreshNotification();
   }
 
@@ -50,10 +53,10 @@ class V1NotificationController extends GetxController{
   /// lấy danh sách thông báo
   ///
   void refreshNotification(){
-    thongBaoProvider.paginate(page: pageMax, limit: 5, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
-      print(data);
+      refreshController.resetNoData();
       refreshController.refreshCompleted();
       isLoading = false;
       update();
@@ -71,7 +74,7 @@ class V1NotificationController extends GetxController{
   void getMoreNotification(){
     pageMax += 1;
     limit = 5;
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=2&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
       print("Dài: ${data.length}");
       if(data.isEmpty){
         refreshController.loadNoData();
@@ -89,32 +92,35 @@ class V1NotificationController extends GetxController{
   }
 
   void onClickItem(ThongBaoResponse notification){
-    String id = notification.idDonDichVu!.idNhomDichVu!.nhomDichVu!;
-    if(id.contains('1')){
-      // phản hồi nhóm 1
-      Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: notification.idDonDichVu);
-    }else if(id.contains('2')){
-      // Đây là nhóm 2 Công việc DVTX khảo sát báo giá
-      Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,arguments: notification.idDonDichVu);
-    }else if(id.contains("3")){
-      // Đây là nhóm 3 không có trang thông báo phản hồi
-      Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,arguments: notification.idDonDichVu);
-    }else if(id.contains('4')){
-      // Đây là nhóm 4 Không có trang thông báo phản hồi
-      Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idDonDichVu);
-    }else if(id.contains('5')){
-      // Đây là nhóm 5 phản hồi dịch vụ xe tải, xe ben, cầu thùng
-      Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idDonDichVu);
-    }else if(id.contains('6')){
-      // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
-      Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idDonDichVu);
-    }else if(id.contains('7')){
-      // Phản hồi tuyển dụng thành viên
-      Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idDonDichVu);
-    }else{
-      // Phản hồi đơn hàng
-       Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idDonDichVu);
-    }
+    print(notification.idPhanHoiDonDichVu!.idDonDichVu!.toJson());
+
+    donDichVuProvider.find(id: notification.idPhanHoiDonDichVu!.idDonDichVu!.id!, onSuccess: (data){
+      print("Data: $data");
+      String id = data.idNhomDichVu!.nhomDichVu!;
+      print("Nhóm dịch vụ : $id");
+      if(id.contains('1')){
+        // phản hồi nhóm 1
+        Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: notification.idPhanHoiDonDichVu);
+      }else if(id.contains('2')){
+        // Đây là nhóm 2 Công việc DVTX khảo sát báo giá
+        Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,arguments: notification.idPhanHoiDonDichVu);
+      }else if(id.contains('5')){
+        // Đây là nhóm 5 phản hồi dịch vụ xe tải, xe ben, cầu thùng
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5,arguments: notification.idPhanHoiDonDichVu);
+      }else if(id.contains('6')){
+        // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+      }else if(id.contains('7')){
+        // Phản hồi tuyển dụng thành viên
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+      }else{
+        // Phản hồi vật tư
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+      }
+    }, onError: (onError){
+      print("V1NotificationController onClickItem onError $onError");
+    });
+    
   }
   
 
