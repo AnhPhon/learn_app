@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
@@ -10,6 +11,7 @@ import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_response.dart';
+import 'package:template/data/model/response/tuyen_dung_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/chuyen_mon_provider.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
@@ -19,6 +21,7 @@ import 'package:template/provider/so_nam_kinh_nghiem_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_provider.dart';
+import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/device_utils.dart';
@@ -39,6 +42,7 @@ class V1CandidateController extends GetxController {
   final TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
   final DangKyViecMoiProvider dangKyViecMoiProvider =
       GetIt.I.get<DangKyViecMoiProvider>();
+  final TuyenDungProvider tuyenDungProvider = GetIt.I.get<TuyenDungProvider>();
 
   //index tab
   int currentIndex = 0;
@@ -51,6 +55,7 @@ class V1CandidateController extends GetxController {
   List<SoNamKinhNghiemResponse> soNamKinhNghiemListModel = [];
   List<TrinhDoResponse> trinhDoListModel = [];
   List<DangKyViecMoiResponse> dangKyViecMoiListModel = [];
+  List<TuyenDungResponse> tuyenDungListModel = [];
   //set default giới tính
   List<GioiTinhModel> gioiTinhModel = [
     GioiTinhModel(key: 'gioiTinh', value: 'Giới tính'),
@@ -87,13 +92,22 @@ class V1CandidateController extends GetxController {
   String conditionFilter = '';
   List<TimKiemUngVienModel> conditions = [];
 
+  //Refresh Page tuyển dụng
+  int pageMax = 1;
+  int limit = 5;
+  bool isLoadingTuyenDung = true;
+
+  // refresh controller for load more refresh
+  RefreshController? refreshController;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //set value frist giới tính
-    gioiTinh = gioiTinhModel.first;
+    refreshController ??= RefreshController();
 
+    //load data tinhTp
+    getDataTinhTp();
     //get userId
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
@@ -103,14 +117,8 @@ class V1CandidateController extends GetxController {
           onSuccess: (value) {
             // set user
             taiKhoanResponse = value;
-
+            onLoadDataWithTab(0);
             //load data frist
-            getDataNgoaiNgu();
-            getDataHinhThucLamViec();
-            getDataTinhTp();
-            getDataChuyenMon();
-            getDataSoNamKinhNghiem();
-            getDataTrinhDo();
           },
           onError: (error) {
             print('V1CandidateController onInit $error');
@@ -127,9 +135,126 @@ class V1CandidateController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
-    super.onClose();
     searchController.dispose();
     searchFocusNode.dispose();
+    refreshController!.dispose();
+    super.onClose();
+  }
+
+  ///
+  ///onLoadDataTuyenDung
+  ///
+  void onLoadDataTuyenDung({required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      tuyenDungListModel.clear();
+    } else {
+      //isLoading
+      pageMax++;
+    }
+    //load data tuyen dung
+    tuyenDungProvider.paginate(
+        page: pageMax,
+        limit: limit,
+        filter: '&sortBy=create_at:desc',
+        onSuccess: (value) {
+          //check data empty
+          if (value.isEmpty) {
+            refreshController!.loadNoData();
+          } else if (isRefresh) {
+            //check refresh
+            tuyenDungListModel = value;
+            refreshController!.refreshCompleted();
+            refreshController!.loadComplete();
+          } else {
+            tuyenDungListModel.addAll(value);
+            refreshController!.loadComplete();
+          }
+          isLoadingTuyenDung = false;
+          print('tuyenDungListModel ${tuyenDungListModel.length}');
+          update();
+        },
+        onError: (error) =>
+            print('V1CandidateController onLoadDataTuyenDung $error'));
+  }
+
+  ///
+  ///onRefresh
+  ///
+  void onRefreshTuyenDung() {
+    onLoadDataTuyenDung(isRefresh: true);
+  }
+
+  ///
+  ///onLoadDataTuyenDung
+  ///
+  void onLoadingTuyenDung() {
+    onLoadDataTuyenDung(isRefresh: false);
+  }
+
+  ///
+  ///onLoadDataWithTab
+  ///
+  void onLoadDataWithTab(int select) {
+    if (select == 1) {
+      getDataNgoaiNgu();
+      getDataHinhThucLamViec();
+      // getDataTinhTp();
+      getDataChuyenMon();
+      getDataSoNamKinhNghiem();
+      getDataTrinhDo();
+      //set value frist giới tính
+      gioiTinh = gioiTinhModel.first;
+      update();
+    } else {
+      onLoadDataTuyenDung(isRefresh: true);
+    }
+  }
+
+  ///
+  ///onChangeNameTinhTp
+  ///
+  String? onChangeNameTinhTp(String id) {
+    print('bbbb');
+    return tinhTpListModel.firstWhere((element) => element.id == id).ten;
+  }
+
+  ///
+  ///onTapViewTuyenDung
+  ///
+  void onTapViewTuyenDung({required TuyenDungResponse tuyendungModel}) {
+    print('tuyendungModel ${tuyendungModel.toJson()}');
+
+    ///gán data tuyển dụng
+    Map<String, dynamic> param = {
+      "TieuDe": tuyendungModel.tieuDe,
+      "CongTy": tuyendungModel.congTy,
+      'TenDiaChiCongTy':
+          '${tuyendungModel.diaChi}, ${tuyendungModel.idPhuongXa}, ${tuyendungModel.idQuanHuyen}, ${tuyendungModel.idTinhTp}',
+      "GioiTinh": tuyendungModel.gioiTinh == 'Nam' ? '1' : '2',
+      "SoLuong": tuyendungModel.soLuong,
+      "TenHinhThucLamViec": tuyendungModel.idHinhThucLamViec,
+      "TenTrinhDoHocVan": tuyendungModel.idTrinhDoHocVan,
+      "TenChuyenNganhChinh": tuyendungModel.idChuyenNganhChinh,
+      "TenChuyenNganhPhu": tuyendungModel.thoiGianThuViec,
+      "TenSoNamKinhNghiem": tuyendungModel.idSoNamKinhNghiem,
+      "TenMucLuongDuKien": tuyendungModel.idMucLuongDuKien,
+      "TenNoiLamViec": onChangeNameTinhTp(tuyendungModel.noiLamViec.toString()),
+      "TenThoiGianLamViec": tuyendungModel.idThoiGianLamViec,
+      "ThoiGianThuViec": tuyendungModel.thoiGianThuViec,
+      "MoTaCongViec": tuyendungModel.moTaCongViec,
+      "YeuCauCongViec": tuyendungModel.yeuCauCongViec,
+      "QuyenLoi": tuyendungModel.quyenLoi,
+      "UuTien": tuyendungModel.uuTien,
+      "HanNopHoSo": tuyendungModel.hanNopHoSo,
+      "HoTenLienHe": tuyendungModel.hoTenLienHe,
+      "SoDienThoaiLienHe": tuyendungModel.soDienThoaiLienHe,
+      "DiaChiLienHe": tuyendungModel.diaChiLienHe,
+      "EmailLienHe": tuyendungModel.emailLienHe,
+    };
+
+    print('param $param ');
   }
 
   ///
@@ -332,6 +457,7 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeTab(int index) {
     currentIndex = index;
+    onLoadDataWithTab(index);
     update();
   }
 
@@ -376,7 +502,7 @@ class V1CandidateController extends GetxController {
           isButtonSearch: false);
     } else {
       SnackBarUtils.showSnackBar(
-          title: 'Tiêu đề quá ngắn', message: 'Tiêu đề phải lớn hơn 2 ký tự');
+          title: 'Tiêu đề quá ngắn', message: 'Tiêu đề tối thiểu 3 ký tự');
     }
     update();
   }
@@ -387,9 +513,16 @@ class V1CandidateController extends GetxController {
   void onChangedSex(GioiTinhModel text) {
     gioiTinh = text;
 
+    //check value giới tính
+    String temp = '';
+    if (text.toString() == 'Giới tính') {
+      temp = '0';
+    } else {
+      temp = text.toString();
+    }
     //add new conditions
     addNewConditions(
-        condition: TimKiemUngVienModel(key: "gioiTinh", value: text.toString()),
+        condition: TimKiemUngVienModel(key: "gioiTinh", value: temp),
         isButtonSearch: false);
     update();
   }
@@ -420,7 +553,7 @@ class V1CandidateController extends GetxController {
     if (condition.value != '0') {
       conditions.add(condition);
     }
-    //check nếu không phải button thì onchange luôn
+    //check nếu không phải button search thì onchange luôn
     if (!isButtonSearch) {
       createConditionFilter(conditions);
     }
@@ -460,6 +593,7 @@ class V1CandidateController extends GetxController {
   ///getDataSeach
   ///
   void getDataSeach({required String textFilter}) {
+    print('có vô ko');
     if (textFilter != '') {
       // ignore: parameter_assignments
       textFilter = '&$textFilter';
@@ -490,8 +624,8 @@ class V1CandidateController extends GetxController {
   ///
   /// Onlick đến xem thông tin hồ sơ ưng tuyển
   ///
-  void onClickProfile() {
-    Get.toNamed(AppRoutes.V1_CANDICATE_PROFILE);
+  void onClickProfile({required DangKyViecMoiResponse dangKyViecMoiModel}) {
+    Get.toNamed(AppRoutes.V1_CANDICATE_PROFILE, arguments: dangKyViecMoiModel);
   }
 
   ///

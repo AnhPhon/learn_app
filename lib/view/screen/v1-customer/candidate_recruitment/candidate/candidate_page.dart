@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
@@ -21,9 +22,17 @@ class V1CandidatePage extends GetView<V1CandidateController> {
         appBar: const AppBarWidget(title: "Tuyển dụng ứng viên"),
         body: GetBuilder(
           builder: (V1CandidateController controller) {
-            return controller.currentIndex == 0
-                ? news(context)
-                : listOfCandidates(context, controller: controller);
+            return SafeArea(
+              child: Column(
+                children: [
+                  tabBarWidget(context: context, controller: controller),
+                  if (controller.currentIndex == 0)
+                    news(context, controller: controller)
+                  else
+                    listOfCandidates(context, controller: controller)
+                ],
+              ),
+            );
           },
         ),
         floatingActionButton: GetBuilder(
@@ -54,23 +63,35 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   ///
   /// Tin tuyển dụng
   ///
-  Widget news(BuildContext context) {
-    return Column(
-      children: [
-        // Tab bar
-        tabBarWidget(context: context, controller: controller),
-        // DANH SÁCH TIN TUYỂN DỤNG
-        Expanded(
-          child: SizedBox(
-            height: DeviceUtils.getScaledHeight(context, 1),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return RecruimentNewsCard(index: index);
-              },
-            ),
-          ),
-        )
-      ],
+  Widget news(BuildContext context,
+      {required V1CandidateController controller}) {
+    return Expanded(
+      child: SmartRefresher(
+        controller: controller.refreshController!,
+        enablePullUp: true,
+        onLoading: controller.onLoadingTuyenDung,
+        onRefresh: controller.onRefreshTuyenDung,
+        footer: const ClassicFooter(
+          loadingText: "Đang tải...",
+          noDataText: "Không có dữ liệu",
+        ),
+        child: controller.isLoadingTuyenDung
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: controller.tuyenDungListModel.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => controller.onTapViewTuyenDung(
+                        tuyendungModel: controller.tuyenDungListModel[index]),
+                    child: RecruimentNewsCard(
+                        tuyenDungResponse:
+                            controller.tuyenDungListModel[index]),
+                  );
+                },
+              ),
+      ),
     );
   }
 
@@ -79,12 +100,10 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   ///
   Widget listOfCandidates(BuildContext context,
       {required V1CandidateController controller}) {
-    return SingleChildScrollView(
-      child: SizedBox(
+    return Expanded(
+      child: SingleChildScrollView(
         child: Column(
           children: [
-            // Tab bar
-            tabBarWidget(context: context, controller: controller),
             // Tìm kiếm
             search(context, controller: controller),
             // Bộ lọc
@@ -107,25 +126,24 @@ class V1CandidatePage extends GetView<V1CandidateController> {
                 ),
               )
             else
-              SingleChildScrollView(
-                child: SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, 1),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.dangKyViecMoiListModel.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            controller.onClickProfile();
-                          },
-                          child: CandidateCard(
-                            dangKyViecMoiResponse:
-                                controller.dangKyViecMoiListModel[index],
-                            showEmailAndPass: false,
-                          ));
-                    },
-                  ),
+              SizedBox(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.dangKyViecMoiListModel.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          controller.onClickProfile(
+                              dangKyViecMoiModel:
+                                  controller.dangKyViecMoiListModel[index]);
+                        },
+                        child: CandidateCard(
+                          dangKyViecMoiResponse:
+                              controller.dangKyViecMoiListModel[index],
+                          showEmailAndPass: false,
+                        ));
+                  },
                 ),
               )
           ],

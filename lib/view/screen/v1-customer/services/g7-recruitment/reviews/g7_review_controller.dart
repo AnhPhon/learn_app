@@ -142,7 +142,7 @@ class V1G7ReviewController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
-    super.onClose();
+
     titleController.dispose();
     companyController.dispose();
     addressController.dispose();
@@ -165,6 +165,7 @@ class V1G7ReviewController extends GetxController {
     thoiGianLamViecController.dispose();
     thoiGianThucTapController.dispose();
     chuyenNganhPhuController.dispose();
+    super.onClose();
   }
 
   ///

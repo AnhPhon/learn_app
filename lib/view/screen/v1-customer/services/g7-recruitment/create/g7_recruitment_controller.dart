@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +27,6 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V1G7RecruitmentController extends GetxController {
@@ -194,7 +192,7 @@ class V1G7RecruitmentController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
-    super.onClose();
+
     titleController.dispose();
     companyController.dispose();
     addressController.dispose();
@@ -225,6 +223,7 @@ class V1G7RecruitmentController extends GetxController {
     emailFocusNode.dispose();
     amountFocusNode.dispose();
     thoiGianThucTapFocusNode.dispose();
+    super.onClose();
   }
 
   ///

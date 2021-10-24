@@ -49,9 +49,12 @@ class TuyenDungResponse {
   String? tongDon;
   String? phiDichVu;
   String? tienCoc;
+  String? idTrangThaiTuyenDung;
+  String? thoiGianThuViec;
 
   String? createdAt;
   String? updatedAt;
+  List<String>? idChuyenNganhPhus;
 
   TuyenDungResponse(
       {this.id,
@@ -89,6 +92,9 @@ class TuyenDungResponse {
       this.tongDon,
       this.phiDichVu,
       this.tienCoc,
+      this.idTrangThaiTuyenDung,
+      this.thoiGianThuViec,
+      this.idChuyenNganhPhus,
       this.createdAt,
       this.updatedAt});
 
@@ -242,6 +248,23 @@ class TuyenDungResponse {
     tongDon = json['tongDon'].toString();
     phiDichVu = json['phiDichVu'].toString();
     tienCoc = json['tienCoc'].toString();
+    idTrangThaiTuyenDung = json['idTrangThaiTuyenDung'].toString();
+    thoiGianThuViec = json['thoiGianThuViec'].toString();
+
+    // mapping idChuyenNganhPhus
+    if (json['idChuyenNganhPhus'] != null &&
+        json['idChuyenNganhPhus'].toString().length != 24) {
+      idChuyenNganhPhus = [];
+      final results = json['idChuyenNganhPhus'] as List<String>;
+
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idChuyenNganhPhus!.add(element.toString());
+        }
+      }
+    } else {
+      idPhuongXa = null;
+    }
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -360,9 +383,13 @@ class TuyenDungResponse {
 
     // check null phiDichVu
     if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
+    // check null thoiGianThuViec
+    if (thoiGianThuViec != null) data['thoiGianThuViec'] = thoiGianThuViec;
 
     // check null tongDon
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    if (idTrangThaiTuyenDung != null)
+      data['idTrangThaiTuyenDung'] = idTrangThaiTuyenDung;
 
     return data;
   }

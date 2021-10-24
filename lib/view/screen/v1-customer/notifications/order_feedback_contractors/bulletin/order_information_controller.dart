@@ -117,7 +117,8 @@ class OrderInformationController extends GetxController {
               if (value.response.data != null)
                 {
                   Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE)),
+                  Get.back()
                 }
               else
                 SnackBarUtils.showSnackBar(
@@ -135,7 +136,8 @@ class OrderInformationController extends GetxController {
               if (value.response.data != null)
                 {
                   Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE)),
+                  Get.back()
                 }
               else
                 {
