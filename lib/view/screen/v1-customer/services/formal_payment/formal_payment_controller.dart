@@ -16,19 +16,29 @@ class V1FormalPaymentController extends GetxController{
 
   int formalPaymentGroup = 0;
   double tongTien = 0;
+  double phiDichVu = 0;
+  double soTien = 0;
+  double khuyenMai = 0;
+  double thanhToan = 0;
   @override
   void onInit() {
     dichVuRequest = Get.arguments as DonDichVuRequest;
+    tinhTien();
+    super.onInit();
+  }
 
+  void tinhTien(){
     if(dichVuRequest != null){
+      phiDichVu = double.parse(dichVuRequest!.khuyenMai!);
+      soTien = double.parse(dichVuRequest!.soTien!);
+      phiDichVu = double.parse(dichVuRequest!.phiDichVu!);
+      tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 0);
       if(formalPaymentGroup == 0){
-        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 0);
+        thanhToan = tongTien;
       }else{
-        tongTien = double.parse(dichVuRequest!.tongDon!, (e)=> 0) * 10 /100;
+        thanhToan = tongTien * 10 /100;
       }
     }  
-
-    super.onInit();
   }
 
   ///
@@ -36,12 +46,13 @@ class V1FormalPaymentController extends GetxController{
   ///
   void onChangedFormalPayment(int val) {
     formalPaymentGroup = val;
+    tinhTien();
     update();
   }
 
   void onClickPayment()async{
     // Đên tài khoản của tôi để thanh toán
-    await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
+    await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${thanhToan.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
         if(value == true){
           EasyLoading.show(status: "Tạo đơn thành công!");
           dichVuRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
@@ -94,7 +105,7 @@ class V1FormalPaymentController extends GetxController{
         content: DialogContentPriceAccept(
           textContent:
               'Bạn chắc chắn đồng ý thanh toán',
-          price: tongTien,
+          price: thanhToan,
         ),
         confirm: ElevatedButton(
             onPressed: () {

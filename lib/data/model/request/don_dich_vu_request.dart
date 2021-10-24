@@ -12,7 +12,7 @@ class DonDichVuRequest {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
+  List<String>? hinhAnhBanKhoiLuongs;
   String? hinhAnhBanVe;
   String? idTrangThaiDonHang;
   String? idTrangThaiDonDichVu;
@@ -55,7 +55,7 @@ class DonDichVuRequest {
       this.moTa,
       this.ngayBatDau,
       this.ngayKetThuc,
-      this.hinhAnhBanKhoiLuong,
+      this.hinhAnhBanKhoiLuongs,
       this.hinhAnhBanVe,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
@@ -100,7 +100,7 @@ class DonDichVuRequest {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
+    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
@@ -169,9 +169,9 @@ class DonDichVuRequest {
     // check null ngayKetThuc
     if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc;
 
-    // check null hinhAnhBanKhoiLuong
-    if (hinhAnhBanKhoiLuong != null) {
-      data['hinhAnhBanKhoiLuong'] = hinhAnhBanKhoiLuong;
+    // check null hinhAnhBanKhoiLuongs
+    if (hinhAnhBanKhoiLuongs != null) {
+      data['hinhAnhBanKhoiLuongs'] = hinhAnhBanKhoiLuongs;
     }
 
     // check null hinhAnhBanVe
@@ -284,26 +284,3 @@ class DonDichVuRequest {
   }
 }
 
-//class ThoiGianLamViec {
-//   String? idThoiGianLamViec;
-//   ThoiGianLamViec({
-//     this.idThoiGianLamViec,
-//   });
-  
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'idThoiGianLamViec': idThoiGianLamViec,
-//     };
-//   }
-
-//   factory ThoiGianLamViec.fromMap(Map<String, dynamic> map) {
-//     return ThoiGianLamViec(
-//       idThoiGianLamViec: map['id'] as String,
-//     );
-//   }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory ThoiGianLamViec.fromJson(String source) => ThoiGianLamViec.fromMap(json.decode(source) as Map<String, dynamic>);
-// }

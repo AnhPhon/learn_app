@@ -4,13 +4,13 @@ import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/dot_widget.dart';
 import 'package:template/view/screen/v1-customer/services/formal_payment/formal_payment_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
   @override
@@ -24,11 +24,11 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT,),
 
               formalPaymentItem(title: "Tự thanh toán cho bên cung cấp dịch vụ",value: 1  ,content:[
-                "Thanh toán trước phí dịch vụ 50.000 VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND((double.parse(controller.dichVuRequest!.tongDon!)*10)/100)} VNĐ",
-                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(double.parse(controller.dichVuRequest!.tongDon!) - (double.parse(controller.dichVuRequest!.tongDon!)*10)/100)} VNĐ (đã khấu trừ tiền cọc)",
+                "Thanh toán trước phí dịch vụ ${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND(controller.tongTien*10/100)} VNĐ",
+                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(controller.tongTien - controller.tongTien*10/100)} VNĐ (đã khấu trừ tiền cọc)",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
               formalPaymentItem(title: "Ủy quyền",value:0,content:[
-                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(double.parse(controller.dichVuRequest!.tongDon!))}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
+                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(controller.tongTien)}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
                 "FSS sẽ hoàn tiền chênh lệch nếu có",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
             ],
@@ -38,14 +38,14 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
       bottomSheet: GetBuilder(
         builder: (V1FormalPaymentController controller) {
           return OrderBottomSheet(
-            itemValue: controller.formalPaymentGroup == 1 ?  (double.parse(controller.dichVuRequest!.tongDon!)*10)/100 + 50000: double.parse(controller.dichVuRequest!.tongDon!.toString()),
+            itemValue: controller.thanhToan,
             title: "Cần thanh toán",
             child: Center(
               child: LongButton(
                 minWidth: DeviceUtils.getScaledWidth(context, 1),
                 title: "Tiếp tục",
                 color: ColorResources.PRIMARYCOLOR,
-                onPressed: controller.onClickPayment,
+                onPressed: controller.showDialogAccept,
               ),
             ),
           );

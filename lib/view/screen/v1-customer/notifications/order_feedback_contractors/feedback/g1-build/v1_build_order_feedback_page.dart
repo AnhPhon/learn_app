@@ -96,7 +96,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.dichVuResponse!.hinhAnhBanKhoiLuong!.isEmpty ? const SizedBox() : Column(
+      child: controller.dichVuResponse!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(

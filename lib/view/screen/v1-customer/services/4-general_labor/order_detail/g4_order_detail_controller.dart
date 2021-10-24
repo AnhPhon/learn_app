@@ -11,6 +11,8 @@ class V1G4OrderDetailController extends GetxController{
   double phiDichVu = 0;
   double khuyenMai = 0;
   double tongTien = 0;
+  int time = 0;
+  int person = 0;
 
   @override
   void onInit() {
@@ -20,7 +22,10 @@ class V1G4OrderDetailController extends GetxController{
       soTien = double.parse(donDichVuRequest!.soTien!,(e)=> 0);
       phiDichVu = double.parse(donDichVuRequest!.phiDichVu!,(e)=> 0);
       khuyenMai = double.parse(donDichVuRequest!.khuyenMai!,(e)=> 0);
-      tongTien = soTien + phiDichVu - khuyenMai;
+      tongTien =  double.parse(donDichVuRequest!.tongDon!,(e)=> 0);
+      donDichVuRequest!.tongDon = (tongTien + phiDichVu - khuyenMai).toString();
+      // int time = int.parse(donDichVuRequest!.soNgay!,);
+      // int persion = int.parse(donDichVuRequest!.soLuongYeuCau!,);
     }
   }
 
