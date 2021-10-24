@@ -5,6 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -190,5 +191,12 @@ class V1MyOrderController extends GetxController
   Future<void> onLoading() async {
     //get order isLoading
     pullOrder(isRefresh: false);
+  }
+
+  ///
+  ///go to order detail page
+  ///
+  void onOrderClick({required int index}) {
+    Get.toNamed(AppRoutes.V1_ORDER_DETAIL, arguments: donHangResponse[index]);
   }
 }

@@ -153,4 +153,13 @@ class V1ProductController extends GetxController {
     //load sanPham
     loadSanPham(isRefresh: false);
   }
+
+  ///
+  ///search product
+  ///
+  void searchProduct() {
+    if (searchController.text.isNotEmpty) {
+      
+    }
+  }
 }

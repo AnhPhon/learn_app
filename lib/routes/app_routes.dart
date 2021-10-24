@@ -62,8 +62,9 @@ class AppRoutes {
   static const String V1_SUCCESSFULLY = "/v1_successfully";
   // Hình thức thanh toán
   static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
-  // 
-  static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
+  //
+  static const String V1_FORMAL_FEEDBACK_PAYMENT =
+      "/v1_formal_feedback_payment";
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -141,6 +142,7 @@ class AppRoutes {
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
   static const String V1_ACCOUNT = '/v1_account_page';
   static const String V1_REFERENCE_PRICE_TABLE = '/v1_reference_price_table';
+  static const String V1_ORDER_DETAIL = '/v1_order_detail';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';

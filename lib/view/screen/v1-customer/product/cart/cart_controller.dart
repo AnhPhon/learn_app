@@ -32,6 +32,7 @@ class V1CartController extends GetxController {
 
   //total
   int total = 0;
+  int totalAmount = 0;
 
   //user id
   String userId = "";
@@ -65,6 +66,7 @@ class V1CartController extends GetxController {
   ///
   void getTotal() {
     total = 0;
+    totalAmount = 0;
     for (final element in chiTietDonHangList) {
       total = total +
           (int.parse(element.soLuong.toString()) *
@@ -72,6 +74,10 @@ class V1CartController extends GetxController {
                 element.idSanPham!.gia.toString(),
               ));
     }
+
+    totalAmount = total +
+        int.parse(donHangResponse!.phiDichVu.toString()) +
+        int.parse(donHangResponse!.phiVanChuyen.toString());
     update();
   }
 
@@ -159,7 +165,8 @@ class V1CartController extends GetxController {
   ///go to payment account page
   ///
   void onCheckoutClick() {
-    Get.toNamed(AppRoutes.V1_PAYMENT_ACCOUNT);
+    Get.toNamed(
+        "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}");
   }
 
   ///

@@ -16,6 +16,7 @@ class InputWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
+  final VoidCallback? suffixIconTap;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLine;
@@ -58,6 +59,7 @@ class InputWidget extends StatelessWidget {
     this.fillColor,
     this.padding,
     this.margin,
+    this.suffixIconTap,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -161,7 +163,10 @@ class InputWidget extends StatelessWidget {
                 decoration: InputDecoration(
                   isDense: true,
                   prefixIcon: prefixIcon,
-                  suffixIcon: suffixIcon,
+                  suffixIcon: GestureDetector(
+                    onTap: suffixIconTap ?? () {},
+                    child: suffixIcon,
+                  ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
                     vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,

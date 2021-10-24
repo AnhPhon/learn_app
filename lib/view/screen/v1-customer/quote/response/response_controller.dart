@@ -49,7 +49,7 @@ class V1ResponseController extends GetxController {
               donDichVu.ngayKetThuc!.replaceAll("T", " "));
 
           // xử lý trường dữ liệu image
-          for (final image in donDichVu.hinhAnhBanKhoiLuong!) {
+          for (final image in donDichVu.hinhAnhBanKhoiLuongs!) {
             if (image.toString().trim().isNotEmpty) {
               images.add(image.toString());
             }

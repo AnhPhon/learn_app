@@ -110,7 +110,7 @@ class V1InsuranceRegisterController extends GetxController {
       data: dangKyBaoHiemRequest,
       onSuccess: (value) {
         Get.toNamed(
-            "${AppRoutes.V1_PAYMENT_ACCOUNT}?idInsurance=true&amountOfMoney=${baoHiemResponse[indexFee].phi}");
+            "${AppRoutes.V1_PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse[indexFee].phi}&url${AppRoutes.V1_DASHBOARD}");
       },
       onError: (error) {
         print("V1InsuranceRegisterController onCheckoutClick onError $error");

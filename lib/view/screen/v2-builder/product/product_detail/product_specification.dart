@@ -6,9 +6,9 @@ import 'package:template/utils/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:html/parser.dart';
 
-class V1ProductSpecification extends StatelessWidget {
+class V2ProductSpecification extends StatelessWidget {
   final String productSpecification;
-  const V1ProductSpecification({Key? key, required this.productSpecification})
+  const V2ProductSpecification({Key? key, required this.productSpecification})
       : super(key: key);
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -19,6 +20,9 @@ import 'package:template/utils/snack_bar.dart';
 class V1ProductDetailController extends GetxController {
   //refresh controller for load more refresh
   RefreshController refreshController = RefreshController();
+
+  // initialize scroll controller
+  ScrollController? scrollController;
 
   //TaiKhoan
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
@@ -60,7 +64,13 @@ class V1ProductDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //binding ScrollController
+    scrollController = ScrollController()..addListener(() {});
+
+    //get arguments
     sanPhamResponse = Get.arguments as SanPhamResponse;
+
+    //get load data
     getTaiKhoan().then((value) => getDonHang());
     getMoreProduct(isRefresh: true);
   }
@@ -144,6 +154,7 @@ class V1ProductDetailController extends GetxController {
       filter:
           "&idDanhMucSanPham=${sanPhamResponse.idDanhMucSanPham!.id}&sortBy=created_at:desc",
       onSuccess: (data) {
+        data.removeWhere((element) => element.id == sanPhamResponse.id);
         //check is empty
         if (data.isEmpty) {
           refreshController.loadNoData();
@@ -222,6 +233,26 @@ class V1ProductDetailController extends GetxController {
   void incrementQuality() {
     quantityProduct += 1;
     update();
+  }
+
+  ///
+  ///on get Product
+  ///
+  void onGetProduct({required int index}) {
+    //back top
+    scrollToTop();
+
+    //reload data
+    sanPhamResponse = sanPhamList[index];
+    getMoreProduct(isRefresh: true);
+  }
+
+  ///
+  ///scroll to top when click other product
+  ///
+  void scrollToTop() {
+    scrollController!.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.linear);
   }
 
   ///

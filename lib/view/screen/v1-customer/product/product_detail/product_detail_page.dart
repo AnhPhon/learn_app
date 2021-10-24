@@ -39,6 +39,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   canLoadingText: "Kéo lên để tải thêm dữ liệu",
                 ),
                 child: SingleChildScrollView(
+                  controller: controller.scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,12 +186,12 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
 
           //infomation product
           if (controller.isLoadingMore)
-            ProductSpecification(
+            V1ProductSpecification(
               productSpecification: controller.sanPhamResponse.moTa.toString(),
             )
           else
             Flexible(
-              child: ProductSpecification(
+              child: V1ProductSpecification(
                 productSpecification:
                     controller.sanPhamResponse.moTa.toString(),
               ),
@@ -274,7 +275,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                 itemCount: controller.sanPhamList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                      onTap: () {},
+                      onTap: () => controller.onGetProduct(index: index),
                       child: ProductWidget(
                         imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
                             .toString(),

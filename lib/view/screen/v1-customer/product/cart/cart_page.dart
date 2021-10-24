@@ -344,25 +344,44 @@ class V1CartPage extends GetView<V1CartController> {
       ),
       child: Column(
         children: [
+          //Giá trị
           rowText(
             text1: "Giá trị",
             text2:
                 "${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
           ),
+
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_SMALL,
           ),
+
+          //Phí vận chuyển
           rowText(
             text1: "Phí vận chuyển",
-            text2: "Miễn phí",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse!.phiVanChuyen.toString()))} vnđ",
           ),
+
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_SMALL,
           ),
+
+          //Phí dịch vụ
+          rowText(
+            text1: "Phí dịch vụ",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse!.phiDichVu.toString()))} vnđ",
+          ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
+          //Tổng
           rowText(
             text1: "Tổng",
             text2:
-                "${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
+                "${PriceConverter.convertPrice(context, double.parse(controller.totalAmount.toString()))} vnđ",
           ),
         ],
       ),
@@ -626,7 +645,7 @@ class V1CartPage extends GetView<V1CartController> {
         onTap: () => controller.onCheckoutClick(),
         color: ColorResources.PRIMARY,
         text:
-            "Thanh toán ${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
+            "Thanh toán ${PriceConverter.convertPrice(context, double.parse(controller.totalAmount.toString()))} vnđ",
         width: DeviceUtils.getScaledWidth(context, .95),
       ),
     );

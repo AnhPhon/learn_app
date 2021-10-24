@@ -81,13 +81,11 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                   itemCount: controller.donHangResponse.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () => controller.onOrderClick(index: index),
                       child: _orderWidget(
                         context,
                         status: controller
                             .donHangResponse[index].idTrangThaiDonHang!.tieuDe
-                            .toString(),
-                        imgUrl: controller.donHangResponse[index].hinhAnh
                             .toString(),
                         idOrder:
                             controller.donHangResponse[index].id.toString(),
@@ -97,8 +95,15 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                         ),
                         price: controller.donHangResponse[index].tongTien
                             .toString(),
-                        paymentOrder: controller
-                            .donHangResponse[index].idTrangThaiThanhToan!.tieuDe
+                        paymentOrder: (controller.donHangResponse[index]
+                                    .idTrangThaiThanhToan ==
+                                null)
+                            ? ""
+                            : controller.donHangResponse[index]
+                                .idTrangThaiThanhToan!.tieuDe
+                                .toString(),
+                        urlImage: controller.donHangResponse[index]
+                            .idTaiKhoanMuaHang!.hinhDaiDien
                             .toString(),
                       ),
                     );
@@ -114,11 +119,11 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
   Widget _orderWidget(
     BuildContext context, {
     required String status,
-    required String imgUrl,
     required String idOrder,
     required String dateTime,
     required String price,
     required String paymentOrder,
+    required String urlImage,
   }) {
     return Container(
       margin: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -155,13 +160,13 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                 borderRadius: BorderRadius.circular(7),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
-                  image: imgUrl,
+                  image: urlImage,
                   width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.152),
+                  height: DeviceUtils.getScaledSize(context, 0.16),
                   fit: BoxFit.cover,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.152),
+                    height: DeviceUtils.getScaledSize(context, 0.16),
                     width: DeviceUtils.getScaledSize(context, 0.178),
                     fit: BoxFit.fill,
                   ),
@@ -174,14 +179,21 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //id order
                       Text(
                         "Id: $idOrder",
                         maxLines: 2,
                         style: Dimensions.fontSizeStyle16(),
                       ),
+
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                      ),
+
+                      //payment status & total
                       IntrinsicHeight(
                         child: Row(
                           children: [

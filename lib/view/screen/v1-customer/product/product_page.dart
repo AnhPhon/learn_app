@@ -41,7 +41,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                     ),
 
                     //search bar
-                    _searchBar(context, controller),
+                    _searchBar(context),
 
                     //category
                     DropDownButton1<DanhMucSanPhamResponse>(
@@ -92,13 +92,18 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///
   ///search bar
   ///
-  Widget _searchBar(BuildContext context, V1ProductController controller) {
-    return InputWidget(
-      hintText: "Tìm kiếm",
-      suffixIcon: const Icon(Icons.search),
-      textEditingController: controller.searchController,
-      width: double.infinity,
-    );
+  Widget _searchBar(BuildContext context) {
+    return GetBuilder<V1ProductController>(builder: (controller) {
+      return InputWidget(
+        hintText: "Tìm kiếm",
+        suffixIcon: const Icon(Icons.search,
+          size: Dimensions.ICON_SIZE_DEFAULT,
+        ),
+        suffixIconTap: () => controller.searchProduct(),
+        textEditingController: controller.searchController,
+        width: double.infinity,
+      );
+    });
   }
 
   ///
@@ -129,8 +134,8 @@ class V1ProductPage extends GetView<V1ProductController> {
                   itemCount: controller.sanPhamList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () => controller.onProductDetailClick(
-                          controller.sanPhamList[index]),
+                      onTap: () => controller
+                          .onProductDetailClick(controller.sanPhamList[index]),
                       child: ProductWidget(
                         imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
                             .toString(),
