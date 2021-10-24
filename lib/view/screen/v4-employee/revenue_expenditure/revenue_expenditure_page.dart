@@ -126,7 +126,6 @@ Widget _timeRevenueExpenditure(
   return InputWidget(
     isColorFieldWhite: true,
     isddMMyyyy: true,
-    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
     isDate: true,
     allowEdit: false,
     label: "Thời gian",

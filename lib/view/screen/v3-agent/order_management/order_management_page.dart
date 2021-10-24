@@ -83,6 +83,7 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 : ListView.builder(
                     itemCount: controller.donHangResponse.length,
                     itemBuilder: (BuildContext context, int index) {
+                      print(controller.donHangResponse.length);
                       return GestureDetector(
                         onTap: () {
                           // controller.onOrderWidgetClick(
@@ -103,8 +104,12 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                                 .toString(),
                           ),
                           paymentStatus: controller.donHangResponse[index]
-                              .idTrangThaiThanhToan!.tieuDe
-                              .toString(),
+                                      .idTrangThaiThanhToan ==
+                                  null
+                              ? ""
+                              : controller.donHangResponse[index]
+                                  .idTrangThaiThanhToan!.tieuDe
+                                  .toString(),
                           price: "${PriceConverter.convertPrice(
                             context,
                             double.parse(
@@ -167,13 +172,13 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder,
                   image: imgUrl,
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.152),
+                  height: DeviceUtils.getScaledSize(context, 0.2),
+                  width: DeviceUtils.getScaledSize(context, 0.22),
                   fit: BoxFit.cover,
                   imageErrorBuilder: (c, o, s) => Image.asset(
                     Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.152),
-                    width: DeviceUtils.getScaledSize(context, 0.178),
+                    height: DeviceUtils.getScaledSize(context, 0.2),
+                    width: DeviceUtils.getScaledSize(context, 0.22),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -185,13 +190,16 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Id: $idOrder",
                         maxLines: 2,
                         style: Dimensions.fontSizeStyle16(),
+                      ),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                       IntrinsicHeight(
                         child: Row(

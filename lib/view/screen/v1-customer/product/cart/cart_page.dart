@@ -1,78 +1,94 @@
-import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
+import 'package:template/view/screen/v1-customer/component_customer/btn_component_border.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_controller.dart';
 
 class V1CartPage extends GetView<V1CartController> {
-  ///
-  ///build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1CartController>(
         init: V1CartController(),
         builder: (controller) {
+          if (controller.isReloadAddress) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
-
-                  //title shipping detail
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                    child: Text(
-                      "Chi tiết về shipping",
-                      style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_LARGE,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-
-                  //shipping detail
-                  _shipping(context, controller),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_SMALL,
-                  ),
-
-                  //title order product detail
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                    child: Text(
-                      "Chi tiết đơn hàng",
-                      style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_LARGE,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-
-                  //order product detail
-                  _orderProductDetail(context, controller),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
-                ],
-              ),
+            appBar: AppBarWidget(
+              title: controller.title,
+              onPressed: () => Get.back(result: true),
             ),
-            bottomNavigationBar: _bottomPaymentBtn(context, controller),
+            body: (controller.chiTietDonHangList.isEmpty ||
+                    controller.donHangResponse == null)
+                ? const Center(
+                    child: Text("Giỏ hàng trống!"),
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_LARGE,
+                        ),
+
+                        //title shipping detail
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                          ),
+                          child: Text(
+                            "Chi tiết về shipping",
+                            style: TextStyle(
+                              fontSize: Dimensions.FONT_SIZE_LARGE,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        //shipping detail
+                        _shipping(context, controller),
+
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_SMALL,
+                        ),
+
+                        //title order product detail
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                          ),
+                          child: Text(
+                            "Chi tiết đơn hàng",
+                            style: TextStyle(
+                              fontSize: Dimensions.FONT_SIZE_LARGE,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        //order product detail
+                        _orderProductDetail(context),
+
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_LARGE,
+                        ),
+
+                        _bottomPaymentBtn(context, controller: controller),
+
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_LARGE,
+                        ),
+                      ],
+                    ),
+                  ),
           );
         });
   }
@@ -117,7 +133,7 @@ class V1CartPage extends GetView<V1CartController> {
               ),
               Text(
                 text2,
-                maxLines: 1,
+                maxLines: 2,
                 style: const TextStyle(
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                   fontWeight: FontWeight.w600,
@@ -208,7 +224,8 @@ class V1CartPage extends GetView<V1CartController> {
                 color: ColorResources.PRIMARY,
               ),
               text1: "Địa chỉ ship",
-              text2: "183 Quách Thị Trang",
+              text2:
+                  "${controller.donHangResponse!.diaChi}, ${controller.donHangResponse!.idPhuongXa!.ten}, ${controller.donHangResponse!.idQuanHuyen!.ten}, ${controller.donHangResponse!.idTinhTp!.ten}",
             ),
           ),
 
@@ -259,28 +276,29 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///edit quality
   ///
-  Widget _editQuanlity(BuildContext context) {
+  Widget _editQuanlity(BuildContext context,
+      {required int index, required V1CartController controller}) {
     return Row(
       children: [
         //decrementQuality
-        _iconQuality(context, onTap: () {
-          controller.decreQuality();
-        },
+        _iconQuality(context,
+            onTap: () => controller.decreQuality(index: index),
             icon: Icon(Icons.remove,
-                color: controller.qualityProduct > 1
+                color: controller.qualityList![index] > 1
                     ? ColorResources.PRIMARY
                     : ColorResources.GREY),
-            color: controller.qualityProduct > 1
+            color: controller.qualityList![index] > 1
                 ? ColorResources.PRIMARY
                 : ColorResources.GREY),
 
         //quanlity
-        _iconQuality(context, text: controller.qualityProduct.toString()),
+        _iconQuality(context, text: controller.qualityList![index].toString()),
 
         //incrementQuality
-        _iconQuality(context, onTap: () {
-          controller.increQuality();
-        }, icon: const Icon(Icons.add_outlined, color: ColorResources.PRIMARY)),
+        _iconQuality(context,
+            onTap: () => controller.increQuality(index: index),
+            icon:
+                const Icon(Icons.add_outlined, color: ColorResources.PRIMARY)),
       ],
     );
   }
@@ -328,7 +346,8 @@ class V1CartPage extends GetView<V1CartController> {
         children: [
           rowText(
             text1: "Giá trị",
-            text2: "260.000 VND",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
           ),
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_SMALL,
@@ -342,7 +361,8 @@ class V1CartPage extends GetView<V1CartController> {
           ),
           rowText(
             text1: "Tổng",
-            text2: "260.000 VND",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
           ),
         ],
       ),
@@ -352,169 +372,263 @@ class V1CartPage extends GetView<V1CartController> {
   ///
   ///order poduct detail
   ///
-  Widget _orderProductDetail(
-    BuildContext context,
-    V1CartController controller,
-  ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
-        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-        horizontal: Dimensions.PADDING_SIZE_LARGE,
-      ),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.grey.withOpacity(.3),
-            spreadRadius: 2,
-          ),
-        ],
-        color: ColorResources.WHITE,
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-      ),
-      child: Column(children: [
-        ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //img order product
-                            Expanded(
-                              flex: 3,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.BORDER_RADIUS_SMALL),
-                                child: Image.asset(
-                                  controller.imgProduct,
-                                  fit: BoxFit.fill,
-                                  width:
-                                      DeviceUtils.getScaledWidth(context, .152),
-                                  height: DeviceUtils.getScaledHeight(
-                                      context, .092),
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(
-                              width: Dimensions.MARGIN_SIZE_SMALL,
-                            ),
-
-                            // name, price, quality
-                            Expanded(
-                              flex: 7,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //name
-                                  Text(
-                                    "Sản phẩm ${index + 1}",
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      fontSize: Dimensions.FONT_SIZE_LARGE,
-                                      fontWeight: FontWeight.bold,
+  Widget _orderProductDetail(BuildContext context) {
+    return GetBuilder<V1CartController>(builder: (controller) {
+      return Container(
+        margin: const EdgeInsets.symmetric(
+          vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+          horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+          horizontal: Dimensions.PADDING_SIZE_LARGE,
+        ),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 2,
+              color: Colors.grey.withOpacity(.3),
+              spreadRadius: 2,
+            ),
+          ],
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+        ),
+        child: Column(children: [
+          ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.chiTietDonHangList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //img order product
+                              Expanded(
+                                flex: 3,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.BORDER_RADIUS_SMALL),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: Images.placeholder,
+                                    image: controller.chiTietDonHangList[index]
+                                        .idSanPham!.hinhAnhDaiDien
+                                        .toString(),
+                                    width: DeviceUtils.getScaledWidth(
+                                        context, .152),
+                                    height: DeviceUtils.getScaledHeight(
+                                        context, .092),
+                                    fit: BoxFit.cover,
+                                    imageErrorBuilder: (c, o, s) => Image.asset(
+                                      Images.placeholder,
+                                      width: DeviceUtils.getScaledWidth(
+                                          context, .152),
+                                      height: DeviceUtils.getScaledHeight(
+                                          context, .092),
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
+                                ),
+                              ),
 
-                                  const SizedBox(
-                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                                  ),
+                              const SizedBox(
+                                width: Dimensions.MARGIN_SIZE_SMALL,
+                              ),
 
-                                  //price
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: Text(
-                                          "${Random().nextInt(500000) + 100000} VND",
-                                          style: const TextStyle(
-                                            color: ColorResources.RED,
-                                            fontSize:
-                                                Dimensions.FONT_SIZE_DEFAULT,
-                                            fontWeight: FontWeight.w600,
+                              // name, price, quality
+                              Expanded(
+                                flex: 7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //name
+                                    Text(
+                                      controller.chiTietDonHangList[index]
+                                          .idSanPham!.ten
+                                          .toString(),
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    const SizedBox(
+                                      height:
+                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                    ),
+
+                                    //price
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "${PriceConverter.convertPrice(context, double.parse(controller.chiTietDonHangList[index].idSanPham!.gia.toString()))} vnđ",
+                                            style: const TextStyle(
+                                              color: ColorResources.RED,
+                                              fontSize:
+                                                  Dimensions.FONT_SIZE_DEFAULT,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                      ],
+                                    ),
 
-                                  const SizedBox(
-                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                                  ),
+                                    const SizedBox(
+                                      height:
+                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                    ),
 
-                                  // edit quality
-                                  _editQuanlity(context),
+                                    // edit quality
+                                    _editQuanlity(
+                                      context,
+                                      index: index,
+                                      controller: controller,
+                                    ),
 
-                                  const SizedBox(
-                                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      height:
+                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
 
-                            /// delete btn
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () => controller.deleteProduct(context),
-                                child: Container(
-                                  padding: const EdgeInsets.all(
-                                    Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                                  ),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ColorResources.GREY.withOpacity(.2),
-                                  ),
-                                  child: const Icon(
-                                    Icons.close_outlined,
-                                    size: Dimensions.ICON_SIZE_EXTRA_SMALL,
+                              /// delete btn
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.dialog(
+                                      _deleteItem(context,
+                                          index: index, controller: controller),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(
+                                      Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                    ),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          ColorResources.GREY.withOpacity(.2),
+                                    ),
+                                    child: const Icon(
+                                      Icons.close_outlined,
+                                      size: Dimensions.ICON_SIZE_EXTRA_SMALL,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
 
-                  //divider
-                  Dimensions().paddingDivider(context),
-                ],
-              );
-            }),
+                    //divider
+                    Dimensions().paddingDivider(context),
+                  ],
+                );
+              }),
 
-        //payment detail
-        _paymentDetail(context, controller),
-      ]),
+          //payment detail
+          _paymentDetail(context, controller),
+        ]),
+      );
+    });
+  }
+
+  ///
+  ///delete
+  ///
+  Widget _deleteItem(BuildContext context,
+      {required int index, required V1CartController controller}) {
+    return Center(
+      child: Container(
+        height: DeviceUtils.getScaledHeight(context, .329),
+        margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_LARGE,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        ),
+        decoration: BoxDecoration(
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Xác nhận",
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+            const Flexible(
+              child: Text(
+                "Bạn có muốn xoá sản phẩm này khỏi giỏ hàng của mình không?",
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE),
+              ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+            Row(
+              children: [
+                BtnCustomBorder(
+                  onTap: () => controller.deleteProduct(index: index),
+                  text: "Đồng ý",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                BtnCustom(
+                  onTap: () => Get.back(),
+                  color: ColorResources.PRIMARY,
+                  text: "Huỷ",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   ///
   ///bottom payment button
   ///
-  Widget _bottomPaymentBtn(
-    BuildContext context,
-    V1CartController controller,
-  ) {
-    return BtnCustom(
+  Widget _bottomPaymentBtn(BuildContext context,
+      {required V1CartController controller}) {
+    return Align(
+      child: BtnCustom(
         onTap: () => controller.onCheckoutClick(),
         color: ColorResources.PRIMARY,
-        text: "Thanh toán 260.000 VND",
-        width: double.infinity);
+        text:
+            "Thanh toán ${PriceConverter.convertPrice(context, double.parse(controller.total.toString()))} vnđ",
+        width: DeviceUtils.getScaledWidth(context, .95),
+      ),
+    );
   }
 }

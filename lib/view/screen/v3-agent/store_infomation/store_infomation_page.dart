@@ -741,25 +741,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
       {required V3StoreInfomationController controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BtnCustom(
-            onTap: () {},
-            color: ColorResources.GREY,
-            text: "Chỉnh sửa",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-          const SizedBox(
-            width: Dimensions.MARGIN_SIZE_LARGE,
-          ),
-          BtnCustom(
-            onTap: () => controller.btnUpdate(context),
-            color: ColorResources.PRIMARY,
-            text: "Cập nhật",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-        ],
+      child: BtnCustom(
+        onTap: () => controller.btnUpdate(context),
+        color: ColorResources.PRIMARY,
+        text: "Cập nhật",
+        width: DeviceUtils.getScaledWidth(context, .9),
       ),
     );
   }

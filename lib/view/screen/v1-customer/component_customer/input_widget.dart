@@ -12,7 +12,8 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
-  final double? paddingTop;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
   final TextInputAction? textInputAction;
@@ -45,7 +46,6 @@ class InputWidget extends StatelessWidget {
     this.labelBold = false,
     this.obligatory = false,
     required this.width,
-    this.paddingTop,
     this.isBorder = true,
     this.isShadow = false,
     this.onChanged,
@@ -56,15 +56,13 @@ class InputWidget extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.fillColor,
+    this.padding,
+    this.margin,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          top: paddingTop ?? 0),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,7 +95,7 @@ class InputWidget extends StatelessWidget {
               height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
-            margin: EdgeInsets.only(top: paddingTop ?? 0),
+            margin: margin ?? EdgeInsets.zero,
             width: DeviceUtils.getScaledWidth(context, width),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)
