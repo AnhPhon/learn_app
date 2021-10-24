@@ -111,6 +111,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_DONE)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
@@ -123,6 +124,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
