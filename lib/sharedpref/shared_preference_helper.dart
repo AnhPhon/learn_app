@@ -272,4 +272,17 @@ class SharedPreferenceHelper {
   Future<bool> removeProductId() async {
     return _sharedPreference.remove(Preferences.productId);
   }
+
+  // giaTriDonHang : -----------------------------------------------
+  Future<double?> get giaTriDonHang async {
+    return _sharedPreference.getDouble(Preferences.giaTriDonHang);
+  }
+
+  Future<bool> saveGiaTriDonHang(double tongTien) async {
+    return _sharedPreference.setDouble(Preferences.giaTriDonHang, tongTien);
+  }
+
+  Future<bool> removeGiaTriDonHang() async {
+    return _sharedPreference.remove(Preferences.giaTriDonHang);
+  }
 }

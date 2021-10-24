@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -17,6 +18,11 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
     return GetBuilder<V1PaymentMethodController>(
         init: V1PaymentMethodController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
@@ -80,7 +86,7 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
                     children: [
                       //title
                       Text(
-                        controller.paymentMethodTitle[index],
+                        controller.paymentMethodTitle![index],
                         style: const TextStyle(
                           height: 1.5,
                           fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
@@ -89,7 +95,7 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
                       ),
 
                       //subtitle
-                      ...controller.paymentMethodSubTitle[index]
+                      ...controller.paymentMethodSubTitle![index]
                           .map((element) => Padding(
                                 padding: const EdgeInsets.only(
                                   left: Dimensions.PADDING_SIZE_LARGE,
@@ -146,15 +152,18 @@ class V1PaymentMethodPage extends GetView<V1PaymentMethodController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const RowText(
+            RowText(
               text1: "Cần thanh toán",
-              text2: "11.050.000 VND",
+              text2:
+                  "${PriceConverter.convertPrice(context, controller.contentMoney)} VND",
               colorRed: true,
             ),
             BtnCustom(
               color: ColorResources.PRIMARY,
               text: "Tiếp tục",
-              onTap: () {},
+              onTap: () {
+                controller.toTaiKhoan();
+              },
               width: double.infinity,
             ),
           ],

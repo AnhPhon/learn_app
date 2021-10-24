@@ -28,6 +28,7 @@ class AppRoutes {
   static const String V1_GROUP_ORDER_FEEDBACK6 = "/v1_grouporderfeedback6";
   // Thông tin đơn hàng
   static const String V1_ORDER_INFORAMTION = "/v1_orderinfo";
+  static const String V1_FEEDBACK_ORDER_INFORAMTION = "/v1_feedback_orderinfo";
   // Tạo đơn công việc (Chung)
   static const String V1_CREATE_WORK = "/v1_create_work";
   // Tạo đơn công việc nhóm 1
@@ -61,6 +62,8 @@ class AppRoutes {
   static const String V1_SUCCESSFULLY = "/v1_successfully";
   // Hình thức thanh toán
   static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
+  // 
+  static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -133,6 +136,7 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_QUOTE_LIST = '/V1_QUOTE_LIST';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
   static const String V1_ACCOUNT = '/v1_account_page';

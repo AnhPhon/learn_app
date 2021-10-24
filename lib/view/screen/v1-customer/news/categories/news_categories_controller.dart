@@ -10,7 +10,7 @@ class V1NewsCategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   DanhMucTinTucResponse? danhMucTinTucList;
 
-  RefreshController refreshController = RefreshController();
+  RefreshController? refreshController;
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   RxList<TinTucResponse> tinTucModelList = <TinTucResponse>[].obs;
@@ -21,6 +21,11 @@ class V1NewsCategoriesController extends GetxController
   @override
   void onInit() {
     super.onInit();
+
+    // init refresh controller
+    refreshController ??= RefreshController();
+
+    // call get news by id
     Future.delayed(Duration.zero, () {
       getNewsByIdCategory();
     });
@@ -28,8 +33,8 @@ class V1NewsCategoriesController extends GetxController
 
   @override
   void onClose() {
+    refreshController!.dispose();
     super.onClose();
-    refreshController.dispose();
   }
 
   ///
@@ -43,7 +48,8 @@ class V1NewsCategoriesController extends GetxController
     tinTucProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
+      filter:
+          "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucModelList.value = value;
         update();
@@ -77,7 +83,7 @@ class V1NewsCategoriesController extends GetxController
             "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
         onSuccess: (value) {
           tinTucModelList.value = value;
-          refreshController.refreshCompleted();
+          refreshController!.refreshCompleted();
           update();
         },
         onError: (error) {
@@ -95,13 +101,14 @@ class V1NewsCategoriesController extends GetxController
     tinTucProvider.paginate(
       page: pageMax,
       limit: currentMax,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
+      filter:
+          "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (data) {
         if (data.isEmpty) {
-          refreshController.loadNoData();
+          refreshController!.loadNoData();
         } else {
           tinTucModelList.value = tinTucModelList.toList() + data;
-          refreshController.loadComplete();
+          refreshController!.loadComplete();
         }
 
         update();

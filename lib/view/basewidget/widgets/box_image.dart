@@ -66,7 +66,7 @@ class BoxImage extends StatelessWidget {
                 }
                 return ImageCard(image: images![index], isAddImage: isAddImage!,onDelete:()=> onDelete!(images![index],images!),);
               }else{
-                return imagesUrl != null ? ImageCard(image:imagesUrl![index], isAddImage: isAddImage!) : ImageCard(image:images![index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images![index],images!),);
+                return imagesUrl != null ? imagesUrl![index].isNotEmpty && !imagesUrl![index].contains('null') ? ImageCard(image:imagesUrl![index], isAddImage: isAddImage!) : const SizedBox() : ImageCard(image:images![index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images![index],images!),);
               }
             },
           ),
