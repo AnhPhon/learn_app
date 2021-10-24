@@ -27,7 +27,7 @@ class V1NotificationController extends GetxController{
   }
 
   void getNotifications(){
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
       isLoading = false;
@@ -53,7 +53,7 @@ class V1NotificationController extends GetxController{
   /// lấy danh sách thông báo
   ///
   void refreshNotification(){
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
       refreshController.resetNoData();
@@ -74,7 +74,7 @@ class V1NotificationController extends GetxController{
   void getMoreNotification(){
     pageMax += 1;
     limit = 5;
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=create_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
       print("Dài: ${data.length}");
       if(data.isEmpty){
         refreshController.loadNoData();

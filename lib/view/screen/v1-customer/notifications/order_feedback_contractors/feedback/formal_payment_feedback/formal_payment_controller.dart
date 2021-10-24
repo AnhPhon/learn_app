@@ -20,6 +20,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
   double phi = 0;
   double khuyenMai = 0;
   double soTien = 0;
+  double thanhToan = 0;
 
   @override
   void onInit() {
@@ -42,7 +43,11 @@ class V1FormalPaymentFeedbackController extends GetxController{
       phi = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.phiDichVu!,(e)=> 0);
       soTien = double.parse(phanHoiDonDichVuResponse!.idDonDichVu!.soTien!);
       tongTien =  soTien + phi - khuyenMai;
-
+      if(formalPaymentGroup == 0){
+        thanhToan = tongTien;
+      }else{
+        thanhToan = tongTien * 10 / 100;
+      }
   }
 
   ///
@@ -68,7 +73,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
         content: DialogContentPriceAccept(
           textContent:
               'Bạn chắc chắn đồng ý thanh toán',
-          price: tongTien,
+          price: thanhToan,
         ),
         confirm: ElevatedButton(
             onPressed: () {
@@ -88,7 +93,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
   void onClickPayment()async{
     // Đên tài khoản của tôi để thanh toán
     PhanHoiDonDichVuRequest donPhanHoi = onRequest(); 
-    await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
+    await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${thanhToan.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
         if(value == true){
           EasyLoading.show(status: "Phản hồi đơn dịch vụ thành công!");
           donPhanHoi.tinhTrangThanhToan = "61604f4cc8e6fa122227e29f";

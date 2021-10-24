@@ -97,8 +97,8 @@ class V2DetailWorkInProgressController extends GetxController {
         }
         for (final element in models) {
           // lấy hình ảnh báo giá
-          urlHinhAnhKhoiLuongList.add(
-            element.idDonDichVu!.hinhAnhBanKhoiLuong!,
+          urlHinhAnhKhoiLuongList.addAll(
+            element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
           );
           urlHinhAnhBangVeList.add(
             element.idDonDichVu!.hinhAnhBanVe!,
