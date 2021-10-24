@@ -210,7 +210,7 @@ class V1G2CreateWorkController extends GetxController {
   ///
   Future<DonDichVuRequest> request(){
       final List<String> workTime = [];
-      String massImagesLink = '';
+      List<String> massImagesLink = [];
       String productImagesLink = '';
       String currentStatusimages ='';
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
@@ -265,7 +265,7 @@ class V1G2CreateWorkController extends GetxController {
       imageUpdateProvider.add(
           file: element,
           onSuccess: (data) {
-            massImagesLink = "$massImagesLink${data.data},";
+            massImagesLink.add(data.data!);// = "$massImagesLink${data.data},";
           },
           onError: (onError) {
             print("V1G2CreateWorkController request khối lượng $onError");
@@ -287,7 +287,7 @@ class V1G2CreateWorkController extends GetxController {
     }
 
     return Future.delayed(const Duration(seconds: 1), () {
-      dichVuRequest.hinhAnhBanKhoiLuong = massImagesLink;
+      dichVuRequest.hinhAnhBanKhoiLuongs = massImagesLink;
       dichVuRequest.hinhAnhBanVe =
           productImagesLink; // Hình ảnh bản vẽ là hình ảnh sản phẩm mẫu
       dichVuRequest.hinhAnhChiTiet =

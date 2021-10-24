@@ -103,30 +103,25 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context,
-      {required V1OrderFeedBackController controller}) {
-    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty
-        ? const SizedBox()
-        : Padding(
-            padding: const EdgeInsets.only(
-                top: Dimensions.PADDING_SIZE_DEFAULT,
-                left: Dimensions.PADDING_SIZE_DEFAULT,
-                right: Dimensions.PADDING_SIZE_DEFAULT),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Đơn giá bằng hình ảnh",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
-                ),
-                BoxImage(
-                    imagesUrl: controller.donPhanHoi!.idDonDichVu!
-                        .hinhAnhBanKhoiLuong! as List<String>),
-              ],
-            ),
-          );
+  Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
+    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
+    Padding(
+      padding: const EdgeInsets.only(
+        top: Dimensions.PADDING_SIZE_DEFAULT,
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Đơn giá bằng hình ảnh",style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+          ),),
+          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
+        ],
+      ),
+    );
   }
 
   ///

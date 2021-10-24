@@ -96,29 +96,26 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context,
-      {required V1BuildOrderFeedBackController controller}) {
+  Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
+      print("Hình ảnh $element");
+    });
     return Padding(
       padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT),
-      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty
-          ? const SizedBox()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Đơn giá bằng hình ảnh",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
-                ),
-                BoxImage(
-                    imagesUrl: controller.donPhanHoi!.idDonDichVu!
-                        .hinhAnhBanKhoiLuong! as List<String>),
-              ],
-            ),
+        top: Dimensions.PADDING_SIZE_DEFAULT,
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT
+      ),
+      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:  [
+          const Text("Đơn giá bằng hình ảnh",style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+          ),),
+          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
+        ],
+      ),
     );
   }
 
@@ -143,12 +140,9 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(BuildContext context,
-      {required V1BuildOrderFeedBackController controller}) {
-    return Padding(
-      padding: const EdgeInsets.all(
-        Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+  Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
