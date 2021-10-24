@@ -75,7 +75,7 @@ class V2DetailWorkInProgressController extends GetxController {
         description = model.moTaChiTiet ?? model.moTa!;
 
         // xử lý trường dữ liệu image
-        for (final image in model.hinhAnhBanKhoiLuong!) {
+        for (final image in model.hinhAnhBanKhoiLuongs!) {
           if (image.toString().trim().isNotEmpty) {
             urlHinhAnhKhoiLuongList.add(image.toString());
           }
@@ -111,6 +111,14 @@ class V2DetailWorkInProgressController extends GetxController {
           fileName = models[0].file ?? "";
         }
         for (final element in models) {
+          // lấy hình ảnh báo giá
+          urlHinhAnhKhoiLuongList.addAll(
+            element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
+          );
+          urlHinhAnhBangVeList.add(
+            element.idDonDichVu!.hinhAnhBanVe!,
+          );
+
           // lấy các thông tin về vật tư
           vatTuProvider.paginate(
             page: 1,

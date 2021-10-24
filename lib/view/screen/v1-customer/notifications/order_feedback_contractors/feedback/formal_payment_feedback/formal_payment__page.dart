@@ -38,8 +38,7 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
       bottomSheet: GetBuilder(
         builder: (V1FormalPaymentFeedbackController controller) {
           return OrderBottomSheet(
-            itemValue: controller.formalPaymentGroup == 1 ?  
-              controller.tongTien *10/100 + controller.phi : controller.tongTien,
+            itemValue: controller.thanhToan,
             title: "Cần thanh toán",
             child: Center(
               child: LongButton(
