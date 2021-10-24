@@ -17,12 +17,6 @@ class V1VatTuListController extends GetxController {
 
   RefreshController? refreshDaPhanHoiController;
   RefreshController? refreshChuaPhanHoiController;
-
-  Map<String, String> titleTabBar = {
-    "DPH": "Đã phản hồi",
-    "CPH": "Chưa phản hồi",
-  };
-
   List<DonDichVuResponse> daPhanHoiDDV = [];
   List<DonDichVuResponse> chuaPhanHoiDDV = [];
 
@@ -79,19 +73,24 @@ class V1VatTuListController extends GetxController {
           for (final phanHoi in phanHoiDonDichVuList) {
             if (phanHoi.idDonDichVu != null) {
               // check trang thai
-              if (phanHoi.yKienThoThau.toString().isNotEmpty) {
-                donDichVuProvider.find(
-                  id: phanHoi.idDonDichVu!.id!,
-                  onSuccess: (data) {
-                    daPhanHoiDDV.add(data);
-                    update();
-                  },
-                  onError: (error) {
-                    print(
-                        "TermsAndPolicyController getTermsAndPolicy onError $error");
-                  },
-                );
-              }
+              donDichVuProvider.find(
+                id: phanHoi.idDonDichVu!.id!,
+                onSuccess: (data) {
+                  if (data.idTrangThaiDonDichVu != null) {
+                    if (data.idTrangThaiDonDichVu!.tieuDe
+                            .toString()
+                            .toLowerCase() ==
+                        daPhanHoiKey) {
+                      daPhanHoiDDV.add(data);
+                    }
+                  }
+                  update();
+                },
+                onError: (error) {
+                  print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error");
+                },
+              );
             }
           }
           isLoading = false;
@@ -116,20 +115,24 @@ class V1VatTuListController extends GetxController {
         onSuccess: (phanHoiDonDichVuList) {
           // run don dich vu list
           for (final phanHoi in phanHoiDonDichVuList) {
-            // check trang thai
-            if (phanHoi.yKienThoThau.toString().isEmpty) {
-              donDichVuProvider.find(
-                id: phanHoi.idDonDichVu!.id!,
-                onSuccess: (data) {
-                  chuaPhanHoiDDV.add(data);
-                  update();
-                },
-                onError: (error) {
-                  print(
-                      "TermsAndPolicyController getTermsAndPolicy onError $error");
-                },
-              );
-            }
+            donDichVuProvider.find(
+              id: phanHoi.idDonDichVu!.id!,
+              onSuccess: (data) {
+                if (data.idTrangThaiDonDichVu != null) {
+                  if (data.idTrangThaiDonDichVu!.tieuDe
+                          .toString()
+                          .toLowerCase() ==
+                      chuaPhanHoiKey) {
+                    chuaPhanHoiDDV.add(data);
+                  }
+                }
+                update();
+              },
+              onError: (error) {
+                print(
+                    "TermsAndPolicyController getTermsAndPolicy onError $error");
+              },
+            );
           }
         },
         onError: (error) {
