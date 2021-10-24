@@ -57,8 +57,8 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller
-            .tongTien, //controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
-        children: [
+            .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
+        children: controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? [ const SizedBox()] : [
           SmallButton(
               title: "Huỷ ", color: ColorResources.GREY, onPressed: () {}),
           SmallButton(
@@ -86,7 +86,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         children: [
           TextHighlight(
             title: "Tiêu đề:",
-            content: controller.donPhanHoi!.idDonDichVu!.tieuDe!,
+            content: controller.donDichVu!.tieuDe!,
           ),
         ],
       ),
@@ -97,7 +97,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
+    controller.donDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
       print("Hình ảnh $element");
     });
     return Padding(
@@ -106,14 +106,14 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
+      child: controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );

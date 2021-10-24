@@ -57,7 +57,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: _controller
-            .tongTien, //double.parse(_controller.donPhanHoi!.idDonDichVu!.tongDon!, (e)=> 1000000000),
+            .tongTien, //double.parse(_controller.donDichVu!.tongDon!, (e)=> 1000000000),
         children: [
           SmallButton(
               title: "Huỷ ", color: ColorResources.GREY, onPressed: () {}),
@@ -86,13 +86,13 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         children: [
           TextHighlight(
             title: "Tiêu đề:",
-            content: controller.donPhanHoi!.idDonDichVu!.tieuDe!,
+            content: controller.donDichVu!.tieuDe!,
           ),
           Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Thông tin báo giá: ",
-              content: controller.donPhanHoi!.idDonDichVu!.moTa!,
+              content: controller.donDichVu!.moTa!,
             ),
           )
         ],
@@ -104,7 +104,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
-    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
+    return controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
     Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -118,7 +118,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );

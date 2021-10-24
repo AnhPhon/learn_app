@@ -22,6 +22,9 @@ const String THEME = 'theme';
 enum SERVICES { WORK, REGULARLY }
 enum TYPEFORMAL { CREATE, FEEDBACK }
 
+const String DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
+const String CHUA_THANH_TOAN = '61615180e87a9124404abe82';
+
 // sharePreference
 const String TOKEN = 'token';
 

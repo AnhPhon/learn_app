@@ -58,7 +58,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller.tongTien,
-        children: [
+        children: controller.donDichVu!.idTrangThaiDonDichVu!.id! == DA_THANH_TOAN ? [const SizedBox()] : [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){
             _controller.onClickAgreeButton();
@@ -75,7 +75,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
       children: [
         // Tiêu đề nhóm
         const GroupTitle(title: "Dịch vụ xe đào,cầu nặng, máy khá"),
-        //GroupTitle(title: _controller.donPhanHoi!.idDonDichVu!.tieuDe!),
+        //GroupTitle(title: _controller.donDichVu!.tieuDe!),
   
         //Công việc: Thuê xe tải thùng 1,5 tấn
          Padding(
@@ -86,7 +86,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
           ),
           child: TextHighlight(
             title: "Công việc: ",
-            content: _controller.donPhanHoi!.idDonDichVu!.tieuDe!,//" Thuê xe đào móng nhà gầu 0,3m",
+            content: _controller.donDichVu!.tieuDe!,//" Thuê xe đào móng nhà gầu 0,3m",
           ),
         ),
       ],

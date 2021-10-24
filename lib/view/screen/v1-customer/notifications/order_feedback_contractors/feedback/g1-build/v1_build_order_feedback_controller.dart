@@ -12,7 +12,7 @@ import 'package:template/utils/app_constants.dart';
 
 class V1BuildOrderFeedBackController extends GetxController{
   final VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
-  PhanHoiDonDichVuResponse? donPhanHoi;
+  DonDichVuResponse? donDichVu;
   // Khối lương công việc
   List<VatTuResponse> workMass = [];
   bool isLoading = true;
@@ -24,11 +24,11 @@ class V1BuildOrderFeedBackController extends GetxController{
   @override
   void onInit() {
     if(Get.arguments != null){
-      donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+      donDichVu = Get.arguments as DonDichVuResponse;
     }
-    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
-    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
-    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+    soTien = double.parse(donDichVu!.soTien!,(e)=> 0);
+    phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
+    khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
     tongTien = soTien + phiDichVu - khuyenMai;
     super.onInit();
     getJobMass();
@@ -38,7 +38,8 @@ class V1BuildOrderFeedBackController extends GetxController{
   /// Lấy báo giá công việc or vâtk liệu thuộc đơn dịch vụ
   ///
   void getJobMass(){
-    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donPhanHoi!.idDonDichVu!.id!}', onSuccess: (data){
+    print(donDichVu!.toJson());
+    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
       workMass.clear();
       workMass.addAll(data);
       isLoading = false;
@@ -52,6 +53,6 @@ class V1BuildOrderFeedBackController extends GetxController{
 
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
-    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donPhanHoi);
+    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donDichVu);
   }
 }

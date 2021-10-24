@@ -36,7 +36,7 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
               ),
               child: TextHighlight(
                 title: "Công việc: ",
-                content: _controller.donPhanHoi!.idDonDichVu!.tieuDe!,
+                content: _controller.donDichVu!.tieuDe!,
               ),
             ),
 

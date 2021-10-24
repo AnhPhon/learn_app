@@ -3,13 +3,14 @@
 
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V1OrderFeedBackController extends GetxController{
-  PhanHoiDonDichVuResponse? donPhanHoi;
+  DonDichVuResponse? donDichVu;
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   // Khối lương công việc
   List<VatTuResponse> workMass = [];
@@ -22,11 +23,11 @@ class V1OrderFeedBackController extends GetxController{
   @override
   void onInit() {
     if(Get.arguments != null){
-      donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
-      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
-      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
-      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
-      tienCoc = double.parse(donPhanHoi!.idDonDichVu!.tienCoc!,(e)=> 0);
+      donDichVu = Get.arguments as DonDichVuResponse;
+      soTien = double.parse(donDichVu!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
+      tienCoc = double.parse(donDichVu!.tienCoc!,(e)=> 0);
       tongTien = soTien + phiDichVu - khuyenMai;
     }
     super.onInit();
@@ -37,7 +38,7 @@ class V1OrderFeedBackController extends GetxController{
   /// Lấy báo giá công việc or vâtk liệu thuộc đơn dịch vụ
   ///
   void getJobMass(){
-    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donPhanHoi!.idDonDichVu!.id!}', onSuccess: (data){
+    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
       workMass.clear();
       workMass.addAll(data);
       isLoading = false;
@@ -50,6 +51,6 @@ class V1OrderFeedBackController extends GetxController{
   }
 
   void onClickAgreeButton(){
-    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donPhanHoi);
+    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donDichVu);
   }
 }
