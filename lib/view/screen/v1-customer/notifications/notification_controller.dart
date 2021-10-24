@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1NotificationController extends GetxController{
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
@@ -16,6 +18,7 @@ class V1NotificationController extends GetxController{
   int pageMax = 1;
   int limit = 5;
   bool isLoading = true;
+  String userId = '';
 
   // refresh controller for load more refresh
   RefreshController refreshController = RefreshController();
@@ -23,11 +26,14 @@ class V1NotificationController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    getNotifications();
+    sl.get<SharedPreferenceHelper>().userId.then((val){
+      userId = val.toString();
+      getNotifications();
+    });
   }
 
   void getNotifications(){
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
       isLoading = false;
@@ -53,7 +59,7 @@ class V1NotificationController extends GetxController{
   /// lấy danh sách thông báo
   ///
   void refreshNotification(){
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',onSuccess: (data){
       notifications.clear();
       notifications = data;
       refreshController.resetNoData();
@@ -74,7 +80,7 @@ class V1NotificationController extends GetxController{
   void getMoreNotification(){
     pageMax += 1;
     limit = 5;
-    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=616d99dd7e28e22b158543bb&sortBy=created_at:desc',onSuccess: (data){
+    thongBaoProvider.paginate(page: pageMax, limit: limit, filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',onSuccess: (data){
       print("Dài: ${data.length}");
       if(data.isEmpty){
         refreshController.loadNoData();
