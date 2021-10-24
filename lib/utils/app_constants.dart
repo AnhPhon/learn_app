@@ -20,6 +20,7 @@ const String THEME = 'theme';
 
 // Enum
 enum SERVICES { WORK, REGULARLY }
+enum TYPEFORMAL { CREATE, FEEDBACK }
 
 // sharePreference
 const String TOKEN = 'token';
