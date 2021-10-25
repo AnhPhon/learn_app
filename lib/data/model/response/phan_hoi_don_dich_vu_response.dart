@@ -17,8 +17,8 @@ class PhanHoiDonDichVuResponse {
   String? createdAt;
   String? updatedAt;
 
-  PhanHoiDonDichVuResponse({
-      this.id,
+  PhanHoiDonDichVuResponse(
+      {this.id,
       this.idDonDichVu,
       this.idTaiKhoan,
       this.taiKhoanNhanDon,
@@ -31,26 +31,30 @@ class PhanHoiDonDichVuResponse {
       this.tinhTrangThanhToan,
       this.createdAt,
       this.updatedAt});
-  
+
   ///
   /// From JSON
   ///
   PhanHoiDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
 
-    // mapping idDonDichVu                                                              
-    if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {                                                  
-      idDonDichVu = DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idDonDichVu = null;                                                               
-    }                                                                                  
+    // mapping idDonDichVu
+    if (json['idDonDichVu'] != null &&
+        json['idDonDichVu'].toString().length != 24) {
+      idDonDichVu = DonDichVuResponse.fromJson(
+          json['idDonDichVu'] as Map<String, dynamic>);
+    } else {
+      idDonDichVu = null;
+    }
 
-    // mapping idTaiKhoan                                                              
-    if (json['idTaiKhoan'] != null && json['idTaiKhoan'].toString().length!=24) {                                                  
-      idTaiKhoan = TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idTaiKhoan = null;                                                               
-    }                                                                                  
+    // mapping idTaiKhoan
+    if (json['idTaiKhoan'] != null &&
+        json['idTaiKhoan'].toString().length != 24) {
+      idTaiKhoan =
+          TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>);
+    } else {
+      idTaiKhoan = null;
+    }
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     yKienThoThau = json['yKienThoThau'].toString();
     khachHangDanhGia = json['khachHangDanhGia'].toString();
@@ -70,38 +74,39 @@ class PhanHoiDonDichVuResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idDonDichVu
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null taiKhoanNhanDon
-    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon; 
+    if (taiKhoanNhanDon != null) data['taiKhoanNhanDon'] = taiKhoanNhanDon;
 
     // check null yKienThoThau
-    if (yKienThoThau != null) data['yKienThoThau'] = yKienThoThau; 
+    if (yKienThoThau != null) data['yKienThoThau'] = yKienThoThau;
 
     // check null khachHangDanhGia
-    if (khachHangDanhGia != null) data['khachHangDanhGia'] = khachHangDanhGia; 
+    if (khachHangDanhGia != null) data['khachHangDanhGia'] = khachHangDanhGia;
 
     // check null yeuCauBaoHanh
-    if (yeuCauBaoHanh != null) data['yeuCauBaoHanh'] = yeuCauBaoHanh; 
+    if (yeuCauBaoHanh != null) data['yeuCauBaoHanh'] = yeuCauBaoHanh;
 
     // check null hinhAnhHuHai
-    if (hinhAnhHuHai != null) data['hinhAnhHuHai'] = hinhAnhHuHai; 
+    if (hinhAnhHuHai != null) data['hinhAnhHuHai'] = hinhAnhHuHai;
 
     // check null noiDungYeuCauBaoHanh
-    if (noiDungYeuCauBaoHanh != null) data['noiDungYeuCauBaoHanh'] = noiDungYeuCauBaoHanh; 
+    if (noiDungYeuCauBaoHanh != null)
+      data['noiDungYeuCauBaoHanh'] = noiDungYeuCauBaoHanh;
 
     // check null danhGiaBaoHanh
-    if (danhGiaBaoHanh != null) data['danhGiaBaoHanh'] = danhGiaBaoHanh; 
+    if (danhGiaBaoHanh != null) data['danhGiaBaoHanh'] = danhGiaBaoHanh;
 
     // check null tinhTrangThanhToan
-    if (tinhTrangThanhToan != null) data['tinhTrangThanhToan'] = tinhTrangThanhToan; 
-
+    if (tinhTrangThanhToan != null)
+      data['tinhTrangThanhToan'] = tinhTrangThanhToan;
 
     return data;
   }

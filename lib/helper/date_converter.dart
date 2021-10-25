@@ -50,6 +50,9 @@ mixin DateConverter {
   static DateTime isoStringToLocalDate(String dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
+  static DateTime stringToLocalDate(String dateTime) {
+    return DateTime.parse(dateTime).toLocal();
+  }
 
   static DateTime isoStringDateTimeToDateTime(String dateTime) {
     return DateTime.parse(dateTime).toLocal();
@@ -137,6 +140,13 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd').format(
       DateFormat('yyyy-MM-dd').parse(first10letter),
     );
+  }
+
+  static String isoStringToFullVNDateOnly(String dateTime) {
+    final String dd = DateFormat('dd').format(isoStringToLocalDate(dateTime));
+    final String mm = DateFormat('MM').format(isoStringToLocalDate(dateTime));
+    final String yy = DateFormat('yyy').format(isoStringToLocalDate(dateTime));
+    return "Ngày $dd tháng $mm năm $yy";
   }
 
   static int toTimeStamp(DateTime dateTime) {

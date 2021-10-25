@@ -124,7 +124,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.work_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+          Get.toNamed(AppRoutes.V1_QUOTE_LIST);
         }
       },
       {
