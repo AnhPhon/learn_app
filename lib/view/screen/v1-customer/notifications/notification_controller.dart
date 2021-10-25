@@ -16,7 +16,7 @@ class V1NotificationController extends GetxController{
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
-  int limit = 5;
+  int limit = 6;
   bool isLoading = true;
   String userId = '';
 
@@ -98,13 +98,10 @@ class V1NotificationController extends GetxController{
   }
 
   void onClickItem(ThongBaoResponse notification){
-    print(notification.toJson());
-    print(notification.idDonDichVu!);
-
     donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
-      print("Data: $data");
-      String id = data.idNhomDichVu!.nhomDichVu!;
-      print("Nhóm dịch vụ : $id");
+      // print("Data: $data");
+      final String id = data.idNhomDichVu!.nhomDichVu!;
+      // print("Nhóm dịch vụ : $id");
       if(id.contains('1')){
         // phản hồi nhóm 1
         Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data);

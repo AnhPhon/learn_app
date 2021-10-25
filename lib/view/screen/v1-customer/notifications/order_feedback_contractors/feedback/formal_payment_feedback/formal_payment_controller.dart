@@ -3,13 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
-import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
-import 'package:template/data/repository/phan_hoi_don_dich_vu_repository.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
@@ -55,22 +51,6 @@ class V1FormalPaymentFeedbackController extends GetxController{
       }
   }
 
-  ///
-  /// Tạo request
-  /// 
-  DonDichVuRequest onRequest(){
-    DonDichVuRequest request =  DonDichVuRequest();
-    //donDichVu!.tieuDe = "Phản hồi báo giá đơn dich vụ "
-    // if(donDichVu!.id != null){
-    //   request. = donDichVu!.id;
-    // }
-    if(donDichVu!.idTaiKhoan != null){
-      // Tài khoản nhận đơn
-      request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
-    }
-   
-    return request;
-  }
 
   void showDialogAccept() {
     Get.defaultDialog(
@@ -97,51 +77,14 @@ class V1FormalPaymentFeedbackController extends GetxController{
 
   void onClickPayment()async{
     // Đên tài khoản của tôi để thanh toán
-    DonDichVuRequest donPhanHoi = onRequest(); 
     await Get.toNamed("${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${thanhToan.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!.then((value){
         if(value == true){
           EasyLoading.show(status: "Phản hồi đơn dịch vụ thành công!");
-          donPhanHoi.idTrangThaiThanhToan = DA_THANH_TOAN;
-          donDichVuRepository.add(donPhanHoi).then((value){
-            if (value.response.data != null)
-                {
-                   updateDon(DA_THANH_TOAN);
-                   EasyLoading.dismiss();
-                   //Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
-                }
-              else
-                {
-                  EasyLoading.showError(
-                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
-                }
-          }, onError: (onError){
-            EasyLoading.dismiss();
-            print("V1FormalPaymentFeedbackController onClickPayment onError $onError");
-          });
+          updateDon(status: DA_THANH_TOAN,serviceStatus: DA_PHAN_HOI);
         }else{
-
             EasyLoading.showSuccess('Phản hồi đơn thất bại');
             //set trạng thái chưa thanh toán
-            updateDon(CHUA_THANH_TOAN);
-            EasyLoading.dismiss();
-            //donPhanHoi.tinhTrangThanhToan= "61615180e87a9124404abe82";
-            //insert db
-            // phanHoiDonDichVuRepository.add(donPhanHoi).then((value){
-            //     if (value.response.data != null)
-            //     {
-            //       EasyLoading.dismiss();
-            //       Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
-            //     }
-            //   else
-            //     {
-            //       EasyLoading.showError(
-            //           'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
-            //     }
-            // }, onError: (onError){
-            //   EasyLoading.dismiss();
-            //   print("V1FormalPaymentFeedbackController onClickPayment onError $onError");
-            // });
-
+            updateDon(status: CHUA_THANH_TOAN, serviceStatus: CHUA_PHAN_HOI);
         }
       });
   }
@@ -149,16 +92,19 @@ class V1FormalPaymentFeedbackController extends GetxController{
   ///
   /// Update 
   ///
-  void updateDon(String status){
+  void updateDon({required String status,required String serviceStatus}){
     final DonDichVuRequest request =  DonDichVuRequest();
     request.id = donDichVu!.id;
-    request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
-    request.idHinhThucThanhToan= status;
-    //request.taiKhoanNhanDon = donDichVu!.idTaiKhoan!.id;
+    //request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
+    request.idTrangThaiDonDichVu = serviceStatus;
+    request.idTrangThaiThanhToan = status;
+    print(request.toJson());
     donDichVuProvider.update(data: request, onSuccess: (onSuccess){
+      EasyLoading.dismiss();
       Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
     }, onError: (onError){
-
+        EasyLoading.dismiss();
+        print("V1FormalPaymentFeedbackController onClickPayment onError $onError");
     });
   }
 
