@@ -8,8 +8,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_controller.dart';
 
 class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {

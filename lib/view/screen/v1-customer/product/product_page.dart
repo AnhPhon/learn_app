@@ -8,8 +8,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/product_widget.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/basewidget/component/product_widget.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
 
 class V1ProductPage extends GetView<V1ProductController> {
@@ -62,8 +62,8 @@ class V1ProductPage extends GetView<V1ProductController> {
                   child: SmartRefresher(
                     controller: controller.refreshController,
                     enablePullUp: true,
-                    onRefresh: controller.onRefresh,
-                    onLoading: controller.onLoading,
+                    onRefresh: () => controller.onRefresh(context),
+                    onLoading: () => controller.onLoading(context),
                     footer: const ClassicFooter(
                       loadingText: "Đang tải...",
                       noDataText: "Không có dữ liệu",
@@ -96,11 +96,19 @@ class V1ProductPage extends GetView<V1ProductController> {
     return GetBuilder<V1ProductController>(builder: (controller) {
       return InputWidget(
         hintText: "Tìm kiếm",
-        suffixIcon: const Icon(Icons.search,
+        suffixIcon: Icon(
+          (controller.isSearched) ? Icons.close : Icons.search,
           size: Dimensions.ICON_SIZE_DEFAULT,
         ),
-        suffixIconTap: () => controller.searchProduct(),
+        suffixIconTap: () {
+          (controller.isSearched)
+              ? controller.clearSearch(context)
+              : controller.btnSearch(context);
+        },
         textEditingController: controller.searchController,
+        textInputAction: TextInputAction.search,
+        onSubmitted: (value) => controller.btnSearch(context),
+        // onChanged: (value) => controller.onChangeSearch(value.toString()),
         width: double.infinity,
       );
     });

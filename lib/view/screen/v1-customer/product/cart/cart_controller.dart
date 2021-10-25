@@ -74,10 +74,11 @@ class V1CartController extends GetxController {
                 element.idSanPham!.gia.toString(),
               ));
     }
-
+    donHangResponse!.phiDichVu = (total * .2).toString();
     totalAmount = total +
         int.parse(donHangResponse!.phiDichVu.toString()) +
         int.parse(donHangResponse!.phiVanChuyen.toString());
+
     update();
   }
 

@@ -6,7 +6,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_controller.dart';
 
 class V3ProductManagementPage extends GetView<V3ProductManagementController> {

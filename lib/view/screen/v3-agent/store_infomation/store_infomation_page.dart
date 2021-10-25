@@ -11,13 +11,12 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_controller.dart';
 
 class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
@@ -42,39 +41,55 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
                   //name company
                   InputWidget(
-                    width: double.infinity,
                     label: "Tên doanh nghiệp (hoặc tên cá nhân)",
                     obligatory: true,
                     textEditingController: controller.nameController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //legal Representative
                   InputWidget(
-                    width: double.infinity,
                     label: "Người đại diện pháp lý (chủ doanh nghiệp/cá nhân)",
                     obligatory: true,
                     textEditingController:
                         controller.legalRepresentativeController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //phone
                   InputWidget(
-                    width: double.infinity,
                     label: "SĐT Zalo",
                     obligatory: true,
                     textEditingController: controller.phoneController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //email
                   InputWidget(
-                    width: double.infinity,
                     label: "Email",
                     obligatory: true,
                     textEditingController: controller.emailController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //store group
@@ -86,12 +101,9 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     onChanged: (val) =>
                         controller.onSelectedNhomCuaHang(value: val!),
                     data: controller.nhomCuaHangList,
-                    width: double.infinity,
+                    width: .95,
                     obligatory: true,
                     fillColor: ColorResources.WHITE,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
                   ),
 
                   //product special
@@ -130,11 +142,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
                   //address
                   InputWidget(
-                    width: double.infinity,
                     label: "Địa chỉ cụ thể(số nhà, tên đường)",
                     obligatory: true,
                     textEditingController: controller.addressController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //working hours in day
@@ -428,7 +447,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             child: RichText(
                 text: TextSpan(
               text: title,
-              style: Dimensions.fontSizeStyle16().copyWith(
+              style: Dimensions.fontSizeStyle16w600().copyWith(
                 color: ColorResources.BLACK,
               ),
               children: isRequired == true
@@ -456,11 +475,19 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                 flex: 5,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    //label
                     Text(
                       "Từ",
                       style: Dimensions.fontSizeStyle18(),
                     ),
+
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //filed
                     InputWidget(
                       width: .3,
                       textEditingController: controller.startController,
@@ -477,12 +504,20 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                   flex: 5,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      //label
                       Text(
                         "Đến",
                         style: Dimensions.fontSizeStyle18(),
                       ),
+
+                      const SizedBox(
+                        width: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
+
+                      //filed
                       InputWidget(
                         width: .3,
                         textEditingController: controller.endController,
@@ -582,18 +617,17 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
             //warehouse address
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   "Địa chỉ cụ thể",
-                  style: Dimensions.fontSizeStyle18(),
+                  style: Dimensions.fontSizeStyle16w600(),
                 ),
                 const SizedBox(
                   width: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
                 InputWidget(
-                  width: .5,
+                  width: .6,
                   textEditingController:
                       controller.warehouseAddressController[index],
                 ),
@@ -606,18 +640,17 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
             //warehouse name
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   "Tên kho hàng",
-                  style: Dimensions.fontSizeStyle18(),
+                  style: Dimensions.fontSizeStyle16w600(),
                 ),
                 const SizedBox(
                   width: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
                 InputWidget(
-                  width: .5,
+                  width: .6,
                   textEditingController:
                       controller.warehouseNameController[index],
                 ),

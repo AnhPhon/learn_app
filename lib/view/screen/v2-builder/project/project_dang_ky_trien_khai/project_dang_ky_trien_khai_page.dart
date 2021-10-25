@@ -10,9 +10,9 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_controller.dart';
 
 class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiController> {

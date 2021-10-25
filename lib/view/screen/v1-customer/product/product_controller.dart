@@ -32,9 +32,16 @@ class V1ProductController extends GetxController {
   bool isLoading = true;
   bool isSPLoading = true;
 
+  //onchange icon (search or close)
+  bool isSearched = false;
+
   //page for for load more refresh
   int pageMax = 1;
   int limitMax = 8;
+
+  //page for for load more refresh
+  int pageSearchMax = 1;
+  int limiSearchtMax = 8;
 
   @override
   void onInit() {
@@ -74,6 +81,7 @@ class V1ProductController extends GetxController {
   void loadSanPham({
     required bool isRefresh,
     bool? isFirst = false,
+    bool? isSearch = false,
   }) {
     //isRefresh
     if (isRefresh) {
@@ -135,31 +143,106 @@ class V1ProductController extends GetxController {
   ///
   /// on refresh
   ///
-  Future<void> onRefresh() async {
-    //isloading
-    isSPLoading = true;
-
+  Future<void> onRefresh(BuildContext context) async {
     //reset noData
     refreshController.resetNoData();
 
-    //load sanPham
-    loadSanPham(isRefresh: true);
+    if (isSearched) {
+      //search
+      searchProduct(context, isRefresh: true);
+    } else {
+      //isloading
+      isSPLoading = true;
+
+      //load sanPham
+      loadSanPham(isRefresh: true);
+    }
   }
 
   ///
   /// on loading
   ///
-  Future<void> onLoading() async {
-    //load sanPham
-    loadSanPham(isRefresh: false);
+  Future<void> onLoading(BuildContext context) async {
+    if (isSearched) {
+      //search
+      searchProduct(context, isRefresh: false);
+    } else {
+      //load sanPham
+      loadSanPham(isRefresh: false);
+    }
   }
 
   ///
   ///search product
   ///
-  void searchProduct() {
-    if (searchController.text.isNotEmpty) {
-      
+  void searchProduct(
+    BuildContext context, {
+    required bool isRefresh,
+  }) {
+    //isRefresh
+    if (isRefresh) {
+      pageSearchMax = 1;
+      sanPhamList.clear();
+    } else {
+      pageSearchMax++;
     }
+
+    //get data search
+    if (searchController.text.isNotEmpty) {
+      sanPhamProvider.paginate(
+        page: pageSearchMax,
+        limit: limiSearchtMax,
+        filter: (danhMucSanPhamResponse == null)
+            ? "&maSanPham=${searchController.text}&sortBy=created_at:desc"
+            : "&idDanhMucSanPham=${danhMucSanPhamResponse!.id}&maSanPham=${searchController.text}&sortBy=created_at:desc",
+        onSuccess: (data) {
+          //check is empty
+          if (data.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //isRefresh
+            if (isRefresh) {
+              sanPhamList = data;
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              sanPhamList = sanPhamList.toList() + data;
+              refreshController.loadComplete();
+            }
+          }
+
+          FocusScope.of(context).requestFocus(FocusNode());
+          isSearched = true;
+          update();
+        },
+        onError: (error) {
+          print("V1ProductController searchProduct onError $error");
+        },
+      );
+    }
+  }
+
+  ///
+  ///btn search
+  ///
+  void btnSearch(BuildContext context) {
+    searchProduct(context, isRefresh: true);
+  }
+
+  ///
+  ///clear search
+  ///
+  void clearSearch(BuildContext context) {
+    //clear text
+    searchController.text = "";
+    isSearched = false;
+
+    //reset noData
+    refreshController.resetNoData();
+
+    //reload
+    loadSanPham(isRefresh: true);
+    FocusScope.of(context).requestFocus(FocusNode());
+    update();
   }
 }
