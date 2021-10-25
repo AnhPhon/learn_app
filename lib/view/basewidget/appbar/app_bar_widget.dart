@@ -9,12 +9,14 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final bool? isNotBack;
   final List<Widget>? action;
+  final Widget? leading;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
     this.isNotBack = false,
+    this.leading,
   }) : super(key: key);
 
   @override
@@ -75,7 +77,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.isNotBack == false)
                   Builder(
                     builder: (context) {
-                      return IconButton(
+                      return widget.leading ?? IconButton(
                           onPressed: () {
                             Get.back();
                           },

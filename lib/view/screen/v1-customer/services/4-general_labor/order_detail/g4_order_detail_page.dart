@@ -20,7 +20,9 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Chi tiết đơn hàng"),
+      appBar: const AppBarWidget(
+        title: "Chi tiết đơn hàng",
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

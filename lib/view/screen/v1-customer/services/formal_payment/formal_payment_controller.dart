@@ -73,7 +73,7 @@ class V1FormalPaymentController extends GetxController{
           });
         }else{
 
-            EasyLoading.showSuccess('Đăng tin thành công');
+            EasyLoading.showSuccess('Đăng tin thất bại');
             //set trạng thái chưa thanh toán
             dichVuRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
             //insert db

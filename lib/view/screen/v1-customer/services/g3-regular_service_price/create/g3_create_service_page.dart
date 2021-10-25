@@ -28,7 +28,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         child: Column(
           children: [
             // Tiêu tề nhóm công việc
-                const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+                const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
       
                 // Nhập địa chỉ cụ thể
                 form(context, _controller),
