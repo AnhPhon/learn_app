@@ -194,6 +194,8 @@ import 'package:template/view/screen/v3-agent/news/news_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
@@ -904,6 +906,15 @@ class AppPages {
       name: AppRoutes.V3_FINISH_UPDATE,
       page: () => V3FinishUpdatePage(),
     ),
+    GetPage(
+      name: AppRoutes.V3_PROJECT_DETAIL_TRIEN_KHAI,
+      page: () => V3ProjectDetailTrienKhaiPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PROJECT_DANG_KY_TRIEN_KHAI,
+      page: () => V3ProjectDangKyTrienKhaiPage(),
+    ),
+
     // Xem trươc đánh văn bản
     GetPage(
       name: AppRoutes.V2_PREVIEW_PROFILE,
@@ -982,10 +993,6 @@ class AppPages {
       name: AppRoutes.V2_PROJECT_DETAIL_TRIEN_KHAI,
       page: () => V2ProjectDetailTrienKhaiPage(),
     ),
-    // GetPage(
-    //   name: AppRoutes.V2_PROJECT_DA_TRIEN_KHAI,
-    //   page: () => V2ProjectDaTrienKhaiPage(),
-    // ),
     GetPage(
       name: AppRoutes.V2_PROJECT_DANG_KY_TRIEN_KHAI,
       page: () => V2ProjectDangKyTrienKhaiPage(),

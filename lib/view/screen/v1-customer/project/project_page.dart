@@ -84,7 +84,7 @@ class V1ProjectPage extends GetView<V1ProjectController> {
               controller.titleTabBar.length,
               (index) {
                 return GetXSmartRefreshPage(
-                  key: Key('GetXSmartRefreshPageTinTuc_$index'),
+                  key: Key('GetXSmartRefreshPageV1Project_$index'),
                   enablePullUp: true,
                   enablePullDown: true,
                   onLoading: controller.onLoading,

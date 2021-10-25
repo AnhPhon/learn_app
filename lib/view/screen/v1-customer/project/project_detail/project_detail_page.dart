@@ -55,7 +55,7 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
                       _imgProject(context, controller),
 
                       //title
-                      _textTitle(context, title: "Vinpearl Land Làng Vân"),
+                      _textTitle(context),
 
                       //content
                       _content(),
@@ -101,7 +101,7 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
   ///
   ///text title
   ///
-  Widget _textTitle(BuildContext context, {required String title}) {
+  Widget _textTitle(BuildContext context) {
     return Container(
       // color: Colors.red,
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
