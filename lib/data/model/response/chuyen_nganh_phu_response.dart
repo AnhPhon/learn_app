@@ -1,16 +1,17 @@
-class LoaiTotNghiepResponse {
+class ChuyenNganhPhuResponse {
   String? id;
   String? tieuDe;
 
   String? createdAt;
   String? updatedAt;
 
-  LoaiTotNghiepResponse({this.id, this.tieuDe, this.createdAt, this.updatedAt});
+  ChuyenNganhPhuResponse(
+      {this.id, this.tieuDe, this.createdAt, this.updatedAt});
 
   ///
   /// From JSON
   ///
-  LoaiTotNghiepResponse.fromJson(Map<String, dynamic> json) {
+  ChuyenNganhPhuResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     tieuDe = json['tieuDe'].toString();
 
