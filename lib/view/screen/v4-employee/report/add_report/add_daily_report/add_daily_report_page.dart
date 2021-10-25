@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/state_manager.dart';
+import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
@@ -73,16 +75,15 @@ Widget _timeReportOnRequest(
 ///
 Widget _projectReportOnRequest(
     V4AddDailyReportController controller, BuildContext context) {
-  return InputField(
-    allowEdit: true,
-    allowMultiline: false,
-    controller: controller.projectDailyReport,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: 'Dự án A',
-    label: 'Tên dự án/văn phòng',
+  return DropDownButton1<DuAnNhanVienResponse>(
+    isColorFieldWhite: true,
+    labelBold: true,
+    hint: 'Vui lòng chọn dự án',
+    label: 'Dự án',
+    data: controller.duAnNhanVienList,
     obligatory: true,
-    typeInput: TextInputType.text,
+    onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
+    value: controller.duAnNhanVien,
     width: DeviceUtils.getScaledWidth(context, 1),
   );
 }

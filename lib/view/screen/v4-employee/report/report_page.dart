@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -21,6 +22,7 @@ class V4ReportPage extends GetView<V4ReportController> {
         ],
         leading: true,
         title: "Danh sách báo cáo",
+        centerTitle: true,
       ),
       body: GetBuilder<V4ReportController>(
           init: V4ReportController(),
@@ -30,6 +32,24 @@ class V4ReportPage extends GetView<V4ReportController> {
             //     child: CircularProgressIndicator(),
             //   );
             // }
+
+
+            // return SmartRefresher(
+            //   key: UniqueKey(),
+            //   controller: controller.refreshController,
+            //   enablePullUp: true,
+            //   onLoading: controller.onLoading,
+            //   onRefresh: controller.onRefresh,
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(
+            //       horizontal: Dimensions.PADDING_SIZE_LARGE,
+            //     ),
+            //     child:
+            //
+            //     //danh sách báo cáo
+            //     _listReport(controller),
+            //   ),
+            // );
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -56,7 +76,9 @@ class V4ReportPage extends GetView<V4ReportController> {
         'Báo cáo theo yêu cầu',
       ],
       hint: '',
-      onChanged: (String? i) {},
+      onChanged: (String? i) {
+
+      },
     );
   }
 }
@@ -110,10 +132,11 @@ Widget _listReport(V4ReportController controller) {
                           height: Dimensions.PADDING_SIZE_SMALL,
                         ),
 
-                        //phụ đề báo cáo công việc
+                        // phụ đề báo cáo công việc
                         Text(
                           controller.baocaonhanvienModelList[index].idDuAnNhanVien!.moTa!,
                           style: Dimensions.fontSizeStyle14(),
+                          maxLines: 1,
                         ),
                         const SizedBox(
                           height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -144,6 +167,7 @@ Widget _listReport(V4ReportController controller) {
                                   ),
                                   Text(
                                     // địa chỉ
+
                                     controller.baocaonhanvienModelList[index].idDuAnNhanVien!.diaChi!,
                                     style: Dimensions.fontSizeStyle14w600(),
                                   ),
@@ -151,7 +175,10 @@ Widget _listReport(V4ReportController controller) {
                               ),
                               Text(
                                 // ngày báo cáo
+                                controller.formatDateTime(
+                                dateTime:
                                 controller.baocaonhanvienModelList[index].createdAt!,
+                              ),
                                 style: Dimensions.fontSizeStyle14w600(),
                               )
                             ],

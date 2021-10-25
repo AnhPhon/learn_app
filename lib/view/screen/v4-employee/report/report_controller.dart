@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
@@ -20,7 +21,7 @@ class V4ReportController extends GetxController
 
   BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
 
-  //Khai báo model thông báo
+  //Khai báo model báo cáo
   RxList<BaoCaoNhanVienResponse> baocaonhanvienModelList = <BaoCaoNhanVienResponse>[].obs;
 
 
@@ -29,7 +30,6 @@ class V4ReportController extends GetxController
 
   RefreshController refreshController =
   RefreshController(initialRefresh: false);
-
   int pageMax = 1;
   int currentMax = 5;
 
@@ -67,7 +67,51 @@ class V4ReportController extends GetxController
     baoCaoNhanVienProvider.paginate(
         page: 1,
         limit: 30,
-        filter: '&sortBy=created_at:desc', // cần sửa lại?
+        filter: '&sortBy=created_at:desc',
+        onSuccess: (value) {
+          baocaonhanvienModelList.value = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        });
+  }
+  ///
+  /// lấy danh sách báo báo theo yêu cầu loai 1
+  ///
+  void getReportOnRequest() {
+    pageMax = 1;
+    currentMax = 5;
+    baocaonhanvienModelList.clear();
+    update();
+    baoCaoNhanVienProvider.paginate(
+        page: 1,
+        limit: 30,
+        filter: '&loai=1&sortBy=created_at:desc',
+        onSuccess: (value) {
+          baocaonhanvienModelList.value = value;
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          update();
+        });
+  }
+  ///
+  /// lấy danh sách báo báo theo ngày loai 2
+  ///
+  void getDailyReport() {
+    pageMax = 1;
+    currentMax = 5;
+    baocaonhanvienModelList.clear();
+    update();
+    baoCaoNhanVienProvider.paginate(
+        page: 1,
+        limit: 30,
+        filter: '&loai=2&sortBy=created_at:desc',
         onSuccess: (value) {
           baocaonhanvienModelList.value = value;
           isLoading = false;
@@ -96,7 +140,7 @@ class V4ReportController extends GetxController
   ///reload
   ///
   void reloadReport() {
-    print('reloadNotifications');
+    print('reloadReport');
     pageMax = 1;
     currentMax = 5;
     update();
@@ -107,7 +151,6 @@ class V4ReportController extends GetxController
         onSuccess: (value) {
           baocaonhanvienModelList.value = value;
           refreshController.refreshCompleted();
-          isLoading = false;
           update();
         },
         onError: (error) {
@@ -125,15 +168,14 @@ class V4ReportController extends GetxController
     baoCaoNhanVienProvider.paginate(
         page: pageMax,
         limit: currentMax,
-        filter: '&loai=1&sortBy=created_at:desc',
-        onSuccess: (value) {
-          if (value.isNotEmpty) {
-            baocaonhanvienModelList.value = value.toList() + value;
-            refreshController.loadComplete();
-          } else {
+        filter: '&sortBy=created_at:desc',
+        onSuccess: (data) {
+          if (data.isEmpty) {
             refreshController.loadNoData();
+          } else {
+            baocaonhanvienModelList.value = baocaonhanvienModelList.toList() + data;
+            refreshController.loadComplete();
           }
-
           isLoading = false;
           update();
         },
@@ -142,43 +184,6 @@ class V4ReportController extends GetxController
           update();
         });
   }
-
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   super.onInit();
-  //   uiReport = [
-  //     {
-  //       "title": "Báo cáo công việc theo yêu cầu",
-  //       "subtitle": "Phòng A trục A",
-  //       "description": "Phòng D,E,F của công trình A",
-  //       "address": "Ngũ Hành Sơn",
-  //       "daysReport": "06/10/2021",
-  //     },
-  //     {
-  //       "title": "Báo cáo công việc theo yêu cầu",
-  //       "subtitle": "Phòng B trục B",
-  //       "description": "Phòng D,E,F của công trình B",
-  //       "address": "Ngũ Hành Sơn",
-  //       "daysReport": "06/10/2021",
-  //     },
-  //     {
-  //       "title": "Báo cáo công việc theo yêu cầu",
-  //       "subtitle": "Phòng C trục C",
-  //       "description": "Phòng D,E,F của công trình B",
-  //       "address": "Ngũ Hành Sơn",
-  //       "daysReport": "06/10/2021",
-  //     },
-  //     {
-  //       "title": "Báo cáo công việc theo yêu cầu",
-  //       "subtitle": "Phòng C trục C",
-  //       "description": "Phòng D,E,F của công trình B",
-  //       "address": "Ngũ Hành Sơn",
-  //       "daysReport": "06/10/2021",
-  //     },
-  //   ];
-  // }
-
   ///
   ///Click to daily report
   ///
@@ -235,31 +240,38 @@ class V4ReportController extends GetxController
     // ignore: prefer_final_locals
     double _timeNow = TimeOfDay.now().hour.toDouble() +
         (TimeOfDay.now().minute.toDouble() / 60);
-
-    // Từ 16h hôm nay cho đến 7h sáng hôm sau thì mới cho báo cáo hằng ngày
-    if (_timeStartReport <= _timeNow) {
-      //đi tới báo cáo hằng ngày
-      return onClickToDailyReport(context);
-    } else if (_timeNow <= _timeEndReport) {
-      //đi tới trang báo cáo hằng ngày
-      return onClickToDailyReport(context);
-    } else {
-      //show dialog thông báo hết time báo cáo
-      Get.defaultDialog(
-        titlePadding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_LARGE,
-          horizontal: Dimensions.PADDING_SIZE_LARGE,
-        ),
-        radius: Dimensions.BORDER_RADIUS_DEFAULT,
-        title: "Đã qua thời gian báo cáo có hiệu lực!",
-        middleText: "Vui lòng quay lại và thực hiện báo cáo cho ngày hôm nay!",
-        cancel:
-        // Button back
-        _btnBack(),
-      );
-    }
+    onClickToDailyReport(context);
+    // // Từ 16h hôm nay cho đến 7h sáng hôm sau thì mới cho báo cáo hằng ngày
+    // if (_timeStartReport <= _timeNow) {
+    //   //đi tới báo cáo hằng ngày
+    //   return onClickToDailyReport(context);
+    // } else if (_timeNow <= _timeEndReport) {
+    //   //đi tới trang báo cáo hằng ngày
+    //   return onClickToDailyReport(context);
+    // } else {
+    //   //show dialog thông báo hết time báo cáo
+    //   Get.defaultDialog(
+    //     titlePadding: const EdgeInsets.symmetric(
+    //       vertical: Dimensions.PADDING_SIZE_LARGE,
+    //       horizontal: Dimensions.PADDING_SIZE_LARGE,
+    //     ),
+    //     radius: Dimensions.BORDER_RADIUS_DEFAULT,
+    //     title: "Đã qua thời gian báo cáo có hiệu lực!",
+    //     middleText: "Vui lòng quay lại và thực hiện báo cáo cho ngày hôm nay!",
+    //     cancel:
+    //     // Button back
+    //     _btnBack(),
+    //   );
+    // }
   }
-
+  ///
+  ///format date time
+  ///
+  String formatDateTime({required String dateTime}) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+        dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
+  }
   ///
   ///Button quay lại khi hiển thị Dialog thông báo hết thời gian báo cáo
   ///
@@ -289,4 +301,5 @@ class V4ReportController extends GetxController
       ),
     );
   }
+
 }
