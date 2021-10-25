@@ -154,7 +154,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
     request.id = donDichVu!.id;
     request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
     request.idHinhThucThanhToan= status;
-    request.taiKhoanNhanDon = donDichVu!.idTaiKhoan!.id;
+    //request.taiKhoanNhanDon = donDichVu!.idTaiKhoan!.id;
     donDichVuProvider.update(data: request, onSuccess: (onSuccess){
       Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
     }, onError: (onError){
