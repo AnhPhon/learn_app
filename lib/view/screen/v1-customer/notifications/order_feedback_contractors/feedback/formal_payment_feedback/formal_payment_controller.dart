@@ -102,6 +102,8 @@ class V1FormalPaymentFeedbackController extends GetxController{
     donDichVuProvider.update(data: request, onSuccess: (onSuccess){
       EasyLoading.dismiss();
       Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+      // TODO
+      Get.back();
     }, onError: (onError){
         EasyLoading.dismiss();
         print("V1FormalPaymentFeedbackController onClickPayment onError $onError");

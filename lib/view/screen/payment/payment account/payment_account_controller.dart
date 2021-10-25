@@ -76,7 +76,9 @@ class PaymentAccountController extends GetxController {
   ///get balance
   ///
   void getBalance() {
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      userId = value;
+
       viTienProvider.paginate(
         page: 1,
         limit: 5,
