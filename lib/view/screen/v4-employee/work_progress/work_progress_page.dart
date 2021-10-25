@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -23,11 +24,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
         body: GetBuilder(
             init: V4WorkProgressController(),
             builder: (V4WorkProgressController controller) {
-              // if (controller.isLoading) {
-              //   return const Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // }
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Column(
                 children: [
                   Container(
@@ -102,146 +103,149 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///ListView tiến độ công việc bảng MỚI TẠO
   ///
   Widget _listViewMoiTao() {
-    return ListView.builder(
-      itemCount: controller.uiWorkProgress!.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
-              ),
-              width: DeviceUtils.getScaledWidth(context, 1),
-              height: DeviceUtils.getScaledHeight(context, 0.18),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                color: ColorResources.WHITE,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    offset: const Offset(0, 2),
-                    color: ColorResources.BLACK.withAlpha(60),
+    return SmartRefresher(
+      controller: controller.refreshMoiTaoController!,
+      onLoading: controller.onMoiTaoLoading,
+      onRefresh: controller.onMoiTaoRefresh,
+      child: ListView.builder(
+        itemCount: controller.moiTaoModelList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: Dimensions.PADDING_SIZE_LARGE,
                   ),
-                ],
-              ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  // ignore: sized_box_for_whitespace
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, 0.77),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_LARGE,
+                  width: DeviceUtils.getScaledWidth(context, 1),
+                  // height: DeviceUtils.getScaledHeight(context, 0.18),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    color: ColorResources.WHITE,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2,
+                        offset: const Offset(0, 2),
+                        color: ColorResources.BLACK.withAlpha(60),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //Tiêu đề tiến độ công việc mới tạo
-                          Text(
-                            controller.uiWorkProgress![index]["title"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle16w600(),
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      Container(
+                        width: DeviceUtils.getScaledWidth(context, 0.77),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            0,
+                            Dimensions.PADDING_SIZE_LARGE,
+                            Dimensions.PADDING_SIZE_SMALL,
+                            Dimensions.PADDING_SIZE_LARGE,
                           ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_SMALL,
-                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //Tiêu đề tiến độ công việc mới tạo
+                              Wrap(
+                                children: [
+                                  Text(
+                                    controller.moiTaoModelList[index].tieuDe
+                                        .toString(),
+                                    style: Dimensions.fontSizeStyle16w600(),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              ),
 
-                          //phụ đề tiến độ công việc mới tạo
-                          Text(
-                            controller.uiWorkProgress![index]["subtitle"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+                              //Tóm tắt
+                              Wrap(
+                                children: [
+                                  Text(
+                                    controller.moiTaoModelList[index].tomTat
+                                        .toString(),
+                                    style: Dimensions.fontSizeStyle14(),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              ),
 
-                          //chi tiết tiến độ công việc
-                          Text(
-                            controller.uiWorkProgress![index]["description"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-
-                          // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //Thời gian bắt đầu
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
-                                    ),
+                              //Thời gian
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //Bắt đầu
+                                  Row(
                                     children: [
-                                      TextSpan(
-                                        text: "Bắt đầu:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["daystart"]
-                                            .toString(),
+                                      Text(
+                                        'Bắt đầu: ',
                                         style: Dimensions.fontSizeStyle14w600(),
                                       ),
-                                    ],
-                                  ),
-                                ),
-
-                                //thời gian kết thúc
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Kết thúc:",
+                                      Text(
+                                        controller.formatDateTime(
+                                          dateTime: controller
+                                              .moiTaoModelList[index].ngayBatDau
+                                              .toString(),
+                                        ),
                                         style: Dimensions.fontSizeStyle14(),
                                       ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["daystart"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle16w600(),
+                                    ],
+                                  ),
+
+                                  //Kết thúc
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Kết thúc: ',
+                                        style: Dimensions.fontSizeStyle14w600(),
+                                      ),
+                                      Text(
+                                        controller.formatDateTime(
+                                          dateTime: controller
+                                              .moiTaoModelList[index]
+                                              .ngayKetThuc
+                                              .toString(),
+                                        ),
+                                        style: Dimensions.fontSizeStyle14(),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                      //Icon
+                      const Positioned(
+                        top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+                        left: Dimensions.PADDING_SIZE_SMALL,
+                        child: Icon(
+                          Icons.engineering_outlined,
+                          size: Dimensions.ICON_SIZE_LARGE,
+                        ),
+                      ),
+                    ],
                   ),
-                  //Icon
-                  const Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    child: Icon(
-                      Icons.engineering_outlined,
-                      size: Dimensions.ICON_SIZE_LARGE,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
 
-            //line Widget
-            _lineWidget(context),
-          ],
-        );
-      },
+              //line Widget
+              _lineWidget(context),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -250,7 +254,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewDangLam() {
     return ListView.builder(
-      itemCount: controller.uiWorkProgress!.length,
+      itemCount: controller.dangLamModelList.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
           children: [
@@ -259,7 +263,6 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                 vertical: Dimensions.PADDING_SIZE_LARGE,
               ),
               width: DeviceUtils.getScaledWidth(context, 1),
-              height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -275,97 +278,84 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               child: Stack(
                 alignment: Alignment.centerRight,
                 children: [
-                  // ignore: sized_box_for_whitespace
                   Container(
                     width: DeviceUtils.getScaledWidth(context, 0.77),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_LARGE,
+                      padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.PADDING_SIZE_LARGE,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_LARGE,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //Tiêu đề tiến độ công việc mới tạo
                           Text(
-                            controller.uiWorkProgress![index]["title"]
+                            controller.dangLamModelList[index].tieuDe
                                 .toString(),
                             style: Dimensions.fontSizeStyle16w600(),
                           ),
                           const SizedBox(
-                            height: Dimensions.PADDING_SIZE_SMALL,
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //phụ đề tiến độ công việc mới tạo
-                          Text(
-                            controller.uiWorkProgress![index]["subtitle"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
+                          //Tóm tắt
+                          Wrap(
+                            children: [
+                              Text(
+                                controller.dangLamModelList[index].tomTat
+                                    .toString(),
+                                style: Dimensions.fontSizeStyle14(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //chi tiết tiến độ công việc
-                          Text(
-                            controller.uiWorkProgress![index]["description"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-
-                          // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //Thời gian bắt đầu
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Bắt đầu:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["daystart"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle14w600(),
-                                      ),
-                                    ],
+                          //Thời gian
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //Bắt đầu
+                              Row(
+                                children: [
+                                  Text(
+                                    'Bắt đầu: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
                                   ),
-                                ),
-
-                                //thời gian kết thúc
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
+                                  Text(
+                                    controller.formatDateTime(
+                                      dateTime: controller
+                                          .dangLamModelList[index].ngayBatDau
+                                          .toString(),
                                     ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Hoàn thành:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["finishday"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle16w600(),
-                                      ),
-                                    ],
+                                    style: Dimensions.fontSizeStyle14(),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+
+                              //Ngày thực thế
+                              Row(
+                                children: [
+                                  Text(
+                                    'Hoàn thành: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
+                                  ),
+                                  Text(
+                                    controller.formatDateTime(
+                                      dateTime: controller
+                                          .dangLamModelList[index].ngayKetThuc
+                                          .toString(),
+                                    ),
+                                    style: Dimensions.fontSizeStyle14(),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -397,7 +387,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewHoanThanh() {
     return ListView.builder(
-      itemCount: controller.uiWorkProgress!.length,
+      itemCount: controller.hoanThanhModelList.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
           children: [
@@ -406,7 +396,6 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                 vertical: Dimensions.PADDING_SIZE_LARGE,
               ),
               width: DeviceUtils.getScaledWidth(context, 1),
-              height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -422,112 +411,123 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
               child: Stack(
                 alignment: Alignment.centerRight,
                 children: [
-                  // ignore: sized_box_for_whitespace
                   Container(
                     width: DeviceUtils.getScaledWidth(context, 0.77),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_LARGE,
+                      padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.PADDING_SIZE_LARGE,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_LARGE,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //Tiêu đề tiến độ công việc mới tạo
                           Text(
-                            controller.uiWorkProgress![index]["title"]
+                            controller.hoanThanhModelList[index].tieuDe
                                 .toString(),
                             style: Dimensions.fontSizeStyle16w600(),
                           ),
                           const SizedBox(
-                            height: Dimensions.PADDING_SIZE_SMALL,
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //phụ đề tiến độ công việc mới tạo
-                          Text(
-                            controller.uiWorkProgress![index]["subtitle"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
+                          //Tóm tắt
+                          Wrap(
+                            children: [
+                              Text(
+                                controller.hoanThanhModelList[index].tomTat
+                                    .toString(),
+                                style: Dimensions.fontSizeStyle14(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //chi tiết tiến độ công việc
-                          Text(
-                            controller.uiWorkProgress![index]["description"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-
-                          // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //Thời gian bắt đầu
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      const TextSpan(
-                                        text: "Tiến độ: ",
-                                        style: TextStyle(
-                                          fontSize:
-                                              Dimensions.FONT_SIZE_DEFAULT,
-                                          color: ColorResources.BLACK,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["progress"]
-                                            .toString(),
-                                        style: const TextStyle(
-                                          fontSize:
-                                              Dimensions.FONT_SIZE_DEFAULT,
-                                          fontWeight: FontWeight.w600,
-                                          color: ColorResources.RED,
-                                        ),
-                                      ),
-                                      const TextSpan(
-                                        text: " Ngày",
-                                        style: TextStyle(
-                                          fontSize:
-                                              Dimensions.FONT_SIZE_DEFAULT,
-                                          color: ColorResources.RED,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
+                          //Thời gian
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //Bắt đầu
+                              Row(
+                                children: [
+                                  Text(
+                                    'Tiến độ: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
                                   ),
-                                ),
-
-                                //thời gian kết thúc
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
+                                  Text(
+                                    "${controller.tienDo(
+                                      startDate: controller
+                                          .hoanThanhModelList[index].ngayThucTe
+                                          .toString(),
+                                      endDate: controller
+                                          .hoanThanhModelList[index].ngayKetThuc
+                                          .toString(),
+                                    )}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                      color: controller.tienDo(
+                                                startDate: controller
+                                                    .hoanThanhModelList[index]
+                                                    .ngayThucTe
+                                                    .toString(),
+                                                endDate: controller
+                                                    .hoanThanhModelList[index]
+                                                    .ngayKetThuc
+                                                    .toString(),
+                                              ) >=
+                                              0
+                                          ? ColorResources.GREEN
+                                          : ColorResources.RED,
                                     ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Hoàn thành:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["finishday"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle16w600(),
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
+                                  Text(
+                                    " Ngày",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                      color: controller.tienDo(
+                                                startDate: controller
+                                                    .hoanThanhModelList[index]
+                                                    .ngayThucTe
+                                                    .toString(),
+                                                endDate: controller
+                                                    .hoanThanhModelList[index]
+                                                    .ngayKetThuc
+                                                    .toString(),
+                                              ) >=
+                                              0
+                                          ? ColorResources.GREEN
+                                          : ColorResources.RED,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //Ngày hoàn thành
+                              Row(
+                                children: [
+                                  Text(
+                                    'Hoàn thành: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
+                                  ),
+                                  Text(
+                                    controller.formatDateTime(
+                                      dateTime: controller
+                                          .hoanThanhModelList[index].ngayKetThuc
+                                          .toString(),
+                                    ),
+                                    style: Dimensions.fontSizeStyle14(),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -559,7 +559,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewChamTre() {
     return ListView.builder(
-      itemCount: controller.uiWorkProgress!.length,
+      itemCount: controller.chamTreModelList.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
           children: [
@@ -568,7 +568,6 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                 vertical: Dimensions.PADDING_SIZE_LARGE,
               ),
               width: DeviceUtils.getScaledWidth(context, 1),
-              height: DeviceUtils.getScaledHeight(context, 0.18),
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -588,93 +587,120 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                   Container(
                     width: DeviceUtils.getScaledWidth(context, 0.77),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimensions.PADDING_SIZE_LARGE,
+                      padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.PADDING_SIZE_LARGE,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_LARGE,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //Tiêu đề tiến độ công việc mới tạo
                           Text(
-                            controller.uiWorkProgress![index]["title"]
+                            controller.chamTreModelList[index].tieuDe
                                 .toString(),
                             style: Dimensions.fontSizeStyle16w600(),
                           ),
                           const SizedBox(
-                            height: Dimensions.PADDING_SIZE_SMALL,
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //phụ đề tiến độ công việc mới tạo
-                          Text(
-                            controller.uiWorkProgress![index]["subtitle"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
+                          //Tóm tắt
+                          Wrap(
+                            children: [
+                              Text(
+                                controller.chamTreModelList[index].tomTat
+                                    .toString(),
+                                style: Dimensions.fontSizeStyle14(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                           ),
 
-                          //chi tiết tiến độ công việc
-                          Text(
-                            controller.uiWorkProgress![index]["description"]
-                                .toString(),
-                            style: Dimensions.fontSizeStyle14(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
-
-                          // thời gian bắt đầu & kết thúc tiến độ công việc mới tạo
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //Thời gian bắt đầu
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Tiến độ:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["daystart"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle14w600(),
-                                      ),
-                                    ],
+                          //Thời gian
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //Bắt đầu
+                              Row(
+                                children: [
+                                  Text(
+                                    'Tiến độ: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
                                   ),
-                                ),
-
-                                //thời gian kết thúc
-                                RichText(
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      color: ColorResources.BLACK,
+                                  Text(
+                                    "${controller.tienDo(
+                                      startDate: controller
+                                          .chamTreModelList[index].ngayThucTe
+                                          .toString(),
+                                      endDate: controller
+                                          .chamTreModelList[index].ngayKetThuc
+                                          .toString(),
+                                    )}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                      color: controller.tienDo(
+                                                startDate: controller
+                                                    .chamTreModelList[index]
+                                                    .ngayThucTe
+                                                    .toString(),
+                                                endDate: controller
+                                                    .chamTreModelList[index]
+                                                    .ngayKetThuc
+                                                    .toString(),
+                                              ) >=
+                                              0
+                                          ? ColorResources.GREEN
+                                          : ColorResources.RED,
                                     ),
-                                    children: [
-                                      TextSpan(
-                                        text: "Hoàn thành:",
-                                        style: Dimensions.fontSizeStyle14(),
-                                      ),
-                                      TextSpan(
-                                        text: controller.uiWorkProgress![index]
-                                                ["finishday"]
-                                            .toString(),
-                                        style: Dimensions.fontSizeStyle16w600(),
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
+                                  Text(
+                                    " Ngày",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                      color: controller.tienDo(
+                                                startDate: controller
+                                                    .chamTreModelList[index]
+                                                    .ngayThucTe
+                                                    .toString(),
+                                                endDate: controller
+                                                    .chamTreModelList[index]
+                                                    .ngayKetThuc
+                                                    .toString(),
+                                              ) >=
+                                              0
+                                          ? ColorResources.GREEN
+                                          : ColorResources.RED,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //Ngày hoàn thành
+                              Row(
+                                children: [
+                                  Text(
+                                    'Thực tế: ',
+                                    style: Dimensions.fontSizeStyle14w600(),
+                                  ),
+                                  Text(
+                                    controller.formatDateTime(
+                                      dateTime: controller
+                                          .chamTreModelList[index].ngayThucTe
+                                          .toString(),
+                                    ),
+                                    style: Dimensions.fontSizeStyle14(),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
