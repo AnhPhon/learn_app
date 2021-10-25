@@ -17,7 +17,6 @@ import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 
 import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
 
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_controller.dart';
 
@@ -43,7 +42,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
                   _timekeeping(controller, context),
 
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_EXTRA_SMALL + 4,
+                    height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                   ),
                   //dự án
                   _project(controller, context),
@@ -92,6 +91,7 @@ class V4TimekeepingPage extends GetView<V4TimekeepingController> {
   Widget _timekeeping(
       V4TimekeepingController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,

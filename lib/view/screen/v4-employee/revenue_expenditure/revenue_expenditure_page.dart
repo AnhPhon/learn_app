@@ -23,19 +23,20 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
                   //thu hoặc chi
                   if (controller.isRevenue == true)
                     _revenue(controller, context)
                   else
                     _expenditure(controller, context),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
 
                   //chọn thời gian thêm thu/chi
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                    child: _timeRevenueExpenditure(controller, context),
-                  ),
+                  _timeRevenueExpenditure(controller, context),
 
                   //nội dung thu/chi
                   if (controller.isRevenue == true)
@@ -80,18 +81,19 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   ///
   Widget _revenue(
       V4RevenueExpenditureController controller, BuildContext context) {
-    return InputField(
-      isColorFieldWhite: true,
+    return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.revenueController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Thu',
       label: 'Loại thêm',
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.revenueController,
     );
   }
 
@@ -100,18 +102,19 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   ///
   Widget _expenditure(
       V4RevenueExpenditureController controller, BuildContext context) {
-    return InputField(
-      isColorFieldWhite: true,
+    return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.expenditureController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Chi',
       label: 'Loại thêm',
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.expenditureController,
     );
   }
 }
@@ -128,7 +131,7 @@ Widget _timeRevenueExpenditure(
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-    isColorFieldWhite: true,
+    fillColor: ColorResources.WHITE,
     isddMMyyyy: true,
     isDate: true,
     allowEdit: false,
@@ -199,7 +202,7 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-    isColorFieldWhite: true,
+    fillColor: ColorResources.WHITE,
     labelBold: true,
     thousandsSeparator: true,
     textInputType: TextInputType.number,

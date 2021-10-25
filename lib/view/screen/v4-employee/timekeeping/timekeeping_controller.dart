@@ -16,7 +16,7 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/alert.dart';
 
 class V4TimekeepingController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -50,7 +50,7 @@ class V4TimekeepingController extends GetxController {
 
   //Khai báo Thời gian chấm công phải trùng với thời gian hiện tại
   final timekeeping = TextEditingController(
-      text: DateConverter.estimatedDateOnly(DateTime.now()));
+      text: DateConverter.formatDateTimeHHmm(DateTime.now()));
 
   //Khai báo TextEditingController của địa chỉ chấm công
   final addressController = TextEditingController();
@@ -154,6 +154,7 @@ class V4TimekeepingController extends GetxController {
           quanHuyenList.clear();
           if (data.isNotEmpty) {
             quanHuyenList.addAll(data);
+            quanHuyen = quanHuyenList.first;
           }
           isLoading = false;
           update();
@@ -176,6 +177,7 @@ class V4TimekeepingController extends GetxController {
           phuongXaList.clear();
           if (data.isNotEmpty) {
             phuongXaList.addAll(data);
+            phuongXa = phuongXaList.first;
           }
           isLoading = false;
           update();
@@ -191,64 +193,24 @@ class V4TimekeepingController extends GetxController {
   ///
   bool validate() {
     if (duAnNhanVien == null) {
-      Get.snackbar(
-        "Dự án không hơp lệ!", // title
-        "Vui lòng chọn dự án hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn dự án!');
       return false;
     }
     if (addressController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Địa chỉ không hợp lệ!", // title
-        "Vui lòng nhập địa chỉ hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập địa chỉ!');
       return false;
     }
 
     if (tinh == null) {
-      Get.snackbar(
-        "Tỉnh không hơp lệ!", // title
-        "Vui lòng chọn tỉnh hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
       return false;
     }
     if (quanHuyen == null) {
-      Get.snackbar(
-        "Quận huyện không hơp lệ!", // title
-        "Vui lòng chọn Quận huyện hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
       return false;
     }
     if (phuongXa == null) {
-      Get.snackbar(
-        "Phường xã không hơp lệ!", // title
-        "Vui lòng chọn Phường xã hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
       return false;
     }
     return true;
@@ -259,10 +221,8 @@ class V4TimekeepingController extends GetxController {
   ///
   Future<void> onChamCong() async {
     if (validate()) {
-      final DateTime timeKeeping = DateTime.parse(DateFormat('dd-MM-yyyy')
-          .parse(timekeeping.text)
-          .toString()
-          .substring(0, 10));
+      final DateTime timeKeeping =
+          DateConverter.convertStringToDatetimeddMMyyyy(timekeeping.text);
       chamCongProvider.add(
         data: ChamCongRequest(
           idNhanVien: await sl.get<SharedPreferenceHelper>().userId,

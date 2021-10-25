@@ -10,6 +10,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 
@@ -32,16 +33,14 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // chọn ngày xuất nhập kho
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_LARGE,
-                        ),
-                        child: _timeExportImport(controller, context),
-                      ),
+                      _timeExportImport(controller, context),
 
                       //Chọn xuất hoặc nhập kho theo trang chủ
                       if (controller.isExport == true)
@@ -124,7 +123,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _timeExportImport(
       V4ExportImportControleer controller, BuildContext context) {
-    return TextFieldDate(
+    return InputWidget(
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -133,13 +132,15 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       ),
       isDate: true,
       allowEdit: false,
-      controller: controller.timeExportImport,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      holdplacer: "12-11-2021",
       label: "Ngày",
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.45,
+      textEditingController: controller.timeExportImport,
+      suffixIcon: const Icon(
+        Icons.date_range,
+        size: Dimensions.ICON_SIZE_SMALL,
+        color: ColorResources.PRIMARYCOLOR,
+      ),
     );
   }
 
@@ -147,18 +148,19 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   /// Xuất được chọn ở trang chủ
   ///
   Widget _exprot(V4ExportImportControleer controller, BuildContext context) {
-    return InputField(
-      boldHinText: true,
+    return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
+      padding: const EdgeInsets.fromLTRB(
+        0,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.exportController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Xuất',
       label: 'Loại xuất',
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.45,
+      textEditingController: controller.exportController,
     );
   }
 
@@ -166,19 +168,20 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///  Nhập được chọn ở trang Chủ
   ///
   Widget _import(V4ExportImportControleer controller, BuildContext context) {
-    return InputField(
+    return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
+      padding: const EdgeInsets.fromLTRB(
+        0,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isColorFieldWhite: true,
-      boldHinText: true,
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.importController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Nhập',
       label: 'Loại nhập',
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.45,
+      textEditingController: controller.importController,
     );
   }
 
@@ -526,7 +529,7 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     textAlignVertical: TextAlignVertical.center,
-                    enabled: true,
+                    enabled: false,
                     controller: controller.utils,
                     onChanged: (value) {},
                     decoration: InputDecoration(

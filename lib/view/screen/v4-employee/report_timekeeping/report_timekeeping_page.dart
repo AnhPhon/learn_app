@@ -47,6 +47,13 @@ class V4ReportTimekeepingPage extends GetView<V4ReportTimekeepingControllter> {
   Widget _reportTimekeeping(
       V4ReportTimekeepingControllter controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       allowEdit: false,
       label: "Thời gian",
       obligatory: true,

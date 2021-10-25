@@ -6,10 +6,10 @@ import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V4RevenueExpenditureController extends GetxController
@@ -51,52 +51,19 @@ class V4RevenueExpenditureController extends GetxController
   ///
   bool validateThu() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
-      Get.snackbar(
-        "Ngày không hợp lệ!", // title
-        "Vui lòng chọn ngày hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn thời gian thêm thu!');
       return false;
     }
     if (contentRevenueController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Nội dung thu chính không hơp lệ!", // title
-        "Vui lòng nhập nội dung thi chính hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập nội dung thu chính!');
       return false;
     }
     if (moneyController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Số tiền không hơp lệ!",
-        "Vui lòng nhập số tiền hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-
+      Alert.error(message: 'Vui lòng số tiền thêm thu!');
       return false;
     }
     if (detailContentRevenueController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Nội dung chi tiết không hơp lệ!",
-        "Vui lòng nhập nội dung chi tiết hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập nội dung thu chi tiết!');
       return false;
     }
     return true;
@@ -139,51 +106,19 @@ class V4RevenueExpenditureController extends GetxController
   ///
   bool validateChi() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
-      Get.snackbar(
-        "Ngày không hợp lệ!",
-        "Vui lòng chọn ngày hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn thời gian thêm chi!');
       return false;
     }
     if (contentExpenditureController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Nội dung chi chính không hơp lệ!",
-        "Vui lòng nhập nội dung chi chính hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập nội dung chi chính!');
       return false;
     }
     if (moneyController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Số tiền không hơp lệ!",
-        "Vui lòng nhập số tiền hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng số tiền thêm chi!');
       return false;
     }
     if (detailContentExpenditureController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Nội dung chi tiết không hơp lệ!",
-        "Vui lòng nhập nội dung chi tiết hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập nội dung chi chi tiết!');
       return false;
     }
     return true;
