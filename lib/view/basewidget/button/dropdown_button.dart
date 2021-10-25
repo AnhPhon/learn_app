@@ -23,7 +23,7 @@ class DropDownButton1<T> extends StatelessWidget {
   });
 
   final String? hint;
-  final Function(T? i) onChanged;
+  final Function(T? i)? onChanged;
   final List<T> data;
   final T? value;
   final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
@@ -63,9 +63,10 @@ class DropDownButton1<T> extends StatelessWidget {
                   ),
               ],
             ),
-          const SizedBox(
-            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          ),
+          if (label != null)
+            const SizedBox(
+              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
           Container(
             width: DeviceUtils.getScaledWidth(context, width),
             margin: margin ?? EdgeInsets.zero,

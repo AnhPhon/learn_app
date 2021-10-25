@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 import 'package:template/view/screen/v4-employee/report/component/v4_drop_dow_button.dart';
 import 'package:template/view/screen/v4-employee/report/report_controller.dart';
 
@@ -19,7 +19,6 @@ class V4ReportPage extends GetView<V4ReportController> {
         action: [
           _filterlistreport(context),
         ],
-        leading: false,
         title: "Danh sách báo cáo",
       ),
       body: GetBuilder<V4ReportController>(

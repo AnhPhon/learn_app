@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/content_widget.dart';
+import 'package:template/view/basewidget/component/image_list_horizontal.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/content_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/image_list_horizontal.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_conroller.dart';
 
 class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {

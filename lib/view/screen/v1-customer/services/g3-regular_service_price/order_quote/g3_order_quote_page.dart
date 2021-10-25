@@ -50,6 +50,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
             width: DeviceUtils.getScaledSize(context,1),
             label: "Loại dịch vụ",
             hint: "Loại dịch vụ",
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         DropDownButton<BangGiaDonHangResponse>(

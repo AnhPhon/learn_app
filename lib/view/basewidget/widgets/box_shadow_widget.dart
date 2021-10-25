@@ -11,11 +11,13 @@ class BoxShadowWidget extends StatelessWidget {
     required this.child,
     this.padding,
     this.margin,
+    this.boxShadowCustom,
   }) : super(key: key);
   final double? borderRadius;
   final double? elevation;
   final Widget child;
   final EdgeInsetsGeometry? padding, margin;
+  final List<BoxShadow>? boxShadowCustom;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -28,7 +30,7 @@ class BoxShadowWidget extends StatelessWidget {
           margin: margin ?? const EdgeInsets.all(0.0),
           padding: padding ?? const EdgeInsets.all(0.0),
           decoration: BoxDecoration(
-            boxShadow: boxShadow,
+            boxShadow: boxShadowCustom ?? boxShadow,
             borderRadius:
                 BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: ColorResources.WHITE,

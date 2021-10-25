@@ -34,6 +34,16 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
                       ),)
                     ),
                   ),
+                  
+                  const Padding(
+                    padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                    child: Align(
+                      child: Text('Bảng giá chi tiết tham khảo', textAlign: TextAlign.center, style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: Dimensions.FONT_SIZE_LARGE
+                      ),)
+                    ),
+                  ),
 
                   imageWidget(context),
                   // File
@@ -90,7 +100,7 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
   Widget imageWidget(BuildContext context){
     String imageNetwork = '';
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: PinchZoomImage(
         image: imageNetwork.isEmpty ?  Image.asset(Images.login_background,fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5))
        : Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),),

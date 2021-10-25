@@ -43,10 +43,11 @@ class ReferencePriceTableController extends GetxController{
     }else if(id.contains('6')){
       // Tạo đơn công viẹc và dịch nhóm 6
       Get.toNamed("${AppRoutes.V1_G6_CREATE_SERVICE}?title=$appBarTitle", arguments: request);
-    }else if(id.contains('7')){
-      // Tạo đơn công viẹc và dịch nhóm 7
-      Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: request);
     }
+    // else if(id.contains('7')){
+    //   // Tạo đơn công viẹc và dịch nhóm 7
+    //   Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: request);
+    // }
   }
 
 }

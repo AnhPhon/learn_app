@@ -20,7 +20,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // usernameController.text = '1';
+    usernameController.text = '1';
     // passwordController.text = 'password';
     super.onInit();
   }
@@ -55,7 +55,7 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    sl.get<SharedPreferenceHelper>().saveUserId("616d7c0dc48e736e333ef26b");
+    sl.get<SharedPreferenceHelper>().saveUserId("616c1b2307809c5435dac950");
 
     if (usernameController.text == '1') {
       Get.toNamed(AppRoutes.V1_DASHBOARD);

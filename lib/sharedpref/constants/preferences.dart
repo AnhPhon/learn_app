@@ -22,4 +22,5 @@ class Preferences {
   static const String idDuAn = "idDuAn";
   static const String productCategoryId = "product_category_id";
   static const String productId = "productId";
+  static const String giaTriDonHang = "giaTriDonHang";
 }

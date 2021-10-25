@@ -5,11 +5,11 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/content_widget.dart';
+import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/content_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/image_list_horizontal_add.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group2/after_quotation_g2/after_quotation_g2_controller.dart';
 
 class V2AfterQuotationG2Page extends GetView<V2AfterQuotationG2Controller> {
