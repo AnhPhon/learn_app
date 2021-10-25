@@ -104,14 +104,14 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.dichVuResponse!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
+      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(imagesUrl: controller.dichVuResponse!.hinhAnhBaoGia!.split(',')),
+          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );

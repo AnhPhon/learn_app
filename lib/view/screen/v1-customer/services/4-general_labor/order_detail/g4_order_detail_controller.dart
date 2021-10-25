@@ -14,10 +14,6 @@ class V1G4OrderDetailController extends GetxController{
   int time = 0;
   int person = 0;
 
-  double soTien = 0;
-  double phiDichVu = 0;
-  double khuyenMai = 0;
-  double tongTien = 0;
   @override
   void onInit() {
     super.onInit();

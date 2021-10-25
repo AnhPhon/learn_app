@@ -105,7 +105,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   ///
   Widget image(BuildContext context,
       {required V1OrderFeedBackController controller}) {
-    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuong!.isEmpty
+    return controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty
         ? const SizedBox()
         : Padding(
             padding: const EdgeInsets.only(
@@ -123,7 +123,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                 ),
                 BoxImage(
                     imagesUrl: controller.donPhanHoi!.idDonDichVu!
-                        .hinhAnhBanKhoiLuong! as List<String>),
+                        .hinhAnhBanKhoiLuongs),
               ],
             ),
           );
