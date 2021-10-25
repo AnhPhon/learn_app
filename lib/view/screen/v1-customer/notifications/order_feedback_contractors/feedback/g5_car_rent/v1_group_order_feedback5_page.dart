@@ -36,7 +36,7 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
               ),
               child: TextHighlight(
                 title: "Công việc: ",
-                content: _controller.donPhanHoi!.idDonDichVu!.tieuDe!,
+                content: _controller.donDichVu!.tieuDe!,
               ),
             ),
 
@@ -59,8 +59,28 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller.tongTien,
-        children: [
-          SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){}),
+        children: 
+        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        // [
+        //   const Flexible(
+        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+        //   )
+        // ] :
+        controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
+        [
+          const Flexible(
+          child: Text("Bạn đã thanh toán đơn dich vụ. Cám ơn bạn đa tin dùng dịch vụ chúng tôi", 
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            ),
+          )
+        ] 
+        :[
+          SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){
+            _controller.onFeebacked();
+          }),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){
             _controller.onClickAgreeButton();
           })

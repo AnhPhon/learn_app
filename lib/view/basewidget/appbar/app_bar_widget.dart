@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool? centerTitle;
@@ -18,14 +17,11 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.isNotBack = false,
     this.onPressed,
   }) : super(key: key);
-
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
 class _CustomAppBarState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {

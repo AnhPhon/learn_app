@@ -33,7 +33,7 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
-  final EdgeInsetsGeometry ? padding;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +45,23 @@ class TextFieldDate extends StatelessWidget {
         children: [
           if (label != null)
             Container(
-              padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              padding: const EdgeInsets.only(
+                  bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL),
               alignment: Alignment.centerLeft,
               child: Wrap(
                 children: [
                   Text(
                     label!,
-                    style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: fontSize, fontWeight: FontWeight.w600),
                   ),
                   if (obligatory)
                     Text(
                       '*',
-                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: Colors.red),
+                      style: TextStyle(
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
                     )
                   else
                     Container()
@@ -72,10 +77,19 @@ class TextFieldDate extends StatelessWidget {
                       firstDate: DateTime(2001),
                       lastDate: DateTime(2100),
                     ).then((value) {
-                      if(onDateTimeChanged != null && value != null){
+                      isToHour!
+                          ? controller.text =
+                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value!.day}-${value.month}-${value.year}";
+                      if (onDateTimeChanged != null && value != null) {
                         onDateTimeChanged!(value.toIso8601String());
                       }
-                      isToHour! ? controller.text = "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text = "${value!.day}-${value.month}-${value.year}";
+                      isToHour!
+                          ? controller.text =
+                              "${value.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value.day}-${value.month}-${value.year}";
                     });
                   }
                 : () {},
@@ -110,29 +124,39 @@ class TextFieldDate extends StatelessWidget {
                     vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: ColorResources.PRIMARYCOLOR),
-                    borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   hintText: holdplacer,
                   filled: true,
-                  fillColor: (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.WHITE
+                      : Colors.white,
                   suffixIconConstraints: const BoxConstraints(
                     maxHeight: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   suffixIcon: (isDate == true)
                       ? const Padding(
-                          padding: EdgeInsets.only(right: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                          padding: EdgeInsets.only(
+                              right: Dimensions.FONT_SIZE_EXTRA_SMALL),
                           child: Icon(
                             Icons.date_range,
                             size: Dimensions.ICON_SIZE_SMALL,

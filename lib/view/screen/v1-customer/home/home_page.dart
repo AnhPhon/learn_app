@@ -37,17 +37,18 @@ class V1HomePage extends GetView<V1HomeController> {
               fullname: "KH, ${controller.fullname}",
               content: Column(
                 children: [
-                  // _categoryBoxWidget
+                  // category box widget
                   _categoryBoxWidget(),
 
                   const SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-                  // _threeFeatureWidget
+                  // three feature widget
                   _threeFeatureWidget(),
 
                   // product
                   _productWidget(controller),
 
+                  // news widget
                   _newsWidget(controller: controller)
                 ],
               ),

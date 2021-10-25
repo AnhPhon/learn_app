@@ -26,8 +26,8 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Dimensions.PADDING_SIZE_LARGE,
+                  padding: const EdgeInsets.only(
+                    top: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -74,20 +74,22 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                 ),
 
                 //Tab View
-                Container(
-                  height: DeviceUtils.getScaledHeight(context, .7),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_LARGE,
+                SingleChildScrollView(
+                  child: Container(
+                    height: DeviceUtils.getScaledHeight(context, .7),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                    ),
+
+                    //Tabbar View Tiến độ công việc
+                    child: TabBarView(children: [
+                      //listview VIỆC ĐANG LÀM
+                      _listViewDangLam(),
+
+                      //Listview VIỆC ĐÃ LÀM
+                      _listViewDaLam(),
+                    ]),
                   ),
-
-                  //Tabbar View Tiến độ công việc
-                  child: TabBarView(children: [
-                    //listview VIỆC ĐANG LÀM
-                    _listViewDangLam(),
-
-                    //Listview VIỆC ĐÃ LÀM
-                    _listViewDaLam(),
-                  ]),
                 ),
               ],
             );
