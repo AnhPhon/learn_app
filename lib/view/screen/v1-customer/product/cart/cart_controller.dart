@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
+import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/chi_tiet_don_hang_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
@@ -12,6 +14,7 @@ import 'package:template/routes/app_routes.dart';
 class V1CartController extends GetxController {
   //donHang
   DonHangProvider donHangProvider = GetIt.I.get<DonHangProvider>();
+  DonHangRequest donHangRequest = DonHangRequest();
   DonHangResponse? donHangResponse;
 
   //ChiTietDonHang
@@ -167,7 +170,34 @@ class V1CartController extends GetxController {
   ///
   void onCheckoutClick() {
     Get.toNamed(
-        "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}");
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_CART}")!
+        .then((value) {
+      if (value == true) {
+        //set data
+        donHangRequest.id = donHangResponse!.id;
+        donHangRequest.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
+        donHangRequest.phiDichVu = donHangResponse!.phiDichVu;
+        donHangRequest.phiVanChuyen = donHangResponse!.phiVanChuyen;
+        donHangRequest.soTien = total.toString();
+        donHangRequest.tongTien = totalAmount.toString();
+        donHangRequest.idHinhThucThanhToan = "616120008c19c11eb11f862a";
+
+        //update donHang
+        donHangProvider.update(
+          data: donHangRequest,
+          onSuccess: (data) {
+            //success
+            Get.offAllNamed(
+              AppRoutes.V1_DASHBOARD,
+              predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD),
+            );
+          },
+          onError: (error) {
+            print("V1ProductDetailController onCheckoutClick onError $error");
+          },
+        );
+      }
+    });
   }
 
   ///
