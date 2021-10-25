@@ -73,7 +73,7 @@ class V1G1ReviewController extends GetxController{
     // Hình ảnh bản khối lượng
     previewServiceRequest!.hinhAnhBanKhoiLuong!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
-        massImages.add(data.data!);
+        massImages.add(data.data!);// = "$massImages${data.data},";
       }, onError: (onError){
         print("V1G1ReviewController request khối lượng $onError");
       });

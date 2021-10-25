@@ -284,26 +284,3 @@ class DonDichVuRequest {
   }
 }
 
-//class ThoiGianLamViec {
-//   String? idThoiGianLamViec;
-//   ThoiGianLamViec({
-//     this.idThoiGianLamViec,
-//   });
-  
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'idThoiGianLamViec': idThoiGianLamViec,
-//     };
-//   }
-
-//   factory ThoiGianLamViec.fromMap(Map<String, dynamic> map) {
-//     return ThoiGianLamViec(
-//       idThoiGianLamViec: map['id'] as String,
-//     );
-//   }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory ThoiGianLamViec.fromJson(String source) => ThoiGianLamViec.fromMap(json.decode(source) as Map<String, dynamic>);
-// }

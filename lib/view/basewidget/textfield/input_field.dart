@@ -25,6 +25,7 @@ class InputField extends StatelessWidget {
       this.textInputAction,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       this.isColorFieldWhite,
+      this.padding,
       required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
@@ -41,11 +42,12 @@ class InputField extends StatelessWidget {
   bool? boldHinText;
   final bool? isColorFieldWhite;
   final bool? isFormatCurrency;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
+      padding: padding ?? EdgeInsets.only(
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT,
           top: paddingTop!),
