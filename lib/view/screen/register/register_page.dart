@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/response/loai_tai_khoan_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -39,7 +40,7 @@ class RegisterPage extends GetView<RegisterController> {
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.enterpriseNameController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Tên doanh nghiệp/đội trưởng/cá nhân",
                       hidden: false,
@@ -53,7 +54,7 @@ class RegisterPage extends GetView<RegisterController> {
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.taxCodeController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Mã số thuế",
                       hidden: false,
@@ -67,7 +68,7 @@ class RegisterPage extends GetView<RegisterController> {
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.fullNameController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Họ và tên",
                       hidden: false,
@@ -81,32 +82,34 @@ class RegisterPage extends GetView<RegisterController> {
                     TextFieldDate(
                       isDate: true,
                       allowEdit: true,
-                      controller: controller.usernameController,
+                      controller: controller.birthDateController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "dd-MM-yyyy",
                       label: "Ngày tháng năm sinh",
                       obligatory: true,
                       typeInput: TextInputType.text,
                       width: DeviceUtils.getScaledWidth(context, 1),
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // Giới tính
-                    DropDownButton<LoaiTaiKhoanResponse>(
-                      data: controller.loaiTaiKhoans,
+                    DropDownButton<String>(
+                      data: controller.genders,
                       obligatory: true,
                       onChanged: (value) =>
-                          controller.onLoaiTaikhoanChange(value!),
-                      value: controller.loaiTaiKhoan,
+                          controller.onChangedGender(value!),
+                      value: controller.gender,
                       width: DeviceUtils.getScaledSize(context, 1),
                       label: "Giới tính",
                       hint: "Giới tính",
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // cmnd
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.cmndController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Số CMND/Căn cước",
                       hidden: false,
@@ -120,20 +123,21 @@ class RegisterPage extends GetView<RegisterController> {
                     TextFieldDate(
                       isDate: true,
                       allowEdit: true,
-                      controller: controller.usernameController,
+                      controller: controller.dateRangeController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "dd-MM-yyyy",
                       label: "Ngày cấp",
                       obligatory: true,
                       typeInput: TextInputType.text,
                       width: DeviceUtils.getScaledWidth(context, 1),
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // Nơi cấp
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.placeIssueController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Nơi cấp",
                       hidden: false,
@@ -147,7 +151,7 @@ class RegisterPage extends GetView<RegisterController> {
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.phoneNumberController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Số điện thoại",
                       hidden: false,
@@ -161,7 +165,7 @@ class RegisterPage extends GetView<RegisterController> {
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.emailController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Nhập email",
                       hidden: false,
@@ -181,13 +185,14 @@ class RegisterPage extends GetView<RegisterController> {
                       width: DeviceUtils.getScaledSize(context, 1),
                       label: "Khu vực tham gia chọn nhiều ",
                       hint: "Khu vực tham gia",
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // địa chỉ hiện tại
                     InputField(
                       allowEdit: true,
                       allowMultiline: false,
-                      controller: controller.usernameController,
+                      controller: controller.addressController,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                       holdplacer: "Nhập địa chỉ hiện tại",
                       hidden: false,
@@ -198,15 +203,16 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
 
                     // Tỉnh/TP
-                    DropDownButton<LoaiTaiKhoanResponse>(
-                      data: controller.loaiTaiKhoans,
+                    DropDownButton<TinhTpResponse>(
+                      data: controller.provinces,
                       obligatory: true,
                       onChanged: (value) =>
-                          controller.onLoaiTaikhoanChange(value!),
-                      value: controller.loaiTaiKhoan,
+                          controller.onChangedProvince(value!),
+                      value: controller.province,
                       width: DeviceUtils.getScaledSize(context, 1),
                       label: "Tỉnh/TP",
                       hint: "Tỉnh/TP",
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // Quận/Huyện
@@ -219,6 +225,7 @@ class RegisterPage extends GetView<RegisterController> {
                       width: DeviceUtils.getScaledSize(context, 1),
                       label: "Quận/Huyện",
                       hint: "Quận/Huyện",
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // Phường xã
@@ -231,6 +238,7 @@ class RegisterPage extends GetView<RegisterController> {
                       width: DeviceUtils.getScaledSize(context, 1),
                       label: "Phường xã",
                       hint: "Phường xã",
+                      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
                     ),
 
                     // Chỉ áp dụng cho thợ thầu
@@ -359,6 +367,7 @@ class RegisterPage extends GetView<RegisterController> {
           width: DeviceUtils.getScaledSize(context, 1),
           label: "Loại tài khoản",
           hint: "Loại tài khoản đăng ký",
+          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
         ),
         DropDownButton<LoaiTaiKhoanResponse>(
           data: controller.loaiTaiKhoans,
@@ -368,6 +377,7 @@ class RegisterPage extends GetView<RegisterController> {
           width: DeviceUtils.getScaledSize(context, 1),
           label: "Pháp lý",
           hint: 'Chọn Pháp lý',
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
       ],
     );

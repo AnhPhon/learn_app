@@ -28,7 +28,7 @@ class SplashController extends GetxController
           Get.offNamed(AppRoutes.DASHBOARD);
         } else {
           // is not login
-          Get.offNamed(AppRoutes.LOGIN);
+          Get.offNamed(AppRoutes.REGISTER);
         }
       }
     });
