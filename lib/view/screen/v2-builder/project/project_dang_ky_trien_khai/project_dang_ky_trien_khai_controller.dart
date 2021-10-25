@@ -18,13 +18,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V2ProjectDangKyTrienKhaiController extends GetxController {
-  String title = "Chi tiết dự án";
-
-  String urlImage = "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg";
-
-  String place = "Hòa Khánh Nam, Liên Chiểu, Đà Nẵng";
-
-  String introduce = "1. Tổng quan dự án:\n- Quy mô: Phân khu cao cấp thuộc KĐT Đà Nẵng Pearl.\n- Chủ đầu tư: Công ty CP Đất Xanh Miền Trung.\n- Đơn vị quy hoạch: SOM Singapore.\n- Đơn vị giám sát: Công ty Delta Mỹ.\n\n2. Tiện ích nội khu:\n- Quảng trường ánh sáng nơi diễn ra các lễ hội trình diễn nghệ thuật, tiệc BBQ ngoài trời.\n- Bến du thuyền và khu biểu diễn nhạc nước trên sông Cổ Cò.\n- Khu thể thao: Sân tennis, sân bóng rổ, đường chạy bộ thể thao.";
+  String title = "";
 
   String? idProject;
 
@@ -40,16 +34,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
   List<LoaiCongViecResponse>? currentLoaiCongViecResponseList = [];
   List<MultiSelectItem<LoaiCongViecResponse?>> loaiCongViecMultiSelectItem = [];
 
-  DanhSachThoThauBaoGiaRequest danhSachThoThauBaoGiaRequest = DanhSachThoThauBaoGiaRequest.fromJson({
-    'idLoaiCongViecs': [],
-    'idMatHangDacTrungs': [],
-    'idDuAnKhachHang': '',
-    'idDuAnKhachHang': '',
-    'tienCoc': 0,
-    'giaBao': 0,
-    'idNhomCuaHang': '',
-    'taiKhoanBaoGia': '',
-  });
+  DanhSachThoThauBaoGiaRequest danhSachThoThauBaoGiaRequest = DanhSachThoThauBaoGiaRequest();
 
   DanhSachThoThauBaoGiaProvider danhSachThoThauBaoGiaProvider = GetIt.I.get<DanhSachThoThauBaoGiaProvider>();
 
@@ -62,20 +47,30 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
     final dynamic arguments = Get.arguments;
     if (arguments != null && arguments['idProject'] != null) {
-
+      /// Khoi tao gia tri lay tu argument
       idProject = arguments!['idProject'].toString();
       title = arguments!['title'].toString();
 
-      danhSachThoThauBaoGiaRequest.idDuAnKhachHang = idProject;
-      danhSachThoThauBaoGiaRequest.taiKhoanBaoGia = sl.get<SharedPreferenceHelper>().userId.toString();
-
+      /// Lay chi tiet du an
       getChiTietDuAn();
 
+      /// Lay nhom dich vu
       getNhomDichVu();
     }
   }
 
-  void getChiTietDuAn() {
+  @override
+  void onClose() {
+    EasyLoading.dismiss();
+    super.onClose();
+  }
+
+  /// Goi api chi tiet du an
+  void getChiTietDuAn() async {
+    danhSachThoThauBaoGiaRequest.idDuAnKhachHang = idProject;
+    danhSachThoThauBaoGiaRequest.idTaiKhoanBaoGia = await sl.get<SharedPreferenceHelper>().userId;
+    print('danhSachThoThauBaoGiaRequest.idTaiKhoanBaoGia ${danhSachThoThauBaoGiaRequest.idTaiKhoanBaoGia}');
+
     duAnKhachHangProvider.find(
       id: idProject.toString(),
       onSuccess: (data) {
@@ -88,16 +83,15 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     );
   }
 
+  /// Goi api lay tat ca nhom dich vu
   void getNhomDichVu() {
     nhomDichVuProvider.all(
       onSuccess: (data) {
         if (data.isNotEmpty) {
-          // Selectbox khong cho phep init null gia tri, nen chon 1 gia tri dau tien de init
+          /// Selectbox khong cho phep init null gia tri, nen chon 1 gia tri dau tien de init
           selectedNhomCongViec(data[0]);
         }
         nhomDichVuResponse = data;
-        print('nhomDichVuResponse $nhomDichVuResponse');
-        print('currentNhomDichVuResponse $currentNhomDichVuResponse');
         update();
       },
       onError: (error) {
@@ -106,12 +100,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     );
   }
 
-  @override
-  void onClose() {
-    EasyLoading.dismiss();
-    super.onClose();
-  }
-
+  /// Kiem tra id hang muc xay dung co gia tri hay k0
   bool kiemTraIdHangMucXayDungs() {
     if (duAnKhachHangResponse!.idHangMucXayDungs != null && duAnKhachHangResponse!.idHangMucXayDungs!.isNotEmpty) {
       return true;
@@ -120,6 +109,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     }
   }
 
+  /// Chon nhom cong viec
   void selectedNhomCongViec(NhomDichVuResponse nhomDichVuResponse) {
     currentNhomDichVuResponse = nhomDichVuResponse;
     danhSachThoThauBaoGiaRequest.idNhomDichVu = currentNhomDichVuResponse.id.toString();
@@ -127,11 +117,13 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     updateNhomDichVu(nhomDichVuResponse);
   }
 
+  /// Chon cac cong viec trong nhom cong viec
   void selectedCongViecPhuHop(List<LoaiCongViecResponse?> results) {
     currentLoaiCongViecResponseList = results.cast<LoaiCongViecResponse>();
     danhSachThoThauBaoGiaRequest.idLoaiCongViecs = currentLoaiCongViecResponseList!.map((e) => e.id.toString()).toList();
   }
 
+  /// Kiem tra dang ky du an
   void moViewDangKyViecMoi() {
     if (danhSachThoThauBaoGiaRequest.idLoaiCongViecs == null || danhSachThoThauBaoGiaRequest.idLoaiCongViecs!.isEmpty) {
       Get.snackbar(
@@ -190,10 +182,12 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         duration: const Duration(seconds: 3),
       );
     } else {
+      /// Goi yeu cau dang ky du an
       guiYeuCauDangKy();
     }
   }
 
+  /// Goi yeu cau dang ky du an
   void guiYeuCauDangKy() {
     try {
       EasyLoading.show(status: "Loading ...");
@@ -216,6 +210,12 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
               duration: const Duration(seconds: 3),
             );
           });
+
+          Future.delayed(Duration.zero, () {
+            Get.back();
+            Get.back();
+          });
+
         },
         onError: (error) {
           EasyLoading.dismiss();
@@ -230,7 +230,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     }
   }
 
-  // Chon nhom dich vu va lay danh sach cong viec
+  /// Chon nhom dich vu va lay danh sach cong viec
   void updateNhomDichVu(NhomDichVuResponse nhomDichVuResponse) {
     loaiCongViecProvider.paginate(
       filter: '&idNhomDichVu=${currentNhomDichVuResponse.id.toString()}',

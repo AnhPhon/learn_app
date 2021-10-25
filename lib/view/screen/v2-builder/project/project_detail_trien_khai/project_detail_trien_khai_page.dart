@@ -1,13 +1,9 @@
-import 'dart:math';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
@@ -29,10 +25,10 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //title
+                      ///title
                       _textTitle(),
 
-                      //content
+                      ///content
                       _content(),
                     ],
                   ),
@@ -62,9 +58,7 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
   ///
   Widget _content() {
     return Container(
-      // color: Colors.red,
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-      // margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
