@@ -13,7 +13,6 @@ import 'package:template/provider/danh_sach_tho_thau_bao_gia_provider.dart';
 import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
@@ -213,7 +212,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
           Future.delayed(Duration.zero, () {
             Get.back();
-            Get.back();
+            // Get.back();
           });
 
         },
