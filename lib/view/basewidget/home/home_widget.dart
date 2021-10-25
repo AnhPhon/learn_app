@@ -13,11 +13,13 @@ class HomeWidget extends StatelessWidget {
   String? notificationURL;
   String? imageNetwork;
   int? soThongBao;
+  bool? isNotNotification;
   HomeWidget(
       {required this.fullname,
       required this.content,
       this.notificationURL,
       this.imageNetwork,
+      this.isNotNotification = true,
       this.soThongBao});
 
   @override
@@ -116,53 +118,57 @@ class HomeWidget extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.all(
                           Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (notificationURL == null) {
-                            Get.toNamed(AppRoutes.V1_NOTIFICATION);
-                          } else {
-                            Get.toNamed(notificationURL!);
-                          }
-                        },
-                        child: Stack(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.bell_fill,
-                              color: Colors.white,
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(1),
-                                width: Dimensions.MARGIN_SIZE_DEFAULT,
-                                height: Dimensions.MARGIN_SIZE_DEFAULT,
-                                decoration: const BoxDecoration(
-                                  color: ColorResources.RED,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(
-                                      Dimensions.BORDER_RADIUS_EXTRA_LARGE,
+                      child: isNotNotification == true
+                          ? GestureDetector(
+                              onTap: () {
+                                if (notificationURL == null) {
+                                  Get.toNamed(AppRoutes.V1_NOTIFICATION);
+                                } else {
+                                  Get.toNamed(notificationURL!);
+                                }
+                              },
+                              child: Stack(
+                                children: [
+                                  const Icon(
+                                    CupertinoIcons.bell_fill,
+                                    color: Colors.white,
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.all(1),
+                                      width: Dimensions.MARGIN_SIZE_DEFAULT,
+                                      height: Dimensions.MARGIN_SIZE_DEFAULT,
+                                      decoration: const BoxDecoration(
+                                        color: ColorResources.RED,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                            Dimensions
+                                                .BORDER_RADIUS_EXTRA_LARGE,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        (soThongBao == null
+                                                ? "0"
+                                                : (soThongBao! > 9)
+                                                    ? "+9"
+                                                    : soThongBao)
+                                            .toString(),
+                                        style: const TextStyle(
+                                          color: ColorResources.WHITE,
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_EXTRA_SMALL,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                child: Text(
-                                  (soThongBao == null
-                                          ? "0"
-                                          : (soThongBao! > 9)
-                                              ? "+9"
-                                              : soThongBao)
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: ColorResources.WHITE,
-                                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                                  ),
-                                ),
+                                  )
+                                ],
                               ),
                             )
-                          ],
-                        ),
-                      ),
+                          : Container(),
                     ),
                     const SizedBox(width: Dimensions.MARGIN_SIZE_SMALL)
                   ],

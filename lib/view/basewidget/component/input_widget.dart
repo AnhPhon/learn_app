@@ -60,7 +60,8 @@ class InputWidget extends StatelessWidget {
     this.fillColor,
     this.padding,
     this.margin,
-    this.suffixIconTap, this.onSubmitted,
+    this.suffixIconTap,
+    this.onSubmitted,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -196,7 +197,9 @@ class InputWidget extends StatelessWidget {
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: fillColor ?? Colors.transparent,
+                  fillColor: (isColorFieldWhite == true)
+                      ? ColorResources.WHITE
+                      : ColorResources.LIGHT_GREY.withOpacity(0.8),
                 ),
               ),
             ),

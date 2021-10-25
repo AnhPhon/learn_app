@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v3-agent/project/project_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V3ProjectPage extends GetView<V3ProjectController> {
   @override
@@ -18,7 +18,6 @@ class V3ProjectPage extends GetView<V3ProjectController> {
           return Scaffold(
             appBar: const AppBarWidget(
               title: "Dự án",
-              leading: false,
             ),
             body: Column(
               children: [
@@ -80,7 +79,7 @@ class V3ProjectPage extends GetView<V3ProjectController> {
                 itemBuilder: (BuildContext ctx, int index) {
                   return ItemListWidget(
                     urlImage: "",
-                    onTap: (){},//controller.onProjectDetailClick(),
+                    onTap: () {}, //controller.onProjectDetailClick(),
                     title: "Thợ ốp lát: Công trình khách hàng 5 sao",
                     icon1: const Icon(Icons.location_on),
                     rowText1: "Ngũ Hàng Sơn",

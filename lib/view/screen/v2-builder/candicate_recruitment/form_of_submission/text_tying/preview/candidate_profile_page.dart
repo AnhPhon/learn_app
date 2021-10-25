@@ -4,12 +4,12 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/candicate_card.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/text_tying/preview/candidate_profile_controller.dart';
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
 class V2PreviewProfilePage extends GetView<V2PreviewProfileController> {
   final V2PreviewProfileController _controller =

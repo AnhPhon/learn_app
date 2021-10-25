@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/utils/color_resources.dart';
-
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -40,7 +38,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                       // chọn ngày xuất nhập kho
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_DEFAULT,
+                          top: Dimensions.PADDING_SIZE_LARGE,
                         ),
                         child: _timeExportImport(controller, context),
                       ),
@@ -127,7 +125,12 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   Widget _timeExportImport(
       V4ExportImportControleer controller, BuildContext context) {
     return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        0,
+        0,
+      ),
       isDate: true,
       allowEdit: false,
       controller: controller.timeExportImport,
@@ -184,7 +187,13 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _project(V4ExportImportControleer controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
-      isColorFieldWhite: true,
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
+      fillColor: ColorResources.WHITE,
       labelBold: true,
       hint: 'Vui lòng chọn tên dự án',
       label: 'Tên dự án',
@@ -202,7 +211,13 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
 ///
 Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<KhoHangResponse>(
-    isColorFieldWhite: true,
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
     labelBold: true,
     hint: 'Vui lòng chọn kho hàng',
     label: 'Kho hàng',
@@ -219,7 +234,13 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<DonViCungCapResponse>(
-    isColorFieldWhite: true,
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
     labelBold: true,
     hint: 'Vui lòng chọn đơn vị cung cấp',
     label: 'Đơn vị cung cấp',
@@ -236,7 +257,13 @@ Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<VatTuResponse>(
-    isColorFieldWhite: true,
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
     labelBold: true,
     hint: 'Vui lòng chọn vật tư',
     label: 'Tên vật tư/Thiết bị',
@@ -366,7 +393,7 @@ Widget _customSoLuong(
               left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
               right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
-            width: DeviceUtils.getScaledWidth(context, 0.2),
+            width: DeviceUtils.getScaledWidth(context, 0.18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -453,7 +480,7 @@ Widget _customSoLuong(
 }
 
 ///
-/// Số lượng
+///  Đơn vị
 ///
 
 Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
@@ -537,7 +564,7 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
                         fontSize: Dimensions.FONT_SIZE_LARGE,
                         fontWeight: FontWeight.w600,
                       ),
-                      fillColor: ColorResources.NOT_ALLOW_EDIT,
+                      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
                     ),
                   ),
                 ),
