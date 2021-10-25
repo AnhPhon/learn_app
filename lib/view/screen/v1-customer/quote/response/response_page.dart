@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -307,7 +308,8 @@ class V1ResponsePage extends GetView<V1ResponseController> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.downloadFile(context, controller.fileURL);
+        controller.downloadClick("file", "docx");
+        // controller.downloadFile(context, controller.fileURL);
       },
       child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",

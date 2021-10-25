@@ -67,12 +67,13 @@ class V1VatTuListController extends GetxController {
       print("&idTaiKhoan=$userId&sortBy=created_at:desc");
       donDichVuProvider.paginate(
         page: 1,
-        limit: 10,
+        limit: 30,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
         onSuccess: (donDichVuList) {
           // run don dich vu list
           for (final ddv in donDichVuList) {
             if (ddv.idTrangThaiDonDichVu != null) {
+              print(ddv.idTrangThaiDonDichVu!.tieuDe.toString());
               if (ddv.idTrangThaiDonDichVu!.tieuDe.toString().toLowerCase() ==
                       daPhanHoiKey &&
                   !daPhanHoiDDV.contains(ddv)) {
@@ -81,8 +82,8 @@ class V1VatTuListController extends GetxController {
             }
           }
 
-          update();
           isLoading = false;
+          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -99,7 +100,7 @@ class V1VatTuListController extends GetxController {
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
       donDichVuProvider.paginate(
         page: 1,
-        limit: 10,
+        limit: 30,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
         onSuccess: (donDichVuList) {
           // run don dich vu list

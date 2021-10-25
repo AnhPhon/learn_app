@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -129,25 +131,54 @@ class V1ResponseController extends GetxController {
   }
 
   ///
-  /// download file
+  /// download to
   ///
-  Future<void> downloadFile(BuildContext context, String url) async {
-    final Dio dio = Dio();
+  Future download2(Dio dio, String url, String savePath) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
-      print("${dir.path}/downloadfile.docx");
-      await dio.download(
+      final response = await dio.get(
         url,
-        "${dir.path}/downloadfile.docx",
-        onReceiveProgress: (rec, total) {
-          EasyLoading.showProgress(rec / total);
-        },
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
       );
+      print(response.headers);
+      final File file = File(savePath);
+      final raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data as List<int>);
+      await raf.close();
     } catch (e) {
-      print("TermsAndPolicyController getTermsAndPolicy onError $e");
+      print(e);
     }
     EasyLoading.dismiss();
-    Get.snackbar("Download", "Hoàn thành");
+  }
+
+  ///
+  /// show download progress
+  ///
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      EasyLoading.showProgress((received as int) / (total as int));
+    }
+  }
+
+  ///
+  /// download click
+  ///
+  Future<void> downloadClick(filename, fileExt) async {
+    final dio = Dio();
+
+    final tempDir = await getTemporaryDirectory();
+    final String fullPath = "${tempDir.path}/$filename.$fileExt'";
+    print('full path $fullPath from URL: $fileURL');
+
+    download2(dio, fileURL, fullPath);
   }
 
   ///
