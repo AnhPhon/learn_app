@@ -5,6 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/cong_viec_nhan_vien_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4WorkProgressController extends GetxController
@@ -112,5 +113,13 @@ class V4WorkProgressController extends GetxController
       startDate: startDate,
       endDate: endDate,
     );
+  }
+
+  ///
+  ///Click to Work done page
+  ///
+  void onClickToDetailNewWork(String idNewWork) {
+    sl.get<SharedPreferenceHelper>().saveIdNewWork(id: idNewWork);
+    Get.toNamed(AppRoutes.V4_NEW_WORK);
   }
 }

@@ -113,7 +113,10 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
           return Column(
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  controller.onClickToDetailNewWork(
+                      controller.moiTaoModelList[index].id!);
+                },
                 child: Container(
                   margin: const EdgeInsets.symmetric(
                     vertical: Dimensions.PADDING_SIZE_LARGE,
