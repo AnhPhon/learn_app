@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,8 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4ReportController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -63,7 +67,7 @@ class V4ReportController extends GetxController
     baoCaoNhanVienProvider.paginate(
         page: 1,
         limit: 30,
-        filter: '&loai=1&sortBy=created_at:desc', // cần sửa lại?
+        filter: '&sortBy=created_at:desc', // cần sửa lại?
         onSuccess: (value) {
           baocaonhanvienModelList.value = value;
           isLoading = false;
@@ -99,7 +103,7 @@ class V4ReportController extends GetxController
     baoCaoNhanVienProvider.paginate(
         page: pageMax,
         limit: currentMax,
-        filter: '&loai=1&sortBy=created_at:desc',
+        filter: '&sortBy=created_at:desc',
         onSuccess: (value) {
           baocaonhanvienModelList.value = value;
           refreshController.refreshCompleted();
@@ -178,21 +182,49 @@ class V4ReportController extends GetxController
   ///
   ///Click to daily report
   ///
-  void onClickToDailyReport() {
-    Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT);
+  void onClickToDailyReport(BuildContext context) {
+    Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT)!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành công",
+            description: "Báo cáo thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   ///Click to report on request
   ///
-  void onClickToReportOnRequest() {
-    Get.toNamed(AppRoutes.V4_ADD_REPORT_ON_REQUEST);
+  void onClickToReportOnRequest(BuildContext context) {
+    Get.toNamed(AppRoutes.V4_ADD_REPORT_ON_REQUEST)!.then((value) {
+      if (value == true) {
+        showAnimatedDialog(
+          context,
+          const MyDialog(
+            icon: Icons.check,
+            title: "Thành công",
+            description: "Báo cáo thành công!",
+          ),
+          dismissible: false,
+          isFlip: true,
+        );
+        update();
+      }
+    });
   }
 
   ///
   /// Từ 16h - 7h sáng hôm say sẽ mở báo cáo ngày. Còn lại sẽ hiện Dialog thông báo hết hiệu lực để báo.
   ///
-  void managerReportTimer() {
+  void managerReportTimer(BuildContext context) {
     // ignore: prefer_final_locals
     double _timeStartReport = timeStartReport.hour.toDouble() +
         (timeStartReport.minute.toDouble() / 60);
@@ -207,10 +239,10 @@ class V4ReportController extends GetxController
     // Từ 16h hôm nay cho đến 7h sáng hôm sau thì mới cho báo cáo hằng ngày
     if (_timeStartReport <= _timeNow) {
       //đi tới báo cáo hằng ngày
-      return onClickToDailyReport();
+      return onClickToDailyReport(context);
     } else if (_timeNow <= _timeEndReport) {
       //đi tới trang báo cáo hằng ngày
-      return onClickToDailyReport();
+      return onClickToDailyReport(context);
     } else {
       //show dialog thông báo hết time báo cáo
       Get.defaultDialog(

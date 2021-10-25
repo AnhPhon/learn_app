@@ -57,8 +57,8 @@ Widget _timeReportOnRequest(
     V4AddReportOnRequestController controller, BuildContext context) {
   return TextFieldDate(
     paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-    isDate: true,
-    allowEdit: true,
+    isDate: false,
+    allowEdit: false,
     controller: controller.timeReportOnRequest,
     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
     holdplacer: "12-11-2021",

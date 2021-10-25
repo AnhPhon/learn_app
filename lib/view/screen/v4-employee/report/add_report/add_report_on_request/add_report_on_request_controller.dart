@@ -92,6 +92,18 @@ class V4AddReportOnRequestController extends GetxController{
       );
       return false;
     }
+    if (duAnNhanVien == null) {
+      Get.snackbar(
+        "Dự án không hơp lệ!", // title
+        "Vui lòng chọn dự án hợp lệ!", // message
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+      return false;
+    }
     return true;
   }
   ///
@@ -101,7 +113,9 @@ class V4AddReportOnRequestController extends GetxController{
     if (validate()) {
       baoCaoNhanVienProvider.add(
         data: BaoCaoNhanVienRequest(
+          idNhanVien: idUser,
           idDuAnNhanVien: duAnNhanVien!.id,
+          loai: "1",
           noiDung: contentReportOnRequest.text,
         ),
         onSuccess: (value) {

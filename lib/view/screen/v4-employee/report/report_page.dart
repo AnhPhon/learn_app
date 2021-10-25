@@ -19,7 +19,7 @@ class V4ReportPage extends GetView<V4ReportController> {
         action: [
           _filterlistreport(context),
         ],
-        leading: false,
+        leading: true,
         title: "Danh sách báo cáo",
       ),
       body: GetBuilder<V4ReportController>(
@@ -42,7 +42,7 @@ class V4ReportPage extends GetView<V4ReportController> {
           }),
 
       //floating Action Button Thêm báo cáo
-      floatingActionButton: _floatingActionButtonReport(controller),
+      floatingActionButton: _floatingActionButtonReport(controller, context),
     );
   }
 
@@ -240,7 +240,7 @@ Widget _lineWidget(BuildContext context) {
 ///
 ///floating Action Button Thêm báo cáo
 ///
-Widget _floatingActionButtonReport(V4ReportController controller) {
+Widget _floatingActionButtonReport(V4ReportController controller, BuildContext context) {
   return SpeedDial(
     icon: Icons.add,
     activeIcon: Icons.close_outlined,
@@ -261,7 +261,7 @@ Widget _floatingActionButtonReport(V4ReportController controller) {
         backgroundColor: ColorResources.YELLOW,
         onTap: () {
           //đi đến trang báo cáo theo yêu cầu
-          controller.onClickToReportOnRequest();
+          controller.onClickToReportOnRequest(context);
         },
         labelStyle: Dimensions.fontSizeStyle18w600(),
       ),
@@ -275,7 +275,7 @@ Widget _floatingActionButtonReport(V4ReportController controller) {
         label: "Thêm báo cáo hằng ngày",
         onTap: () {
           // kiểm tra có trong thời gian cho phép báo cáo hay không
-          controller.managerReportTimer();
+          controller.managerReportTimer(context);
         },
         labelStyle: Dimensions.fontSizeStyle18w600(),
       ),
