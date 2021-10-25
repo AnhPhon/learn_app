@@ -57,16 +57,39 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller
-            .tongTien, //controller.donPhanHoi!.idDonDichVu!.tongDon != null ? double.parse(controller.donPhanHoi!.idDonDichVu!.tongDon!) : 0,
-        children: [
+            .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
+        children: 
+        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        // [
+        //   const Flexible(
+        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+        //   )
+        // ] :
+        controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
+        [
+          const Flexible(
+          child: Text("Bạn đã thanh toán đơn dich vụ. Cám ơn bạn đã tin dùng dịch vụ chúng tôi", 
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            ),
+          )
+        ] 
+        : 
+        [
           SmallButton(
-              title: "Huỷ ", color: ColorResources.GREY, onPressed: () {}),
+            title: "Huỷ ", color: ColorResources.GREY, onPressed: (){
+              controller.onFeebacked();
+            }
+          ),
           SmallButton(
-              title: "Đồng ý đơn giá",
-              color: ColorResources.PRIMARYCOLOR,
-              onPressed: () {
-                controller.onClickAgreeButton();
-              }),
+            title: "Đồng ý đơn giá",
+            color: ColorResources.PRIMARYCOLOR,
+            onPressed: () {
+              controller.onClickAgreeButton();
+            }
+          ),
         ],
       ),
     );
@@ -86,7 +109,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         children: [
           TextHighlight(
             title: "Tiêu đề:",
-            content: controller.donPhanHoi!.idDonDichVu!.tieuDe!,
+            content: controller.donDichVu!.tieuDe!,
           ),
         ],
       ),
@@ -96,22 +119,24 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context,
-      {required V1BuildOrderFeedBackController controller}) {
+  Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    controller.donDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
+      print("Hình ảnh $element");
+    });
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
+      child: controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donPhanHoi!.idDonDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );
@@ -138,12 +163,9 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(BuildContext context,
-      {required V1BuildOrderFeedBackController controller}) {
-    return Padding(
-      padding: const EdgeInsets.all(
-        Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+  Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

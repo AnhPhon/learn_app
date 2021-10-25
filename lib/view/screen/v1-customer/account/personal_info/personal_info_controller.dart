@@ -13,6 +13,7 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
@@ -155,43 +156,31 @@ class V1PersonalInfoController extends GetxController {
   ///update account
   ///
   void updateAccount(BuildContext context) {
-    //show loading
-    EasyLoading.show(status: 'loading...');
-
     //validate
     if (nameCompanyController!.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
-      Get.snackbar(
-        "Lỗi",
-        "Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân",
+      SnackBarUtils.showSnackBar(
+        title: "Vui lòng kiểm tra lại",
+        message: "Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân",
       );
     } else if (fullNameController!.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
-      Get.snackbar(
-        "Lỗi",
-        "Vui lòng nhập họ và tên",
+      SnackBarUtils.showSnackBar(
+        title: "Vui lòng kiểm tra lại",
+        message: "Vui lòng nhập họ và tên",
       );
     } else if (phoneController!.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
-      Get.snackbar(
-        "Lỗi",
-        "Vui lòng nhập số điện thoại",
+      SnackBarUtils.showSnackBar(
+        title: "Vui lòng kiểm tra lại",
+        message: "Vui lòng nhập số điện thoại",
       );
     } else if (emailController!.text.isEmpty) {
-      EasyLoading.dismiss();
-
-      //show snackbar
-      Get.snackbar(
-        "Lỗi",
-        "Vui lòng nhập email",
+      SnackBarUtils.showSnackBar(
+        title: "Vui lòng kiểm tra lại",
+        message: "Vui lòng nhập email",
       );
     } else {
+      //show loading
+      EasyLoading.show(status: 'loading...');
+
       //set data
       taiKhoanRequest.id = idUser;
       taiKhoanRequest.tenPhapLy = nameCompanyController!.text;

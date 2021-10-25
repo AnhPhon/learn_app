@@ -2,13 +2,13 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class OrderFeedbackInformationController extends GetxController{
-  final PhanHoiDonDichVuProvider phanHoiDonDichVuProvider = GetIt.I.get<PhanHoiDonDichVuProvider>();
-    PhanHoiDonDichVuResponse? donPhanHoi;
+    DonDichVuResponse? donDichVu;
 
     double soTien = 0;
     double phiDichVu = 0;
@@ -21,17 +21,17 @@ class OrderFeedbackInformationController extends GetxController{
   void onInit() {
     super.onInit();
     tinhTien();
-    //donPhanHoi!.idDonDichVu!.tongDon = tongTien.toString();
+    //donDichVu!.tongDon = tongTien.toString();
   }
 
   void tinhTien(){
-    donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
-    if(donPhanHoi != null){
-      soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
-      phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
-      khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+    donDichVu = Get.arguments as DonDichVuResponse;
+    if(donDichVu != null){
+      soTien = double.parse(donDichVu!.soTien!,(e)=> 0);
+      phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
+      khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
       tongTien = soTien + phiDichVu - khuyenMai;
-      tienCoc = double.parse(donPhanHoi!.idDonDichVu!.tienCoc!,(e)=> 0);
+      tienCoc = double.parse(donDichVu!.tienCoc!,(e)=> 0);
       isLoading = false;
       update();
     }
@@ -42,16 +42,16 @@ class OrderFeedbackInformationController extends GetxController{
   /// 
   PhanHoiDonDichVuRequest onRequest(){
     PhanHoiDonDichVuRequest request =  PhanHoiDonDichVuRequest();
-    //donPhanHoi!.idDonDichVu!.tieuDe = "Phản hồi báo giá đơn dich vụ "
-    if(donPhanHoi!.idDonDichVu!.id != null){
-      request.idDonDichVu = donPhanHoi!.idDonDichVu!.id;
+    //donDichVu!.tieuDe = "Phản hồi báo giá đơn dich vụ "
+    if(donDichVu!.id != null){
+      request.idDonDichVu = donDichVu!.id;
     }
-    if(donPhanHoi!.idDonDichVu!.idTaiKhoan != null){
+    if(donDichVu!.idTaiKhoan != null){
       // Tài khoản nhận đơn
-      request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
+      request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
     }
-    // if(donPhanHoi!.idTaiKhoan!.id != null){
-    //   request.idTaiKhoan = donPhanHoi!.idTaiKhoan!.id;
+    // if(donDichVu!.idTaiKhoan!.id != null){
+    //   request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
     // }
     return request;
   }
@@ -59,6 +59,6 @@ class OrderFeedbackInformationController extends GetxController{
     /// Nhấn vào đông ý đơn hàng
     ///
     void onNextPage(){
-      Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donPhanHoi);
+      Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donDichVu);
     }
 }

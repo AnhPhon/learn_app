@@ -15,6 +15,7 @@ import 'package:template/view/screen/v1-customer/account/introduce/introduce_pag
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
 import 'package:template/view/screen/v1-customer/account/mail/mail_page.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_page.dart';
+import 'package:template/view/screen/v1-customer/account/my_order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/account/personal_info/personal_info_page.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
@@ -425,6 +426,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_ACCOUNT,
       page: () => V1AccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_ORDER_DETAIL,
+      page: () => V1OrderDetailPage(),
     ),
 
     //builder

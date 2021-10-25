@@ -1,18 +1,21 @@
 
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1BuildOrderFeedBackController extends GetxController{
+  final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
-  PhanHoiDonDichVuResponse? donPhanHoi;
+  DonDichVuResponse? donDichVu;
   // Khối lương công việc
   List<VatTuResponse> workMass = [];
   bool isLoading = true;
@@ -24,11 +27,11 @@ class V1BuildOrderFeedBackController extends GetxController{
   @override
   void onInit() {
     if(Get.arguments != null){
-      donPhanHoi = Get.arguments as PhanHoiDonDichVuResponse;
+      donDichVu = Get.arguments as DonDichVuResponse;
     }
-    soTien = double.parse(donPhanHoi!.idDonDichVu!.soTien!,(e)=> 0);
-    phiDichVu = double.parse(donPhanHoi!.idDonDichVu!.phiDichVu!,(e)=> 0);
-    khuyenMai = double.parse(donPhanHoi!.idDonDichVu!.khuyenMai!,(e)=> 0);
+    soTien = double.parse(donDichVu!.soTien!,(e)=> 0);
+    phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
+    khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
     tongTien = soTien + phiDichVu - khuyenMai;
     super.onInit();
     getJobMass();
@@ -38,7 +41,8 @@ class V1BuildOrderFeedBackController extends GetxController{
   /// Lấy báo giá công việc or vâtk liệu thuộc đơn dịch vụ
   ///
   void getJobMass(){
-    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donPhanHoi!.idDonDichVu!.id!}', onSuccess: (data){
+    print(donDichVu!.toJson());
+    vatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
       workMass.clear();
       workMass.addAll(data);
       isLoading = false;
@@ -52,6 +56,23 @@ class V1BuildOrderFeedBackController extends GetxController{
 
   void onClickAgreeButton(){
     // Đến màn hình chọn phương thức thanh toán
-    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donPhanHoi);
+    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donDichVu);
+  }
+
+  ///
+  /// Đã phản hồi nhưng không đồng ý thanh toán
+  ///
+  void onFeebacked(){
+    EasyLoading.show(status: "Phản hồi đơn dich vụ ...");
+    final DonDichVuRequest dichVuRequest = DonDichVuRequest();
+    dichVuRequest.id = donDichVu!.id;
+    dichVuRequest.idTrangThaiDonDichVu = DA_PHAN_HOI;
+    dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
+    donDichVuProvider.update(data: dichVuRequest, onSuccess: (onSuccess){
+      EasyLoading.dismiss();
+      Get.back();
+    }, onError: (onError){
+      print("V1BuildOrderFeedBackController onFeebacked: $onError");
+    });
   }
 }
