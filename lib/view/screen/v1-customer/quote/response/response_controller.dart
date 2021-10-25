@@ -58,9 +58,7 @@ class V1ResponseController extends GetxController {
               images.add(image.toString());
             }
           }
-          print("321321312321321: ${donDichVu.file}");
           fileURL = donDichVu.file!;
-
           update();
         },
         onError: (error) {
