@@ -30,7 +30,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
           }
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,7 +79,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn công việc phù hợp",
             hint: 'Chọn nhóm công việc',
-            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
           ),
       ],
     );
@@ -265,7 +265,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
 
   Widget button(CreateWorkController controller){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: (){

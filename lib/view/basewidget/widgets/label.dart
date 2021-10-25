@@ -9,9 +9,9 @@ class Label extends StatelessWidget {
     Key? key,
     required this.label,
     required this.obligatory,
-    this.paddingTitle = Dimensions.PADDING_SIZE_SMALL,
+    this.paddingTitle = Dimensions.PADDING_SIZE_EXTRA_SMALL,
     this.horizontalPadding = Dimensions.PADDING_SIZE_DEFAULT,
-    this.topPadding = Dimensions.PADDING_SIZE_LARGE,
+    this.topPadding = Dimensions.PADDING_SIZE_SMALL,
     this.style,
     this.alignment,
   }) : super(key: key);
@@ -38,12 +38,12 @@ class Label extends StatelessWidget {
             Text(
               label,
               style: style ?? const TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold,/*color: ColorResources.BLACK.withOpacity(0.7)*/),
+                  fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold,/*color: ColorResources.BLACK.withOpacity(0.7)*/),
             ),
             if (obligatory) const Text(
                     '*',
                     style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ) else Container()

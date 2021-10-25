@@ -40,7 +40,7 @@ class LongButton extends StatelessWidget {
             title,
             style: const TextStyle(
                 color: ColorResources.WHITE,
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
         ),
       ),
