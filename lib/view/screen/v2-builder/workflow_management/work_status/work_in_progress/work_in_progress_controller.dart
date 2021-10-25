@@ -90,35 +90,32 @@ class V2WorkInProgressController extends GetxController {
       donDichVuProvider.find(
         id: workFlowId!,
         onSuccess: (model) {
-          if (model != null) {
-            // set adress
-            address = "";
-            if (model.idQuanHuyen != null) {
-              address += model.idQuanHuyen!.ten!;
-            }
-            // set title
-            title = model.tieuDe!;
-
-            // set city
-            if (model.idTinhTp != null) {
-              city = model.idTinhTp!.ten!;
-            }
-
-            // set deadline
-            deadline = _getDeadline(model.ngayKetThuc!);
-
-            if (model.idTrangThaiDonHang != null) {
-              // set icon and color
-              isStatus = model.idTrangThaiDonHang!.tieuDe!.toLowerCase() ==
-                  dangTuyenKey;
-
-              // set status
-              result = model.idTrangThaiDonHang!.tieuDe!;
-            }
-
-            isLoading = false;
-            update();
+          address = "";
+          if (model.idQuanHuyen != null) {
+            address += model.idQuanHuyen!.ten!;
           }
+          // set title
+          title = model.tieuDe!;
+
+          // set city
+          if (model.idTinhTp != null) {
+            city = model.idTinhTp!.ten!;
+          }
+
+          // set deadline
+          deadline = _getDeadline(model.ngayKetThuc!);
+
+          if (model.idTrangThaiDonHang != null) {
+            // set icon and color
+            isStatus =
+                model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
+
+            // set status
+            result = model.idTrangThaiDonHang!.tieuDe!;
+          }
+
+          isLoading = false;
+          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

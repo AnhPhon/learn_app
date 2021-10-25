@@ -26,8 +26,8 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Dimensions.PADDING_SIZE_LARGE,
+                  padding: const EdgeInsets.only(
+                    top: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
