@@ -64,35 +64,24 @@ class V1VatTuListController extends GetxController {
   void loadDaPhanHoi() {
     daPhanHoiDDV.clear();
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      phanHoiDonDichVuProvider.paginate(
+      print("&idTaiKhoan=$userId&sortBy=created_at:desc");
+      donDichVuProvider.paginate(
         page: 1,
         limit: 10,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (phanHoiDonDichVuList) {
+        onSuccess: (donDichVuList) {
           // run don dich vu list
-          for (final phanHoi in phanHoiDonDichVuList) {
-            if (phanHoi.idDonDichVu != null) {
-              // check trang thai
-              donDichVuProvider.find(
-                id: phanHoi.idDonDichVu!.id!,
-                onSuccess: (data) {
-                  if (data.idTrangThaiDonDichVu != null) {
-                    if (data.idTrangThaiDonDichVu!.tieuDe
-                            .toString()
-                            .toLowerCase() ==
-                        daPhanHoiKey) {
-                      daPhanHoiDDV.add(data);
-                    }
-                  }
-                  update();
-                },
-                onError: (error) {
-                  print(
-                      "TermsAndPolicyController getTermsAndPolicy onError $error");
-                },
-              );
+          for (final ddv in donDichVuList) {
+            if (ddv.idTrangThaiDonDichVu != null) {
+              if (ddv.idTrangThaiDonDichVu!.tieuDe.toString().toLowerCase() ==
+                      daPhanHoiKey &&
+                  !daPhanHoiDDV.contains(ddv)) {
+                daPhanHoiDDV.add(ddv);
+              }
             }
           }
+
+          update();
           isLoading = false;
         },
         onError: (error) {
@@ -108,32 +97,23 @@ class V1VatTuListController extends GetxController {
   void loadChuaPhanHoi() {
     chuaPhanHoiDDV.clear();
     sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      phanHoiDonDichVuProvider.paginate(
+      donDichVuProvider.paginate(
         page: 1,
         limit: 10,
         filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-        onSuccess: (phanHoiDonDichVuList) {
+        onSuccess: (donDichVuList) {
           // run don dich vu list
-          for (final phanHoi in phanHoiDonDichVuList) {
-            donDichVuProvider.find(
-              id: phanHoi.idDonDichVu!.id!,
-              onSuccess: (data) {
-                if (data.idTrangThaiDonDichVu != null) {
-                  if (data.idTrangThaiDonDichVu!.tieuDe
-                          .toString()
-                          .toLowerCase() ==
-                      chuaPhanHoiKey) {
-                    chuaPhanHoiDDV.add(data);
-                  }
-                }
-                update();
-              },
-              onError: (error) {
-                print(
-                    "TermsAndPolicyController getTermsAndPolicy onError $error");
-              },
-            );
+          for (final ddv in donDichVuList) {
+            if (ddv.idTrangThaiDonDichVu != null) {
+              if (ddv.idTrangThaiDonDichVu!.tieuDe.toString().toLowerCase() ==
+                      chuaPhanHoiKey &&
+                  !chuaPhanHoiDDV.contains(ddv)) {
+                chuaPhanHoiDDV.add(ddv);
+              }
+            }
           }
+
+          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

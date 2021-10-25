@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -19,7 +23,7 @@ class V1ResponseController extends GetxController {
   Map<String, List<Map<String, dynamic>>> infoCard = {};
   List<String> images = [];
   double tongTien = 0;
-
+  String fileURL = "";
   bool isLoading = true;
 
   @override
@@ -54,7 +58,7 @@ class V1ResponseController extends GetxController {
               images.add(image.toString());
             }
           }
-          print(images);
+          fileURL = donDichVu.file!;
 
           update();
         },
@@ -122,6 +126,28 @@ class V1ResponseController extends GetxController {
         },
       );
     });
+  }
+
+  ///
+  /// download file
+  ///
+  Future<void> downloadFile(BuildContext context, String url) async {
+    final Dio dio = Dio();
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      print("${dir.path}/downloadfile.docx");
+      await dio.download(
+        url,
+        "${dir.path}/downloadfile.docx",
+        onReceiveProgress: (rec, total) {
+          EasyLoading.showProgress(rec / total);
+        },
+      );
+    } catch (e) {
+      print("TermsAndPolicyController getTermsAndPolicy onError $e");
+    }
+    EasyLoading.dismiss();
+    Get.snackbar("Download", "Hoàn thành");
   }
 
   ///
