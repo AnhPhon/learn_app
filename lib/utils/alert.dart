@@ -6,8 +6,7 @@ import 'package:template/utils/color_resources.dart';
 
 mixin Alert {
   static void error(
-      {required String title,
-      required String message,
+      {required String message,
       Color? backgroundColor}) {
     showToast(
       message.toString(),
@@ -25,8 +24,7 @@ mixin Alert {
   }
 
   static void success(
-      {required String title,
-      required String message,
+      {required String message,
       Color? backgroundColor}) {
     showToast(
       message.toString(),
@@ -44,8 +42,7 @@ mixin Alert {
   }
 
   static void info(
-      {required String title,
-      required String message,
+      {required String message,
       Color? backgroundColor}) {
     showToast(
       message.toString(),

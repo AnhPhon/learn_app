@@ -14,6 +14,7 @@ import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 
 class V2ProjectDangKyTrienKhaiController extends GetxController {
@@ -125,61 +126,13 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
   /// Kiem tra dang ky du an
   void moViewDangKyViecMoi() {
     if (danhSachThoThauBaoGiaRequest.idLoaiCongViecs == null || danhSachThoThauBaoGiaRequest.idLoaiCongViecs!.isEmpty) {
-      Get.snackbar(
-        'Lỗi', // title
-        'Hãy chọn ít nhất 1 công việc', // message
-        shouldIconPulse: true,
-        isDismissible: true,
-        backgroundColor: ColorResources.RED,
-        colorText: ColorResources.WHITE,
-        icon: const Icon(
-          Icons.error_outline,
-          color: ColorResources.WHITE,
-        ),
-        duration: const Duration(seconds: 3),
-      );
+      Alert.error(message: 'Hãy chọn ít nhất 1 công việc');
     } else if (danhSachThoThauBaoGiaRequest.idNhomDichVu == null || danhSachThoThauBaoGiaRequest.idNhomDichVu!.isEmpty) {
-      Get.snackbar(
-        'Lỗi', // title
-        'Hãy chọn ít nhất 1 nhóm', // message
-        shouldIconPulse: true,
-        isDismissible: true,
-        backgroundColor: ColorResources.RED,
-        colorText: ColorResources.WHITE,
-        icon: const Icon(
-          Icons.error_outline,
-          color: ColorResources.WHITE,
-        ),
-        duration: const Duration(seconds: 3),
-      );
+      Alert.error(message: 'Hãy chọn ít nhất 1 nhóm');
     } else if (danhSachThoThauBaoGiaRequest.thoiGianBatDauLam == null || danhSachThoThauBaoGiaRequest.thoiGianBatDauLam!.isEmpty) {
-      Get.snackbar(
-        'Lỗi', // title
-        'Hãy chọn ngày bắt đầu làm', // message
-        shouldIconPulse: true,
-        isDismissible: true,
-        backgroundColor: ColorResources.RED,
-        colorText: ColorResources.WHITE,
-        icon: const Icon(
-          Icons.error_outline,
-          color: ColorResources.WHITE,
-        ),
-        duration: const Duration(seconds: 3),
-      );
+      Alert.error(message: 'Hãy chọn ngày bắt đầu làm');
     } else if (danhSachThoThauBaoGiaRequest.soLuongNguoi == null || danhSachThoThauBaoGiaRequest.soLuongNguoi! <= 0) {
-      Get.snackbar(
-        'Lỗi', // title
-        'Số lượng người làm không hợp lệ', // message
-        shouldIconPulse: true,
-        isDismissible: true,
-        backgroundColor: ColorResources.RED,
-        colorText: ColorResources.WHITE,
-        icon: const Icon(
-          Icons.error_outline,
-          color: ColorResources.WHITE,
-        ),
-        duration: const Duration(seconds: 3),
-      );
+      Alert.error(message: 'Số lượng người làm không hợp lệ');
     } else {
       /// Goi yeu cau dang ky du an
       guiYeuCauDangKy();
@@ -195,19 +148,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Future.delayed(Duration.zero, () {
-            Get.snackbar(
-              'Thành công', // title
-              'Đã gửi yêu cầu thành công', // message
-              shouldIconPulse: true,
-              isDismissible: true,
-              backgroundColor: ColorResources.GREEN,
-              colorText: ColorResources.WHITE,
-              icon: const Icon(
-                Icons.error_outline,
-                color: ColorResources.WHITE,
-              ),
-              duration: const Duration(seconds: 3),
-            );
+            Alert.success(message: 'Đã gửi yêu cầu thành công');
           });
 
           Future.delayed(Duration.zero, () {
