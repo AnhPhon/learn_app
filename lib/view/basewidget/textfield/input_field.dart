@@ -110,23 +110,33 @@ class InputField extends StatelessWidget {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),

@@ -258,7 +258,7 @@ class V2HomePage extends GetView<V2HomeController> {
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
-
+    print(length);
     return FieldWidget(
       onTap: () => controller.onShortHandedPageClick(),
       title: "Công việc đang cần người",
@@ -272,7 +272,7 @@ class V2HomePage extends GetView<V2HomeController> {
             return TaskNeedWorker(
               tenTask: controller.donDichVuList[index].tieuDe!,
               maTask:
-                  "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
+                  "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
               trangThai:
                   controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
               imageURL: controller.donDichVuList[index].hinhAnhChiTiet,

@@ -13,6 +13,7 @@ class PhanHoiDonDichVuResponse {
   String? noiDungYeuCauBaoHanh;
   String? danhGiaBaoHanh;
   String? tinhTrangThanhToan;
+  String? kichHoatBaoHanh;
 
   String? createdAt;
   String? updatedAt;
@@ -29,6 +30,7 @@ class PhanHoiDonDichVuResponse {
       this.noiDungYeuCauBaoHanh,
       this.danhGiaBaoHanh,
       this.tinhTrangThanhToan,
+      this.kichHoatBaoHanh,
       this.createdAt,
       this.updatedAt});
 
@@ -63,6 +65,7 @@ class PhanHoiDonDichVuResponse {
     noiDungYeuCauBaoHanh = json['noiDungYeuCauBaoHanh'].toString();
     danhGiaBaoHanh = json['danhGiaBaoHanh'].toString();
     tinhTrangThanhToan = json['tinhTrangThanhToan'].toString();
+    kichHoatBaoHanh = json['kichHoatBaoHanh'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -107,6 +110,9 @@ class PhanHoiDonDichVuResponse {
     // check null tinhTrangThanhToan
     if (tinhTrangThanhToan != null)
       data['tinhTrangThanhToan'] = tinhTrangThanhToan;
+
+    // check null kichHoatBaoHanh
+    if (kichHoatBaoHanh != null) data['kichHoatBaoHanh'] = kichHoatBaoHanh;
 
     return data;
   }

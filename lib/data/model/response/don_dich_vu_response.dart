@@ -318,7 +318,8 @@ class DonDichVuResponse {
     if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null giaTriKhachDeXuat
-    if (giaTriKhachDeXuat != null)data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
+    if (giaTriKhachDeXuat != null)
+      data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
 
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;

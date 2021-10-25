@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -10,6 +13,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V2WorkflowManagementController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -111,6 +115,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_DONE)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
@@ -123,6 +128,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
@@ -140,7 +146,7 @@ class V2WorkflowManagementController extends GetxController
           ),
     );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   ///
