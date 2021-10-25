@@ -4,8 +4,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v2-builder/account/profile/contract/contract_controller.dart';
-import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
 
 class V2ContractPage extends GetView<V2ContractController> {
   @override

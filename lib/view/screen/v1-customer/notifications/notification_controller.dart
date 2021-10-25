@@ -16,7 +16,7 @@ class V1NotificationController extends GetxController{
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
-  int limit = 5;
+  int limit = 6;
   bool isLoading = true;
   String userId = '';
 
@@ -98,30 +98,28 @@ class V1NotificationController extends GetxController{
   }
 
   void onClickItem(ThongBaoResponse notification){
-    print(notification.idPhanHoiDonDichVu!.idDonDichVu!.toJson());
-
-    donDichVuProvider.find(id: notification.idPhanHoiDonDichVu!.idDonDichVu!.id!, onSuccess: (data){
-      print("Data: $data");
-      String id = data.idNhomDichVu!.nhomDichVu!;
-      print("Nhóm dịch vụ : $id");
+    donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
+      // print("Data: $data");
+      final String id = data.idNhomDichVu!.nhomDichVu!;
+      // print("Nhóm dịch vụ : $id");
       if(id.contains('1')){
         // phản hồi nhóm 1
-        Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data);
       }else if(id.contains('2')){
         // Đây là nhóm 2 Công việc DVTX khảo sát báo giá
-        Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,arguments: data);
       }else if(id.contains('5')){
         // Đây là nhóm 5 phản hồi dịch vụ xe tải, xe ben, cầu thùng
-        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5,arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5,arguments: data);
       }else if(id.contains('6')){
         // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
-        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: data);
       }else if(id.contains('7')){
         // Phản hồi tuyển dụng thành viên
-        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: data);
       }else{
         // Phản hồi vật tư
-        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: notification.idPhanHoiDonDichVu);
+        Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6,arguments: data);
       }
     }, onError: (onError){
       print("V1NotificationController onClickItem onError $onError");

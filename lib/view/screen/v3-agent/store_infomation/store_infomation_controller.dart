@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -637,7 +638,8 @@ class V3StoreInfomationController extends GetxController {
         if (tinhTpWarehouse[i] == null ||
             quanHuyenWarehouse[i] == null ||
             phuongXaWarehouse[i] == null ||
-            warehouseAddressController[i].text.isEmpty ||warehouseNameController[i].text.isEmpty) {
+            warehouseAddressController[i].text.isEmpty ||
+            warehouseNameController[i].text.isEmpty) {
           SnackBarUtils.showSnackBar(
             title: "Vui lòng kiểm tra lại",
             message: "Trường địa điểm kho hàng $i không được để trống",
@@ -646,6 +648,9 @@ class V3StoreInfomationController extends GetxController {
       }
       print("V3StoreInfomationController  onError ");
     } else {
+      //show loading
+      EasyLoading.show(status: 'loading...');
+
       //set data
       taiKhoanRequest.id = userId;
       taiKhoanRequest.hoTen = nameController.text;
@@ -664,7 +669,6 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.lamChieuThuBay = taiKhoanResponse.lamChieuThuBay;
       taiKhoanRequest.lamNgayChuNhat = taiKhoanResponse.lamNgayChuNhat;
       taiKhoanRequest.hinhAnhCuaHangs = urlImage;
-      print("V3StoreInfomationController btnUpdate trong20 ");
       //update taiKhoan
       taiKhoanProvider.update(
         data: taiKhoanRequest,
@@ -672,40 +676,105 @@ class V3StoreInfomationController extends GetxController {
           //set data
           khoHangDaiLyRequest.idTaiKhoan = userId;
 
-          print("V3StoreInfomationController btnUpdate trong21 ");
-          for (var i = 0; i < tinhTpWarehouse.length; i++) {
-            print("V3StoreInfomationController btnUpdate trong22 ");
-            //set data
-            khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
-            khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
-            khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
-            khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
-            khoHangDaiLyRequest.ten= warehouseNameController[i].text;
+          //if add warehouse
+          if (tinhTpWarehouse.length > khoHangDaiLyList.length) {
+            //update warehouse already exits
+            for (var i = 0; i < khoHangDaiLyList.length; i++) {
+              //set data
+              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
+              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
+              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
+              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
+              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
+              khoHangDaiLyRequest.id = khoHangDaiLyList[i].id;
 
-            //add khoHang
-            khoHangDaiLyProvider.add(
-              data: khoHangDaiLyRequest,
-              onSuccess: (khoHang) {
-                print("V3StoreInfomationController btnUpdate trong ");
-                ////show dialog
-                if (i == tinhTpWarehouse.length - 1) {
-                  Get.offNamed(AppRoutes.V3_STORE);
-                  showAnimatedDialog(
-                    context,
-                    const MyDialog(
-                      icon: Icons.check,
-                      title: "Hoàn tất",
-                      description: "Cập nhật thông tin thành công",
-                    ),
-                    dismissible: false,
-                    isFlip: true,
-                  );
-                }
-              },
-              onError: (error) {
-                print("V3StoreInfomationController btnUpdate onError $error");
-              },
-            );
+              //update warehouse already exits
+              khoHangDaiLyProvider.update(
+                data: khoHangDaiLyRequest,
+                onSuccess: (khoHangDaiLyUpdate) {},
+                onError: (error) {
+                  print(
+                      "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
+                },
+              );
+            }
+            //add new warehouse
+            khoHangDaiLyRequest.id = null;
+            tinhTpWarehouse.removeRange(0, khoHangDaiLyList.length);
+            quanHuyenWarehouse.removeRange(0, khoHangDaiLyList.length);
+            phuongXaWarehouse.removeRange(0, khoHangDaiLyList.length);
+            warehouseAddressController.removeRange(0, khoHangDaiLyList.length);
+            warehouseNameController.removeRange(0, khoHangDaiLyList.length);
+            for (var i = 0; i < tinhTpWarehouse.length; i++) {
+              //set data
+              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
+              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
+              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
+              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
+              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
+
+              //add khoHang
+              khoHangDaiLyProvider.add(
+                data: khoHangDaiLyRequest,
+                onSuccess: (khoHang) {
+                  ////show dialog
+                  if (i == tinhTpWarehouse.length - 1) {
+                    EasyLoading.dismiss();
+                    Get.back();
+                    showAnimatedDialog(
+                      context,
+                      const MyDialog(
+                        icon: Icons.check,
+                        title: "Hoàn tất",
+                        description: "Cập nhật thông tin thành công",
+                      ),
+                      dismissible: false,
+                      isFlip: true,
+                    );
+                  }
+                },
+                onError: (error) {
+                  print("V3StoreInfomationController btnUpdate onError $error");
+                },
+              );
+            }
+          } else {
+            //update warehouse already exits
+            for (var i = 0; i < khoHangDaiLyList.length; i++) {
+              //set data
+              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
+              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
+              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
+              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
+              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
+              khoHangDaiLyRequest.id = khoHangDaiLyList[i].id;
+
+              //update warehouse already exits
+              khoHangDaiLyProvider.update(
+                data: khoHangDaiLyRequest,
+                onSuccess: (khoHangDaiLyUpdate) {
+                  ////show dialog
+                  if (i == tinhTpWarehouse.length - 1) {
+                    EasyLoading.dismiss();
+                    Get.back();
+                    showAnimatedDialog(
+                      context,
+                      const MyDialog(
+                        icon: Icons.check,
+                        title: "Hoàn tất",
+                        description: "Cập nhật thông tin thành công",
+                      ),
+                      dismissible: false,
+                      isFlip: true,
+                    );
+                  }
+                },
+                onError: (error) {
+                  print(
+                      "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
+                },
+              );
+            }
           }
         },
         onError: (error) {

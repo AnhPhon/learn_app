@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V1BeforeRechargeController extends GetxController {
   //textEditingController
@@ -77,19 +78,22 @@ class V1BeforeRechargeController extends GetxController {
     if (amountOfMoneyController.text.isEmpty) {
       EasyLoading.dismiss();
       // show errors
-      Get.snackbar(
-        "Lỗi", // title
-        "Vui lòng nhập sô tiền", // message
-        icon: const Icon(Icons.error_outline),
-        backgroundColor: const Color(0xffFFCDD2),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 3),
+      SnackBarUtils.showSnackBar(
+        title: "Vui lòng kiểm tra lại",
+        message: "Vui lòng nhập số tiền",
       );
     } else {
       EasyLoading.dismiss();
       Get.toNamed(
-          "${AppRoutes.V1_RECHARGE}?amountOfMoney=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}");
+              "${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}&url=${AppRoutes.V1_BEFORE_RECHARGE}")!
+          .then((value) {
+        if (value == true) {
+          Get.offAllNamed(
+            AppRoutes.V1_WALLET,
+            predicate: ModalRoute.withName(AppRoutes.V1_WALLET),
+          );
+        }
+      });
     }
   }
 }

@@ -49,7 +49,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
       },
       child: Container(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-        height: 120,
+        height: 100,
         color: index % 2 == 0 ?  ColorResources.PRIMARYCOLOR.withOpacity(0.3) : ColorResources.WHITE,
         child: Column(
           children: [
@@ -57,7 +57,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
               text: TextSpan(
                 text: '${controller.notifications[index].tieuDe} ',
                 style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
                   color: ColorResources.BLACK.withOpacity(0.8),
                 ),
                 children: [

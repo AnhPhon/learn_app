@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
 import 'package:template/view/basewidget/widgets/file_upload.dart';
@@ -307,11 +307,15 @@ class V1ResponsePage extends GetView<V1ResponseController> {
   ///
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.launchURL();
+        // controller.downloadClick("file", "jpg");
+        // controller.downloadFile(context, controller.fileURL);
+      },
       child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
-        content: FileUploadWidget(label: "Thêm file"),
+        content: FileUploadWidget(label: "Tải file"),
       ),
     );
   }

@@ -87,14 +87,14 @@ class DuAnKhachHangResponse {
     giaDuyet = json['giaDuyet'].toString();
 
     // mapping idHangMucXayDung                                                              
-    if (json['idHangMucXayDungs'] != null && json['idHangMucXayDungs'].toString().length!=24) {
-      idHangMucXayDungs = <HangMucXayDungResponse>[];
-      json['idHangMucXayDungs'].forEach((v) {
-        idHangMucXayDungs!.add(HangMucXayDungResponse.fromJson(v as Map<String, dynamic>));
-      });
-    } else {
-      idHangMucXayDungs = <HangMucXayDungResponse>[];
-    }
+    // if (json['idHangMucXayDungs'] != null && json['idHangMucXayDungs'].toString().length!=24) {
+    //   idHangMucXayDungs = <HangMucXayDungResponse>[];
+    //   json['idHangMucXayDungs'].forEach((v) {
+    //     idHangMucXayDungs!.add(HangMucXayDungResponse.fromJson(v as Map<String, dynamic>));
+    //   });
+    // } else {
+    //   idHangMucXayDungs = <HangMucXayDungResponse>[];
+    // }
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     thoiGianYeuCau = json['thoiGianYeuCau'].toString();
