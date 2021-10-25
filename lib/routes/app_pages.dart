@@ -159,7 +159,6 @@ import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
-import 'package:template/view/screen/v2-builder/project/project_detail/project_detail_page.dart';
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
@@ -978,11 +977,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_NEWS_DETAIL,
       page: () => V2NewsDetailPage(),
-    ),
-    // Dự án
-    GetPage(
-      name: AppRoutes.V2_PROJECT_DETAIL,
-      page: () => V2ProjectDetailPage(),
     ),
     GetPage(
       name: AppRoutes.V2_PROJECT_DETAIL_TRIEN_KHAI,

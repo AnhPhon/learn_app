@@ -21,29 +21,29 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
                 extendBodyBehindAppBar: true,
                 appBar: AppBar(
                   centerTitle: true,
-                  // title: Text(
-                  //   controller.duAnKhachHangResponse!.ten.toString(),
-                  //   style: const TextStyle(
-                  //     shadows: [
-                  //       Shadow(
-                  //           // bottomLeft
-                  //           offset: Offset(-1.5, -1.5),
-                  //           color: ColorResources.PRIMARY),
-                  //       Shadow(
-                  //           // bottomRight
-                  //           offset: Offset(1.5, -1.5),
-                  //           color: ColorResources.PRIMARY),
-                  //       Shadow(
-                  //           // topRight
-                  //           offset: Offset(1.5, 1.5),
-                  //           color: ColorResources.PRIMARY),
-                  //       Shadow(
-                  //           // topLeft
-                  //           offset: Offset(-1.5, 1.5),
-                  //           color: ColorResources.PRIMARY),
-                  //     ],
-                  //   ),
-                  // ),
+                  title: Text(
+                    controller.title.toString(),
+                    style: const TextStyle(
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topRight
+                            offset: Offset(1.5, 1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-1.5, 1.5),
+                            color: ColorResources.BLACK),
+                      ],
+                    ),
+                  ),
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                 ),
@@ -121,35 +121,33 @@ class V1ProjectDetailPage extends GetView<V1ProjectDetailController> {
       // color: Colors.red,
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       // margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
-      child: Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Địa điểm:",
-              textAlign: TextAlign.left,
-              style: Dimensions.fontSizeStyle18w600(),
-            ),
-            Text(
-              controller.duAnKhachHangResponse!.diaDiem.toString(),
-              textAlign: TextAlign.left,
-              style: Dimensions.fontSizeStyle18(),
-            ),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_LARGE,
-            ),
-            Text(
-              "Giới thiệu:",
-              textAlign: TextAlign.left,
-              style: Dimensions.fontSizeStyle18w600(),
-            ),
-            Text(
-              controller.duAnKhachHangResponse!.gioiThieu.toString(),
-              textAlign: TextAlign.left,
-              style: Dimensions.fontSizeStyle18(),
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Địa điểm:",
+            textAlign: TextAlign.left,
+            style: Dimensions.fontSizeStyle18w600(),
+          ),
+          Text(
+            controller.duAnKhachHangResponse!.diaDiem.toString(),
+            textAlign: TextAlign.left,
+            style: Dimensions.fontSizeStyle18(),
+          ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_LARGE,
+          ),
+          Text(
+            "Giới thiệu:",
+            textAlign: TextAlign.left,
+            style: Dimensions.fontSizeStyle18w600(),
+          ),
+          Text(
+            controller.duAnKhachHangResponse!.gioiThieu.toString(),
+            textAlign: TextAlign.left,
+            style: Dimensions.fontSizeStyle18(),
+          ),
+        ],
       ),
     );
   }

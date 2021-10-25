@@ -26,6 +26,7 @@ class V1ProjectDetailController extends GetxController {
     final dynamic arguments = Get.arguments;
     if(arguments != null && arguments['idProject'] != null){
       idProject = arguments!['idProject'].toString();
+      title = arguments!['title'].toString();
       print('V1ProjectDetailController onInit $idProject');
 
       duAnKhachHangProvider.find(
