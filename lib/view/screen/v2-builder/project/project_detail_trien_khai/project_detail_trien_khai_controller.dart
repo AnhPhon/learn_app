@@ -11,6 +11,7 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
 
   DuAnKhachHangProvider duAnKhachHangProvider = GetIt.I.get<DuAnKhachHangProvider>();
   DuAnKhachHangResponse? duAnKhachHangResponse;
+
   @override
   void onInit() {
     super.onInit();
