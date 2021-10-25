@@ -1,7 +1,7 @@
 class DonHangRequest {
   String? id;
   String? idTaiKhoan;
-  String? taiKhoanMuaHang;
+  String? idTaiKhoanMuaHang;
   String? idTinhTp;
   String? idQuanHuyen;
   String? idPhuongXa;
@@ -19,7 +19,7 @@ class DonHangRequest {
   DonHangRequest(
       {this.id,
       this.idTaiKhoan,
-      this.taiKhoanMuaHang,
+      this.idTaiKhoanMuaHang,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
@@ -40,7 +40,7 @@ class DonHangRequest {
   DonHangRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
-    taiKhoanMuaHang = json['taiKhoanMuaHang'].toString();
+    idTaiKhoanMuaHang = json['idTaiKhoanMuaHang'].toString();
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
@@ -67,8 +67,8 @@ class DonHangRequest {
     // check null idTaiKhoan
     if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
-    // check null taiKhoanMuaHang
-    if (taiKhoanMuaHang != null) data['taiKhoanMuaHang'] = taiKhoanMuaHang;
+    // check null idTaiKhoanMuaHang
+    if (idTaiKhoanMuaHang != null) data['idTaiKhoanMuaHang'] = idTaiKhoanMuaHang;
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;

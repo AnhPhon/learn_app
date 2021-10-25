@@ -4,102 +4,121 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
-import 'package:template/di_container.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1ProductController extends GetxController {
-  // provider
+  // SanPham
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  List<SanPhamResponse> sanPhamList = [];
+
+  //DanhMucSanPham
   DanhMucSanPhamProvider danhMucSanPhamProvider =
       GetIt.I.get<DanhMucSanPhamProvider>();
+  List<DanhMucSanPhamResponse> danhMucList = [];
+  DanhMucSanPhamResponse? danhMucSanPhamResponse;
 
-  // refresh controller
+  // refresh controller for load more refresh
   RefreshController refreshController = RefreshController();
+
+  //TextEditingController
   TextEditingController searchController = TextEditingController();
 
-  // list
-  List<SanPhamResponse> sanPhamList = [];
-  List<DanhMucSanPhamResponse> danhMucList = [];
-
+  //title appbar
   String title = "Sản phẩm";
-  String selectIndex = "";
 
-  // bool
+  // loading
   bool isLoading = true;
   bool isSPLoading = true;
+
+  //onchange icon (search or close)
+  bool isSearched = false;
+
+  //page for for load more refresh
+  int pageMax = 1;
+  int limitMax = 8;
+
+  //page for for load more refresh
+  int pageSearchMax = 1;
+  int limiSearchtMax = 8;
 
   @override
   void onInit() {
     super.onInit();
-
-    // load init
-    loadInit();
+    loadDanhMucSanPham();
+    loadSanPham(isRefresh: true, isFirst: true);
   }
 
-  ///
-  /// load init
-  ///
-  void loadInit() {
-    // load san pham theo muc san pham
-    sl
-        .get<SharedPreferenceHelper>()
-        .productCategoryId
-        .then((productCategoryId) {
-      // load sản phẩm theo id người dùng
-      sl.get<SharedPreferenceHelper>().userId.then((userId) {
-        // load danh mục
-        _loadDanhMucSanPham();
-
-        // call product
-        readProductByCategoryIdAndUserId(userId!, productCategoryId!);
-      });
-    });
-  }
-
-  ///
-  /// get san pham theo danh muc
-  ///
-  void readProductByCategoryIdAndUserId(String idUser, String idSanPham) {
-    sanPhamProvider.paginate(
-      page: 1,
-      limit: 30,
-      filter: "&idDanhMucSanPham=$idSanPham&idTaiKhoan=$idUser",
-      onSuccess: (models) {
-        sanPhamList = models;
-        isSPLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  @override
+  void onClose() {
+    refreshController.dispose();
+    searchController.dispose();
+    super.onClose();
   }
 
   ///
   /// load danh muc san pham
   ///
-  void _loadDanhMucSanPham() {
+  void loadDanhMucSanPham() {
     // product list
     danhMucSanPhamProvider.all(
       onSuccess: (values) {
-        // assign values to productList
         danhMucList = values;
-        if (danhMucList.isNotEmpty) {
-          sl
-              .get<SharedPreferenceHelper>()
-              .productCategoryId
-              .then((productCategoryId) {
-            selectIndex = productCategoryId ?? danhMucList[0].id!;
-          });
-        }
+
         isLoading = false;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V1ProductController loadDanhMucSanPham onError $error");
+      },
+    );
+  }
+
+  ///
+  ///load san pham
+  ///
+  void loadSanPham({
+    required bool isRefresh,
+    bool? isFirst = false,
+    bool? isSearch = false,
+  }) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      sanPhamList.clear();
+    } else {
+      pageMax++;
+    }
+
+    //load sanPham
+    sanPhamProvider.paginate(
+      page: pageMax,
+      limit: limitMax,
+      filter: danhMucSanPhamResponse == null
+          ? "&sortBy=created_at:desc"
+          : "&idDanhMucSanPham=${danhMucSanPhamResponse!.id}&sortBy=created_at:desc",
+      onSuccess: (data) {
+        //check is empty
+        if (data.isEmpty) {
+          refreshController.loadNoData();
+        } else {
+          //isRefresh
+          if (isRefresh) {
+            sanPhamList = data;
+            refreshController.refreshCompleted();
+          } else {
+            //is load more
+            sanPhamList = sanPhamList.toList() + data;
+            refreshController.loadComplete();
+          }
+        }
+
+        isSPLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("V1ProductController loadSanPham onError $error");
       },
     );
   }
@@ -107,38 +126,123 @@ class V1ProductController extends GetxController {
   ///
   ///go to product detail
   ///
-  void onProductDetailClick(String id) {
-    sl.get<SharedPreferenceHelper>().saveProductId(id);
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+  void onProductDetailClick(SanPhamResponse value) {
+    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: value);
   }
 
   ///
   /// on Category Change
   ///
-  void onCategoryChange(String? id) {
-    selectIndex = id!;
+  void onCategoryChange(DanhMucSanPhamResponse? value) {
+    danhMucSanPhamResponse = value;
     isSPLoading = true;
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      // call product
-      readProductByCategoryIdAndUserId(userId!, selectIndex);
-    });
     update();
+    loadSanPham(isRefresh: true);
   }
 
   ///
   /// on refresh
   ///
-  Future<void> onRefresh() async {
-    loadInit();
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshController.refreshCompleted();
+  Future<void> onRefresh(BuildContext context) async {
+    //reset noData
+    refreshController.resetNoData();
+
+    if (isSearched) {
+      //search
+      searchProduct(context, isRefresh: true);
+    } else {
+      //isloading
+      isSPLoading = true;
+
+      //load sanPham
+      loadSanPham(isRefresh: true);
+    }
   }
 
   ///
   /// on loading
   ///
-  Future<void> onLoading() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshController.loadComplete();
+  Future<void> onLoading(BuildContext context) async {
+    if (isSearched) {
+      //search
+      searchProduct(context, isRefresh: false);
+    } else {
+      //load sanPham
+      loadSanPham(isRefresh: false);
+    }
+  }
+
+  ///
+  ///search product
+  ///
+  void searchProduct(
+    BuildContext context, {
+    required bool isRefresh,
+  }) {
+    //isRefresh
+    if (isRefresh) {
+      pageSearchMax = 1;
+      sanPhamList.clear();
+    } else {
+      pageSearchMax++;
+    }
+
+    //get data search
+    if (searchController.text.isNotEmpty) {
+      sanPhamProvider.paginate(
+        page: pageSearchMax,
+        limit: limiSearchtMax,
+        filter: (danhMucSanPhamResponse == null)
+            ? "&maSanPham=${searchController.text}&sortBy=created_at:desc"
+            : "&idDanhMucSanPham=${danhMucSanPhamResponse!.id}&maSanPham=${searchController.text}&sortBy=created_at:desc",
+        onSuccess: (data) {
+          //check is empty
+          if (data.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //isRefresh
+            if (isRefresh) {
+              sanPhamList = data;
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              sanPhamList = sanPhamList.toList() + data;
+              refreshController.loadComplete();
+            }
+          }
+
+          FocusScope.of(context).requestFocus(FocusNode());
+          isSearched = true;
+          update();
+        },
+        onError: (error) {
+          print("V1ProductController searchProduct onError $error");
+        },
+      );
+    }
+  }
+
+  ///
+  ///btn search
+  ///
+  void btnSearch(BuildContext context) {
+    searchProduct(context, isRefresh: true);
+  }
+
+  ///
+  ///clear search
+  ///
+  void clearSearch(BuildContext context) {
+    //clear text
+    searchController.text = "";
+    isSearched = false;
+
+    //reset noData
+    refreshController.resetNoData();
+
+    //reload
+    loadSanPham(isRefresh: true);
+    FocusScope.of(context).requestFocus(FocusNode());
+    update();
   }
 }
