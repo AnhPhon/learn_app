@@ -163,7 +163,7 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
                 ),
               ),
               onConfirm: (List<LoaiCongViecResponse?> results) {
-                controller.currentLoaiCongViecResponseList = results.cast<LoaiCongViecResponse>();
+                controller.selectedCongViecPhuHop(results);
               },
             )
           else
@@ -181,17 +181,17 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
           TextFieldDate(
             paddingTop: 0,
             allowEdit: false,
-            controller: controller.textEditingController,
+            controller: controller.textDateController,
             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
             holdplacer: 'Chọn ngày',
-            // holdplacer: "22-11-2021",
-            // label: "Thời gian kết thúc dự kiến",
             obligatory: false,
             typeInput: TextInputType.datetime,
             width: DeviceUtils.getScaledWidth(Get.context!, 1),
+            onDateTimeChanged: (val){
+              controller.danhSachThoThauBaoGiaRequest.thoiGianBatDauLam = val;
+            },
             isDate: true,
           ),
-
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),
@@ -227,6 +227,11 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
                 filled: true,
                 fillColor: Colors.transparent,
               ),
+              onChanged: (val){
+                if(val.isNotEmpty && val.isNumericOnly){
+                  controller.danhSachThoThauBaoGiaRequest.soLuongNguoi = int.parse(val);
+                }
+              },
             ),
           ),
           const SizedBox(
