@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/tab_bar_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v3-agent/project/project_controller.dart';
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 
