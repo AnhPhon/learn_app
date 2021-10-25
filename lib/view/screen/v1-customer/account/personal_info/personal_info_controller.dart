@@ -144,7 +144,6 @@ class V1PersonalInfoController extends GetxController {
       file: image,
       onSuccess: (value) {
         taiKhoanRequest.hinhDaiDien = value.data;
-        print(value.data);
       },
       onError: (error) {
         print("V1PersonalInfoController uploadImage onError $error");

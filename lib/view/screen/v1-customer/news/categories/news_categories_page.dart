@@ -43,7 +43,7 @@ class _V1NewsCategoriesPageState extends State<V1NewsCategoriesPage>
     if (!mounted) return const SizedBox();
     return SmartRefresher(
       key: UniqueKey(),
-      controller: controller!.refreshController,
+      controller: controller!.refreshController!,
       enablePullUp: true,
       onLoading: controller!.onLoading,
       onRefresh: controller!.onRefresh,

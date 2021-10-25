@@ -229,7 +229,7 @@ class V1HomePage extends GetView<V1HomeController> {
                   (controller.danhMucList[index].hinhAnh == null)
                       ? Images.location_example
                       : controller.danhMucList[index].hinhAnh!,
-                  // controller.danhMucList[index].hinhAnhSanPham!,
+                  // controller.danhMucList[index].hinhAnhSanPhams[0]!,
                 ),
               );
             },

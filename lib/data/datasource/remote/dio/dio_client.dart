@@ -66,6 +66,7 @@ class DioClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
+      print('data $data');
       final response = await dio!.post(
         uri,
         data: data,

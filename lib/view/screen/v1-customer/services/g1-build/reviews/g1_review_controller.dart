@@ -54,7 +54,7 @@ class V1G1ReviewController extends GetxController{
   }
 
   Future<DonDichVuRequest> request(){
-    String massImages = '';
+    List<String> massImages = [];
     String drawingImages = '';
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
@@ -73,7 +73,7 @@ class V1G1ReviewController extends GetxController{
     // Hình ảnh bản khối lượng
     previewServiceRequest!.hinhAnhBanKhoiLuong!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
-        massImages = "$massImages${data.data},";
+        massImages.add(data.data!);
       }, onError: (onError){
         print("V1G1ReviewController request khối lượng $onError");
       });
@@ -100,7 +100,7 @@ class V1G1ReviewController extends GetxController{
     
     // Delay
     return Future.delayed(const Duration(seconds: 1)).then((value){
-      dichVuRequest.hinhAnhBanKhoiLuong = massImages;
+      dichVuRequest.hinhAnhBanKhoiLuongs = massImages;
       dichVuRequest.hinhAnhBanVe  = drawingImages;
       return dichVuRequest;
     });
