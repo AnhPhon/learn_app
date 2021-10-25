@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/lich_su_vi_tien_request.dart';
 import 'package:template/data/model/request/vi_tien_request.dart';
 import 'package:template/data/model/response/vi_tien_response.dart';
+import 'package:template/data/repository/lich_su_vi_tien_repository.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/snack_bar.dart';
 
 import 'patment_dialog_accept.dart';
 
@@ -26,6 +28,10 @@ class PaymentAccountController extends GetxController {
 
   //value ViTienRequest
   ViTienRequest viTienRequest = ViTienRequest();
+
+  //lichSuViTien
+  LichSuViTienRequest lichSuViTienRequest = LichSuViTienRequest();
+  LichSuViTienRepository lichSuViTienRepository = LichSuViTienRepository();
 
   String title = "Tài khoản của bạn";
 
@@ -44,6 +50,8 @@ class PaymentAccountController extends GetxController {
 
   //url Back
   String? urlBack;
+  //userId
+  String? userId;
 
   @override
   void onInit() {
@@ -148,20 +156,33 @@ class PaymentAccountController extends GetxController {
               EasyLoading.show(status: 'loading...');
 
               viTienRepository.update(viTienRequest).then((value) {
-                //insert thành công
+                //update ví tiền thành công
                 if (value.response.data != null) {
-                  EasyLoading.dismiss();
-                  Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
-                      .then((value) {
-                    if (value == true) {
-                      Get.back();
-                      Get.back(result: true);
+                  //set data lịch sử ví tiền
+                  lichSuViTienRequest.idTaiKhoan = userId;
+                  lichSuViTienRequest.idViTien = viTienResponse.id;
+                  lichSuViTienRequest.noiDung = "Thanh toán thành công";
+                  lichSuViTienRequest.loaiGiaoDich = "2";
+                  lichSuViTienRequest.trangThai = "2";
+                  lichSuViTienRequest.soTien = tongTienThanhToan.toString();
+
+                  //insert db lịch sử ví tiền
+                  lichSuViTienRepository.add(lichSuViTienRequest).then((value) {
+                    if (value.response.data != null) {
+                      EasyLoading.dismiss();
+                      Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
+                          .then((value) {
+                        if (value == true) {
+                          Get.back();
+                          Get.back(result: true);
+                        }
+                      });
+                    } else {
+                      Alert.error(message: 'Vui lòng thực hiện lại');
                     }
                   });
                 } else {
-                  SnackBarUtils.showSnackBar(
-                      title: 'Thao tác thất bại',
-                      message: 'Vui lòng thực hiện lại');
+                  Alert.error(message: 'Vui lòng thực hiện lại');
                 }
               });
             },

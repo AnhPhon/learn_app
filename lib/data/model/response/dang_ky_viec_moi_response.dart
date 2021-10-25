@@ -36,6 +36,7 @@ class DangKyViecMoiResponse {
   String? kyNangSoTruong;
   List<NgoaiNguResponse>? idNgoaiNgu;
   TinHocResponse? idTinHoc;
+  String? mSHS;
 
   String? createdAt;
   String? updatedAt;
@@ -67,6 +68,7 @@ class DangKyViecMoiResponse {
       this.kyNangSoTruong,
       this.idNgoaiNgu,
       this.idTinHoc,
+      this.mSHS,
       this.createdAt,
       this.updatedAt});
 
@@ -197,6 +199,8 @@ class DangKyViecMoiResponse {
       idTinHoc = null;
     }
 
+    mSHS = json['mSHS'].toString();
+
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
   }
@@ -286,6 +290,7 @@ class DangKyViecMoiResponse {
 
     // check null idTinHoc
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;
+    if (mSHS != null) data['mSHS'] = mSHS;
 
     return data;
   }

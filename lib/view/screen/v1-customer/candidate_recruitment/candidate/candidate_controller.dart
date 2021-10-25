@@ -5,10 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
+import 'package:template/data/model/response/gioi_tinh_model.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/ngoai_ngu_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
+import 'package:template/data/model/response/tim_kiem_ung_vien_model.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_response.dart';
 import 'package:template/data/model/response/tuyen_dung_response.dart';
@@ -24,8 +26,8 @@ import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/dialog_content.dart';
 import 'package:tiengviet/tiengviet.dart';
 
@@ -514,8 +516,7 @@ class V1CandidateController extends GetxController {
           condition: TimKiemUngVienModel(key: "tieuDeSearch", value: '0'),
           isButtonSearch: false);
     } else {
-      SnackBarUtils.showSnackBar(
-          title: 'Tiêu đề quá ngắn', message: 'Tiêu đề tối thiểu 3 ký tự');
+      Alert.error(message: 'Tiêu đề tối thiểu 3 ký tự');
     }
     update();
   }
@@ -654,74 +655,5 @@ class V1CandidateController extends GetxController {
               createConditionFilter(conditions);
             },
             child: const Text("Tìm kiếm")));
-  }
-}
-
-class TimKiemUngVienModel {
-  String? key;
-  String? value;
-
-  TimKiemUngVienModel({
-    this.key,
-    this.value,
-  });
-
-  ///
-  /// From JSON
-  ///
-  TimKiemUngVienModel.fromJson(Map<String, dynamic> json) {
-    key = json['key'].toString();
-    value = json['value'].toString();
-  }
-
-  ///
-  /// To JSON
-  ///
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    // check null id
-    if (key != null) data['key'] = key;
-
-    // check null idTaiKhoan
-    if (value != null) data['value'] = value;
-
-    return data;
-  }
-}
-
-class GioiTinhModel {
-  String? key;
-  String? value;
-
-  GioiTinhModel({
-    this.key,
-    this.value,
-  });
-
-  ///
-  /// From JSON
-  ///
-  GioiTinhModel.fromJson(Map<String, dynamic> json) {
-    key = json['key'].toString();
-    value = json['value'].toString();
-  }
-
-  ///
-  /// To JSON
-  ///
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    // check null id
-    if (key != null) data['key'] = key;
-
-    // check null idTaiKhoan
-    if (value != null) data['value'] = value;
-
-    return data;
-  }
-
-  @override
-  String toString() {
-    return value!;
   }
 }

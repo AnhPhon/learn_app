@@ -42,12 +42,12 @@ class CandidateCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(
+                      Padding(
+                        padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
                         child: Text(
-                          "MSHS: 123456789",
-                          style: TextStyle(
+                          "MSHS: ${dangKyViecMoiResponse!.mSHS!.isEmpty ? '123456' : dangKyViecMoiResponse!.mSHS}",
+                          style: const TextStyle(
                             fontSize: Dimensions.FONT_SIZE_LARGE,
                           ),
                         ),

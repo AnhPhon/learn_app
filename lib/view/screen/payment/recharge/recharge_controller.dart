@@ -17,7 +17,7 @@ import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
+import 'package:template/utils/alert.dart';
 
 class RechargeController extends GetxController {
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
@@ -112,8 +112,7 @@ class RechargeController extends GetxController {
   void onBtnCopyClick({required String content}) {
     Clipboard.setData(ClipboardData(text: content));
 
-    SnackBarUtils.showSnackBarSuccess(
-        title: 'Copy thành công', message: content);
+    Alert.success(message: 'Copy $content thành công');
   }
 
   ///
@@ -145,9 +144,7 @@ class RechargeController extends GetxController {
   void onCheckoutClick() {
     //validate
     if (image == null) {
-      SnackBarUtils.showSnackBar(
-          title: 'Hình ảnh hóa đơn giao dịch bắt buộc',
-          message: 'Vui lòng tài hình ảnh hóa đơn giao dịch');
+      Alert.error(message: 'Vui lòng tài hình ảnh hóa đơn giao dịch');
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
@@ -180,8 +177,7 @@ class RechargeController extends GetxController {
           );
         },
         onError: (error) {
-          SnackBarUtils.showSnackBar(
-              title: 'Thao tác thất bại', message: 'Vui lòng thực hiện lại');
+          Alert.error(message: 'Vui lòng thực hiện lại');
         },
       );
     }

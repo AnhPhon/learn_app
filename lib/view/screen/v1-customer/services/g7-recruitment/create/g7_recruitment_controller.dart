@@ -32,7 +32,7 @@ import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
+import 'package:template/utils/alert.dart';
 
 class V1G7RecruitmentController extends GetxController {
   //Providers
@@ -603,102 +603,59 @@ class V1G7RecruitmentController extends GetxController {
 
     //check validate
     if (titleController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Tiêu đề bắt buộc", message: "Vui lòng nhập tiêu đề");
+      return Alert.error(message: "Vui lòng nhập tiêu đề");
     } else if (companyController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Tên công ty bắt buộc", message: "Vui lòng nhập tên công ty");
+      return Alert.error(message: "Vui lòng nhập tên công ty");
     } else if (tinhTpDiaChi == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Tỉnh/Tp bắt buộc", message: "Vui lòng chọn tỉnh/tp");
+      return Alert.error(message: "Vui lòng chọn tỉnh/tp");
     } else if (quanHuyenResponse == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Quận/Huyện bắt buộc", message: "Vui lòng chọn quận/huyện");
+      return Alert.error(message: "Vui lòng chọn quận/huyện");
     } else if (phuongXaResponse == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Phường/Xã bắt buộc", message: "Vui lòng chọn phường/xã");
+      return Alert.error(message: "Vui lòng chọn phường/xã");
     } else if (addressController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Địa chỉ bắt buộc", message: "Vui lòng nhập địa chỉ");
+      return Alert.error(message: "Vui lòng nhập địa chỉ");
     } else if (chooseSex == 0) {
-      return SnackBarUtils.showSnackBar(
-          title: "Giới tính bắt buộc", message: "Vui lòng chọn giới tính");
+      return Alert.error(message: "Vui lòng chọn giới tính");
     } else if (amountController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Số lượng bắt buộc", message: "Vui lòng nhập số lượng");
+      return Alert.error(message: "Vui lòng nhập số lượng");
     } else if (hinhThucLamViec == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Hình thức làm việc bắt buộc",
-          message: "Vui lòng chọn hình thức làm việc");
+      return Alert.error(message: "Vui lòng chọn hình thức làm việc");
     } else if (trinhDoHocVan == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Trình độ học vấn bắt buộc",
-          message: "Vui lòng chọn trình độ học vấn");
+      return Alert.error(message: "Vui lòng chọn trình độ học vấn");
     } else if (chuyenNgangChinh == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Chuyên ngành chính bắt buộc",
-          message: "Vui lòng chọn chuyên ngành chính");
+      return Alert.error(message: "Vui lòng chọn chuyên ngành chính");
     } else if (chuyenNganhPhuSend.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Chuyên ngành phụ bắt buộc",
-          message: "Vui lòng chọn chuyên ngành phụ");
+      return Alert.error(message: "Vui lòng chọn chuyên ngành phụ");
     } else if (soNamKinhNghiem == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Số năm kinh nghiệm bắt buộc",
-          message: "Vui lòng chọn số năm kinh nghiệm");
+      return Alert.error(message: "Vui lòng chọn số năm kinh nghiệm");
     } else if (mucLuongDuKien == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Mức lương dự kiến bắt buộc",
-          message: "Vui lòng chọn mức lương dự kiến");
+      return Alert.error(message: "Vui lòng chọn mức lương dự kiến");
     } else if (tinhTp == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Nơi làm việc bắt buộc",
-          message: "Vui lòng chọn nơi làm việc");
+      return Alert.error(message: "Vui lòng chọn nơi làm việc");
     } else if (thoiGianLamViec == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Thời gian làm việc bắt buộc",
-          message: "Vui lòng chọn thời gian làm việc");
+      return Alert.error(message: "Vui lòng chọn thời gian làm việc");
     } else if (descController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Mô tả công việc bắt buộc",
-          message: "Vui lòng nhập mô tả công việc");
+      return Alert.error(message: "Vui lòng nhập mô tả công việc");
     } else if (requiredController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Yêu cầu công việc bắt buộc",
-          message: "Vui lòng nhập yêu cầu công việc");
+      return Alert.error(message: "Vui lòng nhập yêu cầu công việc");
     } else if (benifitController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Chế độ quyền lợi bắt buộc",
-          message: "Vui lòng nhập chế đô quyền lợi công việc");
+      return Alert.error(message: "Vui lòng nhập chế đô quyền lợi công việc");
     } else if (prioritizedController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Ưu tiên bắt buộc", message: "Vui lòng nhập ưu tiên");
+      return Alert.error(message: "Vui lòng nhập ưu tiên");
     } else if (daysBetween(DateTime.now(), selectedDate) < 0) {
-      return SnackBarUtils.showSnackBar(
-          title: "Hạn nộp bắt buộc", message: "Vui lòng chọn hạn nộp");
+      return Alert.error(message: "Vui lòng chọn hạn nộp");
     } else if (thoiGianThucTapController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Thời gian thực tập bắt buộc",
-          message: "Vui lòng nhập thời gian thực tập");
+      return Alert.error(message: "Vui lòng nhập thời gian thực tập");
     } else if (nameController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Tên người liên hệ bắt buộc",
-          message: "Vui lòng nhập tên người liên hệ");
+      return Alert.error(message: "Vui lòng nhập tên người liên hệ");
     } else if (phoneController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Số điện thoại người liên hệ bắt buộc",
-          message: "Vui lòng nhập số điện thoại");
+      return Alert.error(message: "Vui lòng nhập số điện thoại");
     } else if (contactAddressController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Địa chỉ người liên hệ bắt buộc",
-          message: "Vui lòng nhập địa chỉ");
+      return Alert.error(message: "Vui lòng nhập địa chỉ");
     } else if (emailController.text.isEmpty) {
-      return SnackBarUtils.showSnackBar(
-          title: "Email người liên hệ bắt buộc",
-          message: "Vui lòng nhập email");
+      return Alert.error(message: "Vui lòng nhập email");
     } else if (image == null) {
-      return SnackBarUtils.showSnackBar(
-          title: "Hình ảnh đại điện bắt buộc", message: "Vui lòng chọn ảnh");
+      return Alert.error(message: "Vui lòng chọn ảnh đại diện");
     } else {
       //upload ảnh
       imageUpdateProvider.add(
@@ -753,8 +710,7 @@ class V1G7RecruitmentController extends GetxController {
           },
           onError: (error) {
             print('V1G7RecruitmentController onClickContinueButton $error');
-            SnackBarUtils.showSnackBar(
-                title: "Thao tác thất bại", message: "Vui lòng thực hiện lại");
+            Alert.error(message: "Vui lòng thực hiện lại");
           });
     }
   }
