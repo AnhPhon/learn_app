@@ -308,7 +308,8 @@ class V1ResponsePage extends GetView<V1ResponseController> {
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.downloadClick("file", "docx");
+        controller.launchURL();
+        // controller.downloadClick("file", "jpg");
         // controller.downloadFile(context, controller.fileURL);
       },
       child: const LabelContent(

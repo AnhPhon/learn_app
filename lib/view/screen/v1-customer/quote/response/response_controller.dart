@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +9,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V1ResponseController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -60,6 +58,7 @@ class V1ResponseController extends GetxController {
               images.add(image.toString());
             }
           }
+          print("321321312321321: ${donDichVu.file}");
           fileURL = donDichVu.file!;
 
           update();
@@ -131,33 +130,11 @@ class V1ResponseController extends GetxController {
   }
 
   ///
-  /// download to
+  /// url launcher
   ///
-  Future download2(Dio dio, String url, String savePath) async {
-    try {
-      final response = await dio.get(
-        url,
-        onReceiveProgress: showDownloadProgress,
-        //Received data with List<int>
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          validateStatus: (status) {
-            return status! < 500;
-          },
-        ),
-      );
-      print(response.headers);
-      final File file = File(savePath);
-      final raf = file.openSync(mode: FileMode.write);
-      // response.data is List<int> type
-      raf.writeFromSync(response.data as List<int>);
-      await raf.close();
-    } catch (e) {
-      print(e);
-    }
-    EasyLoading.dismiss();
-  }
+  void launchURL() async => await canLaunch(fileURL)
+      ? await launch(fileURL)
+      : throw 'Could not launch $fileURL';
 
   ///
   /// show download progress
@@ -166,19 +143,6 @@ class V1ResponseController extends GetxController {
     if (total != -1) {
       EasyLoading.showProgress((received as int) / (total as int));
     }
-  }
-
-  ///
-  /// download click
-  ///
-  Future<void> downloadClick(filename, fileExt) async {
-    final dio = Dio();
-
-    final tempDir = await getTemporaryDirectory();
-    final String fullPath = "${tempDir.path}/$filename.$fileExt'";
-    print('full path $fullPath from URL: $fileURL');
-
-    download2(dio, fileURL, fullPath);
   }
 
   ///
