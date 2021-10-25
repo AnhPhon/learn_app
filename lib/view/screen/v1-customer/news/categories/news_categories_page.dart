@@ -7,7 +7,7 @@ import 'package:template/data/model/response/danh_muc_tin_tuc_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 
 import 'news_categories_controller.dart';
 

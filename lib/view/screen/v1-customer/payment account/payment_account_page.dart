@@ -5,8 +5,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_controller.dart';
 
 class V1PaymentAccountPage extends GetView<V1PaymentAccountController> {

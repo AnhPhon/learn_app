@@ -9,6 +9,7 @@ import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/provider/tu_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
@@ -94,7 +95,6 @@ class V1OtherInsuranceController extends GetxController {
     for (var i = 0; i < isChecked!.length; i++) {
       //check value of check box
       if (isChecked![i] == true) {
-
         //set data
         dangKyBaoHiemRequest.idTaiKhoan = userId;
         dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[i].id;
@@ -112,14 +112,9 @@ class V1OtherInsuranceController extends GetxController {
         );
       } else {
         // show errors
-        Get.snackbar(
-          "Lỗi", // title
-          "Vui lòng chọn bảo hiểm muốn mua", // message
-          icon: const Icon(Icons.error_outline),
-          backgroundColor: const Color(0xffFFCDD2),
-          shouldIconPulse: true,
-          isDismissible: true,
-          duration: const Duration(seconds: 3),
+        SnackBarUtils.showSnackBar(
+          title: "Vui lòng kiểm tra lại",
+          message: "Vui lòng chọn bảo hiểm muốn mua",
         );
       }
     }

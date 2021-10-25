@@ -9,12 +9,14 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final bool? isNotBack;
   final List<Widget>? action;
+  final VoidCallback? onPressed;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
     this.isNotBack = false,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -76,9 +78,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                   Builder(
                     builder: (context) {
                       return IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
+                          onPressed: widget.onPressed ?? () => Get.back(),
                           icon: const Icon(
                             Icons.arrow_back_ios,
                             color: ColorResources.WHITE,

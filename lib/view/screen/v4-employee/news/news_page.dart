@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
 import 'package:template/view/screen/v4-employee/news/news_controller.dart';
 
 import 'categories/news_categories_page.dart';

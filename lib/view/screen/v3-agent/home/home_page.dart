@@ -7,11 +7,11 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
