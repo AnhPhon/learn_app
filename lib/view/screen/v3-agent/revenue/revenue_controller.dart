@@ -71,9 +71,9 @@ class V3RevenueController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     startController.dispose();
     endController.dispose();
+    super.onClose();
   }
 
   ///
