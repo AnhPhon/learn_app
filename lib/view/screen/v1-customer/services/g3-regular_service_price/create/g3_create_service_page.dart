@@ -28,7 +28,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         child: Column(
           children: [
             // Tiêu tề nhóm công việc
-                const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+                const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
       
                 // Nhập địa chỉ cụ thể
                 form(context, _controller),
@@ -71,7 +71,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
                 children: [
                   RadioButton<GENDER>(title: "Nam", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nam, groupValue: controller.gender),
                   RadioButton<GENDER>(title: "Nữ", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nu, groupValue: controller.gender),
-                  RadioButton<GENDER>(title: "Khác", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Không yêu cầu", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
                 ],
               ),
             );

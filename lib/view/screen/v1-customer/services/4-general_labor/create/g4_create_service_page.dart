@@ -70,7 +70,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
                 children: [
                   RadioButton<GENDER>(title: "Nam", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nam, groupValue: controller.gender),
                   RadioButton<GENDER>(title: "Nữ", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nu, groupValue: controller.gender),
-                  RadioButton<GENDER>(title: "Khác", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Không yêu cầu", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
                 ],
               );
             },
@@ -112,6 +112,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         TextFieldDate(
@@ -124,6 +125,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
       ],

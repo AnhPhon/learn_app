@@ -179,16 +179,25 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               obligatory: true,
               typeInput: TextInputType.number,
               width: DeviceUtils.getScaledWidth(context,0.5),
+              padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT
+              ),
             ),
           DropDownButton<String>(
-            data: const ["m2","m3",'Tấn','Tạ','Kg'],
+            data: const ["M2","M3",'Tấn','Tạ','Kg'],
             obligatory: true,
             onChanged: (unit)=> controller.onChangedUnit(unit!),
             value: controller.unit,
             width: DeviceUtils.getScaledSize(context,0.5),
             label: "Đơn vị",
             hint: 'Chọn đơn vị',
-            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+            padding: const EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_DEFAULT,
+              top: Dimensions.PADDING_SIZE_DEFAULT,
+              right: Dimensions.PADDING_SIZE_DEFAULT
+            ),
           ),
           ],
          ),

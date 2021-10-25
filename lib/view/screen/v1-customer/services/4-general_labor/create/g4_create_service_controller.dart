@@ -164,7 +164,7 @@ class V1G4CreateServiceController extends GetxController{
     }else if(GENDER.Nu == gender){
       return "Nữ";
     }
-    return 'Khác';
+    return 'Không yêu cầu';
   }
 
   @override
