@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -20,7 +21,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
             body: Column(
               children: [
                 //account balance
-                _accountBalance(controller: controller),
+                _accountBalance(context, controller: controller),
 
                 //box input
                 _boxInput(context, controller: controller),
@@ -42,7 +43,8 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
   ///
   ///account balance
   ///
-  Widget _accountBalance({required V1BeforeRechargeController controller}) {
+  Widget _accountBalance(BuildContext context,
+      {required V1BeforeRechargeController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: Row(
@@ -51,7 +53,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
           //title
           Text(
             "Số dư tài khoản",
-            style: Dimensions.fontSizeStyle18(),
+            style: Dimensions.fontSizeStyle18w600(),
           ),
 
           Row(
@@ -76,7 +78,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
 
               //balance
               Text(
-                ' ${(controller.isShow) ? controller.balance : "*********"} vnđ',
+                ' ${(controller.isShow) ? PriceConverter.convertPrice(context, double.parse(controller.balance.toString())) : "*********"} vnđ',
                 style: Dimensions.fontSizeStyle18w600(),
               ),
             ],
@@ -99,20 +101,22 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InputWidget(
             label: "Nhập số tiền muốn nạp",
             hintText: "Số tiền (vnđ)",
+            obligatory: true,
             textEditingController: controller.amountOfMoneyController,
-            width: 1,
+            width: .85,
             thousandsSeparator: true,
             textInputType: TextInputType.number,
             onChanged: (val) {
               controller.onChanged(context, val);
             },
           ),
-          Padding(
+          Container(
+            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
             child: Text(
               "Hoặc chọn nhanh số tiền",

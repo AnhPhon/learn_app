@@ -99,21 +99,28 @@ class V1InsuranceRegisterController extends GetxController {
   ///on checkout click
   ///
   void onCheckoutClick(BuildContext context) {
-    //set data
-    dangKyBaoHiemRequest.idTaiKhoan = userId;
-    dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[indexFee].id;
-    dangKyBaoHiemRequest.trangThai = "0";
-    print(userId);
-    print(baoHiemResponse[indexFee].id);
-    //insert
-    dangKyBaoHiemProvider.add(
-      data: dangKyBaoHiemRequest,
-      onSuccess: (value) {
-        Get.toNamed(
-            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse[indexFee].phi}&url${AppRoutes.V1_DASHBOARD}");
-      },
-      onError: (error) {
-        print("V1InsuranceRegisterController onCheckoutClick onError $error");
+    Get.toNamed(
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse[indexFee].phi}&url${AppRoutes.V1_PROFILE}")!
+        .then(
+      (value) {
+        //set data
+        dangKyBaoHiemRequest.idTaiKhoan = userId;
+        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[indexFee].id;
+        dangKyBaoHiemRequest.trangThai = "0";
+        //insert
+        dangKyBaoHiemProvider.add(
+          data: dangKyBaoHiemRequest,
+          onSuccess: (value) {
+            Get.offAllNamed(
+              AppRoutes.V1_PROFILE,
+              predicate: ModalRoute.withName(AppRoutes.V1_PROFILE),
+            );
+          },
+          onError: (error) {
+            print(
+                "V1InsuranceRegisterController onCheckoutClick onError $error");
+          },
+        );
       },
     );
   }

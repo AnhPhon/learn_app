@@ -86,8 +86,7 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                       print(controller.donHangResponse.length);
                       return GestureDetector(
                         onTap: () {
-                          // controller.onOrderWidgetClick(
-                          //     i: i, index: (int.parse(index) + 1).toString());
+                          controller.onOrderDetailClick(index: index);
                         },
                         child: _orderWidget(
                           context,

@@ -25,11 +25,8 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V3StoreInfomationController extends GetxController {
   //image
@@ -143,7 +140,6 @@ class V3StoreInfomationController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     nameController.dispose();
     legalRepresentativeController.dispose();
     phoneController.dispose();
@@ -153,6 +149,7 @@ class V3StoreInfomationController extends GetxController {
     endController.dispose();
     warehouseAddressController.clear();
     warehouseNameController.clear();
+    super.onClose();
   }
 
   ///
@@ -585,54 +582,29 @@ class V3StoreInfomationController extends GetxController {
   void btnUpdate(BuildContext context) {
     //validate
     if (nameController.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường tên không được để trống",
-      );
+      Alert.error(message: 'Trường tên không được để trống');
     } else if (legalRepresentativeController.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường tên đại diện pháp lý",
-      );
+      Alert.error(message: 'Trường tên đại diện pháp lý');
     } else if (phoneController.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường số điện thoại không được để trống",
-      );
+      Alert.error(message: 'Trường số điện thoại không được để trống');
     } else if (emailController.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường email không được để trống",
-      );
+      Alert.error(message: 'Trường email không được để trống');
     } else if (nhomCuaHangResponse == null) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường nhóm không được để trống",
-      );
+      Alert.error(message: 'Trường nhóm không được để trống');
     } else if (matHangDacTrungResponse.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường mặt hàng đặc trưng không được để trống",
-      );
+      Alert.error(message: 'Trường mặt hàng đặc trưng không được để trống');
     } else if (phuongXaStore == null ||
         quanHuyenStore == null ||
         tinhTpStore == null) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường địa điểm cửa hàng chính không được để trống",
-      );
+      Alert.error(
+          message: 'Trường địa điểm cửa hàng chính không được để trống');
     } else if (startController.text.isEmpty || endController.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Trường thời gian làm việc trong ngày không được để trống",
-      );
+      Alert.error(
+          message: 'Trường thời gian làm việc trong ngày không được để trống');
     } else if (double.parse(
             timeDiff(startController.text, endController.text)) <
         0) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
-      );
+      Alert.error(message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
     } else if (warehouseList.isNotEmpty) {
       for (var i = 0; i < warehouseList.length; i++) {
         if (tinhTpWarehouse[i] == null ||
@@ -640,13 +612,10 @@ class V3StoreInfomationController extends GetxController {
             phuongXaWarehouse[i] == null ||
             warehouseAddressController[i].text.isEmpty ||
             warehouseNameController[i].text.isEmpty) {
-          SnackBarUtils.showSnackBar(
-            title: "Vui lòng kiểm tra lại",
-            message: "Trường địa điểm kho hàng $i không được để trống",
-          );
+          Alert.error(
+              message: 'Trường địa điểm kho hàng $i không được để trống');
         }
       }
-      print("V3StoreInfomationController  onError ");
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
@@ -693,6 +662,7 @@ class V3StoreInfomationController extends GetxController {
                 data: khoHangDaiLyRequest,
                 onSuccess: (khoHangDaiLyUpdate) {},
                 onError: (error) {
+                  EasyLoading.dismiss();
                   print(
                       "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
                 },
@@ -721,19 +691,11 @@ class V3StoreInfomationController extends GetxController {
                   if (i == tinhTpWarehouse.length - 1) {
                     EasyLoading.dismiss();
                     Get.back();
-                    showAnimatedDialog(
-                      context,
-                      const MyDialog(
-                        icon: Icons.check,
-                        title: "Hoàn tất",
-                        description: "Cập nhật thông tin thành công",
-                      ),
-                      dismissible: false,
-                      isFlip: true,
-                    );
+                    Alert.success(message: 'Cập nhật thông tin thành công');
                   }
                 },
                 onError: (error) {
+                  EasyLoading.dismiss();
                   print("V3StoreInfomationController btnUpdate onError $error");
                 },
               );
@@ -757,19 +719,11 @@ class V3StoreInfomationController extends GetxController {
                   if (i == tinhTpWarehouse.length - 1) {
                     EasyLoading.dismiss();
                     Get.back();
-                    showAnimatedDialog(
-                      context,
-                      const MyDialog(
-                        icon: Icons.check,
-                        title: "Hoàn tất",
-                        description: "Cập nhật thông tin thành công",
-                      ),
-                      dismissible: false,
-                      isFlip: true,
-                    );
+                    Alert.success(message: 'Cập nhật thông tin thành công');
                   }
                 },
                 onError: (error) {
+                  EasyLoading.dismiss();
                   print(
                       "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
                 },
@@ -778,6 +732,7 @@ class V3StoreInfomationController extends GetxController {
           }
         },
         onError: (error) {
+          EasyLoading.dismiss();
           print("V3StoreInfomationController btnUpdate onError $error");
         },
       );

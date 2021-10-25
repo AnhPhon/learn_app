@@ -240,6 +240,8 @@ class AppRoutes {
   static const String V3_PHAN_HOI_BAO_GIA = '/v3_finish_update';
   static const String V3_PROJECT_DETAIL_TRIEN_KHAI = '/v3_project_detail_trien_khai';
   static const String V3_PROJECT_DANG_KY_TRIEN_KHAI = '/v3_project_dang_ky_trien_khai';
+  static const String V3_ORDER_DETAIL = '/v3_order_detail';
+  static const String V3_PRODUCT_DETAIL = '/v3_product_detail';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';

@@ -191,8 +191,10 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v3-agent/news/news_page.dart';
+import 'package:template/view/screen/v3-agent/order_management/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
+import 'package:template/view/screen/v3-agent/product_management/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
@@ -914,7 +916,14 @@ class AppPages {
       name: AppRoutes.V3_PROJECT_DANG_KY_TRIEN_KHAI,
       page: () => V3ProjectDangKyTrienKhaiPage(),
     ),
-
+    GetPage(
+      name: AppRoutes.V3_ORDER_DETAIL,
+      page: () => V3OrderDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_DETAIL,
+      page: () => V3ProductDetailPage(),
+    ),
     // Xem trươc đánh văn bản
     GetPage(
       name: AppRoutes.V2_PREVIEW_PROFILE,

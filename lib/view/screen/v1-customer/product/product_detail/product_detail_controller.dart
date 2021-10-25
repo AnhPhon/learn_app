@@ -15,6 +15,7 @@ import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V1ProductDetailController extends GetxController {
@@ -73,6 +74,13 @@ class V1ProductDetailController extends GetxController {
     //get load data
     getTaiKhoan().then((value) => getDonHang());
     getMoreProduct(isRefresh: true);
+  }
+
+  @override
+  void onClose() {
+    refreshController.dispose();
+    scrollController!.dispose();
+    super.onClose();
   }
 
   ///
@@ -348,10 +356,7 @@ class V1ProductDetailController extends GetxController {
               getDonHang();
 
               //show snackbar
-              SnackBarUtils.showSnackBarSuccess(
-                title: "Thành công",
-                message: "Thêm sản phẩm vào giỏ hàng thành công",
-              );
+              Alert.success(message: 'Thêm sản phẩm vào giỏ hàng thành công');
             },
             onError: (error) {
               print(

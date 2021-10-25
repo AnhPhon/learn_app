@@ -86,6 +86,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
   ///
   Widget _item(BuildContext context,
       {required V3WarehouseController controller}) {
+    if (controller.isLoadingProduct) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return SmartRefresher(
       controller: controller.refreshController,
       enablePullUp: true,
@@ -145,13 +150,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                         child: SizedBox(
                           height: DeviceUtils.getScaledHeight(context, .08),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                controller
-                                    .nhapKhoHangDaiLyList[index].idSanPham!.ten
-                                    .toString(),
+                                "${controller.nhapKhoHangDaiLyList[index].idSanPham!.maSanPham} - ${controller.nhapKhoHangDaiLyList[index].idSanPham!.ten}",
                                 maxLines: 2,
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
