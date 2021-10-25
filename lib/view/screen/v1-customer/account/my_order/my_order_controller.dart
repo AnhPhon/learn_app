@@ -78,10 +78,9 @@ class V1MyOrderController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
-    //dispose controller
     tabController!.dispose();
     refreshController.clear();
+    super.onClose();
   }
 
   ///

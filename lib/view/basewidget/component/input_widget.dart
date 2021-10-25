@@ -178,28 +178,23 @@ class InputWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: (isColorFieldWhite == true)
-                      ? ColorResources.WHITE
-                      : ColorResources.LIGHT_GREY.withOpacity(0.8),
+                  fillColor: fillColor ?? Colors.transparent,
                 ),
               ),
             ),

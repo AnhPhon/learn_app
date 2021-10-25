@@ -27,7 +27,6 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
               title: controller.title,
               bottom: TabBar(
                 controller: controller.tabController,
-                physics: const NeverScrollableScrollPhysics(),
                 isScrollable: true,
                 indicatorColor: ColorResources.PRIMARY,
                 labelColor: ColorResources.PRIMARY,
@@ -45,7 +44,7 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
             ),
             body: TabBarView(
               controller: controller.tabController,
-              physics: const BouncingScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: List.generate(app_constants.trangThaiDonHangMap.length,
                   (index) => _tabIndex(context, indexController: index)),
             ),

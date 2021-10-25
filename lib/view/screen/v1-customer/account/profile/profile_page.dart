@@ -17,6 +17,10 @@ class V1ProfilePage extends GetView<V1ProfileController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
                   //contract
                   _items(
                     icon: const Icon(Icons.collections_bookmark),
