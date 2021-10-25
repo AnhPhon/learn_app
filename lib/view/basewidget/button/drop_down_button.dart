@@ -6,7 +6,7 @@ class DropDownButton<T> extends StatelessWidget {
   const DropDownButton({
     Key? key,
     this.hint = "",
-    required this.onChanged,
+    this.onChanged,
     required this.data,
     required this.width,
     required this.value,
@@ -18,7 +18,7 @@ class DropDownButton<T> extends StatelessWidget {
   }) : super(key: key);
   final String? hint;
   final double width;
-  final Function(T? value) onChanged;
+  final Function(T? value)? onChanged;
   final String? label;
   final bool? obligatory;
   final List<T> data;

@@ -5,7 +5,7 @@ import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
-class V2ProjectDetailTrienKhaiController extends GetxController {
+class V3ProjectDetailTrienKhaiController extends GetxController {
   String title = "Đang tải";
 
   String? idProject;
@@ -21,7 +21,7 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
     if(arguments != null && arguments['idProject'] != null){
       idProject = arguments!['idProject'].toString();
       title = arguments!['title'].toString();
-      print('V2ProjectDetailTrienKhaiController onInit $idProject');
+      print('V3ProjectDetailTrienKhaiController onInit $idProject');
 
       duAnKhachHangProvider.find(
         id: idProject.toString(),
@@ -30,7 +30,7 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
           update();
         },
         onError: (error) {
-          print('V2ProjectDetailTrienKhaiController onInit onError $error');
+          print('V3ProjectDetailTrienKhaiController onInit onError $error');
         },
       );
     }
@@ -60,6 +60,6 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
   }
 
   void moViewDangKyViecMoi() {
-    Get.toNamed(AppRoutes.V2_PROJECT_DANG_KY_TRIEN_KHAI, arguments: {'idProject': duAnKhachHangResponse!.id.toString(), 'title': title});
+    Get.toNamed(AppRoutes.V3_PROJECT_DANG_KY_TRIEN_KHAI, arguments: {'idProject': duAnKhachHangResponse!.id.toString(), 'title': title});
   }
 }

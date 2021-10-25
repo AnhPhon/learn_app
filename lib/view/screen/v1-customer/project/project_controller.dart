@@ -76,7 +76,7 @@ class V1ProjectController extends GetxController with SingleGetTickerProviderMix
   ///on project detail click
   ///
   void onProjectDetailClick(String idProject) {
-    Get.toNamed(AppRoutes.V1_PROJECT_DETAIL, arguments: {'idProject': idProject});
+    Get.toNamed(AppRoutes.V1_PROJECT_DETAIL, arguments: {'idProject': idProject, 'title': titleTabBar[currentIndex.value]['tieuDe']});
   }
 
   ///
