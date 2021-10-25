@@ -150,8 +150,8 @@ class V1FormalPaymentFeedbackController extends GetxController{
   /// Update 
   ///
   void updateDon(String status){
-    DonDichVuRequest request =  DonDichVuRequest();
-    request.id = donDichVu!.id!;
+    final DonDichVuRequest request =  DonDichVuRequest();
+    request.id = donDichVu!.id;
     request.idTaiKhoan = donDichVu!.idTaiKhoan!.id;
     request.idHinhThucThanhToan= status;
     request.taiKhoanNhanDon = donDichVu!.idTaiKhoan!.id;

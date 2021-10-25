@@ -98,6 +98,7 @@ class V1NotificationController extends GetxController{
   }
 
   void onClickItem(ThongBaoResponse notification){
+    print(notification.toJson());
     print(notification.idDonDichVu!);
 
     donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
