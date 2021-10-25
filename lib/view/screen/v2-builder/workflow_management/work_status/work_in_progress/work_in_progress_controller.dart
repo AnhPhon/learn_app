@@ -192,9 +192,25 @@ class V2WorkInProgressController extends GetxController {
               },
             );
           } else {
-            EasyLoading.showError(
-              "Không thể cập nhật thông tin vào trường rỗng",
-            );
+            sl.get<SharedPreferenceHelper>().userId.then((userId) {
+              sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+                phanHoiDonDichVuProvider.add(
+                  data: PhanHoiDonDichVuRequest(
+                    yKienThoThau: rateBuilder.text,
+                    idDonDichVu: workFlowId,
+                    idTaiKhoan: userId,
+                  ),
+                  onSuccess: (success) {
+                    Get.back(result: true);
+                  },
+                  onError: (error) {
+                    print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error",
+                    );
+                  },
+                );
+              });
+            });
           }
         },
         onError: (error) {

@@ -13,6 +13,7 @@ import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V2WorkDoneController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -302,7 +303,8 @@ class V2WorkDoneController extends GetxController {
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      Get.snackbar("Vui lòng kiểm tra lại!", "Thêm file thất bại");
+      SnackBarUtils.showSnackBar(
+          title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
     }
   }
 
