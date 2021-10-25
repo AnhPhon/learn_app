@@ -15,7 +15,7 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
     return GetBuilder(
         init: PaymentAccountController(),
         builder: (PaymentAccountController controller) {
-          if (controller.isLoading && controller.urlBack!.isNotEmpty) {
+          if (controller.isLoading && controller.urlBack!.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );

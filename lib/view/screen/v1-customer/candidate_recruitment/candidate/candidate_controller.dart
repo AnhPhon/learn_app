@@ -100,6 +100,9 @@ class V1CandidateController extends GetxController {
   // refresh controller for load more refresh
   RefreshController? refreshController;
 
+  //tenChuyeNganhPhu
+  String tenChuyenNganhPhu = '';
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -157,7 +160,7 @@ class V1CandidateController extends GetxController {
     tuyenDungProvider.paginate(
         page: pageMax,
         limit: limit,
-        filter: '&sortBy=create_at:desc',
+        filter: '&sortBy=created_at:desc',
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {
@@ -216,7 +219,6 @@ class V1CandidateController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
-    print('bbbb');
     return tinhTpListModel.firstWhere((element) => element.id == id).ten;
   }
 
@@ -224,7 +226,18 @@ class V1CandidateController extends GetxController {
   ///onTapViewTuyenDung
   ///
   void onTapViewTuyenDung({required TuyenDungResponse tuyendungModel}) {
-    print('tuyendungModel ${tuyendungModel.toJson()}');
+    // set tên chuyên ngành phụ
+    if (tuyendungModel.idChuyenNganhPhus!.isNotEmpty) {
+      for (int i = 0; i < tuyendungModel.idChuyenNganhPhus!.length; i++) {
+        if (i == 0) {
+          tenChuyenNganhPhu =
+              tuyendungModel.idChuyenNganhPhus![i].tieuDe.toString();
+        } else {
+          tenChuyenNganhPhu +=
+              ', ${tuyendungModel.idChuyenNganhPhus![i].tieuDe.toString()}';
+        }
+      }
+    }
 
     ///gán data tuyển dụng
     Map<String, dynamic> param = {
@@ -237,7 +250,7 @@ class V1CandidateController extends GetxController {
       "TenHinhThucLamViec": tuyendungModel.idHinhThucLamViec,
       "TenTrinhDoHocVan": tuyendungModel.idTrinhDoHocVan,
       "TenChuyenNganhChinh": tuyendungModel.idChuyenNganhChinh,
-      "TenChuyenNganhPhu": tuyendungModel.thoiGianThuViec,
+      "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendungModel.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendungModel.idMucLuongDuKien,
       "TenNoiLamViec": onChangeNameTinhTp(tuyendungModel.noiLamViec.toString()),
@@ -254,7 +267,7 @@ class V1CandidateController extends GetxController {
       "EmailLienHe": tuyendungModel.emailLienHe,
     };
 
-    print('param $param ');
+    Get.toNamed('${AppRoutes.V1_G7_REVIEW}?isReview=false', arguments: param);
   }
 
   ///

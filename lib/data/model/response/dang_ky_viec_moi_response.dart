@@ -24,17 +24,17 @@ class DangKyViecMoiResponse {
   String? honNhan;
   LoaiNhanVienResponse? idLoaiNhanVien;
   String? mucTieuNgheNghiep;
-  BangBangCapResponse? idBangBangCap;
+  List<BangBangCapResponse>? idBangBangCap;
   String? chucVuHienTai;
   String? chucVuMongMuon;
   SoNamKinhNghiemResponse? idSoNamKinhNghiem;
   String? noiLamViec;
   String? mucLuongDeXuat;
-  KeKhaiKinhNghiemResponse? idKeKhaiKinhNghiem;
+  List<KeKhaiKinhNghiemResponse>? idKeKhaiKinhNghiem;
   String? anhHoSoXinViec;
   String? fileHoSoXinViec;
   String? kyNangSoTruong;
-  NgoaiNguResponse? idNgoaiNgu;
+  List<NgoaiNguResponse>? idNgoaiNgu;
   TinHocResponse? idTinHoc;
 
   String? createdAt;
@@ -131,8 +131,9 @@ class DangKyViecMoiResponse {
     // mapping idBangBangCap
     if (json['idBangBangCap'] != null &&
         json['idBangBangCap'].toString().length != 24) {
-      idBangBangCap = BangBangCapResponse.fromJson(
-          json['idBangBangCap'] as Map<String, dynamic>);
+      idBangBangCap = (json['idBangBangCap'] as List<dynamic>)
+          .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
 
       //add list Bằng cấp
       // idBangBangCap = [];
@@ -163,8 +164,12 @@ class DangKyViecMoiResponse {
     // mapping idKeKhaiKinhNghiem
     if (json['idKeKhaiKinhNghiem'] != null &&
         json['idKeKhaiKinhNghiem'].toString().length != 24) {
-      idKeKhaiKinhNghiem = KeKhaiKinhNghiemResponse.fromJson(
-          json['idKeKhaiKinhNghiem'] as Map<String, dynamic>);
+      // idKeKhaiKinhNghiem = KeKhaiKinhNghiemResponse.fromJson(
+      //     json['idKeKhaiKinhNghiem'] as Map<String, dynamic>);
+      idKeKhaiKinhNghiem = (json['idKeKhaiKinhNghiem'] as List<dynamic>)
+          .map((e) =>
+              KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
       idKeKhaiKinhNghiem = null;
     }
@@ -175,8 +180,11 @@ class DangKyViecMoiResponse {
     // mapping idNgoaiNgu
     if (json['idNgoaiNgu'] != null &&
         json['idNgoaiNgu'].toString().length != 24) {
-      idNgoaiNgu =
-          NgoaiNguResponse.fromJson(json['idNgoaiNgu'] as Map<String, dynamic>);
+      // idNgoaiNgu =
+      //     NgoaiNguResponse.fromJson(json['idNgoaiNgu'] as Map<String, dynamic>);
+      idNgoaiNgu = (json['idNgoaiNgu'] as List<dynamic>)
+          .map((e) => NgoaiNguResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
       idNgoaiNgu = null;
     }

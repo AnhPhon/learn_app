@@ -29,7 +29,8 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
                     children: [
                       content(controller: controller),
                       // Button tiếp tục
-                      postButton(controller: controller),
+                      if (controller.isReview)
+                        postButton(controller: controller)
                     ],
                   ),
                 );

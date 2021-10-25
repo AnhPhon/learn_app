@@ -92,11 +92,11 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
             content:
                 controller.dangKyViecMoiResponse.mucTieuNgheNghiep.toString(),
           ),
-          TextHighlight(
-            title: "Bằng cấp và trình độ: ",
-            content:
-                "\nTrình độ học vấn: ${controller.dangKyViecMoiResponse.idBangBangCap!.idTrinhDo.toString()} \nChuyên ngành: ${controller.dangKyViecMoiResponse.idBangBangCap!.idChuyenMon.toString()} \nTốt nghiệp loại: ${controller.dangKyViecMoiResponse.idBangBangCap!.idLoaiTotNghiep.toString()} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCap!.donViDaoTao.toString()}",
-          ),
+          // TextHighlight(
+          //   title: "Bằng cấp và trình độ: ",
+          //   content:
+          //       "\nTrình độ học vấn: ${controller.dangKyViecMoiResponse.idBangBangCap!.idTrinhDo.toString()} \nChuyên ngành: ${controller.dangKyViecMoiResponse.idBangBangCap!.idChuyenMon.toString()} \nTốt nghiệp loại: ${controller.dangKyViecMoiResponse.idBangBangCap!.idLoaiTotNghiep.toString()} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCap!.donViDaoTao.toString()}",
+          // ),
           TextHighlight(
             title: "Chức vụ, kinh nghiệm, mức lương,...: ",
             content:
@@ -111,20 +111,20 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                 fontWeight: FontWeight.bold),
           ),
-          TextHighlight(
-            title: "Kết quả, thành tích đạt được: ",
-            content:
-                " \n Từ ${DateConverter.readMongoToString(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.thoiGianBatDau.toString())} đến ${DateConverter.readMongoToString(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.thoiGianKetThuc.toString())} \n- Đơn vị: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.donVi.toString()}\n- Chức vụ: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.chucVu.toString()} \n- Mức lương: ${PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.mucLuong.toString()))} vnđ/tháng\n- Công việc phụ trách: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.congViecPhuTrach.toString()} \n- Kết quả, thành tích đạt được: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.ketQua.toString()}",
-          ),
+          // TextHighlight(
+          //   title: "Kết quả, thành tích đạt được: ",
+          //   content:
+          //       " \n Từ ${DateConverter.readMongoToString(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.thoiGianBatDau.toString())} đến ${DateConverter.readMongoToString(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.thoiGianKetThuc.toString())} \n- Đơn vị: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.donVi.toString()}\n- Chức vụ: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.chucVu.toString()} \n- Mức lương: ${PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.mucLuong.toString()))} vnđ/tháng\n- Công việc phụ trách: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.congViecPhuTrach.toString()} \n- Kết quả, thành tích đạt được: ${controller.dangKyViecMoiResponse.idKeKhaiKinhNghiem!.ketQua.toString()}",
+          // ),
           TextHighlight(
             title: "Kỹ năng và sở trường làm việc: ",
             content: controller.dangKyViecMoiResponse.kyNangSoTruong.toString(),
           ),
-          TextHighlight(
-            title: "Ngoại ngữ: ",
-            content:
-                " - Ngôn ngữ: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.loaiNgoaiNgu.toString()}\n+Nghe: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.nghe.toString()}\n+Đọc: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.doc.toString()}\n+Nói: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.noi.toString()}\n+Viết: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.viet.toString()}\n-Trình độ: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.trinhDo.toString()}",
-          ),
+          // TextHighlight(
+          //   title: "Ngoại ngữ: ",
+          //   content:
+          //       " - Ngôn ngữ: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.loaiNgoaiNgu.toString()}\n+Nghe: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.nghe.toString()}\n+Đọc: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.doc.toString()}\n+Nói: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.noi.toString()}\n+Viết: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.viet.toString()}\n-Trình độ: ${controller.dangKyViecMoiResponse.idNgoaiNgu!.trinhDo.toString()}",
+          // ),
           TextHighlight(
             title: "Tin học: ",
             content:

@@ -35,14 +35,22 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                           alignment: Alignment.center,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                              child: Image.asset(
-                                Images.newsTemplate,
-                                fit: BoxFit.cover,
-                                height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                                child: tuyenDungResponse.hinhAnhDaiDien == null
+                                    ? Image.asset(
+                                        Images.logo_fss,
+                                        fit: BoxFit.cover,
+                                        height: Dimensions
+                                            .AVATAR_SQUARE_SIZE_DEFAULT,
+                                      )
+                                    : Image.network(
+                                        tuyenDungResponse.hinhAnhDaiDien
+                                            .toString(),
+                                        fit: BoxFit.cover,
+                                        height: Dimensions
+                                            .AVATAR_SQUARE_SIZE_DEFAULT,
+                                      )),
                             Text(
                               '${controller.onChangeNameTinhTp(tuyenDungResponse.noiLamViec.toString())}',
                               style: const TextStyle(

@@ -65,10 +65,59 @@ class V1G7ReviewController extends GetxController {
   //isLoading
   bool isLoading = true;
 
+  //bool isReview
+  bool isReview = false;
+
   @override
   void onInit() {
     super.onInit();
 
+    //check router review tin tuyển dụng
+    if (Get.parameters['isReview'] == 'true') {
+      isReview = true;
+    } else {
+      isReview = false;
+    }
+    //load data
+    getDataFrist(isReview: isReview);
+
+    update();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+
+    titleController.dispose();
+    companyController.dispose();
+    addressController.dispose();
+    descController.dispose();
+    requiredController.dispose();
+    benifitController.dispose();
+    prioritizedController.dispose();
+    endTimeController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    contactAddressController.dispose();
+    emailController.dispose();
+    amountController.dispose();
+    hinhThucLamViecController.dispose();
+    trinhDoHocVanController.dispose();
+    chuyenNganhChinhController.dispose();
+    soNamKinhNghiemController.dispose();
+    mucLuongDuKienController.dispose();
+    noiLamViecController.dispose();
+    thoiGianLamViecController.dispose();
+    thoiGianThucTapController.dispose();
+    chuyenNganhPhuController.dispose();
+    super.onClose();
+  }
+
+  ///
+  ///getDataFrist
+  ///
+  void getDataFrist({required bool isReview}) {
+    //set data show page
     //get data parameter
     request = Get.arguments;
     if (request != null) {
@@ -97,10 +146,10 @@ class V1G7ReviewController extends GetxController {
       emailController.text = request['EmailLienHe'].toString();
       thoiGianThucTapController.text = '${request['ThoiGianThuViec']} tháng';
       chuyenNganhPhuController.text = request['TenChuyenNganhPhu'].toString();
+    }
 
-      //isLoading
-      isLoading = false;
-
+    //set data param tuyển dụng
+    if (isReview) {
       //set value tuyển dụng
       tuyenDungRequest.idTaiKhoan = request['IdTaiKhoan'].toString();
       tuyenDungRequest.tieuDe = request['TieuDe'].toString();
@@ -135,37 +184,12 @@ class V1G7ReviewController extends GetxController {
       tuyenDungRequest.emailLienHe = request['EmailLienHe'].toString();
       tuyenDungRequest.thoiGianThuViec = request['ThoiGianThuViec'].toString();
       tuyenDungRequest.idChuyenNganhPhus = request['IdChuyenNganhPhus'] as List;
+      tuyenDungRequest.hinhAnhDaiDien = request['HinhAnhDaiDien'].toString();
     }
+
+    //isLoading
+    isLoading = false;
     update();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-
-    titleController.dispose();
-    companyController.dispose();
-    addressController.dispose();
-    descController.dispose();
-    requiredController.dispose();
-    benifitController.dispose();
-    prioritizedController.dispose();
-    endTimeController.dispose();
-    nameController.dispose();
-    phoneController.dispose();
-    contactAddressController.dispose();
-    emailController.dispose();
-    amountController.dispose();
-    hinhThucLamViecController.dispose();
-    trinhDoHocVanController.dispose();
-    chuyenNganhChinhController.dispose();
-    soNamKinhNghiemController.dispose();
-    mucLuongDuKienController.dispose();
-    noiLamViecController.dispose();
-    thoiGianLamViecController.dispose();
-    thoiGianThucTapController.dispose();
-    chuyenNganhPhuController.dispose();
-    super.onClose();
   }
 
   ///

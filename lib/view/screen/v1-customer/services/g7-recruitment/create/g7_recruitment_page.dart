@@ -13,6 +13,7 @@ import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -569,7 +570,72 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           width: DeviceUtils.getScaledWidth(context, 1),
           textInputAction: TextInputAction.done,
         ),
+
+        //hình ảnh đại điện
+        Container(
+          padding: const EdgeInsets.only(
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+            right: Dimensions.PADDING_SIZE_DEFAULT,
+            top: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          width: DeviceUtils.getScaledWidth(context, 1),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Wrap(
+                    children: const [
+                      Text(
+                        'Hình ảnh đại diện',
+                        style: TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
+                          fontWeight: FontWeight.w600,
+                          color: ColorResources.BLACK,
+                        ),
+                      ),
+                      Text(
+                        '*',
+                        style: TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_LARGE,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              _uploadImage(context, controller)
+            ],
+          ),
+        )
       ],
+    );
+  }
+
+  ///
+  ///upload image
+  ///
+  Widget _uploadImage(
+      BuildContext context, V1G7RecruitmentController controller) {
+    return GestureDetector(
+      onTap: () => controller.pickImage(),
+      child: Container(
+        child: controller.image != null
+            ? Image.file(
+                controller.image!,
+                fit: BoxFit.cover,
+              )
+            : Image.asset(
+                Images.add_image,
+                height: DeviceUtils.getScaledHeight(context, .092),
+                width: DeviceUtils.getScaledWidth(context, .25),
+                fit: BoxFit.fill,
+                color: ColorResources.PRIMARY,
+              ),
+      ),
     );
   }
 

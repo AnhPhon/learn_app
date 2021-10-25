@@ -7,7 +7,6 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
 
 import 'recharge_controller.dart';
 

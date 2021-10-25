@@ -1,3 +1,4 @@
+import 'chuyen_nganh_phu_response.dart';
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
 import 'quan_huyen_response.dart';
@@ -51,10 +52,11 @@ class TuyenDungResponse {
   String? tienCoc;
   String? idTrangThaiTuyenDung;
   String? thoiGianThuViec;
+  String? hinhAnhDaiDien;
 
   String? createdAt;
   String? updatedAt;
-  List<String>? idChuyenNganhPhus;
+  List<ChuyenNganhPhuResponse>? idChuyenNganhPhus;
 
   TuyenDungResponse(
       {this.id,
@@ -95,6 +97,7 @@ class TuyenDungResponse {
       this.idTrangThaiTuyenDung,
       this.thoiGianThuViec,
       this.idChuyenNganhPhus,
+      this.hinhAnhDaiDien,
       this.createdAt,
       this.updatedAt});
 
@@ -250,18 +253,24 @@ class TuyenDungResponse {
     tienCoc = json['tienCoc'].toString();
     idTrangThaiTuyenDung = json['idTrangThaiTuyenDung'].toString();
     thoiGianThuViec = json['thoiGianThuViec'].toString();
+    hinhAnhDaiDien = json['hinhAnhDaiDien'].toString();
 
     // mapping idChuyenNganhPhus
     if (json['idChuyenNganhPhus'] != null &&
         json['idChuyenNganhPhus'].toString().length != 24) {
-      idChuyenNganhPhus = [];
-      final results = json['idChuyenNganhPhus'] as List<String>;
+      // idChuyenNganhPhus = [];
+      // final results = json['idChuyenNganhPhus'] as List<dynamic>;
 
-      for (final element in results) {
-        if (element != null && element.toString().length != 24) {
-          idChuyenNganhPhus!.add(element.toString());
-        }
-      }
+      // for (final element in results) {
+      //   if (element != null && element.toString().length != 24) {
+      //     idChuyenNganhPhus!.add(
+      //         ChuyenNganhPhuResponse.fromJson(element as Map<String, dynamic>));
+      //   }
+      // }
+      idChuyenNganhPhus = (json['idChuyenNganhPhus'] as List<dynamic>)
+          .map(
+              (e) => ChuyenNganhPhuResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
       idPhuongXa = null;
     }
@@ -385,6 +394,12 @@ class TuyenDungResponse {
     if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
     // check null thoiGianThuViec
     if (thoiGianThuViec != null) data['thoiGianThuViec'] = thoiGianThuViec;
+
+    // check null idChuyenNganhPhus
+    if (idChuyenNganhPhus != null)
+      data['idChuyenNganhPhus'] = idChuyenNganhPhus;
+    // check null hinhAnhDaiDien
+    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien;
 
     // check null tongDon
     if (tienCoc != null) data['tienCoc'] = tienCoc;
