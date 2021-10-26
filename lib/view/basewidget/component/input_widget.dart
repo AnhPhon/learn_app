@@ -12,6 +12,7 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
@@ -62,6 +63,7 @@ class InputWidget extends StatelessWidget {
     this.margin,
     this.suffixIconTap,
     this.onSubmitted,
+    this.height,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,9 @@ class InputWidget extends StatelessWidget {
             ),
           Container(
             margin: margin ?? EdgeInsets.zero,
+            height: (height != null)
+                ? DeviceUtils.getScaledHeight(context, height!)
+                : null,
             width: DeviceUtils.getScaledWidth(context, width),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)
@@ -178,28 +183,23 @@ class InputWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: (isColorFieldWhite == true)
-                      ? ColorResources.WHITE
-                      : ColorResources.LIGHT_GREY.withOpacity(0.8),
+                  fillColor: fillColor ?? Colors.transparent,
                 ),
               ),
             ),

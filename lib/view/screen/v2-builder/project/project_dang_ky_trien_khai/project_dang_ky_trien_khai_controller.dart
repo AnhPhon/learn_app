@@ -153,7 +153,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
           Future.delayed(Duration.zero, () {
             Get.back();
-            // Get.back();
+            Get.back();
           });
 
         },

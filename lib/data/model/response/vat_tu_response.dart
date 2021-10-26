@@ -38,7 +38,7 @@ class VatTuResponse {
     //   idDonDichVu = null;
     // }
 
-    idDonDichVu = json['idDonDichVu']['id'].toString();
+    idDonDichVu = json['idDonDichVu'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();

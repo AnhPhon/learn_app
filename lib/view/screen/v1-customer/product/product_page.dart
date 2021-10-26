@@ -10,6 +10,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/component/product_widget.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
 
 class V1ProductPage extends GetView<V1ProductController> {
@@ -36,19 +37,42 @@ class V1ProductPage extends GetView<V1ProductController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
-
-                    //search bar
-                    _searchBar(context),
-
                     //category
                     DropDownButton1<DanhMucSanPhamResponse>(
                       hint: "Hạng mục",
                       value: controller.danhMucSanPhamResponse,
                       onChanged: controller.onCategoryChange,
                       data: controller.danhMucList,
+                      width: double.infinity,
+                      isBorder: false,
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
+                      child: Divider(
+                        color: ColorResources.GREY,
+                        height: 0,
+                      ),
+                    ),
+
+                    //search bar
+                    InputWidget(
+                      hintText: "Tìm kiếm",
+                      suffixIcon: Icon(
+                        (controller.isSearched) ? Icons.close : Icons.search,
+                        size: Dimensions.ICON_SIZE_DEFAULT,
+                      ),
+                      suffixIconTap: () {
+                        (controller.isSearched)
+                            ? controller.clearSearch(context)
+                            : controller.btnSearch(context);
+                      },
+                      textEditingController: controller.searchController,
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (value) => controller.btnSearch(context),
+                      // onChanged: (value) => controller.onChangeSearch(value.toString()),
                       width: double.infinity,
                       isBorder: false,
                     ),
@@ -75,6 +99,8 @@ class V1ProductPage extends GetView<V1ProductController> {
                           const SizedBox(
                             height: Dimensions.MARGIN_SIZE_DEFAULT,
                           ),
+
+                          //product list
                           _productList(context),
                         ],
                       ),
@@ -87,31 +113,6 @@ class V1ProductPage extends GetView<V1ProductController> {
         );
       },
     );
-  }
-
-  ///
-  ///search bar
-  ///
-  Widget _searchBar(BuildContext context) {
-    return GetBuilder<V1ProductController>(builder: (controller) {
-      return InputWidget(
-        hintText: "Tìm kiếm",
-        suffixIcon: Icon(
-          (controller.isSearched) ? Icons.close : Icons.search,
-          size: Dimensions.ICON_SIZE_DEFAULT,
-        ),
-        suffixIconTap: () {
-          (controller.isSearched)
-              ? controller.clearSearch(context)
-              : controller.btnSearch(context);
-        },
-        textEditingController: controller.searchController,
-        textInputAction: TextInputAction.search,
-        onSubmitted: (value) => controller.btnSearch(context),
-        // onChanged: (value) => controller.onChangeSearch(value.toString()),
-        width: double.infinity,
-      );
-    });
   }
 
   ///
@@ -131,30 +132,48 @@ class V1ProductPage extends GetView<V1ProductController> {
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_DEFAULT,
               ),
-              child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: .7,
-                    crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
-                    crossAxisCount: 2,
+              child: Column(
+                children: [
+                  //label
+                  const Label(
+                    label: "Danh sách sản phẩm",
+                    obligatory: false,
+                    horizontalPadding: 0,
+                    paddingTitle: 0,
+                    topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
-                  itemCount: controller.sanPhamList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () => controller
-                          .onProductDetailClick(controller.sanPhamList[index]),
-                      child: ProductWidget(
-                        imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
-                            .toString(),
-                        name: controller.sanPhamList[index].ten!,
-                        price: "${PriceConverter.convertPrice(
-                          context,
-                          double.parse(controller.sanPhamList[index].gia!),
-                        )} vnđ",
+
+                  //divider
+                  Dimensions().paddingDivider(context),
+
+                  //product list
+                  GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: .7,
+                        crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
+                        crossAxisCount: 2,
                       ),
-                    );
-                  }),
+                      itemCount: controller.sanPhamList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => controller.onProductDetailClick(
+                              controller.sanPhamList[index]),
+                          child: ProductWidget(
+                            imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
+                                .toString(),
+                            name: controller.sanPhamList[index].ten!,
+                            price: "${PriceConverter.convertPrice(
+                              context,
+                              double.parse(controller.sanPhamList[index].gia!),
+                            )} vnđ",
+                          ),
+                        );
+                      }),
+                ],
+              ),
             );
     });
   }

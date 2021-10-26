@@ -8,6 +8,7 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/btn_component_border.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_controller.dart';
 
 class V1CartPage extends GetView<V1CartController> {
@@ -35,50 +36,30 @@ class V1CartPage extends GetView<V1CartController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: Dimensions.MARGIN_SIZE_LARGE,
-                        ),
-
                         //title shipping detail
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                          ),
-                          child: Text(
-                            "Chi tiết về shipping",
-                            style: TextStyle(
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        const Label(
+                          label: "Chi tiết về shipping",
+                          obligatory: false,
+                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //shipping detail
                         _shipping(context, controller),
 
-                        const SizedBox(
-                          height: Dimensions.MARGIN_SIZE_SMALL,
-                        ),
-
                         //title order product detail
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                          ),
-                          child: Text(
-                            "Chi tiết đơn hàng",
-                            style: TextStyle(
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        const Label(
+                          label: "Chi tiết đơn hàng",
+                          obligatory: false,
+                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //order product detail
                         _orderProductDetail(context),
 
                         const SizedBox(
-                          height: Dimensions.MARGIN_SIZE_LARGE,
+                          height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
                         ),
 
                         _bottomPaymentBtn(context, controller: controller),
@@ -193,12 +174,10 @@ class V1CartPage extends GetView<V1CartController> {
   ) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: Dimensions.MARGIN_SIZE_DEFAULT,
         horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-        horizontal: Dimensions.PADDING_SIZE_LARGE,
+      padding: const EdgeInsets.all(
+        Dimensions.PADDING_SIZE_SMALL,
       ),
       decoration: BoxDecoration(
         boxShadow: [
@@ -262,13 +241,22 @@ class V1CartPage extends GetView<V1CartController> {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-        height: DeviceUtils.getScaledSize(context, .064),
-        width: DeviceUtils.getScaledSize(context, .064),
+        height: DeviceUtils.getScaledSize(context, .055),
+        width: DeviceUtils.getScaledSize(context, .055),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: color ?? ColorResources.PRIMARY),
         ),
-        child: text != null ? Align(child: Text(text)) : icon,
+        child: text != null
+            ? Align(
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                  ),
+                ),
+              )
+            : icon,
       ),
     );
   }
@@ -284,6 +272,7 @@ class V1CartPage extends GetView<V1CartController> {
         _iconQuality(context,
             onTap: () => controller.decreQuality(index: index),
             icon: Icon(Icons.remove,
+                size: Dimensions.ICON_SIZE_SMALL,
                 color: controller.qualityList![index] > 1
                     ? ColorResources.PRIMARY
                     : ColorResources.GREY),
@@ -295,10 +284,15 @@ class V1CartPage extends GetView<V1CartController> {
         _iconQuality(context, text: controller.qualityList![index].toString()),
 
         //incrementQuality
-        _iconQuality(context,
-            onTap: () => controller.increQuality(index: index),
-            icon:
-                const Icon(Icons.add_outlined, color: ColorResources.PRIMARY)),
+        _iconQuality(
+          context,
+          onTap: () => controller.increQuality(index: index),
+          icon: const Icon(
+            Icons.add_outlined,
+            size: Dimensions.ICON_SIZE_SMALL,
+            color: ColorResources.PRIMARY,
+          ),
+        ),
       ],
     );
   }
@@ -318,6 +312,7 @@ class V1CartPage extends GetView<V1CartController> {
           text1,
           style: const TextStyle(
             fontSize: Dimensions.FONT_SIZE_LARGE,
+            fontWeight: FontWeight.bold,
           ),
         ),
         Text(
@@ -340,7 +335,7 @@ class V1CartPage extends GetView<V1CartController> {
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
+        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
       child: Column(
         children: [
@@ -395,13 +390,9 @@ class V1CartPage extends GetView<V1CartController> {
     return GetBuilder<V1CartController>(builder: (controller) {
       return Container(
         margin: const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_DEFAULT,
           horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
-        padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_DEFAULT,
-          horizontal: Dimensions.PADDING_SIZE_LARGE,
-        ),
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -646,7 +637,7 @@ class V1CartPage extends GetView<V1CartController> {
         color: ColorResources.PRIMARY,
         text:
             "Thanh toán ${PriceConverter.convertPrice(context, double.parse(controller.totalAmount.toString()))} vnđ",
-        width: DeviceUtils.getScaledWidth(context, .95),
+        width: DeviceUtils.getScaledWidth(context, .9),
       ),
     );
   }

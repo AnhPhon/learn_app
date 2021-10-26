@@ -10,6 +10,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_controller.dart';
 
 class V3WarehousePage extends GetView<V3WarehouseController> {
@@ -30,19 +31,6 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 const SizedBox(
                   height: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
-
-                //search
-                // InputWidget(
-                //   width: double.infinity,
-                //   textEditingController: controller.searchController,
-                //   hintText: "Tìm kiếm",
-                //   suffixIcon: const Icon(
-                //     Icons.search,
-                //     size: Dimensions.ICON_SIZE_DEFAULT,
-                //   ),
-                //   fillColor: ColorResources.WHITE,
-                // ),
-
                 const SizedBox(
                   height: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
@@ -86,6 +74,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
   ///
   Widget _item(BuildContext context,
       {required V3WarehouseController controller}) {
+    if (controller.isLoadingProduct) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return SmartRefresher(
       controller: controller.refreshController,
       enablePullUp: true,
@@ -103,7 +96,9 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
               margin: const EdgeInsets.symmetric(
                   vertical: Dimensions.MARGIN_SIZE_SMALL,
                   horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.all(
+                Dimensions.PADDING_SIZE_SMALL,
+              ),
               decoration: BoxDecoration(
                 color: ColorResources.WHITE,
                 borderRadius:
@@ -124,17 +119,16 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: FadeInImage.assetNetwork(
-                          placeholder: Images.placeholder,
-                          image: controller.nhapKhoHangDaiLyList[index]
-                              .idSanPham!.hinhAnhDaiDien
-                              .toString(),
-                          height: DeviceUtils.getScaledHeight(context, .08),
-                          width: double.infinity,
-                          fit: BoxFit.fill,
-                          imageErrorBuilder: (c, o, s) => Image.asset(
-                            Images.placeholder,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_SMALL,
                           ),
+                          child: FadeInImageCustom(
+                              urlImage: controller.nhapKhoHangDaiLyList[index]
+                                  .idSanPham!.hinhAnhDaiDien
+                                  .toString(),
+                              height: .15,
+                              width: double.infinity),
                         ),
                       ),
                       const SizedBox(
@@ -145,13 +139,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                         child: SizedBox(
                           height: DeviceUtils.getScaledHeight(context, .08),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                controller
-                                    .nhapKhoHangDaiLyList[index].idSanPham!.ten
-                                    .toString(),
+                                "${controller.nhapKhoHangDaiLyList[index].idSanPham!.maSanPham} - ${controller.nhapKhoHangDaiLyList[index].idSanPham!.ten}",
                                 maxLines: 2,
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),
