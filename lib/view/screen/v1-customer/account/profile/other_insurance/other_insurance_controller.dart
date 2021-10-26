@@ -12,6 +12,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V1OtherInsuranceController extends GetxController {
   //DangKyBaoHiem
@@ -37,7 +38,6 @@ class V1OtherInsuranceController extends GetxController {
 
   //CircularProgressIndicator
   bool isLoading = true;
-  bool isSucces = false;
 
   @override
   void onInit() {
@@ -62,7 +62,7 @@ class V1OtherInsuranceController extends GetxController {
         baoHiemResponse = value;
 
         //generate list
-        isChecked = List<bool>.filled(value.length, false);
+        isChecked = List<bool>.generate(value.length, (_) => false);
 
         isLoading = false;
         update();
@@ -92,46 +92,34 @@ class V1OtherInsuranceController extends GetxController {
   ///dang ky mua
   ///
   void dangKyMuaBtn(BuildContext context) {
-    for (var i = 0; i < isChecked!.length; i++) {
-      //check value of check box
-      if (isChecked![i] == true) {
-        //set data
-        dangKyBaoHiemRequest.idTaiKhoan = userId;
-        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[i].id;
-        dangKyBaoHiemRequest.trangThai = "0";
+    if (isChecked!.indexWhere((element) => element == true) != -1) {
+      for (var i = 0; i < isChecked!.length; i++) {
+        //check value of check box
+        if (isChecked![i] == true) {
+          //set data
+          dangKyBaoHiemRequest.idTaiKhoan = userId;
+          dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[i].id;
+          dangKyBaoHiemRequest.trangThai = "0";
 
-        //register
-        dangKyBaoHiemProvider.add(
-          data: dangKyBaoHiemRequest,
-          onSuccess: (value) {
-            isSucces = true;
-          },
-          onError: (error) {
-            print("V1OtherInsuranceController dangKyMuaBtn onError $error");
-          },
-        );
-      } else {
-        // show errors
-        SnackBarUtils.showSnackBar(
-          title: "Vui lòng kiểm tra lại",
-          message: "Vui lòng chọn bảo hiểm muốn mua",
-        );
+          //register
+          dangKyBaoHiemProvider.add(
+            data: dangKyBaoHiemRequest,
+            onSuccess: (value) {},
+            onError: (error) {
+              print("V1OtherInsuranceController dangKyMuaBtn onError $error");
+            },
+          );
+        }
+        if (i == isChecked!.length - 1) {
+          Get.back();
+
+          //show dialog
+          Alert.success(message: 'Đăng ký mua bảo hiểm thành công');
+        }
       }
-    }
-    if (isSucces) {
-      Get.back();
-
-      //show dialog
-      showAnimatedDialog(
-        context,
-        const MyDialog(
-          icon: Icons.check,
-          title: "Hoàn tất",
-          description: "Đăng ký mua bảo hiểm thành công",
-        ),
-        dismissible: false,
-        isFlip: true,
-      );
+    } else {
+      // show errors
+      Alert.error(message: 'Vui lòng chọn bảo hiểm muốn mua');
     }
   }
 
@@ -149,16 +137,7 @@ class V1OtherInsuranceController extends GetxController {
         Get.back();
 
         //show dialog
-        showAnimatedDialog(
-          context,
-          const MyDialog(
-            icon: Icons.check,
-            title: "Hoàn tất",
-            description: "Đăng ký tư vấn thành công",
-          ),
-          dismissible: false,
-          isFlip: true,
-        );
+        Alert.success(message: 'Đăng ký tư vấn thành công');
       },
       onError: (error) {
         print("V1OtherInsuranceController dangKyTuVanBtn onError $error");

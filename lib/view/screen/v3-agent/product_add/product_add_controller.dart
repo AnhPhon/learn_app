@@ -24,6 +24,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V3ProductAddController extends GetxController {
   //image
@@ -85,6 +86,18 @@ class V3ProductAddController extends GetxController {
   void onInit() {
     super.onInit();
     getLoadData();
+  }
+
+  @override
+  void onClose() {
+    name.dispose();
+    branch.dispose();
+    price.dispose();
+    code.dispose();
+    quyCach.dispose();
+    detail.dispose();
+    stock.dispose();
+    super.onClose();
   }
 
   ///
@@ -209,168 +222,118 @@ class V3ProductAddController extends GetxController {
   void btnAdd(BuildContext context, {bool? isUpdateAndAdd = false}) {
     //validate
     if (urlImage.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Hình ảnh sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Hình ảnh sản phẩm không được để trống');
     } else if (name.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Tên sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Tên sản phẩm không được để trống');
     } else if (branch.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Thương hiệu sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Thương hiệu sản phẩm không được để trống');
     } else if (price.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Giá sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Giá sản phẩm không được để trống');
     } else if (code.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Mã sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Mã sản phẩm không được để trống');
     } else if (quyCach.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Quy cách không được để trống",
-      );
+      Alert.error(message: 'Quy cách không được để trống');
     } else if (detail.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Chi tiết sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Chi tiết sản phẩm không được để trống');
     } else if (danhMucSanPhamResponse == null) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Bạn chưa chọn danh mục sản phẩm không được để trống",
-      );
+      Alert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
     } else if (stock.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Số lượng không được để trống",
-      );
+      Alert.error(message: 'Số lượng không được để trống');
     } else if (khoHangDaiLyResponse == null) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Bạn chưa chọn kho hàng",
+      Alert.error(message: 'Bạn chưa chọn kho hàng');
+    } else {
+      //set data
+      sanPhamRequest.hinhAnhDaiDien = urlImage[0];
+      sanPhamRequest.hinhAnhSanPhams = urlImage;
+      sanPhamRequest.ten = name.text;
+      sanPhamRequest.thuongHieu = branch.text;
+      sanPhamRequest.gia = price.text.replaceAll(",", "");
+      sanPhamRequest.maSanPham = code.text;
+      sanPhamRequest.quyCach = quyCach.text;
+      sanPhamRequest.moTa = detail.text;
+      sanPhamRequest.idDanhMucSanPham = danhMucSanPhamResponse!.id;
+      sanPhamRequest.idTaiKhoan = userId;
+
+      nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
+      nhapKhoHangDaiLyRequest.idTaiKhoan = userId;
+      nhapKhoHangDaiLyRequest.soLuong = stock.text;
+
+      //check product already exits
+      nhapKhoHangDaiLyProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter:
+            "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
+        onSuccess: (nhapKhoHangDaiLy) {
+          final index = nhapKhoHangDaiLy.indexWhere((element) =>
+              element.idSanPham!.maSanPham!.trim() == code.text.trim());
+          //if product already exits
+          if (index == -1) {
+            //add product
+            sanPhamProvider.add(
+              data: sanPhamRequest,
+              onSuccess: (sanPham) {
+                //set data
+                nhapKhoHangDaiLyRequest.idSanPham = sanPham.id;
+
+                //nhapKho
+                nhapKhoHangDaiLyProvider.add(
+                  data: nhapKhoHangDaiLyRequest,
+                  onSuccess: (nhapKhoHangDaiLyAdd) {
+                    if (isUpdateAndAdd == false) {
+                      Get.offNamed(AppRoutes.V3_STORE);
+                    }
+                    Alert.success(message: 'Thêm sản phẩm thành công');
+                  },
+                  onError: (error) {
+                    print(
+                        "V3ProductAddController nhapKhoHangDaiLyAdd onError $error");
+                  },
+                );
+              },
+              onError: (error) {
+                print("V3ProductAddController sanPhamAdd onError $error");
+              },
+            );
+          } else {
+            //set data
+            sanPhamRequest.id = nhapKhoHangDaiLy[index].idSanPham!.id;
+            //else
+            sanPhamProvider.update(
+              data: sanPhamRequest,
+              onSuccess: (sanPhamUpdate) {
+                //set data
+                nhapKhoHangDaiLyRequest.idSanPham =
+                    nhapKhoHangDaiLy[index].idSanPham!.id;
+                nhapKhoHangDaiLyRequest.id = nhapKhoHangDaiLy[index].id;
+
+                //nhapKho update
+                nhapKhoHangDaiLyProvider.update(
+                  data: nhapKhoHangDaiLyRequest,
+                  onSuccess: (nhapKhoHangDaiLyUpdate) {
+                    if (isUpdateAndAdd == false) {
+                      Get.offNamed(AppRoutes.V3_STORE);
+                    }
+                    Alert.success(message: 'Thêm sản phẩm thành công');
+                  },
+                  onError: (error) {
+                    print(
+                        "V3ProductAddController nhapKhoHangDaiLyUpdate onError $error");
+                  },
+                );
+              },
+              onError: (error) {
+                print("V3ProductAddController sanPhamUpdate onError $error");
+              },
+            );
+          }
+        },
+        onError: (error) {
+          print(
+              "V3ProductAddController nhapKhoHangDaiLyPaginate onError $error");
+        },
       );
-    } else {}
-
-    //set data
-    sanPhamRequest.hinhAnhDaiDien = urlImage[0];
-    sanPhamRequest.hinhAnhSanPhams = urlImage;
-    sanPhamRequest.ten = name.text;
-    sanPhamRequest.thuongHieu = branch.text;
-    sanPhamRequest.gia = price.text.replaceAll(",", "");
-    sanPhamRequest.maSanPham = code.text;
-    sanPhamRequest.quyCach = quyCach.text;
-    sanPhamRequest.moTa = detail.text;
-    sanPhamRequest.idDanhMucSanPham = danhMucSanPhamResponse!.id;
-    sanPhamRequest.idTaiKhoan = userId;
-
-    nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
-    nhapKhoHangDaiLyRequest.idTaiKhoan = userId;
-    nhapKhoHangDaiLyRequest.soLuong = stock.text;
-
-    //check product already exits
-    nhapKhoHangDaiLyProvider.paginate(
-      page: 1,
-      limit: 100,
-      filter:
-          "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
-      onSuccess: (nhapKhoHangDaiLy) {
-        final index = nhapKhoHangDaiLy.indexWhere((element) =>
-            element.idSanPham!.maSanPham!.trim() == code.text.trim());
-        //if product already exits
-        if (index == -1) {
-          //add product
-          sanPhamProvider.add(
-            data: sanPhamRequest,
-            onSuccess: (sanPham) {
-              //set data
-              nhapKhoHangDaiLyRequest.idSanPham = sanPham.id;
-              print(nhapKhoHangDaiLyRequest.idKhoHangDaiLy);
-              //nhapKho
-              nhapKhoHangDaiLyProvider.add(
-                data: nhapKhoHangDaiLyRequest,
-                onSuccess: (nhapKhoHangDaiLyAdd) {
-                  if (isUpdateAndAdd == false) {
-                    Get.offNamed(AppRoutes.V3_STORE);
-                  }
-
-                  //show dialog
-                  showAnimatedDialog(
-                    context,
-                    const MyDialog(
-                      icon: Icons.check,
-                      title: "Hoàn tất",
-                      description: "Thêm sản phẩm thành công",
-                    ),
-                    dismissible: false,
-                    isFlip: true,
-                  );
-                },
-                onError: (error) {
-                  print(
-                      "V3ProductAddController nhapKhoHangDaiLyAdd onError $error");
-                },
-              );
-            },
-            onError: (error) {
-              print("V3ProductAddController sanPhamAdd onError $error");
-            },
-          );
-        } else {
-          //set data
-          sanPhamRequest.id = nhapKhoHangDaiLy[index].idSanPham!.id;
-          //else
-          sanPhamProvider.update(
-            data: sanPhamRequest,
-            onSuccess: (sanPhamUpdate) {
-              //set data
-              nhapKhoHangDaiLyRequest.idSanPham =
-                  nhapKhoHangDaiLy[index].idSanPham!.id;
-              nhapKhoHangDaiLyRequest.id = nhapKhoHangDaiLy[index].id;
-
-              //nhapKho update
-              nhapKhoHangDaiLyProvider.update(
-                data: nhapKhoHangDaiLyRequest,
-                onSuccess: (nhapKhoHangDaiLyUpdate) {
-                  if (isUpdateAndAdd == false) {
-                    Get.offNamed(AppRoutes.V3_STORE);
-                  }
-                  //show dialog
-                  showAnimatedDialog(
-                    context,
-                    const MyDialog(
-                      icon: Icons.check,
-                      title: "Hoàn tất",
-                      description: "Thêm sản phẩm thành công",
-                    ),
-                    dismissible: false,
-                    isFlip: true,
-                  );
-                },
-                onError: (error) {
-                  print(
-                      "V3ProductAddController nhapKhoHangDaiLyUpdate onError $error");
-                },
-              );
-            },
-            onError: (error) {
-              print("V3ProductAddController sanPhamUpdate onError $error");
-            },
-          );
-        }
-      },
-      onError: (error) {
-        print("V3ProductAddController nhapKhoHangDaiLyPaginate onError $error");
-      },
-    );
+    }
   }
 
   ///

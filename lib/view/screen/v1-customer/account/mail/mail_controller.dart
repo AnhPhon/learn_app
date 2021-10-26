@@ -7,6 +7,7 @@ import 'package:template/provider/hop_thu_provider.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V1MailController extends GetxController {
   //textEditingController
@@ -20,6 +21,14 @@ class V1MailController extends GetxController {
 
   //title appbar
   String title = "Hộp thư";
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    phoneController.dispose();
+    contentController.dispose();
+    super.onClose();
+  }
 
   ///
   ///send
@@ -41,6 +50,11 @@ class V1MailController extends GetxController {
         title: "Vui lòng kiểm tra lại",
         message: "Vui lòng nhập nội dung",
       );
+      Alert.error(message: 'Vui lòng nhập tên');
+    } else if (phoneController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập số điện thoại');
+    } else if (contentController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập nội dung');
     } else {
       //set data
       hopThuRequest.hoTen = nameController.text.trim();
@@ -55,16 +69,7 @@ class V1MailController extends GetxController {
           Get.back();
 
           //show dialog
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Liên hệ thành công",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
+          Alert.success(message: 'Liên hệ thành công');
         },
         onError: (error) {
           print("V1MailController onBtnSendClick onError $error");

@@ -17,6 +17,8 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V1ShippingAddressController extends GetxController {
   //TextEditingController
@@ -234,6 +236,7 @@ class V1ShippingAddressController extends GetxController {
             dismissible: false,
             isFlip: true,
           );
+          Alert.success(message: 'Cập nhật địa chỉ thành công');
         },
         onError: (error) {
           print("V1ShippingAddressController updateAddress onError $error");

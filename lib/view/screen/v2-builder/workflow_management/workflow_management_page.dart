@@ -147,6 +147,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RichText(
+                            maxLines: 2,
                             text: TextSpan(
                               style: const TextStyle(
                                 color: ColorResources.BLACK,
@@ -154,8 +155,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               children: [
                                 //Tiêu đề công việc
                                 TextSpan(
-                                  text: controller.dangLam![index].tieuDe
-                                      .toString(),
+                                  text: "${controller.dangLam![index].tieuDe}",
                                   style: Dimensions.fontSizeStyle16w600(),
                                 ),
                               ],
@@ -334,6 +334,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RichText(
+                            maxLines: 3,
                             text: TextSpan(
                               style: const TextStyle(
                                 color: ColorResources.BLACK,
@@ -359,6 +360,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                                   const Icon(
                                     Icons.location_on_outlined,
                                   ),
+                                  const Icon(Icons.location_on_outlined),
 
                                   //Địa điểm
                                   Text(

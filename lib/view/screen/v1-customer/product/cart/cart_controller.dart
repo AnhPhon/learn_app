@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
+import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/chi_tiet_don_hang_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
@@ -12,6 +17,7 @@ import 'package:template/routes/app_routes.dart';
 class V1CartController extends GetxController {
   //donHang
   DonHangProvider donHangProvider = GetIt.I.get<DonHangProvider>();
+  DonHangRequest donHangRequest = DonHangRequest();
   DonHangResponse? donHangResponse;
 
   //ChiTietDonHang
@@ -31,8 +37,8 @@ class V1CartController extends GetxController {
   bool isReloadAddress = false;
 
   //total
-  int total = 0;
-  int totalAmount = 0;
+  double total = 0;
+  double totalAmount = 0;
 
   //user id
   String userId = "";
@@ -65,21 +71,25 @@ class V1CartController extends GetxController {
   ///get total
   ///
   void getTotal() {
-    total = 0;
-    totalAmount = 0;
-    for (final element in chiTietDonHangList) {
-      total = total +
-          (int.parse(element.soLuong.toString()) *
-              int.parse(
-                element.idSanPham!.gia.toString(),
-              ));
-    }
-    donHangResponse!.phiDichVu = (total * .2).toString();
-    totalAmount = total +
-        int.parse(donHangResponse!.phiDichVu.toString()) +
-        int.parse(donHangResponse!.phiVanChuyen.toString());
+    if (donHangResponse != null && chiTietDonHangList.isNotEmpty) {
+      total = 0;
+      totalAmount = 0;
 
-    update();
+      for (var i = 0; i < chiTietDonHangList.length; i++) {
+        total = total +
+            (qualityList![i].toDouble() *
+                double.parse(
+                  chiTietDonHangList[i].idSanPham!.gia.toString(),
+                ));
+      }
+
+      donHangResponse!.phiDichVu = (total * .2).toString();
+      totalAmount = total +
+          double.parse(donHangResponse!.phiDichVu.toString()) +
+          double.parse(donHangResponse!.phiVanChuyen.toString());
+
+      update();
+    }
   }
 
   ///
@@ -124,6 +134,7 @@ class V1CartController extends GetxController {
   ///
   void increQuality({required int index}) {
     qualityList![index]++;
+    getTotal();
     updateChiTietDonHang(index: index, quality: qualityList![index].toString());
     update();
   }
@@ -134,6 +145,7 @@ class V1CartController extends GetxController {
   void decreQuality({required int index}) {
     if (qualityList![index] > 1) {
       qualityList![index]--;
+      getTotal();
       updateChiTietDonHang(
           index: index, quality: qualityList![index].toString());
     } else {
@@ -167,7 +179,35 @@ class V1CartController extends GetxController {
   ///
   void onCheckoutClick() {
     Get.toNamed(
-        "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}");
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!
+        .then((value) {
+      //set data
+      donHangRequest.id = donHangResponse!.id;
+      donHangRequest.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
+      donHangRequest.phiDichVu = donHangResponse!.phiDichVu;
+      donHangRequest.phiVanChuyen = donHangResponse!.phiVanChuyen;
+      donHangRequest.soTien = total.toString();
+      donHangRequest.tongTien = totalAmount.toString();
+      donHangRequest.idHinhThucThanhToan = (value == true)
+          ? "616120008c19c11eb11f862a"
+          : "61615180e87a9124404abe82";
+      donHangRequest.idTrangThaiDonHang = "6169794b3391622ae920354b";
+
+      //update donHang
+      donHangProvider.update(
+        data: donHangRequest,
+        onSuccess: (data) {
+          //success
+          Get.offAllNamed(
+            AppRoutes.V1_DASHBOARD,
+            predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD),
+          );
+        },
+        onError: (error) {
+          print("V1ProductDetailController onCheckoutClick onError $error");
+        },
+      );
+    });
   }
 
   ///

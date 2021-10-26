@@ -16,6 +16,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V1TaxController extends GetxController {
   //file image
@@ -50,6 +51,12 @@ class V1TaxController extends GetxController {
     getTax();
   }
 
+  @override
+  void onClose() {
+    taxController.dispose();
+    super.onClose();
+  }
+
   ///
   ///get tax
   ///
@@ -68,7 +75,7 @@ class V1TaxController extends GetxController {
           dangKyThueResponse = value.first;
 
           //if tax already exits => set data to taxController
-          if (dangKyThueResponse!.trangThai == "1") {
+          if (dangKyThueResponse != null) {
             taxController.text = dangKyThueResponse!.file!;
           }
         }
@@ -129,7 +136,7 @@ class V1TaxController extends GetxController {
 
       //set data
       dangKyThueRequest.idTaiKhoan = userId;
-      dangKyThueRequest.trangThai = "1";
+      dangKyThueRequest.trangThai = "0";
       dangKyThueRequest.file = taxController.text;
       dangKyThueRequest.hinhAnhs = imageUrlList;
       dangKyThueRequest.loai = "1";
@@ -144,16 +151,7 @@ class V1TaxController extends GetxController {
           Get.offNamed(AppRoutes.V1_PROFILE);
 
           //show dialog
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Đăng ký thuế thành công",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
+          Alert.success(message: 'Đăng ký thuế thành công');
         },
         onError: (error) {
           print("V1TaxController onBtnDoneClick onError $error");
@@ -166,6 +164,7 @@ class V1TaxController extends GetxController {
         title: "Vui lòng kiểm tra lại",
         message: "Vui lòng điền mã số thuế",
       );
+      Alert.error(message: 'Vui lòng điền mã số thuế');
     }
   }
 }

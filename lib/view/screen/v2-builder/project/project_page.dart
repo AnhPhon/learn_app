@@ -25,11 +25,15 @@ class V2ProjectPage extends GetView<V2ProjectController> {
             body: Column(
               children: [
                 const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_LARGE,
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
 
                 //tab bar button
                 _tabBarWidget(context: context, controller: controller),
+
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
 
                 //tab view list
                 _itemList(controller),
@@ -80,7 +84,7 @@ class V2ProjectPage extends GetView<V2ProjectController> {
               controller.titleTabBar.length,
                   (index) {
                 return GetXSmartRefreshPage(
-                  key: Key('GetXSmartRefreshPageTinTuc_$index'),
+                  key: Key('GetXSmartRefreshPageV2Project_$index'),
                   enablePullUp: true,
                   enablePullDown: true,
                   onLoading: controller.onLoading,
@@ -99,6 +103,12 @@ class V2ProjectPage extends GetView<V2ProjectController> {
 
   Widget listViewItemBuilder(V2ProjectController controller) {
     return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'].length as int,

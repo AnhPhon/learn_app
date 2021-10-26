@@ -50,6 +50,7 @@ mixin DateConverter {
   static DateTime isoStringToLocalDate(String dateTime) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime).toLocal();
   }
+
   static DateTime stringToLocalDate(String dateTime) {
     return DateTime.parse(dateTime).toLocal();
   }
@@ -115,7 +116,7 @@ mixin DateConverter {
   }
 
   static String formatDateTimeFull({required String dateTime}) {
-    return DateConverter.isoStringToLocalFullDateOnly(
+    return DateConverter.isoStringToLocalDateHMS(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }

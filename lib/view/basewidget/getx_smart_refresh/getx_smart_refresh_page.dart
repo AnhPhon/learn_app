@@ -54,7 +54,7 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
     return SmartRefresher(
       scrollController: scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
-      key: Key('SmartRefresher' + widget.key.toString()),
+      key: Key('SmartRefresher_' + widget.key.toString()),
       controller: controller!.refreshController,
       enablePullUp: widget.enablePullUp ?? false,
       enablePullDown: widget.enablePullDown ?? false,

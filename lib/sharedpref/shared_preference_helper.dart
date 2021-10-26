@@ -273,7 +273,6 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.productId);
   }
 
-
   //  : ----------------------------------------------------------
   Future<String?> get phanHoiDonDichVuId async {
     return _sharedPreference.getString(Preferences.phanHoiDonDichVuId);

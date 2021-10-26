@@ -7,72 +7,67 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_controller.dart';
 
 class V1TaxPage extends GetView<V1TaxController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1TaxController>(
-        init: V1TaxController(),
-        builder: (controller) {
-          if (controller.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //title
-                  _textTitle(context, title: "Mã số thuế"),
-
-                  //input
-                  InputWidget(
-                    width: double.infinity,
-                    textEditingController: controller.taxController,
-                    hintText: "Nhập mã số thuế",
-                    allowEdit: controller.dangKyThueResponse == null,
-                  ),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                  ),
-
-                  //title
-                  _textTitle(context, title: "Tải hình ảnh bản cứng nếu có"),
-
-                  //upload image
-                  _uploadImage(context, controller),
-                ],
-              ),
-            ),
-            bottomNavigationBar: (controller.dangKyThueResponse == null)
-                ? _btnBottomSheet(context, controller: controller)
-                : null,
+      init: V1TaxController(),
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        });
-  }
+        }
+        return Scaffold(
+          appBar: AppBarWidget(title: controller.title),
+          body: Column(
+            children: [
+              //title
+              const Label(
+                label: "Mã số thuế",
+                obligatory: true,
+                horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
+              ),
 
-  ///
-  ///text title
-  ///
-  Widget _textTitle(BuildContext context, {required String title}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+              //input
+              InputWidget(
+                width: .9,
+                textEditingController: controller.taxController,
+                hintText: "Nhập mã số thuế",
+                allowEdit: controller.dangKyThueResponse == null,
+              ),
+
+              //title
+              const Label(
+                label: "Tải hình ảnh bản cứng",
+                obligatory: true,
+                horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
+              ),
+
+              //upload image
+              _uploadImage(context, controller),
+
+              const Spacer(),
+
+              //btn
+              if (controller.dangKyThueResponse == null)
+                BtnCustom(
+                  onTap: () => controller.onBtnDoneClick(context),
+                  color: ColorResources.PRIMARY,
+                  text: "Hoàn thành",
+                  width: DeviceUtils.getScaledWidth(context, .9),
+                ),
+
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -81,6 +76,9 @@ class V1TaxPage extends GetView<V1TaxController> {
   ///
   Widget _uploadImage(BuildContext context, V1TaxController controller) {
     return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: Dimensions.MARGIN_SIZE_LARGE,
+      ),
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.PRIMARY),
@@ -155,19 +153,6 @@ class V1TaxPage extends GetView<V1TaxController> {
                 ),
         ),
       ),
-    );
-  }
-
-  ///
-  ///btn bottom sheet
-  ///
-  Widget _btnBottomSheet(BuildContext context,
-      {required V1TaxController controller}) {
-    return BtnCustom(
-      onTap: () => controller.onBtnDoneClick(context),
-      color: ColorResources.PRIMARY,
-      text: "Hoàn thành",
-      width: double.infinity,
     );
   }
 }

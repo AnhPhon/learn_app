@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/lich_su_vi_tien_response.dart';
 import 'package:template/data/model/response/vi_tien_response.dart';
 import 'package:template/di_container.dart';
@@ -9,6 +10,9 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1WalletController extends GetxController {
+  //refresh controller for load more refresh
+  RefreshController refreshController = RefreshController();
+
   //ViTien
   ViTienProvider viTienProvider = GetIt.I.get<ViTienProvider>();
   ViTienResponse viTienResponse = ViTienResponse();
@@ -22,6 +26,10 @@ class V1WalletController extends GetxController {
   Map<String, Map<String, List<LichSuViTienResponse>>> lichSuViTien = {};
   String? year;
   String? month;
+
+  //page for for load more refresh
+  int pageMax = 1;
+  int limitMax = 6;
 
   //tile appbar
   String title = "Ví của bạn";
@@ -39,6 +47,12 @@ class V1WalletController extends GetxController {
     getWalletInformation();
   }
 
+  @override
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
+  }
+
   ///
   ///get wallet information
   ///
@@ -51,11 +65,11 @@ class V1WalletController extends GetxController {
         onSuccess: (value) {
           //check is not empty
           if (value.isNotEmpty) {
-            viTienResponse = value[0];
+            viTienResponse = value.first;
           }
 
           //get wallet history
-          getWalletHistory();
+          getWalletHistory(isRefresh: true);
           update();
         },
         onError: (error) {
@@ -68,18 +82,37 @@ class V1WalletController extends GetxController {
   ///
   ///get wallet history
   ///
-  void getWalletHistory() {
+  void getWalletHistory({required bool isRefresh}) {
+    if (isRefresh) {
+      pageMax = 1;
+      lichSuViTienResponse.clear();
+      lichSuViTien.clear();
+    } else {
+      pageMax++;
+    }
+
+    //get lichSuViTien
     lichSuViTienProvider.paginate(
-      page: 1,
-      limit: 5,
+      page: pageMax,
+      limit: limitMax,
       filter: "&idViTien=${viTienResponse.id}&sortBy=created_at:desc",
       onSuccess: (value) {
-        
         //check is not empty
-        if (value.isNotEmpty) {
-          lichSuViTienResponse = value;
+        if (value.isEmpty) {
+          refreshController.loadNoData();
+        } else {
+          //isRefresh
+          if (isRefresh) {
+            lichSuViTienResponse = value;
+            refreshController.refreshCompleted();
+          } else {
+            //is load more
+            lichSuViTienResponse = lichSuViTienResponse.toList() + value;
+            refreshController.loadComplete();
+          }
 
-          for (final item in value) {
+          //add to month
+          for (final item in lichSuViTienResponse) {
             //get month & year
             final valueSplit = item.createdAt!.substring(0, 10).split("-");
             year = valueSplit[0];
@@ -97,7 +130,7 @@ class V1WalletController extends GetxController {
             lichSuViTien[year]![month]!.add(item);
           }
         }
-        
+
         isLoading = false;
         update();
       },
@@ -105,6 +138,25 @@ class V1WalletController extends GetxController {
         print("V1WalletController getWalletHistory onError $error");
       },
     );
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    //reset noData
+    refreshController.resetNoData();
+
+    //getWalletHistory
+    getWalletHistory(isRefresh: true);
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    //getWalletHistory
+    getWalletHistory(isRefresh: false);
   }
 
   ///

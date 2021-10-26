@@ -16,6 +16,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V1PersonalInfoController extends GetxController {
   //file image
@@ -60,7 +61,6 @@ class V1PersonalInfoController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     nameCompanyController!.dispose();
     fullNameController!.dispose();
     bornController!.dispose();
@@ -68,6 +68,7 @@ class V1PersonalInfoController extends GetxController {
     ngayCapController!.dispose();
     phoneController!.dispose();
     emailController!.dispose();
+    super.onClose();
   }
 
   ///
@@ -89,15 +90,15 @@ class V1PersonalInfoController extends GetxController {
           fullNameController = TextEditingController(text: value.hoTen);
           //convert date to ddYYmmmm
           bornController = TextEditingController(
-            text: DateConverter.formatDateTimeFull(
-              dateTime: value.ngaySinh.toString(),
+            text: DateConverter.formatDateTime(
+              value.ngaySinh.toString(),
             ),
           );
           sex = value.gioiTinh;
           cMNDController = TextEditingController(text: value.cMND);
           ngayCapController = TextEditingController(
-            text: DateConverter.formatDateTimeFull(
-              dateTime: value.ngayCap.toString(),
+            text: DateConverter.formatDateTime(
+              value.ngayCap.toString(),
             ),
           );
           phoneController = TextEditingController(text: value.soDienThoai);
@@ -177,6 +178,14 @@ class V1PersonalInfoController extends GetxController {
         title: "Vui lòng kiểm tra lại",
         message: "Vui lòng nhập email",
       );
+      Alert.error(
+          message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
+    } else if (fullNameController!.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập họ và tên');
+    } else if (phoneController!.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập số điện thoại');
+    } else if (emailController!.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập email');
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
@@ -186,11 +195,9 @@ class V1PersonalInfoController extends GetxController {
       taiKhoanRequest.tenPhapLy = nameCompanyController!.text;
       taiKhoanRequest.hoTen = fullNameController!.text;
       taiKhoanRequest.gioiTinh = sex ?? taiKhoanResponse.gioiTinh;
-      taiKhoanRequest.ngaySinh = DateConverter.formatDate(
-        DateConverter.convertStringddMMyyyyToDate(
-          bornController!.text.toString(),
-        ),
-      );
+      taiKhoanRequest.ngaySinh = DateConverter.convertStringToDate(
+        bornController!.text.toString(),
+      ).toString();
       taiKhoanRequest.soDienThoai = phoneController!.text;
       taiKhoanRequest.email = emailController!.text;
 
@@ -202,18 +209,10 @@ class V1PersonalInfoController extends GetxController {
           Get.back(result: true);
 
           //show dialog
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Cập nhật thông tin thành công",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
+          Alert.success(message: 'Cập nhật thông tin thành công');
         },
         onError: (error) {
+          EasyLoading.dismiss();
           print("V1PersonalInfoController updateAccount onError $error");
         },
       );

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
@@ -8,14 +9,15 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_controller.dart';
 
-class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiController> {
+class V2ProjectDangKyTrienKhaiPage
+    extends GetView<V2ProjectDangKyTrienKhaiController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V2ProjectDangKyTrienKhaiController>(
@@ -26,12 +28,42 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
                 child: CircularProgressIndicator(),
               )
             : Scaffold(
-                extendBodyBehindAppBar: false,
-                appBar: AppBarWidget(title: controller.title),
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    controller.title.toString(),
+                    style: const TextStyle(
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topRight
+                            offset: Offset(1.5, 1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-1.5, 1.5),
+                            color: ColorResources.BLACK),
+                      ],
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                ),
                 body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //image
+                      _imgProject(context, controller),
+
                       //title
                       _textTitle(),
 
@@ -46,13 +78,47 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
   }
 
   ///
+  ///img product
+  ///
+  Widget _imgProject(
+      BuildContext context, V2ProjectDangKyTrienKhaiController controller) {
+    return SizedBox(
+      width: double.infinity,
+      child: CarouselSlider.builder(
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+          return FadeInImage.assetNetwork(
+            placeholder: Images.placeholder,
+            image: controller.duAnKhachHangResponse!.hinhAnhDaiDien.toString(),
+            width: double.infinity,
+            height: DeviceUtils.getScaledHeight(context, .3),
+            fit: BoxFit.fill,
+            imageErrorBuilder: (c, o, s) => Image.asset(
+              Images.placeholder,
+              width: double.infinity,
+              height: DeviceUtils.getScaledHeight(context, .3),
+            ),
+          );
+        },
+        options: CarouselOptions(
+          height: DeviceUtils.getScaledHeight(context, .355),
+          autoPlay: true,
+          viewportFraction: 1,
+        ),
+      ),
+    );
+  }
+
+  ///
   ///text title
   ///
   Widget _textTitle() {
     return Container(
       // color: Colors.red,
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-      margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      margin:
+          const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Text(
         'Tên dự án: ' + controller.duAnKhachHangResponse!.ten.toString(),
         style: Dimensions.fontSizeStyle22w600(),
@@ -66,7 +132,8 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
   Widget _content() {
     return Container(
       // color: Colors.red,
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       // margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +172,8 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
                 style: Dimensions.fontSizeStyle18w600(),
               ),
               Text(
-                DateConverter.isoStringToddMMYYYY(controller.duAnKhachHangResponse!.ngayKetThuc.toString()),
+                DateConverter.isoStringToddMMYYYY(
+                    controller.duAnKhachHangResponse!.ngayKetThuc.toString()),
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18(),
               ),
@@ -124,7 +192,8 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
           ),
 
           // nhom cong viec
-          if (controller.nhomDichVuResponse != null && controller.nhomDichVuResponse!.length > 2)
+          if (controller.nhomDichVuResponse != null &&
+              controller.nhomDichVuResponse!.length > 2)
             DropDownButton<NhomDichVuResponse>(
               onChanged: (val) => controller.updateNhomDichVu(val!),
               data: controller.nhomDichVuResponse!,
@@ -147,13 +216,15 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
             ),
           ),
           // cong viec phu hop
-          if (controller.nhomDichVuResponse != null && controller.nhomDichVuResponse!.length > 2)
+          if (controller.nhomDichVuResponse != null &&
+              controller.nhomDichVuResponse!.length > 2)
             MultiSelectDialogField(
               listType: MultiSelectListType.CHIP,
               items: controller.loaiCongViecMultiSelectItem,
               title: const Text("Hãy chọn các công việc phù hợp"),
               selectedColor: Colors.blue,
-              selectedItemsTextStyle: const TextStyle(color: ColorResources.WHITE),
+              selectedItemsTextStyle:
+                  const TextStyle(color: ColorResources.WHITE),
               checkColor: ColorResources.WHITE,
               buttonText: const Text(
                 "Chọn công việc phù hợp",
@@ -187,7 +258,7 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
             obligatory: false,
             typeInput: TextInputType.datetime,
             width: DeviceUtils.getScaledWidth(Get.context!, 1),
-            onDateTimeChanged: (val){
+            onDateTimeChanged: (val) {
               controller.danhSachThoThauBaoGiaRequest.thoiGianBatDauLam = val;
             },
             isDate: true,
@@ -218,18 +289,30 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
                   vertical: Dimensions.PADDING_SIZE_DEFAULT,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  borderRadius: BorderRadius.circular(
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT), borderSide: const BorderSide(color: ColorResources.PRIMARY)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT), borderSide: const BorderSide(color: ColorResources.GREY)),
-                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT), borderSide: const BorderSide(color: ColorResources.GREY)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    borderSide:
+                        const BorderSide(color: ColorResources.PRIMARY)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    borderSide: const BorderSide(color: ColorResources.GREY)),
+                disabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    borderSide: const BorderSide(color: ColorResources.GREY)),
                 hintText: "Nhập số lượng người tham gia",
                 filled: true,
                 fillColor: Colors.transparent,
               ),
-              onChanged: (val){
-                if(val.isNotEmpty && val.isNumericOnly){
-                  controller.danhSachThoThauBaoGiaRequest.soLuongNguoi = int.parse(val);
+              onChanged: (val) {
+                if (val.isNotEmpty && val.isNumericOnly) {
+                  controller.danhSachThoThauBaoGiaRequest.soLuongNguoi =
+                      int.parse(val);
                 }
               },
             ),
