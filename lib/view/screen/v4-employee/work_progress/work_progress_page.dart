@@ -104,7 +104,8 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewMoiTao() {
     return SmartRefresher(
-      controller: controller.refreshMoiTaoController!,
+      enablePullUp: true,
+      controller: controller.refreshMoiTaoController,
       onLoading: controller.onMoiTaoLoading,
       onRefresh: controller.onMoiTaoRefresh,
       child: ListView.builder(
@@ -256,132 +257,138 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///ListView tiến độ công việc bảng ĐANG LÀM
   ///
   Widget _listViewDangLam() {
-    return ListView.builder(
-      itemCount: controller.dangLamModelList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
-              ),
-              width: DeviceUtils.getScaledWidth(context, 1),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                color: ColorResources.WHITE,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    offset: const Offset(0, 2),
-                    color: ColorResources.BLACK.withAlpha(60),
-                  ),
-                ],
-              ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, 0.77),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        0,
-                        Dimensions.PADDING_SIZE_LARGE,
-                        Dimensions.PADDING_SIZE_SMALL,
-                        Dimensions.PADDING_SIZE_LARGE,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //Tiêu đề tiến độ công việc mới tạo
-                          Text(
-                            controller.dangLamModelList[index].tieuDe
-                                .toString(),
-                            style: Dimensions.fontSizeStyle16w600(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+    return SmartRefresher(
+      controller: controller.refreshDangLamController,
+      enablePullUp: true,
+      onRefresh: controller.onDangLamRefresh,
+      onLoading: controller.onDangLamLoading,
+      child: ListView.builder(
+        itemCount: controller.dangLamModelList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  vertical: Dimensions.PADDING_SIZE_LARGE,
+                ),
+                width: DeviceUtils.getScaledWidth(context, 1),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  color: ColorResources.WHITE,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                      color: ColorResources.BLACK.withAlpha(60),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, 0.77),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          0,
+                          Dimensions.PADDING_SIZE_LARGE,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_LARGE,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Tiêu đề tiến độ công việc mới tạo
+                            Text(
+                              controller.dangLamModelList[index].tieuDe
+                                  .toString(),
+                              style: Dimensions.fontSizeStyle16w600(),
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Tóm tắt
-                          Wrap(
-                            children: [
-                              Text(
-                                controller.dangLamModelList[index].tomTat
-                                    .toString(),
-                                style: Dimensions.fontSizeStyle14(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+                            //Tóm tắt
+                            Wrap(
+                              children: [
+                                Text(
+                                  controller.dangLamModelList[index].tomTat
+                                      .toString(),
+                                  style: Dimensions.fontSizeStyle14(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Thời gian
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Bắt đầu
-                              Row(
-                                children: [
-                                  Text(
-                                    'Bắt đầu: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    controller.formatDateTime(
-                                      dateTime: controller
-                                          .dangLamModelList[index].ngayBatDau
-                                          .toString(),
+                            //Thời gian
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //Bắt đầu
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Bắt đầu: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
                                     ),
-                                    style: Dimensions.fontSizeStyle14(),
-                                  ),
-                                ],
-                              ),
-
-                              //Ngày thực thế
-                              Row(
-                                children: [
-                                  Text(
-                                    'Hoàn thành: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    controller.formatDateTime(
-                                      dateTime: controller
-                                          .dangLamModelList[index].ngayKetThuc
-                                          .toString(),
+                                    Text(
+                                      controller.formatDateTime(
+                                        dateTime: controller
+                                            .dangLamModelList[index].ngayBatDau
+                                            .toString(),
+                                      ),
+                                      style: Dimensions.fontSizeStyle14(),
                                     ),
-                                    style: Dimensions.fontSizeStyle14(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                  ],
+                                ),
+
+                                //Ngày thực thế
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Hoàn thành: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
+                                    ),
+                                    Text(
+                                      controller.formatDateTime(
+                                        dateTime: controller
+                                            .dangLamModelList[index].ngayKetThuc
+                                            .toString(),
+                                      ),
+                                      style: Dimensions.fontSizeStyle14(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  //Icon
-                  const Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    child: Icon(
-                      Icons.engineering_outlined,
-                      size: Dimensions.ICON_SIZE_LARGE,
+                    //Icon
+                    const Positioned(
+                      top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+                      left: Dimensions.PADDING_SIZE_SMALL,
+                      child: Icon(
+                        Icons.engineering_outlined,
+                        size: Dimensions.ICON_SIZE_LARGE,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            //line Widget
-            _lineWidget(context),
-          ],
-        );
-      },
+              //line Widget
+              _lineWidget(context),
+            ],
+          );
+        },
+      ),
     );
   }
 

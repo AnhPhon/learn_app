@@ -15,11 +15,21 @@ class V4WorkProgressController extends GetxController
   CongViecNhanVienProvider congViecNhanVienProvider =
       GetIt.I.get<CongViecNhanVienProvider>();
 
-  // refresher controller
-  RefreshController? refreshMoiTaoController;
-  RefreshController? refreshDangLamController;
-  RefreshController? refreshHoanThanhController;
-  RefreshController? refreshChamTreController;
+  // refresher controller MỚI TẠO
+  RefreshController refreshMoiTaoController =
+      RefreshController(initialRefresh: true);
+
+  //refresher controller ĐANG LÀM
+  RefreshController refreshDangLamController =
+      RefreshController(initialRefresh: true);
+
+  //refresher controller HOÀN THÀNH
+  RefreshController refreshHoanThanhController =
+      RefreshController(initialRefresh: true);
+
+  //refresher controller CHẬM TRỄ
+  RefreshController refreshChamTreController =
+      RefreshController(initialRefresh: true);
 
   List<CongViecNhanVienResponse> moiTaoModelList = [];
   List<CongViecNhanVienResponse> dangLamModelList = [];
@@ -32,43 +42,84 @@ class V4WorkProgressController extends GetxController
   //khai báo isLoading
   bool isLoading = true;
 
+  // page for for load more refresh MỚI TẠO
+  int pageMaxMoiTao = 1;
+  int limitMaxMoitao = 5;
+
+  // page for for load more refresh ĐANG LÀM
+  int pageMaxDangLam = 1;
+  int limitMaxDangLam = 5;
+
+  // page for for load more refresh HOÀN THÀNH
+  int pageMaxHoanThanh = 1;
+  int limitMaxHoanThanh = 5;
+
+  // page for for load more refresh CHẬM TRỄ
+  int pageMaxChamTre = 1;
+  int limitMaxChamTre = 5;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
 
-    refreshMoiTaoController = RefreshController();
-
     //get worl progress
     selectedIndex = int.parse(Get.parameters['tabIndex'].toString());
 
-    getTienDoCongViec();
+    // Get Data tiến độ công việc MỚI TẠO
+    getTienDoCongViecMoiTao(isRefresh: true);
+
+    // Get Data tiến độ công việc ĐANG LÀM
+    getTienDoCongViecDangLam(isRefresh: true);
+
+    // Get Data tiến độ công việc HOÀN THÀNH
+    getTienDoCongViecHoanThanh(isRefresh: true);
+
+    // Get Data tiến độ công việc CHẬM TRỄ
+    getTienDoCongViecChamTre(isRefresh: true);
+  }
+
+  @override
+  void onClose() {
+    refreshMoiTaoController.dispose();
+    refreshDangLamController.dispose();
+    refreshHoanThanhController.dispose();
+    refreshChamTreController.dispose();
+    super.onClose();
   }
 
   ///
-  ///  theo doi tien do
+  ///  Get Data tiến độ công việc MỚI TẠO
   ///
-  void getTienDoCongViec() {
-    moiTaoModelList.clear();
-    dangLamModelList.clear();
-    hoanThanhModelList.clear();
-    chamTreModelList.clear();
+  void getTienDoCongViecMoiTao({required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMaxMoiTao = 1;
+      moiTaoModelList.clear();
+    } else {
+      //is load more
+      pageMaxMoiTao++;
+    }
+
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       congViecNhanVienProvider.paginate(
-        page: 1,
-        limit: 30,
-        filter: "&idNhanVien=$id&sortBy=created_at:desc",
+        page: pageMaxMoiTao,
+        limit: limitMaxMoitao,
+        filter: "&idNhanVien=$id&trangThai=1&sortBy=created_at:desc",
         onSuccess: (value) {
-          for (final models in value) {
-            final String status = models.trangThai!.toLowerCase();
-            if (status == "1") {
-              moiTaoModelList.add(models);
-            } else if (status == "2") {
-              dangLamModelList.add(models);
-            } else if (status == "3") {
-              hoanThanhModelList.add(models);
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshMoiTaoController.loadNoData();
+          } else {
+            //is Refresh
+            if (isRefresh) {
+              moiTaoModelList = value;
+              print(moiTaoModelList);
+              refreshMoiTaoController.refreshCompleted();
             } else {
-              chamTreModelList.add(models);
+              //is load more
+              moiTaoModelList = moiTaoModelList.toList() + value;
+              refreshMoiTaoController.loadComplete();
             }
           }
 
@@ -83,20 +134,152 @@ class V4WorkProgressController extends GetxController
   }
 
   ///
-  /// on refresh MỚI TẠO
+  ///  Get Data tiến độ công việc ĐANG LÀM
   ///
-  Future<void> onMoiTaoRefresh() async {
-    getTienDoCongViec();
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshMoiTaoController!.refreshCompleted();
+  void getTienDoCongViecDangLam({required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMaxDangLam = 1;
+      dangLamModelList.clear();
+    } else {
+      //is load more
+      pageMaxDangLam++;
+    }
+
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      congViecNhanVienProvider.paginate(
+        page: pageMaxDangLam,
+        limit: limitMaxDangLam,
+        filter: "&idNhanVien=$id&trangThai=2&sortBy=created_at:desc",
+        onSuccess: (value) {
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshDangLamController.loadNoData();
+          } else {
+            if (isRefresh) {
+              dangLamModelList = value;
+              refreshDangLamController.refreshCompleted();
+            } else {
+              //is load more
+              dangLamModelList = dangLamModelList.toList() + value;
+              refreshDangLamController.loadComplete();
+            }
+          }
+
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
   }
 
   ///
-  /// on loading
+  ///  Get Data tiến độ công việc HOÀN THÀNH
   ///
-  Future<void> onMoiTaoLoading() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    refreshMoiTaoController!.loadComplete();
+  void getTienDoCongViecHoanThanh({required bool isRefresh}) {
+    hoanThanhModelList.clear();
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      congViecNhanVienProvider.paginate(
+        page: 1,
+        limit: 5,
+        filter: "&idNhanVien=$id&trangThai=3&sortBy=created_at:desc",
+        onSuccess: (value) {
+          hoanThanhModelList.addAll(value);
+
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
+  }
+
+  ///
+  ///  Get Data tiến độ công việc CHẬM TRỄ
+  ///
+  void getTienDoCongViecChamTre({required bool isRefresh}) {
+    chamTreModelList.clear();
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      congViecNhanVienProvider.paginate(
+        page: 1,
+        limit: 5,
+        filter: "&idNhanVien=$id&trangThai=4&sortBy=created_at:desc",
+        onSuccess: (value) {
+          chamTreModelList.addAll(value);
+
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
+  }
+
+  ///
+  /// on refresh MỚI TẠO
+  ///
+  Future onMoiTaoRefresh() async {
+    refreshMoiTaoController.resetNoData();
+    getTienDoCongViecMoiTao(isRefresh: true);
+  }
+
+  ///
+  /// on loading MỚI TẠO
+  ///
+  Future onMoiTaoLoading() async {
+    getTienDoCongViecMoiTao(isRefresh: false);
+  }
+
+  ///
+  /// on refresh DANG LÀM
+  ///
+  Future onDangLamRefresh() async {
+    refreshDangLamController.resetNoData();
+    getTienDoCongViecDangLam(isRefresh: true);
+  }
+
+  ///
+  /// on loading ĐANG LÀM
+  ///
+  Future onDangLamLoading() async {
+    getTienDoCongViecDangLam(isRefresh: false);
+  }
+
+  ///
+  /// on refresh HOÀN THÀNH
+  ///
+  Future onHoanThanhRefresh() async {
+    refreshHoanThanhController.resetNoData();
+    getTienDoCongViecHoanThanh(isRefresh: true);
+  }
+
+  ///
+  /// on loading HOÀN THÀNH
+  ///
+  Future onHoanThanhLoading() async {
+    getTienDoCongViecHoanThanh(isRefresh: false);
+  }
+
+  ///
+  /// on refresh CHẬM TRỄ
+  ///
+  Future onChamTreRefresh() async {
+    refreshChamTreController.resetNoData();
+    getTienDoCongViecChamTre(isRefresh: true);
+  }
+
+  ///
+  /// on loading CHẬM TRỄ
+  ///
+  Future onChamTreLoading() async {
+    getTienDoCongViecChamTre(isRefresh: false);
   }
 
   ///
@@ -108,6 +291,9 @@ class V4WorkProgressController extends GetxController
         .toString();
   }
 
+  ///
+  /// Tính tiến độ công việc
+  ///
   int tienDo({required String startDate, required String endDate}) {
     return DateConverter.differenceDateyyyyMMdd(
       startDate: startDate,
