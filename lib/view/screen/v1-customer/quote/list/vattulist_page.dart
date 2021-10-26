@@ -27,8 +27,8 @@ class V1VatTuListPage extends GetView<V1VatTuListController> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Dimensions.PADDING_SIZE_LARGE,
+                  padding: const EdgeInsets.only(
+                    top: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -206,14 +206,6 @@ class V1VatTuListPage extends GetView<V1VatTuListController> {
                             BlendMode.multiply,
                           ),
                         ),
-                      ),
-                      child: Text(
-                        DateConverter.isoStringToVNDateOnly(
-                          controller.daPhanHoiDDV[index].createdAt!
-                              .replaceAll("T", " ")
-                              .toString(),
-                        ),
-                        style: Dimensions.fontSizeStyle14w600(),
                       ),
                     ),
                   ),
