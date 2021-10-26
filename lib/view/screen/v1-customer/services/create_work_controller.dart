@@ -115,6 +115,12 @@ class CreateWorkController extends GetxController {
   ///
   void onChangedGroup(int val) {
     groupTinhTpValue = val;
+    if(groupTinhTpValue == 3){
+      khacHuyen = null;
+      khacPhuong = null;
+      otherDistricts.clear();
+      otherwards.clear();
+    }
     getTinhThanh();
     update();
   }
