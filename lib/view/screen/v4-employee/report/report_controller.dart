@@ -22,17 +22,18 @@ class V4ReportController extends GetxController
   BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
 
   //Khai báo model báo cáo
-  RxList<BaoCaoNhanVienResponse> baocaonhanvienModelList = <BaoCaoNhanVienResponse>[].obs;
-
-
+  List<BaoCaoNhanVienResponse> baocaonhanvienModelList = [];
+  List<String> baoCao = ['Báo cáo hằng ngày',
+    'Báo cáo theo yêu cầu',];
   //khai báo isLoading
   bool isLoading = true;
 
-  RefreshController refreshController =
-  RefreshController(initialRefresh: false);
+  // refresh controller for load more refresh
+  RefreshController refreshController = RefreshController(initialRefresh: true);
+
   int pageMax = 1;
   int currentMax = 5;
-
+  String? filterindex;
 //khai báo thời gian bắt đầu báo cáo
   TimeOfDay timeStartReport = const TimeOfDay(hour: 16, minute: 0);
 
@@ -46,7 +47,7 @@ class V4ReportController extends GetxController
     // TODO: implement onInit
     super.onInit();
     Future.delayed(Duration.zero, () {
-      getReport();
+      getReport(isRefresh: true);
     });
   }
 
@@ -57,9 +58,9 @@ class V4ReportController extends GetxController
     refreshController.dispose();
   }
   ///
-  /// lấy danh sách báo báo
+  /// lấy danh sách báo báo all
   ///
-  void getReport() {
+  void getReport({required bool isRefresh}) {
     pageMax = 1;
     currentMax = 5;
     baocaonhanvienModelList.clear();
@@ -69,9 +70,22 @@ class V4ReportController extends GetxController
         limit: 30,
         filter: '&sortBy=created_at:desc',
         onSuccess: (value) {
-          baocaonhanvienModelList.value = value;
-          isLoading = false;
-          update();
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //is Refresh
+            if (isRefresh) {
+              baocaonhanvienModelList = value;
+              isLoading = false;
+              update();
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
+              refreshController.loadComplete();
+            }
+          }
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -81,7 +95,7 @@ class V4ReportController extends GetxController
   ///
   /// lấy danh sách báo báo theo yêu cầu loai 1
   ///
-  void getReportOnRequest() {
+  void getReportOnRequest({required bool isRefresh}) {
     pageMax = 1;
     currentMax = 5;
     baocaonhanvienModelList.clear();
@@ -91,9 +105,22 @@ class V4ReportController extends GetxController
         limit: 30,
         filter: '&loai=1&sortBy=created_at:desc',
         onSuccess: (value) {
-          baocaonhanvienModelList.value = value;
-          isLoading = false;
-          update();
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //is Refresh
+            if (isRefresh) {
+              baocaonhanvienModelList = value;
+              isLoading = false;
+              update();
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
+              refreshController.loadComplete();
+            }
+          }
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -103,7 +130,7 @@ class V4ReportController extends GetxController
   ///
   /// lấy danh sách báo báo theo ngày loai 2
   ///
-  void getDailyReport() {
+  void getDailyReport({required bool isRefresh}) {
     pageMax = 1;
     currentMax = 5;
     baocaonhanvienModelList.clear();
@@ -113,9 +140,22 @@ class V4ReportController extends GetxController
         limit: 30,
         filter: '&loai=2&sortBy=created_at:desc',
         onSuccess: (value) {
-          baocaonhanvienModelList.value = value;
-          isLoading = false;
-          update();
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //is Refresh
+            if (isRefresh) {
+              baocaonhanvienModelList = value;
+              isLoading = false;
+              update();
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
+              refreshController.loadComplete();
+            }
+          }
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -123,66 +163,32 @@ class V4ReportController extends GetxController
         });
   }
   ///
-  /// Set reload List
+  ///Click to onchanged lọc
   ///
-
-  Future<void> onRefresh() async {
-    reloadReport();
+  void onChanged(String? i) {
+    filterindex = i;
+    if () {
+      getDailyReport(isRefresh: true);
+      update();
+    }
+    if (){
+      getReportOnRequest(isRefresh: true);
+      update();
+    }
   }
 
+  ///
+  /// Set reload List
+  ///
+  Future<void> onRefresh() async {
+    refreshController.resetNoData();
+    getReport(isRefresh: true);
+  }
   ///
   /// Set load more List
   ///
   Future<void> onLoading() async {
-    loadMoreReport();
-  }
-  ///
-  ///reload
-  ///
-  void reloadReport() {
-    print('reloadReport');
-    pageMax = 1;
-    currentMax = 5;
-    update();
-    baoCaoNhanVienProvider.paginate(
-        page: pageMax,
-        limit: currentMax,
-        filter: '&sortBy=created_at:desc',
-        onSuccess: (value) {
-          baocaonhanvienModelList.value = value;
-          refreshController.refreshCompleted();
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
-        });
-  }
-  ///
-  ///load more
-  ///
-  void loadMoreReport() {
-    pageMax += 1;
-    print(pageMax);
-    currentMax = currentMax;
-    baoCaoNhanVienProvider.paginate(
-        page: pageMax,
-        limit: currentMax,
-        filter: '&sortBy=created_at:desc',
-        onSuccess: (data) {
-          if (data.isEmpty) {
-            refreshController.loadNoData();
-          } else {
-            baocaonhanvienModelList.value = baocaonhanvienModelList.toList() + data;
-            refreshController.loadComplete();
-          }
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
-        });
+    getReport(isRefresh: false);
   }
   ///
   ///Click to daily report

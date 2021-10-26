@@ -7,6 +7,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 
 import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
 import 'package:template/view/screen/v4-employee/report/component/v4_drop_dow_button.dart';
@@ -22,34 +23,16 @@ class V4ReportPage extends GetView<V4ReportController> {
         ],
         leading: true,
         title: "Danh sách báo cáo",
-        centerTitle: true,
+        // centerTitle: true,
       ),
       body: GetBuilder<V4ReportController>(
           init: V4ReportController(),
           builder: (V4ReportController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
-
-
-            // return SmartRefresher(
-            //   key: UniqueKey(),
-            //   controller: controller.refreshController,
-            //   enablePullUp: true,
-            //   onLoading: controller.onLoading,
-            //   onRefresh: controller.onRefresh,
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(
-            //       horizontal: Dimensions.PADDING_SIZE_LARGE,
-            //     ),
-            //     child:
-            //
-            //     //danh sách báo cáo
-            //     _listReport(controller),
-            //   ),
-            // );
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -70,15 +53,21 @@ class V4ReportPage extends GetView<V4ReportController> {
   /// Lọc danh sách báo cáo hằng ngày hoặc báo cáo theo yêu cầu
   ///
   Widget _filterlistreport(BuildContext context) {
+    // return DropDownButton1<String>(
+        // isColorFieldWhite: true,
+        // labelBold: true,
+        // hint: '',
+        // label: '',
+        // data: controller.baoCao,
+        // obligatory: true,
+        // onChanged: (value) => controller.onChanged(value!),
+        // value: controller.filterindex,
+        // width: DeviceUtils.getScaledWidth(context, 0.3),
     return V4DropButtonAppBar(
-      data: const [
-        'Báo cáo hằng ngày',
-        'Báo cáo theo yêu cầu',
-      ],
+      data: controller.baoCao,
+      value: controller.filterindex,
+      onChanged:  controller.onChanged,
       hint: '',
-      onChanged: (String? i) {
-
-      },
     );
   }
 }
@@ -87,9 +76,15 @@ class V4ReportPage extends GetView<V4ReportController> {
 /// Danh sách báo cáo
 ///
 Widget _listReport(V4ReportController controller) {
-  return ListView.builder(
-    itemCount: controller.baocaonhanvienModelList.length,
-    itemBuilder: (BuildContext context, int index) {
+  return SmartRefresher(
+      enablePullUp: true,
+      onLoading: controller.onLoading,
+      onRefresh: controller.onRefresh,
+      controller: controller.refreshController,
+    child: ListView.builder(
+      shrinkWrap: true,
+      itemCount: controller.baocaonhanvienModelList.length,
+      itemBuilder: (BuildContext context, int index) {
       return Column(
         children: [
           Container(
@@ -97,7 +92,6 @@ Widget _listReport(V4ReportController controller) {
               vertical: Dimensions.PADDING_SIZE_LARGE,
             ),
             width: DeviceUtils.getScaledWidth(context, 1),
-            height: DeviceUtils.getScaledHeight(context, 0.18),
             decoration: BoxDecoration(
               borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -127,6 +121,8 @@ Widget _listReport(V4ReportController controller) {
                         Text(
                           controller.baocaonhanvienModelList[index].idDuAnNhanVien!.tieuDe!,
                           style: Dimensions.fontSizeStyle16w600(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(
                           height: Dimensions.PADDING_SIZE_SMALL,
@@ -146,6 +142,8 @@ Widget _listReport(V4ReportController controller) {
                         Text(
                           controller.baocaonhanvienModelList[index].noiDung!,
                           style: Dimensions.fontSizeStyle14(),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(
                           height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -162,8 +160,9 @@ Widget _listReport(V4ReportController controller) {
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
                                   const Icon(
-                                    Icons.place_outlined,
+                                    Icons.place_sharp,
                                     color: ColorResources.PRIMARY,
+                                    size: Dimensions.ICON_SIZE_EXTRA_SMALL,
                                   ),
                                   Text(
                                     // địa chỉ
@@ -190,11 +189,11 @@ Widget _listReport(V4ReportController controller) {
                 ),
                 //Icon
                 const Positioned(
-                  top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-                  left: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_LARGE,
+                  left: Dimensions.PADDING_SIZE_LARGE,
                   child: Icon(
                     Icons.flag_outlined,
-                    size: Dimensions.ICON_SIZE_LARGE,
+                    size: Dimensions.ICON_SIZE_DEFAULT,
                   ),
                 ),
               ],
@@ -206,6 +205,7 @@ Widget _listReport(V4ReportController controller) {
         ],
       );
     },
+    ),
   );
 }
 
