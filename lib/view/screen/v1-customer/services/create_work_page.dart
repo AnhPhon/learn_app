@@ -121,8 +121,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.hcmPhuong,
+                  huyen: controller.hcmHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
@@ -134,8 +134,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.haNoiPhuong,
+                  huyen: controller.haNoiHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
@@ -147,25 +147,25 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.daNangPhuong,
+                  huyen: controller.daNangHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
-                  ward: controller.phuongXaList,
+                  ward: controller.otherwards,
                   city: "Tỉnh thành khách",
-                  district: controller.quanHuyenList,
+                  district: controller.otherDistricts,
                   value: 3,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen,
+                  phuong: controller.khacPhuong,
+                  huyen: controller.khacHuyen,
                   isRadio: false,
-                  tinh: controller.tinh,
+                  tinh: controller.otherProvince,
                   onChangedProvince: (TinhTpResponse? val)=> controller.onChangedTinhThanh(val!),
-                  tinhList: controller.tinhTps
+                  tinhList: controller.otherProvinces
                 ),
               ],
             ),
