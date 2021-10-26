@@ -37,4 +37,10 @@ class LoaiTaiKhoanResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return tieuDe!;
+  }
 }

@@ -41,7 +41,7 @@ class OTPVerifierController extends GetxController {
     print('asdf ${textEditingController.text}');
     errorController!.add(ErrorAnimationType.shake);
     
-    Get.toNamed(AppRoutes.UPDATE_PASSWORD);
+    Get.toNamed(AppRoutes.UPDATE_PASSWORD,);
 
   }
 }

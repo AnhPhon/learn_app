@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:template/data/model/request/auth_request.dart';
+import 'package:template/data/model/request/tai_khoan_request.dart';
 // import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -33,6 +34,18 @@ class AuthRepository {
     try {
       final response =
           await dioClient!.post('/auth/login', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// register
+  ///
+  Future<ApiResponse> register(TaiKhoanRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/auth/register', data: request.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
