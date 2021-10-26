@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
-// ignore: unused_import
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -17,6 +15,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
     return Scaffold(
       backgroundColor: ColorResources.HOME_BG,
       appBar: const AppBarWidget(
+        isNotBack: true,
         title: 'Thông Báo',
       ),
       body: GetBuilder<V4NotificationController>(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -11,13 +13,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_controller.dart';
 
 class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
@@ -36,45 +38,57 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
-
                   //name company
                   InputWidget(
-                    width: double.infinity,
                     label: "Tên doanh nghiệp (hoặc tên cá nhân)",
                     obligatory: true,
                     textEditingController: controller.nameController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //legal Representative
                   InputWidget(
-                    width: double.infinity,
                     label: "Người đại diện pháp lý (chủ doanh nghiệp/cá nhân)",
                     obligatory: true,
                     textEditingController:
                         controller.legalRepresentativeController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //phone
                   InputWidget(
-                    width: double.infinity,
                     label: "SĐT Zalo",
                     obligatory: true,
                     textEditingController: controller.phoneController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //email
                   InputWidget(
-                    width: double.infinity,
                     label: "Email",
                     obligatory: true,
                     textEditingController: controller.emailController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //store group
@@ -86,17 +100,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     onChanged: (val) =>
                         controller.onSelectedNhomCuaHang(value: val!),
                     data: controller.nhomCuaHangList,
-                    width: double.infinity,
+                    width: .95,
                     obligatory: true,
                     fillColor: ColorResources.WHITE,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
                   ),
 
                   //product special
                   const Label(
-                      label: "Chọn mặt hàng đặc trưng", obligatory: true),
+                    label: "Chọn mặt hàng đặc trưng",
+                    obligatory: true,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -130,11 +145,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
                   //address
                   InputWidget(
-                    width: double.infinity,
                     label: "Địa chỉ cụ thể(số nhà, tên đường)",
                     obligatory: true,
                     textEditingController: controller.addressController,
                     fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //working hours in day
@@ -142,10 +164,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     context,
                     title: "Thời gian làm việc trong ngày",
                     isRequired: true,
-                  ),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
                   ),
 
                   //accept work
@@ -157,8 +175,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     onChanged: (val) =>
                         controller.onSelectedLamChieuThuBay(value: val!),
                     data: controller.boolAccept,
-                    width: double.infinity,
+                    width: .95,
                     fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   DropDownMapButton<String>(
@@ -169,14 +190,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     onChanged: (val) =>
                         controller.onSelectedLamNgayChuNhat(value: val!),
                     data: controller.boolAccept,
-                    width: double.infinity,
+                    width: .95,
                     fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //note
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                      horizontal: Dimensions.PADDING_SIZE_SMALL,
                     ),
                     child: Text(
                       controller.note,
@@ -209,14 +234,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   //warehouse address add
                   _warehouseAddressAdd(context, controller: controller),
 
-                  //image
-                  _textTitle(context, title: "Hình ảnh cửa hàng"),
-
                   //uploadImage
                   _uploadImage(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
                   ),
 
                   //btn
@@ -242,6 +264,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
         const Label(
           label: "Địa điểm cửa hàng chính",
           obligatory: true,
+          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         const Padding(
           padding:
@@ -249,8 +273,9 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
           child: Text(
             "Tỉnh/Thành phố",
             style: TextStyle(
-                fontSize: Dimensions.FONT_SIZE_LARGE,
-                fontWeight: FontWeight.w500),
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         DefaultTextStyle(
@@ -373,16 +398,17 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     : null,
                 value: tinh,
                 hint: "Chọn tỉnh khác",
-                width: .83,
+                width: .4,
                 isBorder: false,
               ),
             ],
           ),
         Padding(
           padding: const EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2),
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               DropDownButton1<QuanHuyenResponse>(
                 data: district,
@@ -391,7 +417,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     : null,
                 value: huyen,
                 hint: "Quận/Huyện",
-                width: .35,
+                width: .4,
                 isBorder: false,
               ),
               DropDownButton1<PhuongXaResponse>(
@@ -401,7 +427,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     : null,
                 value: phuong,
                 hint: "Phường/xã",
-                width: .35,
+                width: .4,
                 isBorder: false,
               ),
             ],
@@ -418,7 +444,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
       {required String title, required bool isRequired}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
       ),
       child: Column(
         children: [
@@ -428,7 +454,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             child: RichText(
                 text: TextSpan(
               text: title,
-              style: Dimensions.fontSizeStyle16().copyWith(
+              style: Dimensions.fontSizeStyle16w600().copyWith(
                 color: ColorResources.BLACK,
               ),
               children: isRequired == true
@@ -445,7 +471,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
           ),
 
           const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
+            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
           ),
 
           // time range
@@ -456,13 +482,22 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                 flex: 5,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    //label
                     Text(
                       "Từ",
-                      style: Dimensions.fontSizeStyle18(),
+                      style: Dimensions.fontSizeStyle16w600(),
                     ),
+
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //filed
                     InputWidget(
-                      width: .3,
+                      height: .06,
+                      width: .34,
                       textEditingController: controller.startController,
                       isTime: true,
                       allowEdit: false,
@@ -477,14 +512,23 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                   flex: 5,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      //label
                       Text(
                         "Đến",
-                        style: Dimensions.fontSizeStyle18(),
+                        style: Dimensions.fontSizeStyle16w600(),
                       ),
+
+                      const SizedBox(
+                        width: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
+
+                      //filed
                       InputWidget(
-                        width: .3,
+                        height: .06,
+                        width: .34,
                         textEditingController: controller.endController,
                         isTime: true,
                         allowEdit: false,
@@ -505,27 +549,54 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   Widget _warehouseAddress(BuildContext context, {required int index}) {
     return GetBuilder<V3StoreInfomationController>(builder: (controller) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: ColorResources.LIGHT_SKY_BLUE),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+        ),
+        margin: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //title
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Địa điểm kho hàng ${index + 1}",
-                style: Dimensions.fontSizeStyle18w600().copyWith(
-                  color: ColorResources.BLACK,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //label
+                Label(
+                  label: "Địa điểm kho hàng ${index + 1}",
+                  obligatory: false,
+                  topPadding: 0,
+                  horizontalPadding: 0,
+                  paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                 ),
-              ),
-            ),
 
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_DEFAULT,
+                //btn remove
+                Container(
+                  padding: const EdgeInsets.all(2),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorResources.RED,
+                    border: Border.all(color: ColorResources.WHITE),
+                  ),
+                  child: const Icon(
+                    Icons.close_outlined,
+                    size: Dimensions.ICON_SIZE_SMALL,
+                    color: ColorResources.WHITE,
+                  ),
+                ),
+              ],
             ),
 
             //province
@@ -535,12 +606,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   controller.onChangedTinhThanhIsWarehouse(value!, index),
               data: controller.tinhTpListIsWareHouse,
               value: controller.tinhTpWarehouse[index],
-              width: .35,
+              width: .4,
               isBorder: false,
-            ),
-
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
 
             //district & ward
@@ -557,7 +624,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   value: controller.quanHuyenListIsWareHouse[index].isNotEmpty
                       ? controller.quanHuyenWarehouse[index]
                       : null,
-                  width: .35,
+                  width: .4,
                   isBorder: false,
                 ),
                 DropDownButton1<PhuongXaResponse>(
@@ -570,32 +637,35 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   value: controller.phuongXaListIsWareHouse[index].isNotEmpty
                       ? controller.phuongXaWarehouse[index]
                       : null,
-                  width: .35,
+                  width: .4,
                   isBorder: false,
                 ),
               ],
             ),
 
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_DEFAULT,
-            ),
-
             //warehouse address
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                //title
                 Text(
                   "Địa chỉ cụ thể",
-                  style: Dimensions.fontSizeStyle18(),
+                  style: Dimensions.fontSizeStyle16w600(),
                 ),
+
                 const SizedBox(
                   width: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
-                InputWidget(
-                  width: .5,
-                  textEditingController:
-                      controller.warehouseAddressController[index],
+
+                //input
+                Expanded(
+                  child: InputWidget(
+                    height: .06,
+                    width: double.infinity,
+                    textEditingController:
+                        controller.warehouseAddressController[index],
+                    fillColor: ColorResources.WHITE,
+                  ),
                 ),
               ],
             ),
@@ -606,20 +676,27 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
             //warehouse name
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                //title
                 Text(
                   "Tên kho hàng",
-                  style: Dimensions.fontSizeStyle18(),
+                  style: Dimensions.fontSizeStyle16w600(),
                 ),
+
                 const SizedBox(
                   width: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
-                InputWidget(
-                  width: .5,
-                  textEditingController:
-                      controller.warehouseNameController[index],
+
+                //input
+                Expanded(
+                  child: InputWidget(
+                    height: .06,
+                    width: double.infinity,
+                    textEditingController:
+                        controller.warehouseNameController[index],
+                    fillColor: ColorResources.WHITE,
+                  ),
                 ),
               ],
             ),
@@ -655,26 +732,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_SMALL,
         ),
-        const Text("Thêm địa điểm kho hàng"),
-      ],
-    );
-  }
-
-  ///
-  ///text title
-  ///
-  Widget _textTitle(BuildContext context, {required String title}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-          fontWeight: FontWeight.bold,
+        Text(
+          "Thêm địa điểm kho hàng",
+          style: Dimensions.fontSizeStyle16w600(),
         ),
-      ),
+      ],
     );
   }
 
@@ -683,53 +745,14 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   Widget _uploadImage(
       BuildContext context, V3StoreInfomationController controller) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      decoration: BoxDecoration(
-        border: Border.all(color: ColorResources.PRIMARY),
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-      ),
-      height: DeviceUtils.getScaledHeight(context, .158),
-      child: Align(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.fileImageList.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                          right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        child: Image.file(
-                          controller.fileImageList[index],
-                          fit: BoxFit.fill,
-                          height: DeviceUtils.getScaledHeight(context, .122),
-                          width: DeviceUtils.getScaledWidth(context, .254),
-                        ),
-                      ),
-                    );
-                  }),
-              GestureDetector(
-                onTap: () => controller.pickImage(),
-                child: Image.asset(
-                  Images.add_image,
-                  height: DeviceUtils.getScaledHeight(context, .122),
-                  width: DeviceUtils.getScaledWidth(context, .254),
-                  fit: BoxFit.fill,
-                  color: ColorResources.PRIMARY,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return ImageListHorizontalAdd<File>(
+      label: "Hình ảnh cửa hàng",
+      labelBold: true,
+      pickImage: () => controller.pickImage(),
+      imageFileList: controller.fileImageList,
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
       ),
     );
   }
@@ -741,25 +764,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
       {required V3StoreInfomationController controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BtnCustom(
-            onTap: () {},
-            color: ColorResources.GREY,
-            text: "Chỉnh sửa",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-          const SizedBox(
-            width: Dimensions.MARGIN_SIZE_LARGE,
-          ),
-          BtnCustom(
-            onTap: () => controller.btnUpdate(context),
-            color: ColorResources.PRIMARY,
-            text: "Cập nhật",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-        ],
+      child: BtnCustom(
+        onTap: () => controller.btnUpdate(context),
+        color: ColorResources.PRIMARY,
+        text: "Cập nhật",
+        width: DeviceUtils.getScaledWidth(context, .95),
       ),
     );
   }

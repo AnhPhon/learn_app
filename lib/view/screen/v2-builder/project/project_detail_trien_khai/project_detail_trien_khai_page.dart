@@ -1,11 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
 
 class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiController> {
@@ -19,22 +20,83 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                 child: CircularProgressIndicator(),
               )
             : Scaffold(
-                extendBodyBehindAppBar: false,
-                appBar: AppBarWidget(title: controller.title),
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    controller.title.toString(),
+                    style: const TextStyle(
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(1.5, -1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topRight
+                            offset: Offset(1.5, 1.5),
+                            color: ColorResources.BLACK),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-1.5, 1.5),
+                            color: ColorResources.BLACK),
+                      ],
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                ),
                 body: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ///title
+                      //image
+                      _imgProject(context, controller),
+
+                      //title
                       _textTitle(),
 
-                      ///content
+                      //content
                       _content(),
                     ],
                   ),
                 ),
               );
       },
+    );
+  }
+
+  ///
+  ///img product
+  ///
+  Widget _imgProject(BuildContext context, V2ProjectDetailTrienKhaiController controller) {
+    return SizedBox(
+      width: double.infinity,
+      child: CarouselSlider.builder(
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+          return FadeInImage.assetNetwork(
+            placeholder: Images.placeholder,
+            image: controller.duAnKhachHangResponse!.hinhAnhDaiDien.toString(),
+            width: double.infinity,
+            height: DeviceUtils.getScaledHeight(context, .3),
+            fit: BoxFit.fill,
+            imageErrorBuilder: (c, o, s) => Image.asset(
+              Images.placeholder,
+              width: double.infinity,
+              height: DeviceUtils.getScaledHeight(context, .3),
+            ),
+          );
+        },
+        options: CarouselOptions(
+          height: DeviceUtils.getScaledHeight(context, .355),
+          autoPlay: true,
+          viewportFraction: 1,
+        ),
+      ),
     );
   }
 
@@ -75,6 +137,23 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),
+          Row(
+            children: [
+              Text(
+                controller.kiemTraIdTrangThaiDuAnDangXayDung() == true ? "Dự kiến kết thúc: " : "Thời gian dự kiến triển khai: ",
+                textAlign: TextAlign.left,
+                style: Dimensions.fontSizeStyle18w600(),
+              ),
+              Text(
+                DateConverter.isoStringToddMMYYYY(controller.kiemTraIdTrangThaiDuAnDangXayDung() == true ? controller.duAnKhachHangResponse!.ngayKetThuc.toString() : controller.duAnKhachHangResponse!.ngayBatDau.toString()),
+                textAlign: TextAlign.left,
+                style: Dimensions.fontSizeStyle18(),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_LARGE,
+          ),
           Text(
             "Giới thiệu:",
             textAlign: TextAlign.left,
@@ -88,27 +167,13 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),
-          Row(
-            children: [
-              Text(
-                "Dự kiến kết thúc: ",
-                textAlign: TextAlign.left,
-                style: Dimensions.fontSizeStyle18w600(),
-              ),
-              Text(
-                DateConverter.isoStringToddMMYYYY(controller.duAnKhachHangResponse!.ngayKetThuc.toString()),
-                textAlign: TextAlign.left,
-                style: Dimensions.fontSizeStyle18(),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_LARGE,
-          ),
           Text(
             "Các hạng mục triển khai: ",
             textAlign: TextAlign.left,
             style: Dimensions.fontSizeStyle18w600(),
+          ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(
@@ -173,6 +238,9 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                       ),
                     ],
             ),
+          ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_LARGE,
           ),
           const Text(
             "Nếu thầu thợ có thể tham gia dự án này, hãy kích nút “Đăng ký” chúng tôi sẽ liên hệ với bạn nếu dự án cần thêm nhân lực",

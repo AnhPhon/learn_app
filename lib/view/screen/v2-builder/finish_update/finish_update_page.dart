@@ -97,14 +97,58 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
       },
       child: Container(
         alignment: Alignment.centerLeft,
-        child: Text(
-          label,
-          style: TextStyle(
-            color: (isPass == true)
-                ? const Color(Dimensions.TEXT_NORMAL_COLOR)
-                : ColorResources.RED,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        decoration: const BoxDecoration(
+          color: ColorResources.WHITE,
+          boxShadow: [
+            BoxShadow(
+              color: ColorResources.LIGHT_GREY,
+              blurRadius: 5,
+            )
+          ],
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              Dimensions.BORDER_RADIUS_DEFAULT,
+            ),
           ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: (isPass == true)
+                      ? const Color(Dimensions.TEXT_NORMAL_COLOR)
+                      : ColorResources.RED,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: (isPass == true)
+                      ? ColorResources.GREEN
+                      : ColorResources.RED,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(
+                      Dimensions.BORDER_RADIUS_BIG,
+                    ),
+                  ),
+                ),
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: Text(
+                  (isPass == true) ? "Đầy đủ" : "Cần bổ sung",
+                  style: const TextStyle(
+                    color: ColorResources.WHITE,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

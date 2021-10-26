@@ -4,8 +4,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/content_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/content_widget.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_conroller.dart';
 
 class V2ShorthandedGroup5Page extends GetView<V2ShorthandedGroup5Controller> {

@@ -35,10 +35,10 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
                   isHasDeposit: false,
                   title: "Chi tiết đơn hàng",
                   orderContents: [
-                  OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.soTien)} ${controller.unit}", boldValue: true,),
-                  OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} ${controller.unit}", boldValue: true,),
-                  OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(controller.khuyenMai)} ${controller.unit}", boldValue: true,),
-                  OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.tongTien)} ${controller.unit}", boldValue: true,),
+                  OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.soTien)} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(controller.khuyenMai)} VNĐ", boldValue: true,),
+                  OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.tongTien)} VNĐ", boldValue: true,),
                 ]);
               },
             )
@@ -52,7 +52,7 @@ class V1G3OrderDetailPage extends GetView<V1G3OrderDetailController> {
       ),
       bottomSheet: OrderBottomSheet(
         mainAxisAlignment: MainAxisAlignment.center,
-        itemValue: double.parse(controller.donDichVuRequest!.tongDon!),
+        itemValue: _controller.tongTien,
         child: Center(
           child: LongButton(
             color: ColorResources.PRIMARYCOLOR,

@@ -9,8 +9,9 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_controller.dart';
 
 class V3ProductAddPage extends GetView<V3ProductAddController> {
@@ -45,6 +46,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       width: double.infinity,
                       textEditingController: controller.name,
                       fillColor: ColorResources.WHITE,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //Thương hiệu sản phẩm
@@ -54,6 +58,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       width: double.infinity,
                       textEditingController: controller.branch,
                       fillColor: ColorResources.WHITE,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //Giá sản phẩm
@@ -65,6 +72,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       fillColor: ColorResources.WHITE,
                       textInputType: TextInputType.number,
                       thousandsSeparator: true,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //Mã sản phẩm
@@ -74,6 +84,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       width: double.infinity,
                       textEditingController: controller.code,
                       fillColor: ColorResources.WHITE,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //Quy cách
@@ -83,6 +96,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       width: double.infinity,
                       textEditingController: controller.quyCach,
                       fillColor: ColorResources.WHITE,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //Chi tiết sản phẩm
@@ -93,10 +109,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       textEditingController: controller.detail,
                       fillColor: ColorResources.WHITE,
                       maxLine: 5,
-                    ),
-
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_DEFAULT,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //product category
@@ -110,8 +125,8 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       data: controller.danhMucSanPhamList,
                       width: double.infinity,
                       fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                     ),
 
@@ -123,6 +138,9 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       textEditingController: controller.stock,
                       fillColor: ColorResources.WHITE,
                       textInputType: TextInputType.number,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
                     ),
 
                     //shipping method
@@ -135,8 +153,8 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       data: controller.loaiVanChuyenList,
                       width: double.infinity,
                       fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                     ),
 
@@ -151,8 +169,8 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       data: controller.khoHangDaiLyList,
                       width: double.infinity,
                       fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      padding: const EdgeInsets.only(
+                        top: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                     ),
 
@@ -302,9 +320,8 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BtnCustom(
+          BtnCustomBorder(
             onTap: () => controller.btnUpdateAndAdd(context),
-            color: ColorResources.GREY,
             text: "Cập nhật và thêm",
             width: DeviceUtils.getScaledWidth(context, .4),
           ),

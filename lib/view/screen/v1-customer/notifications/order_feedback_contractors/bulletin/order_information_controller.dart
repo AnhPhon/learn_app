@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/data/model/response/tuyen_dung_response.dart';
 import 'package:template/data/repository/tuyen_dung_repository.dart';
-import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class OrderInformationController extends GetxController {
   // Provider
-  final DonDichVuProvider donDichVuProvider = DonDichVuProvider();
-  final TuyenDungProvider tuyenDungProvider = TuyenDungProvider();
-  final DonHangProvider donHangProvider = DonHangProvider();
-  final DangKyBaoHiemProvider dangKyBaoHiemProvider = DangKyBaoHiemProvider();
+  final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  final TuyenDungProvider tuyenDungProvider = GetIt.I.get<TuyenDungProvider>();
+  final DonHangProvider donHangProvider = GetIt.I.get<DonHangProvider>();
 
   // value Model
   DonDichVuResponse donDichVuResponse = DonDichVuResponse();
@@ -84,6 +83,7 @@ class OrderInformationController extends GetxController {
         ),
         confirm: ElevatedButton(
             onPressed: () {
+              Get.back();
               onNextPage();
             },
             child: const Text("Đồng ý")),
@@ -100,12 +100,12 @@ class OrderInformationController extends GetxController {
   ///
   /// Nhấn vào đông ý đơn hàng
   ///
-  void onNextPage() async {
-    await Get.toNamed(
+  void onNextPage() {
+    Get.toNamed(
             '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}')!
         .then((value) {
       if (value == true) {
-        EasyLoading.showSuccess('Đăng tin thành công');
+        Alert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái đã thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
         //insert db
@@ -113,16 +113,14 @@ class OrderInformationController extends GetxController {
               if (value.response.data != null)
                 {
                   Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE)),
+                  Get.back()
                 }
               else
-                {
-                  EasyLoading.showError(
-                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
-                }
+                Alert.error(message: 'Vui lòng thực hiện lại')
             });
       } else {
-        EasyLoading.showSuccess('Đăng tin thành công');
+        Alert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái chưa thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
         //insert db
@@ -130,13 +128,11 @@ class OrderInformationController extends GetxController {
               if (value.response.data != null)
                 {
                   Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE))
+                      predicate: ModalRoute.withName(AppRoutes.V1_CANDICATE)),
+                  Get.back()
                 }
               else
-                {
-                  EasyLoading.showError(
-                      'Thao tác không thành công, vui lòng liên hệ hỗ trợ')
-                }
+                {Alert.error(message: 'Vui lòng thực hiện lại')}
             });
       }
     });

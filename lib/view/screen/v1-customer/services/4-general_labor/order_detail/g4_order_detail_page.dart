@@ -20,7 +20,9 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Chi tiết đơn hàng"),
+      appBar: const AppBarWidget(
+        title: "Chi tiết đơn hàng",
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -40,6 +42,8 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
                     OrderContentStringValue(title:"Giá trị đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.soTien)} VNĐ", boldValue: true,),
                     OrderContentStringValue(title:"Phí dịch vụ App" , value:"${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ", boldValue: true,),
                     OrderContentStringValue(title:"Khuyến mãi của App" , value:"${CurrencyConverter.currencyConverterVND(controller.khuyenMai)} VNĐ", boldValue: true,),
+                    // OrderContentStringValue(title:"Thời gian" , value:"${controller.time}", boldValue: true,),
+                    // OrderContentStringValue(title:"Số người" , value:"${controller.person}", boldValue: true,),
                     OrderContentStringValue(title:"Tổng tiền đơn hàng" , value:"${CurrencyConverter.currencyConverterVND(controller.tongTien)} VNĐ", boldValue: true,),
                   ]);
                 },
@@ -53,7 +57,7 @@ class V1G4OrderDetailPage extends GetView<V1G4OrderDetailController> {
       ),
       bottomSheet: OrderBottomSheet(
         mainAxisAlignment: MainAxisAlignment.center, 
-        itemValue: double.parse(_controller.donDichVuRequest!.tongDon!),
+        itemValue: _controller.tongTien,
         child: Center(
           child: LongButton(
             color: ColorResources.PRIMARYCOLOR,

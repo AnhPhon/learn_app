@@ -140,14 +140,14 @@ class Dimensions {
   // SIZE BOX BOTTOM NAV
   static const double SIZE_BOX_BOTTOM_NAV = 150;
 
-  Widget paddingDivider(BuildContext context) {
+  Widget paddingDivider(BuildContext context, {Color? color}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledSize(context, 0.02),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
-      child: const Divider(
+      child: Divider(
         thickness: 1,
-        color: Colors.grey,
+        color: color,
       ),
     );
   }

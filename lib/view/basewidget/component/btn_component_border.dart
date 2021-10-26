@@ -25,7 +25,7 @@ class BtnCustomBorder extends StatelessWidget {
           margin: const EdgeInsets.only(left: Dimensions.MARGIN_SIZE_SMALL),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: Border.all(color: ColorResources.PRIMARY, width: 2),
+            border: Border.all(color: ColorResources.PRIMARY),
             borderRadius:
                 BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: ColorResources.WHITE,
