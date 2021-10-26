@@ -9,6 +9,8 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/product_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_detail/product_detail_controller.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_detail/product_specification.dart';
 
@@ -87,10 +89,9 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
       child: CarouselSlider.builder(
         itemCount: controller.sanPhamResponse.hinhAnhSanPhams!.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          return FadeInImage.assetNetwork(
-            placeholder: Images.logo,
-            image: controller.sanPhamResponse.hinhAnhSanPhams![itemIndex],
-            fit: BoxFit.fill,
+          return FadeInImageCustom(
+            urlImage: controller.sanPhamResponse.hinhAnhSanPhams![itemIndex],
+            height: double.infinity,
             width: double.infinity,
           );
         },
@@ -163,23 +164,16 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_SMALL,
-              top: Dimensions.PADDING_SIZE_DEFAULT,
-              bottom: Dimensions.PADDING_SIZE_SMALL,
-            ),
-            child: Text(
-              "Thông tin sản phẩm",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: Dimensions.FONT_SIZE_LARGE),
-            ),
+          const Label(
+            label: "Thông tin sản phẩm",
+            obligatory: false,
+            horizontalPadding: 0,
+            paddingTitle: 0,
+            topPadding: Dimensions.PADDING_SIZE_DEFAULT,
           ),
-          const Divider(color: Colors.grey),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
-          ),
+
+          //divider
+          Dimensions().paddingDivider(context),
 
           //infomation product
           if (controller.isLoadingMore)
@@ -239,23 +233,17 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //title
-          const Padding(
-            padding: EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_SMALL,
-              top: Dimensions.PADDING_SIZE_DEFAULT,
-              bottom: Dimensions.PADDING_SIZE_SMALL,
-            ),
-            child: Text(
-              "Xem thêm",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: Dimensions.FONT_SIZE_LARGE),
-            ),
+          //label
+          const Label(
+            label: "Xem thêm",
+            obligatory: false,
+            horizontalPadding: 0,
+            paddingTitle: 0,
+            topPadding: Dimensions.PADDING_SIZE_DEFAULT,
           ),
 
           //divider
-          const Divider(color: Colors.grey),
+          Dimensions().paddingDivider(context),
 
           //product list
           if (controller.sanPhamList.isEmpty)

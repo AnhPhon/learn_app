@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:template/helper/common_helper.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:html/parser.dart';
 
 class AccidentInsuranceSpecification extends StatelessWidget {
   final String accidentInsuranceSpecification;
-  const AccidentInsuranceSpecification({Key? key, required this.accidentInsuranceSpecification})
+  const AccidentInsuranceSpecification(
+      {Key? key, required this.accidentInsuranceSpecification})
       : super(key: key);
 
   @override
@@ -19,8 +21,9 @@ class AccidentInsuranceSpecification extends StatelessWidget {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Html(
-          data: _parseHtmlString(accidentInsuranceSpecification),
+          data: CommonHelper().htmlUnescape(accidentInsuranceSpecification),
           style: {
+            "html": Style(textAlign: TextAlign.justify),
             "table": Style(
               backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
             ),

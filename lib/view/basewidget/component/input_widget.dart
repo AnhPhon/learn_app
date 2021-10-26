@@ -12,6 +12,7 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
@@ -62,6 +63,7 @@ class InputWidget extends StatelessWidget {
     this.margin,
     this.suffixIconTap,
     this.onSubmitted,
+    this.height,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,9 @@ class InputWidget extends StatelessWidget {
             ),
           Container(
             margin: margin ?? EdgeInsets.zero,
+            height: (height != null)
+                ? DeviceUtils.getScaledHeight(context, height!)
+                : null,
             width: DeviceUtils.getScaledWidth(context, width),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)

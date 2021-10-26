@@ -41,7 +41,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   _avatar(context, controller: controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //title
@@ -51,7 +51,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   ),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //company name
@@ -97,7 +97,8 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   Padding(
                     padding: const EdgeInsets.only(
                       left: Dimensions.PADDING_SIZE_LARGE,
-                      right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      right: Dimensions.PADDING_SIZE_LARGE,
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,6 +156,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                         allowEdit: false,
                         padding: const EdgeInsets.only(
                           left: Dimensions.PADDING_SIZE_LARGE,
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
                       ),
 
@@ -170,6 +172,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                         allowEdit: false,
                         padding: const EdgeInsets.only(
                           right: Dimensions.PADDING_SIZE_LARGE,
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
                       ),
                     ],
