@@ -100,6 +100,7 @@ class PaymentAccountController extends GetxController {
               Get.back();
               Get.offAllNamed(urlBack!,
                   predicate: ModalRoute.withName(urlBack!));
+              Get.back();
             },
             child: const Text("Hủy thanh toán")));
   }

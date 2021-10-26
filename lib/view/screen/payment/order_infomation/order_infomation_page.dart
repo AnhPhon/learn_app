@@ -59,7 +59,7 @@ class OrderInformationPage extends GetView<OrderInformationController> {
                           boldValue: true,
                         ),
                         OrderContent(
-                          title: "Phí dịch vụ app",
+                          title: "Phí dịch vụ App",
                           value: controller.phiDichVu,
                           boldValue: true,
                         ),
