@@ -168,15 +168,14 @@ class DonDichVuResponse {
     // mapping idThoiGianLamViec
     if (json['idThoiGianLamViecs'] != null &&
         json['idThoiGianLamViecs'].toString().length != 24) {
-      idThoiGianLamViecs = [];
+          idThoiGianLamViecs = [];
       final result = (json['idThoiGianLamViecs'] as List<dynamic>);
-      result.forEach((element) {
-        if (element != null && element.toString().length != 24) {
-          //result.map((e) =>
-          idThoiGianLamViecs!.add(ThoiGianLamViecResponse.fromJson(
-              element as Map<String, dynamic>));
-        }
-      });
+          result.forEach((element) {
+            if(element != null && element.toString().length != 24) {
+              //result.map((e) =>
+                  idThoiGianLamViecs!.add(ThoiGianLamViecResponse.fromJson(element as Map<String, dynamic>));
+            }
+          });
     } else {
       idThoiGianLamViecs = [];
     }
@@ -319,7 +318,8 @@ class DonDichVuResponse {
     if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null giaTriKhachDeXuat
-    if (giaTriKhachDeXuat != null)data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
+    if (giaTriKhachDeXuat != null)
+      data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
 
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;

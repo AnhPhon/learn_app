@@ -12,9 +12,12 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
-  final double? paddingTop;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
+  final VoidCallback? suffixIconTap;
+  final Function(dynamic)? onSubmitted;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLine;
@@ -45,7 +48,6 @@ class InputWidget extends StatelessWidget {
     this.labelBold = false,
     this.obligatory = false,
     required this.width,
-    this.paddingTop,
     this.isBorder = true,
     this.isShadow = false,
     this.onChanged,
@@ -56,15 +58,15 @@ class InputWidget extends StatelessWidget {
     this.firstDate,
     this.lastDate,
     this.fillColor,
+    this.padding,
+    this.margin,
+    this.suffixIconTap,
+    this.onSubmitted,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          top: paddingTop ?? 0),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,7 +99,7 @@ class InputWidget extends StatelessWidget {
               height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
-            margin: EdgeInsets.only(top: paddingTop ?? 0),
+            margin: margin ?? EdgeInsets.zero,
             width: DeviceUtils.getScaledWidth(context, width),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)
@@ -155,6 +157,7 @@ class InputWidget extends StatelessWidget {
                 onChanged: onChanged,
                 maxLines: maxLine ?? 1,
                 textInputAction: textInputAction,
+                onSubmitted: onSubmitted,
                 keyboardType: textInputType,
                 textAlignVertical: TextAlignVertical.center,
                 controller: textEditingController,
@@ -163,31 +166,31 @@ class InputWidget extends StatelessWidget {
                 decoration: InputDecoration(
                   isDense: true,
                   prefixIcon: prefixIcon,
-                  suffixIcon: suffixIcon,
+                  suffixIcon: GestureDetector(
+                    onTap: suffixIconTap ?? () {},
+                    child: suffixIcon ?? const SizedBox.shrink(),
+                  ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                       borderSide: (isBorder == true)
-                          ? const BorderSide(
-                              color: ColorResources.PRIMARY, width: 2)
+                          ? const BorderSide(color: ColorResources.PRIMARY)
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,

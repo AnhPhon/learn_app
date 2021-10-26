@@ -6,9 +6,9 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/basewidget/getx_smart_refresh/getx_smart_refresh_page.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/tab_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
 class V1ProjectPage extends GetView<V1ProjectController> {
@@ -30,6 +30,10 @@ class V1ProjectPage extends GetView<V1ProjectController> {
 
                 //tab bar button
                 _tabBarWidget(context: context, controller: controller),
+
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_LARGE,
+                ),
 
                 //tab view list
                 _itemList(controller),
@@ -80,7 +84,7 @@ class V1ProjectPage extends GetView<V1ProjectController> {
               controller.titleTabBar.length,
               (index) {
                 return GetXSmartRefreshPage(
-                  key: Key('GetXSmartRefreshPageTinTuc_$index'),
+                  key: Key('GetXSmartRefreshPageV1Project_$index'),
                   enablePullUp: true,
                   enablePullDown: true,
                   onLoading: controller.onLoading,
@@ -99,6 +103,12 @@ class V1ProjectPage extends GetView<V1ProjectController> {
 
   Widget listViewItemBuilder(V1ProjectController controller) {
     return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'].length as int,
@@ -119,77 +129,4 @@ class V1ProjectPage extends GetView<V1ProjectController> {
     );
   }
 
-// Widget _itemList(V1ProjectController controller) {
-//   return Expanded(
-//     child: controller.isLoading == true
-//         ? const Center(
-//             child: CircularProgressIndicator(),
-//           )
-//         : SingleChildScrollView(
-//             child: Column(
-//               children: [
-//                 const SizedBox(
-//                   height: Dimensions.MARGIN_SIZE_LARGE,
-//                 ),
-//                 if (controller.currentIndex == 0)
-//                   GetXSmartRefreshPage(
-//                     key: UniqueKey(),
-//                     enablePullUp: true,
-//                     enablePullDown: true,
-//                     onLoading: controller.onLoading,
-//                     onRefresh: controller.onRefresh,
-//                     child: ListView.builder(
-//                       key: UniqueKey(),
-//                       physics: const NeverScrollableScrollPhysics(),
-//                       shrinkWrap: true,
-//                       itemCount: controller.duAnKhachHangResponse.length,
-//                       itemBuilder: (BuildContext ctx, int index) {
-//                         return ItemListWidget(
-//                           urlImage: controller.duAnKhachHangResponse[index].hinhAnhDaiDien.toString(),
-//                           onTap: () => controller.onProjectDetailClick(),
-//                           title: controller.duAnKhachHangResponse[index].ten.toString(),
-//                           icon1: const Icon(Icons.location_on),
-//                           rowText1: controller.duAnKhachHangResponse[index].idQuanHuyen != null ? controller.duAnKhachHangResponse[index].idQuanHuyen!.ten.toString() : '',
-//                           colorRowText1: ColorResources.GREY,
-//                           icon2: const Icon(Icons.calendar_today),
-//                           rowText2: DateConverter.isoStringToddMMYYYY(controller.duAnKhachHangResponse[index].ngayBatDau!.toString()),
-//                           colorRowText2: ColorResources.GREY,
-//                           isSpaceBetween: true,
-//                         );
-//                       },
-//                     ),
-//                   )
-//                 else
-//                   GetXSmartRefreshPage(
-//                     key: UniqueKey(),
-//                     enablePullUp: true,
-//                     enablePullDown: true,
-//                     onLoading: controller.onLoading,
-//                     onRefresh: controller.onRefresh,
-//                     child: ListView.builder(
-//                       key: UniqueKey(),
-//                       physics: const NeverScrollableScrollPhysics(),
-//                       shrinkWrap: true,
-//                       itemCount: controller.duAnKhachHangResponse.length,
-//                       itemBuilder: (BuildContext ctx, int index) {
-//                         return ItemListWidget(
-//                           urlImage: controller.duAnKhachHangResponse[index].hinhAnhDaiDien.toString(),
-//                           onTap: () => controller.onProjectDetailClick(),
-//                           title: controller.duAnKhachHangResponse[index].ten.toString(),
-//                           icon1: const Icon(Icons.location_on),
-//                           rowText1: controller.duAnKhachHangResponse[index].idQuanHuyen != null ? controller.duAnKhachHangResponse[index].idQuanHuyen!.ten.toString() : '',
-//                           colorRowText1: ColorResources.GREY,
-//                           icon2: const Icon(Icons.calendar_today),
-//                           rowText2: DateConverter.isoStringToddMMYYYY(controller.duAnKhachHangResponse[index].ngayBatDau!.toString()),
-//                           colorRowText2: ColorResources.GREY,
-//                           isSpaceBetween: true,
-//                         );
-//                       },
-//                     ),
-//                   ),
-//               ],
-//             ),
-//           ),
-//   );
-// }
 }

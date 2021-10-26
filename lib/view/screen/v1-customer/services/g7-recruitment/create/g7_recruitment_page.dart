@@ -13,6 +13,7 @@ import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -75,6 +76,8 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
+          focusNode: controller.titleFocusNode,
         ),
 
         //Công ty *
@@ -89,6 +92,8 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
+          focusNode: controller.companyFocusNode,
         ),
 
         // Địa chỉ chọn tỉnh
@@ -136,6 +141,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
+          focusNode: controller.addressFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập địa chỉ",
           hidden: false,
@@ -143,6 +149,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // Giới tính
@@ -184,6 +191,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.amountController,
+          focusNode: controller.amountFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập số lượng ứng tuyển",
           hidden: false,
@@ -192,6 +200,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context, 1),
           paddingTop: Dimensions.PADDING_SIZE_SMALL,
+          textInputAction: TextInputAction.next,
         ),
 
         // Hình thức làm viêc
@@ -343,6 +352,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: true,
           controller: controller.descController,
+          focusNode: controller.descFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Vui lòng nhập mô tả công việc",
           hidden: false,
@@ -350,6 +360,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // Yêu cẩu công việc
@@ -357,6 +368,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.requiredController,
+          focusNode: controller.requiredFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập yêu cầu công việc",
           hidden: false,
@@ -364,6 +376,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // Chế độ quyển lợi
@@ -371,6 +384,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.benifitController,
+          focusNode: controller.benifitFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập chế độ quyền lợi",
           hidden: false,
@@ -378,6 +392,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // Ưu tiên
@@ -385,6 +400,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.prioritizedController,
+          focusNode: controller.prioritizedFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập ưu tiên",
           hidden: false,
@@ -392,6 +408,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // Hạn nộp hết ngày
@@ -468,6 +485,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.thoiGianThucTapController,
+          focusNode: controller.thoiGianThucTapFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập thời gian thực tập (tháng)",
           hidden: false,
@@ -475,6 +493,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         const Label(
@@ -492,6 +511,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.nameController,
+          focusNode: controller.nameFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập họ tên người liên hệ",
           hidden: false,
@@ -499,6 +519,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         //Số điện thoại
@@ -506,6 +527,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.phoneController,
+          focusNode: controller.phoneFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập số điện thoại",
           hidden: false,
@@ -513,6 +535,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.phone,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         //Địa chỉ
@@ -520,6 +543,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: true,
           controller: controller.contactAddressController,
+          focusNode: controller.contactFocusNodetroller,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập địa chỉ người liên hệ",
           hidden: false,
@@ -528,6 +552,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         //Email
@@ -535,6 +560,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.emailController,
+          focusNode: controller.emailFocusNode,
           fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Nhập email người liên hệ",
           hidden: false,
@@ -542,8 +568,74 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
           obligatory: true,
           typeInput: TextInputType.emailAddress,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.done,
         ),
+
+        //hình ảnh đại điện
+        Container(
+          padding: const EdgeInsets.only(
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+            right: Dimensions.PADDING_SIZE_DEFAULT,
+            top: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          width: DeviceUtils.getScaledWidth(context, 1),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Wrap(
+                    children: const [
+                      Text(
+                        'Hình ảnh đại diện',
+                        style: TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_LARGE, // * 2.1,
+                          fontWeight: FontWeight.w600,
+                          color: ColorResources.BLACK,
+                        ),
+                      ),
+                      Text(
+                        '*',
+                        style: TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_LARGE,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              _uploadImage(context, controller)
+            ],
+          ),
+        )
       ],
+    );
+  }
+
+  ///
+  ///upload image
+  ///
+  Widget _uploadImage(
+      BuildContext context, V1G7RecruitmentController controller) {
+    return GestureDetector(
+      onTap: () => controller.pickImage(),
+      child: Container(
+        child: controller.image != null
+            ? Image.file(
+                controller.image!,
+                fit: BoxFit.cover,
+              )
+            : Image.asset(
+                Images.add_image,
+                height: DeviceUtils.getScaledHeight(context, .092),
+                width: DeviceUtils.getScaledWidth(context, .25),
+                fit: BoxFit.fill,
+                color: ColorResources.PRIMARY,
+              ),
+      ),
     );
   }
 

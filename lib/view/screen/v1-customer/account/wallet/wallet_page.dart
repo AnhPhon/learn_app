@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/my_clipper.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/my_clipper.dart';
 
 class V1WalletPage extends GetView<V1WalletController> {
   @override
@@ -349,91 +350,103 @@ class V1WalletPage extends GetView<V1WalletController> {
                 child: Text("Chưa có lịch sử giao dịch".toUpperCase(),
                     style: Dimensions.fontSizeStyle18w600()),
               )
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ...List.generate(controller.lichSuViTien.keys.length,
-                        (index) {
-                      return Column(
-                        children: [
-                          const Divider(
-                            thickness: 2,
-                          ),
-
-                          //MM-yyyy
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            : SmartRefresher(
+                controller: controller.refreshController,
+                enablePullUp: true,
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                footer: const ClassicFooter(
+                  loadingText: "Đang tải...",
+                  noDataText: "Không có dữ liệu",
+                  canLoadingText: "Kéo lên để tải thêm dữ liệu",
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...List.generate(controller.lichSuViTien.keys.length,
+                          (index) {
+                        return Column(
+                          children: [
+                            const Divider(
+                              thickness: 2,
                             ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Tháng ${controller.lichSuViTien[controller.lichSuViTien.keys.toList()[index]]!.keys.toList()[index]} ${controller.lichSuViTien.keys.toList()[index]}"
-                                    .toUpperCase(),
-                                style:
-                                    Dimensions.fontSizeStyle18w600().copyWith(
-                                  color: ColorResources.GREY,
+
+                            //MM-yyyy
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Tháng ${controller.lichSuViTien[controller.lichSuViTien.keys.toList()[index]]!.keys.toList()[index]} ${controller.lichSuViTien.keys.toList()[index]}"
+                                      .toUpperCase(),
+                                  style:
+                                      Dimensions.fontSizeStyle18w600().copyWith(
+                                    color: ColorResources.GREY,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                          const Divider(
-                            thickness: 2,
-                          ),
+                            const Divider(
+                              thickness: 2,
+                            ),
 
-                          //show item history
+                            //show item history
 
-                          ...List.generate(
-                              controller
+                            ...List.generate(
+                                controller
+                                    .lichSuViTien[controller.lichSuViTien.keys
+                                            .toList()[index]]![
+                                        controller
+                                            .lichSuViTien[controller
+                                                .lichSuViTien.keys
+                                                .toList()[index]]!
+                                            .keys
+                                            .toList()[index]]!
+                                    .length, (i) {
+                              final lichSuViTien = controller.lichSuViTien[
+                                  controller.lichSuViTien.keys
+                                      .toList()[index]]![controller
                                   .lichSuViTien[controller.lichSuViTien.keys
-                                          .toList()[index]]![
-                                      controller
-                                          .lichSuViTien[controller
-                                              .lichSuViTien.keys
-                                              .toList()[index]]!
-                                          .keys
-                                          .toList()[index]]!
-                                  .length, (i) {
-                            final lichSuViTien = controller.lichSuViTien[
-                                controller.lichSuViTien.keys
-                                    .toList()[index]]![controller
-                                .lichSuViTien[controller.lichSuViTien.keys
-                                    .toList()[index]]!
-                                .keys
-                                .toList()[index]]!;
-                            final giaoDich =
-                                "${lichSuViTien[i].loaiGiaoDich! == '1' ? '+' : '-'}${"${PriceConverter.convertPrice(context, double.parse(lichSuViTien[i].soTien!))} vnđ"}";
-                            return Column(
-                              children: [
-                                _itemHistory(
-                                  context,
-                                  id: lichSuViTien[i].id!,
-                                  price: giaoDich,
-                                  content: lichSuViTien[i].noiDung!,
-                                  time: DateConverter.formatDateTimeFull(
-                                      dateTime: lichSuViTien[i].createdAt!),
-                                  status: lichSuViTien[i].trangThai!,
-                                ),
-                                if (i == lichSuViTien.length - 1)
-                                  const SizedBox.shrink()
-                                else
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                      left: Dimensions.PADDING_SIZE_EXTRA_LARGE,
-                                    ),
-                                    child: Divider(
-                                      thickness: 2,
-                                    ),
+                                      .toList()[index]]!
+                                  .keys
+                                  .toList()[index]]!;
+                              final giaoDich =
+                                  "${lichSuViTien[i].loaiGiaoDich! == '1' ? '+' : '-'}${"${PriceConverter.convertPrice(context, double.parse(lichSuViTien[i].soTien!))} vnđ"}";
+                              return Column(
+                                children: [
+                                  _itemHistory(
+                                    context,
+                                    id: lichSuViTien[i].id!,
+                                    price: giaoDich,
+                                    content: lichSuViTien[i].noiDung!,
+                                    time: DateConverter.formatDateTimeFull(
+                                        dateTime: lichSuViTien[i].createdAt!),
+                                    status: lichSuViTien[i].trangThai!,
                                   ),
-                              ],
-                            );
-                          }),
-                        ],
-                      );
-                    }),
-                  ],
+                                  if (i == lichSuViTien.length - 1)
+                                    const SizedBox.shrink()
+                                  else
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        left:
+                                            Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                                      ),
+                                      child: Divider(
+                                        thickness: 2,
+                                      ),
+                                    ),
+                                ],
+                              );
+                            }),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
       ),

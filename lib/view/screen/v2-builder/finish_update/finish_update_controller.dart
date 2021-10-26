@@ -9,8 +9,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2FinishUpdateController extends GetxController {
-  String title = "Bạn cần hoàn thiện hồ sơ";
-
   // provider
   DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
   DangKyBaoHiemProvider dangKyBaoHiemProvider =
@@ -19,6 +17,8 @@ class V2FinishUpdateController extends GetxController {
       GetIt.I.get<DangKyHopDongSBSProvider>();
   GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
+
+  String title = "Bạn cần hoàn thiện hồ sơ";
 
   bool thueValid = false;
   bool maSoThueValid = false;

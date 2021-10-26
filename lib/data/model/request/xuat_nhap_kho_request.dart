@@ -7,17 +7,21 @@ class XuatNhapKhoRequest {
   String? idDonViCungCap;
   String? soLuong;
   String? ghiChu;
+  String? loai;
+  String? ngayXuatNhapKhoa;
 
-  XuatNhapKhoRequest({
-      this.id,
+  XuatNhapKhoRequest(
+      {this.id,
       this.idNhanVien,
       this.idDuAnNhanVien,
       this.idKhoHang,
       this.idVatTu,
       this.idDonViCungCap,
       this.soLuong,
+      this.loai,
+      this.ngayXuatNhapKhoa,
       this.ghiChu});
-  
+
   ///
   /// From JSON
   ///
@@ -30,6 +34,8 @@ class XuatNhapKhoRequest {
     idDonViCungCap = json['idDonViCungCap'].toString();
     soLuong = json['soLuong'].toString();
     ghiChu = json['ghiChu'].toString();
+    loai = json['loai'].toString();
+    ngayXuatNhapKhoa = json['ngayXuatNhapKhoa'].toString();
   }
 
   ///
@@ -38,29 +44,34 @@ class XuatNhapKhoRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idNhanVien
-    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien;
 
     // check null idDuAnNhanVien
-    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien;
 
     // check null idKhoHang
-    if (idKhoHang != null) data['idKhoHang'] = idKhoHang; 
+    if (idKhoHang != null) data['idKhoHang'] = idKhoHang;
 
     // check null idVatTu
-    if (idVatTu != null) data['idVatTu'] = idVatTu; 
+    if (idVatTu != null) data['idVatTu'] = idVatTu;
 
     // check null idDonViCungCap
-    if (idDonViCungCap != null) data['idDonViCungCap'] = idDonViCungCap; 
+    if (idDonViCungCap != null) data['idDonViCungCap'] = idDonViCungCap;
 
     // check null soLuong
-    if (soLuong != null) data['soLuong'] = soLuong; 
+    if (soLuong != null) data['soLuong'] = soLuong;
 
     // check null ghiChu
-    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+    if (ghiChu != null) data['ghiChu'] = ghiChu;
 
+    // check null loai
+    if (loai != null) data['loai'] = loai;
+
+    // check null ngay xuat nhap kho
+    if (ngayXuatNhapKhoa != null) data['ngayXuatNhapKhoa'] = ngayXuatNhapKhoa;
 
     return data;
   }

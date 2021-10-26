@@ -53,7 +53,7 @@ class ThongBaoResponse {
       idDonDichVu = null;                                                               
     }  
 
-    // mapping idDonDichVu                                                              
+    // mapping idPhanHoiDonDichVu                                                              
     if (json['idPhanHoiDonDichVu'] != null && json['idPhanHoiDonDichVu'].toString().length!=24) {                                                  
       idPhanHoiDonDichVu = PhanHoiDonDichVuResponse.fromJson(json['idPhanHoiDonDichVu'] as Map<String, dynamic>); 
     } else {                                                                           

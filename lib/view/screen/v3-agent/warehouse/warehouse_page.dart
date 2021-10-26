@@ -10,7 +10,6 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_controller.dart';
 
 class V3WarehousePage extends GetView<V3WarehouseController> {
@@ -87,6 +86,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
   ///
   Widget _item(BuildContext context,
       {required V3WarehouseController controller}) {
+    if (controller.isLoadingProduct) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return SmartRefresher(
       controller: controller.refreshController,
       enablePullUp: true,
@@ -146,13 +150,11 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                         child: SizedBox(
                           height: DeviceUtils.getScaledHeight(context, .08),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                controller
-                                    .nhapKhoHangDaiLyList[index].idSanPham!.ten
-                                    .toString(),
+                                "${controller.nhapKhoHangDaiLyList[index].idSanPham!.maSanPham} - ${controller.nhapKhoHangDaiLyList[index].idSanPham!.ten}",
                                 maxLines: 2,
                                 style: Dimensions.fontSizeStyle16w600(),
                               ),

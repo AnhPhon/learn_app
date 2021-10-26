@@ -1,11 +1,15 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V1ResponseController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -19,7 +23,7 @@ class V1ResponseController extends GetxController {
   Map<String, List<Map<String, dynamic>>> infoCard = {};
   List<String> images = [];
   double tongTien = 0;
-
+  String fileURL = "";
   bool isLoading = true;
 
   @override
@@ -54,8 +58,7 @@ class V1ResponseController extends GetxController {
               images.add(image.toString());
             }
           }
-          print(images);
-
+          fileURL = donDichVu.file!;
           update();
         },
         onError: (error) {
@@ -122,6 +125,22 @@ class V1ResponseController extends GetxController {
         },
       );
     });
+  }
+
+  ///
+  /// url launcher
+  ///
+  void launchURL() async => await canLaunch(fileURL)
+      ? await launch(fileURL)
+      : throw 'Could not launch $fileURL';
+
+  ///
+  /// show download progress
+  ///
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      EasyLoading.showProgress((received as int) / (total as int));
+    }
   }
 
   ///

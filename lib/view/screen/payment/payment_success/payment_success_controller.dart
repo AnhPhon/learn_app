@@ -9,7 +9,7 @@ class PaymentSuccessController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //check có phải thanh toán hay nạp tiền
+    //check trạng thái thanh toán thành công
     if (Get.parameters['isPayment'] != null &&
         Get.parameters['isPayment'] == '0') {
       isPayment = true;

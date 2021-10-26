@@ -4,9 +4,9 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_controller.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_specification.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 
 class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
   @override

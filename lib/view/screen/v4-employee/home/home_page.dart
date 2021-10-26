@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -35,8 +33,7 @@ class V4HomePage extends GetView<V4HomeController> {
             child: HomeWidget(
               fullname: "NV, ${controller.fullname}!",
               imageNetwork: Images.V4AvatarHome,
-              notificationURL: AppRoutes.V4_NOTIFICATION,
-              soThongBao: 5,
+              isNotNotification: false,
               content: Column(
                 children: [
                   // notificate label
@@ -48,7 +45,7 @@ class V4HomePage extends GetView<V4HomeController> {
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _followWorkProgressWidget
-                  _followWorkProgressWidget(),
+                  _followWorkProgressWidget(context),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _splitWidget
@@ -130,7 +127,7 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   /// follow work progress
   ///
-  Widget _followWorkProgressWidget() {
+  Widget _followWorkProgressWidget(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
@@ -150,10 +147,11 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: 280,
-            padding:
-                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+            height: DeviceUtils.getScaledHeight(context, .3),
             child: GridView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 100,
@@ -444,7 +442,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                   child: const Text(
-                    "Thêm thu",
+                    "Xuất kho",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -472,7 +470,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                   child: const Text(
-                    "Thêm chi",
+                    "Nhập kho",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

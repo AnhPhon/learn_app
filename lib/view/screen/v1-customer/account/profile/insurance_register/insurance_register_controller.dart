@@ -24,7 +24,7 @@ class V1InsuranceRegisterController extends GetxController {
   String title0 = "Bảo hiểm của bạn";
   String title1 = "Đăng ký mua bảo hiểm";
 
-  //tab 
+  //tab
   List titleTabBar = [
     "Bảo hiểm của bạn",
     "Đăng ký mua",
@@ -59,7 +59,7 @@ class V1InsuranceRegisterController extends GetxController {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //get your insurance 
+    //get your insurance
     dangKyBaoHiemProvider.paginate(
       page: 1,
       limit: 5,
@@ -99,21 +99,28 @@ class V1InsuranceRegisterController extends GetxController {
   ///on checkout click
   ///
   void onCheckoutClick(BuildContext context) {
-
-    //set data
-    dangKyBaoHiemRequest.idTaiKhoan = userId;
-    dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[indexFee].id;
-    dangKyBaoHiemRequest.trangThai = "0";
-
-    //insert
-    dangKyBaoHiemProvider.add(
-      data: dangKyBaoHiemRequest,
-      onSuccess: (value) {
-        Get.toNamed(
-            "${AppRoutes.V1_PAYMENT_ACCOUNT}?idInsurance=true&amountOfMoney=${baoHiemResponse[indexFee].phi}");
-      },
-      onError: (error) {
-        print("V1InsuranceRegisterController onCheckoutClick onError $error");
+    Get.toNamed(
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse[indexFee].phi}&url${AppRoutes.V1_PROFILE}")!
+        .then(
+      (value) {
+        //set data
+        dangKyBaoHiemRequest.idTaiKhoan = userId;
+        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[indexFee].id;
+        dangKyBaoHiemRequest.trangThai = "0";
+        //insert
+        dangKyBaoHiemProvider.add(
+          data: dangKyBaoHiemRequest,
+          onSuccess: (value) {
+            Get.offAllNamed(
+              AppRoutes.V1_PROFILE,
+              predicate: ModalRoute.withName(AppRoutes.V1_PROFILE),
+            );
+          },
+          onError: (error) {
+            print(
+                "V1InsuranceRegisterController onCheckoutClick onError $error");
+          },
+        );
       },
     );
   }

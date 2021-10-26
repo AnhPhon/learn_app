@@ -8,11 +8,11 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/card/product_card.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/task_need_worker.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -258,7 +258,7 @@ class V2HomePage extends GetView<V2HomeController> {
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
-
+    print(length);
     return FieldWidget(
       onTap: () => controller.onShortHandedPageClick(),
       title: "Công việc đang cần người",
@@ -272,7 +272,7 @@ class V2HomePage extends GetView<V2HomeController> {
             return TaskNeedWorker(
               tenTask: controller.donDichVuList[index].tieuDe!,
               maTask:
-                  "DH ${controller.donDichVuList[index].id!.substring(0, 6)}",
+                  "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
               trangThai:
                   controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
               imageURL: controller.donDichVuList[index].hinhAnhChiTiet,

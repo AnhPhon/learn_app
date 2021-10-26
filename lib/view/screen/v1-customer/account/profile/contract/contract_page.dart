@@ -4,9 +4,9 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_controller.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_specification.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
 
 class V1ContractPage extends GetView<V1ContractController> {
   @override
@@ -34,9 +34,7 @@ class V1ContractPage extends GetView<V1ContractController> {
           ),
           bottomNavigationBar: (controller.dangKyHopDongSBSResponse == null)
               ? _bottomContract(context, controller: controller)
-              : (controller.dangKyHopDongSBSResponse!.trangThai == "0")
-                  ? _bottomContract(context, controller: controller)
-                  : null,
+              : null,
         );
       },
     );
@@ -101,12 +99,20 @@ class V1ContractPage extends GetView<V1ContractController> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
           //btn accept
           BtnCustom(
             onTap: () => controller.onBtnAceptClick(context),
             color: ColorResources.PRIMARY,
             text: "Tôi đồng ý",
-            width: double.infinity,
+            width: DeviceUtils.getScaledWidth(context, .9),
+          ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
           ),
         ],
       ),
