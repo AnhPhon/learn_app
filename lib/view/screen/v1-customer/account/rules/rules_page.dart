@@ -29,9 +29,9 @@ class V1RulesPage extends GetView<V1RulesController> {
                       children: [
                         //title
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_LARGE,
-                            vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                          padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_LARGE,
+                            bottom: Dimensions.PADDING_SIZE_DEFAULT,
                           ),
                           child: Text(
                             controller.dieuKhoanChinhSachResponse!.tieuDe!,

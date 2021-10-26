@@ -138,13 +138,13 @@ class V1ProductPage extends GetView<V1ProductController> {
                   const Label(
                     label: "Danh sách sản phẩm",
                     obligatory: false,
-                    horizontalPadding: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    horizontalPadding: 0,
+                    paddingTitle: 0,
+                    topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
 
                   //divider
-                  const Divider(
-                    color: ColorResources.GREY,
-                  ),
+                  Dimensions().paddingDivider(context),
 
                   //product list
                   GridView.builder(

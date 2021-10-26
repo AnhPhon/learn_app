@@ -38,6 +38,7 @@ class V1TaxPage extends GetView<V1TaxController> {
                 textEditingController: controller.taxController,
                 hintText: "Nhập mã số thuế",
                 allowEdit: controller.dangKyThueResponse == null,
+                fillColor: ColorResources.WHITE,
               ),
 
               //title
@@ -81,6 +82,7 @@ class V1TaxPage extends GetView<V1TaxController> {
       ),
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       decoration: BoxDecoration(
+        color: ColorResources.WHITE,
         border: Border.all(color: ColorResources.PRIMARY),
         borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
       ),
@@ -141,12 +143,16 @@ class V1TaxPage extends GetView<V1TaxController> {
                         }),
                     GestureDetector(
                       onTap: () => controller.pickImage(),
-                      child: Image.asset(
-                        Images.add_image,
+                      child: Container(
+                        alignment: Alignment.center,
                         height: DeviceUtils.getScaledHeight(context, .122),
                         width: DeviceUtils.getScaledWidth(context, .254),
-                        fit: BoxFit.fill,
-                        color: ColorResources.PRIMARY,
+                        decoration: BoxDecoration(
+                            color:
+                                ColorResources.LIGHT_SKY_BLUE.withOpacity(.5),
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT)),
+                        child: const Icon(Icons.add),
                       ),
                     ),
                   ],

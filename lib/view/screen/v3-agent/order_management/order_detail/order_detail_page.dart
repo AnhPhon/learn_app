@@ -34,39 +34,47 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin chung",
                     obligatory: false,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
                   _thongTinChung(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //shipping
                   const Label(
                     label: "Thông tin shipping",
                     obligatory: false,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: 0,
                   ),
                   _shipping(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //product info
                   const Label(
                     label: "Thông tin sản phẩm",
                     obligatory: false,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: 0,
                   ),
                   _productInfo(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //payment detail
                   const Label(
                     label: "Chi tiết thanh toán",
                     obligatory: false,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: 0,
                   ),
                   _paymentDetail(context, controller),
 
