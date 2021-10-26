@@ -7,6 +7,8 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/basewidget/animated_custom_dialog.dart';
+import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4WorkProgressController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -180,14 +182,34 @@ class V4WorkProgressController extends GetxController
   ///  Get Data tiến độ công việc HOÀN THÀNH
   ///
   void getTienDoCongViecHoanThanh({required bool isRefresh}) {
-    hoanThanhModelList.clear();
+    //isRefresh
+    if (isRefresh) {
+      pageMaxHoanThanh = 1;
+      hoanThanhModelList.clear();
+    } else {
+      //is load more
+      pageMaxHoanThanh++;
+    }
+
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       congViecNhanVienProvider.paginate(
-        page: 1,
-        limit: 5,
+        page: pageMaxHoanThanh,
+        limit: limitMaxHoanThanh,
         filter: "&idNhanVien=$id&trangThai=3&sortBy=created_at:desc",
         onSuccess: (value) {
-          hoanThanhModelList.addAll(value);
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshHoanThanhController.loadNoData();
+          } else {
+            if (isRefresh) {
+              hoanThanhModelList = value;
+              refreshHoanThanhController.refreshCompleted();
+            } else {
+              //is load more
+              hoanThanhModelList = hoanThanhModelList.toList() + value;
+              refreshHoanThanhController.loadComplete();
+            }
+          }
 
           isLoading = false;
           update();
@@ -203,14 +225,34 @@ class V4WorkProgressController extends GetxController
   ///  Get Data tiến độ công việc CHẬM TRỄ
   ///
   void getTienDoCongViecChamTre({required bool isRefresh}) {
-    chamTreModelList.clear();
+    //isRefresh
+    if (isRefresh) {
+      pageMaxChamTre = 1;
+      chamTreModelList.clear();
+    } else {
+      //is load more
+      pageMaxChamTre++;
+    }
+
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       congViecNhanVienProvider.paginate(
-        page: 1,
-        limit: 5,
+        page: pageMaxChamTre,
+        limit: limitMaxChamTre,
         filter: "&idNhanVien=$id&trangThai=4&sortBy=created_at:desc",
         onSuccess: (value) {
-          chamTreModelList.addAll(value);
+          //check isEmpty
+          if (value.isEmpty) {
+            refreshChamTreController.loadNoData();
+          } else {
+            if (isRefresh) {
+              chamTreModelList = value;
+              refreshChamTreController.refreshCompleted();
+            } else {
+              //is load more
+              chamTreModelList = chamTreModelList.toList() + value;
+              refreshChamTreController.loadComplete();
+            }
+          }
 
           isLoading = false;
           update();

@@ -396,171 +396,180 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///ListView tiến độ công việc bảng HOÀN THÀNH
   ///
   Widget _listViewHoanThanh() {
-    return ListView.builder(
-      itemCount: controller.hoanThanhModelList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
-              ),
-              width: DeviceUtils.getScaledWidth(context, 1),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                color: ColorResources.WHITE,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    offset: const Offset(0, 2),
-                    color: ColorResources.BLACK.withAlpha(60),
-                  ),
-                ],
-              ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, 0.77),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        0,
-                        Dimensions.PADDING_SIZE_LARGE,
-                        Dimensions.PADDING_SIZE_SMALL,
-                        Dimensions.PADDING_SIZE_LARGE,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //Tiêu đề tiến độ công việc mới tạo
-                          Text(
-                            controller.hoanThanhModelList[index].tieuDe
-                                .toString(),
-                            style: Dimensions.fontSizeStyle16w600(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+    return SmartRefresher(
+      enablePullUp: true,
+      controller: controller.refreshHoanThanhController,
+      onRefresh: controller.onHoanThanhRefresh,
+      onLoading: controller.onHoanThanhLoading,
+      child: ListView.builder(
+        itemCount: controller.hoanThanhModelList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  vertical: Dimensions.PADDING_SIZE_LARGE,
+                ),
+                width: DeviceUtils.getScaledWidth(context, 1),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  color: ColorResources.WHITE,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                      color: ColorResources.BLACK.withAlpha(60),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, 0.77),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          0,
+                          Dimensions.PADDING_SIZE_LARGE,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_LARGE,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Tiêu đề tiến độ công việc mới tạo
+                            Text(
+                              controller.hoanThanhModelList[index].tieuDe
+                                  .toString(),
+                              style: Dimensions.fontSizeStyle16w600(),
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Tóm tắt
-                          Wrap(
-                            children: [
-                              Text(
-                                controller.hoanThanhModelList[index].tomTat
-                                    .toString(),
-                                style: Dimensions.fontSizeStyle14(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+                            //Tóm tắt
+                            Wrap(
+                              children: [
+                                Text(
+                                  controller.hoanThanhModelList[index].tomTat
+                                      .toString(),
+                                  style: Dimensions.fontSizeStyle14(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Thời gian
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Bắt đầu
-                              Row(
-                                children: [
-                                  Text(
-                                    'Tiến độ: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    "${controller.tienDo(
-                                      startDate: controller
-                                          .hoanThanhModelList[index].ngayThucTe
-                                          .toString(),
-                                      endDate: controller
-                                          .hoanThanhModelList[index].ngayKetThuc
-                                          .toString(),
-                                    )}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: controller.tienDo(
-                                                startDate: controller
-                                                    .hoanThanhModelList[index]
-                                                    .ngayThucTe
-                                                    .toString(),
-                                                endDate: controller
-                                                    .hoanThanhModelList[index]
-                                                    .ngayKetThuc
-                                                    .toString(),
-                                              ) >=
-                                              0
-                                          ? ColorResources.GREEN
-                                          : ColorResources.RED,
+                            //Thời gian
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //Bắt đầu
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Tiến độ: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
                                     ),
-                                  ),
-                                  Text(
-                                    " Ngày",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: controller.tienDo(
-                                                startDate: controller
-                                                    .hoanThanhModelList[index]
-                                                    .ngayThucTe
-                                                    .toString(),
-                                                endDate: controller
-                                                    .hoanThanhModelList[index]
-                                                    .ngayKetThuc
-                                                    .toString(),
-                                              ) >=
-                                              0
-                                          ? ColorResources.GREEN
-                                          : ColorResources.RED,
+                                    Text(
+                                      "${controller.tienDo(
+                                        startDate: controller
+                                            .hoanThanhModelList[index]
+                                            .ngayThucTe
+                                            .toString(),
+                                        endDate: controller
+                                            .hoanThanhModelList[index]
+                                            .ngayKetThuc
+                                            .toString(),
+                                      )}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: controller.tienDo(
+                                                  startDate: controller
+                                                      .hoanThanhModelList[index]
+                                                      .ngayThucTe
+                                                      .toString(),
+                                                  endDate: controller
+                                                      .hoanThanhModelList[index]
+                                                      .ngayKetThuc
+                                                      .toString(),
+                                                ) >=
+                                                0
+                                            ? ColorResources.GREEN
+                                            : ColorResources.RED,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Text(
+                                      " Ngày",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: controller.tienDo(
+                                                  startDate: controller
+                                                      .hoanThanhModelList[index]
+                                                      .ngayThucTe
+                                                      .toString(),
+                                                  endDate: controller
+                                                      .hoanThanhModelList[index]
+                                                      .ngayKetThuc
+                                                      .toString(),
+                                                ) >=
+                                                0
+                                            ? ColorResources.GREEN
+                                            : ColorResources.RED,
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                              //Ngày hoàn thành
-                              Row(
-                                children: [
-                                  Text(
-                                    'Hoàn thành: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    controller.formatDateTime(
-                                      dateTime: controller
-                                          .hoanThanhModelList[index].ngayKetThuc
-                                          .toString(),
+                                //Ngày hoàn thành
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Hoàn thành: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
                                     ),
-                                    style: Dimensions.fontSizeStyle14(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                    Text(
+                                      controller.formatDateTime(
+                                        dateTime: controller
+                                            .hoanThanhModelList[index]
+                                            .ngayKetThuc
+                                            .toString(),
+                                      ),
+                                      style: Dimensions.fontSizeStyle14(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  //Icon
-                  const Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    child: Icon(
-                      Icons.engineering_outlined,
-                      size: Dimensions.ICON_SIZE_LARGE,
+                    //Icon
+                    const Positioned(
+                      top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+                      left: Dimensions.PADDING_SIZE_SMALL,
+                      child: Icon(
+                        Icons.engineering_outlined,
+                        size: Dimensions.ICON_SIZE_LARGE,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            //line Widget
-            _lineWidget(context),
-          ],
-        );
-      },
+              //line Widget
+              _lineWidget(context),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -568,172 +577,178 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///ListView tiến độ công việc bảng CHẬM TRỄ
   ///
   Widget _listViewChamTre() {
-    return ListView.builder(
-      itemCount: controller.chamTreModelList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
-              ),
-              width: DeviceUtils.getScaledWidth(context, 1),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                color: ColorResources.WHITE,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    offset: const Offset(0, 2),
-                    color: ColorResources.BLACK.withAlpha(60),
-                  ),
-                ],
-              ),
-              child: Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  // ignore: sized_box_for_whitespace
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, 0.77),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        0,
-                        Dimensions.PADDING_SIZE_LARGE,
-                        Dimensions.PADDING_SIZE_SMALL,
-                        Dimensions.PADDING_SIZE_LARGE,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //Tiêu đề tiến độ công việc mới tạo
-                          Text(
-                            controller.chamTreModelList[index].tieuDe
-                                .toString(),
-                            style: Dimensions.fontSizeStyle16w600(),
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+    return SmartRefresher(
+      enablePullUp: true,
+      onRefresh: controller.onChamTreRefresh,
+      onLoading: controller.onChamTreLoading,
+      controller: controller.refreshChamTreController,
+      child: ListView.builder(
+        itemCount: controller.chamTreModelList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  vertical: Dimensions.PADDING_SIZE_LARGE,
+                ),
+                width: DeviceUtils.getScaledWidth(context, 1),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  color: ColorResources.WHITE,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                      color: ColorResources.BLACK.withAlpha(60),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    // ignore: sized_box_for_whitespace
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, 0.77),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          0,
+                          Dimensions.PADDING_SIZE_LARGE,
+                          Dimensions.PADDING_SIZE_SMALL,
+                          Dimensions.PADDING_SIZE_LARGE,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //Tiêu đề tiến độ công việc mới tạo
+                            Text(
+                              controller.chamTreModelList[index].tieuDe
+                                  .toString(),
+                              style: Dimensions.fontSizeStyle16w600(),
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Tóm tắt
-                          Wrap(
-                            children: [
-                              Text(
-                                controller.chamTreModelList[index].tomTat
-                                    .toString(),
-                                style: Dimensions.fontSizeStyle14(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          ),
+                            //Tóm tắt
+                            Wrap(
+                              children: [
+                                Text(
+                                  controller.chamTreModelList[index].tomTat
+                                      .toString(),
+                                  style: Dimensions.fontSizeStyle14(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
 
-                          //Thời gian
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Bắt đầu
-                              Row(
-                                children: [
-                                  Text(
-                                    'Tiến độ: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    "${controller.tienDo(
-                                      startDate: controller
-                                          .chamTreModelList[index].ngayThucTe
-                                          .toString(),
-                                      endDate: controller
-                                          .chamTreModelList[index].ngayKetThuc
-                                          .toString(),
-                                    )}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: controller.tienDo(
-                                                startDate: controller
-                                                    .chamTreModelList[index]
-                                                    .ngayThucTe
-                                                    .toString(),
-                                                endDate: controller
-                                                    .chamTreModelList[index]
-                                                    .ngayKetThuc
-                                                    .toString(),
-                                              ) >=
-                                              0
-                                          ? ColorResources.GREEN
-                                          : ColorResources.RED,
+                            //Thời gian
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //Bắt đầu
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Tiến độ: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
                                     ),
-                                  ),
-                                  Text(
-                                    " Ngày",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: controller.tienDo(
-                                                startDate: controller
-                                                    .chamTreModelList[index]
-                                                    .ngayThucTe
-                                                    .toString(),
-                                                endDate: controller
-                                                    .chamTreModelList[index]
-                                                    .ngayKetThuc
-                                                    .toString(),
-                                              ) >=
-                                              0
-                                          ? ColorResources.GREEN
-                                          : ColorResources.RED,
+                                    Text(
+                                      "${controller.tienDo(
+                                        startDate: controller
+                                            .chamTreModelList[index].ngayThucTe
+                                            .toString(),
+                                        endDate: controller
+                                            .chamTreModelList[index].ngayKetThuc
+                                            .toString(),
+                                      )}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: controller.tienDo(
+                                                  startDate: controller
+                                                      .chamTreModelList[index]
+                                                      .ngayThucTe
+                                                      .toString(),
+                                                  endDate: controller
+                                                      .chamTreModelList[index]
+                                                      .ngayKetThuc
+                                                      .toString(),
+                                                ) >=
+                                                0
+                                            ? ColorResources.GREEN
+                                            : ColorResources.RED,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Text(
+                                      " Ngày",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: controller.tienDo(
+                                                  startDate: controller
+                                                      .chamTreModelList[index]
+                                                      .ngayThucTe
+                                                      .toString(),
+                                                  endDate: controller
+                                                      .chamTreModelList[index]
+                                                      .ngayKetThuc
+                                                      .toString(),
+                                                ) >=
+                                                0
+                                            ? ColorResources.GREEN
+                                            : ColorResources.RED,
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                              //Ngày hoàn thành
-                              Row(
-                                children: [
-                                  Text(
-                                    'Thực tế: ',
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                  Text(
-                                    controller.formatDateTime(
-                                      dateTime: controller
-                                          .chamTreModelList[index].ngayThucTe
-                                          .toString(),
+                                //Ngày hoàn thành
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Thực tế: ',
+                                      style: Dimensions.fontSizeStyle14w600(),
                                     ),
-                                    style: Dimensions.fontSizeStyle14(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                    Text(
+                                      controller.formatDateTime(
+                                        dateTime: controller
+                                            .chamTreModelList[index].ngayThucTe
+                                            .toString(),
+                                      ),
+                                      style: Dimensions.fontSizeStyle14(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  //Icon
-                  const Positioned(
-                    top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    child: Icon(
-                      Icons.engineering_outlined,
-                      size: Dimensions.ICON_SIZE_LARGE,
+                    //Icon
+                    const Positioned(
+                      top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
+                      left: Dimensions.PADDING_SIZE_SMALL,
+                      child: Icon(
+                        Icons.engineering_outlined,
+                        size: Dimensions.ICON_SIZE_LARGE,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            //line Widget
-            _lineWidget(context),
-          ],
-        );
-      },
+              //line Widget
+              _lineWidget(context),
+            ],
+          );
+        },
+      ),
     );
   }
 
