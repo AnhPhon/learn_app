@@ -7,6 +7,7 @@ import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -273,5 +274,12 @@ class V3OrderManagementController extends GetxController
         isRefresh: false,
       );
     }
+  }
+
+  ///
+  ///on order detail click
+  ///
+  void onOrderDetailClick({required int index}) {
+    Get.toNamed(AppRoutes.V3_ORDER_DETAIL, arguments: donHangResponse[index]);
   }
 }

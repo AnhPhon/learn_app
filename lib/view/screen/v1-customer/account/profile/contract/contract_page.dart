@@ -34,9 +34,7 @@ class V1ContractPage extends GetView<V1ContractController> {
           ),
           bottomNavigationBar: (controller.dangKyHopDongSBSResponse == null)
               ? _bottomContract(context, controller: controller)
-              : (controller.dangKyHopDongSBSResponse!.trangThai == "0")
-                  ? _bottomContract(context, controller: controller)
-                  : null,
+              : null,
         );
       },
     );
@@ -101,12 +99,20 @@ class V1ContractPage extends GetView<V1ContractController> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
           //btn accept
           BtnCustom(
             onTap: () => controller.onBtnAceptClick(context),
             color: ColorResources.PRIMARY,
             text: "Tôi đồng ý",
-            width: double.infinity,
+            width: DeviceUtils.getScaledWidth(context, .9),
+          ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
           ),
         ],
       ),

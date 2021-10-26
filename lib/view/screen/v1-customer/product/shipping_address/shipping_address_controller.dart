@@ -14,9 +14,8 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 
 class V1ShippingAddressController extends GetxController {
   //TextEditingController
@@ -224,16 +223,7 @@ class V1ShippingAddressController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Get.back(result: true);
-          showAnimatedDialog(
-            context,
-            const MyDialog(
-              icon: Icons.check,
-              title: "Hoàn tất",
-              description: "Cập nhật địa chỉ thành công",
-            ),
-            dismissible: false,
-            isFlip: true,
-          );
+          Alert.success(message: 'Cập nhật địa chỉ thành công');
         },
         onError: (error) {
           print("V1ShippingAddressController updateAddress onError $error");

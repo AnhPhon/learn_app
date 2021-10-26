@@ -29,9 +29,9 @@ class V1MailPage extends GetView<V1MailController> {
                     style: Dimensions.fontSizeStyle20w600(),
                   ),
 
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                  ),
+                  // const SizedBox(
+                  //   height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  // ),
 
                   //name
                   InputWidget(
@@ -39,6 +39,9 @@ class V1MailPage extends GetView<V1MailController> {
                     textEditingController: controller.nameController,
                     width: 1,
                     textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //phone
@@ -48,6 +51,9 @@ class V1MailPage extends GetView<V1MailController> {
                     width: 1,
                     textInputType: TextInputType.number,
                     textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //content
@@ -56,6 +62,9 @@ class V1MailPage extends GetView<V1MailController> {
                     textEditingController: controller.contentController,
                     width: 1,
                     maxLine: 5,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   const SizedBox(
@@ -66,7 +75,7 @@ class V1MailPage extends GetView<V1MailController> {
                     onTap: () => controller.onBtnSendClick(context),
                     color: ColorResources.PRIMARY,
                     text: "Gửi liên hệ",
-                    width: DeviceUtils.getScaledWidth(context, .8),
+                    width: DeviceUtils.getScaledWidth(context, .85),
                   ),
 
                   const SizedBox(
