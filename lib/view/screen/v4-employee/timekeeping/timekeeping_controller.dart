@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -96,6 +97,11 @@ class V4TimekeepingController extends GetxController {
         update();
       },
     );
+  }
+
+  Future<void> getLocator() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
 
   ///
