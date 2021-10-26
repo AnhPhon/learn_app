@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -7,9 +6,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_controller.dart';
 
@@ -87,7 +85,7 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
       allowEdit: false,
       allowMultiline: false,
       controller: controller.revenueController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       hidden: false,
       holdplacer: 'Thu',
       label: 'Loại thêm',
@@ -124,9 +122,14 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
 Widget _timeRevenueExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
   return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     isddMMyyyy: true,
-    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
     isDate: true,
     allowEdit: false,
     label: "Thời gian",
@@ -190,6 +193,12 @@ Widget _contentExpenditure(
 ///
 Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
   return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
     isColorFieldWhite: true,
     labelBold: true,
     thousandsSeparator: true,

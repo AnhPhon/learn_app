@@ -1,22 +1,28 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class TextFieldDate extends StatelessWidget {
-  const TextFieldDate(
-      {this.label,
-      this.isToHour = false,
-      required this.holdplacer,
-      required this.controller,
-      required this.allowEdit,
-      required this.isDate,
-      this.typeInput,
-      required this.width,
-      required this.obligatory,
-      this.area = false,
-      required this.fontSize,
-      this.padding,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE});
+  const TextFieldDate({
+    this.label,
+    this.isToHour = false,
+    required this.holdplacer,
+    required this.controller,
+    required this.allowEdit,
+    required this.isDate,
+    this.typeInput,
+    required this.width,
+    required this.obligatory,
+    this.area = false,
+    required this.fontSize,
+    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+    this.onDateTimeChanged,
+    this.padding,
+  });
+
+  final Function(String)? onDateTimeChanged;
   final String holdplacer;
   final String? label;
   final TextEditingController controller;
@@ -27,7 +33,8 @@ class TextFieldDate extends StatelessWidget {
   final bool? area;
   final double? paddingTop;
   final bool? isToHour;
-  final EdgeInsetsGeometry ? padding;
+  final EdgeInsetsGeometry? padding;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,19 +69,30 @@ class TextFieldDate extends StatelessWidget {
               ),
             ),
           GestureDetector(
-            onTap: isDate  ? (){
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2100),
-              ).then((value) {
-                isToHour! ? controller.text =
-                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}" : controller.text =
-                    "${value!.day}-${value.month}-${value.year}";
-                    
-              });
-            } : (){},
+            onTap: isDate
+                ? () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2001),
+                      lastDate: DateTime(2100),
+                    ).then((value) {
+                      isToHour!
+                          ? controller.text =
+                              "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value!.day}-${value.month}-${value.year}";
+                      if (onDateTimeChanged != null && value != null) {
+                        onDateTimeChanged!(value.toIso8601String());
+                      }
+                      isToHour!
+                          ? controller.text =
+                              "${value.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
+                          : controller.text =
+                              "${value.day}-${value.month}-${value.year}";
+                    });
+                  }
+                : () {},
             child: TextField(
               textInputAction: TextInputAction.done,
               keyboardType: isDate ? null : typeInput,
@@ -129,8 +147,9 @@ class TextFieldDate extends StatelessWidget {
                   ),
                   hintText: holdplacer,
                   filled: true,
-                  fillColor:
-                      (allowEdit == false) ? ColorResources.WHITE : Colors.white,
+                  fillColor: (allowEdit == false)
+                      ? ColorResources.WHITE
+                      : Colors.white,
                   suffixIconConstraints: const BoxConstraints(
                     maxHeight: Dimensions.PADDING_SIZE_LARGE,
                   ),

@@ -56,8 +56,9 @@ dependencies:
   pinch_zoom_image_last: ^0.4.1
   flutter_slidable: ^0.6.0
   multi_select_flutter: ^4.0.0
-
   html_unescape: ^2.0.0
+  tiengviet: ^0.5.0
+  flutter_styled_toast: ^2.0.0
 
 
 dev_dependencies:

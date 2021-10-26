@@ -54,6 +54,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
             width: DeviceUtils.getScaledSize(context,1),
             label: "Loại dịch vụ",
             hint: "Loại dịch vụ",
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
 
         InputField(
@@ -74,7 +75,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.timeNumberContrller,
+          controller: controller.timeNumberController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "10",
           hidden: false,
@@ -87,7 +88,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.personNumberContrller,
+          controller: controller.personNumberController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "10",
           hidden: false,

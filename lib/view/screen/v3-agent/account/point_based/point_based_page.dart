@@ -5,12 +5,12 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v2-builder/account/point_based/point_based_controller.dart';
-import 'package:template/view/screen/v2-builder/component_customer/btn_component.dart';
-import 'package:template/view/screen/v2-builder/component_customer/input_widget.dart';
-import 'package:template/view/screen/v2-builder/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v2-builder/component_customer/row_text.dart';
-import 'package:template/view/screen/v2-builder/component_customer/tab_bar_widget.dart';
 
 class V2PointBasedPage extends GetView<V2PointBasedController> {
   @override
@@ -73,10 +73,11 @@ class V2PointBasedPage extends GetView<V2PointBasedController> {
                   ItemListWidget(
                     onTap: () {},
                     title: "Biệt thự 170 Nguyễn Đình Thi",
-                    icon: const Icon(Icons.monetization_on_outlined),
+                    icon1: const Icon(Icons.monetization_on_outlined),
                     rowText1: "2.000.000 vnđ",
                     colorRowText1: ColorResources.RED,
-                    isStart: true,
+                    isStart: true, 
+                    urlImage: '',
                   ),
                 ],
               ),

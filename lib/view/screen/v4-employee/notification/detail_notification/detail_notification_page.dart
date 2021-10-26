@@ -91,6 +91,9 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 1.5,
+                  ),
                 ],
               ),
             );

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
 import 'package:template/view/screen/v1-customer/form_management/bill_detail/bill_detail_controller.dart';
 
 class V1BillDetailPage extends GetView<V1BillDetailController> {
@@ -46,7 +47,8 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
                     height: 1.5),
                 children: [
                   TextSpan(
-                      text: controller.deposit,
+                      text:
+                          "${PriceConverter.convertPrice(context, controller.depositMoney)} VND",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: ColorResources.RED,
@@ -82,13 +84,27 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
       child: Column(
         children: [
           //price
-          const RowText(text1: "Giá trị đơn hàng", text2: "11.000.000 VND"),
-          const RowText(text1: "Phí dịch vụ App", text2: "50.000 VND"),
-          const RowText(text1: "Khuyến mãi của App", text2: "0 VND"),
-          const RowText(
-              text1: "Tổng tiền đơn hàng",
-              text2: "11.050.000 VND",
-              colorRed: true),
+          RowText(
+            text1: "Giá trị đơn hàng",
+            text2:
+                "${PriceConverter.convertPrice(context, controller.giaTriDonHangMoney)} VND",
+          ),
+          RowText(
+            text1: "Phí dịch vụ App",
+            text2:
+                "${PriceConverter.convertPrice(context, controller.phiDichVu)} VND",
+          ),
+          RowText(
+            text1: "Khuyến mãi của App",
+            text2:
+                "${PriceConverter.convertPrice(context, controller.khuyenMaiCuaApp)} VND",
+          ),
+          RowText(
+            text1: "Tổng tiền đơn hàng",
+            text2:
+                "${PriceConverter.convertPrice(context, controller.getTongDonHang())} VND",
+            colorRed: true,
+          ),
 
           //divider
           const Padding(
@@ -135,9 +151,10 @@ class V1BillDetailPage extends GetView<V1BillDetailController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const RowText(
+            RowText(
                 text1: "Cần thanh toán",
-                text2: "11.050.000 VND",
+                text2:
+                    "${PriceConverter.convertPrice(context, controller.getTongDonHang())} VND",
                 colorRed: true),
             BtnCustom(
               color: ColorResources.PRIMARY,

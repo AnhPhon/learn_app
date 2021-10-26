@@ -4,18 +4,19 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
-import 'package:template/data/model/response/trang_thai_don_hang_response.dart';
+import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
-import 'package:template/provider/trang_thai_don_hang_provider.dart';
+import 'package:template/provider/trang_thai_don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2WorkInProgressController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-  TrangThaiDonHangProvider trangThaiDonHangProvider =
-      GetIt.I.get<TrangThaiDonHangProvider>();
+  TrangThaiDonDichVuProvider trangThaiDonDichVuProvider =
+      GetIt.I.get<TrangThaiDonDichVuProvider>();
   PhanHoiDonDichVuProvider phanHoiDonDichVuProvider =
       GetIt.I.get<PhanHoiDonDichVuProvider>();
 
@@ -39,7 +40,7 @@ class V2WorkInProgressController extends GetxController {
 
   String? selectIndex;
   String? keyIndex;
-  List<TrangThaiDonHangResponse> selectList = [];
+  List<TrangThaiDonDichVuResponse> selectList = [];
   @override
   void onInit() {
     super.onInit();
@@ -58,7 +59,7 @@ class V2WorkInProgressController extends GetxController {
   /// load trang thai
   ///
   void loadTrangThai() {
-    trangThaiDonHangProvider.paginate(
+    trangThaiDonDichVuProvider.paginate(
       page: 1,
       limit: 20,
       filter: "",
@@ -66,7 +67,7 @@ class V2WorkInProgressController extends GetxController {
         selectList = [];
         for (final element in models) {
           final String tieuDe = element.tieuDe!.toLowerCase();
-          if (tieuDe == 'hoàn thành' || tieuDe == 'đang xử lý') {
+          if (tieuDe == 'đã làm' || tieuDe == 'đang làm') {
             selectList.add(element);
           }
         }
@@ -89,31 +90,29 @@ class V2WorkInProgressController extends GetxController {
       donDichVuProvider.find(
         id: workFlowId!,
         onSuccess: (model) {
-          // set adress
           address = "";
           if (model.idQuanHuyen != null) {
             address += model.idQuanHuyen!.ten!;
           }
-
-          if (model.idQuanHuyen != null) {
-            address += model.idQuanHuyen!.ten!;
-          }
-
           // set title
           title = model.tieuDe!;
 
           // set city
-          city = model.idTinhTp!.ten!;
+          if (model.idTinhTp != null) {
+            city = model.idTinhTp!.ten!;
+          }
 
           // set deadline
           deadline = _getDeadline(model.ngayKetThuc!);
 
-          // set icon and color
-          isStatus =
-              model.idTrangThaiDonDichVu!.tieuDe!.toLowerCase() == dangTuyenKey;
+          if (model.idTrangThaiDonHang != null) {
+            // set icon and color
+            isStatus =
+                model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
 
-          // set status
-          result = model.idTrangThaiDonDichVu!.tieuDe!;
+            // set status
+            result = model.idTrangThaiDonHang!.tieuDe!;
+          }
 
           isLoading = false;
           update();
@@ -152,6 +151,7 @@ class V2WorkInProgressController extends GetxController {
   ///
   void updateData() {
     sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+      print("PRINT $workFlowId");
       phanHoiDonDichVuProvider.paginate(
         page: 1,
         limit: 20,
@@ -189,9 +189,25 @@ class V2WorkInProgressController extends GetxController {
               },
             );
           } else {
-            EasyLoading.showError(
-              "Không thể cập nhật thông tin vào trường rỗng",
-            );
+            sl.get<SharedPreferenceHelper>().userId.then((userId) {
+              sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+                phanHoiDonDichVuProvider.add(
+                  data: PhanHoiDonDichVuRequest(
+                    yKienThoThau: rateBuilder.text,
+                    idDonDichVu: workFlowId,
+                    idTaiKhoan: userId,
+                  ),
+                  onSuccess: (success) {
+                    Get.back(result: true);
+                  },
+                  onError: (error) {
+                    print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error",
+                    );
+                  },
+                );
+              });
+            });
           }
         },
         onError: (error) {
@@ -231,9 +247,14 @@ class V2WorkInProgressController extends GetxController {
   ///
   String _getDeadline(String end) {
     final DateTime current = DateTime.now();
-    final DateTime dateEnd = DateTime.parse(end);
+    final DateTime dateEnd = DateConverter.convertStringToDatetime(
+      end.replaceAll("T", " ").substring(
+            0,
+            end.length - 1,
+          ),
+    );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   bool _validate() {

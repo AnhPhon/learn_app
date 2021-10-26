@@ -167,14 +167,12 @@ class V4ReportController extends GetxController
   ///
   void onChanged(String? i) {
     filterindex = i;
-    if () {
       getDailyReport(isRefresh: true);
       update();
-    }
-    if (){
+
       getReportOnRequest(isRefresh: true);
       update();
-    }
+
   }
 
   ///

@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/trang_thai_don_dich_vu_repository.dart';
 
 class TrangThaiDonDichVuProvider {
-  TrangThaiDonDichVuRepository? repository = GetIt.I.get<TrangThaiDonDichVuRepository>();
+  TrangThaiDonDichVuRepository? repository =
+      GetIt.I.get<TrangThaiDonDichVuRepository>();
 
   TrangThaiDonDichVuProvider();
 
@@ -13,7 +14,8 @@ class TrangThaiDonDichVuProvider {
   /// Get all trangThaiDonDichVus
   ///
   Future<void> all({
-    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus) onSuccess,
+    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class TrangThaiDonDichVuProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class TrangThaiDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class TrangThaiDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class TrangThaiDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class TrangThaiDonDichVuProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus) onSuccess,
+    required Function(List<TrangThaiDonDichVuResponse> trangThaiDonDichVus)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -103,7 +110,8 @@ class TrangThaiDonDichVuProvider {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TrangThaiDonDichVuResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class TrangThaiDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiDonDichVuResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiDonDichVuResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

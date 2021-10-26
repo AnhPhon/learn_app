@@ -20,6 +20,12 @@ const String THEME = 'theme';
 
 // Enum
 enum SERVICES { WORK, REGULARLY }
+enum TYPEFORMAL { CREATE, FEEDBACK }
+
+const String DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
+const String CHUA_THANH_TOAN = '61615180e87a9124404abe82';
+const String DA_PHAN_HOI = '617286ebf5c09a07f815e825';
+const String CHUA_PHAN_HOI = '617286fdf5c09a07f815e826';
 
 // sharePreference
 const String TOKEN = 'token';
@@ -38,6 +44,16 @@ List<LanguageModel> languages = [
 ];
 
 Map<String, String> trangThaiDonHangMap = {
+  "Xác nhận": "6169794b3391622ae920354b",
+  "Chuẩn bị hàng": "616979573391622ae920354d",
+  "Đang giao": "6169795f3391622ae920354f",
+  "Đã giao": "616979663391622ae9203551",
+  "Huỷ đơn": "6169796e3391622ae9203553",
+  "Trả hàng": "616979743391622ae9203555",
+};
+
+Map<String, String> quanLyDonHangMap = {
+  "Tất cả": "",
   "Xác nhận": "6169794b3391622ae920354b",
   "Chuẩn bị hàng": "616979573391622ae920354d",
   "Đang giao": "6169795f3391622ae920354f",

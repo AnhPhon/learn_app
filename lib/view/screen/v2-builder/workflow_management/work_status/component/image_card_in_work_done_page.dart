@@ -61,37 +61,21 @@ class ImageCardInWorkPage extends StatelessWidget {
               crossAxisSpacing: 10,
             ),
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
+            itemCount: urlList!.length,
             itemBuilder: (BuildContext ctx, index) {
-              if (index < urlList!.length) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                        Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                    child: FadeInImage.assetNetwork(
-                      image: urlList![index],
-                      height: 90,
-                      fit: BoxFit.fill,
-                      placeholder: Images.logo,
-                    ),
+              return GestureDetector(
+                onTap: () {},
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+                  child: FadeInImage.assetNetwork(
+                    image: urlList![index],
+                    height: 90,
+                    fit: BoxFit.fill,
+                    placeholder: Images.logo,
                   ),
-                );
-              } else {
-                return GestureDetector(
-                  onTap: () {},
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                        Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                    child: FadeInImage.assetNetwork(
-                      image: ImageURL.location_example,
-                      height: 90,
-                      fit: BoxFit.fill,
-                      placeholder: Images.logo,
-                    ),
-                  ),
-                );
-              }
+                ),
+              );
             },
           ),
         ),

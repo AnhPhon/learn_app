@@ -6,7 +6,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
-import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';

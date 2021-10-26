@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/button/dropdown_button.dart';
-
-import 'package:template/view/screen/v4-employee/notification/components/appbar_notifcation_page.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v4-employee/report/component/v4_drop_dow_button.dart';
 import 'package:template/view/screen/v4-employee/report/report_controller.dart';
 
@@ -21,7 +18,6 @@ class V4ReportPage extends GetView<V4ReportController> {
         action: [
           _filterlistreport(context),
         ],
-        leading: true,
         title: "Danh sách báo cáo",
         // centerTitle: true,
       ),

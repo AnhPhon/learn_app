@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:template/data/model/request/xuat_nhap_kho_request.dart';
 import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
@@ -65,7 +66,7 @@ class V4ExportImportControleer extends GetxController {
   final exportController = TextEditingController(text: "Xuất");
   final importController = TextEditingController(text: "Nhập");
 
-  final countController = TextEditingController();
+  final countController = TextEditingController(text: "${0}");
   TextEditingController utils = TextEditingController(text: "Tấn");
   final contentController = TextEditingController();
 
@@ -289,8 +290,14 @@ class V4ExportImportControleer extends GetxController {
   void xuat() {
     if (validate() && justOnlyClick == false) {
       justOnlyClick = true;
+      final DateTime timeA = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeExportImport.text)
+          .toString()
+          .substring(0, 10));
       xuatNhapKhoProvider.add(
         data: XuatNhapKhoRequest(
+          ngayXuatNhapKhoa: timeA.toString(),
+          loai: "1",
           idDonViCungCap: donViCungCap!.id,
           ghiChu: contentController.text,
           soLuong: countController.text,
@@ -316,8 +323,14 @@ class V4ExportImportControleer extends GetxController {
   void nhap() {
     if (validate() && justOnlyClick == false) {
       justOnlyClick = true;
+      final DateTime timeB = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeExportImport.text)
+          .toString()
+          .substring(0, 10));
       xuatNhapKhoProvider.add(
         data: XuatNhapKhoRequest(
+          ngayXuatNhapKhoa: timeB.toString(),
+          loai: "2",
           idDonViCungCap: donViCungCap!.id,
           ghiChu: contentController.text,
           soLuong: countController.text,

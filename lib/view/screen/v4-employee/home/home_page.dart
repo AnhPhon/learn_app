@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -35,8 +33,7 @@ class V4HomePage extends GetView<V4HomeController> {
             child: HomeWidget(
               fullname: "NV, ${controller.fullname}!",
               imageNetwork: Images.V4AvatarHome,
-              notificationURL: AppRoutes.V4_NOTIFICATION,
-              soThongBao: 5,
+              isNotNotification: false,
               content: Column(
                 children: [
                   // notificate label
@@ -444,7 +441,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                   child: const Text(
-                    "Thêm thu",
+                    "Xuất kho",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -472,7 +469,7 @@ class V4HomePage extends GetView<V4HomeController> {
                     ),
                   ),
                   child: const Text(
-                    "Thêm chi",
+                    "Nhập kho",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

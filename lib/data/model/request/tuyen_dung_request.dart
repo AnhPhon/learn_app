@@ -34,6 +34,10 @@ class TuyenDungRequest {
   String? tongDon;
   String? thoiGianThuViec;
   List<dynamic>? idChuyenNganhPhus;
+  String? phiDichVu;
+  String? tienCoc;
+  String? idTrangThaiThanhToan;
+  String? hinhAnhDaiDien;
 
   TuyenDungRequest(
       {this.id,
@@ -70,7 +74,11 @@ class TuyenDungRequest {
       this.soTien,
       this.tongDon,
       this.thoiGianThuViec,
-      this.idChuyenNganhPhus});
+      this.idChuyenNganhPhus,
+      this.phiDichVu,
+      this.tienCoc,
+      this.idTrangThaiThanhToan,
+      this.hinhAnhDaiDien});
 
   ///
   /// From JSON
@@ -111,6 +119,10 @@ class TuyenDungRequest {
     tongDon = json['tongDon'].toString();
     thoiGianThuViec = json['thoiGianThuViec'].toString();
     idChuyenNganhPhus = json['idChuyenNganhPhus'] as List<dynamic>;
+    phiDichVu = json['phiDichVu'].toString();
+    tienCoc = json['tienCoc'].toString();
+    idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
+    hinhAnhDaiDien = json['hinhAnhDaiDien'].toString();
   }
 
   ///
@@ -230,6 +242,15 @@ class TuyenDungRequest {
     // check null idChuyenNganhPhus
     if (idChuyenNganhPhus != null)
       data['idChuyenNganhPhus'] = idChuyenNganhPhus;
+    // check null idChuyenNganhPhus
+    if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
+    // check null tienCoc
+    if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null idTrangThaiThanhToan
+    if (idTrangThaiThanhToan != null)
+      data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
+    // check null hinhAnhDaiDien
+    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien;
 
     return data;
   }
