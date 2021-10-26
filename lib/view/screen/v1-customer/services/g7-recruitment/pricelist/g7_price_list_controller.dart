@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -8,6 +9,8 @@ import 'package:template/data/repository/tuyen_dung_repository.dart';
 import 'package:template/provider/bang_gia_dang_tin_provider.dart';
 import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V1G7PriceListController extends GetxController {
   //provider
@@ -127,15 +130,66 @@ class V1G7PriceListController extends GetxController {
     tongTien = tienDangTin;
     //set value tuyendung
     tuyenDungRequest.soTien = tongTien.toStringAsFixed(0);
-    tuyenDungRequest.tongDon = tongTien.toStringAsFixed(0);
-    tuyenDungRequest.phiDichVu = '0';
-    tuyenDungRequest.khuyenMai = '0';
     tuyenDungRequest.tienCoc = '0';
     tuyenDungRequest.idTrangThaiTuyenDung = '6162b79bd3d3e9825095fb20';
 
     Get.toNamed(
-      AppRoutes.V1_ORDER_INFORAMTION,
-      arguments: tuyenDungRequest,
-    );
+            '${AppRoutes.ORDER_INFORMATION}?soTien=${tuyenDungRequest.soTien!}&tienCoc=${tuyenDungRequest.tienCoc}&urlBack=${AppRoutes.V1_CANDICATE}&isTuyenDung=true')!
+        .then((value) => {
+              print('bbbb $value'),
+              if (value != null && value['type'] == 1)
+                {
+                  //set trạng thái đã thanh toán
+                  tuyenDungRequest.idTrangThaiThanhToan =
+                      app_constants.TUYEN_DUNG_DA_THANH_TOAN,
+                  tuyenDungRequest.phiDichVu = value['phiDichVu'].toString(),
+                  tuyenDungRequest.khuyenMai = value['khuyenMai'].toString(),
+                  tuyenDungRequest.tongDon = value['tongTien'].toString(),
+                  //insert db
+                  tuyenDungRepository.add(tuyenDungRequest).then((value) => {
+                        if (value.response.data != null)
+                          {
+                            // Get.offAllNamed(AppRoutes.V1_CANDICATE,
+                            //     predicate: ModalRoute.withName(
+                            //         AppRoutes.V1_CANDICATE)),
+                            Get.back(result: true),
+                            Alert.success(
+                                message: 'Đăng tin tuyển dụng thành công'),
+                          }
+                        else
+                          Alert.error(message: 'Vui lòng thực hiện lại')
+                      })
+                }
+              else if (value != null && value['type'] == 2)
+                {
+                  //set trạng thái chưa thanh toán
+                  tuyenDungRequest.idTrangThaiThanhToan =
+                      app_constants.TUYEN_DUNG_CHUA_THANH_TOAN,
+                  tuyenDungRequest.phiDichVu = value['phiDichVu'].toString(),
+                  tuyenDungRequest.khuyenMai = value['khuyenMai'].toString(),
+                  tuyenDungRequest.tongDon = value['tongTien'].toString(),
+                  //insert db
+                  tuyenDungRepository.add(tuyenDungRequest).then((value) => {
+                        if (value.response.data != null)
+                          {
+                            // Get.offAllNamed(AppRoutes.V1_CANDICATE,
+                            //     predicate: ModalRoute.withName(
+                            //         AppRoutes.V1_CANDICATE)),
+                            Get.back(result: true),
+                            Alert.success(
+                                message: 'Đăng tin tuyển dụng thành công'),
+                          }
+                        else
+                          {Alert.error(message: 'Vui lòng thực hiện lại')}
+                      })
+                }
+              else
+                {Alert.error(message: 'Vui lòng thực hiện lại')}
+            });
+
+    // Get.toNamed(
+    //   AppRoutes.V1_ORDER_INFORAMTION,
+    //   arguments: tuyenDungRequest,
+    // );
   }
 }

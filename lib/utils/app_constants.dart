@@ -80,3 +80,8 @@ const dynamic TRANG_THAI_DU_AN = {
     'id': '616ce9687aade64ebae7c941'
   },
 };
+
+//Trạng thái thanh toán đơn tuyển dụng
+
+const String TUYEN_DUNG_DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
+const String TUYEN_DUNG_CHUA_THANH_TOAN = '61615180e87a9124404abe82';

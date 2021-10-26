@@ -293,4 +293,5 @@ class AppRoutes {
   static const String PAYMENT_ACCOUNT = '/payment_account';
   static const String PAYMENT_SUCCESS = '/payment_success';
   static const String PAYMENT_RECHARGE = '/payment_recharge';
+  static const String ORDER_INFORMATION = '/order_infomation';
 }

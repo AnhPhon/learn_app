@@ -21,7 +21,7 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text(controller.title),
+              title: const Text('Tài khoản của bạn'),
               centerTitle: true,
               leading: Builder(
                 builder: (BuildContext context) {

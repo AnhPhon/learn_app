@@ -33,8 +33,6 @@ class PaymentAccountController extends GetxController {
   LichSuViTienRequest lichSuViTienRequest = LichSuViTienRequest();
   LichSuViTienRepository lichSuViTienRepository = LichSuViTienRepository();
 
-  String title = "Tài khoản của bạn";
-
   //isLoading
   bool isLoading = true;
 
@@ -65,11 +63,45 @@ class PaymentAccountController extends GetxController {
       tongTienThanhToan = double.parse(Get.parameters['tongTien'].toString());
       getBalance();
     }
-    //check url
-    if (Get.parameters['url'] != null) {
-      urlBack = Get.parameters['url'].toString();
+
+    //set data
+    if (Get.parameters['urlBack'] != null) {
+      urlBack = Get.parameters['urlBack'].toString();
+      getBalance();
     }
+
     update();
+  }
+
+  ///
+  ///dialog button back
+  ///
+  void showDialogBack() {
+    Get.defaultDialog(
+        titlePadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        contentPadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        title: "Bạn có chắc chắn muốn hủy thanh toán không?",
+        content: PaymentDialogAccept(
+          textContent:
+              'Bấm nút hủy thanh toán để thoát trang thanh toán, nút trở lại để đóng popup',
+          price: 0,
+          isShowPrice: false,
+        ),
+        confirm: ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("Trở lại")),
+        cancel: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: ColorResources.GREY,
+            ),
+            onPressed: () {
+              Get.back();
+              Get.offAllNamed(urlBack!,
+                  predicate: ModalRoute.withName(urlBack!));
+            },
+            child: const Text("Hủy thanh toán")));
   }
 
   ///
@@ -108,37 +140,6 @@ class PaymentAccountController extends GetxController {
   }
 
   ///
-  ///dialog button back
-  ///
-  void showDialogBack() {
-    Get.defaultDialog(
-        titlePadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        contentPadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        title: "Bạn có chắc chắn muốn quay lại không?",
-        content: PaymentDialogAccept(
-          textContent:
-              'Bấm nút hủy tạo đơn để hủy tạo đơn, nút trở lại để thoát',
-          price: 0,
-          isShowPrice: false,
-        ),
-        confirm: ElevatedButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text("Trở lại")),
-        cancel: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: ColorResources.GREY,
-            ),
-            onPressed: () {
-              Get.back();
-              Get.offAllNamed(urlBack!,
-                  predicate: ModalRoute.withName(urlBack!));
-            },
-            child: const Text("Hủy tạo đơn")));
-  }
-
-  ///
   ///  Hiển thị xác nhận
   ///
   void showDialogAccept() {
@@ -168,6 +169,12 @@ class PaymentAccountController extends GetxController {
                   lichSuViTienRequest.trangThai = "2";
                   lichSuViTienRequest.soTien = tongTienThanhToan.toString();
 
+                  //set param back
+                  final Map<String, dynamic> param = {
+                    'type': 1,
+                    'status': true
+                  };
+
                   //insert db lịch sử ví tiền
                   lichSuViTienRepository.add(lichSuViTienRequest).then((value) {
                     if (value.response.data != null) {
@@ -176,7 +183,7 @@ class PaymentAccountController extends GetxController {
                           .then((value) {
                         if (value == true) {
                           Get.back();
-                          Get.back(result: true);
+                          Get.back(result: param);
                         }
                       });
                     } else {
@@ -206,8 +213,8 @@ class PaymentAccountController extends GetxController {
     Get.toNamed(
             '${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=$tongTienThanhToan')!
         .then((value) {
-      if (value == true) {
-        Get.back(result: false);
+      if (value != null && value['status'] == true) {
+        Get.back(result: value);
       }
     });
   }

@@ -177,7 +177,6 @@ class V1CandidateController extends GetxController {
             refreshController!.loadComplete();
           }
           isLoadingTuyenDung = false;
-          print('tuyenDungListModel ${tuyenDungListModel.length}');
           update();
         },
         onError: (error) =>
@@ -632,7 +631,10 @@ class V1CandidateController extends GetxController {
   /// Onlick đến đơn tạo tuyển ứng viên
   ///
   void onClickFloatButton() {
-    Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
+    Get.toNamed(AppRoutes.V1_G7_RECRUITMENT)!.then((value) => {
+          if (value != null && value == true)
+            {onLoadDataTuyenDung(isRefresh: true)}
+        });
   }
 
   ///

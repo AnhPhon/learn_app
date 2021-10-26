@@ -187,7 +187,7 @@ class V1CandidatePage extends GetView<V1CandidateController> {
             color: controller.currentIndex == index
                 ? ColorResources.WHITE
                 : ColorResources.GREY,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
           ),
         ),
       ),
