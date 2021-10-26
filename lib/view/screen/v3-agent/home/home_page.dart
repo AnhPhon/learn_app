@@ -46,7 +46,7 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // news widget
                   _newsWidget(),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
                   _productWidget(controller: controller)
@@ -130,7 +130,7 @@ class V3HomePage extends GetView<V3HomeController> {
     return SizedBox(
       height: 120,
       child: GridView.builder(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -170,7 +170,7 @@ class V3HomePage extends GetView<V3HomeController> {
         height: (len > 0) ? 130 * len : 0,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: length,
           itemBuilder: (
             BuildContext ctx,
@@ -225,7 +225,7 @@ class V3HomePage extends GetView<V3HomeController> {
         height: 110 * size + 20,
         child: ListView.builder(
           itemCount: size,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,

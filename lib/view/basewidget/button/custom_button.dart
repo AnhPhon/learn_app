@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
-      style: TextButton.styleFrom(padding: const EdgeInsets.all(0)),
+      style: TextButton.styleFrom(padding: EdgeInsets.zero),
       child: Container(
         height: 45,
         alignment: Alignment.center,

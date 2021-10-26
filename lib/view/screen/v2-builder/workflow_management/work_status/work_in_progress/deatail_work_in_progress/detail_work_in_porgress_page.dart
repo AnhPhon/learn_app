@@ -391,7 +391,9 @@ class V2DetailWorkInProgresspage
   Widget _btnBack() {
     return LongButton(
       color: ColorResources.PRIMARY,
-      onPressed: () {},
+      onPressed: () {
+        Get.back();
+      },
       title: 'Quay lại',
     );
   }
