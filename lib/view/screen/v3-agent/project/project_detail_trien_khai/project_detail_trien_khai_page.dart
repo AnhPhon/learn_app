@@ -7,13 +7,13 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
-import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
+import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
 
-class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiController> {
+class V3ProjectDetailTrienKhaiPage extends GetView<V3ProjectDetailTrienKhaiController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V2ProjectDetailTrienKhaiController>(
-      init: V2ProjectDetailTrienKhaiController(),
+    return GetBuilder<V3ProjectDetailTrienKhaiController>(
+      init: V3ProjectDetailTrienKhaiController(),
       builder: (controller) {
         return controller.duAnKhachHangResponse == null
             ? const Center(
@@ -72,7 +72,7 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
   ///
   ///img product
   ///
-  Widget _imgProject(BuildContext context, V2ProjectDetailTrienKhaiController controller) {
+  Widget _imgProject(BuildContext context, V3ProjectDetailTrienKhaiController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
@@ -243,7 +243,7 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),
           const Text(
-            "Nếu thầu thợ có thể tham gia dự án này, hãy kích nút “Đăng ký” chúng tôi sẽ liên hệ với bạn nếu dự án cần thêm nhân lực",
+            'Nếu đại lý có thể tham gia báo giá dự án này, hãy kích nút Đăng kí. Chúng tôi sẽ kết nối với bạn nếu dự án cần nguồn cung cấp vật tư',
             textAlign: TextAlign.left,
             style: TextStyle(
               color: ColorResources.RED,

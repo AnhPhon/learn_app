@@ -31,19 +31,6 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 const SizedBox(
                   height: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),
-
-                //search
-                // InputWidget(
-                //   width: double.infinity,
-                //   textEditingController: controller.searchController,
-                //   hintText: "Tìm kiếm",
-                //   suffixIcon: const Icon(
-                //     Icons.search,
-                //     size: Dimensions.ICON_SIZE_DEFAULT,
-                //   ),
-                //   fillColor: ColorResources.WHITE,
-                // ),
-
                 const SizedBox(
                   height: Dimensions.MARGIN_SIZE_DEFAULT,
                 ),

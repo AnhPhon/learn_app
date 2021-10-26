@@ -15,6 +15,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
     return Scaffold(
       backgroundColor: ColorResources.HOME_BG,
       appBar: const AppBarWidget(
+        isNotBack: true,
         title: 'Thông Báo',
       ),
       body: GetBuilder<V4NotificationController>(

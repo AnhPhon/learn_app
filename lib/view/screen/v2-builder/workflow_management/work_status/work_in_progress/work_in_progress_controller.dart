@@ -135,7 +135,11 @@ class V2WorkInProgressController extends GetxController {
         filter: "&idDonDichVu=$workFlowId",
         onSuccess: (models) {
           if (models.isNotEmpty) {
-            rate = models[0].khachHangDanhGia!;
+            if (models[0].khachHangDanhGia.toString() != "null") {
+              rate = models[0].khachHangDanhGia!;
+            } else {
+              rate = "Không có";
+            }
           }
           update();
         },

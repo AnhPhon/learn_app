@@ -10,6 +10,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
 
@@ -32,16 +33,14 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // chọn ngày xuất nhập kho
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_LARGE,
-                        ),
-                        child: _timeExportImport(controller, context),
-                      ),
+                      _timeExportImport(controller, context),
 
                       //Chọn xuất hoặc nhập kho theo trang chủ
                       if (controller.isExport == true)
@@ -51,31 +50,31 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                     ],
                   ),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   // Tên dự án
                   _project(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Tên kho theo dự án
                   _wareHouse(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //đơn vị cung cấp
                   _supplier(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Tên vật tư/thiết bị
                   _supplies(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   Padding(
@@ -92,8 +91,8 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: DeviceUtils.getScaledHeight(context, 0.03),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Nội dung khác(nếu có)
@@ -124,7 +123,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///
   Widget _timeExportImport(
       V4ExportImportControleer controller, BuildContext context) {
-    return TextFieldDate(
+    return InputWidget(
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -133,13 +132,15 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       ),
       isDate: true,
       allowEdit: false,
-      controller: controller.timeExportImport,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      holdplacer: "12-11-2021",
       label: "Ngày",
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.4,
+      textEditingController: controller.timeExportImport,
+      suffixIcon: const Icon(
+        Icons.date_range,
+        size: Dimensions.ICON_SIZE_SMALL,
+        color: ColorResources.PRIMARYCOLOR,
+      ),
     );
   }
 
@@ -147,18 +148,19 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   /// Xuất được chọn ở trang chủ
   ///
   Widget _exprot(V4ExportImportControleer controller, BuildContext context) {
-    return InputField(
-      boldHinText: true,
+    return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
+      padding: const EdgeInsets.fromLTRB(
+        0,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.exportController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Xuất',
       label: 'Loại xuất',
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.4,
+      textEditingController: controller.exportController,
     );
   }
 
@@ -166,19 +168,20 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
   ///  Nhập được chọn ở trang Chủ
   ///
   Widget _import(V4ExportImportControleer controller, BuildContext context) {
-    return InputField(
+    return InputWidget(
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
+      padding: const EdgeInsets.fromLTRB(
+        0,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isColorFieldWhite: true,
-      boldHinText: true,
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.importController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Nhập',
       label: 'Loại nhập',
       obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 0.5),
+      width: 0.4,
+      textEditingController: controller.importController,
     );
   }
 
@@ -189,7 +192,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
     return DropDownButton1<DuAnNhanVienResponse>(
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
@@ -213,7 +216,7 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<KhoHangResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -236,7 +239,7 @@ Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<DonViCungCapResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -259,7 +262,7 @@ Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<VatTuResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -280,19 +283,19 @@ Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _ortherContent(
     V4ExportImportControleer controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 5,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.contentController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung khác',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung nếu có",
     label: 'Nội dung khác(nếu có)',
-    obligatory: false,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.contentController,
   );
 }
 
@@ -360,7 +363,7 @@ Widget _customSoLuong(
         ),
       ),
       const SizedBox(
-        width: 5,
+        width: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
       Row(
         children: [
@@ -398,8 +401,6 @@ Widget _customSoLuong(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: TextField(
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
@@ -487,9 +488,6 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
   return Row(
     children: [
       Container(
-        margin: const EdgeInsets.only(
-          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-        ),
         alignment: Alignment.centerLeft,
         child: Wrap(
           // ignore: prefer_const_literals_to_create_immutables
@@ -520,13 +518,11 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: TextField(
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     textAlignVertical: TextAlignVertical.center,
-                    enabled: true,
+                    enabled: false,
                     controller: controller.utils,
                     onChanged: (value) {},
                     decoration: InputDecoration(

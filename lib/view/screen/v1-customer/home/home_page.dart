@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
@@ -44,9 +45,11 @@ class V1HomePage extends GetView<V1HomeController> {
 
                   // three feature widget
                   _threeFeatureWidget(),
+                  const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
                   // product
-                  _productWidget(controller),
+                  _productWidget(context, controller),
+                  const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
                   // news widget
                   _newsWidget(controller: controller)
@@ -201,7 +204,7 @@ class V1HomePage extends GetView<V1HomeController> {
   ///
   /// product widget
   ///
-  Widget _productWidget(V1HomeController controller) {
+  Widget _productWidget(BuildContext context, V1HomeController controller) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: FieldWidget(
@@ -209,9 +212,10 @@ class V1HomePage extends GetView<V1HomeController> {
         onTap: () => controller.onMoreProductList(),
         widget: SizedBox(
           height: 380,
+          width: DeviceUtils.getScaledWidth(context, 1),
           child: GridView.builder(
             padding: const EdgeInsets.only(
-              top: Dimensions.PADDING_SIZE_DEFAULT,
+              top: Dimensions.PADDING_SIZE_SMALL,
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
@@ -258,7 +262,7 @@ class V1HomePage extends GetView<V1HomeController> {
           itemCount: controller.tinTucList.length <= 2
               ? controller.tinTucList.length
               : 2,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemBuilder: (
             BuildContext ctx,
             index,
