@@ -34,7 +34,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,31 +50,31 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                     ],
                   ),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   // Tên dự án
                   _project(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Tên kho theo dự án
                   _wareHouse(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //đơn vị cung cấp
                   _supplier(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_SMALL,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Tên vật tư/thiết bị
                   _supplies(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   Padding(
@@ -91,8 +91,8 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: DeviceUtils.getScaledHeight(context, 0.03),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //Nội dung khác(nếu có)
@@ -134,7 +134,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: "Ngày",
       obligatory: true,
-      width: 0.45,
+      width: 0.4,
       textEditingController: controller.timeExportImport,
       suffixIcon: const Icon(
         Icons.date_range,
@@ -159,7 +159,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: 'Loại xuất',
       obligatory: true,
-      width: 0.45,
+      width: 0.4,
       textEditingController: controller.exportController,
     );
   }
@@ -180,7 +180,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: 'Loại nhập',
       obligatory: true,
-      width: 0.45,
+      width: 0.4,
       textEditingController: controller.importController,
     );
   }
@@ -192,7 +192,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
     return DropDownButton1<DuAnNhanVienResponse>(
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
@@ -216,7 +216,7 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<KhoHangResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -239,7 +239,7 @@ Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<DonViCungCapResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -262,7 +262,7 @@ Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
   return DropDownButton1<VatTuResponse>(
     padding: const EdgeInsets.fromLTRB(
       Dimensions.PADDING_SIZE_DEFAULT,
-      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
@@ -283,19 +283,19 @@ Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
 ///
 Widget _ortherContent(
     V4ExportImportControleer controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 5,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.contentController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung khác',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung nếu có",
     label: 'Nội dung khác(nếu có)',
-    obligatory: false,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.contentController,
   );
 }
 
@@ -363,7 +363,7 @@ Widget _customSoLuong(
         ),
       ),
       const SizedBox(
-        width: 5,
+        width: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
       Row(
         children: [
@@ -401,8 +401,6 @@ Widget _customSoLuong(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: TextField(
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
@@ -490,9 +488,6 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
   return Row(
     children: [
       Container(
-        margin: const EdgeInsets.only(
-          bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-        ),
         alignment: Alignment.centerLeft,
         child: Wrap(
           // ignore: prefer_const_literals_to_create_immutables
@@ -523,8 +518,6 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: TextField(
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,

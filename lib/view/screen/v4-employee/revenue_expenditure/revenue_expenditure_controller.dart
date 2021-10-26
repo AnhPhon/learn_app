@@ -10,7 +10,6 @@ import 'package:template/helper/currency_covert.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
 
 class V4RevenueExpenditureController extends GetxController
     with CurrencyConverter {

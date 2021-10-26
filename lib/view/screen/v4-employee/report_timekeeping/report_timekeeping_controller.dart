@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,11 @@ class V4ReportTimekeepingControllter extends GetxController {
       text: DateConverter.formatDateTimeHHmm(DateTime.now()));
 
   final reportContent = TextEditingController();
+
+  //Khai báo location
+  String location = "";
+
+  //Khai báo id Chấm công
   String idChamCong = '';
   @override
   void onInit() {
@@ -46,6 +52,22 @@ class V4ReportTimekeepingControllter extends GetxController {
   }
 
   ///
+  ///Get Current Location
+  ///
+  Future<void> getLocator() async {
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var lastPosition = await Geolocator.getLastKnownPosition();
+
+    print(position.latitude);
+    print(position.longitude);
+    print(lastPosition);
+    location = "$lastPosition";
+    print(location);
+    update();
+  }
+
+  ///
   /// Button báo cáo
   ///
   Future<void> report() async {
@@ -56,6 +78,7 @@ class V4ReportTimekeepingControllter extends GetxController {
                 reportTimekeeping.text);
         chamCongProvider.update(
           data: ChamCongRequest(
+            viTri: location,
             idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
             idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
             id: idChamCong,
@@ -77,6 +100,7 @@ class V4ReportTimekeepingControllter extends GetxController {
                 reportTimekeeping.text);
         chamCongProvider.add(
           data: ChamCongRequest(
+            viTri: location,
             idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
             idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
             thoiGianKetThuc: reportTime.toString(),

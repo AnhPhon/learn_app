@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,9 @@ class V4TimekeepingController extends GetxController {
   //Khai báo isLoading
   bool isLoading = true;
 
+  //Khai báo location
+  String location = "";
+
   //Khai báo Thời gian chấm công phải trùng với thời gian hiện tại
   final timekeeping = TextEditingController(
       text: DateConverter.formatDateTimeHHmm(DateTime.now()));
@@ -62,6 +66,7 @@ class V4TimekeepingController extends GetxController {
     super.onInit();
     getTinhThanh();
     getDuAnNhanVien();
+    getLocator();
   }
 
   @override
@@ -99,9 +104,20 @@ class V4TimekeepingController extends GetxController {
     );
   }
 
+  ///
+  ///Get Current Location
+  ///
   Future<void> getLocator() async {
-    Position position = await Geolocator.getCurrentPosition(
+    var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+    var lastPosition = await Geolocator.getLastKnownPosition();
+
+    print(position.latitude);
+    print(position.longitude);
+    print(lastPosition);
+    location = "$lastPosition";
+    print(location);
+    update();
   }
 
   ///
@@ -231,6 +247,7 @@ class V4TimekeepingController extends GetxController {
           DateConverter.convertStringToDatetimeddMMyyyy(timekeeping.text);
       chamCongProvider.add(
         data: ChamCongRequest(
+          viTri: location,
           idNhanVien: await sl.get<SharedPreferenceHelper>().userId,
           thoiGianBatDau: timeKeeping.toString(),
           idDuAnNhanVien: duAnNhanVien!.id,

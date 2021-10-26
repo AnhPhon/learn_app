@@ -40,6 +40,12 @@ class V4NotificationController extends GetxController
     });
   }
 
+  @override
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
+  }
+
   ///
   /// lấy danh sách thông báo
   ///
