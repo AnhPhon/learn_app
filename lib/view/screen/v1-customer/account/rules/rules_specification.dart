@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:template/helper/common_helper.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:html/parser.dart';
 
 class RulesSpecification extends StatelessWidget {
   final String rulesSpecification;
@@ -19,8 +19,9 @@ class RulesSpecification extends StatelessWidget {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Html(
-          data: _parseHtmlString(rulesSpecification),
+          data: CommonHelper().htmlUnescape(rulesSpecification),
           style: {
+            "html": Style(textAlign: TextAlign.justify),
             "table": Style(
               backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
             ),
@@ -76,15 +77,5 @@ class RulesSpecification extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  ///
-  ///  parse Html String
-  ///
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString =
-        parse(document.body!.text).documentElement!.text;
-    return parsedString;
   }
 }
