@@ -1100,9 +1100,9 @@ class AppPages {
     ),
 
     GetPage(
-      name: AppRoutes.V4_NEW_WORK,
-      page: () => V4NewWorkPage(),
-      binding: V2NewWorkBinding(),
+      name: AppRoutes.V4_DETAIL_WORK,
+      page: () => V4DetailWorkPage(),
+      binding: V4DetailWorkBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

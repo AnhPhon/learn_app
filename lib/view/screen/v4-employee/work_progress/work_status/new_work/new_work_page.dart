@@ -10,14 +10,14 @@ import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
 
-class V4NewWorkPage extends GetView<V4NewWorkPage> {
+class V4DetailWorkPage extends GetView<V4DetailWorkController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: 'Chi tiết công việc mới tạo'),
-      body: GetBuilder<V4NewWorkController>(
-          init: V4NewWorkController(),
-          builder: (V4NewWorkController controller) {
+      body: GetBuilder<V4DetailWorkController>(
+          init: V4DetailWorkController(),
+          builder: (V4DetailWorkController controller) {
             if (controller.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),

@@ -252,7 +252,7 @@ class AppRoutes {
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
-  static const String V4_NEW_WORK = '/v4_new_work';
+  static const String V4_DETAIL_WORK = '/v4_detail_work';
 
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';

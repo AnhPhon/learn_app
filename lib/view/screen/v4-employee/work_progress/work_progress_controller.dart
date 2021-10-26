@@ -348,6 +348,6 @@ class V4WorkProgressController extends GetxController
   ///
   void onClickToDetailNewWork(String idNewWork) {
     sl.get<SharedPreferenceHelper>().saveIdNewWork(id: idNewWork);
-    Get.toNamed(AppRoutes.V4_NEW_WORK);
+    Get.toNamed(AppRoutes.V4_DETAIL_WORK);
   }
 }

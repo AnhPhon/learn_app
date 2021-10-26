@@ -9,7 +9,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
-class V4NewWorkController extends GetxController {
+class V4DetailWorkController extends GetxController {
   GetIt sl = GetIt.instance;
   CongViecNhanVienProvider congViecNhanVienProvider =
       GetIt.I.get<CongViecNhanVienProvider>();
@@ -51,6 +51,12 @@ class V4NewWorkController extends GetxController {
           moiTaoModel = value;
           if (moiTaoModel!.trangThai == "1") {
             selectIndex = "Mới tạo";
+          } else if (moiTaoModel!.trangThai == "2") {
+            selectIndex = "Đang làm";
+          } else if (moiTaoModel!.trangThai == "3") {
+            selectIndex = "Hoàn thành";
+          } else if (moiTaoModel!.trangThai == "4") {
+            selectIndex = "Chậm trễ";
           }
           contentDetailWork.text = moiTaoModel!.noiDung.toString();
           print(selectIndex);
