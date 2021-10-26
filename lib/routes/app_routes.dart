@@ -82,8 +82,8 @@ class AppRoutes {
 
   //
   static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
+  static const String V1_DETAIL_NOTIFICATION = "/v1_detail_notification";
 
-  //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';

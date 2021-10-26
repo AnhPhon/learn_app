@@ -48,6 +48,8 @@ import 'package:template/view/screen/v1-customer/form_management/product_respons
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
@@ -537,6 +539,14 @@ class AppPages {
       name: AppRoutes.V1_NOTIFICATION,
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
+    ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V1_DETAIL_NOTIFICATION,
+      page: () => V1DetailNotificationPage(),
+      binding: V1DetailNotificationBinding(),
     ),
 
     ///
