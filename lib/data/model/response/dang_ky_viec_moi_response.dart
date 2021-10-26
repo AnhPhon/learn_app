@@ -135,10 +135,11 @@ class DangKyViecMoiResponse {
     // mapping idBangBangCaps
     if (json['idBangBangCaps'] != null &&
         json['idBangBangCaps'].toString().length != 24) {
+      print('idBangBangCaps ${json['idBangBangCaps']}');
       idBangBangCaps = (json['idBangBangCaps'] as List<dynamic>)
           .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
           .toList();
-
+      print('idBangBangCaps ${idBangBangCaps!.length}');
       //add list Bằng cấp
       // idBangBangCaps = [];
       // final results = json['idBangBangCaps'] as List<dynamic>;
@@ -184,6 +185,7 @@ class DangKyViecMoiResponse {
     // mapping idNgoaiNgus
     if (json['idNgoaiNgus'] != null &&
         json['idNgoaiNgus'].toString().length != 24) {
+      print('bbbbb ${json['idNgoaiNgus']}');
       // idNgoaiNgus =
       //     NgoaiNguResponse.fromJson(json['idNgoaiNgus'] as Map<String, dynamic>);
       idNgoaiNgus = (json['idNgoaiNgus'] as List<dynamic>)

@@ -613,7 +613,7 @@ class V1CandidateController extends GetxController {
     }
     dangKyViecMoiProvider.paginate(
         page: 1,
-        limit: 20,
+        limit: 40,
         filter: textFilter,
         onSuccess: (value) {
           print('conditionFilter value ${value.length}');

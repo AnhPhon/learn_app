@@ -5,8 +5,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 import '../candidate_controller.dart';
 
@@ -37,20 +37,14 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                             ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                                child: tuyenDungResponse.hinhAnhDaiDien == null
-                                    ? Image.asset(
-                                        Images.logo_fss,
-                                        fit: BoxFit.cover,
-                                        height: Dimensions
-                                            .AVATAR_SQUARE_SIZE_DEFAULT,
-                                      )
-                                    : Image.network(
-                                        tuyenDungResponse.hinhAnhDaiDien
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: Dimensions
-                                            .AVATAR_SQUARE_SIZE_DEFAULT,
-                                      )),
+                                child: FadeInImageCustom(
+                                  width:
+                                      DeviceUtils.getScaledHeight(context, 1),
+                                  height:
+                                      DeviceUtils.getScaledHeight(context, .5),
+                                  urlImage: tuyenDungResponse.hinhAnhDaiDien
+                                      .toString(),
+                                )),
                             Text(
                               '${controller.onChangeNameTinhTp(tuyenDungResponse.noiLamViec.toString())}',
                               style: const TextStyle(
