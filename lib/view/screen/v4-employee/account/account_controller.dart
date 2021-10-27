@@ -91,16 +91,16 @@ class V4AccountController extends GetxController {
   ///
   void onClickToSalarypage(BuildContext context) {
     Get.defaultDialog(
+      titleStyle: Dimensions.fontSizeStyle16w600(),
       title: 'Vui lòng nhập mật khẩu để tiếp tục',
       backgroundColor: ColorResources.HOME_BG,
       radius: Dimensions.BORDER_RADIUS_SMALL,
       titlePadding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_LARGE,
-        left: Dimensions.PADDING_SIZE_LARGE,
-        right: Dimensions.PADDING_SIZE_LARGE,
+        left: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        right: Dimensions.PADDING_SIZE_EXTRA_LARGE,
       ),
       content: Column(
-        // ignore: prefer_const_literals_to_create_immutables
         children: [
           //Input Password
           Container(
@@ -115,9 +115,15 @@ class V4AccountController extends GetxController {
                     width: DeviceUtils.getScaledWidth(context, 0.7),
                     height: 48,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 2),
+                            blurRadius: 2,
+                            color: ColorResources.BLACK.withAlpha(40),
+                          )
+                        ]),
                     padding: const EdgeInsets.only(
                       left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                       top: 13,

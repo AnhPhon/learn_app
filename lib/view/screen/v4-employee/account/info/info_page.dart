@@ -197,6 +197,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _name(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       textInputType: TextInputType.name,
       isShadow: true,
       isColorFieldWhite: true,
@@ -219,6 +225,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _birthday(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       suffixIcon: const Icon(
         Icons.date_range,
         size: Dimensions.ICON_SIZE_SMALL,
@@ -258,6 +270,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _identityCard(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isBorder: false,
       isShadow: true,
       allowEdit: false,
@@ -273,6 +291,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       isShadow: true,
       isBorder: false,
       isDate: true,
@@ -290,6 +314,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   Widget _addresssIndentityCard(
       V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       allowEdit: false,
       textInputType: TextInputType.streetAddress,
       suffixIcon: const Icon(
@@ -311,6 +341,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _phoneNumber(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       suffixIcon: const Icon(
         Icons.edit_outlined,
         size: Dimensions.ICON_SIZE_SMALL,
@@ -332,6 +368,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _email(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       textInputType: TextInputType.emailAddress,
       suffixIcon: const Icon(
         Icons.edit_outlined,
@@ -352,6 +394,12 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _addresss(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
       suffixIcon: const Icon(
         Icons.edit_outlined,
         size: Dimensions.ICON_SIZE_SMALL,
@@ -607,21 +655,24 @@ class V4InfoPage extends GetView<V4InfoController> {
     return Stack(
       children: [
         //image
-        Container(
-          height: DeviceUtils.getScaledSize(context, .2),
-          width: DeviceUtils.getScaledSize(context, .2),
-          child: ClipOval(
-            child: controller.avatarFile != null
-                ? Image.file(
-                    controller.avatarFile!,
-                    fit: BoxFit.cover,
-                  )
-                : FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse.hinhDaiDien.toString(),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                        backgroundImage: AssetImage(Images.placeholder))),
+        GestureDetector(
+          onTap: () => controller.pickImage(),
+          child: Container(
+            height: DeviceUtils.getScaledSize(context, .2),
+            width: DeviceUtils.getScaledSize(context, .2),
+            child: ClipOval(
+              child: controller.avatarFile != null
+                  ? Image.file(
+                      controller.avatarFile!,
+                      fit: BoxFit.cover,
+                    )
+                  : FadeInImage.assetNetwork(
+                      placeholder: Images.placeholder,
+                      image: controller.nhanVienResponse.hinhDaiDien.toString(),
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                          backgroundImage: AssetImage(Images.placeholder))),
+            ),
           ),
         ),
 

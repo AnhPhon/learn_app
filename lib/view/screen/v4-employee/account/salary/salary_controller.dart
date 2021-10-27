@@ -24,6 +24,9 @@ class V4SalaryController extends GetxController {
   //Khai báo user id nhân viên
   String idUser = "";
 
+  String fileURL = "";
+  String testUrl = "https://www.youtube.com/watch?v=iMzMRhBx9mQ";
+
   final salaryController = TextEditingController(
       text: DateConverter.estimatedDateOnly(DateTime.now()));
 
@@ -31,6 +34,7 @@ class V4SalaryController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    getAccountInformation();
   }
 
   ///
@@ -44,10 +48,13 @@ class V4SalaryController extends GetxController {
       //Get thông tin nhân viên theo id
       bangLuongProvider.paginate(
         page: 1,
-        limit: 10,
+        limit: 5,
         filter: "&idNhanVien=$idUser&sortBy=created_at:desc",
         onSuccess: (value) {
-          bangLuongModelList = value;
+          if (value.isNotEmpty) {
+            bangLuongResponse = value.first;
+          }
+          print(fileURL);
           isLoading = false;
           update();
         },
@@ -58,14 +65,20 @@ class V4SalaryController extends GetxController {
     });
   }
 
+  static Future openLink({required String url}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  }
+
   ///
-  ///btn xem luong
+  ///Xem bảng lương
   ///
-  Future<void> bntXemLuong({required String url}) async {
+  Future<void> btnXemLuong({required String url}) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw "TermsAndPolicyController getTermsAndPolicy onError  $url";
+      throw 'V1HelpController btnContact Could not launch $url';
     }
   }
 }

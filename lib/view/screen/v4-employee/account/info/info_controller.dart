@@ -17,6 +17,7 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
@@ -267,9 +268,8 @@ class V4InfoController extends GetxController {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      final imageTemporary = File(image.path);
-      avatarFile = imageTemporary;
-      uploadImage(image: imageTemporary);
+      avatarFile = File(image.path);
+      uploadImage(image: avatarFile!);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -280,11 +280,13 @@ class V4InfoController extends GetxController {
   ///Upload Image Avatar
   ///
   void uploadImage({required File image}) {
+    // show loading
+    EasyLoading.show(status: 'Loading...');
     imageUpdateProvider.add(
       file: image,
       onSuccess: (value) {
         nhanVienRequest.hinhDaiDien = value.data;
-        print(value.data);
+        EasyLoading.dismiss();
         update();
       },
       onError: (error) {
@@ -301,10 +303,8 @@ class V4InfoController extends GetxController {
       final imageFront =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (imageFront == null) return;
-      final imageTemporaryFront = File(imageFront.path);
-      imageIndentityFront = imageTemporaryFront;
-      uploadImage(image: imageTemporaryFront);
-      print("done");
+      imageIndentityFront = File(imageFront.path);
+      uploadIndentiryFront(image: imageIndentityFront!);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -315,11 +315,13 @@ class V4InfoController extends GetxController {
   ///Upload CMND mặt trước
   ///
   void uploadIndentiryFront({required File image}) {
+    // show loading
+    EasyLoading.show(status: 'Loading...');
     imageUpdateProvider.add(
       file: image,
       onSuccess: (value) {
         nhanVienRequest.anhMTCMND = value.data;
-        print(value.data);
+        EasyLoading.dismiss();
         update();
       },
       onError: (error) {
@@ -336,9 +338,8 @@ class V4InfoController extends GetxController {
       final imageAfter =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (imageAfter == null) return;
-      final imageTemporaryAfter = File(imageAfter.path);
-      imageIndentityAfter = imageTemporaryAfter;
-      uploadImage(image: imageTemporaryAfter);
+      imageIndentityAfter = File(imageAfter.path);
+      uploadIndentiryAfter(image: imageIndentityAfter!);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -349,11 +350,13 @@ class V4InfoController extends GetxController {
   ///Upload CMND mặt sau
   ///
   void uploadIndentiryAfter({required File image}) {
+    // show loading
+    EasyLoading.show(status: 'Loading...');
     imageUpdateProvider.add(
       file: image,
       onSuccess: (value) {
         nhanVienRequest.anhMSCMND = value.data;
-        print(value.data);
+        EasyLoading.dismiss();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -362,99 +365,58 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///update account
+  ///Check null value
   ///
-  void updateAccount(BuildContext context) {
+  bool validate() {
     //validate
     if (nameController.text.isEmpty) {
       //show snackbar check họ và tên
-      Get.snackbar(
-        "Họ và tên không hợp lệ!",
-        "Vui lòng nhập họ và tên hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (birthdayController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập họ và tên!');
+      return false;
+    }
+    if (birthdayController.text.isEmpty) {
       //show snackbar check ngày sinh
-      Get.snackbar(
-        "Ngày sinh không hợp lệ!",
-        "Vui lòng chọn ngày sinh hợp hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (sex == null) {
+      Alert.error(message: 'Vui lòng chọn ngày sinh!');
+      return false;
+    }
+    if (sex == null) {
       //show snackbar check giới tính
-      Get.snackbar(
-        "Giới tính không hợp lệ",
-        "Vui lòng chọn giới tính hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (phoneNumberController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng chọn giới tính!');
+      return false;
+    }
+    if (phoneNumberController.text.isEmpty) {
       //show snackbar check số điện thoại
-      Get.snackbar(
-        "Số điện thoại không hợp lệ!",
-        "Vui lòng nhập số điện thoại hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (addressController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập số điện thoại!');
+      return false;
+    }
+    if (addressController.text.isEmpty) {
       //show snackbar check địa chỉ
-      Get.snackbar(
-        "Địa chỉ thường trú không hợp lệ!",
-        "Vui lòng nhập địa chỉ thường trú hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (tinhTp == null) {
+      Alert.error(message: 'Vui lòng nhập địa chỉ thường trú hiện tại!');
+      return false;
+    }
+    if (tinhTp == null) {
       //show snackbar check địa chỉ
-      Get.snackbar(
-        "Tỉnh/Tp không hợp lệ!",
-        "Vui lòng chọn Tỉnh/Tp hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (quanHuyen == null) {
+      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
+      return false;
+    }
+    if (quanHuyen == null) {
       //show snackbar check địa chỉ
-      Get.snackbar(
-        "Quận/Huyện không hợp lệ!",
-        "Vui lòng chọn Quận/Huyện hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else if (phuongXa == null) {
+      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
+      return false;
+    }
+    if (phuongXa == null) {
       //show snackbar check địa chỉ
-      Get.snackbar(
-        "Phường/Xã không hợp lệ!",
-        "Vui lòng chọn Phường/Xã hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
-    } else {
+      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
+      return false;
+    }
+    return true;
+  }
+
+  ///
+  ///update account
+  ///
+  void updateAccount(BuildContext context) {
+    if (validate()) {
       //set data
       nhanVienRequest.id = idUser;
       nhanVienRequest.hoTen = nameController.text;
@@ -470,14 +432,14 @@ class V4InfoController extends GetxController {
       nhanVienRequest.idTinhTp = tinhTp!.id;
       nhanVienRequest.idQuanHuyen = quanHuyen!.id;
       nhanVienRequest.idPhuongXa = phuongXa!.id;
-
+      //show loading
+      EasyLoading.show(status: 'Loading...');
+      print(nhanVienRequest.toJson());
       //update
       nhanVienProvider.update(
         data: nhanVienRequest,
         onSuccess: (value) {
-          print(nhanVienResponse.hinhDaiDien);
-          print(nhanVienResponse.anhMSCMND);
-
+          EasyLoading.dismiss();
           Get.back(result: nhanVienResponse.hinhDaiDien);
 
           //show dialog

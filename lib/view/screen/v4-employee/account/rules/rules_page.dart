@@ -38,8 +38,7 @@ class V4RulesPage extends GetView {
                     ],
                   ),
                   Text(
-                    controller.dieuKhoanChinhSachModelList[0].noiDung
-                        .toString(),
+                    "Đợi Update",
                     style: Dimensions.fontSizeStyle16(),
                   ),
                 ],

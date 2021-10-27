@@ -130,6 +130,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
         0,
         0,
       ),
+      isColorFieldWhite: true,
       isDate: true,
       allowEdit: false,
       label: "Ngày",
@@ -176,7 +177,6 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
-      isColorFieldWhite: true,
       allowEdit: false,
       label: 'Loại nhập',
       obligatory: true,
@@ -196,11 +196,8 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
-<<<<<<< HEAD
       isColorFieldWhite: true,
-=======
       fillColor: ColorResources.WHITE,
->>>>>>> origin/develop
       labelBold: true,
       hint: 'Vui lòng chọn tên dự án',
       label: 'Tên dự án',
@@ -224,11 +221,8 @@ Widget _wareHouse(V4ExportImportControleer controller, BuildContext context) {
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-<<<<<<< HEAD
     isColorFieldWhite: true,
-=======
     fillColor: ColorResources.WHITE,
->>>>>>> origin/develop
     labelBold: true,
     hint: 'Vui lòng chọn kho hàng',
     label: 'Kho hàng',
@@ -251,11 +245,8 @@ Widget _supplier(V4ExportImportControleer controller, BuildContext context) {
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-<<<<<<< HEAD
     isColorFieldWhite: true,
-=======
     fillColor: ColorResources.WHITE,
->>>>>>> origin/develop
     labelBold: true,
     hint: 'Vui lòng chọn đơn vị cung cấp',
     label: 'Đơn vị cung cấp',
@@ -278,11 +269,8 @@ Widget _supplies(V4ExportImportControleer controller, BuildContext context) {
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-<<<<<<< HEAD
     isColorFieldWhite: true,
-=======
     fillColor: ColorResources.WHITE,
->>>>>>> origin/develop
     labelBold: true,
     hint: 'Vui lòng chọn vật tư',
     label: 'Tên vật tư/Thiết bị',
@@ -306,6 +294,7 @@ Widget _ortherContent(
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
+    isColorFieldWhite: true,
     fillColor: ColorResources.WHITE,
     maxLine: 8,
     hintText: "Vui lòng nhập nội dung nếu có",
