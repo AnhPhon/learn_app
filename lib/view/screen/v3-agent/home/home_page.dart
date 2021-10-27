@@ -47,7 +47,7 @@ class V3HomePage extends GetView<V3HomeController> {
                   _newsWidget(),
 
                   // product widget
-                  _productWidget(controller: controller)
+                  _productWidget()
                 ],
               ),
             ),
@@ -183,11 +183,11 @@ class V3HomePage extends GetView<V3HomeController> {
                   // call detail
                   controller.onNewsDetailClick(index: index);
                 },
-                title: "Biệt thự 170 Nguyễn Đình Thi",
+                title: controller.tinTucList[index].tieuDe!,
                 icon1: const Icon(Icons.remove_red_eye),
                 rowText1: controller.tinTucList[index].luotXem,
                 colorRowText1: ColorResources.BLACKGREY,
-                icon2: const Icon(Icons.monetization_on_outlined),
+                icon2: const Icon(Icons.date_range_outlined),
                 rowText2: controller.tinTucList[index].createdAt
                     .toString()
                     .substring(0, 10),
@@ -206,10 +206,26 @@ class V3HomePage extends GetView<V3HomeController> {
   ///
   /// product widget
   ///
-  Widget _productWidget({required V3HomeController controller}) {
-    final int size =
-        controller.sanPhamList.length <= 2 ? controller.sanPhamList.length : 2;
+  Widget _productWidget() {
+    int size = 2;
+    if (controller.sanPhamList.length < 2) {
+      size = controller.sanPhamList.length;
+    }
 
+    // return notificaiotn widget 0 case
+    if (size == 0) {
+      return Container(
+        alignment: Alignment.centerLeft,
+        child: const Text(
+          "Kho sản phẩm rỗng",
+          style: TextStyle(
+            color: ColorResources.RED,
+          ),
+        ),
+      );
+    }
+
+    // backup
     return FieldWidget(
       title: "Kho sản phẩm",
       onTap: () {
@@ -236,8 +252,11 @@ class V3HomePage extends GetView<V3HomeController> {
                 },
                 child: KhoSanPham(
                   tenSanPham: controller.sanPhamList[index].ten!,
-                  hinhAnh: controller.sanPhamList[index].hinhAnhSanPhams![0]
-                      .toString(),
+                  hinhAnh: (controller
+                          .sanPhamList[index].hinhAnhSanPhams!.isNotEmpty)
+                      ? controller.sanPhamList[index].hinhAnhSanPhams![0]
+                          .toString()
+                      : "",
                   maSanPham: "${controller.sanPhamList[index].maSanPham}",
                   giaSanPham: "${PriceConverter.convertPrice(
                     ctx,
