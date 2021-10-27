@@ -14,7 +14,7 @@ class V1NotificationController extends GetxController {
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
-  int limit = 6;
+  int limit = 10;
   bool isLoading = true;
   String userId = '';
 
@@ -30,6 +30,10 @@ class V1NotificationController extends GetxController {
     });
   }
 
+
+  ///
+  /// Get notifications
+  ///
   void getNotifications() {
     thongBaoProvider.paginate(
         page: pageMax,
@@ -48,9 +52,10 @@ class V1NotificationController extends GetxController {
         });
   }
 
+
   Future<void> onRefresh() async {
     pageMax = 1;
-    limit = 5;
+    limit = 10;
     refreshNotification();
   }
 
@@ -110,7 +115,8 @@ class V1NotificationController extends GetxController {
   }
 
   void onClickItem(ThongBaoResponse notification) {
-    donDichVuProvider.find(
+    if(notification.idDonDichVu != null){
+      donDichVuProvider.find(
         id: notification.idDonDichVu!.id!,
         onSuccess: (data) {
           // print("Data: $data");
@@ -129,17 +135,19 @@ class V1NotificationController extends GetxController {
           } else if (id.contains('6')) {
             // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
             Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
-          } else if (id.contains('7')) {
-            // Phản hồi tuyển dụng thành viên
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
           } else {
-            // Phản hồi vật tư
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
+            // Xem thông báo chi tiết admin
+            Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
           }
         },
         onError: (onError) {
           print("V1NotificationController onClickItem onError $onError");
-        });
+        }
+      );
+    }else{
+      Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
+    }
+    
   }
 
   @override

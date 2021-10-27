@@ -13,11 +13,11 @@ class GroupTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: Align(
         child: Text(title, textAlign: TextAlign.center, style: const TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: Dimensions.FONT_SIZE_OVER_LARGE
+          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
         ),)
       ),
     );

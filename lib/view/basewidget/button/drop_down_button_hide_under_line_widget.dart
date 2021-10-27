@@ -32,7 +32,7 @@ class DropDownButtonHideUnderLineWidget<T> extends StatelessWidget {
           ),),
           value: value,
           style: const TextStyle(
-            fontSize: Dimensions.PADDING_SIZE_DEFAULT,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
             color: ColorResources.BLACK
           ),
           isDense: true,

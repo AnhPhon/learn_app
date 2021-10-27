@@ -83,7 +83,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!)), style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontSize: Dimensions.FONT_SIZE_SMALL,
                   color: ColorResources.BLACK.withOpacity(0.5)
                 ),)
               ),

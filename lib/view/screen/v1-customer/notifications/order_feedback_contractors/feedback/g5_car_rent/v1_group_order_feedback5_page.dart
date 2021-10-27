@@ -30,7 +30,7 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
             //Công việc: Thuê xe tải thùng 1,5 tấn
             Padding(
               padding: const EdgeInsets.only(
-                top: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_SMALL,
                 left: Dimensions.PADDING_SIZE_DEFAULT,
                 right: Dimensions.PADDING_SIZE_DEFAULT,
               ),
@@ -42,7 +42,11 @@ class V1GroupOrderFeedBack5Page extends GetView<V1GroupOrderFeedBack5Controller>
 
             // Bảng thông tin đơn hàng
             Padding(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(
+                top: Dimensions.PADDING_SIZE_SMALL,
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+              ),
               child: BillWidget(
                 orderContents: [
                 OrderContent(title:"Giá trị đơn hàng" , value: controller.soTien, boldValue: true,),
