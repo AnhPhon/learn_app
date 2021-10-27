@@ -14,7 +14,7 @@ class V1NotificationController extends GetxController {
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
-  int limit = 6;
+  int limit = 10;
   bool isLoading = true;
   String userId = '';
 

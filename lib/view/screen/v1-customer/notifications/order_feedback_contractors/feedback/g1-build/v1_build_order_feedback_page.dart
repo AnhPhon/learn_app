@@ -108,7 +108,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextHighlight(
-            title: "Tiêu đề:",
+            title: "Tiêu đề: ",
             content: controller.donDichVu!.tieuDe!,
           ),
         ],
@@ -134,7 +134,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+            fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
           BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
@@ -165,7 +165,11 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
 
   Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
     return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
+      padding: const EdgeInsets.only(
+        left:Dimensions.PADDING_SIZE_DEFAULT,
+        right:Dimensions.PADDING_SIZE_DEFAULT,
+        top:Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +178,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
           Column(
             children: [

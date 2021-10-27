@@ -56,7 +56,11 @@ class V1FormalPaymentFeedbackPage extends GetView<V1FormalPaymentFeedbackControl
 
   Widget formalPaymentItem({required String title, required int value, required int groupValue, required List<String> content, required V1FormalPaymentFeedbackController controller}){
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.only(
+        top: Dimensions.PADDING_SIZE_SMALL,
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: BoxShadowWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

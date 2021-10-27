@@ -16,7 +16,7 @@ class MaterialCard extends StatelessWidget {
   final VatTuResponse mass;
   const MaterialCard({
     Key? key,
-    this.topPading = Dimensions.PADDING_SIZE_DEFAULT,
+    this.topPading = Dimensions.PADDING_SIZE_EXTRA_SMALL,
     this.bottomPading = 0,
     this.leftPading = Dimensions.PADDING_SIZE_DEFAULT,
     this.rightPading = Dimensions.PADDING_SIZE_DEFAULT,
@@ -32,7 +32,7 @@ class MaterialCard extends StatelessWidget {
       ),
       child: BoxShadowWidget(
         child: Container(
-          padding: paddingSmall,
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children:[
@@ -40,36 +40,40 @@ class MaterialCard extends StatelessWidget {
                 title: "Tên công việc: ",
                 value: mass.tenVatTu!,
                 boldTitle: true,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL
                 ),
               ),
               OrderContentStringValue(
                 title: "Quy cách: ",
                 value: mass.quyCach!,
                 boldTitle: true,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL
                 ),
               ),
               OrderContentStringValue(
                 title: "Khối lượng: ",
                 value: mass.donGia!,
                 boldTitle: true,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL
                 ),
               ),
               OrderContentStringValue(
                 title: "Đơn vị: ",
                 value: mass.donVi!,
                 boldTitle: true,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL,
-                  vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL
                 ),
               ),
             ],

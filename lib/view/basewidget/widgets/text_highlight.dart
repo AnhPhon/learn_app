@@ -15,7 +15,7 @@ class TextHighlight extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
-    this.fontSize = Dimensions.FONT_SIZE_EXTRA_LARGE,
+    this.fontSize = Dimensions.FONT_SIZE_LARGE,
     this.style,
     this.titleStyle,
   }) : super(key: key);

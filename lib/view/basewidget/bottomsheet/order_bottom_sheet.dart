@@ -27,7 +27,7 @@ class OrderBottomSheet extends StatelessWidget {
     return Container(
         height: height ?? BOTTOMSHEET,
         padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+          vertical: Dimensions.PADDING_SIZE_SMALL,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         width: DeviceUtils.getScaledWidth(context, 1),
@@ -43,7 +43,7 @@ class OrderBottomSheet extends StatelessWidget {
           children: [
             DefaultTextStyle(
               style: const TextStyle(
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                fontSize: Dimensions.FONT_SIZE_LARGE,
                 fontWeight: FontWeight.bold,
                 color: ColorResources.BLACK
               ),

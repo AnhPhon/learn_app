@@ -18,17 +18,21 @@ class OrderContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_SMALL,
+        right: Dimensions.PADDING_SIZE_SMALL,
+        top: Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,style: const TextStyle(
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+            fontSize: Dimensions.FONT_SIZE_LARGE
           )),
           Text("${CurrencyConverter.currencyConverterVND(value)} VNĐ" , style: TextStyle(
             color: ColorResources.BLACK,
             fontWeight: boldValue! ? FontWeight.bold : FontWeight.normal,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
           )),
         ],
       ),
