@@ -45,7 +45,7 @@ class V4HomePage extends GetView<V4HomeController> {
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _followWorkProgressWidget
-                  _followWorkProgressWidget(),
+                  _followWorkProgressWidget(context),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _splitWidget
@@ -127,7 +127,7 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   /// follow work progress
   ///
-  Widget _followWorkProgressWidget() {
+  Widget _followWorkProgressWidget(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: const BoxDecoration(
@@ -147,10 +147,11 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: 280,
-            padding:
-                const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+            height: DeviceUtils.getScaledHeight(context, .3),
             child: GridView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 100,

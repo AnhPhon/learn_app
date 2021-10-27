@@ -8,6 +8,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_controller.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -136,12 +137,14 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
         children: [
           //status order
           Container(
-            padding: EdgeInsets.all(
-              DeviceUtils.getScaledSize(context, 0.02),
+            padding: const EdgeInsets.all(
+              Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
             decoration: BoxDecoration(
               color: controller.statusBackgroundColor[status],
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(
+                Dimensions.BORDER_RADIUS_DEFAULT,
+              ),
             ),
             child: Text(
               status.toString(),
@@ -150,25 +153,19 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
               ),
             ),
           ),
-          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
           //product info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(7),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: urlImage,
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.16),
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.16),
-                    width: DeviceUtils.getScaledSize(context, 0.178),
-                    fit: BoxFit.fill,
-                  ),
+                child: FadeInImageCustom(
+                  urlImage: urlImage,
+                  height: .16,
+                  width: .178,
                 ),
               ),
               const SizedBox(
@@ -178,7 +175,6 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //id order

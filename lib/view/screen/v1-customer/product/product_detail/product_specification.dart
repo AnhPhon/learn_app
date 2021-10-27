@@ -22,6 +22,7 @@ class V1ProductSpecification extends StatelessWidget {
         child: Html(
           data: CommonHelper().htmlUnescape(productSpecification),
           style: {
+            "html": Style(textAlign: TextAlign.justify),
             "table": Style(
               backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
             ),

@@ -112,7 +112,13 @@ class V2WorkDoneController extends GetxController {
         filter: "&idDonDichVu=$workFlowId&sortBy=created_at:desc",
         onSuccess: (values) {
           for (final value in values) {
-            noiDungYeuCauBaoHanhList.add(value.noiDungYeuCauBaoHanh!);
+            if (value.noiDungYeuCauBaoHanh.toString() != "null") {
+              noiDungYeuCauBaoHanhList.add(value.noiDungYeuCauBaoHanh!);
+            }
+          }
+
+          if (noiDungYeuCauBaoHanhList.isEmpty) {
+            noiDungYeuCauBaoHanhList.add("Không có");
           }
           update();
         },

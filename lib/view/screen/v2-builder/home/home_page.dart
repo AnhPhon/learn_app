@@ -139,7 +139,7 @@ class V2HomePage extends GetView<V2HomeController> {
     return SizedBox(
       height: 110,
       child: GridView.builder(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -258,7 +258,6 @@ class V2HomePage extends GetView<V2HomeController> {
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
-    print(length);
     return FieldWidget(
       onTap: () => controller.onShortHandedPageClick(),
       title: "Công việc đang cần người",
@@ -266,7 +265,7 @@ class V2HomePage extends GetView<V2HomeController> {
         height: (length > 0) ? 120.0 * length : 0,
         child: ListView.builder(
           itemCount: length,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext ctx, index) {
             return TaskNeedWorker(
@@ -298,7 +297,7 @@ class V2HomePage extends GetView<V2HomeController> {
       widget: SizedBox(
         height: (length > 0) ? 140.0 * length : 0,
         child: GridView.builder(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisExtent: 280,
@@ -347,7 +346,7 @@ class V2HomePage extends GetView<V2HomeController> {
         height: ((length > 0) ? 120.0 * length : 0) + 50,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: length,
           itemBuilder: (
             BuildContext ctx,

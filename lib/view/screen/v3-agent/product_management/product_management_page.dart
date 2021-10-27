@@ -80,13 +80,14 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                     itemCount: controller.sanPhamResponse.length,
                     itemBuilder: (BuildContext ctx, int index) {
                       return GestureDetector(
-                        onTap: () => controller.onProductDetailClick(index: index),
+                        onTap: () =>
+                            controller.onProductDetailClick(index: index),
                         child: Container(
                           margin: const EdgeInsets.symmetric(
                               vertical: Dimensions.MARGIN_SIZE_SMALL,
                               horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
                           padding: const EdgeInsets.all(
-                              Dimensions.PADDING_SIZE_DEFAULT),
+                              Dimensions.PADDING_SIZE_SMALL),
                           decoration: BoxDecoration(
                             color: ColorResources.WHITE,
                             borderRadius: BorderRadius.circular(
@@ -116,7 +117,8 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                           context, .08),
                                       width: double.infinity,
                                       fit: BoxFit.fill,
-                                      imageErrorBuilder: (c, o, s) => Image.asset(
+                                      imageErrorBuilder: (c, o, s) =>
+                                          Image.asset(
                                         Images.placeholder,
                                         height: DeviceUtils.getScaledHeight(
                                             context, .08),
@@ -140,11 +142,12 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                           controller.sanPhamResponse[index].ten
                                               .toString(),
                                           maxLines: 2,
-                                          style: Dimensions.fontSizeStyle16w600(),
+                                          style:
+                                              Dimensions.fontSizeStyle16w600(),
                                         ),
                                         const SizedBox(
-                                          height:
-                                              Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                          height: Dimensions
+                                              .MARGIN_SIZE_EXTRA_SMALL,
                                         ),
                                         IntrinsicHeight(
                                           child: Row(
@@ -175,17 +178,19 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                   ),
                                 ],
                               ),
-                      
+
                               Divider(
                                 height: 20,
                                 color: ColorResources.BLACK.withOpacity(.7),
                               ),
-                      
+
                               //product code
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(controller.sanPhamResponse[index].maSanPham
+                                  Text(controller
+                                      .sanPhamResponse[index].maSanPham
                                       .toString()),
                                   Text(
                                       "Quy cách: ${controller.sanPhamResponse[index].quyCach}"),
