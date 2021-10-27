@@ -3,6 +3,7 @@ import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/payment/order_infomation/order_infomation_page.dart';
 import 'package:template/view/screen/payment/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/payment/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/payment/recharge/recharge_page.dart';
@@ -593,7 +594,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_ORDER_INFORAMTION,
-      page: () => OrderInformationPage(),
+      page: () => V1OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -1162,6 +1163,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.PAYMENT_RECHARGE,
       page: () => RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.ORDER_INFORMATION,
+      page: () => OrderInformationPage(),
     ),
   ];
 }
