@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:isoweek/isoweek.dart';
 import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
@@ -25,12 +26,27 @@ class V4AddDailyReportController extends GetxController {
       text: DateConverter.estimatedDateOnly(DateTime.now()));
   final projectDailyReport = TextEditingController();
   final contentDailyReport = TextEditingController();
-
   //khai báo biến isLoading
   bool isLoading = true;
 
   String idUser= '';
 
+  //Khai báo Ngày đầu tiên của năm
+
+  //Lấy được số ngày trong năm
+  // final date = DateTime.now();
+  // final diff = now.difference(new DateTime(date.year, 1, 1, 0, 0));
+  // final diffInDays = diff.inDays;
+  //
+  // int weekNumber(DateTime date) {
+  //   int dayOfYear = int.parse(DateFormat("D").format(date));
+  //   return ((dayOfYear - date.weekday + 10) / 7).floor();
+  // }
+
+  int currentWeek = Week.current().weekNumber;
+  // late Week one;
+  //OUTPUT: 2021W13
+  //Lấy số tuần bằng cách chia lấy phần nguyên số ngày trong năm cho 7
   @override
   void onInit() {
     // TODO: implement onInit
@@ -104,6 +120,11 @@ class V4AddDailyReportController extends GetxController {
     }
     return true;
   }
+
+  // void chuyenDoiTuanHienTaiSangNguyen(){
+  //   String? currentW = Week.current();
+  //   return String cur = currentW.replaceALl("${year}W${weekNumber.toString().padLeft(2, '0')", "${weekNumber.toString().padLeft(2, '0')");
+  // }
   ///
   /// Button báo cáo
   ///
@@ -114,6 +135,8 @@ class V4AddDailyReportController extends GetxController {
           idNhanVien: idUser,
           idDuAnNhanVien: duAnNhanVien!.id,
           loai: "2",
+          soTuan: currentWeek.toString(),
+
           noiDung: contentDailyReport.text,
         ),
         onSuccess: (value) {
@@ -126,4 +149,12 @@ class V4AddDailyReportController extends GetxController {
       );
     }
   }
+  // ///
+  // ///format week
+  // ///
+  // String formatWeek({required String dateTime}) {
+  //   return currentWeek(
+  //       dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+  //       .toString();
+  // }
 }
