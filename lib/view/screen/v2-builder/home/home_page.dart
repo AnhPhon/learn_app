@@ -48,6 +48,7 @@ class V2HomePage extends GetView<V2HomeController> {
                   // box
                   ketQuaBaoGiaWidget(),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // need people widget
                   _needPeopleWidget(),
@@ -81,34 +82,35 @@ class V2HomePage extends GetView<V2HomeController> {
       child: Row(
         children: [
           Row(
-            children: [
-              const Text(
-                "Bạn cần hoàn thiện ",
-                style: TextStyle(
-                  color: Color(0xff4D4D4D),
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_SMALL,
-                ),
-              ),
+            children: const [
               Text(
-                controller.number.toString(),
-                style: const TextStyle(
-                  color: ColorResources.RED,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_SMALL,
-                ),
-              ),
-              const Text(
-                " hồ sơ",
+                "Bạn cần hoàn thiện hồ sơ",
                 style: TextStyle(
                   color: Color(0xff4D4D4D),
                   fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                  fontSize: Dimensions.FONT_SIZE_SMALL,
                 ),
               ),
             ],
           ),
-          const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
+          Stack(
+            children: [
+              const Icon(CupertinoIcons.bell_fill,
+                  color: ColorResources.PRIMARY),
+              Positioned(
+                right: 8,
+                top: 5,
+                child: Text(
+                  controller.number.toString(),
+                  style: const TextStyle(
+                    color: ColorResources.WHITE,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                  ),
+                ),
+              )
+            ],
+          ),
           const Spacer(),
           GestureDetector(
             onTap: controller.onNeedUpdateClick,
@@ -366,7 +368,7 @@ class V2HomePage extends GetView<V2HomeController> {
                   icon1: const Icon(Icons.remove_red_eye),
                   rowText1: controller.tinTucList[index].luotXem,
                   colorRowText1: ColorResources.BLACKGREY,
-                  icon2: const Icon(Icons.monetization_on_outlined),
+                  icon2: const Icon(Icons.date_range_outlined),
                   rowText2: controller.tinTucList[index].createdAt
                       .toString()
                       .substring(0, 10),
