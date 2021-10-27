@@ -6,7 +6,9 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class V1FormalPaymentController extends GetxController{
@@ -59,7 +61,8 @@ class V1FormalPaymentController extends GetxController{
           donDichVuRepository.add(dichVuRequest!).then((value){
             if (value.response.data != null)
                 {
-                   EasyLoading.dismiss();
+                  EasyLoading.dismiss();
+                  Alert.success(message: "Tạo đơn thành công!Chúng tôi sẽ phản hồi lại sớm nhất");
                   Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
                 }
               else
@@ -73,7 +76,7 @@ class V1FormalPaymentController extends GetxController{
           });
         }else{
 
-            EasyLoading.showSuccess('Đăng tin thất bại');
+            EasyLoading.showSuccess('Tạo đơn thất bại');
             //set trạng thái chưa thanh toán
             dichVuRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
             //insert db
@@ -87,6 +90,7 @@ class V1FormalPaymentController extends GetxController{
                 {
                   EasyLoading.showError(
                       'Thao tác không thành công, vui lòng liên hệ hỗ trợ');
+                  Alert.error( message: "Đã xảy ra lỗi vui lòng kiểm tra lại!");
                 }
             }, onError: (onError){
               EasyLoading.dismiss();

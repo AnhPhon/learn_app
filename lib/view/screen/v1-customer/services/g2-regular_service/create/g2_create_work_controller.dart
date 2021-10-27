@@ -128,7 +128,7 @@ class V1G2CreateWorkController extends GetxController {
   ///
   void onDeleteImage({required File file, required List<File> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    SnackBarUtils.showSnackBar(title: "Xoá", message: "Xoá ảnh thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
+    SnackBarUtils.showSnackBarSuccess(title: "Xoá", message: "Xoá ảnh thành công");
     update();
   }
 
@@ -196,6 +196,7 @@ class V1G2CreateWorkController extends GetxController {
       final DonDichVuRequest data = await request();
       donDichVuProvider.add(data: data, onSuccess: (data){
         EasyLoading.dismiss();
+        SnackBarUtils.showSnackBarSuccess(title: "Tạo dich đơn thành công", message: "Chúng tôi sẽ phản hồi bạn sơm nhất có thể");
         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){

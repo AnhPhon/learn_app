@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
+import 'package:template/helper/common_helper.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -86,12 +88,22 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
               fontSize: Dimensions.FONT_SIZE_LARGE
             ),
             child: Column(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  child: Text("File.pdf",),
+              children: [
+                GestureDetector(
+                  onTap: ()async{
+                    CommonHelper.openLink(url: URL_TO_LINK_PDF);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                    child: Text("File.pdf",),
+                  ),
                 ),
-                Text("File.xls")
+                GestureDetector(
+                  onTap: ()async{
+                    CommonHelper.openLink(url: URL_TO_LINK_EXELS);
+                  },
+                  child: const Text("File.xls")
+                )
               ],
             ),
           ),

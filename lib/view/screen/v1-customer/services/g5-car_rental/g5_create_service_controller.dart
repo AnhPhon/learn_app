@@ -161,7 +161,7 @@ class V1G5CreateServiceController extends GetxController{
       EasyLoading.show(status: "Loading ...");
       donDichVuProvider.add(data: request(), onSuccess: (data){
          EasyLoading.dismiss();
-         SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất", backgroundColor: ColorResources.PRIMARYCOLOR);
+         SnackBarUtils.showSnackBarSuccess(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất");
          Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),arguments: request());
          //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
       }, onError: (onError){
