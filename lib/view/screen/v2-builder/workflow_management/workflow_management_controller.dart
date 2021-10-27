@@ -78,7 +78,7 @@ class V2WorkflowManagementController extends GetxController
       donDichVuProvider.paginate(
         page: 1,
         limit: 30,
-        filter: "&idTaiKhoan=$id",
+        filter: "&taiKhoanNhanDon=$id",
         onSuccess: (values) {
           for (final value in values) {
             if (value.idTrangThaiDonDichVu != null &&
