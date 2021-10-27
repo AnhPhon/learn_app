@@ -236,6 +236,9 @@ import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_page.dart';
 
 import 'app_routes.dart';
 
@@ -1104,6 +1107,12 @@ class AppPages {
       name: AppRoutes.V4_DETAIL_NOTIFICATION,
       page: () => V4DetailNotificationPage(),
       binding: V4DetailNotificationBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V4_DETAIL_WORK,
+      page: () => V4DetailWorkPage(),
+      binding: V4DetailWorkBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,

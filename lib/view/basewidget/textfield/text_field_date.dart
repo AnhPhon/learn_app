@@ -38,7 +38,7 @@ class TextFieldDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? const EdgeInsets.all(0),
+      padding: padding ?? EdgeInsets.zero,
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

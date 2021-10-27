@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
@@ -19,7 +20,7 @@ class TaskNeedWorker extends StatelessWidget {
   Widget build(BuildContext context) {
     const double height = 100;
     return Container(
-      width: 352,
+      width: DeviceUtils.getScaledWidth(context, 1),
       height: height,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -55,7 +56,7 @@ class TaskNeedWorker extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            width: 230,
+            width: DeviceUtils.getScaledWidth(context, .67),
             child: Column(
               children: [
                 Container(
@@ -88,19 +89,22 @@ class TaskNeedWorker extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.person_search,
-                            color: Color(0xff8E8A8A),
-                          ),
-                          Text(
-                            trangThai,
-                            style: const TextStyle(
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.person_search,
                               color: Color(0xff8E8A8A),
                             ),
-                          )
-                        ],
+                            Text(
+                              trangThai,
+                              style: const TextStyle(
+                                color: Color(0xff8E8A8A),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -3,9 +3,11 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4NotificationController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -26,11 +28,22 @@ class V4NotificationController extends GetxController
   int pageMax = 1;
   int limitMax = 5;
 
+  String userId = '';
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getNotification(isRefresh: true);
+    sl.get<SharedPreferenceHelper>().userId.then((val) {
+      userId = val.toString();
+    });
+  }
+
+  @override
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
   }
 
   ///

@@ -21,6 +21,7 @@ class V4NewsCategoriesController extends GetxController
   @override
   void onInit() {
     super.onInit();
+
     Future.delayed(Duration.zero, () {
       getNewsByIdCategory();
     });
@@ -28,8 +29,8 @@ class V4NewsCategoriesController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
     refreshController.dispose();
+    super.onClose();
   }
 
   ///

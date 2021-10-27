@@ -5,6 +5,10 @@ mixin DateConverter {
     return DateFormat('yyyy-MM-dd hh:mm:ss').format(dateTime);
   }
 
+  static String formatDateTimeHHmm(DateTime dateTime) {
+    return DateFormat('HH:mm dd-MM-yyyy').format(dateTime);
+  }
+
   static String estimatedDate(DateTime dateTime) {
     return DateFormat('dd MMM yyyy').format(dateTime);
   }
@@ -105,6 +109,14 @@ mixin DateConverter {
       {required String startDate, required String endDate}) {
     return int.parse(convertStringToDate(endDate)
         .difference(convertStringToDate(startDate))
+        .inDays
+        .toString());
+  }
+
+  static int differenceDateyyyyMMdd(
+      {required String startDate, required String endDate}) {
+    return int.parse(convertStringToDateOnly(endDate)
+        .difference(convertStringToDateOnly(startDate))
         .inDays
         .toString());
   }

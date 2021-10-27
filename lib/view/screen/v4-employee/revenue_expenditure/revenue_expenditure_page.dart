@@ -23,18 +23,22 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.PADDING_SIZE_LARGE,
+                  ),
                   //thu hoặc chi
                   if (controller.isRevenue == true)
                     _revenue(controller, context)
                   else
                     _expenditure(controller, context),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
 
                   //chọn thời gian thêm thu/chi
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                    child: _timeRevenueExpenditure(controller, context),
+                  _timeRevenueExpenditure(controller, context),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //nội dung thu/chi
@@ -43,11 +47,14 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
                   else
                     _contentExpenditure(controller, context),
                   const SizedBox(
-                    height: Dimensions.PADDING_SIZE_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //số tiền
                   _money(controller, context),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
 
                   //Nội dung thu/chi chi tiết
                   if (controller.isRevenue == true)
@@ -80,18 +87,19 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   ///
   Widget _revenue(
       V4RevenueExpenditureController controller, BuildContext context) {
-    return InputField(
-      isColorFieldWhite: true,
+    return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.revenueController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Thu',
       label: 'Loại thêm',
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.revenueController,
     );
   }
 
@@ -100,18 +108,19 @@ class V4RevenueExpenditurePage extends GetView<V4RevenueExpenditureController> {
   ///
   Widget _expenditure(
       V4RevenueExpenditureController controller, BuildContext context) {
-    return InputField(
-      isColorFieldWhite: true,
+    return InputWidget(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+      ),
+      fillColor: ColorResources.LIGHT_GREY.withOpacity(0.8),
       allowEdit: false,
-      allowMultiline: false,
-      controller: controller.expenditureController,
-      fontSize: Dimensions.FONT_SIZE_LARGE,
-      hidden: false,
-      holdplacer: 'Chi',
       label: 'Loại thêm',
       obligatory: true,
-      typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
+      textEditingController: controller.expenditureController,
     );
   }
 }
@@ -128,7 +137,7 @@ Widget _timeRevenueExpenditure(
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-    isColorFieldWhite: true,
+    fillColor: ColorResources.WHITE,
     isddMMyyyy: true,
     isDate: true,
     allowEdit: false,
@@ -151,19 +160,20 @@ Widget _timeRevenueExpenditure(
 
 Widget _contentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 7,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.contentRevenueController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung thu chính',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung thu chính",
     label: 'Nội dung thu chính',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.contentRevenueController,
   );
 }
 
@@ -172,19 +182,20 @@ Widget _contentRevenue(
 ///
 Widget _contentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 7,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.contentExpenditureController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung chi chính',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung chi chính",
     label: 'Nội dung chi chính',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.contentExpenditureController,
   );
 }
 
@@ -199,7 +210,7 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
-    isColorFieldWhite: true,
+    fillColor: ColorResources.WHITE,
     labelBold: true,
     thousandsSeparator: true,
     textInputType: TextInputType.number,
@@ -217,19 +228,20 @@ Widget _money(V4RevenueExpenditureController controller, BuildContext context) {
 
 Widget _detailContentRevenue(
     V4RevenueExpenditureController controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 7,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.detailContentRevenueController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung thu chi tiết',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung thu chi tiết",
     label: 'Nội dung thu chi tiết',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.detailContentRevenueController,
   );
 }
 
@@ -239,19 +251,20 @@ Widget _detailContentRevenue(
 
 Widget _detailContentExpenditure(
     V4RevenueExpenditureController controller, BuildContext context) {
-  return InputField(
-    isColorFieldWhite: false,
-    line: 7,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.detailContentExpenditureController,
-    fontSize: Dimensions.FONT_SIZE_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung chi chi tiết',
+  return InputWidget(
+    padding: const EdgeInsets.fromLTRB(
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+      Dimensions.PADDING_SIZE_DEFAULT,
+      0,
+    ),
+    fillColor: ColorResources.WHITE,
+    maxLine: 8,
+    hintText: "Vui lòng nhập nội dung chi chi tiết",
     label: 'Nội dung chi chi tiết',
     obligatory: true,
-    typeInput: TextInputType.text,
     width: DeviceUtils.getScaledWidth(context, 1),
+    textEditingController: controller.detailContentExpenditureController,
   );
 }
 
