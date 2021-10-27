@@ -67,7 +67,7 @@ class V3HomePage extends GetView<V3HomeController> {
           color: Colors.white,
           borderRadius:
               BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
-          boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
+          boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x3f000000))]),
       child: Row(
         children: [
           Row(
