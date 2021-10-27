@@ -22,13 +22,13 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
           return Column(
             children: [
               const SizedBox(height: Dimensions.SPACE_HEIGHT_DEFAULT,),
-
+                //phí dịch vụ ${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ và
               formalPaymentItem(title: "Tự thanh toán cho bên cung cấp dịch vụ",value: 1  ,content:[
-                "Thanh toán trước phí dịch vụ ${CurrencyConverter.currencyConverterVND(controller.phiDichVu)} VNĐ và tiền cọc ${CurrencyConverter.currencyConverterVND(controller.tongTien*10/100)} VNĐ",
-                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(controller.tongTien - controller.tongTien*10/100)} VNĐ (đã khấu trừ tiền cọc)",
+                "Thanh toán trước tiền cọc ${CurrencyConverter.currencyConverterVND(controller.soTien*10/100)} VNĐ",
+                "Tự thanh toán sau cho Bên cung cấp dịch vụ ${CurrencyConverter.currencyConverterVND(controller.soTien - controller.soTien*10/100)} VNĐ (đã khấu trừ tiền cọc)",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
               formalPaymentItem(title: "Ủy quyền",value:0,content:[
-                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(controller.tongTien)}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
+                'Thanh toán trước ${CurrencyConverter.currencyConverterVND(controller.soTien)}, FSS sẽ chịu trách nhiệm thanh toán cho bên cung cấp dịch vụ.',
                 "FSS sẽ hoàn tiền chênh lệch nếu có",
               ] ,groupValue: controller.formalPaymentGroup, controller: controller),
             ],
