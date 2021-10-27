@@ -155,36 +155,43 @@ class V1ProductDetailController extends GetxController {
       pageMax++;
     }
 
-    //load sanPhamList
-    sanPhamProvider.paginate(
-      page: pageMax,
-      limit: limitMax,
-      filter:
-          "&idDanhMucSanPham=${sanPhamResponse.idDanhMucSanPham!.id}&sortBy=created_at:desc",
-      onSuccess: (data) {
-        data.removeWhere((element) => element.id == sanPhamResponse.id);
-        //check is empty
-        if (data.isEmpty) {
-          refreshController.loadNoData();
-        } else {
-          //isRefresh
-          if (isRefresh) {
-            sanPhamList = data;
-            refreshController.refreshCompleted();
+    //check is not empty
+    if (sanPhamResponse.idDanhMucSanPham != null) {
+//load sanPhamList
+      sanPhamProvider.paginate(
+        page: pageMax,
+        limit: limitMax,
+        filter:
+            "&idDanhMucSanPham=${sanPhamResponse.idDanhMucSanPham!.id}&sortBy=created_at:desc",
+        onSuccess: (data) {
+          data.removeWhere((element) => element.id == sanPhamResponse.id);
+          //check is empty
+          if (data.isEmpty) {
+            refreshController.loadNoData();
           } else {
-            //is load more
-            sanPhamList = sanPhamList.toList() + data;
-            refreshController.loadComplete();
+            //isRefresh
+            if (isRefresh) {
+              sanPhamList = data;
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              sanPhamList = sanPhamList.toList() + data;
+              refreshController.loadComplete();
+            }
           }
-        }
 
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("V1ProductDetailController getMoreProduct onError $error");
-      },
-    );
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print("V1ProductDetailController getMoreProduct onError $error");
+        },
+      );
+    } else {
+      refreshController.loadFailed();
+      isLoading = false;
+      update();
+    }
   }
 
   ///

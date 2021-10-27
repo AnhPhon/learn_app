@@ -93,7 +93,9 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
         itemCount: controller.sanPhamResponse.hinhAnhSanPhams!.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           return FadeInImageCustom(
-            urlImage: controller.sanPhamResponse.hinhAnhSanPhams![itemIndex],
+            urlImage: (controller.sanPhamResponse.hinhAnhSanPhams!.isNotEmpty)
+                ? controller.sanPhamResponse.hinhAnhSanPhams![itemIndex]
+                : "image",
             height: double.infinity,
             width: double.infinity,
           );

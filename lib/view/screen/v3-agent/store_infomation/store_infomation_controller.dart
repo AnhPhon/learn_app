@@ -65,7 +65,7 @@ class V3StoreInfomationController extends GetxController {
   MatHangDacTrungProvider matHangDacTrungProvider =
       GetIt.I.get<MatHangDacTrungProvider>();
   List<MatHangDacTrungResponse?> matHangDacTrungList = [];
-  List<MatHangDacTrungResponse?> matHangDacTrungResponse = [];
+  List<String?> matHangDacTrungResponse = [];
 
   //TinhTp
   TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
@@ -159,44 +159,17 @@ class V3StoreInfomationController extends GetxController {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //get user infomation
-    taiKhoanProvider
-        .find(
-      id: userId,
-      onSuccess: (value) {
-        //binding data TextEditingController
-        taiKhoanResponse = value;
-        nameController.text = value.hoTen.toString();
-        legalRepresentativeController.text = value.tenPhapLy.toString();
-        phoneController.text = value.soDienThoai.toString();
-        emailController.text = value.email ?? "";
-        addressController.text = value.diaChi.toString();
+    //getMatHangDacTrung
+    getMatHangDacTrung();
 
-        matHangDacTrungResponse =
-            value.idMatHangDacTrungs!.map((e) => e).toList();
+    //getNhomCuaHang
+    getNhomCuaHang();
 
-        //getNhomCuaHang
-        getNhomCuaHang();
+    //getTinhTp
+    getTinhTp();
 
-        //getMatHangDacTrung
-        getMatHangDacTrung();
-
-        //getTinhTp
-        getTinhTp();
-
-        //getKhoHang
-        getKhoHangDaiLy();
-      },
-      onError: (error) {
-        print("V3StoreInfomationController getUserInfomation onError $error");
-      },
-    )
-        .then(
-      (value) {
-        isLoading = false;
-        update();
-      },
-    );
+    //getKhoHang
+    getKhoHangDaiLy();
   }
 
   ///
@@ -285,6 +258,36 @@ class V3StoreInfomationController extends GetxController {
       onSuccess: (value) {
         matHangDacTrungList = value;
         update();
+
+        //get user infomation
+        taiKhoanProvider
+            .find(
+          id: userId,
+          onSuccess: (value) {
+            //binding data TextEditingController
+            taiKhoanResponse = value;
+            nameController.text = value.hoTen.toString();
+            legalRepresentativeController.text = value.tenPhapLy.toString();
+            phoneController.text = value.soDienThoai.toString();
+            emailController.text = value.email ?? "";
+            addressController.text = value.diaChi.toString();
+
+            value.idMatHangDacTrungs!.map((e) => matHangDacTrungResponse.add(e.id)).toList();
+            print('phuong ${matHangDacTrungResponse[0]!.toString()}');
+            print('phuong 1 ${matHangDacTrungList[0]!.toString()}');
+            update();
+          },
+          onError: (error) {
+            print(
+                "V3StoreInfomationController getUserInfomation onError $error");
+          },
+        )
+            .then(
+          (value) {
+            isLoading = false;
+            update();
+          },
+        );
       },
       onError: (error) {
         print("V3StoreInfomationController getMatHangDacTrung onError $error");
@@ -722,8 +725,8 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.soDienThoai = phoneController.text;
       taiKhoanRequest.email = emailController.text;
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
-      taiKhoanRequest.idMatHangDacTrungs =
-          matHangDacTrungResponse.map((e) => e!.id!).toList();
+      // taiKhoanRequest.idMatHangDacTrungs =
+      //     matHangDacTrungResponse.map((e) => e!.id!).toList();
 
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =

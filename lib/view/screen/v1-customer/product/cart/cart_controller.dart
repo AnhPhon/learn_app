@@ -199,6 +199,7 @@ class V1CartController extends GetxController {
             AppRoutes.V1_DASHBOARD,
             predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD),
           );
+          Get.back();
         },
         onError: (error) {
           print("V1ProductDetailController onCheckoutClick onError $error");
