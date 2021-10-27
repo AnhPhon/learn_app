@@ -14,9 +14,6 @@ import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
-import 'package:template/view/screen/v1-customer/product/product_controller.dart';
-import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
 class V1HomeController extends GetxController {
   // declare provider
@@ -124,7 +121,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.work_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+          Get.toNamed(AppRoutes.V1_QUOTE_LIST);
         }
       },
       {

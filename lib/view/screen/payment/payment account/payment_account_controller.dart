@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/lich_su_vi_tien_request.dart';
 import 'package:template/data/model/request/vi_tien_request.dart';
 import 'package:template/data/model/response/vi_tien_response.dart';
+import 'package:template/data/repository/lich_su_vi_tien_repository.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -25,6 +28,10 @@ class PaymentAccountController extends GetxController {
 
   //value ViTienRequest
   ViTienRequest viTienRequest = ViTienRequest();
+
+  //lichSuViTien
+  LichSuViTienRequest lichSuViTienRequest = LichSuViTienRequest();
+  LichSuViTienRepository lichSuViTienRepository = LichSuViTienRepository();
 
   String title = "Tài khoản của bạn";
 
@@ -43,6 +50,8 @@ class PaymentAccountController extends GetxController {
 
   //url Back
   String? urlBack;
+  //userId
+  String? userId;
 
   @override
   void onInit() {
@@ -56,6 +65,7 @@ class PaymentAccountController extends GetxController {
       tongTienThanhToan = double.parse(Get.parameters['tongTien'].toString());
       getBalance();
     }
+    //check url
     if (Get.parameters['url'] != null) {
       urlBack = Get.parameters['url'].toString();
     }
@@ -66,7 +76,9 @@ class PaymentAccountController extends GetxController {
   ///get balance
   ///
   void getBalance() {
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      userId = value;
+
       viTienProvider.paginate(
         page: 1,
         limit: 5,
@@ -75,7 +87,7 @@ class PaymentAccountController extends GetxController {
           viTienResponse = value.first;
           soDuTaiKhoan = double.parse(viTienResponse.tongTien.toString());
 
-          //check so du tài khoản
+          //check số dư tài khoản có đủ không
           if ((soDuTaiKhoan - tongTienThanhToan) < 0) {
             soDuConLai = 0;
             isShowSoDu = true;
@@ -95,6 +107,9 @@ class PaymentAccountController extends GetxController {
     });
   }
 
+  ///
+  ///dialog button back
+  ///
   void showDialogBack() {
     Get.defaultDialog(
         titlePadding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -134,7 +149,7 @@ class PaymentAccountController extends GetxController {
           price: tongTienThanhToan,
         ),
         confirm: ElevatedButton(
-            onPressed: () async {
+            onPressed: () {
               //set value viTienRequest
               viTienRequest.id = viTienResponse.id;
               viTienRequest.idTaiKhoan =
@@ -142,17 +157,34 @@ class PaymentAccountController extends GetxController {
               viTienRequest.tongTien = soDuConLai.toString();
               EasyLoading.show(status: 'loading...');
 
-              await viTienRepository.update(viTienRequest).then((value) async {
+              viTienRepository.update(viTienRequest).then((value) {
+                //update ví tiền thành công
                 if (value.response.data != null) {
-                  EasyLoading.dismiss();
-                  await Get.toNamed(AppRoutes.PAYMENT_SUCCESS)!.then((value) {
-                    if (value == true) {
-                      Get.back();
-                      Get.back(result: true);
+                  //set data lịch sử ví tiền
+                  lichSuViTienRequest.idTaiKhoan = userId;
+                  lichSuViTienRequest.idViTien = viTienResponse.id;
+                  lichSuViTienRequest.noiDung = "Thanh toán thành công";
+                  lichSuViTienRequest.loaiGiaoDich = "2";
+                  lichSuViTienRequest.trangThai = "2";
+                  lichSuViTienRequest.soTien = tongTienThanhToan.toString();
+
+                  //insert db lịch sử ví tiền
+                  lichSuViTienRepository.add(lichSuViTienRequest).then((value) {
+                    if (value.response.data != null) {
+                      EasyLoading.dismiss();
+                      Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
+                          .then((value) {
+                        if (value == true) {
+                          Get.back();
+                          Get.back(result: true);
+                        }
+                      });
+                    } else {
+                      Alert.error(message: 'Vui lòng thực hiện lại');
                     }
                   });
                 } else {
-                  EasyLoading.showError('Vui lòng thực hiện lại');
+                  Alert.error(message: 'Vui lòng thực hiện lại');
                 }
               });
             },
@@ -168,35 +200,10 @@ class PaymentAccountController extends GetxController {
   }
 
   ///
-  ///on checkout click
-  ///
-  void onCheckoutClick() async {
-    //set value viTienRequest
-    viTienRequest.id = viTienResponse.id;
-    viTienRequest.idTaiKhoan = viTienResponse.idTaiKhoan!.id.toString();
-    viTienRequest.tongTien = soDuConLai.toString();
-    EasyLoading.show(status: 'loading...');
-
-    await viTienRepository.update(viTienRequest).then((value) async {
-      if (value.response.data != null) {
-        EasyLoading.dismiss();
-        await Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=0')!
-            .then((value) {
-          if (value == true) {
-            Get.back(result: true);
-          }
-        });
-      } else {
-        EasyLoading.showError('Vui lòng thực hiện lại');
-      }
-    });
-  }
-
-  ///
   ///go to recharge
   ///
-  void onRechargeClick() async {
-    await Get.toNamed(
+  void onRechargeClick() {
+    Get.toNamed(
             '${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=$tongTienThanhToan')!
         .then((value) {
       if (value == true) {

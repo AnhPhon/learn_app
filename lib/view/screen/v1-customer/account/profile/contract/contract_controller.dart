@@ -9,8 +9,7 @@ import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
 import 'package:template/provider/thong_tin_dang_ky_hop_dong_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V1ContractController extends GetxController {
   //DangKyHopDongSBS
@@ -70,6 +69,7 @@ class V1ContractController extends GetxController {
           onSuccess: (value) {
             //check is not empty
             if (value.isNotEmpty) {
+              print(value);
               dangKyHopDongSBSResponse = value.first;
             }
 
@@ -113,7 +113,7 @@ class V1ContractController extends GetxController {
       if (dangKyHopDongSBSResponse == null) {
         //set data
         dangKyHopDongSBSRequest.idTaiKhoan = userId;
-        dangKyHopDongSBSRequest.trangThai = "1";
+        dangKyHopDongSBSRequest.trangThai = "0";
         dangKyHopDongSBSRequest.file = thongTinDangKyHopDongResponse!.noiDung;
         dangKyHopDongSBSProvider.add(
           data: dangKyHopDongSBSRequest,
@@ -124,16 +124,7 @@ class V1ContractController extends GetxController {
             );
 
             //show dialog
-            showAnimatedDialog(
-              context,
-              const MyDialog(
-                icon: Icons.check,
-                title: "Hoàn tất",
-                description: "Đăng ký hợp đông nguyên tắc thành công",
-              ),
-              dismissible: false,
-              isFlip: true,
-            );
+            Alert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
           },
           onError: (error) {
             print("V1ContractController onBtnAceptClick onError $error");
@@ -152,16 +143,7 @@ class V1ContractController extends GetxController {
           onSuccess: (value) {
             //go to profile page and show dialog
             Get.offNamed(AppRoutes.V1_PROFILE);
-            showAnimatedDialog(
-              context,
-              const MyDialog(
-                icon: Icons.check,
-                title: "Hoàn tất",
-                description: "Đăng ký hợp đông nguyên tắc thành công",
-              ),
-              dismissible: false,
-              isFlip: true,
-            );
+            Alert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
           },
           onError: (error) {
             print("V1ContractController onBtnAceptClick onError $error");
@@ -170,15 +152,7 @@ class V1ContractController extends GetxController {
       }
     } else {
       // show errors
-      Get.snackbar(
-        "Lỗi", // title
-        "Vui lòng chọn đồng ý với tất cả nội dung", // message
-        icon: const Icon(Icons.error_outline),
-        backgroundColor: const Color(0xffFFCDD2),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 3),
-      );
+      Alert.error(message: 'Vui lòng chọn đồng ý với tất cả nội dung');
     }
   }
 }

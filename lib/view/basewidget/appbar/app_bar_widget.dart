@@ -10,6 +10,7 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? isNotBack;
   final List<Widget>? action;
   final Widget? leading;
+  final VoidCallback? onPressed;
   const AppBarWidget({
     Key? key,
     required this.title,
@@ -17,11 +18,10 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.action = const [],
     this.isNotBack = false,
     this.leading,
+    this.onPressed,
   }) : super(key: key);
-
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

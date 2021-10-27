@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/don_dich_vu_response.dart';
+
 class VatTuResponse {
   String? id;
   String? tenVatTu;
@@ -27,6 +29,15 @@ class VatTuResponse {
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
     donGia = json['donGia'].toString();
+    // mapping idDonDichVu
+    // if (json['idDonDichVu'] != null &&
+    //     json['idDonDichVu'].toString().length != 24) {
+    //   idDonDichVu = DonDichVuResponse.fromJson(
+    //       json['idDonDichVu'] as Map<String, dynamic>);
+    // } else {
+    //   idDonDichVu = null;
+    // }
+
     idDonDichVu = json['idDonDichVu'].toString();
 
     createdAt = json['created_at'].toString();

@@ -39,6 +39,7 @@ class V3WarehouseController extends GetxController {
 
   //CircularProgressIndicator
   bool isLoading = true;
+  bool isLoadingProduct = true;
 
   @override
   void onInit() {
@@ -49,9 +50,9 @@ class V3WarehouseController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     refreshController.dispose();
     searchController.dispose();
+    super.onClose();
   }
 
   ///
@@ -104,7 +105,6 @@ class V3WarehouseController extends GetxController {
       filter:
           "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
-        print(value.length);
         //check is empty
         if (value.isEmpty) {
           refreshController.loadNoData();
@@ -119,7 +119,7 @@ class V3WarehouseController extends GetxController {
             refreshController.loadComplete();
           }
         }
-
+        isLoadingProduct = false;
         update();
       },
       onError: (error) {
@@ -132,6 +132,7 @@ class V3WarehouseController extends GetxController {
   ///onChanged khoHang
   ///
   void onChangedKhoHang(KhoHangDaiLyResponse value) {
+    isLoadingProduct = true;
     //resetNoData
     refreshController.resetNoData();
     khoHangDaiLyResponse = value;

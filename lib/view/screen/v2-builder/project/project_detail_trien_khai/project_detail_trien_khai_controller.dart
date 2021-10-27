@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/du_an_khach_hang_response.dart';
 import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V2ProjectDetailTrienKhaiController extends GetxController {
   String title = "Đang tải";
@@ -11,6 +12,7 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
 
   DuAnKhachHangProvider duAnKhachHangProvider = GetIt.I.get<DuAnKhachHangProvider>();
   DuAnKhachHangResponse? duAnKhachHangResponse;
+
   @override
   void onInit() {
     super.onInit();
@@ -39,6 +41,16 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
     super.onClose();
   }
 
+  // Neu du an dang xay dung tra ve true
+  bool kiemTraIdTrangThaiDuAnDangXayDung(){
+    if (duAnKhachHangResponse!.idTrangThaiDuAn != null && duAnKhachHangResponse!.idTrangThaiDuAn!.id.toString() == TRANG_THAI_DU_AN['DANG_TRIEN_KHAI']['id']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Neu hang muc xay dung co du lieu tra ve true
   bool kiemTraIdHangMucXayDungs(){
     if (duAnKhachHangResponse!.idHangMucXayDungs != null && duAnKhachHangResponse!.idHangMucXayDungs!.isNotEmpty) {
       return true;

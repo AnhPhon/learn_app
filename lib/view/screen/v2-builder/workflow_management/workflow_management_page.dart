@@ -26,8 +26,8 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Dimensions.PADDING_SIZE_LARGE,
+                  padding: const EdgeInsets.only(
+                    top: Dimensions.PADDING_SIZE_LARGE,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -74,20 +74,22 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                 ),
 
                 //Tab View
-                Container(
-                  height: DeviceUtils.getScaledHeight(context, .7),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_LARGE,
+                SingleChildScrollView(
+                  child: Container(
+                    height: DeviceUtils.getScaledHeight(context, .7),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                    ),
+
+                    //Tabbar View Tiến độ công việc
+                    child: TabBarView(children: [
+                      //listview VIỆC ĐANG LÀM
+                      _listViewDangLam(),
+
+                      //Listview VIỆC ĐÃ LÀM
+                      _listViewDaLam(),
+                    ]),
                   ),
-
-                  //Tabbar View Tiến độ công việc
-                  child: TabBarView(children: [
-                    //listview VIỆC ĐANG LÀM
-                    _listViewDangLam(),
-
-                    //Listview VIỆC ĐÃ LÀM
-                    _listViewDaLam(),
-                  ]),
                 ),
               ],
             );
@@ -145,6 +147,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RichText(
+                            maxLines: 2,
                             text: TextSpan(
                               style: const TextStyle(
                                 color: ColorResources.BLACK,
@@ -152,8 +155,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                               children: [
                                 //Tiêu đề công việc
                                 TextSpan(
-                                  text: controller.dangLam![index].tieuDe
-                                      .toString(),
+                                  text: "${controller.dangLam![index].tieuDe}",
                                   style: Dimensions.fontSizeStyle16w600(),
                                 ),
                               ],
@@ -242,37 +244,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                           ),
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Thành phố
-                          Stack(
-                            children: [
-                              Text(
-                                controller.dangLam![index].idTinhTp!.ten
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  fontWeight: FontWeight.w600,
-                                  foreground: Paint()
-                                    ..style = PaintingStyle.stroke
-                                    ..color = ColorResources.WHITE
-                                    ..strokeWidth = 1,
-                                ),
-                              ),
-                              Text(
-                                controller.dangLam![index].idTinhTp!.ten
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  color: ColorResources.BLACK,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
@@ -332,6 +303,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           RichText(
+                            maxLines: 3,
                             text: TextSpan(
                               style: const TextStyle(
                                 color: ColorResources.BLACK,
@@ -354,9 +326,7 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                  ),
+                                  const Icon(Icons.location_on_outlined),
 
                                   //Địa điểm
                                   Text(
@@ -406,37 +376,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                             BlendMode.multiply,
                           ),
                         ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Thành phố
-                          Stack(
-                            children: [
-                              Text(
-                                controller.hoanThanh![index].idTinhTp!.ten
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  fontWeight: FontWeight.w600,
-                                  foreground: Paint()
-                                    ..style = PaintingStyle.stroke
-                                    ..color = ColorResources.WHITE
-                                    ..strokeWidth = 1,
-                                ),
-                              ),
-                              Text(
-                                controller.hoanThanh![index].idTinhTp!.ten
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                  color: ColorResources.BLACK,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                     ),
                   ),

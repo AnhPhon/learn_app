@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_controller.dart';
 
 class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
@@ -16,7 +19,9 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
         init: V1ShippingAddressController(),
         builder: (controller) {
           return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
+            appBar: AppBarWidget(
+              title: controller.title
+            ),
             backgroundColor: ColorResources.WHITE,
             body: SingleChildScrollView(
                 child: Padding(
@@ -24,47 +29,62 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
                   horizontal: Dimensions.PADDING_SIZE_DEFAULT),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
                   //province
-                  DropDownButton1(
+                  DropDownButton1<TinhTpResponse>(
                     label: "Tỉnh thành phố",
+                    hint: "Nhập tỉnh/thành phố",
                     obligatory: true,
                     labelBold: true,
-                    hint: "Nhập tỉnh/thành phố",
-                    value: controller.province,
-                    onChanged: controller.setSelectedProvince,
-                    data: controller.provinceList,
+                    value: controller.tinhTpResponse,
+                    onChanged: controller.setSelectedTinhTp,
+                    data: controller.tinhTpList,
                     width: double.infinity,
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //district
-                  DropDownButton1(
+                  DropDownButton1<QuanHuyenResponse>(
                     label: "Quận huyện",
+                    hint: "Nhập quận/huyện",
                     obligatory: true,
                     labelBold: true,
-                    hint: "Nhập quận/huyện",
-                    value: controller.district,
-                    onChanged: controller.setSelectedDistrict,
-                    data: controller.districtList,
+                    value: controller.quanHuyenResponse,
+                    onChanged: controller.setSelectedQuanHuyen,
+                    data: controller.quanHuyenList,
                     width: double.infinity,
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //ward
-                  DropDownButton1(
+                  DropDownButton1<PhuongXaResponse>(
                     label: "Phường xã",
+                    hint: "Nhập phường/xã",
                     obligatory: true,
                     labelBold: true,
-                    hint: "Nhập phường/xã",
-                    value: controller.ward,
-                    onChanged: controller.setSelectedWard,
-                    data: controller.wardList,
+                    value: controller.phuongXaResponse,
+                    onChanged: controller.setSelectedPhuongXa,
+                    data: controller.phuongXaList,
                     width: double.infinity,
                   ),
 
-                  //address
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
 
+                  //address
                   InputWidget(
                     width: double.infinity,
-                    label: "Địa chỉ cụ thể nhận hàng",
+                    label: "Địa chỉ cụ thể",
                     obligatory: true,
                     labelBold: true,
                     textEditingController: controller.addressController,
@@ -77,10 +97,10 @@ class V1ShippingAddressPage extends GetView<V1ShippingAddressController> {
 
                   //btn
                   BtnCustom(
-                    onTap: () {},
+                    onTap: () => controller.updateAddress(context),
                     color: ColorResources.PRIMARY,
                     text: "Cập nhật",
-                    width: DeviceUtils.getScaledWidth(context, .5),
+                    width: DeviceUtils.getScaledWidth(context, .95),
                   )
                 ],
               ),

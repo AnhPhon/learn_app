@@ -21,6 +21,7 @@ class DropDownButton1<T> extends StatelessWidget {
     this.colorText,
     this.isColorFieldWhite,
     this.isBoldHintText = false,
+    this.height,
   });
 
   final String? hint;
@@ -37,6 +38,7 @@ class DropDownButton1<T> extends StatelessWidget {
   final Color? colorText;
   final Color? fillColor;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
 
@@ -74,6 +76,9 @@ class DropDownButton1<T> extends StatelessWidget {
               height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
+            height: (height != null)
+                ? DeviceUtils.getScaledHeight(context, height!)
+                : null,
             width: DeviceUtils.getScaledWidth(context, width),
             margin: margin ?? EdgeInsets.zero,
             decoration: BoxDecoration(
@@ -99,19 +104,13 @@ class DropDownButton1<T> extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                     disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),
@@ -122,10 +121,7 @@ class DropDownButton1<T> extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                   ),
                   child: DropdownButtonHideUnderline(

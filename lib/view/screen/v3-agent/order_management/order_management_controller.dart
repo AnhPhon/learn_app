@@ -7,6 +7,7 @@ import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -77,9 +78,9 @@ class V3OrderManagementController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
     tabController!.dispose();
     refreshController!.clear();
+    super.onClose();
   }
 
   ///
@@ -88,6 +89,7 @@ class V3OrderManagementController extends GetxController
   Future<void> getAllOrder({bool? isRefresh = true}) async {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
+    print(userId);
 
     //isRefresh
     if (isRefresh!) {
@@ -104,10 +106,10 @@ class V3OrderManagementController extends GetxController
       limit: limitMax,
       filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
       onSuccess: (orderAll) {
+        print(orderAll.length);
         //check is empty
         if (orderAll.isEmpty) {
           refreshController![tabController!.index].loadNoData();
-          update();
         } else {
           //remove at idTrangThaiDonHang.tieuDe == Mới tạo
           orderAll.removeWhere((element) =>
@@ -272,5 +274,12 @@ class V3OrderManagementController extends GetxController
         isRefresh: false,
       );
     }
+  }
+
+  ///
+  ///on order detail click
+  ///
+  void onOrderDetailClick({required int index}) {
+    Get.toNamed(AppRoutes.V3_ORDER_DETAIL, arguments: donHangResponse[index]);
   }
 }

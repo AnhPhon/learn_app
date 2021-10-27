@@ -23,14 +23,14 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
                   );
                 }
                 return Padding(
-                  padding: const EdgeInsets.only(
-                      top: Dimensions.PADDING_SIZE_DEFAULT),
+                  padding: const EdgeInsets.only(top: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       content(controller: controller),
                       // Button tiếp tục
-                      postButton(controller: controller),
+                      if (controller.isReview)
+                        postButton(controller: controller)
                     ],
                   ),
                 );
@@ -43,7 +43,10 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
   ///
   Widget content({required V1G7ReviewController controller}) {
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT),
       child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -226,15 +229,12 @@ class V1G7ReviewPage extends GetView<V1G7ReviewController> {
   ///
 
   Widget postButton({required V1G7ReviewController controller}) {
-    return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-      child: LongButton(
-        color: ColorResources.PRIMARYCOLOR,
-        onPressed: controller.onClickPostButton,
-        title: "Đăng bài",
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+    return LongButton(
+      color: ColorResources.PRIMARYCOLOR,
+      onPressed: controller.onClickPostButton,
+      title: "Đăng bài",
+      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      vertical: Dimensions.PADDING_SIZE_DEFAULT,
     );
   }
 }

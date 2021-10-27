@@ -23,11 +23,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
         body: GetBuilder(
             init: V4WorkProgressController(),
             builder: (V4WorkProgressController controller) {
-              // if (controller.isLoading) {
-              //   return const Center(
-              //     child: CircularProgressIndicator(),
-              //   );
-              // }
+              if (controller.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Column(
                 children: [
                   Container(

@@ -205,7 +205,7 @@
 //                   ),
 //                   child: ListView.builder(
 //                       physics: const BouncingScrollPhysics(),
-//                       padding: const EdgeInsets.all(0),
+//                       padding: EdgeInsets.zero,
 //                       itemCount: controller.categoriesName.length,
 //                       itemBuilder: (context, index) {
 //                         return InkWell(

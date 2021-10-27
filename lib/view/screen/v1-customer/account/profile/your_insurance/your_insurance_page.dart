@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 class V1YourInsurancePage extends GetView<V1YourInsuranceController> {
   @override

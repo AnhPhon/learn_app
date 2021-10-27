@@ -8,7 +8,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_controller.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -83,10 +84,10 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 : ListView.builder(
                     itemCount: controller.donHangResponse.length,
                     itemBuilder: (BuildContext context, int index) {
+                      print(controller.donHangResponse.length);
                       return GestureDetector(
                         onTap: () {
-                          // controller.onOrderWidgetClick(
-                          //     i: i, index: (int.parse(index) + 1).toString());
+                          controller.onOrderDetailClick(index: index);
                         },
                         child: _orderWidget(
                           context,
@@ -103,8 +104,12 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                                 .toString(),
                           ),
                           paymentStatus: controller.donHangResponse[index]
-                              .idTrangThaiThanhToan!.tieuDe
-                              .toString(),
+                                      .idTrangThaiThanhToan ==
+                                  null
+                              ? ""
+                              : controller.donHangResponse[index]
+                                  .idTrangThaiThanhToan!.tieuDe
+                                  .toString(),
                           price: "${PriceConverter.convertPrice(
                             context,
                             double.parse(
@@ -152,30 +157,29 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
             onChanged: (val) =>
                 controller.onChangedDropdown(value: val, index: indexOrder),
             data: app_constants.trangThaiDonHangMap.keys.toList(),
-            width: .4,
+            width: .35,
             isBorder: false,
             fillColor: controller.statusBackgroundColor[status],
             colorText: controller.statusColor[status],
+            height: .06,
           ),
-          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
+          ),
+
           //product info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: imgUrl,
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.152),
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.152),
-                    width: DeviceUtils.getScaledSize(context, 0.178),
-                    fit: BoxFit.fill,
-                  ),
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_DEFAULT,
+                ),
+                child: FadeInImageCustom(
+                  urlImage: imgUrl,
+                  height: .2,
+                  width: .22,
                 ),
               ),
               const SizedBox(
@@ -185,13 +189,16 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Id: $idOrder",
                         maxLines: 2,
                         style: Dimensions.fontSizeStyle16(),
+                      ),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
                       ),
                       IntrinsicHeight(
                         child: Row(

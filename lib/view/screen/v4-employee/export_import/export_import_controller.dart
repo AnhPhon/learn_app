@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:template/data/model/request/xuat_nhap_kho_request.dart';
 import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
-import 'package:template/data/repository/don_vi_cung_cap_repository.dart';
-import 'package:template/data/repository/du_an_nhan_vien_repository.dart';
-import 'package:template/data/repository/vat_tu_repository.dart';
+
 import 'package:template/helper/date_converter.dart';
-import 'package:template/provider/don_dich_vu_provider.dart';
+
 import 'package:template/provider/don_vi_cung_cap_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/provider/xuat_nhap_kho_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/alert.dart';
 
 class V4ExportImportControleer extends GetxController {
   GetIt sl = GetIt.instance;
@@ -65,7 +64,7 @@ class V4ExportImportControleer extends GetxController {
   final exportController = TextEditingController(text: "Xuất");
   final importController = TextEditingController(text: "Nhập");
 
-  final countController = TextEditingController();
+  final countController = TextEditingController(text: "${0}");
   TextEditingController utils = TextEditingController(text: "Tấn");
   final contentController = TextEditingController();
 
@@ -219,64 +218,28 @@ class V4ExportImportControleer extends GetxController {
   /// Check null value xuất kho
   ///
   bool validate() {
+    if (timeExportImport.text.toString().isEmpty) {
+      Alert.error(message: 'Vui lòng chọn thời gian!');
+      return false;
+    }
     if (duAnNhanVien == null) {
-      Get.snackbar(
-        "Tên dự án không hợp lệ!",
-        "Vui lòng chọn tên dự án hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn tên dự án!');
       return false;
     }
     if (khoHang == null) {
-      Get.snackbar(
-        "Kho hàng không hơp lệ!",
-        "Vui lòng chọn kho hàng hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn kho hàng!');
       return false;
     }
     if (donViCungCap == null) {
-      Get.snackbar(
-        "Đơn vị cung cấp không hơp lệ!",
-        "Vui lòng chọn đơn vị cung cấp hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn đơn vị cung cấp!');
       return false;
     }
     if (vatTu == null) {
-      Get.snackbar(
-        "Vật tư/Thiết bị không hơp lệ!",
-        "Vui lòng chọn vật tư/chi tiết hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng chọn vật tư/thiết bị!');
       return false;
     }
     if (countController.text.toString().isEmpty) {
-      Get.snackbar(
-        "Số lượng không hơp lệ!",
-        "Vui lòng nhập số lượng hợp lệ!",
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+      Alert.error(message: 'Vui lòng nhập số lượng!');
       return false;
     }
 
@@ -289,8 +252,14 @@ class V4ExportImportControleer extends GetxController {
   void xuat() {
     if (validate() && justOnlyClick == false) {
       justOnlyClick = true;
+      final DateTime timeA = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeExportImport.text)
+          .toString()
+          .substring(0, 10));
       xuatNhapKhoProvider.add(
         data: XuatNhapKhoRequest(
+          ngayXuatNhapKhoa: timeA.toString(),
+          loai: "1",
           idDonViCungCap: donViCungCap!.id,
           ghiChu: contentController.text,
           soLuong: countController.text,
@@ -316,8 +285,14 @@ class V4ExportImportControleer extends GetxController {
   void nhap() {
     if (validate() && justOnlyClick == false) {
       justOnlyClick = true;
+      final DateTime timeB = DateTime.parse(DateFormat('dd-MM-yyyy')
+          .parse(timeExportImport.text)
+          .toString()
+          .substring(0, 10));
       xuatNhapKhoProvider.add(
         data: XuatNhapKhoRequest(
+          ngayXuatNhapKhoa: timeB.toString(),
+          loai: "2",
           idDonViCungCap: donViCungCap!.id,
           ghiChu: contentController.text,
           soLuong: countController.text,

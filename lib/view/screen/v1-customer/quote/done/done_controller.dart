@@ -9,7 +9,5 @@ class V1DoneController extends GetxController {
   void onCompleteClick() {
     Get.back();
     Get.back();
-    Get.back();
-    Get.back();
   }
 }

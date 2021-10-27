@@ -7,11 +7,11 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -46,7 +46,7 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // news widget
                   _newsWidget(),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
                   _productWidget(controller: controller)
@@ -130,7 +130,7 @@ class V3HomePage extends GetView<V3HomeController> {
     return SizedBox(
       height: 120,
       child: GridView.builder(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -170,7 +170,7 @@ class V3HomePage extends GetView<V3HomeController> {
         height: (len > 0) ? 130 * len : 0,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: length,
           itemBuilder: (
             BuildContext ctx,
@@ -225,7 +225,7 @@ class V3HomePage extends GetView<V3HomeController> {
         height: 110 * size + 20,
         child: ListView.builder(
           itemCount: size,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,

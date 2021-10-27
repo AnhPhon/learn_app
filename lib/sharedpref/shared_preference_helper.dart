@@ -272,4 +272,30 @@ class SharedPreferenceHelper {
   Future<bool> removeProductId() async {
     return _sharedPreference.remove(Preferences.productId);
   }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get phanHoiDonDichVuId async {
+    return _sharedPreference.getString(Preferences.phanHoiDonDichVuId);
+  }
+
+  Future<bool> savePhanHoiDonDichVuId(String id) async {
+    return _sharedPreference.setString(Preferences.phanHoiDonDichVuId, id);
+  }
+
+  Future<bool> removePhanHoiDonDichVuId() async {
+    return _sharedPreference.remove(Preferences.phanHoiDonDichVuId);
+  }
+
+  // giaTriDonHang : -----------------------------------------------
+  Future<double?> get giaTriDonHang async {
+    return _sharedPreference.getDouble(Preferences.giaTriDonHang);
+  }
+
+  Future<bool> saveGiaTriDonHang(double tongTien) async {
+    return _sharedPreference.setDouble(Preferences.giaTriDonHang, tongTien);
+  }
+
+  Future<bool> removeGiaTriDonHang() async {
+    return _sharedPreference.remove(Preferences.giaTriDonHang);
+  }
 }

@@ -6,6 +6,7 @@ import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V3ProductManagementController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -40,6 +41,13 @@ class V3ProductManagementController extends GetxController
     super.onInit();
     //get load data
     getAllCategory();
+  }
+
+  @override
+  void onClose() {
+    tabController!.dispose();
+    refreshControllerList!.clear();
+    super.onClose();
   }
 
   ///
@@ -147,5 +155,12 @@ class V3ProductManagementController extends GetxController
   ///
   Future onLoading() async {
     getProductByIdCategory(isRefresh: false);
+  }
+
+  ///
+  ///on product detail click
+  ///
+  void onProductDetailClick({required int index}) {
+    Get.toNamed(AppRoutes.V3_PRODUCT_DETAIL, arguments: sanPhamResponse[index]);
   }
 }
