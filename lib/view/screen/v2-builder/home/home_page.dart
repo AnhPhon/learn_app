@@ -320,7 +320,10 @@ class V2HomePage extends GetView<V2HomeController> {
                     const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ProductCard(
                   title: controller.sanPhamList[index].ten!,
-                  image: controller.sanPhamList[index].hinhAnhSanPhams![0],
+                  image:
+                      controller.sanPhamList[index].hinhAnhSanPhams!.isNotEmpty
+                          ? controller.sanPhamList[index].hinhAnhSanPhams![0]
+                          : "",
                   cost: PriceConverter.convertPrice(context, 100000),
                 ),
               ),

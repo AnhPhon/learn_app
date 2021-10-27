@@ -126,6 +126,9 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
             Container(
               alignment: Alignment.centerRight,
               child: Container(
@@ -140,10 +143,14 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   ),
                 ),
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                child: Text(
-                  (isPass == true) ? "Đầy đủ" : "Cần bổ sung",
-                  style: const TextStyle(
-                    color: ColorResources.WHITE,
+                child: Container(
+                  width: 100,
+                  alignment: Alignment.center,
+                  child: Text(
+                    (isPass == true) ? "Đầy đủ" : "Cần bổ sung",
+                    style: const TextStyle(
+                      color: ColorResources.WHITE,
+                    ),
                   ),
                 ),
               ),
