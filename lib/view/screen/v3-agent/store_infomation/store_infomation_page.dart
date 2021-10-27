@@ -11,12 +11,12 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
@@ -214,15 +214,20 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.tinhTpWarehouse.length,
+                    itemCount: controller.khoHangModelList.length,
                     itemBuilder: (BuildContext ctx, int index) {
                       if (controller.isLoadingAdd &&
-                          index == controller.warehouseList.length - 1) {
+                          index == controller.khoHangModelList.length - 1) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
                       if (controller.isLoadingAdd) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (controller.isLoadingWarehouse) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
@@ -287,9 +292,9 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             children: [
               onSelectedLocation(
                 context,
-                ward: controller.phuongXaList,
+                ward: controller.phuongXasList,
                 city: "Hồ Chí Minh",
-                district: controller.quanHuyenList,
+                district: controller.quanHuyensList,
                 value: 0,
                 groupValue: controller.groupTinhTpValue,
                 onChanged: (int? val) => controller.onChangedGroup(val!),
@@ -297,40 +302,44 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     controller.onChangedQuanHuyen(val!),
                 onChangedPhuong: (PhuongXaResponse? val) =>
                     controller.onChangedPhuongXa(val!),
-                phuong: controller.phuongXaStore,
-                huyen: controller.quanHuyenStore,
+                phuong: controller.hcmPhuong,
+                huyen: controller.hcmHuyen,
               ),
-              onSelectedLocation(context,
-                  ward: controller.phuongXaList,
-                  city: "Hà Nội",
-                  district: controller.quanHuyenList,
-                  value: 1,
-                  groupValue: controller.groupTinhTpValue,
-                  onChanged: (int? val) => controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenResponse? val) =>
-                      controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaResponse? val) =>
-                      controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXaStore,
-                  huyen: controller.quanHuyenStore),
-              onSelectedLocation(context,
-                  ward: controller.phuongXaList,
-                  city: "Đà Nẵng",
-                  district: controller.quanHuyenList,
-                  value: 2,
-                  groupValue: controller.groupTinhTpValue,
-                  onChanged: (int? val) => controller.onChangedGroup(val!),
-                  onChangedHuyen: (QuanHuyenResponse? val) =>
-                      controller.onChangedQuanHuyen(val!),
-                  onChangedPhuong: (PhuongXaResponse? val) =>
-                      controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXaStore,
-                  huyen: controller.quanHuyenStore),
               onSelectedLocation(
                 context,
-                ward: controller.phuongXaList,
+                ward: controller.phuongXasList,
+                city: "Hà Nội",
+                district: controller.quanHuyensList,
+                value: 1,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.haNoiPhuong,
+                huyen: controller.haNoiHuyen,
+              ),
+              onSelectedLocation(
+                context,
+                ward: controller.phuongXasList,
+                city: "Đà Nẵng",
+                district: controller.quanHuyensList,
+                value: 2,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.daNangPhuong,
+                huyen: controller.daNangHuyen,
+              ),
+              onSelectedLocation(
+                context,
+                ward: controller.otherwards,
                 city: "Tỉnh thành khách",
-                district: controller.quanHuyenList,
+                district: controller.otherDistricts,
                 value: 3,
                 groupValue: controller.groupTinhTpValue,
                 onChanged: (int? val) => controller.onChangedGroup(val!),
@@ -338,13 +347,13 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     controller.onChangedQuanHuyen(val!),
                 onChangedPhuong: (PhuongXaResponse? val) =>
                     controller.onChangedPhuongXa(val!),
-                phuong: controller.phuongXaStore,
-                huyen: controller.quanHuyenStore,
+                phuong: controller.khacPhuong,
+                huyen: controller.khacHuyen,
                 isRadio: false,
-                tinh: controller.tinhTpStore,
+                tinh: controller.otherProvince,
                 onChangedProvince: (TinhTpResponse? val) =>
                     controller.onChangedTinhThanh(val!),
-                tinhList: controller.tinhTpList,
+                tinhList: controller.otherProvinces,
               ),
             ],
           ),
@@ -582,18 +591,30 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 ),
 
                 //btn remove
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ColorResources.RED,
-                    border: Border.all(color: ColorResources.WHITE),
-                  ),
-                  child: const Icon(
-                    Icons.close_outlined,
-                    size: Dimensions.ICON_SIZE_SMALL,
-                    color: ColorResources.WHITE,
+                GestureDetector(
+                  onTap: () {
+                    if (controller.khoHangModelList[index].idKhoHang != null) {
+                      Get.dialog(
+                        _deleteItem(context,
+                            index: index, controller: controller),
+                      );
+                    } else {
+                      controller.onDeleteWarehouse(index: index);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorResources.RED,
+                      border: Border.all(color: ColorResources.WHITE),
+                    ),
+                    child: const Icon(
+                      Icons.close_outlined,
+                      size: Dimensions.ICON_SIZE_SMALL,
+                      color: ColorResources.WHITE,
+                    ),
                   ),
                 ),
               ],
@@ -604,8 +625,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               hint: "Tỉnh",
               onChanged: (value) =>
                   controller.onChangedTinhThanhIsWarehouse(value!, index),
-              data: controller.tinhTpListIsWareHouse,
-              value: controller.tinhTpWarehouse[index],
+              data: controller.khoHangModelList[index].tinhTpList!,
+              value: controller.khoHangModelList[index].tinhTpResponse,
               width: .4,
               isBorder: false,
             ),
@@ -618,12 +639,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   hint: "Quận/huyện",
                   onChanged: (value) =>
                       controller.onChangedQuanHuyenIsWarehouse(value!, index),
-                  data: controller.quanHuyenListIsWareHouse[index].isNotEmpty
-                      ? controller.quanHuyenListIsWareHouse[index]
-                      : [],
-                  value: controller.quanHuyenListIsWareHouse[index].isNotEmpty
-                      ? controller.quanHuyenWarehouse[index]
-                      : null,
+                  data: controller.khoHangModelList[index].quanHuyenList!,
+                  value: controller.khoHangModelList[index].quanHuyenResponse,
                   width: .4,
                   isBorder: false,
                 ),
@@ -631,12 +648,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   hint: "Phường/xã",
                   onChanged: (value) =>
                       controller.onChangedPhuongXaIsWarehouse(value!, index),
-                  data: controller.phuongXaListIsWareHouse[index].isNotEmpty
-                      ? controller.phuongXaListIsWareHouse[index]
-                      : [],
-                  value: controller.phuongXaListIsWareHouse[index].isNotEmpty
-                      ? controller.phuongXaWarehouse[index]
-                      : null,
+                  data: controller.khoHangModelList[index].phuongXaList!,
+                  value: controller.khoHangModelList[index].phuongXaResponse,
                   width: .4,
                   isBorder: false,
                 ),
@@ -663,7 +676,8 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     height: .06,
                     width: double.infinity,
                     textEditingController:
-                        controller.warehouseAddressController[index],
+                        controller.khoHangModelList[index].warehouseAddress!,
+                    textInputAction: TextInputAction.next,
                     fillColor: ColorResources.WHITE,
                   ),
                 ),
@@ -694,7 +708,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     height: .06,
                     width: double.infinity,
                     textEditingController:
-                        controller.warehouseNameController[index],
+                        controller.khoHangModelList[index].warehouseName!,
                     fillColor: ColorResources.WHITE,
                   ),
                 ),
@@ -704,6 +718,79 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
         ),
       );
     });
+  }
+
+  ///
+  ///delete
+  ///
+  Widget _deleteItem(
+    BuildContext context, {
+    required int index,
+    required V3StoreInfomationController controller,
+  }) {
+    return Center(
+      child: Container(
+        height: DeviceUtils.getScaledHeight(context, .35),
+        margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_LARGE,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        ),
+        decoration: BoxDecoration(
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Xác nhận",
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            // const SizedBox(
+            //   height: Dimensions.MARGIN_SIZE_DEFAULT,
+            // ),
+            const Flexible(
+              child: Text(
+                "Xoá kho hàng sẽ xoá hết các sản phẩm thuộc kho hàng. Bạn có chắc chắn muốn xoá kho hàng này không?",
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE),
+              ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+            Row(
+              children: [
+                BtnCustomBorder(
+                  onTap: () {
+                    controller.onDeleteWarehouse(index: index);
+                    Get.back();
+                  },
+                  text: "Đồng ý",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                BtnCustom(
+                  onTap: () => Get.back(),
+                  color: ColorResources.PRIMARY,
+                  text: "Huỷ",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   ///
@@ -717,8 +804,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
           height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
         GestureDetector(
-          onTap: () => controller.onClickWareHouseAdd(
-              index: controller.warehouseList.length),
+          onTap: () => controller.onClickWareHouseAdd(),
           child: Container(
             alignment: Alignment.center,
             decoration: const ShapeDecoration(
