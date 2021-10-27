@@ -1,4 +1,6 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:convert';
+
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
@@ -31,7 +33,7 @@ class AuthRepository {
   ///
   /// Insert user to database
   ///
-  Future<ApiResponse> login(AccountRequest request) async {
+  Future<ApiResponse> login(AuthRequest request) async {
     try {
       final response =
           await dioClient!.post('/auth/login', data: request.toJson());
@@ -47,6 +49,32 @@ class AuthRepository {
     try {
       final response =
           await dioClient!.post('/auth/register', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Đăng nhập bằng tài khoản số điện thoại
+  ///
+  Future<ApiResponse> loginAccount(AccountRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/login', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Đăng xuất tài khoản số điện thoại
+  ///
+  Future<ApiResponse> logoutAccount(dynamic request) async {
+    try {
+      final response =
+          await dioClient!.post('/auth/logout', data: json.encode(request) );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

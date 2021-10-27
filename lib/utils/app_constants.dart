@@ -26,6 +26,11 @@ const String DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
 const String CHUA_THANH_TOAN = '61615180e87a9124404abe82';
 const String DA_PHAN_HOI = '617286ebf5c09a07f815e825';
 const String CHUA_PHAN_HOI = '617286fdf5c09a07f815e826';
+// Id loại tài khoản
+const String DAI_LY = '6168fb1362f385255f293af2';
+const String KHACH_HANG = '6168fb1e62f385255f293afb';
+const String THO_THAU = '6168fb3062f385255f293b0b';
+const String NHAN_VIEN = '616e71de3535150e7a4d4755';
 
 // sharePreference
 const String TOKEN = 'token';
@@ -80,3 +85,8 @@ const dynamic TRANG_THAI_DU_AN = {
     'id': '616ce9687aade64ebae7c941'
   },
 };
+
+//Trạng thái thanh toán đơn tuyển dụng
+
+const String TUYEN_DUNG_DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
+const String TUYEN_DUNG_CHUA_THANH_TOAN = '61615180e87a9124404abe82';

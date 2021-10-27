@@ -42,7 +42,7 @@ class AttachButton extends StatelessWidget {
           padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           child: Text(title,style: const TextStyle(
             color: ColorResources.BLACK,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+            fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
         ),
       ),

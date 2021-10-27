@@ -175,7 +175,17 @@ import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/provider/xuat_nhap_kho_provider.dart';
 import 'data/datasource/remote/dio/logging_interceptor.dart';
 import 'data/repository/bang_gia_phi_van_chuyen_repository.dart';
+import 'data/repository/cai_dat_chung_repository.dart';
+import 'data/repository/danh_sach_luu_tin_tuyen_dung_repository.dart';
+import 'data/repository/danh_sach_xem_tuyen_dung_repository.dart';
+import 'data/repository/dia_diem_dang_ky_lam_viec_repository.dart';
+import 'data/repository/phi_app_repository.dart';
 import 'data/repository/tai_khoan_repository.dart';
+import 'provider/cai_dat_chung_provider.dart';
+import 'provider/danh_sach_luu_tin_tuyen_dung_provider.dart';
+import 'provider/danh_sach_xem_tuyen_dung_provider.dart';
+import 'provider/dia_diem_dang_ky_lam_viec_provider.dart';
+import 'provider/phi_app_provider.dart';
 import 'provider/phuong_xa_provider.dart';
 import 'sharedpref/shared_preference_helper.dart';
 
@@ -280,6 +290,11 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ThongTinDangKyHopDongRepository());
   sl.registerLazySingleton(() => TuVanRepository());
   sl.registerLazySingleton(() => NhapKhoHangDaiLyRepository());
+  sl.registerLazySingleton(() => DanhSachXemTuyenDungRepository());
+  sl.registerLazySingleton(() => DiaDiemDangKyLamViecRepository());
+  sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungRepository());
+  sl.registerLazySingleton(() => CaiDatChungRepository());
+  sl.registerLazySingleton(() => PhiAppRepository());
 
   // Provider
   sl.registerLazySingleton(() => AuthProvider());
@@ -368,5 +383,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ThongTinDangKyHopDongProvider());
   sl.registerLazySingleton(() => TuVanProvider());
   sl.registerLazySingleton(() => NhapKhoHangDaiLyProvider());
-
+  sl.registerLazySingleton(() => DanhSachXemTuyenDungProvider());
+  sl.registerLazySingleton(() => DiaDiemDangKyLamViecProvider());
+  sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungProvider());
+  sl.registerLazySingleton(() => PhiAppProvider());
+  sl.registerLazySingleton(() => CaiDatChungProvider());
 }

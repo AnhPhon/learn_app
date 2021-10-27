@@ -100,14 +100,14 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   Widget header({required V1OrderFeedBackController controller}) {
     return Padding(
       padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_DEFAULT,
+          top: Dimensions.PADDING_SIZE_SMALL,
           left: Dimensions.PADDING_SIZE_DEFAULT,
           right: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextHighlight(
-            title: "Tiêu đề:",
+            title: "Tiêu đề: ",
             content: controller.donDichVu!.tieuDe!,
           ),
           Padding(
@@ -129,7 +129,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
     return controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
     Padding(
       padding: const EdgeInsets.only(
-        top: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_SMALL,
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
@@ -138,7 +138,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         children: [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+            fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
           BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
@@ -175,13 +175,13 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: controller.workMass.isEmpty  ? []: [
           const Text(
             "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
           Column(
             children: [
@@ -210,7 +210,6 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                                       title: "Tên công việc:",
                                       content:
                                           controller.workMass[index].tenVatTu!,
-                                      fontSize: Dimensions.FONT_SIZE_LARGE,
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",

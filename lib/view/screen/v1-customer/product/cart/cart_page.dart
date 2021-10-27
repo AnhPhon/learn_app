@@ -39,8 +39,9 @@ class V1CartPage extends GetView<V1CartController> {
                         //title shipping detail
                         const Label(
                           label: "Chi tiết về shipping",
-                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                           obligatory: false,
+                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //shipping detail
@@ -49,8 +50,9 @@ class V1CartPage extends GetView<V1CartController> {
                         //title order product detail
                         const Label(
                           label: "Chi tiết đơn hàng",
-                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                           obligatory: false,
+                          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //order product detail
@@ -174,9 +176,8 @@ class V1CartPage extends GetView<V1CartController> {
       margin: const EdgeInsets.symmetric(
         horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
       ),
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-        horizontal: Dimensions.PADDING_SIZE_LARGE,
+      padding: const EdgeInsets.all(
+        Dimensions.PADDING_SIZE_SMALL,
       ),
       decoration: BoxDecoration(
         boxShadow: [
@@ -334,7 +335,7 @@ class V1CartPage extends GetView<V1CartController> {
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
+        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
       child: Column(
         children: [

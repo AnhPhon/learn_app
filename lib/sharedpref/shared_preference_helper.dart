@@ -138,6 +138,18 @@ class SharedPreferenceHelper {
   Future<bool> removeUserId() async {
     return _sharedPreference.remove(Preferences.userId);
   }
+  // type Account: ----------------------------------------------------------
+  Future<String?> get typeAccount async {
+    return _sharedPreference.getString(Preferences.typeAccount);
+  }
+
+  Future<bool> saveTypeAccount(String typeAccount) async {
+    return _sharedPreference.setString(Preferences.typeAccount, typeAccount);
+  }
+
+  Future<bool> removeTypeAccount() async {
+    return _sharedPreference.remove(Preferences.typeAccount);
+  }
 
   // ProvinceId: ----------------------------------------------------------
   Future<String?> get provinceId async {
@@ -297,5 +309,18 @@ class SharedPreferenceHelper {
 
   Future<bool> removeGiaTriDonHang() async {
     return _sharedPreference.remove(Preferences.giaTriDonHang);
+  }
+
+  // Tiến độ công việc: MỚI TẠO : -----------------------------------------------
+  Future<String?> get idNewWork async {
+    return _sharedPreference.getString(Preferences.idNewWork);
+  }
+
+  Future<bool> saveIdNewWork({required String id}) async {
+    return _sharedPreference.setString(Preferences.idNewWork, id);
+  }
+
+  Future<bool> removeIdNewWork() async {
+    return _sharedPreference.remove(Preferences.idNewWork);
   }
 }

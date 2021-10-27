@@ -120,7 +120,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
       allowEdit: true,
       allowMultiline: true,
       controller: controller.desController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+      fontSize: Dimensions.FONT_SIZE_LARGE,
       holdplacer: "Khách hàng nêu nội dung chi tiết báo gía",
       hidden: false,
       label: "Nội dung chi tiết báo giá",

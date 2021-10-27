@@ -14,14 +14,14 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
     return GetBuilder(
         init: PaymentAccountController(),
         builder: (PaymentAccountController controller) {
-          if (controller.isLoading && controller.urlBack!.isEmpty) {
+          if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text(controller.title),
+              title: const Text('Tài khoản của bạn'),
               centerTitle: true,
               leading: Builder(
                 builder: (BuildContext context) {

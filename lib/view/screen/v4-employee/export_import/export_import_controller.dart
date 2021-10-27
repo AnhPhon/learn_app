@@ -17,7 +17,6 @@ import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/provider/xuat_nhap_kho_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
 
 class V4ExportImportControleer extends GetxController {
   GetIt sl = GetIt.instance;

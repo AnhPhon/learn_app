@@ -1,27 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/account_request.dart';
+import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
+import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 // import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 
 class LoginController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
-  TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
+  final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
+  final LoaiTaiKhoanProvider typeAccountProvider = GetIt.I.get<LoaiTaiKhoanProvider>();
 
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   bool isRemember = false;
 
-  AuthModel? auth;
   bool isLoading = true;
 
   @override
@@ -61,17 +65,7 @@ class LoginController extends GetxController {
   /// on login click
   ///
   void onLoginBtnClick() {
-    sl.get<SharedPreferenceHelper>().saveUserId("616d7c0dc48e736e333ef26b");
-
-    if (phoneController.text == '1') {
-      Get.toNamed(AppRoutes.V1_DASHBOARD);
-    } else if (phoneController.text == '2') {
-      Get.toNamed(AppRoutes.V2_DASHBOARD);
-    } else if (phoneController.text == '3') {
-      Get.toNamed(AppRoutes.V3_DASHBOARD);
-    } else if (phoneController.text == '4') {
-      Get.toNamed(AppRoutes.V4_DASHBOARD);
-    } else {}
+    onLogin();
   }
 
 
@@ -96,33 +90,52 @@ class LoginController extends GetxController {
   ///
   void onLogin(){
     if(onValidateLogin()){
+      EasyLoading.show(status: "Đăng nhập");
       final AccountRequest accountRequest = AccountRequest();
       accountRequest.soDienThoai = phoneController.text.toString();
       accountRequest.matKhau = passwordController.text.toString();
-      authProvider.login(
+      authProvider.loginAccount(
         request: accountRequest,
         onSuccess: (account) {
-          isLoading = false;
-          auth = auth;
 
-          // save info token and info user
-          sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
-          sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
-          sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
-          sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
+              // save info token and info user
+              sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
+              sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
+              sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
+              sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
+              sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
 
-          print(account.toJson());
-
-          update();
-          //Get.toNamed(AppRoutes.DASHBOARD);
+              if(account.idLoaiTaiKhoan != null){
+                if (account.idLoaiTaiKhoan == KHACH_HANG) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                  return;
+                } else if (account.idLoaiTaiKhoan == THO_THAU) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+                  return;   
+                } else if (account.idLoaiTaiKhoan == DAI_LY) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+                  return;
+                } else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
+                  return;
+                }else{
+                  Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+                }
+              }else{
+                Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+              }
         },
         onError: (error) {
-          isLoading = false;
+          Alert.error(message: "Đăng nhập thất bại vui lòng thử lại!");
+          EasyLoading.dismiss();
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
           update();
         }
       );
     }
   }
-
 }

@@ -87,4 +87,4 @@ const boxShadowText = [
       offset: Offset(-1, -1))
 ];
 
-const paddingSmall = EdgeInsets.all(Dimensions.FONT_SIZE_SMALL);
+const paddingSmall = EdgeInsets.all(Dimensions.FONT_SIZE_EXTRA_SMALL);

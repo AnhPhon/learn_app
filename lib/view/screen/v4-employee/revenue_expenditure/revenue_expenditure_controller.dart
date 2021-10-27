@@ -6,6 +6,7 @@ import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/currency_covert.dart';
+import 'package:template/helper/date_converter.dart';
 
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -29,7 +30,8 @@ class V4RevenueExpenditureController extends GetxController
   //Set ngày hiện Tại
   String timeNow = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
-  final timeRevenueExpenditure = TextEditingController();
+  final timeRevenueExpenditure = TextEditingController(
+      text: DateConverter.estimatedDateOnly(DateTime.now()));
   final revenueController = TextEditingController(text: "Thêm thu");
   final expenditureController = TextEditingController(text: "Thêm chi");
   final contentRevenueController = TextEditingController();

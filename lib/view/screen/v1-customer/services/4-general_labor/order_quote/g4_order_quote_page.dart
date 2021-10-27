@@ -54,14 +54,14 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
             width: DeviceUtils.getScaledSize(context,1),
             label: "Loại dịch vụ",
             hint: "Loại dịch vụ",
-            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         InputField(
           allowEdit: false,
           allowMultiline: false,
           controller: controller.priceController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "0",
           hidden: false,
           label: "Đơn giá",
@@ -76,7 +76,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.timeNumberController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "10",
           hidden: false,
           label: "Số lượng thời gian",
@@ -89,7 +89,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.personNumberController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "10",
           hidden: false,
           label: "Số lượng người",
@@ -102,7 +102,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowEdit: true,
           allowMultiline: true,
           controller: controller.descController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "mô tả công việc",
           hidden: false,
           label: "Mô tả lại dịch vụ yêu cầu của quý khách để chúng tôi nắm rõ và phục vụ tốt hơn (tránh trường hợp nhầm lẫn",
@@ -121,7 +121,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
 
   Widget nextButton({required V1G4OrderQuoteController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: ()=> controller.onNextPage(),
