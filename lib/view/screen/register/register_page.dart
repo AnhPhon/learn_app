@@ -413,7 +413,7 @@ class RegisterPage extends GetView<RegisterController> {
           width: DeviceUtils.getScaledSize(context, 1),
           label: "Loại tài khoản",
           hint: "Loại tài khoản đăng ký",
-          padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
         ),
         DropDownButton<String>(
           data: controller.juridicals,
