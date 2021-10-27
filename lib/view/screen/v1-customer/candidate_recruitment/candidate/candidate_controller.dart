@@ -49,6 +49,9 @@ class V1CandidateController extends GetxController {
   //index tab
   int currentIndex = 0;
 
+  // refresh controller for load more refresh
+  List<RefreshController>? refreshControllerList;
+
   //model value
   List<NgoaiNguResponse> ngoaiNguListModel = [];
   List<HinhThucLamViecResponse> hinhThucLamViecListModel = [];
@@ -110,6 +113,8 @@ class V1CandidateController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     refreshController ??= RefreshController();
+    //binding refresh controller
+    refreshControllerList = List.generate(2, (_) => RefreshController());
 
     //load data tinhTp
     getDataTinhTp();
@@ -122,7 +127,7 @@ class V1CandidateController extends GetxController {
           onSuccess: (value) {
             // set user
             taiKhoanResponse = value;
-            onLoadDataWithTab(0);
+            onLoadDataWithTab(select: currentIndex, isRefresh: true);
             //load data frist
           },
           onError: (error) {
@@ -143,7 +148,29 @@ class V1CandidateController extends GetxController {
     searchController.dispose();
     searchFocusNode.dispose();
     refreshController!.dispose();
+    refreshControllerList!.clear();
     super.onClose();
+  }
+
+  ///
+  ///Thay đổi vị trí tab
+  ///
+  void onChangeTab(int index) {
+    pageMax = 1;
+    currentIndex = index;
+    //load data fillter ứng viên
+    if (index == 1) {
+      getDataNgoaiNgu();
+      getDataHinhThucLamViec();
+      // getDataTinhTp();
+      getDataChuyenMon();
+      getDataSoNamKinhNghiem();
+      getDataTrinhDo();
+      //set value frist giới tính
+      gioiTinh = gioiTinhModel.first;
+    }
+    onLoadDataWithTab(select: index, isRefresh: true);
+    update();
   }
 
   ///
@@ -166,15 +193,15 @@ class V1CandidateController extends GetxController {
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {
-            refreshController!.loadNoData();
+            refreshControllerList![currentIndex].loadNoData();
           } else if (isRefresh) {
             //check refresh
             tuyenDungListModel = value;
-            refreshController!.refreshCompleted();
-            refreshController!.loadComplete();
+            refreshControllerList![currentIndex].refreshCompleted();
+            refreshControllerList![currentIndex].loadComplete();
           } else {
             tuyenDungListModel.addAll(value);
-            refreshController!.loadComplete();
+            refreshControllerList![currentIndex].loadComplete();
           }
           isLoadingTuyenDung = false;
           update();
@@ -186,33 +213,31 @@ class V1CandidateController extends GetxController {
   ///
   ///onRefresh
   ///
-  void onRefreshTuyenDung() {
-    onLoadDataTuyenDung(isRefresh: true);
+  Future onRefresh() async {
+    // onLoadDataTuyenDung(isRefresh: true);
+    refreshControllerList![currentIndex].resetNoData();
+    onLoadDataWithTab(select: currentIndex, isRefresh: true);
   }
 
   ///
   ///onLoadDataTuyenDung
   ///
-  void onLoadingTuyenDung() {
-    onLoadDataTuyenDung(isRefresh: false);
+  Future onLoading() async {
+    // onLoadDataTuyenDung(isRefresh: false);
+    onLoadDataWithTab(select: currentIndex, isRefresh: false);
   }
 
   ///
   ///onLoadDataWithTab
   ///
-  void onLoadDataWithTab(int select) {
+  void onLoadDataWithTab({required int select, required bool isRefresh}) {
     if (select == 1) {
-      getDataNgoaiNgu();
-      getDataHinhThucLamViec();
-      // getDataTinhTp();
-      getDataChuyenMon();
-      getDataSoNamKinhNghiem();
-      getDataTrinhDo();
-      //set value frist giới tính
-      gioiTinh = gioiTinhModel.first;
+      //get data ứng viên
+      getDataSeach(textFilter: '', isRefresh: isRefresh);
       update();
     } else {
-      onLoadDataTuyenDung(isRefresh: true);
+      onLoadDataTuyenDung(isRefresh: isRefresh);
+      update();
     }
   }
 
@@ -383,9 +408,6 @@ class V1CandidateController extends GetxController {
               0, TrinhDoResponse(id: "0", tieuDe: "Trình độ"));
           trinhDoResponse = value.first;
           // isLoadingCadidate = false;
-
-          //get data ứng viên
-          getDataSeach(textFilter: '');
           update();
         },
         onError: (error) =>
@@ -463,15 +485,6 @@ class V1CandidateController extends GetxController {
     addNewConditions(
         condition: TimKiemUngVienModel(key: "idTrinhDo", value: item.id),
         isButtonSearch: false);
-    update();
-  }
-
-  ///
-  ///Thay đổi vị trí tab
-  ///
-  void onChangeTab(int index) {
-    currentIndex = index;
-    onLoadDataWithTab(index);
     update();
   }
 
@@ -599,27 +612,49 @@ class V1CandidateController extends GetxController {
     }
 
     print('conditionFilter $conditionFilter');
-    getDataSeach(textFilter: conditionFilter);
+    getDataSeach(textFilter: conditionFilter, isRefresh: false);
   }
 
   ///
   ///getDataSeach
   ///
-  void getDataSeach({required String textFilter}) {
+  void getDataSeach({required String textFilter, required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      dangKyViecMoiListModel.clear();
+    } else {
+      //isLoading
+      pageMax++;
+    }
+
     print('có vô ko');
     if (textFilter != '') {
       // ignore: parameter_assignments
       textFilter = '&$textFilter';
     }
+
     dangKyViecMoiProvider.paginate(
-        page: 1,
-        limit: 40,
+        page: pageMax,
+        limit: limit,
         filter: textFilter,
         onSuccess: (value) {
           print('conditionFilter value ${value.length}');
+          //check data empty
+          if (value.isEmpty) {
+            refreshControllerList![currentIndex].loadNoData();
+          } else if (isRefresh) {
+            //check refresh
+            dangKyViecMoiListModel = value;
+            refreshControllerList![currentIndex].refreshCompleted();
+            refreshControllerList![currentIndex].loadComplete();
+          } else {
+            dangKyViecMoiListModel.addAll(value);
+            refreshControllerList![currentIndex].loadComplete();
+          }
           //reset và add value
-          dangKyViecMoiListModel.clear();
-          dangKyViecMoiListModel.addAll(value);
+          // dangKyViecMoiListModel.clear();
+          // dangKyViecMoiListModel.addAll(value);
           isLoadingCadidate = false;
           update();
         },

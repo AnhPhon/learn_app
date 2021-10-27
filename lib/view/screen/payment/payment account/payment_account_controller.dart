@@ -46,8 +46,6 @@ class PaymentAccountController extends GetxController {
 
   //check urlBlack
 
-  //url Back
-  String? urlBack;
   //userId
   String? userId;
 
@@ -61,12 +59,6 @@ class PaymentAccountController extends GetxController {
     //set data
     if (Get.parameters['tongTien'] != null) {
       tongTienThanhToan = double.parse(Get.parameters['tongTien'].toString());
-      getBalance();
-    }
-
-    //set data
-    if (Get.parameters['urlBack'] != null) {
-      urlBack = Get.parameters['urlBack'].toString();
       getBalance();
     }
 
@@ -98,8 +90,6 @@ class PaymentAccountController extends GetxController {
             ),
             onPressed: () {
               Get.back();
-              Get.offAllNamed(urlBack!,
-                  predicate: ModalRoute.withName(urlBack!));
               Get.back();
             },
             child: const Text("Hủy thanh toán")));
@@ -110,8 +100,9 @@ class PaymentAccountController extends GetxController {
   ///
   void getBalance() {
     sl.get<SharedPreferenceHelper>().userId.then((value) {
+      //set isUser
       userId = value;
-
+      //load ví tiền
       viTienProvider.paginate(
         page: 1,
         limit: 5,
@@ -191,9 +182,10 @@ class PaymentAccountController extends GetxController {
                       Alert.error(message: 'Vui lòng thực hiện lại');
                     }
                   });
-                } else {
-                  Alert.error(message: 'Vui lòng thực hiện lại');
                 }
+                // else {
+                //   Alert.error(message: 'Vui lòng thực hiện lại');
+                // }
               });
             },
             child: const Text("Đồng ý")),

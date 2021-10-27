@@ -28,9 +28,11 @@ class V1CandidatePage extends GetView<V1CandidateController> {
                 children: [
                   tabBarWidget(context: context, controller: controller),
                   if (controller.currentIndex == 0)
-                    news(context, controller: controller)
+                    news(context,
+                        controller: controller, index: controller.currentIndex)
                   else
-                    listOfCandidates(context, controller: controller)
+                    listOfCandidates(context,
+                        controller: controller, index: controller.currentIndex)
                 ],
               ),
             );
@@ -65,20 +67,24 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   /// Tin tuyển dụng
   ///
   Widget news(BuildContext context,
-      {required V1CandidateController controller}) {
+      {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshController!,
+        controller: controller.refreshControllerList![index],
         enablePullUp: true,
-        onLoading: controller.onLoadingTuyenDung,
-        onRefresh: controller.onRefreshTuyenDung,
+        onLoading: controller.onLoading,
+        onRefresh: controller.onRefresh,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",
+          canLoadingText: 'Đang tải...',
         ),
         child: controller.isLoadingTuyenDung
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? const Padding(
+                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               )
             : ListView.builder(
                 itemCount: controller.tuyenDungListModel.length,
@@ -100,9 +106,18 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   /// Danh sách ứng tuyển
   ///
   Widget listOfCandidates(BuildContext context,
-      {required V1CandidateController controller}) {
+      {required V1CandidateController controller, required int index}) {
     return Expanded(
-      child: SingleChildScrollView(
+      child: SmartRefresher(
+        controller: controller.refreshControllerList![index],
+        enablePullUp: true,
+        onLoading: controller.onLoading,
+        onRefresh: controller.onRefresh,
+        footer: const ClassicFooter(
+          loadingText: "Đang tải...",
+          noDataText: "Không có dữ liệu",
+          canLoadingText: 'Đang tải...',
+        ),
         child: Column(
           children: [
             // Tìm kiếm

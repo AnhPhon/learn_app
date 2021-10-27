@@ -6,9 +6,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';
 
 class V2RecruitmentController extends GetxController {
-  //tabController
-  TabController? tabController;
-
   // refresh controller for load more refresh
   List<RefreshController>? refreshControllerList;
 
@@ -51,7 +48,7 @@ class V2RecruitmentController extends GetxController {
   //onRefresh
   Future<void> onRefresh() async {
     //resetNoData
-    refreshControllerList![tabController!.index].resetNoData();
+    refreshControllerList![currentIndex].resetNoData();
     //get order isRefresh
     // pullOrder(isRefresh: true);
   }

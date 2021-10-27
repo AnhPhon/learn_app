@@ -53,6 +53,12 @@ class V1G7PriceListController extends GetxController {
     // getDataBangGiaLocHoSo();
   }
 
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+  }
+
   ///
   /// load data hình thức làm việc
   ///
@@ -131,12 +137,12 @@ class V1G7PriceListController extends GetxController {
     //set value tuyendung
     tuyenDungRequest.soTien = tongTien.toStringAsFixed(0);
     tuyenDungRequest.tienCoc = '0';
-    tuyenDungRequest.idTrangThaiTuyenDung = '6162b79bd3d3e9825095fb20';
+    tuyenDungRequest.loaiTin = '2';
 
     Get.toNamed(
-            '${AppRoutes.ORDER_INFORMATION}?soTien=${tuyenDungRequest.soTien!}&tienCoc=${tuyenDungRequest.tienCoc}&urlBack=${AppRoutes.V1_CANDICATE}&isTuyenDung=true')!
+            '${AppRoutes.ORDER_INFORMATION}?soTien=${tuyenDungRequest.soTien!}&tienCoc=${tuyenDungRequest.tienCoc}&isTuyenDung=true')!
         .then((value) => {
-              print('bbbb $value'),
+              //đã thanh toán
               if (value != null && value['type'] == 1)
                 {
                   //set trạng thái đã thanh toán
@@ -149,9 +155,6 @@ class V1G7PriceListController extends GetxController {
                   tuyenDungRepository.add(tuyenDungRequest).then((value) => {
                         if (value.response.data != null)
                           {
-                            // Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                            //     predicate: ModalRoute.withName(
-                            //         AppRoutes.V1_CANDICATE)),
                             Get.back(result: true),
                             Alert.success(
                                 message: 'Đăng tin tuyển dụng thành công'),
@@ -160,6 +163,7 @@ class V1G7PriceListController extends GetxController {
                           Alert.error(message: 'Vui lòng thực hiện lại')
                       })
                 }
+              //chưa thanh toán
               else if (value != null && value['type'] == 2)
                 {
                   //set trạng thái chưa thanh toán
@@ -172,9 +176,6 @@ class V1G7PriceListController extends GetxController {
                   tuyenDungRepository.add(tuyenDungRequest).then((value) => {
                         if (value.response.data != null)
                           {
-                            // Get.offAllNamed(AppRoutes.V1_CANDICATE,
-                            //     predicate: ModalRoute.withName(
-                            //         AppRoutes.V1_CANDICATE)),
                             Get.back(result: true),
                             Alert.success(
                                 message: 'Đăng tin tuyển dụng thành công'),
@@ -183,13 +184,6 @@ class V1G7PriceListController extends GetxController {
                           {Alert.error(message: 'Vui lòng thực hiện lại')}
                       })
                 }
-              else
-                {Alert.error(message: 'Vui lòng thực hiện lại')}
             });
-
-    // Get.toNamed(
-    //   AppRoutes.V1_ORDER_INFORAMTION,
-    //   arguments: tuyenDungRequest,
-    // );
   }
 }

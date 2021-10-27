@@ -60,9 +60,6 @@ class OrderInformationController extends GetxController {
   //phí dịch vụ
   double phanTramPhiDichVu = 0;
 
-  //urlBack
-  String? urlBack;
-
   //isTuyenDung
   bool isTuyenDung = false;
 
@@ -79,10 +76,7 @@ class OrderInformationController extends GetxController {
     if (Get.parameters['tienCoc'] != null) {
       tienCoc = double.parse(Get.parameters['tienCoc'].toString());
     }
-    //check url
-    if (Get.parameters['urlBack'] != null) {
-      urlBack = Get.parameters['urlBack'].toString();
-    }
+
     //check isTuyenDung
     if (Get.parameters['isTuyenDung'] != null &&
         Get.parameters['isTuyenDung'] == 'true') {
@@ -177,8 +171,6 @@ class OrderInformationController extends GetxController {
             ),
             onPressed: () {
               Get.back();
-              Get.offAllNamed(urlBack!,
-                  predicate: ModalRoute.withName(urlBack!));
               Get.back();
             },
             child: const Text("Hủy thanh toán")));
@@ -232,7 +224,7 @@ class OrderInformationController extends GetxController {
       'hinhAnhHoaDon': '',
     };
     Get.toNamed(
-            '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&urlBack=$urlBack')!
+            '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}')!
         .then((value) {
       if (value != null && value['status'] == true) {
         //set value param
@@ -241,8 +233,6 @@ class OrderInformationController extends GetxController {
             value['type'] == 2 ? value['hinhAnhHoaDon'] : '';
 
         Get.back(result: param);
-      } else {
-        Alert.error(message: 'Vui lòng thực hiện lại');
       }
     });
   }
