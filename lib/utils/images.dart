@@ -21,6 +21,7 @@ class Images {
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
   static const String qr_code = 'assets/images/qr_code.png';
+  static const String notifications = 'assets/images/notifications.png';
 
   // login
   static const String login_background = 'assets/images/login_background.png';

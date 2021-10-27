@@ -113,6 +113,14 @@ mixin DateConverter {
         .toString());
   }
 
+  static int differenceDateyyyyMMdd(
+      {required String startDate, required String endDate}) {
+    return int.parse(convertStringToDateOnly(endDate)
+        .difference(convertStringToDateOnly(startDate))
+        .inDays
+        .toString());
+  }
+
   static String formatDateTime(String dateTime) {
     return DateConverter.isoStringToLocalFullDateOnly(
             dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))

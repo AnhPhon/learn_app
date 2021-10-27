@@ -31,7 +31,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           }
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,7 +63,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           allowEdit: false,
           allowMultiline: false,
           controller: controller.workTitleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Tiêu đề",
           hidden: false,
           label: "Tiêu đề công việc",
@@ -94,33 +94,33 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           isDate: true,
           allowEdit: false,
           controller: controller.startTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Thời gian bắt đầu dự kiến",
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         TextFieldDate(
           allowEdit: false,
           controller: controller.endTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "22-11-2021",
           label: "Thời gian kết thúc dự kiến",
           obligatory: false,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         InputField(
           allowEdit: true,
           allowMultiline: true,
           controller: controller.workDesc,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Mô tả nội dung công việc",
           hidden: false,
           textInputAction: TextInputAction.next,
@@ -139,7 +139,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           allowEdit: true,
           allowMultiline: true,
           controller: controller.massDesc,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Mô khối lượng công việc của bạn",
           hidden: false,
           label: "Mô tả khối lượng công việc (nếu có)",
@@ -249,7 +249,7 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
 
   Widget nextButton({required V1G2CreateWorkController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: ()=> controller.onClickContinueButton(),

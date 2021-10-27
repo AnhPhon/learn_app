@@ -19,24 +19,24 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
         builder: (ReferencePriceTableController controller) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
                   // Tiêu tề nhóm công việc
                   Padding(
-                    padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                    padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                     child: Align(
                       child: Text(controller.title, textAlign: TextAlign.center, style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+                        fontSize: Dimensions.FONT_SIZE_LARGE
                       ),)
                     ),
                   ),
                   
                   const Padding(
-                    padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                    padding:  EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                     child: Align(
                       child: Text('Bảng giá chi tiết tham khảo', textAlign: TextAlign.center, style: TextStyle(
                         fontWeight: FontWeight.normal,
@@ -63,7 +63,11 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
 
   Widget file(){
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(
+        left:Dimensions.PADDING_SIZE_DEFAULT,
+        right:Dimensions.PADDING_SIZE_DEFAULT,
+        top:Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,12 +83,12 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
               decorationStyle: TextDecorationStyle.solid,
               decoration: TextDecoration.underline,
               color: ColorResources.PRIMARYCOLOR,
-              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+              fontSize: Dimensions.FONT_SIZE_LARGE
             ),
             child: Column(
               children: const [
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                  padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: Text("File.pdf",),
                 ),
                 Text("File.xls")

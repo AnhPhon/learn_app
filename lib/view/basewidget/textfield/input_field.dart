@@ -23,7 +23,7 @@ class InputField extends StatelessWidget {
       required this.obligatory,
       this.line = 5,
       this.textInputAction,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.paddingTop = Dimensions.PADDING_SIZE_SMALL,
       this.isColorFieldWhite,
       this.focusNode,
       this.padding,
@@ -54,7 +54,6 @@ class InputField extends StatelessWidget {
               left: Dimensions.PADDING_SIZE_DEFAULT,
               right: Dimensions.PADDING_SIZE_DEFAULT,
               top: paddingTop!),
-      //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
       width: width,
       child: Column(
         children: [
