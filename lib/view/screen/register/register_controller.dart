@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -372,6 +373,7 @@ class RegisterController extends GetxController {
       if(emailController.text.toString().isNotEmpty){
         auth.email = emailController.text.toString();
       }
+      auth.matKhau = const Uuid().v1();
       // Khu vực tham gia chọn nhiều
       if(addressController.text.toString().isNotEmpty){
         auth.diaDiemCuThe = addressController.text.toString();
@@ -385,6 +387,7 @@ class RegisterController extends GetxController {
         });
        
       }
+      // Upload CMND
       if(backSideCMND != null){
         imageUpdateProvider.add(file: backSideCMND!, onSuccess: (data){
            auth.hinhCMNDSau = data.data;
@@ -392,6 +395,7 @@ class RegisterController extends GetxController {
           print("Upload image onError $onError");
         });
       }
+      // Upload avatar
       if(avatarFile != null){
         imageUpdateProvider.add(file: avatarFile!, onSuccess: (data){
            auth.hinhDaiDien = data.data;
@@ -399,12 +403,10 @@ class RegisterController extends GetxController {
           print("Upload image onError $onError");
         });
       }
-      auth.matKhau = const Uuid().v1();
-      // HÌnh ảnh khuôn mặt không có
       
+      EasyLoading.show(status: 'loading...');
+      // HÌnh ảnh khuôn mặt không có
       Future.delayed(const Duration(milliseconds: 100)).then((value){
-        print(auth.hinhCMNDSau);
-        print(auth.hinhCMNDTruoc);
         // Register account
         taiKhoanProvider.add(data: auth, onSuccess: (user){
           // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
@@ -412,11 +414,13 @@ class RegisterController extends GetxController {
           sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
           // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
           Alert.info(message: "Xác nhận OTP để kiểm hoàn tất đăng ký người dùng");
+          EasyLoading.dismiss();
           Get.toNamed(AppRoutes.OTP_VERIFIER);
         }, onError: (onError){
           print("Đăng ký tài khoản $onError");
         });
       });
+
     }
   }
 
