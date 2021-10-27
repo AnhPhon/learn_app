@@ -376,7 +376,7 @@ class RegisterController extends GetxController {
       if(addressController.text.toString().isNotEmpty){
         auth.diaDiemCuThe = addressController.text.toString();
       }
-      auth.diaChi = '${province!.ten!} - ${district!.id} - ${ward!.id}';
+      auth.diaChi = '${province!.ten!} - ${district!.ten} - ${ward!.ten}';
       if(frontCMND != null){
         imageUpdateProvider.add(file: frontCMND!, onSuccess: (data){
            auth.hinhCMNDTruoc = data.data;
@@ -403,6 +403,8 @@ class RegisterController extends GetxController {
       // HÌnh ảnh khuôn mặt không có
       
       Future.delayed(const Duration(milliseconds: 100)).then((value){
+        print(auth.hinhCMNDSau);
+        print(auth.hinhCMNDTruoc);
         // Register account
         taiKhoanProvider.add(data: auth, onSuccess: (user){
           // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
