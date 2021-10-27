@@ -17,6 +17,7 @@ class V1GroupOrderFeedBack5Controller extends GetxController{
   double phiDichVu = 0;
   double khuyenMai = 0;
   double tongTien = 0;
+  double tienCoc = 0;
 
   @override
   void onInit() {
@@ -25,7 +26,8 @@ class V1GroupOrderFeedBack5Controller extends GetxController{
       soTien = double.parse(donDichVu!.soTien!,(e)=> 0);
       phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
       khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
-      tongTien = soTien + phiDichVu - khuyenMai;
+      tienCoc = double.parse(donDichVu!.tienCoc!,(e)=> 0);
+      tongTien = double.parse(donDichVu!.tongDon!,(e)=> 0);
     }
     super.onInit();
   }

@@ -33,7 +33,7 @@ class V1OrderFeedBackController extends GetxController{
       phiDichVu = double.parse(donDichVu!.phiDichVu!,(e)=> 0);
       khuyenMai = double.parse(donDichVu!.khuyenMai!,(e)=> 0);
       tienCoc = double.parse(donDichVu!.tienCoc!,(e)=> 0);
-      tongTien = soTien + phiDichVu - khuyenMai;
+      tongTien =  double.parse(donDichVu!.tongDon!,(e)=> 0);
     }
     super.onInit();
     getJobMass();
@@ -56,7 +56,7 @@ class V1OrderFeedBackController extends GetxController{
   }
 
   void onClickAgreeButton(){
-    Get.toNamed(AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION, arguments: donDichVu);
+    Get.toNamed(AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT, arguments: donDichVu);
   }
 
   ///
