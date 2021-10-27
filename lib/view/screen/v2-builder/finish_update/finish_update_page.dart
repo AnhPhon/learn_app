@@ -11,6 +11,14 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
     return GetBuilder<V2FinishUpdateController>(
       init: V2FinishUpdateController(),
       builder: (controller) {
+        // data is loading
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        // finish is loading
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
