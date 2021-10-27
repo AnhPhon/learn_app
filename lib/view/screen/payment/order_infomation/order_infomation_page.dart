@@ -3,26 +3,39 @@ import 'package:get/get.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_controller.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 
-class V1OrderInformationPage extends GetView<V1OrderInformationController> {
+import 'order_infomation_controller.dart';
+
+class OrderInformationPage extends GetView<OrderInformationController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: V1OrderInformationController(),
-        builder: (V1OrderInformationController controller) {
+        init: OrderInformationController(),
+        builder: (OrderInformationController controller) {
           if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
           return Scaffold(
-            appBar: const AppBarWidget(title: "Thông tin đơn hàng"),
+            appBar: AppBar(
+              title: const Text('Thông tin đơn hàng'),
+              centerTitle: true,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      controller.showDialogBack();
+                    },
+                  );
+                },
+              ),
+            ),
             body: Container(
               padding: const EdgeInsets.all(
                 Dimensions.PADDING_SIZE_DEFAULT,
@@ -34,7 +47,9 @@ class V1OrderInformationPage extends GetView<V1OrderInformationController> {
                     BillWidget(
                       orderContents: [
                         OrderContent(
-                          title: 'Phí đăng tin',
+                          title: controller.isTuyenDung
+                              ? 'Phí đăng tin'
+                              : 'Giá trị đơn hàng',
                           value: controller.soTien,
                           boldValue: true,
                         ),
@@ -44,7 +59,7 @@ class V1OrderInformationPage extends GetView<V1OrderInformationController> {
                           boldValue: true,
                         ),
                         OrderContent(
-                          title: "Phí dịch vụ app",
+                          title: "Phí dịch vụ App",
                           value: controller.phiDichVu,
                           boldValue: true,
                         ),
