@@ -257,9 +257,8 @@ class V1HomeController extends GetxController {
   ///
   /// xem thêm category sản phẩm
   ///
-  void onMoreCategoryProduct(String id) {
-    sl.get<SharedPreferenceHelper>().saveProductCategoryId(id);
-    Get.toNamed(AppRoutes.V1_PRODUCT);
+  void onMoreCategoryProduct({required int index}) {
+    Get.toNamed(AppRoutes.V1_PRODUCT, arguments: danhMucList[index]);
   }
 
   ///

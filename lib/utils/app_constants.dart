@@ -85,3 +85,8 @@ const dynamic TRANG_THAI_DU_AN = {
 
 const String TUYEN_DUNG_DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
 const String TUYEN_DUNG_CHUA_THANH_TOAN = '61615180e87a9124404abe82';
+
+//Hình thức thanh toán
+
+const String THANH_TOAN_CHUYEN_KHOAN = '616120008c19c11eb11f862a';
+const String THANH_TOAN_KHI_NHAN_HANG = '616cd5d67aade64ebae7c01c';

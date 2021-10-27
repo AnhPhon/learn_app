@@ -10,6 +10,7 @@ import 'package:template/provider/chi_tiet_don_hang_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V1CartController extends GetxController {
   //donHang
@@ -80,7 +81,7 @@ class V1CartController extends GetxController {
                 ));
       }
 
-      donHangResponse!.phiDichVu = (total * .2).toString();
+      // donHangResponse!.phiDichVu = (total * .2).toString();
       totalAmount = total +
           double.parse(donHangResponse!.phiDichVu.toString()) +
           double.parse(donHangResponse!.phiVanChuyen.toString());
@@ -163,12 +164,14 @@ class V1CartController extends GetxController {
   ///
   void onSelectShippingAddress() {
     Get.toNamed(AppRoutes.V1_SHIPPING_ADDRESS, arguments: donHangResponse)!
-        .then((value) {
-      if (value == true) {
-        isReloadAddress = true;
-        reloadAddress();
-      }
-    });
+        .then(
+      (value) {
+        if (value == true) {
+          isReloadAddress = true;
+          reloadAddress();
+        }
+      },
+    );
   }
 
   ///
@@ -176,36 +179,42 @@ class V1CartController extends GetxController {
   ///
   void onCheckoutClick() {
     Get.toNamed(
-            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${total.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}")!
-        .then((value) {
-      //set data
-      donHangRequest.id = donHangResponse!.id;
-      donHangRequest.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
-      donHangRequest.phiDichVu = donHangResponse!.phiDichVu;
-      donHangRequest.phiVanChuyen = donHangResponse!.phiVanChuyen;
-      donHangRequest.soTien = total.toString();
-      donHangRequest.tongTien = totalAmount.toString();
-      donHangRequest.idHinhThucThanhToan = (value == true)
-          ? "616120008c19c11eb11f862a"
-          : "61615180e87a9124404abe82";
-      donHangRequest.idTrangThaiDonHang = "6169794b3391622ae920354b";
+            "${AppRoutes.ORDER_INFORMATION}?soTien=${total.toStringAsFixed(0)}&tienCoc=0")!
+        .then(
+      (value) {
+        if (value != null) {
+          //set data
+          donHangRequest.id = donHangResponse!.id;
+          donHangRequest.idTrangThaiThanhToan = (value['type'] == 1)
+              ? app_constants.TUYEN_DUNG_DA_THANH_TOAN.toString()
+              : app_constants.TUYEN_DUNG_CHUA_THANH_TOAN.toString();
+          donHangRequest.phiDichVu = value['phiDichVu'].toString();
+          donHangRequest.phiVanChuyen = donHangResponse!.phiVanChuyen;
+          donHangRequest.soTien = total.toString();
+          donHangRequest.tongTien = value['tongTien'].toString();
+          donHangRequest.idHinhThucThanhToan =
+              app_constants.THANH_TOAN_CHUYEN_KHOAN;
+          donHangRequest.idTrangThaiDonHang =
+              app_constants.trangThaiDonHangMap['Xác nhận'];
 
-      //update donHang
-      donHangProvider.update(
-        data: donHangRequest,
-        onSuccess: (data) {
-          //success
-          Get.offAllNamed(
-            AppRoutes.V1_DASHBOARD,
-            predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD),
+          //update donHang
+          donHangProvider.update(
+            data: donHangRequest,
+            onSuccess: (data) {
+              //success
+              Get.offAllNamed(
+                AppRoutes.V1_DASHBOARD,
+                predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD),
+              );
+              Get.back();
+            },
+            onError: (error) {
+              print("V1ProductDetailController onCheckoutClick onError $error");
+            },
           );
-          Get.back();
-        },
-        onError: (error) {
-          print("V1ProductDetailController onCheckoutClick onError $error");
-        },
-      );
-    });
+        }
+      },
+    );
   }
 
   ///

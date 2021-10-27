@@ -272,7 +272,9 @@ class V3StoreInfomationController extends GetxController {
             emailController.text = value.email ?? "";
             addressController.text = value.diaChi.toString();
 
-            value.idMatHangDacTrungs!.map((e) => matHangDacTrungResponse.add(e.id)).toList();
+            value.idMatHangDacTrungs!
+                .map((e) => matHangDacTrungResponse.add(e.id))
+                .toList();
             print('phuong ${matHangDacTrungResponse[0]!.toString()}');
             print('phuong 1 ${matHangDacTrungList[0]!.toString()}');
             update();
@@ -725,8 +727,8 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.soDienThoai = phoneController.text;
       taiKhoanRequest.email = emailController.text;
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
-      // taiKhoanRequest.idMatHangDacTrungs =
-      //     matHangDacTrungResponse.map((e) => e!.id!).toList();
+      taiKhoanRequest.idMatHangDacTrungs!.addAll(matHangDacTrungResponse as List<String>);
+      // matHangDacTrungResponse.map((e) => e.toString()).toList();
 
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =
