@@ -180,6 +180,32 @@ class RegisterPage extends GetView<RegisterController> {
                       typeInput: TextInputType.emailAddress,
                       width: DeviceUtils.getScaledWidth(context, 1),
                     ),
+                    // email
+                    InputField(
+                      allowEdit: true,
+                      allowMultiline: false,
+                      controller: controller.passwordController,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      holdplacer: "Nhập mật khẩu",
+                      hidden: true,
+                      label: "Mật khẩu",
+                      obligatory: true,
+                      typeInput: TextInputType.emailAddress,
+                      width: DeviceUtils.getScaledWidth(context, 1),
+                    ),
+                    // email
+                    InputField(
+                      allowEdit: true,
+                      allowMultiline: false,
+                      controller: controller.repeatPasswordController,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      holdplacer: "Nhập lại mật khẩu",
+                      hidden: true,
+                      label: "Nhập lại mật khẩu",
+                      obligatory: true,
+                      typeInput: TextInputType.emailAddress,
+                      width: DeviceUtils.getScaledWidth(context, 1),
+                    ),
 
                     // Khu vực tham gia chọn nhiều
                     // DropDownButton<LoaiTaiKhoanResponse>(

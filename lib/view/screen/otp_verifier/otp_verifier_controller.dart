@@ -40,8 +40,8 @@ class OTPVerifierController extends GetxController {
   void onBtnCompleteTap() {
     print('asdf ${textEditingController.text}');
     errorController!.add(ErrorAnimationType.shake);
-    
-    Get.toNamed(AppRoutes.UPDATE_PASSWORD,);
+    // Nếu chính xác OPT thì => true else false
+    Get.back(result: true);
 
   }
 }

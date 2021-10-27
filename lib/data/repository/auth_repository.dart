@@ -2,6 +2,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:template/data/model/request/account_request.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
 // import 'package:template/data/model/body/user_model.dart';
@@ -30,7 +31,7 @@ class AuthRepository {
   ///
   /// Insert user to database
   ///
-  Future<ApiResponse> login(AuthRequest request) async {
+  Future<ApiResponse> login(AccountRequest request) async {
     try {
       final response =
           await dioClient!.post('/auth/login', data: request.toJson());

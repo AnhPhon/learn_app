@@ -52,6 +52,8 @@ class RegisterController extends GetxController {
   final placeIssueController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final repeatPasswordController = TextEditingController();
   final addressController = TextEditingController();
   final amountController = TextEditingController();
   final jobExpertsController = TextEditingController();
@@ -320,6 +322,12 @@ class RegisterController extends GetxController {
     }else if(phoneNumberController.text.toString().isEmpty){
       Alert.error(message: "Số điện thoại không được để trống");
       return false;
+    }else if(passwordController.text.toString().isEmpty){
+      Alert.error(message: "Mật khẩu không được để trống");
+      return false;
+    }else if(passwordController.text.toString() != repeatPasswordController.text.toString()){
+      Alert.error(message: "Mật khẩu không trung khớp");
+      return false;
     }else if(province == null){
       Alert.error(message: "Vui lòng chọn tỉnh thành phố");
       return false;
@@ -373,7 +381,7 @@ class RegisterController extends GetxController {
       if(emailController.text.toString().isNotEmpty){
         auth.email = emailController.text.toString();
       }
-      auth.matKhau = const Uuid().v1();
+      auth.matKhau = passwordController.text.toString();
       // Khu vực tham gia chọn nhiều
       if(addressController.text.toString().isNotEmpty){
         auth.diaDiemCuThe = addressController.text.toString();
@@ -403,22 +411,29 @@ class RegisterController extends GetxController {
           print("Upload image onError $onError");
         });
       }
-      
-      EasyLoading.show(status: 'loading...');
-      // HÌnh ảnh khuôn mặt không có
-      Future.delayed(const Duration(milliseconds: 100)).then((value){
-        // Register account
-        taiKhoanProvider.add(data: auth, onSuccess: (user){
-          // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
-          // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
-          sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
-          // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
-          Alert.info(message: "Xác nhận OTP để kiểm hoàn tất đăng ký người dùng");
-          EasyLoading.dismiss();
-          Get.toNamed(AppRoutes.OTP_VERIFIER);
-        }, onError: (onError){
-          print("Đăng ký tài khoản $onError");
-        });
+
+      Get.toNamed(AppRoutes.OTP_VERIFIER)!.then((value){
+          if(value == true){
+            EasyLoading.show(status: 'loading...');
+            // HÌnh ảnh khuôn mặt không có
+            Future.delayed(const Duration(milliseconds: 100)).then((value){
+              // Register account
+              taiKhoanProvider.add(data: auth, onSuccess: (user){
+                // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
+                // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
+                sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
+                // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
+                Alert.info(message: "Đăng ký Tài khoản thành công");
+                Get.back();
+                EasyLoading.dismiss();
+                
+              }, onError: (onError){
+                print("Đăng ký tài khoản $onError");
+              });
+            });
+          }else{
+            Alert.info(message: "Đăng ký tài khoản thất bại");
+          }
       });
 
     }
@@ -441,6 +456,8 @@ class RegisterController extends GetxController {
     jobExpertsController.dispose();
     experienceController.dispose();
     readyWorkController.dispose();
+    passwordController.dispose();
+    repeatPasswordController.dispose();
     super.onClose();
   }
 

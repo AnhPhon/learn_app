@@ -46,6 +46,9 @@ class TaiKhoanResponse {
 
   String? createdAt;
   String? updatedAt;
+  String? access;
+  String? refresh;
+
 
   TaiKhoanResponse(
       {this.id,
@@ -188,6 +191,8 @@ class TaiKhoanResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    access = json['access'].toString();
+    refresh = json['refresh'].toString();
   }
 
   ///
@@ -309,7 +314,8 @@ class TaiKhoanResponse {
 
     // check null diaDiemCuThe
     if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
-
+    if (access != null) data['access'] = access;
+    if (refresh != null) data['refresh'] = refresh;
     return data;
   }
 }

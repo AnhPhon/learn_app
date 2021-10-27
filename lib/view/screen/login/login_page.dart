@@ -151,7 +151,7 @@ class LoginPage extends GetView<LoginController> {
               child: TextField(
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
-                controller: controller.usernameController,
+                controller: controller.phoneController,
                 keyboardType: TextInputType.number,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
