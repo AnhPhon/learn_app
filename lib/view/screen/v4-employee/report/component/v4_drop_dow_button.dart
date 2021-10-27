@@ -38,7 +38,7 @@ class V4DropButtonAppBar extends StatelessWidget {
                     child: Text(
                       e,
                       style: const TextStyle(
-                        fontSize: Dimensions.PADDING_SIZE_DEFAULT,
+                        fontSize: Dimensions.FONT_SIZE_SMALL,
                         color: ColorResources.WHITE,
                       ),
                       overflow: TextOverflow.ellipsis,

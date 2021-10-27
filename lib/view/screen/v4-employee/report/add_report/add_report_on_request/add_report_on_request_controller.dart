@@ -69,6 +69,7 @@ class V4AddReportOnRequestController extends GetxController{
         if (value.isNotEmpty) {
           duAnNhanVienList.addAll(value);
         }
+        isLoading = false;
         update();
       },
       onError: (error) {

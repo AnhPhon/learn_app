@@ -18,7 +18,9 @@ class V4ReportPage extends GetView<V4ReportController> {
         action: [
           _filterlistreport(context),
         ],
+        isNotBack: true,
         title: "Danh sách báo cáo",
+
         // centerTitle: true,
       ),
       body: GetBuilder<V4ReportController>(
@@ -49,16 +51,6 @@ class V4ReportPage extends GetView<V4ReportController> {
   /// Lọc danh sách báo cáo hằng ngày hoặc báo cáo theo yêu cầu
   ///
   Widget _filterlistreport(BuildContext context) {
-    // return DropDownButton1<String>(
-        // isColorFieldWhite: true,
-        // labelBold: true,
-        // hint: '',
-        // label: '',
-        // data: controller.baoCao,
-        // obligatory: true,
-        // onChanged: (value) => controller.onChanged(value!),
-        // value: controller.filterindex,
-        // width: DeviceUtils.getScaledWidth(context, 0.3),
     return V4DropButtonAppBar(
       data: controller.baoCao,
       value: controller.filterindex,
@@ -295,10 +287,10 @@ Widget _floatingActionButtonReport(V4ReportController controller, BuildContext c
           size: Dimensions.ICON_SIZE_LARGE,
         ),
         backgroundColor: ColorResources.PRIMARY,
-        label: "Thêm báo cáo hằng ngày",
+        label: "Thêm báo cáo tuần",
         onTap: () {
-          // kiểm tra có trong thời gian cho phép báo cáo hay không
-          controller.managerReportTimer(context);
+          //đi đến trang báo cáo tuần
+          controller.onClickToDailyReport(context);
         },
         labelStyle: Dimensions.fontSizeStyle18w600(),
       ),
