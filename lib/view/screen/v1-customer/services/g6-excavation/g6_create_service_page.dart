@@ -31,22 +31,19 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-                  // Tiêu tề nhóm công việc
-                  const GroupTitle(title: "Dịch vụ xe đào, cầu nặng , máy khác"),
+                // Tiêu tề nhóm công việc
+                const GroupTitle(title: "Dịch vụ xe đào, cầu nặng , máy khác"),
 
-                  // Form nhập dữ 
-                  form(context, controller),
-                  
-                  // Button tiếp tục
-                  nextButton(controller: controller)
-                ],
-              ),
+                // Form nhập dữ 
+                form(context, controller),
+                
+                // Button tiếp tục
+                nextButton(controller: controller)
+              ],
             ),
           );
         },
