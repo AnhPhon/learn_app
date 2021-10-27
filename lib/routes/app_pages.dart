@@ -145,6 +145,7 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_su
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_page.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/search_recruitment_page.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_binding.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_page.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
@@ -544,6 +545,7 @@ class AppPages {
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
+
     ///
     /// Xem chi tiết thông báo
     ///
@@ -812,6 +814,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_HISTORY_RECRUITMENT_NEWS,
       page: () => V2HistoryRectuitmentNewsPage(),
+    ),
+    //tìm kiếm tin tuyển dụng
+    GetPage(
+      name: AppRoutes.V2_SEARCH_RECRUITMENT_NEWS,
+      page: () => V2SearchRecruitmentPage(),
     ),
 
     // Chọn hình thức ứng tuyển

@@ -182,7 +182,7 @@ class V1G7RecruitmentController extends GetxController {
             //load data frist
             getDataHinhThucLamViec();
             getDataTrinhDoHocVan();
-            getDataChuyenNangChinh();
+            getDataChuyenNganhChinh();
             getDataSoNamKinhNghiem();
             getDataMucLuongDuKien();
             getDataTinhTp(isLoadFrist: true);
@@ -272,7 +272,7 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data chuyên ngành chính
   ///
-  void getDataChuyenNangChinh() {
+  void getDataChuyenNganhChinh() {
     //list hinh thuc lam iec
     chuyenNganhChinhProvider.all(
         onSuccess: (value) {
@@ -282,7 +282,7 @@ class V1G7RecruitmentController extends GetxController {
           update();
         },
         onError: (error) =>
-            print('V1G7RecruitmentController getDataChuyenNangChinh $error'));
+            print('V1G7RecruitmentController getDataChuyenNganhChinh $error'));
   }
 
   ///

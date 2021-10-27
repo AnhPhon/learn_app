@@ -4,9 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_controller.dart';
-import 'package:template/view/basewidget/appbar/search_app_bar.dart';
-import 'package:template/view/basewidget/button/drop_down_button_icon.dart';
+import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/recruiment_news_card.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_controller.dart';
 
@@ -14,60 +12,46 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: AppBarController(),
-      builder: (AppBarController appbar) {
-        return GetBuilder(
-          init: V2RecruitmentController(),
-          builder: (V2RecruitmentController controller) {
-            return Scaffold(
-              appBar: SearchAppBarWidget(
-                title: "Tin tuyển dụng",
-                searchController: controller.searchController,
-                action: [
+      init: V2RecruitmentController(),
+      builder: (V2RecruitmentController controller) {
+        return Scaffold(
+          appBar: AppBarWidget(
+            title: "Tin tuyển dụng",
+            action: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    color: ColorResources.WHITE,
+                    onPressed: () {
+                      controller.onChangedSearch();
+                    },
+                  ),
                   IconButton(
                     icon: const Icon(Icons.history),
                     color: ColorResources.WHITE,
                     onPressed: () {
                       controller.onClickHistory();
                     },
-                  )
+                  ),
                 ],
-              ),
-              body: SafeArea(
-                  child: Column(
-                children: [
-                  if (appbar.isSearch)
-                    filter(context, controller: controller)
-                  else
-                    tabBarWidget(context, controller: controller),
-                  recruitment(context, controller: controller)
-                ],
-              )),
-            );
-          },
+              )
+            ],
+          ),
+          body: SafeArea(
+              child: Column(
+            children: [
+              tabBarWidget(context, controller: controller),
+              if (controller.isLoading)
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              else
+                recruitment(context, controller: controller)
+            ],
+          )),
         );
       },
-    );
-  }
-
-  Widget filterProfile(BuildContext context,
-      {required V2RecruitmentController controller}) {
-    return Expanded(
-      child: SizedBox(
-        height: DeviceUtils.getScaledHeight(context, 1),
-        child: ListView.builder(
-          itemCount: 7,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-                onTap: () {
-                  controller.onClickRecruitmentNews();
-                },
-                child: V2RecruimentNewsCard(
-                  index: index,
-                ));
-          },
-        ),
-      ),
     );
   }
 
@@ -85,18 +69,14 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController> {
           canLoadingText: "Kéo lên để tải thêm dữ liệu",
         ),
         child: ListView.builder(
-          itemCount: controller.currentIndex == 1
-              ? 3
-              : controller.currentIndex == 2
-                  ? 5
-                  : 7,
+          itemCount: controller.tuyenDungListModel.length,
           itemBuilder: (context, index) {
             return GestureDetector(
                 onTap: () {
                   controller.onClickRecruitmentNews();
                 },
                 child: V2RecruimentNewsCard(
-                  index: index,
+                  tuyenDungResponse: controller.tuyenDungListModel[index],
                 ));
           },
         ),
@@ -114,7 +94,7 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController> {
       bool? isSelectedMN = false}) {
     return GestureDetector(
       onTap: () {
-        controller.onChangeTab(index);
+        controller.onChangeTab(index: index);
       },
       child: Container(
         alignment: Alignment.center,
@@ -186,117 +166,6 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController> {
                       isSelectedMN: index == 2 ? true : false))
             ],
           )),
-    );
-  }
-
-  ///
-  ///Bộ lọc
-  ///
-  Widget filter(BuildContext context,
-      {required V2RecruitmentController controller}) {
-    return Container(
-      padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT),
-      child: Wrap(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  controller.showDialog();
-                },
-                child: DropDownButtonIcon<String>(
-                  width: DeviceUtils.getScaledWidth(context, 0.25),
-                  onChanged: (val) {},
-                  data: const [],
-                  icon: const Icon(
-                    Icons.filter_alt_outlined,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  hint: "Lọc",
-                  dropIcon: Container(),
-                  style: const TextStyle(color: ColorResources.BLACK),
-                ),
-              ),
-              DropDownButtonIcon<String>(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL),
-                width: DeviceUtils.getScaledWidth(context, 0.6),
-                onChanged: (val) {},
-                data: const [],
-                icon: const Icon(
-                  Icons.location_on,
-                  size: Dimensions.ICON_SIZE_DEFAULT,
-                ),
-                hint: "Toàn quốc",
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: Row(
-              children: [
-                DropDownButtonIcon<String>(
-                  width: DeviceUtils.getScaledWidth(context, 0.47),
-                  onChanged: (val) {},
-                  data: const [],
-                  icon: const Icon(
-                    Icons.work,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  hint: "Ngành nghề",
-                ),
-                DropDownButtonIcon<String>(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL),
-                  width: DeviceUtils.getScaledWidth(context, 0.4),
-                  onChanged: (val) {},
-                  data: const [],
-                  icon: const Icon(
-                    Icons.person,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  hint: "Giới tính",
-                ),
-              ],
-            ),
-          ),
-          // Kinh nghiêm trình độ
-          Padding(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: Row(
-              children: [
-                DropDownButtonIcon<String>(
-                  width: DeviceUtils.getScaledWidth(context, 0.4),
-                  onChanged: (val) {},
-                  data: const [],
-                  icon: const Icon(
-                    Icons.score,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  hint: "Kinh nghiệm",
-                ),
-                DropDownButtonIcon<String>(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL),
-                  width: DeviceUtils.getScaledWidth(context, 0.45),
-                  onChanged: (val) {},
-                  data: const [],
-                  icon: const Icon(
-                    Icons.school_rounded,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                  hint: "Trình độ",
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
     );
   }
 }

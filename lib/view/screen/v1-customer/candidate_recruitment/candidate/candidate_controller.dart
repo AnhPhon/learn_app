@@ -652,14 +652,10 @@ class V1CandidateController extends GetxController {
             dangKyViecMoiListModel.addAll(value);
             refreshControllerList![currentIndex].loadComplete();
           }
-          //reset và add value
-          // dangKyViecMoiListModel.clear();
-          // dangKyViecMoiListModel.addAll(value);
           isLoadingCadidate = false;
           update();
         },
-        onError: (error) =>
-            print('V1CandidateController getDataTrinhDo $error'));
+        onError: (error) => print('V1CandidateController getDataSeach $error'));
   }
 
   ///
