@@ -18,7 +18,8 @@ class AppRoutes {
   static const String V1_NOTIFICATION = "/v1_notification";
 
   // Phản hồi dịch vụ thường xuyên click từ thông báo
-  static const String V1_ORDER_FEEDBACK_CONTRACTORS = "/v1orderfeedbackcontractors";
+  static const String V1_ORDER_FEEDBACK_CONTRACTORS =
+      "/v1orderfeedbackcontractors";
 
   // Phản hồi đơn hàng nhóm 5
   static const String V1_GROUP_ORDER_FEEDBACK5 = "/v1_grouporderfeedback5";
@@ -79,9 +80,11 @@ class AppRoutes {
 
   // Hình thức thanh toán
   static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
+  //
 
   //
-  static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
+  static const String V1_FORMAL_FEEDBACK_PAYMENT =
+      "/v1_formal_feedback_payment";
 
   //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
 
@@ -192,8 +195,10 @@ class AppRoutes {
   static const String V2_RECHARGE = '/v2_recharge';
   static const String V2_NEWS_DETAIL = '/v2_news_detail';
   static const String V2_PROJECT_DETAIL = '/v2_project_detail';
-  static const String V2_PROJECT_DETAIL_TRIEN_KHAI = '/v2_project_detail_trien_khai';
-  static const String V2_PROJECT_DANG_KY_TRIEN_KHAI = '/v2_project_dang_ky_trien_khai';
+  static const String V2_PROJECT_DETAIL_TRIEN_KHAI =
+      '/v2_project_detail_trien_khai';
+  static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
+      '/v2_project_dang_ky_trien_khai';
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -238,13 +243,16 @@ class AppRoutes {
   static const String V3_NEWS = '/v3_news';
   static const String V3_FINISH_UPDATE = '/v3_finish_update';
   static const String V3_PHAN_HOI_BAO_GIA = '/v3_finish_update';
-  static const String V3_PROJECT_DETAIL_TRIEN_KHAI = '/v3_project_detail_trien_khai';
-  static const String V3_PROJECT_DANG_KY_TRIEN_KHAI = '/v3_project_dang_ky_trien_khai';
+  static const String V3_PROJECT_DETAIL_TRIEN_KHAI =
+      '/v3_project_detail_trien_khai';
+  static const String V3_PROJECT_DANG_KY_TRIEN_KHAI =
+      '/v3_project_dang_ky_trien_khai';
   static const String V3_ORDER_DETAIL = '/v3_order_detail';
   static const String V3_PRODUCT_DETAIL = '/v3_product_detail';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
+  static const String V4_DETAIL_WORK = '/v4_detail_work';
 
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
@@ -281,7 +289,8 @@ class AppRoutes {
   static const String V2_VIEW_RECRUITMENT_NEWS = '/v2_view_recruitment_news';
 
   //Xem lịch sử tin đã ứng tuyển và đã lưu
-  static const String V2_HISTORY_RECRUITMENT_NEWS = '/v2_history_recruitment_news';
+  static const String V2_HISTORY_RECRUITMENT_NEWS =
+      '/v2_history_recruitment_news';
 
   // Hình thức ứng tuyển
   static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
@@ -312,7 +321,8 @@ class AppRoutes {
   static const String V2_WORK_DONE = '/v2_work_done';
   static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
   static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
-  static const String V2_DETAIL_WORK_IN_PROGRESS = '/v2_detail_work_in_progress';
+  static const String V2_DETAIL_WORK_IN_PROGRESS =
+      '/v2_detail_work_in_progress';
 
   // Builder
   // static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
