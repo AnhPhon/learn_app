@@ -132,9 +132,6 @@ class V3HomeController extends GetxController {
       onSuccess: (sanPhamModels) {
         // get san pham list
         sanPhamList = sanPhamModels;
-
-        // set is loading
-        isLoading = false;
         update();
       },
       onError: (error) {
@@ -170,6 +167,8 @@ class V3HomeController extends GetxController {
       filter: "&doiTuong=$type",
       onSuccess: (data) {
         thongBaoList = data;
+        // set is loading
+        isLoading = false;
         update();
       },
       onError: (error) {

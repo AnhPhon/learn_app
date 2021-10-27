@@ -33,6 +33,7 @@ class V2HomePage extends GetView<V2HomeController> {
             onLoading: controller.onLoading,
             child: HomeWidget(
               fullname: "NT, ${controller.fullname}",
+              soThongBao: controller.thongBaoList.length,
               content: Column(
                 children: [
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
