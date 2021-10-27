@@ -196,6 +196,12 @@ class V1G7ReviewController extends GetxController {
   /// Nhấn tiếp tục
   ///
   void onClickPostButton() {
-    Get.toNamed(AppRoutes.V1_G7_PRICE_LIST, arguments: tuyenDungRequest);
+    Get.toNamed(AppRoutes.V1_G7_PRICE_LIST, arguments: tuyenDungRequest)!
+        .then((value) => {
+              if (value != null && value == true)
+                {
+                  Get.back(result: true),
+                }
+            });
   }
 }

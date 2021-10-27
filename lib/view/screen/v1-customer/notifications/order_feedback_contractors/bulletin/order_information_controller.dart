@@ -15,7 +15,7 @@ import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
-class OrderInformationController extends GetxController {
+class V1OrderInformationController extends GetxController {
   // Provider
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final TuyenDungProvider tuyenDungProvider = GetIt.I.get<TuyenDungProvider>();
@@ -108,6 +108,7 @@ class OrderInformationController extends GetxController {
         Alert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái đã thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
+        tuyenDungRequest!.loaiTin = "2";
         //insert db
         tuyenDungRepository.add(tuyenDungRequest!).then((value) => {
               if (value.response.data != null)
@@ -123,6 +124,7 @@ class OrderInformationController extends GetxController {
         Alert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái chưa thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
+        tuyenDungRequest!.loaiTin = "2";
         //insert db
         tuyenDungRepository.add(tuyenDungRequest!).then((value) => {
               if (value.response.data != null)
