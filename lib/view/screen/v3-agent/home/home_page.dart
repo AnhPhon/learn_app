@@ -32,6 +32,7 @@ class V3HomePage extends GetView<V3HomeController> {
             onRefresh: controller.onRefresh,
             child: HomeWidget(
               fullname: "DL, ${controller.fullname}",
+              soThongBao: controller.thongBaoList.length,
               content: Column(
                 children: [
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -145,6 +146,7 @@ class V3HomePage extends GetView<V3HomeController> {
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
+              iconColor: ColorResources.BLACK,
             ),
           );
         },
