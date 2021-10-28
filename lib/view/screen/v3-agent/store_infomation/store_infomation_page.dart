@@ -1,16 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
+import 'package:template/data/model/response/nhom_cua_hang_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/drop_down_button.dart';
-import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
+import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
+import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_controller.dart';
 
 class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
@@ -19,75 +28,116 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
     return GetBuilder<V3StoreInfomationController>(
         init: V3StoreInfomationController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
-
                   //name company
                   InputWidget(
-                    width: double.infinity,
                     label: "Tên doanh nghiệp (hoặc tên cá nhân)",
                     obligatory: true,
                     textEditingController: controller.nameController,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //legal Representative
                   InputWidget(
-                    width: double.infinity,
                     label: "Người đại diện pháp lý (chủ doanh nghiệp/cá nhân)",
                     obligatory: true,
                     textEditingController:
                         controller.legalRepresentativeController,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //phone
                   InputWidget(
-                    width: double.infinity,
                     label: "SĐT Zalo",
                     obligatory: true,
                     textEditingController: controller.phoneController,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //email
                   InputWidget(
-                    width: double.infinity,
                     label: "Email",
                     obligatory: true,
                     textEditingController: controller.emailController,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //store group
-                  DropDownButton<StoreGroup>(
-                    hint: "Chọn nhóm cửa hàng",
-                    value: controller.storeGroup!,
-                    onChanged: controller.onSelectedStoreGroup,
-                    data: controller.storeGroupList,
-                    width: double.infinity,
+                  DropDownButton1<NhomCuaHangResponse>(
                     label: "Chọn nhóm cửa hàng",
+                    hint: "Chọn nhóm cửa hàng",
+                    labelBold: true,
+                    value: controller.nhomCuaHangResponse,
+                    onChanged: (val) =>
+                        controller.onSelectedNhomCuaHang(value: val!),
+                    data: controller.nhomCuaHangList,
+                    width: .95,
                     obligatory: true,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
                   ),
 
                   //product special
-                  DropDownButton<ProductSpecial>(
-                    hint: "Chọn nhóm cửa hàng",
-                    value: controller.productSpecial!,
-                    onChanged: (value) =>
-                        controller.onProductSpecialGroup(value!),
-                    data: controller.productSpecialList,
-                    width: double.infinity,
+                  const Label(
                     label: "Chọn mặt hàng đặc trưng",
                     obligatory: true,
-                    isColorFieldWhite: true,
+                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    child: MultiSelectDialogField<MatHangDacTrungResponse?>(
+                      initialValue: controller.matHangDacTrungResponse,
+                      listType: MultiSelectListType.CHIP,
+                      items: controller.matHangDacTrungList
+                          .map((e) => MultiSelectItem(e, e!.tieuDe!))
+                          .toList(),
+                      title: const Text("Chọn mặt hàng đặc trưng"),
+                      selectedColor: Colors.blue,
+                      selectedItemsTextStyle:
+                          const TextStyle(color: ColorResources.WHITE),
+                      checkColor: ColorResources.WHITE,
+                      buttonText: Text(
+                        "Chọn mặt hàng đặc trưng",
+                        style: TextStyle(
+                          color: Colors.blue[800],
+                          fontSize: 16,
+                        ),
+                      ),
+                      onConfirm: (List<MatHangDacTrungResponse?> results) {
+                        controller.matHangDacTrungResponse = results;
+                      },
+                    ),
                   ),
 
                   //store address
@@ -95,11 +145,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
                   //address
                   InputWidget(
-                    width: double.infinity,
                     label: "Địa chỉ cụ thể(số nhà, tên đường)",
                     obligatory: true,
                     textEditingController: controller.addressController,
-                    isColorFieldWhite: true,
+                    fillColor: ColorResources.WHITE,
+                    width: .95,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //working hours in day
@@ -109,33 +166,42 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     isRequired: true,
                   ),
 
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                  ),
-
                   //accept work
-                  DropDownButton1<String>(
+                  DropDownMapButton<String>(
                     label: "Chiều thứ 7 có làm việc không?",
+                    labelBold: true,
                     hint: "Chọn có hoặc không",
-                    value: controller.acceptWork,
-                    onChanged: controller.onSelectedAcceptWork,
-                    data: const ["Có", "Không"],
-                    width: double.infinity,
+                    value: controller.taiKhoanResponse.lamChieuThuBay,
+                    onChanged: (val) =>
+                        controller.onSelectedLamChieuThuBay(value: val!),
+                    data: controller.boolAccept,
+                    width: .95,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
-                  DropDownButton1<String>(
+                  DropDownMapButton<String>(
                     label: "Chủ nhật có làm việc không?",
+                    labelBold: true,
                     hint: "Chọn có hoặc không",
-                    value: controller.acceptWork,
-                    onChanged: controller.onSelectedAcceptWork,
-                    data: const ["Có", "Không"],
-                    width: double.infinity,
+                    value: controller.taiKhoanResponse.lamNgayChuNhat,
+                    onChanged: (val) =>
+                        controller.onSelectedLamNgayChuNhat(value: val!),
+                    data: controller.boolAccept,
+                    width: .95,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //note
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                      horizontal: Dimensions.PADDING_SIZE_SMALL,
                     ),
                     child: Text(
                       controller.note,
@@ -144,15 +210,44 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     ),
                   ),
 
-                  //warehouse address
-                  _warehouseAddress(context),
+                  //warehouse address list
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.khoHangModelList.length,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      if (controller.isLoadingAdd &&
+                          index == controller.khoHangModelList.length - 1) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (controller.isLoadingAdd) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (controller.isLoadingWarehouse) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return _warehouseAddress(context, index: index);
+                    },
+                  ),
 
                   //warehouse address add
-                  _warehouseAddressAdd(),
+                  _warehouseAddressAdd(context, controller: controller),
 
-                  //image
-                  _textTitle(context, title: "Hình ảnh cửa hàng"),
+                  //uploadImage
                   _uploadImage(context, controller),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  ),
+
+                  //btn
+                  _btnBottom(context, controller: controller),
 
                   const SizedBox(
                     height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
@@ -160,7 +255,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 ],
               ),
             ),
-            bottomNavigationBar: _btnBottom(context, controller),
           );
         });
   }
@@ -169,110 +263,181 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   /// store address
   ///
   Widget _storeAddress(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_DEFAULT,
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(
-                text: "Địa điểm cửa hàng chính",
-                style: Dimensions.fontSizeStyle18w600().copyWith(
-                  color: ColorResources.BLACK,
-                ),
-                children: const [
-                  TextSpan(
-                    text: "*",
-                    style: TextStyle(
-                      color: ColorResources.RED,
-                    ),
-                  )
-                ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Label(
+          label: "Địa điểm cửa hàng chính",
+          obligatory: true,
+          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          topPadding: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        const Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: Text(
+            "Tỉnh/Thành phố",
+            style: TextStyle(
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        DefaultTextStyle(
+          style: const TextStyle(
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              color: ColorResources.BLACK),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              onSelectedLocation(
+                context,
+                ward: controller.phuongXasList,
+                city: "Hồ Chí Minh",
+                district: controller.quanHuyensList,
+                value: 0,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.hcmPhuong,
+                huyen: controller.hcmHuyen,
               ),
-            ),
+              onSelectedLocation(
+                context,
+                ward: controller.phuongXasList,
+                city: "Hà Nội",
+                district: controller.quanHuyensList,
+                value: 1,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.haNoiPhuong,
+                huyen: controller.haNoiHuyen,
+              ),
+              onSelectedLocation(
+                context,
+                ward: controller.phuongXasList,
+                city: "Đà Nẵng",
+                district: controller.quanHuyensList,
+                value: 2,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.daNangPhuong,
+                huyen: controller.daNangHuyen,
+              ),
+              onSelectedLocation(
+                context,
+                ward: controller.otherwards,
+                city: "Tỉnh thành khách",
+                district: controller.otherDistricts,
+                value: 3,
+                groupValue: controller.groupTinhTpValue,
+                onChanged: (int? val) => controller.onChangedGroup(val!),
+                onChangedHuyen: (QuanHuyenResponse? val) =>
+                    controller.onChangedQuanHuyen(val!),
+                onChangedPhuong: (PhuongXaResponse? val) =>
+                    controller.onChangedPhuongXa(val!),
+                phuong: controller.khacPhuong,
+                huyen: controller.khacHuyen,
+                isRadio: false,
+                tinh: controller.otherProvince,
+                onChangedProvince: (TinhTpResponse? val) =>
+                    controller.onChangedTinhThanh(val!),
+                tinhList: controller.otherProvinces,
+              ),
+            ],
           ),
-          Container(
-            margin: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-            child: const Text(
-              "Tỉnh/Thành phố:",
-              style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-          DefaultTextStyle(
-            style: const TextStyle(
-                fontSize: Dimensions.FONT_SIZE_LARGE,
-                color: ColorResources.BLACK),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                onSelectedStoreAddress(context,
-                    ward: ["Hoà Khánh", "Thanh Khê"],
-                    city: "Hồ Chí Minh",
-                    district: ["Quận 9", "Quận 8"],
-                    value: 0),
-                onSelectedStoreAddress(context,
-                    ward: ["Hoà Khánh", "Thanh Khê"],
-                    city: "Hà Nội",
-                    district: ["Quận 9", "Quận 8"],
-                    value: 1),
-                onSelectedStoreAddress(context,
-                    ward: ["Hoà Khánh", "Thanh Khê"],
-                    city: "Đà Nẵng",
-                    district: ["Quận 9", "Quận 8"],
-                    value: 2),
-              ],
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
   ///
-  /// Radio button chon đia điểm cua hang
+  /// Radio button chon đia điểm
   ///
-  Widget onSelectedStoreAddress(
+  Widget onSelectedLocation(
     BuildContext context, {
-    required List<String> district,
+    required List<QuanHuyenResponse> district,
     required String city,
-    required List<String> ward,
+    required List<PhuongXaResponse> ward,
     required int value,
+    QuanHuyenResponse? huyen,
+    PhuongXaResponse? phuong,
+    required int groupValue,
+    required Function(int? val) onChanged,
+    required Function(QuanHuyenResponse? val) onChangedHuyen,
+    required Function(PhuongXaResponse? val) onChangedPhuong,
+    bool? isRadio = true,
+    List<TinhTpResponse>? tinhList,
+    TinhTpResponse? tinh,
+    Function(TinhTpResponse? val)? onChangedProvince,
   }) {
     return Column(
       children: [
-        RadioButton<int>(
-          title: city,
-          value: value,
-          groupValue: 1,
-          onChanged: (int? val) {},
-        ),
+        if (isRadio!)
+          RadioButton<int>(
+            title: city,
+            value: value,
+            groupValue: groupValue,
+            onChanged: (int? val) => onChanged(val),
+          )
+        else
+          Row(
+            children: [
+              RadioButton<int>(
+                title: "",
+                value: value,
+                groupValue: groupValue,
+                onChanged: (int? val) => onChanged(val),
+              ),
+              DropDownButton1<TinhTpResponse>(
+                data: tinhList!,
+                onChanged: value == groupValue
+                    ? (TinhTpResponse? val) => onChangedProvince!(val)
+                    : null,
+                value: tinh,
+                hint: "Chọn tỉnh khác",
+                width: .4,
+                isBorder: false,
+              ),
+            ],
+          ),
         Padding(
           padding: const EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2),
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              DropDownButtonHideUnderLineWidget<String>(
+              DropDownButton1<QuanHuyenResponse>(
                 data: district,
-                onChanged: (val) {},
-                value: "Quận 9",
+                onChanged: value == groupValue
+                    ? (QuanHuyenResponse? val) => onChangedHuyen(val)
+                    : null,
+                value: huyen,
                 hint: "Quận/Huyện",
-                width: DeviceUtils.getScaledWidth(context, 0.3),
+                width: .4,
+                isBorder: false,
               ),
-              DropDownButtonHideUnderLineWidget<String>(
+              DropDownButton1<PhuongXaResponse>(
                 data: ward,
-                onChanged: (val) {},
-                value: null,
+                onChanged: value == groupValue
+                    ? (PhuongXaResponse? val) => onChangedPhuong(val)
+                    : null,
+                value: phuong,
                 hint: "Phường/xã",
-                width: DeviceUtils.getScaledWidth(context, 0.3),
+                width: .4,
+                isBorder: false,
               ),
             ],
           ),
@@ -288,7 +453,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
       {required String title, required bool isRequired}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
       ),
       child: Column(
         children: [
@@ -298,7 +463,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
             child: RichText(
                 text: TextSpan(
               text: title,
-              style: Dimensions.fontSizeStyle16().copyWith(
+              style: Dimensions.fontSizeStyle16w600().copyWith(
                 color: ColorResources.BLACK,
               ),
               children: isRequired == true
@@ -315,7 +480,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
           ),
 
           const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
+            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
           ),
 
           // time range
@@ -326,20 +491,27 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                 flex: 5,
                 child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    //label
                     Text(
                       "Từ",
-                      style: Dimensions.fontSizeStyle18(),
+                      style: Dimensions.fontSizeStyle16w600(),
                     ),
+
                     const SizedBox(
-                      width: Dimensions.MARGIN_SIZE_DEFAULT,
+                      width: Dimensions.MARGIN_SIZE_SMALL,
                     ),
+
+                    //filed
                     InputWidget(
-                      width: .25,
+                      height: .06,
+                      width: .34,
                       textEditingController: controller.startController,
                       isTime: true,
                       allowEdit: false,
+                      suffixIcon: const Icon(Icons.calendar_today_outlined),
+                      fillColor: ColorResources.WHITE,
                     ),
                   ],
                 ),
@@ -349,21 +521,28 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                   flex: 5,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
-                    // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      //label
                       Text(
                         "Đến",
-                        style: Dimensions.fontSizeStyle18(),
+                        style: Dimensions.fontSizeStyle16w600(),
                       ),
+
                       const SizedBox(
-                        width: Dimensions.MARGIN_SIZE_DEFAULT,
+                        width: Dimensions.MARGIN_SIZE_SMALL,
                       ),
+
+                      //filed
                       InputWidget(
-                        width: .25,
+                        height: .06,
+                        width: .34,
                         textEditingController: controller.endController,
                         isTime: true,
                         allowEdit: false,
+                        suffixIcon: const Icon(Icons.calendar_today_outlined),
+                        fillColor: ColorResources.WHITE,
                       ),
                     ],
                   )),
@@ -377,87 +556,239 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   ///warehouse address
   ///
-  Widget _warehouseAddress(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-        vertical: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //title
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Địa điểm kho hàng 1",
-              style: Dimensions.fontSizeStyle18w600().copyWith(
-                color: ColorResources.BLACK,
+  Widget _warehouseAddress(BuildContext context, {required int index}) {
+    return GetBuilder<V3StoreInfomationController>(builder: (controller) {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: ColorResources.LIGHT_SKY_BLUE),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+        ),
+        margin: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        padding: const EdgeInsets.only(
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_SMALL,
+          right: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //title
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //label
+                Label(
+                  label: "Địa điểm kho hàng ${index + 1}",
+                  obligatory: false,
+                  topPadding: 0,
+                  horizontalPadding: 0,
+                  paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+
+                //btn remove
+                GestureDetector(
+                  onTap: () {
+                    if (controller.khoHangModelList[index].idKhoHang != null) {
+                      Get.dialog(
+                        _deleteItem(context,
+                            index: index, controller: controller),
+                      );
+                    } else {
+                      controller.onDeleteWarehouse(index: index);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorResources.RED,
+                      border: Border.all(color: ColorResources.WHITE),
+                    ),
+                    child: const Icon(
+                      Icons.close_outlined,
+                      size: Dimensions.ICON_SIZE_SMALL,
+                      color: ColorResources.WHITE,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            //province
+            DropDownButton1<TinhTpResponse?>(
+              hint: "Tỉnh",
+              onChanged: (value) =>
+                  controller.onChangedTinhThanhIsWarehouse(value!, index),
+              data: controller.khoHangModelList[index].tinhTpList!,
+              value: controller.khoHangModelList[index].tinhTpResponse,
+              width: .4,
+              isBorder: false,
+            ),
+
+            //district & ward
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                DropDownButton1<QuanHuyenResponse?>(
+                  hint: "Quận/huyện",
+                  onChanged: (value) =>
+                      controller.onChangedQuanHuyenIsWarehouse(value!, index),
+                  data: controller.khoHangModelList[index].quanHuyenList!,
+                  value: controller.khoHangModelList[index].quanHuyenResponse,
+                  width: .4,
+                  isBorder: false,
+                ),
+                DropDownButton1<PhuongXaResponse>(
+                  hint: "Phường/xã",
+                  onChanged: (value) =>
+                      controller.onChangedPhuongXaIsWarehouse(value!, index),
+                  data: controller.khoHangModelList[index].phuongXaList!,
+                  value: controller.khoHangModelList[index].phuongXaResponse,
+                  width: .4,
+                  isBorder: false,
+                ),
+              ],
+            ),
+
+            //warehouse address
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //title
+                Text(
+                  "Địa chỉ cụ thể",
+                  style: Dimensions.fontSizeStyle16w600(),
+                ),
+
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+
+                //input
+                Expanded(
+                  child: InputWidget(
+                    height: .06,
+                    width: double.infinity,
+                    textEditingController:
+                        controller.khoHangModelList[index].warehouseAddress!,
+                    textInputAction: TextInputAction.next,
+                    fillColor: ColorResources.WHITE,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_DEFAULT,
+            ),
+
+            //warehouse name
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //title
+                Text(
+                  "Tên kho hàng",
+                  style: Dimensions.fontSizeStyle16w600(),
+                ),
+
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+
+                //input
+                Expanded(
+                  child: InputWidget(
+                    height: .06,
+                    width: double.infinity,
+                    textEditingController:
+                        controller.khoHangModelList[index].warehouseName!,
+                    fillColor: ColorResources.WHITE,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  ///
+  ///delete
+  ///
+  Widget _deleteItem(
+    BuildContext context, {
+    required int index,
+    required V3StoreInfomationController controller,
+  }) {
+    return Center(
+      child: Container(
+        height: DeviceUtils.getScaledHeight(context, .35),
+        margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.PADDING_SIZE_LARGE,
+          vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+        ),
+        decoration: BoxDecoration(
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Xác nhận",
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
-          ),
-
-          //province
-          DropDownButtonHideUnderLineWidget<String>(
-            hint: "Tỉnh",
-            onChanged: (value) {},
-            data: const ["Tỉnh"],
-            value: null,
-            width: DeviceUtils.getScaledWidth(context, .3),
-          ),
-
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
-          ),
-
-          //district & ward
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DropDownButtonHideUnderLineWidget<String>(
-                hint: "Quận/huyện",
-                onChanged: (value) {},
-                data: const ["Quận"],
-                value: null,
-                width: DeviceUtils.getScaledWidth(context, .3),
+            // const SizedBox(
+            //   height: Dimensions.MARGIN_SIZE_DEFAULT,
+            // ),
+            const Flexible(
+              child: Text(
+                "Xoá kho hàng sẽ xoá hết các sản phẩm thuộc kho hàng. Bạn có chắc chắn muốn xoá kho hàng này không?",
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE),
               ),
-              DropDownButtonHideUnderLineWidget<String>(
-                hint: "Phường/xã",
-                onChanged: (value) {},
-                data: const ["Phường"],
-                value: null,
-                width: DeviceUtils.getScaledWidth(context, .3),
-              ),
-            ],
-          ),
-
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
-          ),
-
-          //warehouse address
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "Địa chỉ cụ thể",
-                style: Dimensions.fontSizeStyle18(),
-              ),
-              const SizedBox(
-                width: Dimensions.MARGIN_SIZE_DEFAULT,
-              ),
-              InputWidget(
-                width: .5,
-                textEditingController: controller.warehouseController,
-              ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+            Row(
+              children: [
+                BtnCustomBorder(
+                  onTap: () {
+                    controller.onDeleteWarehouse(index: index);
+                    Get.back();
+                  },
+                  text: "Đồng ý",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                BtnCustom(
+                  onTap: () => Get.back(),
+                  color: ColorResources.PRIMARY,
+                  text: "Huỷ",
+                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -465,44 +796,33 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   ///warehouse address add
   ///
-  Widget _warehouseAddressAdd() {
+  Widget _warehouseAddressAdd(BuildContext context,
+      {required V3StoreInfomationController controller}) {
     return Column(
       children: [
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
-        Container(
-          alignment: Alignment.center,
-          decoration: const ShapeDecoration(
-              color: ColorResources.GREY, shape: CircleBorder()),
-          child: const Icon(
-            Icons.add,
-            size: Dimensions.ICON_SIZE_DEFAULT,
+        GestureDetector(
+          onTap: () => controller.onClickWareHouseAdd(),
+          child: Container(
+            alignment: Alignment.center,
+            decoration: const ShapeDecoration(
+                color: ColorResources.GREY, shape: CircleBorder()),
+            child: const Icon(
+              Icons.add,
+              size: Dimensions.ICON_SIZE_DEFAULT,
+            ),
           ),
         ),
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_SMALL,
         ),
-        const Text("Thêm địa điểm kho hàng"),
-      ],
-    );
-  }
-
-  ///
-  ///text title
-  ///
-  Widget _textTitle(BuildContext context, {required String title}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-          fontWeight: FontWeight.bold,
+        Text(
+          "Thêm địa điểm kho hàng",
+          style: Dimensions.fontSizeStyle16w600(),
         ),
-      ),
+      ],
     );
   }
 
@@ -511,53 +831,14 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   Widget _uploadImage(
       BuildContext context, V3StoreInfomationController controller) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-          horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-      decoration: BoxDecoration(
-        border: Border.all(color: ColorResources.PRIMARY),
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-      ),
-      height: DeviceUtils.getScaledHeight(context, .158),
-      child: Align(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.taxImageList.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                          right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        child: Image.file(
-                          controller.taxImageList[index],
-                          fit: BoxFit.fill,
-                          height: DeviceUtils.getScaledHeight(context, .122),
-                          width: DeviceUtils.getScaledWidth(context, .254),
-                        ),
-                      ),
-                    );
-                  }),
-              GestureDetector(
-                onTap: () => controller.pickImage(),
-                child: Image.asset(
-                  Images.add_image,
-                  height: DeviceUtils.getScaledHeight(context, .122),
-                  width: DeviceUtils.getScaledWidth(context, .254),
-                  fit: BoxFit.fill,
-                  color: ColorResources.PRIMARY,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return ImageListHorizontalAdd<File>(
+      label: "Hình ảnh cửa hàng",
+      labelBold: true,
+      pickImage: () => controller.pickImage(),
+      imageFileList: controller.fileImageList,
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
       ),
     );
   }
@@ -565,29 +846,15 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   ///btn bottom
   ///
-  Widget _btnBottom(
-      BuildContext context, V3StoreInfomationController controller) {
+  Widget _btnBottom(BuildContext context,
+      {required V3StoreInfomationController controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BtnCustom(
-            onTap: () {},
-            color: ColorResources.GREY,
-            text: "Chỉnh sửa",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-          const SizedBox(
-            width: Dimensions.MARGIN_SIZE_LARGE,
-          ),
-          BtnCustom(
-            onTap: () {},
-            color: ColorResources.PRIMARY,
-            text: "Cập nhật",
-            width: DeviceUtils.getScaledWidth(context, .4),
-          ),
-        ],
+      child: BtnCustom(
+        onTap: () => controller.btnUpdate(context),
+        color: ColorResources.PRIMARY,
+        text: "Cập nhật",
+        width: DeviceUtils.getScaledWidth(context, .95),
       ),
     );
   }

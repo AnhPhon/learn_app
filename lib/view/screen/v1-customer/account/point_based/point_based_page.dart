@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/row_text.dart';
-import 'package:template/view/screen/v1-customer/component_customer/tab_bar_widget.dart';
 
 class V1PointBasedPage extends GetView<V1PointBasedController> {
   @override
@@ -39,34 +37,32 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
                     const SizedBox.shrink()
                   else
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //start
-                        _timeRange(
-                          context,
-                          title: "Từ ngày",
-                          textController: controller.startController,
-                          hintText:
-                              DateConverter.estimatedDateOnly(DateTime.now()),
-                        ),
-
-                        const SizedBox(
-                          width: Dimensions.MARGIN_SIZE_LARGE,
+                        InputWidget(
+                          label: "Từ ngày",
+                          textEditingController: controller.startController,
+                          width: .4,
+                          isDate: true,
+                          allowEdit: false,
+                          isColorFieldWhite: true,
                         ),
 
                         //end
-                        _timeRange(
-                          context,
-                          title: "Đến ngày",
-                          textController: controller.endController,
-                          hintText:
-                              DateConverter.estimatedDateOnly(DateTime.now()),
+                        InputWidget(
+                          label: "Đến ngày",
+                          textEditingController: controller.startController,
+                          width: .4,
+                          isDate: true,
+                          allowEdit: false,
+                          isColorFieldWhite: true,
                         ),
                       ],
                     ),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //item list
@@ -82,9 +78,8 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
                 ],
               ),
             ),
-            bottomNavigationBar: controller.currentIndex == 0
-                ? _btnBottomSheet(context)
-                : _bottomTimeRange(context),
+            bottomNavigationBar:
+                controller.currentIndex == 0 ? null : _bottomTimeRange(context),
           );
         });
   }
@@ -117,7 +112,7 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
   ///
   ///hide/show time range
   ///
-  Widget _timeRange(
+  Widget timeRange(
     BuildContext context, {
     required String title,
     required TextEditingController textController,
@@ -140,34 +135,34 @@ class V1PointBasedPage extends GetView<V1PointBasedController> {
     );
   }
 
-  ///
-  ///btn bottom sheet
-  ///
-  Widget _btnBottomSheet(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-      height: DeviceUtils.getScaledHeight(context, .2),
-      color: ColorResources.WHITE,
-      child: Column(
-        children: [
-          //total
-          const RowText(text1: "Tổng đơn", text2: "1 đơn"),
+  // ///
+  // ///btn bottom sheet
+  // ///
+  // Widget _btnBottomSheet(BuildContext context) {
+  //   return Container(
+  //     padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+  //     height: DeviceUtils.getScaledHeight(context, .2),
+  //     color: ColorResources.WHITE,
+  //     child: Column(
+  //       children: [
+  //         //total
+  //         const RowText(text1: "Tổng đơn", text2: "1 đơn"),
 
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_LARGE,
-          ),
+  //         const SizedBox(
+  //           height: Dimensions.MARGIN_SIZE_LARGE,
+  //         ),
 
-          //btn
-          BtnCustom(
-            onTap: () {},
-            color: ColorResources.PRIMARY,
-            text: "Tích điểm",
-            width: DeviceUtils.getScaledWidth(context, .9),
-          ),
-        ],
-      ),
-    );
-  }
+  //         //btn
+  //         BtnCustom(
+  //           onTap: () {},
+  //           color: ColorResources.PRIMARY,
+  //           text: "Tích điểm",
+  //           width: DeviceUtils.getScaledWidth(context, .9),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   ///
   ///bottom time range

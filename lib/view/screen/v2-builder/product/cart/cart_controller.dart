@@ -1,35 +1,140 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
+import 'package:template/data/model/response/chi_tiet_don_hang_response.dart';
+import 'package:template/data/model/response/don_hang_response.dart';
+import 'package:template/data/model/response/tai_khoan_response.dart';
+import 'package:template/provider/chi_tiet_don_hang_provider.dart';
+import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component_border.dart';
 
 class V2CartController extends GetxController {
+  //donHang
+  DonHangProvider donHangProvider = GetIt.I.get<DonHangProvider>();
+  DonHangResponse? donHangResponse;
+
+  //ChiTietDonHang
+  ChiTietDonHangProvider chiTietDonHangProvider =
+      GetIt.I.get<ChiTietDonHangProvider>();
+  ChiTietDonHangRequest chiTietDonHangRequest = ChiTietDonHangRequest();
+  List<ChiTietDonHangResponse> chiTietDonHangList = [];
+
+  //TaiKhoan
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
+
+  //quality list
+  List<int>? qualityList;
+
+  //loading
+  bool isReloadAddress = false;
+
+  //total
+  int total = 0;
+  int totalAmount = 0;
+
+  //user id
+  String userId = "";
+
+  //loading
+  // bool isLoading = true;
+
+  //title appbar
   String title = "Giỏ hàng";
 
-  String imgProduct = Images.newsTemplate;
+  @override
+  void onInit() {
+    super.onInit();
+    //get arguments
+    chiTietDonHangList =
+        Get.arguments['chiTietDonHangList'] as List<ChiTietDonHangResponse>;
+    donHangResponse = (Get.arguments['donHang'] != null)
+        ? Get.arguments['donHang'] as DonHangResponse
+        : null;
 
-  int qualityProduct = 1;
+    //get quality
+    qualityList = List<int>.generate(chiTietDonHangList.length,
+        (index) => int.parse(chiTietDonHangList[index].soLuong.toString()));
+        
+    //get total
+    getTotal();
+  }
+
+  ///
+  ///get total
+  ///
+  void getTotal() {
+    total = 0;
+    totalAmount = 0;
+    for (final element in chiTietDonHangList) {
+      total = total +
+          (int.parse(element.soLuong.toString()) *
+              int.parse(
+                element.idSanPham!.gia.toString(),
+              ));
+    }
+
+    totalAmount = total +
+        int.parse(donHangResponse!.phiDichVu.toString()) +
+        int.parse(donHangResponse!.phiVanChuyen.toString());
+    update();
+  }
+
+  ///
+  ///reload address
+  ///
+  void reloadAddress() {
+    donHangProvider.find(
+      id: donHangResponse!.id.toString(),
+      onSuccess: (data) {
+        donHangResponse = data;
+        isReloadAddress = false;
+        update();
+      },
+      onError: (error) {
+        print("V2ProductDetailController reloadAddress onError $error");
+      },
+    );
+  }
+
+  ///
+  ///update chiTietDonHang
+  ///
+  void updateChiTietDonHang({required int index, required String quality}) {
+    //set data
+    chiTietDonHangRequest.id = chiTietDonHangList[index].id;
+    chiTietDonHangRequest.soLuong = quality;
+
+    //update chiTietDonHang
+    chiTietDonHangProvider.update(
+      data: chiTietDonHangRequest,
+      onSuccess: (data) {
+        print("update số lượng");
+      },
+      onError: (error) {
+        print("V2ProductDetailController donHangAdd onError $error");
+      },
+    );
+  }
 
   ///
   ///incre quality
   ///
-  void increQuality() {
-    qualityProduct += 1;
+  void increQuality({required int index}) {
+    qualityList![index]++;
+    updateChiTietDonHang(index: index, quality: qualityList![index].toString());
     update();
   }
 
   ///
   ///decre quality
   ///
-  void decreQuality() {
-    if (qualityProduct > 1) {
-      qualityProduct -= 1;
+  void decreQuality({required int index}) {
+    if (qualityList![index] > 1) {
+      qualityList![index]--;
+      updateChiTietDonHang(
+          index: index, quality: qualityList![index].toString());
     } else {
       return;
     }
@@ -47,79 +152,38 @@ class V2CartController extends GetxController {
   ///go to shipping address
   ///
   void onSelectShippingAddress() {
-    Get.toNamed(AppRoutes.V2_SHIPPING_ADDRESS);
+    Get.toNamed(AppRoutes.V2_SHIPPING_ADDRESS, arguments: donHangResponse)!
+        .then((value) {
+      if (value == true) {
+        isReloadAddress = true;
+        reloadAddress();
+      }
+    });
   }
 
   ///
-  ///go to biill detail page
+  ///go to payment account page
   ///
-  void onBillDetailClick() {
-    Get.toNamed(AppRoutes.V2_BILL_DETAIL_IS_BUY);
+  void onCheckoutClick() {
+    Get.toNamed(
+        "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${totalAmount.toStringAsFixed(0)}&url=${AppRoutes.V2_DASHBOARD}");
   }
 
   ///
   ///delete product
   ///
-  void deleteProduct(BuildContext context) {
-    Get.dialog(Center(
-      child: Container(
-        height: DeviceUtils.getScaledHeight(context, .329),
-        margin: const EdgeInsets.symmetric(
-          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_LARGE,
-          vertical: Dimensions.PADDING_SIZE_EXTRA_LARGE,
-        ),
-        decoration: BoxDecoration(
-          color: ColorResources.WHITE,
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Xác nhận",
-              style: TextStyle(
-                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_LARGE,
-            ),
-            const Flexible(
-              child: Text(
-                "Bạn có muốn xoá sản phẩm này khỏi giỏ hàng của mình không?",
-                textAlign: TextAlign.center,
-                style:
-                    TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE),
-              ),
-            ),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_LARGE,
-            ),
-            Row(
-              children: [
-                BtnCustomBorder(
-                  onTap: () {},
-                  text: "Đồng ý",
-                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
-                ),
-                const SizedBox(
-                  width: Dimensions.MARGIN_SIZE_SMALL,
-                ),
-                BtnCustom(
-                  onTap: () => Get.back(),
-                  color: ColorResources.PRIMARY,
-                  text: "Huỷ",
-                  width: DeviceUtils.getScaledWidth(context, 0.7) / 2,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ));
+  void deleteProduct({required int index}) {
+    chiTietDonHangProvider.delete(
+      id: chiTietDonHangList[index].id.toString(),
+      onSuccess: (data) {
+        chiTietDonHangList.removeAt(index);
+        getTotal();
+        Get.back();
+        update();
+      },
+      onError: (error) {
+        print("V2ProductDetailController deleteProduct onError $error");
+      },
+    );
   }
 }

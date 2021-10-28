@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -54,14 +53,14 @@ class PasswordChangeController extends GetxController {
       //             update();
       //           },
       //           onError: (error) {
-      //             print(error);
+      //             print("TermsAndPolicyController getTermsAndPolicy onError $error");
       //             update();
       //           },
       //         );
       //       }
       //     },
       //     onError: (error) {
-      //       print(error);
+      //       print("TermsAndPolicyController getTermsAndPolicy onError $error");
       //       update();
       //     });
     });

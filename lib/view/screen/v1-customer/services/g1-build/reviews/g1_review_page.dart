@@ -58,7 +58,10 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   
   Widget workContent({required V1G1ReviewController controller}){
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,7 +72,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-            child: TextHighlight(title: "Thời gian: ", content: "${controller.previewServiceRequest!.ngayBatDau} - ${controller.previewServiceRequest!.ngayKetThuc}"),
+            child: TextHighlight(title: "Thời gian: ", content: "${controller.previewServiceRequest!.ngayBatDau} ${controller.previewServiceRequest!.ngayKetThuc == null ? '' : "- ${controller.previewServiceRequest!.ngayKetThuc}"} "),
           ),
         ],
       ),
@@ -81,7 +84,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   /// Danh sách vật liệu được thêm 
   ///
   Widget materialList(BuildContext context,{required V1G1ReviewController controller}){
-    return Column(
+    return controller.previewServiceRequest!.bangKhoiLuong!.isEmpty ? Container() : Column(
       children:  [
         const Label(
           label: "Bảng khối lượng công việc(nếu có)",
@@ -112,7 +115,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   }
 
   Widget imageMaterial({required V1G1ReviewController controller}){
-    return Column(
+    return controller.previewServiceRequest!.hinhAnhBanKhoiLuong!.isEmpty ?  Container(): Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
         const Label(
@@ -133,7 +136,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   }
 
   Widget drawing({required V1G1ReviewController controller}){
-    return Column(
+    return controller.previewServiceRequest!.hinhAnhBanVe!.isEmpty ?  Container() : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
         const Label(
@@ -158,9 +161,10 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-            vertical: Dimensions.PADDING_SIZE_DEFAULT
+          padding: EdgeInsets.only(
+            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+            right: Dimensions.PADDING_SIZE_DEFAULT,
           ),
           child: BoxShadowWidget(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),

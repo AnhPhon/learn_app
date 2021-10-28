@@ -1,4 +1,3 @@
-
 class DonViCungCapResponse {
   String? id;
   String? tenDonVi;
@@ -6,12 +5,9 @@ class DonViCungCapResponse {
   String? createdAt;
   String? updatedAt;
 
-  DonViCungCapResponse({
-      this.id,
-      this.tenDonVi,
-      this.createdAt,
-      this.updatedAt});
-  
+  DonViCungCapResponse(
+      {this.id, this.tenDonVi, this.createdAt, this.updatedAt});
+
   ///
   /// From JSON
   ///
@@ -29,12 +25,16 @@ class DonViCungCapResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null tenDonVi
-    if (tenDonVi != null) data['tenDonVi'] = tenDonVi; 
-
+    if (tenDonVi != null) data['tenDonVi'] = tenDonVi;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return tenDonVi!;
   }
 }

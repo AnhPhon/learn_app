@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
-import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
+import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_controller.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V3OrderManagementPage extends GetView<V3OrderManagementController> {
   @override
@@ -14,34 +19,36 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
     return GetBuilder<V3OrderManagementController>(
         init: V3OrderManagementController(),
         builder: (controller) {
-          return DefaultTabController(
-            length: controller.orderList.length,
-            child: Scaffold(
-              appBar: AppBarWithTabBar(
-                title: controller.title,
-                bottom: TabBar(
-                  isScrollable: true,
-                  indicatorColor: ColorResources.PRIMARY,
-                  labelColor: ColorResources.PRIMARY,
-                  unselectedLabelColor: Colors.grey,
-                  tabs: [
-                    ...List.generate(
-                      controller.orderList.length,
-                      (index) => Tab(
-                          text: controller.statusLabel.values.toList()[index]),
-                    )
-                  ],
-                ),
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            appBar: AppBarWithTabBar(
+              title: controller.title,
+              bottom: TabBar(
+                controller: controller.tabController,
+                isScrollable: true,
+                indicatorColor: ColorResources.PRIMARY,
+                labelColor: ColorResources.PRIMARY,
+                unselectedLabelColor: Colors.grey,
+                tabs: app_constants.quanLyDonHangMap.keys.toList().map(
+                  (element) {
+                    return Tab(
+                      text: element,
+                    );
+                  },
+                ).toList(),
               ),
-              body: TabBarView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  ...List.generate(
-                      controller.orderList.length,
-                      (index) => _tabIndex(context, controller,
-                          index: (index).toString())),
-                ],
-              ),
+            ),
+            body: TabBarView(
+              controller: controller.tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children:
+                  List.generate(app_constants.quanLyDonHangMap.length, (index) {
+                return _tabIndex(context, indexRefreshController: index);
+              }),
             ),
           );
         });
@@ -50,26 +57,75 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
   ///
   ///tab index
   ///
-  Widget _tabIndex(BuildContext context, V3OrderManagementController controller,
-      {required String index}) {
-    return ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: (BuildContext context, int i) {
-          return GestureDetector(
-            onTap: () {
-              // controller.onOrderWidgetClick(
-              //     i: i, index: (int.parse(index) + 1).toString());
-            },
-            child: _orderWidget(
-              context,
-              controller,
-              status: controller.orderList[int.parse(index)].statusOrder,
-              imgUrl: controller.orderList[int.parse(index)].image,
-              idOrder: controller.orderList[int.parse(index)].id,
-              dateTime: controller.orderList[int.parse(index)].dateTime,
-            ),
+  Widget _tabIndex(BuildContext context,
+      {required int indexRefreshController}) {
+    return GetBuilder<V3OrderManagementController>(
+      builder: (controller) {
+        if (controller.isLoadingOrder) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        });
+        }
+        return Scrollbar(
+          child: SmartRefresher(
+            controller: controller.refreshController![indexRefreshController],
+            enablePullUp: true,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
+            footer: const ClassicFooter(
+              loadingText: "Đang tải...",
+              noDataText: "Không có dữ liệu",
+              canLoadingText: "Kéo lên để tải thêm dữ liệu",
+            ),
+            child: (controller.donHangResponse.isEmpty)
+                ? const Center(
+                    child: Text("Chưa có đơn hàng"),
+                  )
+                : ListView.builder(
+                    itemCount: controller.donHangResponse.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      print(controller.donHangResponse.length);
+                      return GestureDetector(
+                        onTap: () {
+                          controller.onOrderDetailClick(index: index);
+                        },
+                        child: _orderWidget(
+                          context,
+                          controller,
+                          status: controller
+                              .donHangResponse[index].idTrangThaiDonHang!.tieuDe
+                              .toString(),
+                          imgUrl:
+                              "controller.donHangResponse[index].hinhAnhHoaDon",
+                          idOrder:
+                              controller.donHangResponse[index].id.toString(),
+                          dateTime: DateConverter.formatDateTime(
+                            controller.donHangResponse[index].createdAt
+                                .toString(),
+                          ),
+                          paymentStatus: controller.donHangResponse[index]
+                                      .idTrangThaiThanhToan ==
+                                  null
+                              ? ""
+                              : controller.donHangResponse[index]
+                                  .idTrangThaiThanhToan!.tieuDe
+                                  .toString(),
+                          price: "${PriceConverter.convertPrice(
+                            context,
+                            double.parse(
+                              controller.donHangResponse[index].tongTien
+                                  .toString(),
+                            ),
+                          )} vnđ",
+                          indexOrder: index,
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        );
+      },
+    );
   }
 
   ///
@@ -82,6 +138,9 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
     required String imgUrl,
     required String idOrder,
     required String dateTime,
+    required String paymentStatus,
+    required String price,
+    required int indexOrder,
   }) {
     return Container(
       margin: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -93,33 +152,34 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //change order product
-          DropDownMapButton(
-            onChanged: (val) {},
-            data: controller.statusLabel,
-            width: .4,
+          DropDownButton1<String>(
             value: status,
+            onChanged: (val) =>
+                controller.onChangedDropdown(value: val, index: indexOrder),
+            data: app_constants.trangThaiDonHangMap.keys.toList(),
+            width: .35,
+            isBorder: false,
             fillColor: controller.statusBackgroundColor[status],
             colorText: controller.statusColor[status],
+            height: .06,
           ),
-          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
+          ),
+
           //product info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: imgUrl,
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.152),
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.152),
-                    width: DeviceUtils.getScaledSize(context, 0.178),
-                  ),
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_DEFAULT,
+                ),
+                child: FadeInImageCustom(
+                  urlImage: imgUrl,
+                  height: .2,
+                  width: .22,
                 ),
               ),
               const SizedBox(
@@ -129,7 +189,7 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -137,14 +197,17 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                         maxLines: 2,
                         style: Dimensions.fontSizeStyle16(),
                       ),
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
                       IntrinsicHeight(
                         child: Row(
                           children: [
-                            const Text("unit"),
+                            Text(paymentStatus),
                             VerticalDivider(
                               color: ColorResources.BLACK.withOpacity(.7),
                             ),
-                            const Text("price"),
+                            Text(price),
                           ],
                         ),
                       ),

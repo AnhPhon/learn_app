@@ -10,7 +10,7 @@ class V1NewsCategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   DanhMucTinTucResponse? danhMucTinTucList;
 
-  RefreshController refreshController = RefreshController();
+  RefreshController? refreshController;
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   RxList<TinTucResponse> tinTucModelList = <TinTucResponse>[].obs;
@@ -21,6 +21,11 @@ class V1NewsCategoriesController extends GetxController
   @override
   void onInit() {
     super.onInit();
+
+    // init refresh controller
+    refreshController ??= RefreshController();
+
+    // call get news by id
     Future.delayed(Duration.zero, () {
       getNewsByIdCategory();
     });
@@ -28,8 +33,8 @@ class V1NewsCategoriesController extends GetxController
 
   @override
   void onClose() {
+    refreshController!.dispose();
     super.onClose();
-    refreshController.dispose();
   }
 
   ///
@@ -43,13 +48,14 @@ class V1NewsCategoriesController extends GetxController
     tinTucProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+      filter:
+          "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucModelList.value = value;
         update();
       },
       onError: (error) {
-        print(error);
+        print('V1NewsCategoriesController getNewsByIdCategory $error');
       },
     );
   }
@@ -66,7 +72,7 @@ class V1NewsCategoriesController extends GetxController
   ///reload
   ///
   void reloadNews() {
-    print('reloadNews');
+    print('V1NewsCategoriesController reloadNews');
     pageMax = 1;
     currentMax = 5;
     update();
@@ -74,14 +80,14 @@ class V1NewsCategoriesController extends GetxController
         page: 1,
         limit: 5,
         filter:
-            "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+            "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
         onSuccess: (value) {
           tinTucModelList.value = value;
-          refreshController.refreshCompleted();
+          refreshController!.refreshCompleted();
           update();
         },
         onError: (error) {
-          print(error);
+          print('V1NewsCategoriesController reloadNews $error');
         });
   }
 
@@ -90,24 +96,25 @@ class V1NewsCategoriesController extends GetxController
   ///
   void loadMoreNews() {
     pageMax += 1;
-    print(pageMax);
+    print('V1NewsCategoriesController loadMoreNews $pageMax');
     currentMax = currentMax;
     tinTucProvider.paginate(
       page: pageMax,
       limit: currentMax,
-      filter: "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=create_at:desc",
+      filter:
+          "&idDanhMucTinTuc=${danhMucTinTucList!.id}&sortBy=created_at:desc",
       onSuccess: (data) {
         if (data.isEmpty) {
-          refreshController.loadNoData();
+          refreshController!.loadNoData();
         } else {
           tinTucModelList.value = tinTucModelList.toList() + data;
-          refreshController.loadComplete();
+          refreshController!.loadComplete();
         }
 
         update();
       },
       onError: (error) {
-        print(error);
+        print('V1NewsCategoriesController loadMoreNews $error');
       },
     );
   }

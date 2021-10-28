@@ -4,7 +4,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_controller.dart';
 
 class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
@@ -56,22 +56,32 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Column(
-          children: const [
-            SizedBox(
+          children: [
+            const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
             ),
             Text(
-              "Bạn đã chuyển tiền cọc và tiền phí thành công!",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              (controller.isBuy == true)
+                  ? "Bạn đã chuyển tiền cọc và tiền phí thành công!"
+                  : (controller.isBuy == true)
+                      ? "Bạn đã chuyển tiền thành công"
+                      : "Bạn đã nạp tiền thành công!",
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
-            Text("Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!"),
-            SizedBox(
+            Text(
+              (controller.isBuy == true)
+                  ? "Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!"
+                  : (controller.isBuy == true)
+                      ? "Chúng tôi sẽ xác nhận hoá đơn và cung cấp thông tin bảo hiểm cho bạn"
+                      : "Chúng tôi sẽ xác nhận hoá đơn và chuyển tiền vào ví của bạn",
+            ),
+            const SizedBox(
               height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
-            Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
+            const Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
           ],
         ),
       ),

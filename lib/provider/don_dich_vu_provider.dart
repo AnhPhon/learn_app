@@ -37,6 +37,7 @@ class DonDichVuProvider {
     required Function(DonDichVuRequest donDichVu) onSuccess,
     required Function(dynamic error) onError,
   }) async {
+    print(data.toJson());
     final ApiResponse apiResponse = await repository!.add(data);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
@@ -102,9 +103,9 @@ class DonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data['results'] as List<dynamic>;
-      onSuccess(results
-          .map((e) => DonDichVuResponse.fromJson(e as Map<String, dynamic>))
-          .toList());
+      onSuccess(results.map((e) {
+        return DonDichVuResponse.fromJson(e as Map<String, dynamic>);
+      }).toList());
     } else {
       onError(apiResponse.error);
     }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
@@ -24,7 +23,7 @@ class BillWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BoxShadowWidget(
       child: Container(
-        height: height ?? DeviceUtils.getScaledHeight(context, 0.6),
+        height: height ?? DeviceUtils.getScaledHeight(context, 0.7),
         width:  DeviceUtils.getScaledHeight(context,1),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
@@ -35,14 +34,14 @@ class BillWidget extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                 child: Text(title ?? "Thông tin đơn hàng", style:const TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
                   fontWeight: FontWeight.bold
                 )),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
                 child: DefaultTextStyle(
                   style: const TextStyle(
                     fontSize: Dimensions.FONT_SIZE_LARGE,
@@ -70,11 +69,14 @@ class BillWidget extends StatelessWidget {
                 ),),
               ),
               if(deposit != null && isHasDeposit!)
-              Text("${CurrencyConverter.currencyConverterVND(deposit!)} VNĐ", style: const TextStyle(
-                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                color: ColorResources.RED,
-                fontWeight: FontWeight.bold,
-              )),
+              Padding(
+                padding: const EdgeInsets.only(bottom: Dimensions.FONT_SIZE_LARGE),
+                child: Text("${CurrencyConverter.currencyConverterVND(deposit!)} VNĐ", style: const TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  color: ColorResources.RED,
+                  fontWeight: FontWeight.bold,
+                )),
+              ),
             ],
           ),
         )

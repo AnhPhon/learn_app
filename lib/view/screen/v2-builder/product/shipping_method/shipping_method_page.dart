@@ -5,7 +5,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v2-builder/component_builder/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_controller.dart';
 
 class V2ShippingMethodPage extends GetView<V2ShippingMethodController> {

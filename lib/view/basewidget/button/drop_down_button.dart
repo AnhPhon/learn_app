@@ -3,35 +3,35 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
 class DropDownButton<T> extends StatelessWidget {
-  const DropDownButton({
-    Key? key,
-    this.hint = "",
-    required this.onChanged,
-    required this.data,
-    required this.width,
-    required this.value,
-    this.label,
-    required this.obligatory,
-    this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
-    this.isColorFieldWhite = false,
-  }) : super(key: key);
+  const DropDownButton(
+      {Key? key,
+      this.hint = "",
+      this.onChanged,
+      required this.data,
+      required this.width,
+      required this.value,
+      this.label,
+      required this.obligatory,
+      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.isColorFieldWhite = false,
+      this.padding})
+      : super(key: key);
   final String? hint;
   final double width;
-  final Function(T? value) onChanged;
+  final Function(T? value)? onChanged;
   final String? label;
   final bool? obligatory;
   final List<T> data;
   final double? paddingTop;
   final bool? isColorFieldWhite;
   final T? value;
+  final EdgeInsetsGeometry? padding;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop ?? 0),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
         children: [
           if (label != null)
@@ -43,16 +43,17 @@ class DropDownButton<T> extends StatelessWidget {
                 children: [
                   Text(
                     label!,
-                    style: TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                        fontWeight: FontWeight.bold,
-                        color: ColorResources.BLACK.withOpacity(0.7)),
+                    style: const TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.w600,
+                      color: ColorResources.BLACK,
+                    ),
                   ),
                   if (obligatory == true)
                     const Text(
                       '*',
                       style: TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
                           fontWeight: FontWeight.bold,
                           color: Colors.red),
                     )
@@ -95,7 +96,7 @@ class DropDownButton<T> extends StatelessWidget {
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_SMALL - 3,
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT,
                       horizontal: Dimensions.PADDING_SIZE_SMALL),
                 ),
                 child: DropdownButtonHideUnderline(
@@ -110,7 +111,9 @@ class DropDownButton<T> extends StatelessWidget {
                     onChanged: onChanged,
                     items: data
                         .map((e) => DropdownMenuItem<T>(
-                            value: e, child: Text(e.toString())))
+                            value: e,
+                            child: Text(e.toString(),
+                                overflow: TextOverflow.ellipsis)))
                         .toList(),
                   ),
                 ),

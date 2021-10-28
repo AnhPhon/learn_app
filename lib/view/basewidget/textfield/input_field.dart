@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/format/format_currency.dart';
 
 class InputField extends StatelessWidget {
   InputField(
@@ -13,13 +15,18 @@ class InputField extends StatelessWidget {
       this.onChanged,
       this.boldHinText,
       this.errorText,
+      this.isFormatCurrency = false,
       required this.typeInput,
       required this.width,
       this.height = 50,
       required this.hidden,
       required this.obligatory,
       this.line = 5,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.textInputAction,
+      this.paddingTop = Dimensions.PADDING_SIZE_SMALL,
+      this.isColorFieldWhite,
+      this.focusNode,
+      this.padding,
       required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
@@ -31,17 +38,22 @@ class InputField extends StatelessWidget {
   final double? paddingTop;
   final String? errorText;
   final int? line;
+  final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   bool? boldHinText;
+  final bool? isColorFieldWhite;
+  final bool? isFormatCurrency;
+  final FocusNode? focusNode;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
-      //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
+      padding: padding ??
+          EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_DEFAULT,
+              right: Dimensions.PADDING_SIZE_DEFAULT,
+              top: paddingTop!),
       width: width,
       child: Column(
         children: [
@@ -52,9 +64,10 @@ class InputField extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, // * 2.1,
-                      fontWeight: FontWeight.bold,
-                      color: ColorResources.BLACK.withOpacity(0.7)),
+                    fontSize: fontSize, // * 2.1,
+                    fontWeight: FontWeight.w600,
+                    color: ColorResources.BLACK,
+                  ),
                 ),
                 if (obligatory)
                   Text(
@@ -73,7 +86,14 @@ class InputField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
             child: TextField(
-              textInputAction: TextInputAction.done,
+              inputFormatters: typeInput == TextInputType.number
+                  ? isFormatCurrency!
+                      ? [
+                          ThousandsSeparatorInputFormatterCurrency(),
+                        ]
+                      : [FilteringTextInputFormatter.digitsOnly]
+                  : null,
+              textInputAction: textInputAction,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,
               textAlignVertical: TextAlignVertical.top,
@@ -81,33 +101,46 @@ class InputField extends StatelessWidget {
               controller: controller,
               obscureText: hidden,
               onChanged: onChanged,
+              focusNode: focusNode,
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL,
-                      vertical: Dimensions.PADDING_SIZE_DEFAULT),
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   errorText: errorText,
+                  filled: true,
                   isDense: true,
                   hintText: holdplacer,
                   hintStyle: TextStyle(
@@ -118,8 +151,8 @@ class InputField extends StatelessWidget {
                     fontWeight: boldHinText == true ? FontWeight.w600 : null,
                   ),
                   fillColor: (allowEdit == false)
-                      ? ColorResources.GREY
-                      : Colors.transparent,
+                      ? ColorResources.LIGHT_GREY.withOpacity(0.4)
+                      : ColorResources.WHITE,
                   suffixIcon: suffixIcon),
             ),
           ),

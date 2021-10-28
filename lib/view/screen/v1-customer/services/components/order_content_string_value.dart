@@ -27,13 +27,13 @@ class OrderContentStringValue extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,style: TextStyle(
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
             fontWeight: boldTitle! ? FontWeight.bold : FontWeight.normal
           )),
           Text(value , style: TextStyle(
             color: ColorResources.BLACK,
             fontWeight: boldValue! ? FontWeight.bold : FontWeight.normal,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
           )),
         ],
       ),

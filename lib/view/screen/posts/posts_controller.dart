@@ -21,7 +21,7 @@ class PostsController extends GetxController {
   //   //     isDismissible: true,
   //   //     duration: const Duration(seconds: 3),
   //   //   );
-  //   //   print(error);
+  //   //   print("TermsAndPolicyController getTermsAndPolicy onError $error");
   //   //   update();
   //   // });
   //   super.onInit();

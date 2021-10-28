@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
 class TaskNeedWorker extends StatelessWidget {
-  final String nhanTask;
   final String tenTask;
   final String maTask;
   final String trangThai;
+  String? imageURL;
 
-  const TaskNeedWorker({
-    required this.nhanTask,
+  TaskNeedWorker({
     required this.tenTask,
     required this.maTask,
     required this.trangThai,
+    this.imageURL,
   });
 
   @override
   Widget build(BuildContext context) {
     const double height = 100;
     return Container(
-      width: 352,
+      width: DeviceUtils.getScaledWidth(context, 1),
       height: height,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -40,28 +41,28 @@ class TaskNeedWorker extends StatelessWidget {
           Container(
             width: height,
             height: height,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: AssetImage(Images.V4NewsExample),
+                image: NetworkImage(imageURL!),
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            width: 230,
+            width: DeviceUtils.getScaledWidth(context, .67),
             child: Column(
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "$nhanTask: $tenTask",
+                    tenTask,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color.fromRGBO(42, 53, 71, 1),
@@ -88,19 +89,22 @@ class TaskNeedWorker extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.person_search,
-                            color: Color(0xff8E8A8A),
-                          ),
-                          Text(
-                            trangThai,
-                            style: const TextStyle(
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.person_search,
                               color: Color(0xff8E8A8A),
                             ),
-                          )
-                        ],
+                            Text(
+                              trangThai,
+                              style: const TextStyle(
+                                color: Color(0xff8E8A8A),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

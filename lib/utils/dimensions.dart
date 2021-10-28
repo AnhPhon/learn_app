@@ -9,7 +9,7 @@ class Dimensions {
   static const double FONT_SIZE_DEFAULT = 14.0;
   static const double FONT_SIZE_LARGE = 16.0;
   static const double FONT_SIZE_EXTRA_LARGE = 18.0;
-  static const double FONT_SIZE_EXTRA_SUPER_LARGE = 18.0;
+  static const double FONT_SIZE_EXTRA_SUPER_LARGE = 20.0;
   static const double FONT_SIZE_OVER_LARGE = 22.0;
 
   static const double PADDING_SIZE_EXTRA_SMALL = 5.0;
@@ -85,8 +85,7 @@ class Dimensions {
   static const double SIZE_EXTRA_LAEGE = 40;
   static const double SIZE_EXTRA_LARGE = 40;
   static const double SIZE_OVER_LARGE = 50;
-    static const double SIZE_SUPER_LARGE = 90;
-
+  static const double SIZE_SUPER_LARGE = 90;
 
   // COLOR
   static const int COLOR_LABEL_DEFAULT = 0xff2A3547;
@@ -141,14 +140,14 @@ class Dimensions {
   // SIZE BOX BOTTOM NAV
   static const double SIZE_BOX_BOTTOM_NAV = 150;
 
-  Widget paddingDivider(BuildContext context) {
+  Widget paddingDivider(BuildContext context, {Color? color}) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: DeviceUtils.getScaledSize(context, 0.02),
+      padding: const EdgeInsets.symmetric(
+        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
       ),
-      child: const Divider(
+      child: Divider(
         thickness: 1,
-        color: Colors.grey,
+        color: color,
       ),
     );
   }

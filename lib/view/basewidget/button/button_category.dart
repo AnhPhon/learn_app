@@ -3,13 +3,15 @@ import 'package:template/utils/dimensions.dart';
 
 class BtnCategory extends StatelessWidget {
   final Gradient gradient;
-  final String label;
+  final List<String> label;
   final IconData icon;
+  Color? iconColor;
 
-  const BtnCategory({
+  BtnCategory({
     required this.gradient,
     required this.label,
     required this.icon,
+    this.iconColor,
   });
 
   @override
@@ -33,34 +35,39 @@ class BtnCategory extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: Colors.white,
+            color: iconColor ?? Colors.white,
           ),
           const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
           Container(
             alignment: Alignment.center,
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontSize: Dimensions.FONT_SIZE_SMALL,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, 0),
+            child: Column(
+              children: List.generate(
+                label.length,
+                (index) => Text(
+                  label[index],
+                  style: const TextStyle(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(2, 0),
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(0, 2),
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(0, -2),
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(-2, 0),
+                      )
+                    ],
                   ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(0, 2),
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(0, -2),
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, 0),
-                  )
-                ],
+                ),
               ),
             ),
           )

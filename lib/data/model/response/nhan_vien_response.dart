@@ -19,56 +19,65 @@ class NhanVienResponse {
   String? anhMSCMND;
   String? matKhau;
   String? tokenDevice;
-
   String? createdAt;
   String? updatedAt;
+  String? ngaySinh;
+  String? email;
 
   NhanVienResponse({
-      this.id,
-      this.idTinhTp,
-      this.idQuanHuyen,
-      this.idPhuongXa,
-      this.hoTen,
-      this.soDienThoai,
-      this.gioiTinh,
-      this.cMND,
-      this.ngayCap,
-      this.noiCap,
-      this.diaChi,
-      this.hinhDaiDien,
-      this.anhMTCMND,
-      this.anhMSCMND,
-      this.matKhau,
-      this.tokenDevice,
-      this.createdAt,
-      this.updatedAt});
-  
+    this.id,
+    this.idTinhTp,
+    this.idQuanHuyen,
+    this.idPhuongXa,
+    this.hoTen,
+    this.soDienThoai,
+    this.gioiTinh,
+    this.cMND,
+    this.ngayCap,
+    this.noiCap,
+    this.diaChi,
+    this.hinhDaiDien,
+    this.anhMTCMND,
+    this.anhMSCMND,
+    this.matKhau,
+    this.tokenDevice,
+    this.createdAt,
+    this.updatedAt,
+    this.ngaySinh,
+    this.email,
+  });
+
   ///
   /// From JSON
   ///
   NhanVienResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
 
-    // mapping idTinhTp                                                              
-    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length!=24) {                                                  
-      idTinhTp = TinhTpResponse.fromJson(json['idTinhTp'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idTinhTp = null;                                                               
-    }                                                                                  
+    // mapping idTinhTp
+    if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {
+      idTinhTp =
+          TinhTpResponse.fromJson(json['idTinhTp'] as Map<String, dynamic>);
+    } else {
+      idTinhTp = null;
+    }
 
-    // mapping idQuanHuyen                                                              
-    if (json['idQuanHuyen'] != null && json['idQuanHuyen'].toString().length!=24) {                                                  
-      idQuanHuyen = QuanHuyenResponse.fromJson(json['idQuanHuyen'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idQuanHuyen = null;                                                               
-    }                                                                                  
+    // mapping idQuanHuyen
+    if (json['idQuanHuyen'] != null &&
+        json['idQuanHuyen'].toString().length != 24) {
+      idQuanHuyen = QuanHuyenResponse.fromJson(
+          json['idQuanHuyen'] as Map<String, dynamic>);
+    } else {
+      idQuanHuyen = null;
+    }
 
-    // mapping idPhuongXa                                                              
-    if (json['idPhuongXa'] != null && json['idPhuongXa'].toString().length!=24) {                                                  
-      idPhuongXa = PhuongXaResponse.fromJson(json['idPhuongXa'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idPhuongXa = null;                                                               
-    }                                                                                  
+    // mapping idPhuongXa
+    if (json['idPhuongXa'] != null &&
+        json['idPhuongXa'].toString().length != 24) {
+      idPhuongXa =
+          PhuongXaResponse.fromJson(json['idPhuongXa'] as Map<String, dynamic>);
+    } else {
+      idPhuongXa = null;
+    }
     hoTen = json['hoTen'].toString();
     soDienThoai = json['soDienThoai'].toString();
     gioiTinh = json['gioiTinh'].toString();
@@ -81,9 +90,10 @@ class NhanVienResponse {
     anhMSCMND = json['anhMSCMND'].toString();
     matKhau = json['matKhau'].toString();
     tokenDevice = json['tokenDevice'].toString();
-
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    ngaySinh = json['ngaySinh'].toString();
+    email = json['email'].toString();
   }
 
   ///
@@ -92,53 +102,58 @@ class NhanVienResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTinhTp
-    if (idTinhTp != null) data['idTinhTp'] = idTinhTp; 
+    if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
 
     // check null idQuanHuyen
-    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen; 
+    if (idQuanHuyen != null) data['idQuanHuyen'] = idQuanHuyen;
 
     // check null idPhuongXa
-    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa; 
+    if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null hoTen
-    if (hoTen != null) data['hoTen'] = hoTen; 
+    if (hoTen != null) data['hoTen'] = hoTen;
 
     // check null soDienThoai
-    if (soDienThoai != null) data['soDienThoai'] = soDienThoai; 
+    if (soDienThoai != null) data['soDienThoai'] = soDienThoai;
 
     // check null gioiTinh
-    if (gioiTinh != null) data['gioiTinh'] = gioiTinh; 
+    if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null cMND
-    if (cMND != null) data['cMND'] = cMND; 
+    if (cMND != null) data['cMND'] = cMND;
 
     // check null ngayCap
-    if (ngayCap != null) data['ngayCap'] = ngayCap; 
+    if (ngayCap != null) data['ngayCap'] = ngayCap;
 
     // check null noiCap
-    if (noiCap != null) data['noiCap'] = noiCap; 
+    if (noiCap != null) data['noiCap'] = noiCap;
 
     // check null diaChi
-    if (diaChi != null) data['diaChi'] = diaChi; 
+    if (diaChi != null) data['diaChi'] = diaChi;
 
     // check null hinhDaiDien
-    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien; 
+    if (hinhDaiDien != null) data['hinhDaiDien'] = hinhDaiDien;
 
     // check null anhMTCMND
-    if (anhMTCMND != null) data['anhMTCMND'] = anhMTCMND; 
+    if (anhMTCMND != null) data['anhMTCMND'] = anhMTCMND;
 
     // check null anhMSCMND
-    if (anhMSCMND != null) data['anhMSCMND'] = anhMSCMND; 
+    if (anhMSCMND != null) data['anhMSCMND'] = anhMSCMND;
 
     // check null matKhau
-    if (matKhau != null) data['matKhau'] = matKhau; 
+    if (matKhau != null) data['matKhau'] = matKhau;
 
     // check null tokenDevice
-    if (tokenDevice != null) data['tokenDevice'] = tokenDevice; 
+    if (tokenDevice != null) data['tokenDevice'] = tokenDevice;
 
+    // check null ngay sinh
+    if (ngaySinh != null) data['ngaySinh'] = ngaySinh;
+
+    // check null email
+    if (email != null) data['email'] = email;
 
     return data;
   }

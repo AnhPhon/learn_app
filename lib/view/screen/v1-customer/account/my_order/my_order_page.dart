@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
-import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
+import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/app_bar_with_tabbar.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V1MyOrderPage extends GetView<V1MyOrderController> {
   @override
@@ -14,34 +18,36 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
     return GetBuilder<V1MyOrderController>(
         init: V1MyOrderController(),
         builder: (controller) {
-          return DefaultTabController(
-            length: controller.orderList.length,
-            child: Scaffold(
-              appBar: AppBarWithTabBar(
-                title: controller.title,
-                bottom: TabBar(
-                  isScrollable: true,
-                  indicatorColor: ColorResources.PRIMARY,
-                  labelColor: ColorResources.PRIMARY,
-                  unselectedLabelColor: Colors.grey,
-                  tabs: [
-                    ...List.generate(
-                      controller.orderList.length,
-                      (index) => Tab(
-                          text: controller.statusLabel.values.toList()[index]),
-                    )
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                physics: const BouncingScrollPhysics(),
-                children: [
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            appBar: AppBarWithTabBar(
+              title: controller.title,
+              bottom: TabBar(
+                controller: controller.tabController,
+                isScrollable: true,
+                indicatorColor: ColorResources.PRIMARY,
+                labelColor: ColorResources.PRIMARY,
+                unselectedLabelColor: Colors.grey,
+                tabs: [
                   ...List.generate(
-                      controller.orderList.length,
-                      (index) => _tabIndex(context, controller,
-                          index: (index).toString())),
+                    app_constants.trangThaiDonHangMap.length,
+                    (index) => Tab(
+                      text: app_constants.trangThaiDonHangMap.keys
+                          .toList()[index],
+                    ),
+                  ),
                 ],
               ),
+            ),
+            body: TabBarView(
+              controller: controller.tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: List.generate(app_constants.trangThaiDonHangMap.length,
+                  (index) => _tabIndex(context, indexController: index)),
             ),
           );
         });
@@ -50,38 +56,74 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
   ///
   ///tab index
   ///
-  Widget _tabIndex(BuildContext context, V1MyOrderController controller,
-      {required String index}) {
-    return ListView.builder(
-        itemCount: controller.orderList.length,
-        itemBuilder: (BuildContext context, int i) {
-          return GestureDetector(
-            onTap: () {
-              // controller.onOrderWidgetClick(
-              //     i: i, index: (int.parse(index) + 1).toString());
-            },
-            child: _orderWidget(
-              context,
-              controller,
-              status: controller.orderList[int.parse(index)].statusOrder,
-              imgUrl: controller.orderList[int.parse(index)].image,
-              idOrder: controller.orderList[int.parse(index)].id,
-              dateTime: controller.orderList[int.parse(index)].dateTime,
-            ),
-          );
-        });
+  Widget _tabIndex(BuildContext context, {required int indexController}) {
+    return GetBuilder<V1MyOrderController>(builder: (controller) {
+      if (controller.isLoadingOrder) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      return Scrollbar(
+        child: SmartRefresher(
+          enablePullUp: true,
+          onRefresh: controller.onRefresh,
+          onLoading: controller.onLoading,
+          controller: controller.refreshController[indexController],
+          footer: const ClassicFooter(
+            loadingText: "Đang tải...",
+            noDataText: "Không có dữ liệu",
+          ),
+          child: (controller.donHangResponse.isEmpty)
+              ? const Center(
+                  child: Text("Đơn hàng rỗng"),
+                )
+              : ListView.builder(
+                  itemCount: controller.donHangResponse.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () => controller.onOrderClick(index: index),
+                      child: _orderWidget(
+                        context,
+                        status: controller
+                            .donHangResponse[index].idTrangThaiDonHang!.tieuDe
+                            .toString(),
+                        idOrder:
+                            controller.donHangResponse[index].id.toString(),
+                        dateTime: DateConverter.formatDateTime(
+                          controller.donHangResponse[index].createdAt
+                              .toString(),
+                        ),
+                        price: controller.donHangResponse[index].tongTien
+                            .toString(),
+                        paymentOrder: (controller.donHangResponse[index]
+                                    .idTrangThaiThanhToan ==
+                                null)
+                            ? ""
+                            : controller.donHangResponse[index]
+                                .idTrangThaiThanhToan!.tieuDe
+                                .toString(),
+                        urlImage: controller.donHangResponse[index]
+                            .idTaiKhoanMuaHang!.hinhDaiDien
+                            .toString(),
+                      ),
+                    );
+                  }),
+        ),
+      );
+    });
   }
 
   ///
   ///order widget
   ///
   Widget _orderWidget(
-    BuildContext context,
-    V1MyOrderController controller, {
+    BuildContext context, {
     required String status,
-    required String imgUrl,
     required String idOrder,
     required String dateTime,
+    required String price,
+    required String paymentOrder,
+    required String urlImage,
   }) {
     return Container(
       margin: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
@@ -95,39 +137,35 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
         children: [
           //status order
           Container(
-            padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.02)),
+            padding: const EdgeInsets.all(
+              Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
             decoration: BoxDecoration(
-                color: status == "0"
-                    ? Colors.white
-                    : controller.statusBackgroundColor[status],
-                borderRadius: BorderRadius.circular(16)),
+              color: controller.statusBackgroundColor[status],
+              borderRadius: BorderRadius.circular(
+                Dimensions.BORDER_RADIUS_DEFAULT,
+              ),
+            ),
             child: Text(
-              controller.statusLabel[status].toString(),
+              status.toString(),
               style: TextStyle(
-                color: status == "0"
-                    ? Colors.white
-                    : controller.statusColor[status],
+                color: controller.statusColor[status],
               ),
             ),
           ),
-          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
           //product info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(7),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: imgUrl,
-                  width: DeviceUtils.getScaledSize(context, 0.178),
-                  height: DeviceUtils.getScaledSize(context, 0.152),
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.152),
-                    width: DeviceUtils.getScaledSize(context, 0.178),
-                  ),
+                child: FadeInImageCustom(
+                  urlImage: urlImage,
+                  height: .16,
+                  width: .178,
                 ),
               ),
               const SizedBox(
@@ -137,22 +175,33 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                 child: SizedBox(
                   height: DeviceUtils.getScaledSize(context, 0.152),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //id order
                       Text(
                         "Id: $idOrder",
                         maxLines: 2,
                         style: Dimensions.fontSizeStyle16(),
                       ),
+
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                      ),
+
+                      //payment status & total
                       IntrinsicHeight(
                         child: Row(
                           children: [
-                            const Text("unit"),
+                            Text(paymentOrder),
                             VerticalDivider(
                               color: ColorResources.BLACK.withOpacity(.7),
                             ),
-                            const Text("price"),
+                            Text(
+                              "${PriceConverter.convertPrice(
+                                context,
+                                double.parse(price),
+                              )} vnđ",
+                            ),
                           ],
                         ),
                       ),

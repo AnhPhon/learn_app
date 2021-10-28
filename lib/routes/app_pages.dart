@@ -1,10 +1,22 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
+import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
+import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/payment/order_infomation/order_infomation_page.dart';
+import 'package:template/view/screen/payment/payment%20account/payment_account_page.dart';
+import 'package:template/view/screen/payment/payment_success/payment_success_page.dart';
+import 'package:template/view/screen/payment/recharge/recharge_page.dart';
+import 'package:template/view/screen/register/register_page.dart';
+import 'package:template/view/screen/splash/splash_page.dart';
+import 'package:template/view/screen/update_password/update_password_page.dart';
+import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
 import 'package:template/view/screen/v1-customer/account/mail/mail_page.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_page.dart';
+import 'package:template/view/screen/v1-customer/account/my_order/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/v1-customer/account/personal_info/personal_info_page.dart';
 import 'package:template/view/screen/v1-customer/account/point_based/point_based_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_page.dart';
@@ -14,7 +26,6 @@ import 'package:template/view/screen/v1-customer/account/profile/insurance_regis
 import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/profile_page.dart';
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_page.dart';
-import 'package:template/view/screen/v1-customer/account/profile/your_insurance/your_insurance_page.dart';
 import 'package:template/view/screen/v1-customer/account/rules/rules_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_page.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
@@ -38,12 +49,18 @@ import 'package:template/view/screen/v1-customer/form_management/product_respons
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin_feedback/order_information_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/building_materials/order_feedback_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment__page.dart';
+import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/formal_payment_feedback/formal_payment_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feedback_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g1-build/v1_build_order_feefback_binding.dart.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/feedback/g5_car_rent/v1_group_order_feedback5_binding.dart';
@@ -53,6 +70,7 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
+import 'package:template/view/screen/v1-customer/product/product_binding.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
@@ -60,8 +78,11 @@ import 'package:template/view/screen/v1-customer/product/shipping_method/shippin
 import 'package:template/view/screen/v1-customer/project/project_detail/project_detail_page.dart';
 import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
 import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
+import 'package:template/view/screen/v1-customer/quote/list/vattulist_binding.dart';
+import 'package:template/view/screen/v1-customer/quote/list/vattulist_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
+import 'package:template/view/screen/v1-customer/quote/response/response_binding.dart';
 import 'package:template/view/screen/v1-customer/quote/response/response_page.dart';
 import 'package:template/view/screen/v1-customer/recharge/recharge_page.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/create/g4_create_service_binding.dart';
@@ -95,6 +116,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_list_page.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_binding.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/reviews/g7_review_page.dart';
+import 'package:template/view/screen/v1-customer/services/reference_price_list/reference_price_table_page.dart';
 import 'package:template/view/screen/v1-customer/services/successfully_page.dart';
 import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
 import 'package:template/view/screen/v2-builder/account/introduce/introduce_page.dart';
@@ -128,16 +150,6 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recru
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
-import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -149,7 +161,8 @@ import 'package:template/view/screen/v2-builder/product/product_detail/product_d
 import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
-import 'package:template/view/screen/v2-builder/project/project_detail/project_detail_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
@@ -165,15 +178,29 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/w
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_binding.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/deatail_work_in_progress/detail_work_in_porgress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_in_progress/work_in_progress_page.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
+import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v3-agent/news/news_page.dart';
+import 'package:template/view/screen/v3-agent/order_management/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
+import 'package:template/view/screen/v3-agent/product_management/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
+import 'package:template/view/screen/v3-agent/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
@@ -194,6 +221,9 @@ import 'package:template/view/screen/v4-employee/export_import/export_import_bin
 import 'package:template/view/screen/v4-employee/export_import/export_import_page.dart';
 import 'package:template/view/screen/v4-employee/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v4-employee/news/news_page.dart';
+import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_page.dart';
+import 'package:template/view/screen/v4-employee/notification/notification_binding.dart';
 import 'package:template/view/screen/v4-employee/notification/notification_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
@@ -201,15 +231,15 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_report_on
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
-// import 'package:template/view/screen/auth/auth_page.dart';
-// import 'package:template/view/screen/introduction/introduction_page.dart';
-// import 'package:template/view/screen/splash/splash_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_page.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_page.dart';
 
 import 'app_routes.dart';
 
@@ -217,8 +247,35 @@ import 'app_routes.dart';
 class AppPages {
   static List<GetPage> list = [
     GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => SplashPage(),
+    ),
+
+    GetPage(
+      name: AppRoutes.INTRO,
+      page: () => IntroductionPage(),
+    ),
+
+    // auth
+    GetPage(
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
+    ),
+    GetPage(
+      name: AppRoutes.FORGOT_PASSWORD,
+      page: () => ForgotPasswordPage(),
+    ),
+    GetPage(
+      name: AppRoutes.UPDATE_PASSWORD,
+      page: () => UpdatePasswordPage(),
+    ),
+    GetPage(
+      name: AppRoutes.OTP_VERIFIER,
+      page: () => OTPVerifierPage(),
+    ),
+    GetPage(
+      name: AppRoutes.REGISTER,
+      page: () => RegisterPage(),
     ),
 
     // custommer
@@ -260,6 +317,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PRODUCT,
       page: () => V1ProductPage(),
+      binding: V1ProductBinding(),
     ),
     GetPage(
       name: AppRoutes.V1_NEWS,
@@ -358,10 +416,6 @@ class AppPages {
       page: () => V1InsuranceRegisterPage(),
     ),
     GetPage(
-      name: AppRoutes.V1_YOUR_INSURANCE,
-      page: () => V1YourInsurancePage(),
-    ),
-    GetPage(
       name: AppRoutes.V1_INSURANCE_DETAIL,
       page: () => V1InsuranceDetailPage(),
     ),
@@ -378,6 +432,15 @@ class AppPages {
       name: AppRoutes.V1_PROJECT_DETAIL,
       page: () => V1ProjectDetailPage(),
     ),
+    GetPage(
+      name: AppRoutes.V1_ACCOUNT,
+      page: () => V1AccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_ORDER_DETAIL,
+      page: () => V1OrderDetailPage(),
+    ),
+
     //builder
     GetPage(
       name: AppRoutes.V2_PRODUCT_DETAIL,
@@ -440,8 +503,14 @@ class AppPages {
       page: () => V1DonePage(),
     ),
     GetPage(
+      name: AppRoutes.V1_QUOTE_LIST,
+      page: () => V1VatTuListPage(),
+      binding: V1VatTuListBinding(),
+    ),
+    GetPage(
       name: AppRoutes.V1_QUOTE_RESPONSE,
       page: () => V1ResponsePage(),
+      binding: V1ResponseBinding(),
     ),
     GetPage(
       name: AppRoutes.V1_PERSONAL_INFORMATION,
@@ -461,12 +530,27 @@ class AppPages {
     ),
 
     ///
+    ///Bang giá tham khảo
+    ///
+    GetPage(
+        name: AppRoutes.V1_REFERENCE_PRICE_TABLE,
+        page: () => V1ReferencePriceTablePage()),
+
+    ///
     /// Thông báo
     ///
     GetPage(
       name: AppRoutes.V1_NOTIFICATION,
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
+    ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V1_DETAIL_NOTIFICATION,
+      page: () => V1DetailNotificationPage(),
+      binding: V1DetailNotificationBinding(),
     ),
 
     ///
@@ -492,7 +576,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_GROUP_ORDER_FEEDBACK5,
-      page: () => const V1GroupOrderFeedBack5Page(),
+      page: () => V1GroupOrderFeedBack5Page(),
       binding: V1OrderFeedBackGroup5Binding(),
     ),
 
@@ -501,7 +585,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_GROUP_ORDER_FEEDBACK6,
-      page: () => const V1GroupOrderFeedBack6Page(),
+      page: () => V1GroupOrderFeedBack6Page(),
       binding: V1OrderFeedBackGroup6Binding(),
     ),
 
@@ -510,7 +594,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_ORDER_INFORAMTION,
-      page: () => OrderInformationPage(),
+      page: () => V1OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -615,8 +699,18 @@ class AppPages {
     // Hình thức thanh toán
     GetPage(
         name: AppRoutes.V1_FORMAL_PAYMENT,
-        page: () => const V1FormalPaymentPage(),
+        page: () => V1FormalPaymentPage(),
         binding: V1FormalPaymentBinding()),
+    // Hình thức thanh toán
+    GetPage(
+        name: AppRoutes.V1_FORMAL_FEEDBACK_PAYMENT,
+        page: () => V1FormalPaymentFeedbackPage(),
+        binding: V1FormalPaymentFeedbackBinding()),
+    // Thông tin đơn hàng phản hồi
+    GetPage(
+        name: AppRoutes.V1_FEEDBACK_ORDER_INFORAMTION,
+        page: () => OrderFeedbackInformationPage(),
+        binding: OrderFeedbackInformationBinding()),
 
     // Tạo thành công
     GetPage(
@@ -828,6 +922,22 @@ class AppPages {
       name: AppRoutes.V3_FINISH_UPDATE,
       page: () => V3FinishUpdatePage(),
     ),
+    GetPage(
+      name: AppRoutes.V3_PROJECT_DETAIL_TRIEN_KHAI,
+      page: () => V3ProjectDetailTrienKhaiPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PROJECT_DANG_KY_TRIEN_KHAI,
+      page: () => V3ProjectDangKyTrienKhaiPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ORDER_DETAIL,
+      page: () => V3OrderDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_PRODUCT_DETAIL,
+      page: () => V3ProductDetailPage(),
+    ),
     // Xem trươc đánh văn bản
     GetPage(
       name: AppRoutes.V2_PREVIEW_PROFILE,
@@ -902,10 +1012,13 @@ class AppPages {
       name: AppRoutes.V2_NEWS_DETAIL,
       page: () => V2NewsDetailPage(),
     ),
-    // Dự án
     GetPage(
-      name: AppRoutes.V2_PROJECT_DETAIL,
-      page: () => V2ProjectDetailPage(),
+      name: AppRoutes.V2_PROJECT_DETAIL_TRIEN_KHAI,
+      page: () => V2ProjectDetailTrienKhaiPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_PROJECT_DANG_KY_TRIEN_KHAI,
+      page: () => V2ProjectDangKyTrienKhaiPage(),
     ),
     GetPage(
       name: AppRoutes.V2_INURANCE_REGISTER,
@@ -989,6 +1102,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.V4_NOTIFICATION,
       page: () => V4NotificationPage(),
+      binding: V4NotificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_DETAIL_NOTIFICATION,
+      page: () => V4DetailNotificationPage(),
+      binding: V4DetailNotificationBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.V4_DETAIL_WORK,
+      page: () => V4DetailWorkPage(),
+      binding: V4DetailWorkBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.INTRO,
@@ -1024,6 +1149,24 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_FINISH_UPDATE,
       page: () => V2FinishUpdatePage(),
+    ),
+
+    //payment
+    GetPage(
+      name: AppRoutes.PAYMENT_ACCOUNT,
+      page: () => PaymentAccountPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_SUCCESS,
+      page: () => PaymentSuccessPage(),
+    ),
+    GetPage(
+      name: AppRoutes.PAYMENT_RECHARGE,
+      page: () => RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.ORDER_INFORMATION,
+      page: () => OrderInformationPage(),
     ),
   ];
 }

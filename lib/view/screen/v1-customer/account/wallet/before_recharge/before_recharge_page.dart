@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
   @override
@@ -18,10 +21,19 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
             body: Column(
               children: [
                 //account balance
-                _accountBalance(controller: controller),
+                _accountBalance(context, controller: controller),
 
                 //box input
                 _boxInput(context, controller: controller),
+
+                const Spacer(),
+
+                //btn recharge
+                btnRecharge(context, controller: controller),
+
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                ),
               ],
             ),
           );
@@ -31,7 +43,8 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
   ///
   ///account balance
   ///
-  Widget _accountBalance({required V1BeforeRechargeController controller}) {
+  Widget _accountBalance(BuildContext context,
+      {required V1BeforeRechargeController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: Row(
@@ -40,7 +53,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
           //title
           Text(
             "Số dư tài khoản",
-            style: Dimensions.fontSizeStyle18(),
+            style: Dimensions.fontSizeStyle18w600(),
           ),
 
           Row(
@@ -65,7 +78,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
 
               //balance
               Text(
-                ' ${(controller.isShow) ? "7.000.000" : "*********"} vnđ',
+                ' ${(controller.isShow) ? PriceConverter.convertPrice(context, double.parse(controller.balance.toString())) : "*********"} vnđ',
                 style: Dimensions.fontSizeStyle18w600(),
               ),
             ],
@@ -88,18 +101,22 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InputWidget(
             label: "Nhập số tiền muốn nạp",
             hintText: "Số tiền (vnđ)",
+            obligatory: true,
             textEditingController: controller.amountOfMoneyController,
-            width: 1,
+            width: .85,
+            thousandsSeparator: true,
+            textInputType: TextInputType.number,
             onChanged: (val) {
               controller.onChanged(context, val);
             },
           ),
-          Padding(
+          Container(
+            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
             child: Text(
               "Hoặc chọn nhanh số tiền",
@@ -153,6 +170,19 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
           ),
         ],
       ),
+    );
+  }
+
+  ///
+  ///btn
+  ///
+  Widget btnRecharge(BuildContext context,
+      {required V1BeforeRechargeController controller}) {
+    return BtnCustom(
+      onTap: () => controller.onBtnRechargeClick(),
+      color: ColorResources.PRIMARY,
+      text: "Tiếp tục",
+      width: DeviceUtils.getScaledWidth(context, .9),
     );
   }
 }

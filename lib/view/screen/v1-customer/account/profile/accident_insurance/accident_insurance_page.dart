@@ -4,8 +4,10 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
+import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_specification.dart';
 
 class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
   @override
@@ -13,6 +15,11 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
     return GetBuilder<V1AccidentInsuranceController>(
         init: V1AccidentInsuranceController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
@@ -24,13 +31,12 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
                   //tab bar
                   _tabBarWidget(context: context, controller: controller),
 
-                  const Spacer(),
-
-                  //btn bottom
-                  _btnBottom(context, controller),
+                  //tab view
+                  _tabView(),
                 ],
               ),
             ),
+            bottomNavigationBar: _btnBottom(context, controller: controller),
           );
         });
   }
@@ -111,31 +117,54 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
   }
 
   ///
+  ///tab view
+  ///
+  Widget _tabView() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            AccidentInsuranceSpecification(
+              accidentInsuranceSpecification: (controller.currentIndex == 1)
+                  ? controller.baoHiemResponse[0].quyenLoi.toString()
+                  : (controller.currentIndex == 2)
+                      ? controller.baoHiemResponse[0].boiThuong.toString()
+                      : controller.baoHiemResponse[0].gioiThieu.toString(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
   ///btn bottom
   ///
-  Widget _btnBottom(
-      BuildContext context, V1AccidentInsuranceController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        BtnCustom(
-          onTap: () => controller.onYourInsurancePageClick(),
-          color: ColorResources.GREY,
-          text: "Bảo hiểm của bạn",
-          width: DeviceUtils.getScaledWidth(context, .4),
-          isPadding: true,
-        ),
-        const SizedBox(
-          width: Dimensions.MARGIN_SIZE_SMALL,
-        ),
-        BtnCustom(
-          onTap: () => controller.onRegisterClick(),
-          color: ColorResources.PRIMARY,
-          text: "Đăng ký mua bảo hiểm",
-          width: DeviceUtils.getScaledWidth(context, .4),
-          isPadding: true,
-        ),
-      ],
+  Widget _btnBottom(BuildContext context,
+      {required V1AccidentInsuranceController controller}) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BtnCustomBorder(
+            onTap: () => controller.onYourInsurancePageClick(),
+            text: "Bảo hiểm của bạn",
+            width: DeviceUtils.getScaledWidth(context, .4),
+          ),
+          const SizedBox(
+            width: Dimensions.MARGIN_SIZE_LARGE,
+          ),
+          BtnCustom(
+            onTap: () => controller.onRegisterClick(),
+            color: ColorResources.PRIMARY,
+            text: "Đăng ký mua",
+            width: DeviceUtils.getScaledWidth(context, .4),
+          ),
+        ],
+      ),
     );
   }
 }

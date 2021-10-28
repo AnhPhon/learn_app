@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -16,12 +15,15 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-
+import 'package:template/utils/app_constants.dart';
+import 'package:template/utils/snack_bar.dart';
 import '../../../../di_container.dart';
 
-class CreateWorkController extends GetxController{
-  final NhomDichVuProvider nhomDichVuProvider = GetIt.I.get<NhomDichVuProvider>();
-  final LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
+class CreateWorkController extends GetxController {
+  final NhomDichVuProvider nhomDichVuProvider =
+      GetIt.I.get<NhomDichVuProvider>();
+  final LoaiCongViecProvider loaiCongViecProvider =
+      GetIt.I.get<LoaiCongViecProvider>();
   final TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
   final QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
   final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
@@ -40,34 +42,61 @@ class CreateWorkController extends GetxController{
   bool isLoading = true;
   //Tỉnh thành phố
   List<TinhTpResponse> tinhTps = [];
-  TinhTpResponse? tinh;
+  List<TinhTpResponse> otherProvinces = [];
+
+  TinhTpResponse? hcmProvince;
+  TinhTpResponse? otherProvince;
+  TinhTpResponse? daNangProvince;
+  TinhTpResponse? haNoiProvince;
+
   int groupTinhTpValue = 0;
   List<QuanHuyenResponse> quanHuyenList = [];
-  QuanHuyenResponse? quanHuyen;
+  List<QuanHuyenResponse> otherDistricts = [];
+  QuanHuyenResponse? hcmHuyen;
+  QuanHuyenResponse? daNangHuyen;
+  QuanHuyenResponse? haNoiHuyen;
+  QuanHuyenResponse? khacHuyen;
   List<PhuongXaResponse> phuongXaList = [];
-  PhuongXaResponse? phuongXa;
+  List<PhuongXaResponse> otherwards = [];
+  PhuongXaResponse? hcmPhuong;
+  PhuongXaResponse? daNangPhuong;
+  PhuongXaResponse? haNoiPhuong;
+  PhuongXaResponse? khacPhuong;
   // Id User
   String idUser = '';
+  // Get param (idType) nếu là dịch vụ thường xuyên 2 và tạo đơn dich vụ là 1
+  SERVICES services = SERVICES.REGULARLY;
+  String titleAppBar = 'Tạo đơn dịch vụ';
   @override
   void onInit() {
     super.onInit();
     // Nếu dich vụ thì chỉ có nhóm 3, 4, 5, 6, 7
     // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6 
+    if(Get.arguments != null){
+      services = Get.arguments as SERVICES;
+    }
     getNhomDichVu();
     getTinhThanh();
     getUserId();
+    /// Change Title App bar
+    if(services == SERVICES.REGULARLY){
+      titleAppBar = "Dịch vụ thường xuyên";
+    }else if(services == SERVICES.WORK){
+      titleAppBar = 'Tạo đơn công việc';
+    }
   }
 
 
   Future<void> getUserId()async{
-    final idUser =  await sl.get<SharedPreferenceHelper>().userId;
-    this.idUser = idUser!;
+    await sl.get<SharedPreferenceHelper>().userId.then((value){
+      idUser = value!;
+    });
   }
 
   ///
   /// Thay đổi nhóm công việc
   ///
-  void onChangedDichVu(NhomDichVuResponse dichvu){
+  void onChangedDichVu(NhomDichVuResponse dichvu) {
     this.dichvu = dichvu;
     getLoaiCongViec(dichvu: dichvu);
     update();
@@ -76,17 +105,22 @@ class CreateWorkController extends GetxController{
   ///
   /// Thay đổi công việc
   ///
-  void onChangedLoaiCongViec(LoaiCongViecResponse loaiCongViec){
+  void onChangedLoaiCongViec(LoaiCongViecResponse loaiCongViec) {
     this.loaiCongViec = loaiCongViec;
     update();
   }
 
-
   ///
   /// Thay đổi radio button
   ///
-  void onChangedGroup(int val){
+  void onChangedGroup(int val) {
     groupTinhTpValue = val;
+    if(groupTinhTpValue == 3){
+      khacHuyen = null;
+      khacPhuong = null;
+      otherDistricts.clear();
+      otherwards.clear();
+    }
     getTinhThanh();
     update();
   }
@@ -94,101 +128,139 @@ class CreateWorkController extends GetxController{
   ///
   ///Thay đổi tỉnh thành
   ///
-  void onChangedTinhThanh(TinhTpResponse tinhTp){
-    tinh = tinhTp;
+  void onChangedTinhThanh(TinhTpResponse tinhTp) {
+    if(groupTinhTpValue == 3){
+      otherProvince = tinhTp;
+    }else if(groupTinhTpValue == 2){
+      daNangProvince = tinhTp;
+    }else if(groupTinhTpValue == 1){
+      haNoiProvince = tinhTp;
+    }else{
+      hcmProvince = tinhTp;
+    }
     getQuanHuyen(filter: '&idTinhTp=${tinhTp.id}');
     update();
   }
 
-
   ///
   ///Thay đổi quận huyện
   ///
-  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen){
-    this.quanHuyen = quanHuyen;
-    getPhuongXa(filter: '&idQuanHuyen=${quanHuyen.id}');
+  void onChangedQuanHuyen(QuanHuyenResponse huyen) {
+    if(groupTinhTpValue == 3){
+      khacHuyen= huyen;
+    }else if(groupTinhTpValue == 2){
+      daNangHuyen = huyen;
+    }else if(groupTinhTpValue == 1){
+      haNoiHuyen = huyen;
+    }else{
+      hcmHuyen = huyen;
+    }
+    getPhuongXa(filter: '&idQuanHuyen=${huyen.id}');
     update();
   }
-  
 
   ///
   ///Thay đổi tỉnh thành
   ///
-  void onChangedPhuongXa(PhuongXaResponse phuongXa){
-    this.phuongXa = phuongXa;
+  void onChangedPhuongXa(PhuongXaResponse phuong) {
+    if(groupTinhTpValue == 3){
+      khacPhuong = phuong;
+    }else if(groupTinhTpValue == 2){
+      daNangPhuong = phuong;
+    }else if(groupTinhTpValue == 1){
+      haNoiPhuong = phuong;
+    }else{
+      hcmPhuong = phuong;
+    }
     update();
   }
-
 
   ///
   /// Get nhóm dich vụ
   ///
-  void getNhomDichVu(){
-    nhomDichVuProvider.all(onSuccess: (data){
+  void getNhomDichVu() {
+    nhomDichVuProvider.all(onSuccess: (data) {
       isLoadingNhomDichVu = true;
       nhomDichVuResponseList.clear();
       if(data.isNotEmpty){
-        nhomDichVuResponseList.addAll(data);
+        if(services == SERVICES.WORK){
+          nhomDichVuResponseList.addAll(data.where((element) => element.nhomDichVu!.contains('1')|| element.nhomDichVu!.contains('2') || element.nhomDichVu!.contains('5') || element.nhomDichVu!.contains('6')));
+        }else if(services == SERVICES.REGULARLY){
+          nhomDichVuResponseList.addAll(data.where((element) => element.nhomDichVu!.contains('3')|| element.nhomDichVu!.contains('4') || element.nhomDichVu!.contains('5') || element.nhomDichVu!.contains('6') || element.nhomDichVu!.contains('7')));
+        }
         dichvu = nhomDichVuResponseList.first;
       }
       isLoadingNhomDichVu = false;
       getLoaiCongViec(dichvu: dichvu!);
       update();
-    }, onError: (error){
+    }, onError: (error) {
       isLoadingNhomDichVu = false;
       update();
-      Get.snackbar("Error",error.message.toString(),);
+      SnackBarUtils.showSnackBar(
+        title:"Error",
+        message:error.message.toString(),
+      );
     });
   }
-
 
   ///
   /// Lấy danh sách công việc thuôc nhóm côgn việc
   ///
-  void getLoaiCongViec({required NhomDichVuResponse dichvu}){
-    print(dichvu.id);
-    loaiCongViecProvider.paginate(page: 1, limit: 100, filter: "&idNhomDichVu=${dichvu.id}" ,onSuccess: (data){
-      loaiCongViec = null;
-      loaiCongViecResponseList.clear();
-      loaiCongViecResponseList.addAll(data);
-      if(data.isNotEmpty){
-        loaiCongViec = loaiCongViecResponseList.first;
-      }
-      update();
-    }, onError:(error){
-      print("CreateWorkController getLoaiCongViec onError $error");
-      update();
-      Get.snackbar("Error",error.message.toString(),);
-    });
+  void getLoaiCongViec({required NhomDichVuResponse dichvu}) {
+    loaiCongViecProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter: "&idNhomDichVu=${dichvu.id}",
+        onSuccess: (data) {
+          loaiCongViec = null;
+          loaiCongViecResponseList.clear();
+          loaiCongViecResponseList.addAll(data);
+          if (data.isNotEmpty) {
+            loaiCongViec = loaiCongViecResponseList.first;
+          }
+          update();
+        },
+        onError: (error) {
+          print("CreateWorkController getLoaiCongViec onError $error");
+          update();
+          SnackBarUtils.showSnackBar(
+            title:"Error",
+            message:error.message.toString(),
+          );
+        });
   }
-
 
   ///
   /// Lấy tất cả tỉnh thành phố
   ///
-  void getTinhThanh(){
-    tinhTpProvider.all(onSuccess: (data){
+  void getTinhThanh() {
+    tinhTpProvider.all(onSuccess: (data) {
       tinhTps.clear();
       tinhTps.addAll(data);
-      if(groupTinhTpValue == 0){
-        tinh = tinhTps.firstWhere((element) => element.ten!.contains("Hồ Chí Minh"));
-        getQuanHuyen(filter: '&idTinhTp=${tinh!.id}');
-      }else if(groupTinhTpValue == 1){
-        tinh = tinhTps.firstWhere((element) => element.ten!.contains("Hà Nội"));
-        getQuanHuyen(filter: '&idTinhTp=${tinh!.id}');
-      }else if(groupTinhTpValue == 2){
-        tinh = tinhTps.firstWhere((element) => element.ten!.contains("Đà Nẵng"));
-        getQuanHuyen(filter: '&idTinhTp=${tinh!.id}');
-      }else{
-        tinh = null;
+      otherProvinces.addAll(data);
+      if (groupTinhTpValue == 0) {
+        hcmProvince = tinhTps
+            .firstWhere((element) => element.ten!.contains("Hồ Chí Minh"));
+        getQuanHuyen(filter: '&idTinhTp=${hcmProvince!.id}');
+      } else if (groupTinhTpValue == 1) {
+        haNoiProvince= tinhTps.firstWhere((element) => element.ten!.contains("Hà Nội"));
+        getQuanHuyen(filter: '&idTinhTp=${haNoiProvince!.id}');
+      } else if (groupTinhTpValue == 2) {
+        daNangProvince =
+            tinhTps.firstWhere((element) => element.ten!.contains("Đà Nẵng"));
+        getQuanHuyen(filter: '&idTinhTp=${daNangProvince!.id}');
+      } else {
+        otherProvince = null;
       }
-      
+
       isLoading = false;
       update();
-    }, onError: (error){
+    }, onError: (error) {
       isLoading = false;
       update();
-      SnackBar(content: Text(error.message.toString()),);
+      SnackBar(
+        content: Text(error.message.toString()),
+      );
       print("CreateWorkController getTinhThanh onError $error");
     });
   }
@@ -196,111 +268,136 @@ class CreateWorkController extends GetxController{
   ///
   /// Lấy tất cả quận huyện
   ///
-  void getQuanHuyen({String? filter =''}){
+  void getQuanHuyen({String? filter = ''}) {
     quanHuyenProvider.paginate(
-      filter: filter!,
-      limit: 100,
-      page: 1,
-      onSuccess: (data){
-      quanHuyen = null;
-      phuongXa = null;
-      quanHuyenList.clear();
-      phuongXaList.clear();
-      if(data.isNotEmpty){
-        quanHuyenList.addAll(data);
-        quanHuyen = quanHuyenList.first;
-        // xã khi chon huỵen
-        getPhuongXa(filter: '&idQuanHuyen=${quanHuyen!.id}');
-      }
+        filter: filter!,
+        limit: 100,
+        page: 1,
+        onSuccess: (data) {
+          if(groupTinhTpValue != 3){
+            hcmHuyen = null;
+            hcmPhuong = null;
+            quanHuyenList.clear();
+            phuongXaList.clear();
+            if (data.isNotEmpty) {
+              quanHuyenList.addAll(data);
+              hcmHuyen = quanHuyenList.first;
+              // xã khi chon huỵen
+              getPhuongXa(filter: '&idQuanHuyen=${hcmHuyen!.id}');
+            }
 
-      //isLoadingNhomDichVu = false;
-      update();
-    }, onError: (error){
-      update();
-      SnackBar(content: Text(error.message.toString()),);
-      print("CreateWorkController getQuanHuyen onError $error");
-    });
+            //isLoadingNhomDichVu = false;
+            update();
+          }else{
+            khacHuyen = null;
+            khacPhuong = null;
+            otherDistricts.clear();
+            otherDistricts.addAll(data);
+            update();
+          }
+          
+        },
+        onError: (error) {
+          update();
+          SnackBar(
+            content: Text(error.message.toString()),
+          );
+          print("CreateWorkController getQuanHuyen onError $error");
+        });
   }
 
   ///
   /// Lấy tất cả phường xa
   ///
-  void getPhuongXa({String? filter =''}){
+  void getPhuongXa({String? filter = ''}) {
     phuongXaProvider.paginate(
-      filter: filter!,
-      limit: 100,
-      page: 1,
-      onSuccess: (data){
-      //isLoadingNhomDichVu = true;
-      phuongXa = null;
-      phuongXaList.clear();
-      if(data.isNotEmpty){
-        phuongXaList.addAll(data);
-        phuongXa = phuongXaList.first;
-      }
-      //isLoadingNhomDichVu = false;
-      update();
-    }, onError: (error){
-      update();
-      SnackBar(content: Text(error.message.toString()),);
-      print("CreateWorkController getPhuongXa onError $error");
-    });
+        filter: filter!,
+        limit: 100,
+        page: 1,
+        onSuccess: (data) {
+          if(groupTinhTpValue != 3){
+             hcmPhuong = null;
+            phuongXaList.clear();
+            if (data.isNotEmpty) {
+              phuongXaList.addAll(data);
+              hcmPhuong = phuongXaList.first;
+            }
+            //isLoadingNhomDichVu = false;
+            update();
+          }else{
+            khacPhuong = null;
+            otherwards.clear();
+            otherwards.addAll(data);
+            update();
+          }
+        },
+        onError: (error) {
+          update();
+          SnackBar(
+            content: Text(error.message.toString()),
+          );
+          print("CreateWorkController getPhuongXa onError $error");
+        });
   }
-
 
   ///
   /// Nhấn vào nút tiếp tục
   ///
   void onClickContinue() async{
-   
-    
       if(dichvu == null){
-        return Get.snackbar("Nhóm dich vụ bắt buộc","Vui lòng chọn dịch vụ");
-      }else if(tinh == null){
-        return Get.snackbar("Tỉnh","Vui lòng chọn tỉnh");
-      }else if(quanHuyen == null){
-        return Get.snackbar("Trường quận huyện bắt buộc","Vui lòng quận huyện");
-      }else if(phuongXa == null){
-        return Get.snackbar("Trường phường xã bắt buộc","Vui lòng phường xã");
+        SnackBarUtils.showSnackBar(title:"Nhóm dich vụ bắt buộc",message:"Vui lòng chọn dịch vụ");
+        return; 
+      }else if(hcmProvince == null && otherProvince == null && haNoiProvince == null && daNangProvince == null){
+        SnackBarUtils.showSnackBar(title:"Trường tỉnh bắt buộc",message:"Vui lòng chọn tỉnh");
+        return; 
+      }else if(hcmHuyen == null && khacHuyen == null && haNoiHuyen == null && daNangHuyen == null){
+        SnackBarUtils.showSnackBar(title:"Trường quận huyện bắt buộc",message:"Vui lòng chọn quận huyện");
+        return; 
+      }else if(hcmPhuong == null && khacPhuong == null && haNoiPhuong == null && daNangPhuong == null){
+        SnackBarUtils.showSnackBar(title:"Trường phường xã bắt buộc",message:"Vui lòng phường xã");
+        return; 
       }else if(loaiCongViec == null){
-        return  Get.snackbar("Trường công việc bắt buộc","Vui lòng chọn công việc");
+         SnackBarUtils.showSnackBar(title:"Trường công việc bắt buộc",message:"Vui lòng chọn công việc");
+        return; 
       }else if(addressController.text.toString().isEmpty){
-        return Get.snackbar("Trường địa chỉ bắt buộc","Vui lòng điền địa chỉ cụ thể");
+        SnackBarUtils.showSnackBar(title:"Trường địa chỉ bắt buộc",message:"Vui lòng điền địa chỉ cụ thể");
+        return; 
       }else{
-        
         if(dichvu!.nhomDichVu! == '1'){
          // Nhóm 1
           Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.nhomDichVu! == '2'){
-          // Nhóm 2
-          Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: await request());
-        }else if(dichvu!.nhomDichVu! == '3'){
-          // Nhóm 3
-          // Tạo đơn dịch vụ có gía
-          Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: await request());
-        }else if(dichvu == 4){
-          // Tạo đơn dich vụ có giá nhóm 4
-          Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE);
-        }else if(dichvu == 5){
-          // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G5_CREATE_SERVICE);
-        }else if(dichvu == 6){
-          // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G6_CREATE_SERVICE);
-        }else if(dichvu == 7){
-          // Tạo đơn công viẹc và dịch nhóm 5
-          Get.toNamed(AppRoutes.V1_G7_RECRUITMENT);
+        }else if(dichvu!.nhomDichVu! == '7'){
+         // Nhóm 7
+          Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: await request());
+        }else {
+          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),);
         }
       }
   }
 
   Future<DonDichVuRequest> request()async {
       final DonDichVuRequest serviceApplication = DonDichVuRequest();
-      serviceApplication.idTinhTp = tinh!.id;
-      serviceApplication.idQuanHuyen = quanHuyen!.id;
-      serviceApplication.idPhuongXa = phuongXa!.id;
+      if(groupTinhTpValue == 3){
+        serviceApplication.idTinhTp = otherProvince!.id;
+        serviceApplication.idQuanHuyen = khacHuyen!.id;
+        serviceApplication.idPhuongXa = khacPhuong!.id;
+      }else if(groupTinhTpValue == 2){
+        serviceApplication.idTinhTp = daNangProvince!.id;
+        serviceApplication.idQuanHuyen = daNangHuyen!.id;
+        serviceApplication.idPhuongXa = daNangPhuong!.id;
+      }else if(groupTinhTpValue == 1){
+        serviceApplication.idTinhTp = haNoiProvince!.id;
+        serviceApplication.idQuanHuyen = haNoiHuyen!.id;
+        serviceApplication.idPhuongXa = haNoiPhuong!.id;
+      }else{
+        serviceApplication.idTinhTp = hcmProvince!.id;
+        serviceApplication.idQuanHuyen = hcmHuyen!.id;
+        serviceApplication.idPhuongXa = hcmPhuong!.id;
+      }
+      print("Tinh: ${serviceApplication.idTinhTp} Huyen: ${serviceApplication.idQuanHuyen} xa: ${serviceApplication.idPhuongXa}");
+      
       serviceApplication.idNhomDichVu = dichvu!.id;
-      serviceApplication.idTaiKhoan = await sl.get<SharedPreferenceHelper>().userId;
+      serviceApplication.idTaiKhoan = idUser;//await sl.get<SharedPreferenceHelper>().userId;
       serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
       serviceApplication.diaChiCuThe = addressController.text.toString();
       return serviceApplication;
@@ -311,5 +408,5 @@ class CreateWorkController extends GetxController{
     super.onClose();
     addressController.dispose();
   }
-
+  
 }

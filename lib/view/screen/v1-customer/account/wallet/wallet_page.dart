@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/my_clipper.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/my_clipper.dart';
 
 class V1WalletPage extends GetView<V1WalletController> {
   @override
@@ -13,34 +16,58 @@ class V1WalletPage extends GetView<V1WalletController> {
     return GetBuilder<V1WalletController>(
         init: V1WalletController(),
         builder: (controller) {
-          return Stack(
-            children: [
-              ClipPath(
-                clipper: MyClipper(),
-                child: SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, .3),
-                  width: double.infinity,
-                  child: AppBarWidget(title: controller.title),
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              leading: GestureDetector(
+                onTap: () => controller.onBtnBackClick(),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: ColorResources.WHITE,
                 ),
               ),
-              Column(
-                children: [
-                  //wallet status
-                  _walletStatus(context, controller: controller),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE +
-                        Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: Stack(
+              children: [
+                ClipPath(
+                  clipper: MyClipper(),
+                  child: SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, .3),
+                    width: double.infinity,
+                    child: AppBarWidget(title: controller.title),
                   ),
+                ),
+                Column(
+                  children: [
+                    //wallet status
+                    _walletStatus(context, controller: controller),
 
-                  //title
-                  _title(),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+                    ),
 
-                  //history
-                  _history(context, controller),
-                ],
-              ),
-            ],
+                    //title
+                    _title(),
+
+                    if (controller.lichSuViTienResponse.isEmpty)
+                      const Divider(
+                        height: 0,
+                        color: ColorResources.BLACK,
+                      ),
+
+                    //history
+                    _history(context, controller: controller),
+                  ],
+                ),
+              ],
+            ),
           );
         });
   }
@@ -71,14 +98,56 @@ class V1WalletPage extends GetView<V1WalletController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Tài khoản FSS",
-                  style: Dimensions.fontSizeStyle14w600(),
-                ),
+                //status wallet
                 Row(
                   children: [
                     Text(
-                      (controller.isShow) ? "7.000.000 vnđ" : "Xem số dư",
+                      "Tài khoản FSS",
+                      style: Dimensions.fontSizeStyle14w600(),
+                    ),
+
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //color status
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, .025),
+                      height: DeviceUtils.getScaledHeight(context, .013),
+                      decoration: BoxDecoration(
+                          color: controller.viTienResponse.trangThai == "1"
+                              ? ColorResources.GREEN
+                              : ColorResources.RED,
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_LARGE - 5)),
+                    ),
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //status
+                    Text(
+                      controller.viTienResponse.trangThai == "1"
+                          ? "Đang hoạt động"
+                          : "Tài khoản tạm khoá",
+                      style: TextStyle(
+                          color: (controller.viTienResponse.trangThai == "1")
+                              ? ColorResources.GREEN
+                              : ColorResources.RED),
+                    ),
+                  ],
+                ),
+
+                //balance
+                Row(
+                  children: [
+                    Text(
+                      (controller.isShow)
+                          ? "${PriceConverter.convertPrice(
+                              context,
+                              double.parse(controller.viTienResponse.tongTien!),
+                            )} vnđ"
+                          : "Xem số dư",
                       style: Dimensions.fontSizeStyle18w600(),
                     ),
                     const SizedBox(
@@ -130,16 +199,16 @@ class V1WalletPage extends GetView<V1WalletController> {
       width: double.infinity,
       padding:
           const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_LARGE),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: ColorResources.WHITE,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            offset: Offset(0, -2),
+            color: Colors.grey.withOpacity(.5),
+            blurRadius: 2,
+            offset: const Offset(0, -2),
           ),
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
           topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
         ),
@@ -163,7 +232,7 @@ class V1WalletPage extends GetView<V1WalletController> {
     required String price,
     required String content,
     required String time,
-    required int status,
+    required String status,
   }) {
     return Padding(
       padding:
@@ -233,9 +302,11 @@ class V1WalletPage extends GetView<V1WalletController> {
                         width: DeviceUtils.getScaledWidth(context, .025),
                         height: DeviceUtils.getScaledHeight(context, .013),
                         decoration: BoxDecoration(
-                            color: status == 0
+                            color: status == "1"
                                 ? ColorResources.YELLOW
-                                : ColorResources.GREEN,
+                                : status == "2"
+                                    ? ColorResources.GREEN
+                                    : ColorResources.RED,
                             borderRadius: BorderRadius.circular(
                                 Dimensions.BORDER_RADIUS_LARGE - 5)),
                       ),
@@ -245,7 +316,11 @@ class V1WalletPage extends GetView<V1WalletController> {
 
                       //status
                       Text(
-                        status == 0 ? "Đang đợi" : "Thành công",
+                        status == "1"
+                            ? "Đang đợi"
+                            : status == "2"
+                                ? "Thành công"
+                                : "Thất bại",
                       ),
                       const Spacer(),
                     ],
@@ -262,111 +337,119 @@ class V1WalletPage extends GetView<V1WalletController> {
   ///
   ///history
   ///
-  Widget _history(BuildContext context, V1WalletController controller) {
+  Widget _history(BuildContext context,
+      {required V1WalletController controller}) {
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
           color: ColorResources.WHITE,
         ),
-        child: //show history
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.historyList.length,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return Column(
+        //show history
+        child: (controller.lichSuViTienResponse.isEmpty)
+            ? Center(
+                child: Text("Chưa có lịch sử giao dịch".toUpperCase(),
+                    style: Dimensions.fontSizeStyle18w600()),
+              )
+            : SmartRefresher(
+                controller: controller.refreshController,
+                enablePullUp: true,
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                footer: const ClassicFooter(
+                  loadingText: "Đang tải...",
+                  noDataText: "Không có dữ liệu",
+                  canLoadingText: "Kéo lên để tải thêm dữ liệu",
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      const Divider(
-                        thickness: 2,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            controller.historyList[index].dateTime
-                                .toUpperCase(),
-                            style: Dimensions.fontSizeStyle18w600().copyWith(
-                              color: ColorResources.GREY,
+                      ...List.generate(controller.lichSuViTien.keys.length,
+                          (index) {
+                        return Column(
+                          children: [
+                            const Divider(
+                              thickness: 2,
                             ),
-                          ),
-                        ),
-                      ),
 
-                      const Divider(
-                        thickness: 2,
-                      ),
-
-                      //show item history
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount:
-                            controller.historyList[index].itemHistory.length,
-                        itemBuilder: (BuildContext ctx, int i) {
-                          return Column(
-                            children: [
-                              _itemHistory(
-                                context,
-                                id: controller
-                                    .historyList[index].itemHistory[i].id,
-                                price: controller
-                                    .historyList[index].itemHistory[i].price,
-                                content: controller
-                                    .historyList[index].itemHistory[i].content,
-                                time: controller
-                                    .historyList[index].itemHistory[i].time,
-                                status: controller
-                                    .historyList[index].itemHistory[i].status,
+                            //MM-yyyy
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                               ),
-                              if (i ==
-                                  controller.historyList[index].itemHistory
-                                          .length -
-                                      1)
-                                const SizedBox.shrink()
-                              else
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left:
-                                          Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                                  child: Divider(
-                                    thickness: 2,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Tháng ${controller.lichSuViTien[controller.lichSuViTien.keys.toList()[index]]!.keys.toList()[index]} ${controller.lichSuViTien.keys.toList()[index]}"
+                                      .toUpperCase(),
+                                  style:
+                                      Dimensions.fontSizeStyle18w600().copyWith(
+                                    color: ColorResources.GREY,
                                   ),
                                 ),
-                            ],
-                          );
-                        },
-                      ),
+                              ),
+                            ),
+
+                            const Divider(
+                              thickness: 2,
+                            ),
+
+                            //show item history
+
+                            ...List.generate(
+                                controller
+                                    .lichSuViTien[controller.lichSuViTien.keys
+                                            .toList()[index]]![
+                                        controller
+                                            .lichSuViTien[controller
+                                                .lichSuViTien.keys
+                                                .toList()[index]]!
+                                            .keys
+                                            .toList()[index]]!
+                                    .length, (i) {
+                              final lichSuViTien = controller.lichSuViTien[
+                                  controller.lichSuViTien.keys
+                                      .toList()[index]]![controller
+                                  .lichSuViTien[controller.lichSuViTien.keys
+                                      .toList()[index]]!
+                                  .keys
+                                  .toList()[index]]!;
+                              final giaoDich =
+                                  "${lichSuViTien[i].loaiGiaoDich! == '1' ? '+' : '-'}${"${PriceConverter.convertPrice(context, double.parse(lichSuViTien[i].soTien!))} vnđ"}";
+                              return Column(
+                                children: [
+                                  _itemHistory(
+                                    context,
+                                    id: lichSuViTien[i].id!,
+                                    price: giaoDich,
+                                    content: lichSuViTien[i].noiDung!,
+                                    time: DateConverter.formatDateTimeFull(
+                                        dateTime: lichSuViTien[i].createdAt!),
+                                    status: lichSuViTien[i].trangThai!,
+                                  ),
+                                  if (i == lichSuViTien.length - 1)
+                                    const SizedBox.shrink()
+                                  else
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        left:
+                                            Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                                      ),
+                                      child: Divider(
+                                        thickness: 2,
+                                      ),
+                                    ),
+                                ],
+                              );
+                            }),
+                          ],
+                        );
+                      }),
                     ],
-                  );
-                }),
+                  ),
+                ),
+              ),
       ),
     );
   }
-}
-
-class History {
-  String dateTime;
-  List<ItemHistory> itemHistory;
-  History({
-    required this.dateTime,
-    required this.itemHistory,
-  });
-}
-
-class ItemHistory {
-  String id;
-  String price;
-  String content;
-  String time;
-  int status;
-  ItemHistory(
-      {required this.id,
-      required this.price,
-      required this.content,
-      required this.time,
-      required this.status});
 }

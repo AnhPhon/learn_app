@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
-      style: TextButton.styleFrom(padding: const EdgeInsets.all(0)),
+      style: TextButton.styleFrom(padding: EdgeInsets.zero),
       child: Container(
         height: 45,
         alignment: Alignment.center,
@@ -26,15 +26,16 @@ class CustomButton extends StatelessWidget {
                   offset: const Offset(0, 1)), // changes position of shadow
             ],
             gradient: const LinearGradient(colors: [
-                    ColorResources.PRIMARY,
-                    ColorResources.PRIMARY,
-                    ColorResources.PRIMARY,
-                  ]),
-            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
+              ColorResources.PRIMARY,
+              ColorResources.PRIMARY,
+              ColorResources.PRIMARY,
+            ]),
+            borderRadius:
+                BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
         child: Text(buttonText,
             style: titilliumSemiBold.copyWith(
               fontSize: Dimensions.FONT_SIZE_LARGE,
-              color: Theme.of(context).primaryColor,
+              color: ColorResources.WHITE,
             )),
       ),
     );
