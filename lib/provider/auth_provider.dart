@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/account_request.dart';
@@ -72,6 +73,9 @@ class AuthProvider with ChangeNotifier {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await authRepository!.loginAccount(request);
+    if(apiResponse.response.statusCode == null){
+      EasyLoading.dismiss();
+    }
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success

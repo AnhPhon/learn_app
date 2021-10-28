@@ -30,44 +30,54 @@ class SplashController extends GetxController
       final bool? isLogin = await sl.get<SharedPreferenceHelper>().isLogin;
       final String? idLoaiTaiKhoan = await sl.get<SharedPreferenceHelper>().typeAccount;
 
-      // is first time
-      if (isFirst == null) {
-        Get.offAllNamed(AppRoutes.INTRO);
-      } else {
-        // check if is login
-        if (isLogin != null && isLogin) {
-          if(idLoaiTaiKhoan != null){
-            if (idLoaiTaiKhoan == KHACH_HANG) {
-              Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
-              return;
-            } else if (idLoaiTaiKhoan == THO_THAU) {
-              Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
-              return;   
-            } else if (idLoaiTaiKhoan == DAI_LY) {
-              Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
-              return;
-            } else if (idLoaiTaiKhoan == NHAN_VIEN) {
-              Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-              return;
-            }else{
-              // Logout
-              // Khi không tự động nhập được thì logout clear() share để người dùng đăng nhập lại từ đầu
-              logout();
-              update();
+      // Nếu người dùng remember thì đăng nhập thằng vào app
+      sl.get<SharedPreferenceHelper>().rememberAccount.then((value){
+        if(value == true && value != null){
+          // is first time
+          if (isFirst == null) {
+            Get.offAllNamed(AppRoutes.INTRO);
+          } else {
+            // check if is login
+            if (isLogin != null && isLogin) {
+              if(idLoaiTaiKhoan != null){
+                if (idLoaiTaiKhoan == KHACH_HANG) {
+                  Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                  return;
+                } else if (idLoaiTaiKhoan == THO_THAU) {
+                  Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+                  return;   
+                } else if (idLoaiTaiKhoan == DAI_LY) {
+                  Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+                  return;
+                } else if (idLoaiTaiKhoan == NHAN_VIEN) {
+                  Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
+                  return;
+                }else{
+                  // Logout
+                  // Khi không tự động nhập được thì logout clear() share để người dùng đăng nhập lại từ đầu
+                  Get.offAllNamed(AppRoutes.LOGIN);
+                  update();
+                }
+              }else{
+                // logout
+                Get.offAllNamed(AppRoutes.LOGIN);
+                update();
+              }
+              //Get.offNamed(AppRoutes.DASHBOARD);
+            } else {
+              // is not login
+              Get.offAllNamed(AppRoutes.LOGIN);
             }
-          }else{
-            // logout
-            logout();
-            update();
           }
-          //Get.offNamed(AppRoutes.DASHBOARD);
-        } else {
-          // is not login
+        }else{
+          // Không remember thì không đăng nhập thằng vào home
           Get.offAllNamed(AppRoutes.LOGIN);
         }
-      }
-    });
+        
+      });// end
+      
 
+    });// end
     super.onInit();
   }
 

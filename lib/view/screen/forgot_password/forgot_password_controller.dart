@@ -44,11 +44,11 @@ class ForgotPasswordController extends GetxController {
   ///
   bool phoneValidate(){
     if (phoneController.text == '') {
-      Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
     } else if(Validate.phone(phoneController.text.toString())){
-      Alert.error(message: "Số điện thoại không hợp lệ");
-      return false;
+      Alert.info(message: "Số điện thoại không hợp lệ");
+      return true;
     }
     return true;
   }

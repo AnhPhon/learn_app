@@ -16,6 +16,7 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
+import 'package:template/utils/validate.dart';
 
 class LoginController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -74,12 +75,11 @@ class LoginController extends GetxController {
   ///
   bool onValidateLogin(){
     //validate infomation username password
-    final RegExp phoneRegExp = RegExp(r'^(?:[+0]9)?[0-9]{10}$');
     if (phoneController.text == '' || passwordController.text == '') {
-      Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
-    } else if(phoneRegExp.hasMatch(phoneController.text.toString())){
-      Alert.error(message: "Số điện thoại không hợp lệ");
+    } else if(Validate.phone(phoneController.text.toString())){
+      Alert.info(message: "Số điện thoại không hợp lệ");
       return false;
     }
     return true;
@@ -102,8 +102,14 @@ class LoginController extends GetxController {
               sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
               sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
               sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
-              sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
-              sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
+              
+              // sl.get<SharedPreferenceHelper>().savePassword(password)
+              // sl.get<SharedPreferenceHelper>().saveUsername(username)
+              if(isRemember){
+                sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
+                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
+                sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
+              }
 
               if(account.idLoaiTaiKhoan != null){
                 if (account.idLoaiTaiKhoan == KHACH_HANG) {
@@ -132,7 +138,7 @@ class LoginController extends GetxController {
         onError: (error) {
           Alert.error(message: "Đăng nhập thất bại vui lòng thử lại!");
           EasyLoading.dismiss();
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          print("Lỗi đăng nhập onError $error");
           update();
         }
       );

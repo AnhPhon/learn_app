@@ -93,7 +93,7 @@ class Validate{
     ///
     static bool phone(String text){
       //r'^([+0]9)?[0-9]{10}$'
-      final RegExp reg = RegExp(r'^([+0])\d{9}$');
+      final RegExp reg = RegExp(r'^([+0])\d{8}$');
       if(reg.hasMatch(text)){
         // email hợp lệ
         return true;
