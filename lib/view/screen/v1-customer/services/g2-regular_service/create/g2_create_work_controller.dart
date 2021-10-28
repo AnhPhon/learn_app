@@ -12,6 +12,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
@@ -234,6 +235,9 @@ class V1G2CreateWorkController extends GetxController {
       }
       dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
       dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
+      // trạng thái đơn
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
 
     // Tải hình ảnh hiên trạng
     images.forEach((element) {

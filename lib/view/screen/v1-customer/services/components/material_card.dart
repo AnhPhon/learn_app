@@ -58,7 +58,7 @@ class MaterialCard extends StatelessWidget {
               ),
               OrderContentStringValue(
                 title: "Khối lượng: ",
-                value: mass.donGia!,
+                value: mass.khoiLuong!,
                 boldTitle: true,
                 padding: const EdgeInsets.only(
                   left: Dimensions.PADDING_SIZE_SMALL,

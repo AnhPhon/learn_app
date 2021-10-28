@@ -10,6 +10,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
 
@@ -70,6 +71,9 @@ class V1G1ReviewController extends GetxController{
     dichVuRequest.tieuDe = previewServiceRequest!.tieuDe;
     dichVuRequest.diaChiCuThe = previewServiceRequest!.diaChiCuThe ;
 
+    dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
+    dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
+
     // Hình ảnh bản khối lượng
     previewServiceRequest!.hinhAnhBanKhoiLuong!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
@@ -109,7 +113,7 @@ class V1G1ReviewController extends GetxController{
   void addMass({required String idDon}){
     previewServiceRequest!.bangKhoiLuong!.forEach((item) {
       final VatTuRequest vatTuRequest = VatTuRequest();
-      vatTuRequest.donGia = item.donGia;
+      vatTuRequest.khoiLuong = item.khoiLuong;
       vatTuRequest.donVi = item.donVi;
       vatTuRequest.tenVatTu = item.tenVatTu;
       vatTuRequest.quyCach = item.quyCach;

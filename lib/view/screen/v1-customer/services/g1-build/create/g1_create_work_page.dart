@@ -186,7 +186,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               ),
             ),
           DropDownButton<String>(
-            data: const ["M2","M3",'Tấn','Tạ','Kg'],
+            data: const ["m2","m3",'Tấn','Tạ','Kg'],
             obligatory: true,
             onChanged: (unit)=> controller.onChangedUnit(unit!),
             value: controller.unit,

@@ -207,27 +207,23 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                       title: "Tên công việc:",
                                       content:
                                           controller.workMass[index].tenVatTu!,
-                                      fontSize: Dimensions.FONT_SIZE_LARGE,
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
                                         content:
-                                            controller.workMass[index].quyCach!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                            controller.workMass[index].quyCach!),
                                     TextHighlight(
                                         title: "Khối lượng:",
                                         content:
-                                            controller.workMass[index].donGia!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                            controller.workMass[index].khoiLuong!),
                                     TextHighlight(
                                         title: "Đơn vị:",
                                         content:
-                                            controller.workMass[index].donVi!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
-                                    // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
-                                    //   color: ColorResources.RED,
-                                    //   fontSize: Dimensions.FONT_SIZE_LARGE
-                                    // ),),
+                                            controller.workMass[index].donVi!),
+                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia} VNĐ' , style: const TextStyle(
+                                      color: ColorResources.RED,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE
+                                    ),),
                                   ],
                                 ),
                               ),

@@ -112,7 +112,7 @@ class V1G1CreateWorkController extends GetxController{
       return SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!",message: "Khối lượng không được để trống");
     }else{
       final VatTuResponse supplies = VatTuResponse(
-        donGia: massController.text.toString(),
+        khoiLuong: massController.text.toString(),
         donVi: unit,
         quyCach: specificationController.text.toString(),
         tenVatTu: nameTitleController.text.toString(),

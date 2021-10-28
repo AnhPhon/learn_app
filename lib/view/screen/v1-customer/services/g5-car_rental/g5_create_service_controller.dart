@@ -15,6 +15,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
@@ -204,6 +205,10 @@ class V1G5CreateServiceController extends GetxController{
       dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
       dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
       dichVuRequest.moTaChiTiet = workDescController.text.toString();
+      // trạng thái đơn
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
+      
       if(amountController.text.toString().isNotEmpty){
         dichVuRequest.soLuongYeuCau = amountController.text.toString();
       }

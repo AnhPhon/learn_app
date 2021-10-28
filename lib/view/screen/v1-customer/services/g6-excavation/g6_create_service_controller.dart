@@ -19,6 +19,7 @@ import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
 
@@ -224,6 +225,9 @@ class V1G6CreateServiceController extends GetxController{
       dichVuRequest.ngayKetThuc= DateConverter.formatYYYYMMDD(endTimeController.text.toString());
       dichVuRequest.moTaChiTiet = workDescController.text.toString();
       dichVuRequest.soLuongYeuCau = amountController.text.toString();
+      // trạng thái đơn
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
       // Updalod image ảnh sản phẩm mẫu nếu có
       if(productImages.isNotEmpty){
         // HỈnh ảnh sản phẩm mẫu
