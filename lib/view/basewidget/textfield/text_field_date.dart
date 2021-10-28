@@ -38,7 +38,7 @@ class TextFieldDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? const EdgeInsets.all(0),
+      padding: padding ?? EdgeInsets.zero,
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,22 +100,22 @@ class TextFieldDate extends StatelessWidget {
               maxLines: area! ? 3 : 1,
               enabled: false,
               controller: controller,
-              // onTap: (isDate == true)
-              //     ? () {
-              //         showDatePicker(
-              //           context: context,
-              //           initialDate: DateTime.now(),
-              //           firstDate: DateTime(2001),
-              //           lastDate: DateTime(2100),
-              //         ).then((value) {
-              //           isToHour == true
-              //               ? controller.text =
-              //                   "${value!.year}-${value.month}-${value.day}"
-              //               : controller.text =
-              //                   "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
-              //         });
-              //       }
-              //     : null,
+              onTap: (isDate == true)
+                  ? () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2001),
+                        lastDate: DateTime(2100),
+                      ).then((value) {
+                        isToHour == true
+                            ? controller.text =
+                                "${value!.year}-${value.month}-${value.day}"
+                            : controller.text =
+                                "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}";
+                      });
+                    }
+                  : null,
               cursorColor: ColorResources.PRIMARYCOLOR,
               decoration: InputDecoration(
                   isDense: true,

@@ -33,6 +33,7 @@ class V2HomePage extends GetView<V2HomeController> {
             onLoading: controller.onLoading,
             child: HomeWidget(
               fullname: "NT, ${controller.fullname}",
+              soThongBao: controller.thongBaoList.length,
               content: Column(
                 children: [
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -46,6 +47,7 @@ class V2HomePage extends GetView<V2HomeController> {
 
                   // box
                   ketQuaBaoGiaWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // need people widget
@@ -80,34 +82,35 @@ class V2HomePage extends GetView<V2HomeController> {
       child: Row(
         children: [
           Row(
-            children: [
-              const Text(
-                "Bạn cần hoàn thiện ",
-                style: TextStyle(
-                  color: Color(0xff4D4D4D),
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_SMALL,
-                ),
-              ),
+            children: const [
               Text(
-                controller.number.toString(),
-                style: const TextStyle(
-                  color: ColorResources.RED,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_SMALL,
-                ),
-              ),
-              const Text(
-                " hồ sơ",
+                "Bạn cần hoàn thiện hồ sơ",
                 style: TextStyle(
                   color: Color(0xff4D4D4D),
                   fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                  fontSize: Dimensions.FONT_SIZE_SMALL,
                 ),
               ),
             ],
           ),
-          const Icon(CupertinoIcons.bell_fill, color: ColorResources.PRIMARY),
+          Stack(
+            children: [
+              const Icon(CupertinoIcons.bell_fill,
+                  color: ColorResources.PRIMARY),
+              Positioned(
+                right: 8,
+                top: 5,
+                child: Text(
+                  controller.number.toString(),
+                  style: const TextStyle(
+                    color: ColorResources.WHITE,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                  ),
+                ),
+              )
+            ],
+          ),
           const Spacer(),
           GestureDetector(
             onTap: controller.onNeedUpdateClick,
@@ -139,7 +142,7 @@ class V2HomePage extends GetView<V2HomeController> {
     return SizedBox(
       height: 110,
       child: GridView.builder(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -258,7 +261,6 @@ class V2HomePage extends GetView<V2HomeController> {
     final int length = controller.donDichVuList.length > 2
         ? 2
         : controller.donDichVuList.length;
-    print(length);
     return FieldWidget(
       onTap: () => controller.onShortHandedPageClick(),
       title: "Công việc đang cần người",
@@ -266,7 +268,7 @@ class V2HomePage extends GetView<V2HomeController> {
         height: (length > 0) ? 120.0 * length : 0,
         child: ListView.builder(
           itemCount: length,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext ctx, index) {
             return TaskNeedWorker(
@@ -298,7 +300,7 @@ class V2HomePage extends GetView<V2HomeController> {
       widget: SizedBox(
         height: (length > 0) ? 140.0 * length : 0,
         child: GridView.builder(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisExtent: 280,
@@ -321,7 +323,10 @@ class V2HomePage extends GetView<V2HomeController> {
                     const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 child: ProductCard(
                   title: controller.sanPhamList[index].ten!,
-                  image: controller.sanPhamList[index].hinhAnhSanPhams![0],
+                  image:
+                      controller.sanPhamList[index].hinhAnhSanPhams!.isNotEmpty
+                          ? controller.sanPhamList[index].hinhAnhSanPhams![0]
+                          : "",
                   cost: PriceConverter.convertPrice(context, 100000),
                 ),
               ),
@@ -347,7 +352,7 @@ class V2HomePage extends GetView<V2HomeController> {
         height: ((length > 0) ? 120.0 * length : 0) + 50,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: length,
           itemBuilder: (
             BuildContext ctx,
@@ -363,7 +368,7 @@ class V2HomePage extends GetView<V2HomeController> {
                   icon1: const Icon(Icons.remove_red_eye),
                   rowText1: controller.tinTucList[index].luotXem,
                   colorRowText1: ColorResources.BLACKGREY,
-                  icon2: const Icon(Icons.monetization_on_outlined),
+                  icon2: const Icon(Icons.date_range_outlined),
                   rowText2: controller.tinTucList[index].createdAt
                       .toString()
                       .substring(0, 10),

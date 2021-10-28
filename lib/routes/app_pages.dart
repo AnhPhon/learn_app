@@ -3,6 +3,7 @@ import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
+import 'package:template/view/screen/payment/order_infomation/order_infomation_page.dart';
 import 'package:template/view/screen/payment/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/payment/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/payment/recharge/recharge_page.dart';
@@ -48,6 +49,8 @@ import 'package:template/view/screen/v1-customer/form_management/product_respons
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_binding.dart';
 import 'package:template/view/screen/v1-customer/notifications/notification_page.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/bulletin/order_information_binding.dart';
@@ -227,6 +230,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_daily_rep
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_binding.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_page.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
@@ -235,6 +240,9 @@ import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_binding
 import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_binding.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_page.dart';
 
 import 'app_routes.dart';
 
@@ -539,6 +547,14 @@ class AppPages {
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V1_DETAIL_NOTIFICATION,
+      page: () => V1DetailNotificationPage(),
+      binding: V1DetailNotificationBinding(),
+    ),
 
     ///
     /// Phản hồi dịch vụ thường xuyên click từ thông báo
@@ -581,7 +597,7 @@ class AppPages {
     ///
     GetPage(
       name: AppRoutes.V1_ORDER_INFORAMTION,
-      page: () => OrderInformationPage(),
+      page: () => V1OrderInformationPage(),
       binding: OrderInformationBinding(),
     ),
 
@@ -1096,6 +1112,12 @@ class AppPages {
       page: () => V4DetailNotificationPage(),
       binding: V4DetailNotificationBinding(),
     ),
+
+    GetPage(
+      name: AppRoutes.V4_DETAIL_WORK,
+      page: () => V4DetailWorkPage(),
+      binding: V4DetailWorkBinding(),
+    ),
     // GetPage(
     //   name: AppRoutes.INTRO,
     //   page: () => IntroductionPage(),
@@ -1144,6 +1166,15 @@ class AppPages {
     GetPage(
       name: AppRoutes.PAYMENT_RECHARGE,
       page: () => RechargePage(),
+    ),
+    GetPage(
+      name: AppRoutes.ORDER_INFORMATION,
+      page: () => OrderInformationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_DETAIL_REPORT,
+      page: () => V4DetailReportPage(),
+      binding: V4DetailReportBinding(),
     ),
   ];
 }

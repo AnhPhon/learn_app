@@ -706,7 +706,11 @@ class V1G7RecruitmentController extends GetxController {
             };
 
             Get.toNamed('${AppRoutes.V1_G7_REVIEW}?isReview=true',
-                arguments: param);
+                    arguments: param)!
+                .then((value) => {
+                      if (value != null && value == true)
+                        {Get.back(result: true)}
+                    });
           },
           onError: (error) {
             print('V1G7RecruitmentController onClickContinueButton $error');

@@ -130,31 +130,33 @@ class V4HomeController extends GetxController {
   ///  theo doi tien do
   ///
   void _theoDoiTienDo() {
-    congViecNhanVienProvider.paginate(
-      page: 1,
-      limit: 10,
-      filter: "",
-      onSuccess: (models) {
-        for (final model in models) {
-          final String status = model.trangThai!.toLowerCase();
-          if (status == "moi tao") {
-            moiTaoQuality = moiTaoQuality! + 1;
-          } else if (status == "dang lam") {
-            dangLamQuality = dangLamQuality! + 1;
-          } else if (status == "hoan thanh") {
-            hoanThanhQuality = hoanThanhQuality! + 1;
-          } else {
-            chamTreQuality = chamTreQuality! + 1;
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      congViecNhanVienProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter: "&idNhanVien=$id",
+        onSuccess: (models) {
+          for (final model in models) {
+            final String status = model.trangThai!.toLowerCase();
+            if (status == "1") {
+              moiTaoQuality = moiTaoQuality! + 1;
+            } else if (status == "2") {
+              dangLamQuality = dangLamQuality! + 1;
+            } else if (status == "3") {
+              hoanThanhQuality = hoanThanhQuality! + 1;
+            } else {
+              chamTreQuality = chamTreQuality! + 1;
+            }
+            _resetContenGrid();
+            isLoading = false;
+            update();
           }
-          _resetContenGrid();
-          isLoading = false;
-          update();
-        }
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
   }
 
   ///

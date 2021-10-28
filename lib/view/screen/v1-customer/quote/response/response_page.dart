@@ -309,8 +309,6 @@ class V1ResponsePage extends GetView<V1ResponseController> {
     return GestureDetector(
       onTap: () {
         controller.launchURL();
-        // controller.downloadClick("file", "jpg");
-        // controller.downloadFile(context, controller.fileURL);
       },
       child: const LabelContent(
         title: "Đính kèm file excel hoặc khác:",

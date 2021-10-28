@@ -20,17 +20,25 @@ class DropDownButton1<T> extends StatelessWidget {
     this.fillColor,
     this.colorText,
     this.isColorFieldWhite,
+    this.isBoldHintText = false,
+    this.height,
   });
 
   final String? hint;
   final Function(T? i)? onChanged;
   final List<T> data;
   final T? value;
-  final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
+  final bool? obligatory,
+      labelBold,
+      isBorder,
+      isShadow,
+      isColorFieldWhite,
+      isBoldHintText;
   final String? label;
   final Color? colorText;
   final Color? fillColor;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
 
@@ -68,6 +76,9 @@ class DropDownButton1<T> extends StatelessWidget {
               height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
           Container(
+            height: (height != null)
+                ? DeviceUtils.getScaledHeight(context, height!)
+                : null,
             width: DeviceUtils.getScaledWidth(context, width),
             margin: margin ?? EdgeInsets.zero,
             decoration: BoxDecoration(
@@ -85,25 +96,21 @@ class DropDownButton1<T> extends StatelessWidget {
                 return InputDecorator(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: fillColor ?? Colors.transparent,
+                    fillColor: (isColorFieldWhite == true)
+                        ? ColorResources.WHITE
+                        : ColorResources.NOT_ALLOW_EDIT,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                     disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),
@@ -114,16 +121,24 @@ class DropDownButton1<T> extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                         borderSide: (isBorder == true)
-                            ? const BorderSide(
-                                color: ColorResources.PRIMARY,
-                                width: 2,
-                              )
+                            ? const BorderSide(color: ColorResources.PRIMARY)
                             : BorderSide.none),
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
                         hint: hint.toString().isNotEmpty
-                            ? Text(hint.toString())
+                            ? Text(
+                                hint.toString(),
+                                style: TextStyle(
+                                  color: isBoldHintText == true
+                                      ? ColorResources.BLACK
+                                      : null,
+                                  fontSize: isBoldHintText == true
+                                      ? Dimensions.FONT_SIZE_DEFAULT
+                                      : null,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )
                             : null,
                         isDense: true,
                         isExpanded: true,

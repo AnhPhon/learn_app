@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Thông tin cá nhân"),
+      appBar: const AppBarWidget(title: "Báo cáo theo yêu cầu"),
       body: SingleChildScrollView(
           child: GetBuilder<V4DetailReportController>(
               init: V4DetailReportController(),
@@ -36,7 +37,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
                         height: DeviceUtils.getScaledWidth(context, 0.6),
                       ),
                       //button cập nhật
-                      _btnUpdateDetailReport(controller),
+                      _btnUpdateDetailReport(controller,context),
                     ],
                   ),
                 );
@@ -103,7 +104,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   ///
   /// Button cập nhập
   ///
-  Widget _btnUpdateDetailReport(V4DetailReportController controller) {
+  Widget _btnUpdateDetailReport(V4DetailReportController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -111,7 +112,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
       child: LongButton(
         color: ColorResources.PRIMARY,
         onPressed: () {
-          controller.onUpdate();
+          controller.onUpdate(context);
         },
         title: 'Cập nhập',
       ),

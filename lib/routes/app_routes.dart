@@ -81,10 +81,11 @@ class AppRoutes {
   // Hình thức thanh toán
   static const String V1_FORMAL_PAYMENT = "/v1_formal_payment";
   //
+
+  //
   static const String V1_FORMAL_FEEDBACK_PAYMENT =
       "/v1_formal_feedback_payment";
-
-  //static const String V1ORDERFEEDBACKCONTRACTORS = "/v1orderfeedbackcontractors";
+  static const String V1_DETAIL_NOTIFICATION = "/v1_detail_notification";
 
   static const String ACCOUNT = '/account';
   static const String LOGIN = '/login';
@@ -250,6 +251,7 @@ class AppRoutes {
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
+  static const String V4_DETAIL_WORK = '/v4_detail_work';
 
   static const String V4_TIMEKEEPING = '/v4_timekeeping';
   static const String V4_REPORT_TIMEKEEPING = '/v4_report_timekeeping';
@@ -329,4 +331,5 @@ class AppRoutes {
   static const String PAYMENT_ACCOUNT = '/payment_account';
   static const String PAYMENT_SUCCESS = '/payment_success';
   static const String PAYMENT_RECHARGE = '/payment_recharge';
+  static const String ORDER_INFORMATION = '/order_infomation';
 }

@@ -87,7 +87,7 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                               vertical: Dimensions.MARGIN_SIZE_SMALL,
                               horizontal: Dimensions.MARGIN_SIZE_DEFAULT),
                           padding: const EdgeInsets.all(
-                              Dimensions.PADDING_SIZE_DEFAULT),
+                              Dimensions.PADDING_SIZE_SMALL),
                           decoration: BoxDecoration(
                             color: ColorResources.WHITE,
                             borderRadius: BorderRadius.circular(

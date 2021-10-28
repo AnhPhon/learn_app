@@ -26,10 +26,11 @@ class V4ReportPage extends GetView<V4ReportController> {
           }
           return Scaffold(
             appBar: AppBarWidget(
-              action: [
-                _filterlistreport(context,controller),
-              ],
+              // action: [
+              //   _filterlistreport(context,controller),
+              // ],
               title: "Danh sách báo cáo",
+              isNotBack: true,
             ),
             body: controller.isLoading ?
             const Center(
@@ -86,7 +87,8 @@ Widget _listReport(V4ReportController controller) {
           ),
           child: GestureDetector(
             onTap: () {
-              controller.onClickDetailReport(index: index);
+              controller.onClickDetailReport(
+                  controller.baoCaoNhanVienModelList[index].id!);
             },
             child: Column(
               children: [
@@ -122,7 +124,7 @@ Widget _listReport(V4ReportController controller) {
                             children: [
                               //Tiêu đề báo cáo công việc theo yêu cầu hoặc theo tuần
                               Text(
-                                controller.baoCaoNhanVienModelList[index].loai.toString(),
+                                "Báo cáo công việc theo yêu cầu",
                                 style: Dimensions.fontSizeStyle16w600(),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -176,14 +178,25 @@ Widget _listReport(V4ReportController controller) {
                                         ),
                                       ],
                                     ),
-                                    Text(
-                                      // ngày báo cáo
-                                      controller.formatDateTime(
-                                      dateTime:
-                                      controller.baoCaoNhanVienModelList[index].createdAt!,
+                                    Row(
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      children: [
+                                        const Icon(
+                                          Icons.date_range,
+                                          color: ColorResources.PRIMARY,
+                                          size: Dimensions.ICON_SIZE_EXTRA_SMALL,
+                                        ),
+                                        Text(
+                                          // ngày báo cáo
+                                          controller.formatDateTime(
+                                            dateTime:
+                                            controller.baoCaoNhanVienModelList[index].createdAt!,
+                                          ),
+                                          style: Dimensions.fontSizeStyle14w600(),
+                                        )
+                                      ],
                                     ),
-                                      style: Dimensions.fontSizeStyle14w600(),
-                                    )
+
                                   ],
                                 ),
                               )
@@ -297,20 +310,20 @@ Widget _floatingActionButtonReport(V4ReportController controller, BuildContext c
         },
         labelStyle: Dimensions.fontSizeStyle18w600(),
       ),
-      SpeedDialChild(
-        child: const Icon(
-          Icons.add,
-          color: ColorResources.WHITE,
-          size: Dimensions.ICON_SIZE_LARGE,
-        ),
-        backgroundColor: ColorResources.PRIMARY,
-        label: "Thêm báo cáo tuần",
-        onTap: () {
-          //đi đến trang báo cáo tuần
-          controller.onClickToDailyReport(context);
-        },
-        labelStyle: Dimensions.fontSizeStyle18w600(),
-      ),
+      // SpeedDialChild(
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: ColorResources.WHITE,
+      //     size: Dimensions.ICON_SIZE_LARGE,
+      //   ),
+      //   backgroundColor: ColorResources.PRIMARY,
+      //   label: "Thêm báo cáo tuần",
+      //   onTap: () {
+      //     //đi đến trang báo cáo tuần
+      //     controller.onClickToDailyReport(context);
+      //   },
+      //   labelStyle: Dimensions.fontSizeStyle18w600(),
+      // ),
     ],
   );
 }

@@ -10,7 +10,7 @@ class V4NewsCategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   DanhMucTinTucResponse? danhMucTinTucList;
 
-  RefreshController refreshController = RefreshController();
+  RefreshController refreshController = RefreshController(initialRefresh: true);
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   RxList<TinTucResponse> tinTucModelList = <TinTucResponse>[].obs;
@@ -21,6 +21,7 @@ class V4NewsCategoriesController extends GetxController
   @override
   void onInit() {
     super.onInit();
+
     Future.delayed(Duration.zero, () {
       getNewsByIdCategory();
     });
@@ -28,8 +29,8 @@ class V4NewsCategoriesController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
     refreshController.dispose();
+    super.onClose();
   }
 
   ///

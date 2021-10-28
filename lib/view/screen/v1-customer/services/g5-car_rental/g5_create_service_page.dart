@@ -28,7 +28,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           }
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,7 +62,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: false,
           allowMultiline: false,
           controller: controller.workTitleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
@@ -124,7 +124,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.amountController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "5",
           hidden: false,
           label: "Số lượng yêu cầu",
@@ -138,13 +138,13 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           isDate: true,
           allowEdit: true,
           controller: controller.startWorkController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày làm việc",
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         // Địa điểm bốc hàng
@@ -152,7 +152,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.estimatedPickUpLocation,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Thanh Khê - Đà Nẵng",
           hidden: false,
           label: "Địa điểm bốc hàng dự kiến",
@@ -166,7 +166,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.estimatedDeliveryLocation,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Thanh Khê - Đà Nẵng",
           hidden: false,
           label: "Địa điểm trả hàng dự kiến",
@@ -180,7 +180,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.distanceController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "100km",
           hidden: false,
           label: "Cự ly vận chuyển đương đối(km)",
@@ -194,7 +194,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.receivingWidthController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "100m",
           hidden: false,
           label: "Bề rộng mặt đường nhận hàng(m)",
@@ -208,7 +208,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.returnWidthController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "100m",
           hidden: false,
           label: "Bề rộng mặt đường trả hàng (m)",
@@ -224,7 +224,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
           allowEdit: true,
           allowMultiline: true,
           controller: controller.workDescController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Bốc hàng",
           hidden: false,
           label: "Miêu tả yêu cầu công việc cụ thể",
@@ -243,7 +243,7 @@ class V1G5CreateServicePage extends GetView<V1G5CreateServiceController>{
 
   Widget nextButton({required V1G5CreateServiceController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: controller.onClickContinueButton,

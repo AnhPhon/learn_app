@@ -10,11 +10,13 @@ import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4ReportController extends GetxController
     with SingleGetTickerProviderMixin {
+  GetIt sl = GetIt.instance;
   BaoCaoNhanVienResponse? baoCaoNhanVienList;
 
   BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
@@ -56,7 +58,7 @@ class V4ReportController extends GetxController
     // TODO: implement onInit
     super.onInit();
     nhanVienModel=baoCaoNhanVienModel.first;
-    getReport(isRefresh: true, value: "0");
+    getReport(isRefresh: true, value: "1");
   }
 
   @override
@@ -66,7 +68,7 @@ class V4ReportController extends GetxController
     refreshController.dispose();
   }
   ///
-  /// lấy danh sách báo báo all
+  /// lấy danh sách báo báo theo loai
   ///
   void getReport({required bool isRefresh, required String value} ) {
     //isRefresh
@@ -185,8 +187,10 @@ class V4ReportController extends GetxController
   ///
   ///go to  detail notifications page
   ///
-  void onClickDetailReport({required int index}) {
-    Get.toNamed(
-        "${AppRoutes.V4_DETAIL_REPORT}?id=${baoCaoNhanVienModelList[index].id}");
+  void onClickDetailReport(String idUser) {
+    sl.get<SharedPreferenceHelper>().saveUserId(idUser);
+    // Get.toNamed(
+    //     "${AppRoutes.V4_DETAIL_REPORT}?id=${baoCaoNhanVienModelList[index].id}");
+    Get.toNamed(AppRoutes.V4_DETAIL_REPORT);
   }
 }

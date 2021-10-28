@@ -12,6 +12,7 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final String? label;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
@@ -36,7 +37,7 @@ class InputWidget extends StatelessWidget {
   const InputWidget({
     Key? key,
     required this.textEditingController,
-    this.isddMMyyyy,
+    this.isddMMyyyy = false,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -62,6 +63,7 @@ class InputWidget extends StatelessWidget {
     this.margin,
     this.suffixIconTap,
     this.onSubmitted,
+    this.height,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,9 @@ class InputWidget extends StatelessWidget {
             ),
           Container(
             margin: margin ?? EdgeInsets.zero,
+            height: (height != null)
+                ? DeviceUtils.getScaledHeight(context, height!)
+                : null,
             width: DeviceUtils.getScaledWidth(context, width),
             decoration: BoxDecoration(
               boxShadow: (isShadow == true)
@@ -129,8 +134,13 @@ class InputWidget extends StatelessWidget {
                         firstDate: firstDate ?? DateTime(2000),
                         lastDate: lastDate ?? DateTime(2200),
                       ).then((value) {
+                        isddMMyyyy == true
+                            ? textEditingController.text =
+                                DateConverter.estimatedDateOnly(value!)
+                            : textEditingController.text =
+                                DateConverter.formatDate(value!);
                         textEditingController.text =
-                            DateConverter.estimatedDateOnly(value!);
+                            DateConverter.estimatedDateOnly(value);
                       });
                     }
                   : (isTime == true)
@@ -194,7 +204,9 @@ class InputWidget extends StatelessWidget {
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: fillColor ?? Colors.transparent,
+                  fillColor: (isColorFieldWhite == true)
+                      ? ColorResources.WHITE
+                      : ColorResources.NOT_ALLOW_EDIT,
                 ),
               ),
             ),

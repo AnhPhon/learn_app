@@ -55,11 +55,6 @@ class V3StoreInfomationController extends GetxController {
   final startController = TextEditingController();
   //end time range
   final endController = TextEditingController();
-  //warehouse address list
-  List<TextEditingController> warehouseAddressController = [];
-
-  //warehouse address list
-  List<TextEditingController> warehouseNameController = [];
 
   //user idd
   String userId = "";
@@ -82,29 +77,33 @@ class V3StoreInfomationController extends GetxController {
 
   //TinhTp
   TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
-  List<TinhTpResponse> tinhTpList = [];
+  List<TinhTpResponse> tinhTpsList = [];
+  List<TinhTpResponse> otherProvinces = [];
   //isWarehouse
-  List<TinhTpResponse> tinhTpListIsWareHouse = [];
-  TinhTpResponse? tinhTpStore;
-  List<TinhTpResponse?> tinhTpWarehouse = [];
+  TinhTpResponse? hcmProvince;
+  TinhTpResponse? otherProvince;
+  TinhTpResponse? daNangProvince;
+  TinhTpResponse? haNoiProvince;
   //rad address index
   int groupTinhTpValue = 0;
 
   //QuanHuyen
   QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
-  List<QuanHuyenResponse> quanHuyenList = [];
-  //isWarehouse
-  List<List<QuanHuyenResponse>> quanHuyenListIsWareHouse = [];
-  QuanHuyenResponse? quanHuyenStore;
-  List<QuanHuyenResponse?> quanHuyenWarehouse = [];
+  List<QuanHuyenResponse> quanHuyensList = [];
+  List<QuanHuyenResponse> otherDistricts = [];
+  QuanHuyenResponse? hcmHuyen;
+  QuanHuyenResponse? daNangHuyen;
+  QuanHuyenResponse? haNoiHuyen;
+  QuanHuyenResponse? khacHuyen;
 
   //PhuongXa
   PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
-  List<PhuongXaResponse> phuongXaList = [];
-  //isWarehouse
-  List<List<PhuongXaResponse>> phuongXaListIsWareHouse = [];
-  PhuongXaResponse? phuongXaStore;
-  List<PhuongXaResponse?> phuongXaWarehouse = [];
+  List<PhuongXaResponse> phuongXasList = [];
+  List<PhuongXaResponse> otherwards = [];
+  PhuongXaResponse? hcmPhuong;
+  PhuongXaResponse? daNangPhuong;
+  PhuongXaResponse? haNoiPhuong;
+  PhuongXaResponse? khacPhuong;
 
   //KhoHangDaiLy
   KhoHangDaiLyProvider khoHangDaiLyProvider =
@@ -112,6 +111,9 @@ class V3StoreInfomationController extends GetxController {
   List<KhoHangDaiLyResponse> khoHangDaiLyList = [];
   KhoHangDaiLyResponse? khoHangDaiLyResponse;
   KhoHangDaiLyRequest khoHangDaiLyRequest = KhoHangDaiLyRequest();
+
+  //list khohang model
+  List<KhoHangModel> khoHangModelList = [];
 
   //ImageUpdate
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
@@ -155,8 +157,6 @@ class V3StoreInfomationController extends GetxController {
     addressController.dispose();
     startController.dispose();
     endController.dispose();
-    warehouseAddressController.clear();
-    warehouseNameController.clear();
     super.onClose();
   }
 
@@ -190,7 +190,6 @@ class V3StoreInfomationController extends GetxController {
         getMatHangDacTrung();
 
         //getTinhTp
-        getTinhTp(isWarehouse: true);
         getTinhTp();
 
         //getKhoHang
@@ -220,31 +219,32 @@ class V3StoreInfomationController extends GetxController {
       onSuccess: (value) {
         if (value.isNotEmpty) {
           khoHangDaiLyList = value;
+          khoHangModelList =
+              List<KhoHangModel>.generate(khoHangDaiLyList.length, (index) {
+            return KhoHangModel(
+              idKhoHang: khoHangDaiLyList[index].id,
+              warehouseAddress: TextEditingController(),
+              warehouseName: TextEditingController(),
+            );
+          });
           for (var i = 0; i < value.length; i++) {
             //mapping tinhTpWarehouse
-            tinhTpWarehouse.add(null);
-            tinhTpWarehouse[i] = tinhTpListIsWareHouse[tinhTpListIsWareHouse
+            khoHangModelList[i].tinhTpResponse = tinhTpsList[tinhTpsList
                 .indexWhere((element) => element.id == value[i].idTinhTp!.id)];
+            khoHangModelList[i].tinhTpList = tinhTpsList;
 
-            //add index
-            quanHuyenWarehouse.add(null);
-            phuongXaWarehouse.add(null);
-            warehouseAddressController.add(TextEditingController());
-            warehouseNameController.add(TextEditingController());
-
-            //mapping warehouse address
-            warehouseAddressController[i].text = value[i].diaChi.toString();
-            warehouseNameController[i].text = value[i].ten.toString();
+            //mapping name & address
+            khoHangModelList[i].warehouseAddress!.text =
+                value[i].diaChi.toString();
+            khoHangModelList[i].warehouseName!.text = value[i].ten.toString();
 
             //mapping quanHuyenWareHouse
-            quanHuyenListIsWareHouse.add([]);
             getQuanHuyen(
                 idTinhTp: value[i].idTinhTp!.id.toString(),
                 indexWarehouse: i,
                 isWarehouse: true);
 
             //mapping phuongXaWareHouse
-            phuongXaListIsWareHouse.add([]);
             getPhuongXa(
                 idQuanHuyen: value[i].idQuanHuyen!.id.toString(),
                 indexWarehouse: i,
@@ -303,31 +303,25 @@ class V3StoreInfomationController extends GetxController {
   ///
   ///get TinhTp
   ///
-  void getTinhTp({bool? isWarehouse = false}) {
+  void getTinhTp() {
     tinhTpProvider.all(
       onSuccess: (value) {
-        //is not Warehouse
-        if (isWarehouse == false) {
-          tinhTpList.clear();
-          tinhTpList.addAll(value);
-          if (groupTinhTpValue == 0) {
-            tinhTpStore = tinhTpList
-                .firstWhere((element) => element.ten!.contains("Hồ Chí Minh"));
-            getQuanHuyen(idTinhTp: tinhTpStore!.id!);
-          } else if (groupTinhTpValue == 1) {
-            tinhTpStore = tinhTpList
-                .firstWhere((element) => element.ten!.contains("Hà Nội"));
-            getQuanHuyen(idTinhTp: tinhTpStore!.id!);
-          } else if (groupTinhTpValue == 2) {
-            tinhTpStore = tinhTpList
-                .firstWhere((element) => element.ten!.contains("Đà Nẵng"));
-            getQuanHuyen(idTinhTp: tinhTpStore!.id!);
-          } else {
-            tinhTpStore = null;
-          }
+        tinhTpsList.addAll(value);
+        otherProvinces.addAll(value);
+        if (groupTinhTpValue == 0) {
+          hcmProvince = tinhTpsList
+              .firstWhere((element) => element.ten!.contains("Hồ Chí Minh"));
+          getQuanHuyen(idTinhTp: hcmProvince!.id!);
+        } else if (groupTinhTpValue == 1) {
+          haNoiProvince = tinhTpsList
+              .firstWhere((element) => element.ten!.contains("Hà Nội"));
+          getQuanHuyen(idTinhTp: haNoiProvince!.id!);
+        } else if (groupTinhTpValue == 2) {
+          daNangProvince = tinhTpsList
+              .firstWhere((element) => element.ten!.contains("Đà Nẵng"));
+          getQuanHuyen(idTinhTp: daNangProvince!.id!);
         } else {
-          //isWarehouse
-          tinhTpListIsWareHouse = value;
+          otherProvince = null;
         }
 
         update();
@@ -354,26 +348,34 @@ class V3StoreInfomationController extends GetxController {
       onSuccess: (value) {
         //is not Warehouse
         if (isWarehouse == false) {
-          quanHuyenStore = null;
-          phuongXaStore = null;
-          quanHuyenList.clear();
-          phuongXaList.clear();
-          if (value.isNotEmpty) {
-            quanHuyenList.addAll(value);
+          if (groupTinhTpValue != 3) {
+            hcmHuyen = null;
+            hcmPhuong = null;
+            quanHuyensList.clear();
+            phuongXasList.clear();
+            if (value.isNotEmpty) {
+              quanHuyensList.addAll(value);
+            }
+            update();
+          } else {
+            khacHuyen = null;
+            khacPhuong = null;
+            otherDistricts.clear();
+            otherDistricts.addAll(value);
+            update();
           }
         } else {
           if (index != -1) {
             //isWarehouse
-            quanHuyenWarehouse[index!] = null;
-            quanHuyenListIsWareHouse[index].clear();
-            quanHuyenListIsWareHouse[index] = value;
+            khoHangModelList[index!].quanHuyenList = value;
           }
         }
         if (indexWarehouse != -1) {
-          quanHuyenListIsWareHouse[indexWarehouse!] = value;
-          quanHuyenWarehouse[indexWarehouse] =
-              quanHuyenListIsWareHouse[indexWarehouse][
-                  quanHuyenListIsWareHouse[indexWarehouse].indexWhere(
+          //mapping warehouse quanHUyen
+          khoHangModelList[indexWarehouse!].quanHuyenList = value;
+          khoHangModelList[indexWarehouse].quanHuyenResponse =
+              khoHangModelList[indexWarehouse].quanHuyenList![
+                  khoHangModelList[indexWarehouse].quanHuyenList!.indexWhere(
                       (element) =>
                           element.id ==
                           khoHangDaiLyList[indexWarehouse].idQuanHuyen!.id)];
@@ -403,25 +405,38 @@ class V3StoreInfomationController extends GetxController {
       onSuccess: (value) {
         //is not Warehouse
         if (isWarehouse == false) {
-          phuongXaList = value;
+          if (groupTinhTpValue != 3) {
+            hcmPhuong = null;
+            phuongXasList.clear();
+            if (value.isNotEmpty) {
+              phuongXasList.addAll(value);
+            }
+            update();
+          } else {
+            khacPhuong = null;
+            otherwards.clear();
+            otherwards.addAll(value);
+            update();
+          }
         } else {
           if (index != -1) {
             //isWarehouse
-            phuongXaWarehouse[index!] = null;
-            phuongXaListIsWareHouse[index].clear();
-            phuongXaListIsWareHouse[index] = value;
+            khoHangModelList[index!].phuongXaList = value;
           }
         }
         if (indexWarehouse != -1) {
-          phuongXaListIsWareHouse[indexWarehouse!] = value;
-          phuongXaWarehouse[indexWarehouse] =
-              phuongXaListIsWareHouse[indexWarehouse][
-                  phuongXaListIsWareHouse[indexWarehouse].indexWhere(
+          //mapping warehouse phuongXa
+          khoHangModelList[indexWarehouse!].phuongXaList = value;
+          khoHangModelList[indexWarehouse].phuongXaResponse =
+              khoHangModelList[indexWarehouse].phuongXaList![
+                  khoHangModelList[indexWarehouse].phuongXaList!.indexWhere(
                       (element) =>
                           element.id ==
                           khoHangDaiLyList[indexWarehouse].idPhuongXa!.id)];
         }
-
+        if (indexWarehouse == khoHangDaiLyList.length - 1) {
+          isLoadingWarehouse = false;
+        }
         update();
       },
       onError: (error) {
@@ -484,7 +499,16 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi tỉnh thành
   ///
   void onChangedTinhThanh(TinhTpResponse tinhTp) {
-    tinhTpStore = tinhTp;
+    if (groupTinhTpValue == 3) {
+      otherProvince = tinhTp;
+    } else if (groupTinhTpValue == 2) {
+      daNangProvince = tinhTp;
+    } else if (groupTinhTpValue == 1) {
+      haNoiProvince = tinhTp;
+    } else {
+      hcmProvince = tinhTp;
+    }
+
     getQuanHuyen(idTinhTp: tinhTp.id!);
     update();
   }
@@ -493,7 +517,16 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi quận huyện
   ///
   void onChangedQuanHuyen(QuanHuyenResponse quanHuyen) {
-    quanHuyenStore = quanHuyen;
+    if (groupTinhTpValue == 3) {
+      khacHuyen = quanHuyen;
+    } else if (groupTinhTpValue == 2) {
+      daNangHuyen = quanHuyen;
+    } else if (groupTinhTpValue == 1) {
+      haNoiHuyen = quanHuyen;
+    } else {
+      hcmHuyen = quanHuyen;
+    }
+
     getPhuongXa(idQuanHuyen: quanHuyen.id!);
     update();
   }
@@ -502,22 +535,31 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi PhuongXa
   ///
   void onChangedPhuongXa(PhuongXaResponse phuongXa) {
-    phuongXaStore = phuongXa;
+    if (groupTinhTpValue == 3) {
+      khacPhuong = phuongXa;
+    } else if (groupTinhTpValue == 2) {
+      daNangPhuong = phuongXa;
+    } else if (groupTinhTpValue == 1) {
+      haNoiPhuong = phuongXa;
+    } else {
+      hcmPhuong = phuongXa;
+    }
+
     update();
   }
 
   ///
   ///btn click add warehouse address
   ///
-  void onClickWareHouseAdd({required int index}) {
+  void onClickWareHouseAdd() {
     isLoadingAdd = true;
-    tinhTpWarehouse.add(null);
-    quanHuyenWarehouse.add(null);
-    phuongXaWarehouse.add(null);
-    warehouseAddressController.add(TextEditingController());
-    warehouseNameController.add(TextEditingController());
-    quanHuyenListIsWareHouse.add([]);
-    phuongXaListIsWareHouse.add([]);
+    khoHangModelList.add(KhoHangModel(
+      tinhTpList: tinhTpsList,
+      quanHuyenList: [],
+      phuongXaList: [],
+      warehouseAddress: TextEditingController(),
+      warehouseName: TextEditingController(),
+    ));
     isLoadingAdd = false;
     update();
   }
@@ -526,7 +568,17 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi tỉnh thành IsWarehouse
   ///
   void onChangedTinhThanhIsWarehouse(TinhTpResponse tinhTp, int index) {
-    tinhTpWarehouse[index] = tinhTp;
+    //clear data
+    khoHangModelList[index].quanHuyenResponse = null;
+    khoHangModelList[index].quanHuyenList!.clear();
+    khoHangModelList[index].phuongXaResponse = null;
+    khoHangModelList[index].phuongXaList!.clear();
+
+    //set data
+    khoHangModelList[index].tinhTpResponse = tinhTp;
+    update();
+
+    //getQuanHuyen
     getQuanHuyen(idTinhTp: tinhTp.id!, isWarehouse: true, index: index);
     update();
   }
@@ -535,7 +587,15 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi quận huyện IsWarehouse
   ///
   void onChangedQuanHuyenIsWarehouse(QuanHuyenResponse quanHuyen, int index) {
-    quanHuyenWarehouse[index] = quanHuyen;
+    //clear data
+    khoHangModelList[index].phuongXaResponse = null;
+    khoHangModelList[index].phuongXaList!.clear();
+
+    //set data
+    khoHangModelList[index].quanHuyenResponse = quanHuyen;
+    update();
+
+    //getPhuongXa
     getPhuongXa(idQuanHuyen: quanHuyen.id!, isWarehouse: true, index: index);
     update();
   }
@@ -544,7 +604,29 @@ class V3StoreInfomationController extends GetxController {
   ///Thay đổi PhuongXa IsWarehouse
   ///
   void onChangedPhuongXaIsWarehouse(PhuongXaResponse phuongXa, int index) {
-    phuongXaWarehouse[index] = phuongXa;
+    print(index);
+    //set data
+    khoHangModelList[index].phuongXaResponse = phuongXa;
+    update();
+  }
+
+  ///
+  ///on delete warehouse
+  ///
+  void onDeleteWarehouse({required int index}) {
+    //check is not empty
+    if (khoHangModelList[index].idKhoHang != null) {
+      khoHangDaiLyProvider.delete(
+        id: khoHangModelList[index].idKhoHang.toString(),
+        onSuccess: (data) {
+          print("Xoá kho hàng thành công");
+        },
+        onError: (error) {
+          print("V3StoreInfomationController onDeleteWarehouse onError $error");
+        },
+      );
+    }
+    khoHangModelList.removeAt(index);
     update();
   }
 
@@ -592,40 +674,53 @@ class V3StoreInfomationController extends GetxController {
     if (nameController.text.isEmpty) {
 
       Alert.error(message: 'Trường tên không được để trống');
+      return;
     } else if (legalRepresentativeController.text.isEmpty) {
       Alert.error(message: 'Trường tên đại diện pháp lý');
+      return;
     } else if (phoneController.text.isEmpty) {
       Alert.error(message: 'Trường số điện thoại không được để trống');
+      return;
     } else if (emailController.text.isEmpty) {
       Alert.error(message: 'Trường email không được để trống');
+      return;
     } else if (nhomCuaHangResponse == null) {
       Alert.error(message: 'Trường nhóm không được để trống');
+      return;
     } else if (matHangDacTrungResponse.isEmpty) {
       Alert.error(message: 'Trường mặt hàng đặc trưng không được để trống');
-    } else if (phuongXaStore == null ||
-        quanHuyenStore == null ||
-        tinhTpStore == null) {
+      return;
+    } else if (hcmProvince == null &&
+        otherProvince == null &&
+        haNoiProvince == null &&
+        daNangProvince == null) {
       Alert.error(
           message: 'Trường địa điểm cửa hàng chính không được để trống');
+      return;
+    } else if (hcmHuyen == null &&
+        khacHuyen == null &&
+        haNoiHuyen == null &&
+        daNangHuyen == null) {
+      Alert.error(
+          message: 'Trường địa điểm cửa hàng chính không được để trống');
+      return;
+    } else if (hcmPhuong == null &&
+        khacPhuong == null &&
+        haNoiPhuong == null &&
+        daNangPhuong == null) {
+      Alert.error(
+          message: 'Trường địa điểm cửa hàng chính không được để trống');
+      return;
     } else if (startController.text.isEmpty || endController.text.isEmpty) {
       Alert.error(
           message: 'Trường thời gian làm việc trong ngày không được để trống');
+      return;
     } else if (double.parse(
             timeDiff(startController.text, endController.text)) <
         0) {
       Alert.error(message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
-    } else if (warehouseList.isNotEmpty) {
-      for (var i = 0; i < warehouseList.length; i++) {
-        if (tinhTpWarehouse[i] == null ||
-            quanHuyenWarehouse[i] == null ||
-            phuongXaWarehouse[i] == null ||
-            warehouseAddressController[i].text.isEmpty ||
-            warehouseNameController[i].text.isEmpty) {
-          Alert.error(
-              message: 'Trường địa điểm kho hàng $i không được để trống');
-        }
-      }
-    } else {
+      return;
+    } else if (khoHangModelList.isNotEmpty) {
       //show loading
       EasyLoading.show(status: 'loading...');
 
@@ -638,8 +733,7 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
       taiKhoanRequest.idMatHangDacTrungs =
           matHangDacTrungResponse.map((e) => e!.id!).toList();
-      taiKhoanRequest.diaDiemCuaHangChinh =
-          "$phuongXaStore, $quanHuyenStore, $tinhTpStore";
+
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =
           "${timeDiff(startController.text, endController.text)} giờ";
@@ -647,104 +741,106 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.lamChieuThuBay = taiKhoanResponse.lamChieuThuBay;
       taiKhoanRequest.lamNgayChuNhat = taiKhoanResponse.lamNgayChuNhat;
       taiKhoanRequest.hinhAnhCuaHangs = urlImage;
-      //update taiKhoan
-      taiKhoanProvider.update(
-        data: taiKhoanRequest,
-        onSuccess: (value) {
-          //set data
-          khoHangDaiLyRequest.idTaiKhoan = userId;
 
-          //if add warehouse
-          if (tinhTpWarehouse.length > khoHangDaiLyList.length) {
-            //update warehouse already exits
-            for (var i = 0; i < khoHangDaiLyList.length; i++) {
-              //set data
-              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
-              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
-              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
-              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
-              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
-              khoHangDaiLyRequest.id = khoHangDaiLyList[i].id;
+      //set data store address
+      if (groupTinhTpValue == 3) {
+        taiKhoanRequest.diaDiemCuaHangChinh =
+            "$otherProvince, $khacHuyen, $khacPhuong";
+      } else if (groupTinhTpValue == 2) {
+        taiKhoanRequest.diaDiemCuaHangChinh =
+            "$daNangProvince, $daNangHuyen, $daNangPhuong";
+      } else if (groupTinhTpValue == 1) {
+        taiKhoanRequest.diaDiemCuaHangChinh =
+            "$haNoiProvince, $haNoiHuyen, $haNoiPhuong";
+      } else {
+        taiKhoanRequest.diaDiemCuaHangChinh =
+            "$hcmProvince, $hcmHuyen, $hcmPhuong";
+      }
 
-              //update warehouse already exits
-              khoHangDaiLyProvider.update(
-                data: khoHangDaiLyRequest,
-                onSuccess: (khoHangDaiLyUpdate) {},
-                onError: (error) {
-                  EasyLoading.dismiss();
-                  print(
-                      "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
-                },
-              );
-            }
-            //add new warehouse
-            khoHangDaiLyRequest.id = null;
-            tinhTpWarehouse.removeRange(0, khoHangDaiLyList.length);
-            quanHuyenWarehouse.removeRange(0, khoHangDaiLyList.length);
-            phuongXaWarehouse.removeRange(0, khoHangDaiLyList.length);
-            warehouseAddressController.removeRange(0, khoHangDaiLyList.length);
-            warehouseNameController.removeRange(0, khoHangDaiLyList.length);
-            for (var i = 0; i < tinhTpWarehouse.length; i++) {
-              //set data
-              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
-              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
-              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
-              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
-              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
+      //set data
+      khoHangDaiLyRequest.idTaiKhoan = userId;
 
-              //add khoHang
-              khoHangDaiLyProvider.add(
-                data: khoHangDaiLyRequest,
-                onSuccess: (khoHang) {
-                  ////show dialog
-                  if (i == tinhTpWarehouse.length - 1) {
-                    EasyLoading.dismiss();
-                    Get.back();
-                    Alert.success(message: 'Cập nhật thông tin thành công');
-                  }
-                },
-                onError: (error) {
-                  EasyLoading.dismiss();
-                  print("V3StoreInfomationController btnUpdate onError $error");
-                },
-              );
-            }
-          } else {
-            //update warehouse already exits
-            for (var i = 0; i < khoHangDaiLyList.length; i++) {
-              //set data
-              khoHangDaiLyRequest.idTinhTp = tinhTpWarehouse[i]!.id;
-              khoHangDaiLyRequest.idQuanHuyen = quanHuyenWarehouse[i]!.id;
-              khoHangDaiLyRequest.idPhuongXa = phuongXaWarehouse[i]!.id;
-              khoHangDaiLyRequest.diaChi = warehouseAddressController[i].text;
-              khoHangDaiLyRequest.ten = warehouseNameController[i].text;
-              khoHangDaiLyRequest.id = khoHangDaiLyList[i].id;
-
-              //update warehouse already exits
-              khoHangDaiLyProvider.update(
-                data: khoHangDaiLyRequest,
-                onSuccess: (khoHangDaiLyUpdate) {
-                  ////show dialog
-                  if (i == tinhTpWarehouse.length - 1) {
-                    EasyLoading.dismiss();
-                    Get.back();
-                    Alert.success(message: 'Cập nhật thông tin thành công');
-                  }
-                },
-                onError: (error) {
-                  EasyLoading.dismiss();
-                  print(
-                      "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
-                },
-              );
-            }
-          }
-        },
-        onError: (error) {
+      for (var i = 0; i < khoHangModelList.length; i++) {
+        //validate warehouse
+        if (khoHangModelList[i].tinhTpResponse == null ||
+            khoHangModelList[i].quanHuyenResponse == null ||
+            khoHangModelList[i].phuongXaResponse == null ||
+            khoHangModelList[i].warehouseAddress!.text.isEmpty ||
+            khoHangModelList[i].warehouseName!.text.isEmpty) {
           EasyLoading.dismiss();
-          print("V3StoreInfomationController btnUpdate onError $error");
-        },
-      );
+          Alert.error(
+              message: 'Trường địa điểm kho hàng ${i + 1} không được để trống');
+          return;
+        }
+        //set data
+        khoHangDaiLyRequest.idTinhTp = khoHangModelList[i].tinhTpResponse!.id;
+        khoHangDaiLyRequest.idQuanHuyen =
+            khoHangModelList[i].quanHuyenResponse!.id;
+        khoHangDaiLyRequest.idPhuongXa =
+            khoHangModelList[i].phuongXaResponse!.id;
+        khoHangDaiLyRequest.diaChi = khoHangModelList[i].warehouseAddress!.text;
+        khoHangDaiLyRequest.ten = khoHangModelList[i].warehouseName!.text;
+        khoHangDaiLyRequest.id = khoHangModelList[i].idKhoHang;
+        //if warehouse already exits
+        if (khoHangModelList[i].idKhoHang != null) {
+          //set data
+
+          //update warehouse already exits
+          khoHangDaiLyProvider.update(
+            data: khoHangDaiLyRequest,
+            onSuccess: (khoHangDaiLyUpdate) {
+              ////show dialog
+              if (khoHangModelList[i] == khoHangModelList.last) {
+                //update taiKhoan
+                taiKhoanProvider.update(
+                  data: taiKhoanRequest,
+                  onSuccess: (value) {},
+                  onError: (error) {
+                    EasyLoading.dismiss();
+                    print(
+                        "V3StoreInfomationController btnUpdate onError $error");
+                  },
+                );
+                EasyLoading.dismiss();
+                Get.back();
+                Alert.success(message: 'Cập nhật thông tin thành công');
+              }
+            },
+            onError: (error) {
+              EasyLoading.dismiss();
+              print(
+                  "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
+            },
+          );
+        } else {
+          //add khoHang
+          khoHangDaiLyProvider.add(
+            data: khoHangDaiLyRequest,
+            onSuccess: (khoHang) {
+              ////show dialog
+              if (khoHangModelList[i] == khoHangModelList.last) {
+                //update taiKhoan
+                taiKhoanProvider.update(
+                  data: taiKhoanRequest,
+                  onSuccess: (value) {},
+                  onError: (error) {
+                    EasyLoading.dismiss();
+                    print(
+                        "V3StoreInfomationController btnUpdate onError $error");
+                  },
+                );
+                EasyLoading.dismiss();
+                Get.back();
+                Alert.success(message: 'Cập nhật thông tin thành công');
+              }
+            },
+            onError: (error) {
+              EasyLoading.dismiss();
+              print("V3StoreInfomationController btnUpdate onError $error");
+            },
+          );
+        }
+      }
     }
   }
 
@@ -760,4 +856,27 @@ class V3StoreInfomationController extends GetxController {
   }
 
   double abc(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+}
+
+class KhoHangModel {
+  String? idKhoHang;
+  TextEditingController? warehouseAddress = TextEditingController();
+  TextEditingController? warehouseName = TextEditingController();
+  TinhTpResponse? tinhTpResponse;
+  QuanHuyenResponse? quanHuyenResponse;
+  PhuongXaResponse? phuongXaResponse;
+  List<TinhTpResponse>? tinhTpList;
+  List<QuanHuyenResponse>? quanHuyenList;
+  List<PhuongXaResponse>? phuongXaList;
+  KhoHangModel({
+    this.idKhoHang,
+    this.warehouseAddress,
+    this.warehouseName,
+    this.tinhTpResponse,
+    this.quanHuyenResponse,
+    this.phuongXaResponse,
+    this.tinhTpList,
+    this.quanHuyenList,
+    this.phuongXaList,
+  });
 }

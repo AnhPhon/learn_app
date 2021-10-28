@@ -61,7 +61,11 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
       required List<String> content,
       required V1FormalPaymentController controller}) {
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.only(
+        left:Dimensions.PADDING_SIZE_DEFAULT,
+        right:Dimensions.PADDING_SIZE_DEFAULT,
+        top:Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: BoxShadowWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +85,7 @@ class V1FormalPaymentPage extends GetView<V1FormalPaymentController> {
                     (e) => Padding(
                       padding: const EdgeInsets.only(
                           top: Dimensions.PADDING_SIZE_SMALL,
-                          bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                          bottom: Dimensions.PADDING_SIZE_SMALL),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

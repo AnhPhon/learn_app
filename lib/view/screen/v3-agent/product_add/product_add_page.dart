@@ -10,6 +10,7 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_controller.dart';
 
@@ -111,10 +112,6 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                       padding: const EdgeInsets.only(
                         top: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
-                    ),
-
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
                     //product category
@@ -323,9 +320,8 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BtnCustom(
+          BtnCustomBorder(
             onTap: () => controller.btnUpdateAndAdd(context),
-            color: ColorResources.GREY,
             text: "Cập nhật và thêm",
             width: DeviceUtils.getScaledWidth(context, .4),
           ),

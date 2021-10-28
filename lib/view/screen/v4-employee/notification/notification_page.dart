@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,6 +16,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
     return Scaffold(
       backgroundColor: ColorResources.HOME_BG,
       appBar: const AppBarWidget(
+        isNotBack: true,
         title: 'Thông Báo',
       ),
       body: GetBuilder<V4NotificationController>(
@@ -138,27 +140,24 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                     Positioned(
                       top: 0,
                       left: 0,
-                      child: Hero(
-                        tag: controller.thongbaoModelList[index].hinhDaiDien!,
-                        child: Container(
-                          height: DeviceUtils.getScaledHeight(context, 0.15),
-                          width: DeviceUtils.getScaledWidth(context, 0.28),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(
-                                Dimensions.BORDER_RADIUS_DEFAULT,
-                              ),
-                              bottomLeft: Radius.circular(
-                                Dimensions.BORDER_RADIUS_DEFAULT,
-                              ),
+                      child: Container(
+                        height: DeviceUtils.getScaledHeight(context, 0.15),
+                        width: DeviceUtils.getScaledWidth(context, 0.28),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(
+                              Dimensions.BORDER_RADIUS_DEFAULT,
                             ),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                controller.thongbaoModelList[index].hinhDaiDien
-                                    .toString(),
-                              ),
-                              fit: BoxFit.cover,
+                            bottomLeft: Radius.circular(
+                              Dimensions.BORDER_RADIUS_DEFAULT,
                             ),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              controller.thongbaoModelList[index].hinhDaiDien
+                                  .toString(),
+                            ),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

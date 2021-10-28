@@ -9,6 +9,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_controller.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -156,30 +157,29 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
             onChanged: (val) =>
                 controller.onChangedDropdown(value: val, index: indexOrder),
             data: app_constants.trangThaiDonHangMap.keys.toList(),
-            width: .4,
+            width: .35,
             isBorder: false,
             fillColor: controller.statusBackgroundColor[status],
             colorText: controller.statusColor[status],
+            height: .06,
           ),
-          const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_DEFAULT,
+          ),
+
           //product info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: imgUrl,
-                  height: DeviceUtils.getScaledSize(context, 0.2),
-                  width: DeviceUtils.getScaledSize(context, 0.22),
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
-                    height: DeviceUtils.getScaledSize(context, 0.2),
-                    width: DeviceUtils.getScaledSize(context, 0.22),
-                    fit: BoxFit.fill,
-                  ),
+                borderRadius: BorderRadius.circular(
+                  Dimensions.BORDER_RADIUS_DEFAULT,
+                ),
+                child: FadeInImageCustom(
+                  urlImage: imgUrl,
+                  height: .2,
+                  width: .22,
                 ),
               ),
               const SizedBox(

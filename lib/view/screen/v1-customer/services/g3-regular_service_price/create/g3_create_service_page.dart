@@ -51,7 +51,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           allowEdit: false,
           allowMultiline: false,
           controller: controller.workTitleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
@@ -106,26 +106,26 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           isDate: true,
           allowEdit: true,
           controller: controller.startTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày bắt đầu",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         TextFieldDate(
           allowEdit: true,
           controller: controller.endTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "22-11-2021",
           label: "Ngày kết thúc",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
-          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
       ],
     );
@@ -139,7 +139,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
 
   Widget nextButton({required V1G3CreateServiceController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: controller.onClickContinueButton,

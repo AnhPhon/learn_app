@@ -18,9 +18,12 @@ class SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+        right: Dimensions.PADDING_SIZE_EXTRA_SMALL
+      ),
       child: MaterialButton(
-        height: height ?? 45,
+        height: height ?? 40,
         onPressed: () => onPressed(),
         minWidth: DeviceUtils.getScaledSize(context, 0.4),
         color: color,
@@ -31,7 +34,7 @@ class SmallButton extends StatelessWidget {
           title,
           style: const TextStyle(
               color: ColorResources.WHITE,
-              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+              fontSize: Dimensions.FONT_SIZE_LARGE),
         ),
       ),
     );
