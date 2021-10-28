@@ -83,7 +83,8 @@ class AppRoutes {
   //
 
   //
-  static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
+  static const String V1_FORMAL_FEEDBACK_PAYMENT =
+      "/v1_formal_feedback_payment";
   static const String V1_DETAIL_NOTIFICATION = "/v1_detail_notification";
 
   static const String ACCOUNT = '/account';
@@ -155,6 +156,7 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_QUOTE_NO_RESPONSE = '/v1_quote_no_response';
   static const String V1_QUOTE_LIST = '/V1_QUOTE_LIST';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -11,13 +12,13 @@ import 'package:template/view/basewidget/widgets/content_whitebox.dart';
 import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/basewidget/widgets/three_image_box.dart';
-import 'package:template/view/screen/v1-customer/quote/response/response_controller.dart';
+import 'package:template/view/screen/v1-customer/quote/no_response/no_response_controller.dart';
 
-class V1ResponsePage extends GetView<V1ResponseController> {
+class V1NoResponsePage extends GetView<V1NoResponseController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V1ResponseController>(
-      init: V1ResponseController(),
+    return GetBuilder<V1NoResponseController>(
+      init: V1NoResponseController(),
       builder: (controller) {
         if (controller.isLoading) {
           return const Center(
@@ -32,79 +33,76 @@ class V1ResponsePage extends GetView<V1ResponseController> {
               child: Column(
                 children: [
                   Container(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: Text(
-                      "Công việc: ${controller.tenDonDichVu}",
+                      controller.tenDonDichVu,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                        fontSize: 20,
                       ),
                     ),
                   ),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                  // Đơn giá phản hồi
-                  LabelContent(
-                    title: "Đơn giá phản hồi",
-                    content: // vat lieu đã được thêm
-                        Column(
-                      children: List.generate(controller.infoCard.keys.length,
-                          (index) {
-                        final keys = controller.infoCard.keys;
-                        final String key = keys.toList()[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            top: Dimensions.PADDING_SIZE_DEFAULT,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      children: [
+                        const Text(
+                          "Công trình: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                           ),
-                          child: ContentWhiteBox(
-                            infoCard: controller.infoCard[key]!,
+                        ),
+                        Text(
+                          controller.tenDonDichVu,
+                          style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                           ),
-                        );
-                      }),
+                        )
+                      ],
                     ),
-                    isRequired: false,
                   ),
-
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   //text
                   _textField(
                     context,
-                    "Thời gian nhận dự kiến:",
-                    "Từ 7h30\tĐến 11h30",
+                    "Địa điểm nhận",
+                    "${controller.tinhTp} - ${controller.quanHuyen}",
+                  ),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+
+                  //text
+                  _textField(
+                    context,
+                    "Thời gian nhận dự kiến",
+                    "Từ ${controller.ngayBatDau} \tĐến ${controller.ngayKetThuc}",
                   ),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // ngày
                   _textField(
                     context,
-                    "Ngày",
-                    controller.ngayBatDau,
+                    "Nội dung yêu cầu",
+                    controller.yeuCau,
                   ),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                  // báo cáo có hiệu lực đến hết ngày
-                  _textField(
-                    context,
-                    "Báo cáo có hiệu lực đến hết ngày",
-                    controller.ngayKetThuc,
-                  ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  // bảng khối lượng
+                  bangKhoiLuong(),
 
                   _lineSplit(context, 2),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
-                  // tien do giao hang
-                  _tienDoGiaoHang(context),
+                  // hinh anh khoi luong
+                  _hinhAnhKhoiLuong(),
+
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // file upload
                   _fileUpload(context),
-
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-
-                  // hinh anh khoi luong
-                  _hinhAnhKhoiLuong(),
 
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
@@ -284,6 +282,36 @@ class V1ResponsePage extends GetView<V1ResponseController> {
           )
         ],
       ),
+    );
+  }
+
+  ///
+  /// Bảng khối lượng
+  ///
+  Widget bangKhoiLuong() {
+    // Đơn giá phản hồi
+    return LabelContent(
+      title: "Bảng khối lượng",
+      content: (controller.infoCard.keys.isNotEmpty)
+          ? Column(
+              children: List.generate(controller.infoCard.keys.length, (index) {
+                final keys = controller.infoCard.keys;
+                final String key = keys.toList()[index];
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
+                  child: ContentWhiteBox(
+                    infoCard: controller.infoCard[key]!,
+                  ),
+                );
+              }),
+            )
+          : Container(
+              alignment: Alignment.centerLeft,
+              child: const Text("Không có"),
+            ),
+      isRequired: false,
     );
   }
 

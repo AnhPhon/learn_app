@@ -80,6 +80,8 @@ import 'package:template/view/screen/v1-customer/quote/check/check_page.dart';
 import 'package:template/view/screen/v1-customer/quote/done/done_page.dart';
 import 'package:template/view/screen/v1-customer/quote/list/vattulist_binding.dart';
 import 'package:template/view/screen/v1-customer/quote/list/vattulist_page.dart';
+import 'package:template/view/screen/v1-customer/quote/no_response/no_response_binding.dart';
+import 'package:template/view/screen/v1-customer/quote/no_response/no_response_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request1/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/request2/request_page.dart';
 import 'package:template/view/screen/v1-customer/quote/response/response_binding.dart';
@@ -513,6 +515,11 @@ class AppPages {
       binding: V1ResponseBinding(),
     ),
     GetPage(
+      name: AppRoutes.V1_QUOTE_NO_RESPONSE,
+      page: () => V1NoResponsePage(),
+      binding: V1NoResponseBinding(),
+    ),
+    GetPage(
       name: AppRoutes.V1_PERSONAL_INFORMATION,
       page: () => V1PersonalInfoPage(),
     ),
@@ -544,6 +551,7 @@ class AppPages {
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
+
     ///
     /// Xem chi tiết thông báo
     ///
