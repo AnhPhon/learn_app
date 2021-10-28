@@ -145,7 +145,6 @@ class V2RecruitmentController extends GetxController {
             //check refresh
             tuyenDungListModel = value;
             refreshControllerList![currentIndex].refreshCompleted();
-            refreshControllerList![currentIndex].loadComplete();
           } else {
             tuyenDungListModel.addAll(value);
             refreshControllerList![currentIndex].loadComplete();
@@ -177,8 +176,51 @@ class V2RecruitmentController extends GetxController {
   ///
   /// Nhấn vào tin tuyển dụng thì xem thông tin của tin
   ///
-  void onClickRecruitmentNews() {
-    Get.toNamed(AppRoutes.V2_VIEW_RECRUITMENT_NEWS);
+  void onClickRecruitmentNews({required TuyenDungResponse tuyendung}) {
+    ///set tên chuyên ngành phụ
+    String tenChuyenNganhPhu = '';
+    // set tên chuyên ngành phụ
+    if (tuyendung.idChuyenNganhPhus!.isNotEmpty) {
+      for (int i = 0; i < tuyendung.idChuyenNganhPhus!.length; i++) {
+        if (i == 0) {
+          tenChuyenNganhPhu = tuyendung.idChuyenNganhPhus![i].tieuDe.toString();
+        } else {
+          tenChuyenNganhPhu +=
+              ', ${tuyendung.idChuyenNganhPhus![i].tieuDe.toString()}';
+        }
+      }
+    }
+
+    ///gán data tuyển dụng
+    Map<String, dynamic> param = {
+      "idTuyenDung": tuyendung.id,
+      "TieuDe": tuyendung.tieuDe,
+      "CongTy": tuyendung.congTy,
+      'TenDiaChiCongTy':
+          '${tuyendung.diaChi}, ${tuyendung.idPhuongXa}, ${tuyendung.idQuanHuyen}, ${tuyendung.idTinhTp}',
+      "GioiTinh": tuyendung.gioiTinh == 'Nam' ? '1' : '2',
+      "SoLuong": tuyendung.soLuong,
+      "TenHinhThucLamViec": tuyendung.idHinhThucLamViec,
+      "TenTrinhDoHocVan": tuyendung.idTrinhDoHocVan,
+      "TenChuyenNganhChinh": tuyendung.idChuyenNganhChinh,
+      "TenChuyenNganhPhu": tenChuyenNganhPhu,
+      "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
+      "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
+      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.noiLamViec.toString()),
+      "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
+      "ThoiGianThuViec": tuyendung.thoiGianThuViec,
+      "MoTaCongViec": tuyendung.moTaCongViec,
+      "YeuCauCongViec": tuyendung.yeuCauCongViec,
+      "QuyenLoi": tuyendung.quyenLoi,
+      "UuTien": tuyendung.uuTien,
+      "HanNopHoSo": tuyendung.hanNopHoSo,
+      "HoTenLienHe": tuyendung.hoTenLienHe,
+      "SoDienThoaiLienHe": tuyendung.soDienThoaiLienHe,
+      "DiaChiLienHe": tuyendung.diaChiLienHe,
+      "EmailLienHe": tuyendung.emailLienHe,
+    };
+
+    Get.toNamed(AppRoutes.V2_VIEW_RECRUITMENT_NEWS, arguments: param);
   }
 
   ///

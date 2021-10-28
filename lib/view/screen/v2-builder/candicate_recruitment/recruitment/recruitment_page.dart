@@ -73,7 +73,8 @@ class V2RecruitmentPage extends GetView<V2RecruitmentController> {
           itemBuilder: (context, index) {
             return GestureDetector(
                 onTap: () {
-                  controller.onClickRecruitmentNews();
+                  controller.onClickRecruitmentNews(
+                      tuyendung: controller.tuyenDungListModel[index]);
                 },
                 child: V2RecruimentNewsCard(
                   tuyenDungResponse: controller.tuyenDungListModel[index],

@@ -118,51 +118,45 @@ class V1CandidatePage extends GetView<V1CandidateController> {
           noDataText: "Không có dữ liệu",
           canLoadingText: 'Đang tải...',
         ),
-        child: Column(
-          children: [
-            // Tìm kiếm
-            search(context, controller: controller),
-            // Bộ lọc
-            filter(context, controller: controller),
-            // dánh sách ứng viên
-            if (controller.isLoadingCadidate)
-              const Padding(
-                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            else if (!controller.isLoadingCadidate &&
-                controller.dangKyViecMoiListModel.isEmpty)
-              const Center(
-                child: Padding(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Tìm kiếm
+              search(context, controller: controller),
+              // Bộ lọc
+              filter(context, controller: controller),
+              // dánh sách ứng viên
+              if (controller.isLoadingCadidate)
+                const Padding(
                   padding:
                       EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Text('Không có dữ liệu'),
-                ),
-              )
-            else
-              SizedBox(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.dangKyViecMoiListModel.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        onTap: () {
-                          controller.onClickProfile(
-                              dangKyViecMoiModel:
-                                  controller.dangKyViecMoiListModel[index]);
-                        },
-                        child: CandidateCard(
-                          dangKyViecMoiResponse:
-                              controller.dangKyViecMoiListModel[index],
-                          showEmailAndPass: false,
-                        ));
-                  },
-                ),
-              )
-          ],
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                SizedBox(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.dangKyViecMoiListModel.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            controller.onClickProfile(
+                                dangKyViecMoiModel:
+                                    controller.dangKyViecMoiListModel[index]);
+                          },
+                          child: CandidateCard(
+                            dangKyViecMoiResponse:
+                                controller.dangKyViecMoiListModel[index],
+                            showEmailAndPass: false,
+                          ));
+                    },
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );

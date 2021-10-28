@@ -89,11 +89,14 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
   ///btn bottomsheet
   ///
   Widget _btnBottomSheet(PaymentSuccessController controller) {
-    return BtnCustom(
-      onTap: () => controller.onCompleteClick(),
-      color: ColorResources.PRIMARY,
-      text: "Xác nhận",
-      width: double.infinity,
+    return Padding(
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      child: BtnCustom(
+        onTap: () => controller.onCompleteClick(),
+        color: ColorResources.PRIMARY,
+        text: "Xác nhận",
+        width: double.infinity,
+      ),
     );
   }
 }

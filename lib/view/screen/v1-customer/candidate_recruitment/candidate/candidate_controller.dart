@@ -100,6 +100,9 @@ class V1CandidateController extends GetxController {
   //Refresh Page tuyển dụng
   int pageMax = 1;
   int limit = 5;
+  int pageMaxSearch = 1;
+
+  //isLoadingTuyenDung
   bool isLoadingTuyenDung = true;
 
   // refresh controller for load more refresh
@@ -107,6 +110,9 @@ class V1CandidateController extends GetxController {
 
   //tenChuyeNganhPhu
   String tenChuyenNganhPhu = '';
+
+  //isOnChangeSearch
+  bool isOnChangeSearch = false;
 
   @override
   void onInit() {
@@ -156,7 +162,13 @@ class V1CandidateController extends GetxController {
   ///Thay đổi vị trí tab
   ///
   void onChangeTab(int index) {
+    if (index == 1) {
+      isLoadingCadidate = true;
+    } else {
+      isLoadingTuyenDung = true;
+    }
     pageMax = 1;
+    pageMaxSearch = 1;
     currentIndex = index;
     //load data fillter ứng viên
     if (index == 1) {
@@ -198,9 +210,8 @@ class V1CandidateController extends GetxController {
             //check refresh
             tuyenDungListModel = value;
             refreshControllerList![currentIndex].refreshCompleted();
-            refreshControllerList![currentIndex].loadComplete();
           } else {
-            tuyenDungListModel.addAll(value);
+            tuyenDungListModel = tuyenDungListModel.toList() + value;
             refreshControllerList![currentIndex].loadComplete();
           }
           isLoadingTuyenDung = false;
@@ -214,7 +225,6 @@ class V1CandidateController extends GetxController {
   ///onRefresh
   ///
   Future onRefresh() async {
-    // onLoadDataTuyenDung(isRefresh: true);
     refreshControllerList![currentIndex].resetNoData();
     onLoadDataWithTab(select: currentIndex, isRefresh: true);
   }
@@ -223,7 +233,6 @@ class V1CandidateController extends GetxController {
   ///onLoadDataTuyenDung
   ///
   Future onLoading() async {
-    // onLoadDataTuyenDung(isRefresh: false);
     onLoadDataWithTab(select: currentIndex, isRefresh: false);
   }
 
@@ -308,7 +317,7 @@ class V1CandidateController extends GetxController {
 
           //set value tất cả
           ngoaiNguListModel.insert(
-              0, NgoaiNguResponse(id: "0", loaiNgoaiNgu: "Ngoại ngữ"));
+              0, NgoaiNguResponse(id: "-1", loaiNgoaiNgu: "Ngoại ngữ"));
 
           ngoaiNguResponse = value.first;
           // isLoadingCadidate = false;
@@ -330,7 +339,7 @@ class V1CandidateController extends GetxController {
 
           //set value tất cả
           hinhThucLamViecListModel.insert(0,
-              HinhThucLamViecResponse(id: "0", tieuDe: "Hình thức việc làm"));
+              HinhThucLamViecResponse(id: "-1", tieuDe: "Hình thức việc làm"));
           hinhThucLamViecResponse = value.first;
           // isLoadingCadidate = false;
           update();
@@ -348,7 +357,7 @@ class V1CandidateController extends GetxController {
           //add list
           tinhTpListModel = value;
           //set value tất cả
-          tinhTpListModel.insert(0, TinhTpResponse(id: "0", ten: "Tỉnh/Tp"));
+          tinhTpListModel.insert(0, TinhTpResponse(id: "-1", ten: "Tỉnh/Tp"));
           tinhTpResponse = value.first;
           // isLoadingCadidate = false;
           update();
@@ -367,7 +376,7 @@ class V1CandidateController extends GetxController {
           chuyenMonListModel = value;
           //set value tất cả
           chuyenMonListModel.insert(
-              0, ChuyenMonResponse(id: "0", tieuDe: "Ngành nghề"));
+              0, ChuyenMonResponse(id: "-1", tieuDe: "Ngành nghề"));
           chuyenMonResponse = value.first;
           // isLoadingCadidate = false;
           update();
@@ -386,7 +395,7 @@ class V1CandidateController extends GetxController {
           soNamKinhNghiemListModel = value;
           //set value tất cả
           soNamKinhNghiemListModel.insert(
-              0, SoNamKinhNghiemResponse(id: "0", tieuDe: "Kinh Nghiệm"));
+              0, SoNamKinhNghiemResponse(id: "-1", tieuDe: "Kinh Nghiệm"));
           soNamKinhNghiemResponse = value.first;
           // isLoadingCadidate = false;
           update();
@@ -405,7 +414,7 @@ class V1CandidateController extends GetxController {
           trinhDoListModel = value;
           //set value tất cả
           trinhDoListModel.insert(
-              0, TrinhDoResponse(id: "0", tieuDe: "Trình độ"));
+              0, TrinhDoResponse(id: "-1", tieuDe: "Trình độ"));
           trinhDoResponse = value.first;
           // isLoadingCadidate = false;
           update();
@@ -419,6 +428,9 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeHinhThucLamViec(HinhThucLamViecResponse item) {
     hinhThucLamViecResponse = item;
+
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition:
@@ -432,6 +444,8 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeNgoaiNgu(NgoaiNguResponse item) {
     ngoaiNguResponse = item;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition: TimKiemUngVienModel(key: "idNgoaiNgu", value: item.id),
@@ -444,9 +458,12 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeTinhTp(TinhTpResponse item) {
     tinhTpResponse = item;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
-        condition: TimKiemUngVienModel(key: "idTinhTp", value: item.id),
+        condition:
+            TimKiemUngVienModel(key: "idDiaDiemDangKyLamViecs", value: item.id),
         isButtonSearch: false);
     update();
   }
@@ -456,6 +473,8 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeNganhNghe(ChuyenMonResponse item) {
     chuyenMonResponse = item;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition: TimKiemUngVienModel(key: "idChuyenMon", value: item.id),
@@ -468,6 +487,8 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeKinhNghiem(SoNamKinhNghiemResponse item) {
     soNamKinhNghiemResponse = item;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition:
@@ -481,6 +502,8 @@ class V1CandidateController extends GetxController {
   ///
   void onChangeTrinhDo(TrinhDoResponse item) {
     trinhDoResponse = item;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition: TimKiemUngVienModel(key: "idTrinhDo", value: item.id),
@@ -501,6 +524,8 @@ class V1CandidateController extends GetxController {
   ///
   void onChangedEndSalary(double salary) {
     this.salary = salary;
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition: TimKiemUngVienModel(
@@ -517,6 +542,8 @@ class V1CandidateController extends GetxController {
       searchController.text = text;
       tieuDeSearch = TiengViet.parse(text);
       DeviceUtils.hideKeyboard(context);
+      //set isOnChangeSearch
+      isOnChangeSearch = true;
       //add new conditions
       addNewConditions(
           condition: TimKiemUngVienModel(
@@ -538,14 +565,17 @@ class V1CandidateController extends GetxController {
   ///
   void onChangedSex(GioiTinhModel text) {
     gioiTinh = text;
-
     //check value giới tính
     String temp = '';
     if (text.toString() == 'Giới tính') {
-      temp = '0';
+      temp = '-1';
+    } else if (text.toString() == 'Nam') {
+      temp = '1';
     } else {
-      temp = text.toString();
+      temp = '0';
     }
+    //set isOnChangeSearch
+    isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
         condition: TimKiemUngVienModel(key: "gioiTinh", value: temp),
@@ -576,7 +606,7 @@ class V1CandidateController extends GetxController {
     }
 
     // insert new seach condition if !=0
-    if (condition.value != '0') {
+    if (condition.value != '-1') {
       conditions.add(condition);
     }
     //check nếu không phải button search thì onchange luôn
@@ -611,7 +641,6 @@ class V1CandidateController extends GetxController {
       }
     }
 
-    print('conditionFilter $conditionFilter');
     getDataSeach(textFilter: conditionFilter, isRefresh: false);
   }
 
@@ -620,35 +649,41 @@ class V1CandidateController extends GetxController {
   ///
   void getDataSeach({required String textFilter, required bool isRefresh}) {
     //isRefresh
-    if (isRefresh) {
-      pageMax = 1;
+    if (isRefresh || isOnChangeSearch) {
+      pageMaxSearch = 1;
       dangKyViecMoiListModel.clear();
     } else {
       //isLoading
-      pageMax++;
+      pageMaxSearch++;
     }
 
-    print('có vô ko');
     if (textFilter != '') {
       // ignore: parameter_assignments
       textFilter = '&$textFilter';
     }
 
+    print('có vô ko $textFilter');
+
     dangKyViecMoiProvider.paginate(
-        page: pageMax,
+        page: pageMaxSearch,
         limit: limit,
-        filter: textFilter,
+        filter: '$textFilter&sortBy=created_at:desc',
         onSuccess: (value) {
-          print('conditionFilter value ${value.length}');
+          print('dangKyViecMoiProvider value ${value.length}');
+          print('currentIndex $currentIndex');
           //check data empty
           if (value.isEmpty) {
+            print('1');
             refreshControllerList![currentIndex].loadNoData();
+            dangKyViecMoiListModel.clear();
           } else if (isRefresh) {
+            print('2');
             //check refresh
             dangKyViecMoiListModel = value;
             refreshControllerList![currentIndex].refreshCompleted();
-            refreshControllerList![currentIndex].loadComplete();
           } else {
+            print('3');
+            // dangKyViecMoiListModel = dangKyViecMoiListModel.toList() + value;
             dangKyViecMoiListModel.addAll(value);
             refreshControllerList![currentIndex].loadComplete();
           }

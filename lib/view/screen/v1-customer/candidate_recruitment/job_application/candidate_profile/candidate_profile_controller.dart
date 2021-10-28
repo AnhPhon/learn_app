@@ -70,6 +70,10 @@ class V1CandidateProfileController extends GetxController {
     //set data đang ký việc mới
     dangKyViecMoiResponse = Get.arguments as DangKyViecMoiResponse;
     print('dangKyViecMoiResponse ${dangKyViecMoiResponse.toJson()}');
+    print(
+        'idBangBangCaps ${dangKyViecMoiResponse.idBangBangCaps![0].toJson()}');
+    print(
+        'nganhNgheMongMuons ${dangKyViecMoiResponse.idNganhNgheMongMuons!.length}');
 
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
@@ -97,7 +101,7 @@ class V1CandidateProfileController extends GetxController {
     danhSachXemTuyenDungProvider.paginate(
         page: 1,
         limit: 5,
-        filter: '&idTaiKhoan=$idTaiKhoan&idDangKyViecMoi=idDangKyViecMoi',
+        filter: '&idTaiKhoan=$idTaiKhoan&idDangKyViecMoi=$idDangKyViecMoi',
         onSuccess: (value) {
           if (value.isNotEmpty) {
             isView = true;

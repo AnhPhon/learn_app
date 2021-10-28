@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -46,7 +45,6 @@ class V1G7PriceListController extends GetxController {
     super.onInit();
     //set value tuyển dụng
     tuyenDungRequest = Get.arguments as TuyenDungRequest;
-    tuyenDungRequest.gioiTinh = tuyenDungRequest.gioiTinh == "1" ? "Nam" : "Nữ";
 
     //get load data bảng giá
     getDataBangGiaDangTin();
