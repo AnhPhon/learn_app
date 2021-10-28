@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/common_helper.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/string_cut.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:template/utils/dimensions.dart';
@@ -54,26 +56,18 @@ class V1NotificationPage extends GetView<V1NotificationController> {
         child: Column(
           children: [
             RichText(
-              text: TextSpan(
-                text: '${controller.notifications[index].tieuDe} ',
+            text: TextSpan(
+                text: '${StringCut.stringCut120(controller.notifications[index].tieuDe.toString())} ',
                 style: TextStyle(
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                   color: ColorResources.BLACK.withOpacity(0.8),
+                  fontWeight: FontWeight.bold,
                 ),
                 children: [
                   TextSpan(
-                    text: controller.notifications[index].noiDung,
+                    text: StringCut.stringCut120(CommonHelper().htmlUnescape(controller.notifications[index].noiDung.toString())),
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    )
-                  ),
-                  const TextSpan(
-                    text: " mã số"
-                  ),
-                  const TextSpan(
-                    text: " ĐH12353",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.normal,
                     )
                   ),
                 ]
