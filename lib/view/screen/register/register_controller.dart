@@ -420,11 +420,12 @@ class RegisterController extends GetxController {
         auth.diaDiemCuThe = addressController.text.toString();
       }
       auth.diaChi = '${province!.ten!} - ${district!.ten} - ${ward!.ten}';
+
       if(frontCMND != null){
         imageUpdateProvider.add(file: frontCMND!, onSuccess: (data){
            auth.hinhCMNDTruoc = data.data;
         }, onError: (onError){
-          print("Upload image onError $onError");
+          print("Upload CMND truoc onError $onError");
         });
        
       }
@@ -433,7 +434,7 @@ class RegisterController extends GetxController {
         imageUpdateProvider.add(file: backSideCMND!, onSuccess: (data){
            auth.hinhCMNDSau = data.data;
         }, onError: (onError){
-          print("Upload image onError $onError");
+          print("Upload CMND sau onError $onError");
         });
       }
       // Upload avatar
@@ -441,11 +442,18 @@ class RegisterController extends GetxController {
         imageUpdateProvider.add(file: avatarFile!, onSuccess: (data){
            auth.hinhDaiDien = data.data;
         }, onError: (onError){
-          print("Upload image onError $onError");
+          print("Upload avatar onError $onError");
         });
       }
-      // HÌnh ảnh khuôn mặt không có
 
+      // Upload hình ảnh khuôn mat
+      if(faceFile != null){
+        imageUpdateProvider.add(file: faceFile!, onSuccess: (data){
+           auth.hinhAnhKhuonMat = data.data;
+        }, onError: (onError){
+          print("Upload khuôn mặt onError $onError");
+        });
+      }
       // Đăng ký tài khoản
       registerAccount(auth);
 

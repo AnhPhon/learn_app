@@ -36,6 +36,7 @@ class TaiKhoanRequest {
   String? diaDiemCuaHangChinh;
   List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
+  String? hinhAnhKhuonMat;
 
   TaiKhoanRequest({
     this.id,
@@ -75,6 +76,7 @@ class TaiKhoanRequest {
     this.diaDiemCuaHangChinh,
     this.hinhAnhCuaHangs,
     this.diaDiemCuThe,
+    this.hinhAnhKhuonMat
   });
 
   ///
@@ -122,6 +124,7 @@ class TaiKhoanRequest {
         .map((e) => e as String)
         .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
+    hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
   }
 
   ///
@@ -242,6 +245,7 @@ class TaiKhoanRequest {
 
     // check null diaDiemCuThe
     if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
+    if (hinhAnhKhuonMat != null) data['hinhAnhKhuonMat'] = hinhAnhKhuonMat;
 
     return data;
   }

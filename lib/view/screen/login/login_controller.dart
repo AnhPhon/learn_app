@@ -78,7 +78,7 @@ class LoginController extends GetxController {
     if (phoneController.text == '' || passwordController.text == '') {
       Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
-    } else if(Validate.phone(phoneController.text.toString())){
+    } else if(!Validate.phone(phoneController.text.toString())){
       Alert.info(message: "Số điện thoại không hợp lệ");
       return false;
     }
@@ -136,7 +136,7 @@ class LoginController extends GetxController {
               }
         },
         onError: (error) {
-          Alert.error(message: "Đăng nhập thất bại vui lòng thử lại!");
+          Alert.error(message: "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
           EasyLoading.dismiss();
           print("Lỗi đăng nhập onError $error");
           update();

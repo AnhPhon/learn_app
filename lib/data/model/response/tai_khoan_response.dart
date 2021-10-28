@@ -43,6 +43,7 @@ class TaiKhoanResponse {
   String? diaDiemCuaHangChinh;
   List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
+  String? hinhAnhKhuonMat;
 
   String? createdAt;
   String? updatedAt;
@@ -89,6 +90,7 @@ class TaiKhoanResponse {
       this.diaDiemCuaHangChinh,
       this.hinhAnhCuaHangs,
       this.diaDiemCuThe,
+      this.hinhAnhKhuonMat,
       this.createdAt,
       this.updatedAt});
 
@@ -197,6 +199,8 @@ class TaiKhoanResponse {
     updatedAt = json['updated_at'].toString();
     access = json['access'].toString();
     refresh = json['refresh'].toString();
+    hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
+
   }
 
   ///
@@ -315,6 +319,8 @@ class TaiKhoanResponse {
 
     // check null hinhAnhCuaHangs
     if (hinhAnhCuaHangs != null) data['hinhAnhCuaHangs'] = hinhAnhCuaHangs;
+    // check null hinhAnhKhuonMat
+    if (hinhAnhKhuonMat != null) data['hinhAnhKhuonMat'] = hinhAnhKhuonMat;
 
     // check null diaDiemCuThe
     if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;

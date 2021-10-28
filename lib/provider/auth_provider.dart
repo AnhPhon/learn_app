@@ -74,7 +74,8 @@ class AuthProvider with ChangeNotifier {
   }) async {
     final ApiResponse apiResponse = await authRepository!.loginAccount(request);
     if(apiResponse.response.statusCode == null){
-      EasyLoading.dismiss();
+      onError(apiResponse.error);
+      //EasyLoading.dismiss();
     }
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
