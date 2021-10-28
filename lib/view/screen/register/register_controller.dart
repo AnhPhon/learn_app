@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:template/data/model/body/auth_model.dart';
-import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
 import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
@@ -25,12 +24,9 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/validate.dart';
-import 'package:uuid/uuid.dart';
-
-import '../../../di_container.dart';
 
 class RegisterController extends GetxController {
   // Provider
@@ -377,6 +373,23 @@ class RegisterController extends GetxController {
         return false;
       }
     }
+    if(avatarFile == null){
+      Alert.info(message: "Vui lòng chọn ảnh đại diện");
+      return false;
+    }else if(frontCMND == null){
+      Alert.info(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt trước");
+      return false;
+    }else if(backSideCMND == null){
+      Alert.info(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt sau");
+      return false;
+    }
+    // if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('nhân viên') || loaiTaiKhoan!.id == NHAN_VIEN){
+    //   if(faceFile == null){
+    //     Alert.info(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
+    //     return false;
+    //   }
+    // }
+    
     return true;
   }
 

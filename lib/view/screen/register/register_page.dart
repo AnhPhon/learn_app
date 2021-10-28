@@ -7,6 +7,7 @@ import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -473,11 +474,11 @@ class RegisterPage extends GetView<RegisterController> {
                 style: Dimensions.fontSizeStyle16w600()
                     .copyWith(color: ColorResources.BLACK),
               ),
-              // Text(
-              //   "*",
-              //   style: Dimensions.fontSizeStyle16w600()
-              //       .copyWith(color: ColorResources.RED),
-              // ),
+              Text(
+                "*",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.RED),
+              ),
             ],
           ),
 
@@ -620,11 +621,11 @@ class RegisterPage extends GetView<RegisterController> {
                 style: Dimensions.fontSizeStyle16w600()
                     .copyWith(color: ColorResources.BLACK),
               ),
-              // Text(
-              //   "*",
-              //   style: Dimensions.fontSizeStyle16w600()
-              //       .copyWith(color: ColorResources.RED),
-              // ),
+              Text(
+                "*",
+                style: Dimensions.fontSizeStyle16w600()
+                    .copyWith(color: ColorResources.RED),
+              ),
             ],
           ),
 
