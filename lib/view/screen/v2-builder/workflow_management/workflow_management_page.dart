@@ -16,29 +16,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
       child: Scaffold(
         appBar: const AppBarWidget(title: "Quản lý công việc"),
         body: GetBuilder(
-<<<<<<< HEAD
-            init: V2WorkflowManagementController(),
-            builder: (V2WorkflowManagementController controller) {
-              if (controller.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_LARGE,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: DeviceUtils.getScaledWidth(context, .9),
-                          height: DeviceUtils.getScaledHeight(context, .07),
-                          decoration: BoxDecoration(
-                            color: ColorResources.WHITE,
-=======
           init: V2WorkflowManagementController(),
           builder: (V2WorkflowManagementController controller) {
             if (controller.isLoading) {
@@ -71,7 +48,6 @@ class V2WorkflowManagementPage extends GetView<V2WorkflowManagementController> {
                           labelStyle: Dimensions.fontSizeStyle16w600(),
                           indicator: BoxDecoration(
                             color: ColorResources.APPBARCOLOR,
->>>>>>> origin/develop
                             borderRadius: BorderRadius.circular(
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
