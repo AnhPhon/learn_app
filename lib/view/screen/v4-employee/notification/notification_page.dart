@@ -7,6 +7,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 import 'package:template/view/screen/v4-employee/notification/notification_controller.dart';
 
@@ -68,7 +69,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                 decoration: BoxDecoration(
                   color: ColorResources.WHITE,
                   borderRadius: BorderRadius.circular(
-                    Dimensions.BORDER_RADIUS_DEFAULT,
+                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -143,22 +144,22 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                       child: Container(
                         height: DeviceUtils.getScaledHeight(context, 0.15),
                         width: DeviceUtils.getScaledWidth(context, 0.28),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(
-                              Dimensions.BORDER_RADIUS_DEFAULT,
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
                             bottomLeft: Radius.circular(
-                              Dimensions.BORDER_RADIUS_DEFAULT,
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
                           ),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              controller.thongbaoModelList[index].hinhDaiDien
-                                  .toString(),
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                        ),
+                        child: FadeInImageCustom(
+                          height: DeviceUtils.getScaledHeight(context, 0.15),
+                          urlImage: controller
+                              .thongbaoModelList[index].hinhDaiDien
+                              .toString(),
+                          width: DeviceUtils.getScaledWidth(context, 0.28),
                         ),
                       ),
                     ),
