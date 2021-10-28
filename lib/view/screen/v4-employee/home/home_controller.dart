@@ -323,6 +323,8 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        //refresh lại home pape
+        initProgramRun();
         update();
       }
     });
@@ -345,6 +347,9 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+
+        //refresh lại home pape
+        initProgramRun();
         update();
       }
     });
