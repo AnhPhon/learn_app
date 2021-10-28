@@ -20,16 +20,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        leading: IconButton(
-          onPressed: () {
-            controller.backHome();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: ColorResources.WHITE,
-          ),
-        ),
+      appBar: const AppBarWidget(
         title: "Thông tin cá nhân",
       ),
       body: SingleChildScrollView(

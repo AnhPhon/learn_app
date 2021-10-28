@@ -395,21 +395,6 @@ class V4InfoController extends GetxController {
       Alert.error(message: 'Vui lòng nhập địa chỉ thường trú hiện tại!');
       return false;
     }
-    if (tinhTp == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
-      return false;
-    }
-    if (quanHuyen == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
-      return false;
-    }
-    if (phuongXa == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
-      return false;
-    }
     return true;
   }
 
@@ -460,12 +445,5 @@ class V4InfoController extends GetxController {
         },
       );
     }
-  }
-
-  ///
-  ///Back
-  ///
-  void backHome() {
-    Get.back(result: nhanVienResponse.hinhDaiDien);
   }
 }

@@ -80,8 +80,9 @@ class V4AccountController extends GetxController {
   ///
   void onClickToInformation() {
     Get.toNamed(AppRoutes.V4_INFO)!.then((value) {
-      getAccountInformation();
-      nhanVienResponse.hinhDaiDien = value.toString();
+      if (value == true) {
+        getAccountInformation();
+      }
       print(value);
       update();
     });
