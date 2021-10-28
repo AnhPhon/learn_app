@@ -56,6 +56,9 @@ class V4ReportPage extends GetView<V4ReportController> {
       value: controller.filterindex,
       onChanged:  controller.onChanged,
       hint: '',
+      // onPressed: (){
+      //   controller.kiemTraLoc(context);
+      // },
     );
   }
 }

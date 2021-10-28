@@ -175,11 +175,32 @@ class V4ReportController extends GetxController
   ///
   ///Click to onchanged lọc
   ///
-  void onChanged(String? i) {
-    filterindex = i;
-    getDailyReport(isRefresh: true);
-    update();
+  void onChanged(String? newValue) {
+    filterindex = newValue;
+    // getDailyReport(isRefresh: true);
+    // update();
+    if(baoCao.contains("Báo cáo tuần")){
+      getReportOnRequest(isRefresh: true);
+      update();
+    }
+    else if(baoCao.contains("Báo cáo theo yêu cầu")){
+      getDailyReport(isRefresh: true);
+      update();
+    }
   }
+  ///
+  ///Click to onchanged lọc
+  ///
+  // void kiemTraLoc(BuildContext context) {
+  //   if(filterindex == baoCao.contains("Báo cáo tuần")){
+  //     getDailyReport(isRefresh: true);
+  //   }
+  //   if(filterindex == baoCao.contains("Báo cáo theo yêu cầu")){
+  //     getReportOnRequest(isRefresh: true);
+  //   }
+  //   // filterindex = newValue;
+  //   // update();
+  // }
 
   ///
   /// Set reload List

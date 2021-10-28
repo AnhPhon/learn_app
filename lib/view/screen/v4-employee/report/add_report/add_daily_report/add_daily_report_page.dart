@@ -18,7 +18,7 @@ class V4AddDailyReportPage extends GetView<V4AddDailyReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Báo cáo ngày"),
+      appBar: const AppBarWidget(title: "Báo cáo tuần"),
       body: GetBuilder(
           init: V4AddDailyReportController(),
           builder: (V4AddDailyReportController controller) {

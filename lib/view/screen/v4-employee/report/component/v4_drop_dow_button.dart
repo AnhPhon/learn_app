@@ -9,12 +9,17 @@ class V4DropButtonAppBar extends StatelessWidget {
     required this.onChanged,
     required this.data,
     this.value,
+    // this.selectedItemBuilder,
+    // required this.onPressed,
+
   }) : super(key: key);
 
   final String hint;
   final Function(String? i) onChanged;
   final List<String> data;
   final String? value;
+  // final DropdownButtonBuilder? selectedItemBuilder;
+  // final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +35,9 @@ class V4DropButtonAppBar extends StatelessWidget {
         // ignore: avoid_redundant_argument_values
         iconSize: Dimensions.ICON_SIZE_DEFAULT,
         elevation: 16,
+        // selectedItemBuilder: (BuildContext context) {
+        //   return onClickToDailyReport(context);
+        // },
         onChanged: onChanged,
         items: data
             .map<DropdownMenuItem<String>>(
