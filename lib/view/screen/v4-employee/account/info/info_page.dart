@@ -273,7 +273,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         0,
       ),
       isBorder: false,
@@ -281,7 +281,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       allowEdit: false,
       label: 'Số CMND/Căn cước',
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.indentityCardController,
     );
   }

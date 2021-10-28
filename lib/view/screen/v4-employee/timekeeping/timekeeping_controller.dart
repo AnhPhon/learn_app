@@ -261,7 +261,7 @@ class V4TimekeepingController extends GetxController {
           sl
               .get<SharedPreferenceHelper>()
               .saveIdDuAnNhanVien(value.id.toString());
-
+          sl.get<SharedPreferenceHelper>().saveIsSelected(isSelected: true);
           print(value.id.toString());
           Get.back(result: true);
         },

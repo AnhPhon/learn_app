@@ -13,6 +13,7 @@ import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4HomeController extends GetxController {
+  GetIt sl = GetIt.instance;
   // providers
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
@@ -32,8 +33,20 @@ class V4HomeController extends GetxController {
   TimeOfDay timekeeping = const TimeOfDay(hour: 7, minute: 0);
 
   //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  bool isvalid = 7 <=
+          TimeOfDay.now().hour.toDouble() +
+              (TimeOfDay.now().minute.toDouble() / 60) &&
+      TimeOfDay.now().hour.toDouble() +
+              (TimeOfDay.now().minute.toDouble() / 60) <=
+          17;
 
+  // isSelected
+  bool? isSelected;
+
+  // isReport
+  bool? isReport;
+
+  //
   List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
@@ -61,6 +74,49 @@ class V4HomeController extends GetxController {
 
     // init program run
     initProgramRun();
+
+    //Check isSelected
+    getIsSelected();
+
+    //Check isReport
+    getIsReport();
+  }
+
+  ///
+  /// Get isSelected
+  ///
+  void getIsSelected() {
+    if (TimeOfDay.now().hour.toDouble() +
+            (TimeOfDay.now().minute.toDouble() / 60) >
+        17) {
+      isSelected = false;
+      print("Phone 1: $isSelected");
+    } else {
+      sl.get<SharedPreferenceHelper>().isSelected.then((value) {
+        isSelected = value;
+        print("Phone 2 : $isSelected");
+      });
+    }
+  }
+
+  ///
+  /// Get isReport
+  ///
+  void getIsReport() {
+    if (7 <
+            TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) &&
+        TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) <
+            17) {
+      isReport = false;
+      print("phon2: $isReport");
+    } else {
+      sl.get<SharedPreferenceHelper>().isReport.then((value) {
+        isReport = value;
+        print("Phone2: $isReport");
+      });
+    }
   }
 
   ///
@@ -223,6 +279,7 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        getIsSelected();
         update();
       }
     });
@@ -244,6 +301,7 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        getIsReport();
         update();
       }
     });
@@ -261,11 +319,17 @@ class V4HomeController extends GetxController {
         (TimeOfDay.now().minute.toDouble() / 60);
 
     if (_reportTimekeeping < _timeNow) {
-      onClickToReportTimeKeeping(context);
+      if (isReport == false || isReport == null) {
+        onClickToReportTimeKeeping(context);
+      }
     } else if (_timeNow < _timekeeping) {
-      onClickToReportTimeKeeping(context);
+      if (isReport == false || isReport == null) {
+        onClickToReportTimeKeeping(context);
+      }
     } else {
-      onClickToTimeKeeping(context);
+      if (isSelected == false || isSelected == null) {
+        onClickToTimeKeeping(context);
+      }
     }
   }
 

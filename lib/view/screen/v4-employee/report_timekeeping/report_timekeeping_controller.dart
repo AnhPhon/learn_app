@@ -31,6 +31,7 @@ class V4ReportTimekeepingControllter extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getidChamCong();
+    getLocator();
   }
 
   void getidChamCong() {
@@ -87,6 +88,7 @@ class V4ReportTimekeepingControllter extends GetxController {
           ),
           onSuccess: (value) {
             print(reportTime.toString());
+            sl.get<SharedPreferenceHelper>().saveIsReport(isReport: true);
             Get.back(result: true);
           },
           onError: (error) {
@@ -107,6 +109,7 @@ class V4ReportTimekeepingControllter extends GetxController {
             noiDungBaoCao: reportContent.text,
           ),
           onSuccess: (value) {
+            sl.get<SharedPreferenceHelper>().saveIsReport(isReport: true);
             Get.back(result: true);
           },
           onError: (error) {

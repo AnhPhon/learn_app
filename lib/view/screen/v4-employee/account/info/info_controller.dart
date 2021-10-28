@@ -146,6 +146,7 @@ class V4InfoController extends GetxController {
           addressController = TextEditingController(text: value.diaChi);
 
           //Tỉnh/Tp
+
           hintTextTinhTp = value.idTinhTp!.ten.toString();
           //Quận/huyện
           hintTextQuanHuyen = value.idQuanHuyen!.ten.toString();
@@ -440,7 +441,7 @@ class V4InfoController extends GetxController {
         data: nhanVienRequest,
         onSuccess: (value) {
           EasyLoading.dismiss();
-          Get.back(result: nhanVienResponse.hinhDaiDien);
+          Get.back(result: true);
 
           //show dialog
           showAnimatedDialog(

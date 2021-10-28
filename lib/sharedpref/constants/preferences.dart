@@ -25,4 +25,6 @@ class Preferences {
   static const String phanHoiDonDichVuId = "phanHoiDonDichVuId";
   static const String giaTriDonHang = "giaTriDonHang";
   static const String idNewWork = "idNewWork";
+  static const String idSelected = "idSelected";
+  static const String idReport = "idReport";
 }

@@ -184,6 +184,7 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                     // Chi tiết công việc đang làm
                     Container(
                       width: DeviceUtils.getScaledWidth(context, 1),
+                      height: DeviceUtils.getScaledHeight(context, 0.4),
                       decoration: BoxDecoration(
                         color: ColorResources.WHITE,
                         borderRadius: BorderRadius.circular(
@@ -197,17 +198,19 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                           ),
                         ],
                       ),
-                      child: Column(
-                        children: [
-                          DetailWork(
-                            detailWork:
-                                controller.moiTaoModel!.noiDung.toString(),
-                          ),
-                        ],
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            DetailWork(
+                              detailWork:
+                                  controller.moiTaoModel!.noiDung.toString(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(
-                      height: DeviceUtils.getScaledHeight(context, 0.05),
+                      height: DeviceUtils.getScaledHeight(context, 0.04),
                     ),
 
                     //Button cập nhập

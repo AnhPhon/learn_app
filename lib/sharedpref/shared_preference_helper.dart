@@ -311,4 +311,30 @@ class SharedPreferenceHelper {
   Future<bool> removeIdNewWork() async {
     return _sharedPreference.remove(Preferences.idNewWork);
   }
+
+  // Chấm công: ----------------------------------------------------------
+  Future<bool?> get isSelected async {
+    return _sharedPreference.getBool(Preferences.idSelected);
+  }
+
+  Future<bool> saveIsSelected({required bool isSelected}) async {
+    return _sharedPreference.setBool(Preferences.idSelected, isSelected);
+  }
+
+  Future<bool> removeIsSelected() async {
+    return _sharedPreference.remove(Preferences.idSelected);
+  }
+
+  // Báo cáo: ----------------------------------------------------------
+  Future<bool?> get isReport async {
+    return _sharedPreference.getBool(Preferences.idReport);
+  }
+
+  Future<bool> saveIsReport({required bool isReport}) async {
+    return _sharedPreference.setBool(Preferences.idReport, isReport);
+  }
+
+  Future<bool> removeIsReport() async {
+    return _sharedPreference.remove(Preferences.idReport);
+  }
 }

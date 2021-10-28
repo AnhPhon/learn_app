@@ -41,7 +41,12 @@ class V4HomePage extends GetView<V4HomeController> {
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // time keeping
-                  _btnTimekeeping(context),
+                  if (controller.isSelected == true)
+                    _btnTimed(context)
+                  else if (controller.isReport == true)
+                    _btnReported(context)
+                  else
+                    _btnTimekeeping(context),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _followWorkProgressWidget
@@ -118,6 +123,58 @@ class V4HomePage extends GetView<V4HomeController> {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// button đã chấm công
+  ///
+  Widget _btnTimed(BuildContext context) {
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: ColorResources.GREY,
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+      ),
+      child: const Center(
+        child: Text(
+          "Đã chấm công",
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// button đã báo cáo
+  ///
+  Widget _btnReported(BuildContext context) {
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: ColorResources.GREY,
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+      ),
+      child: const Center(
+        child: Text(
+          "Đã báo cáo",
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
       ),

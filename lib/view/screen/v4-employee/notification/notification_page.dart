@@ -121,8 +121,9 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.notifications_active_outlined,
+                            color: ColorResources.BLACK.withOpacity(0.6),
                           ),
                           const SizedBox(
                             width: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -132,6 +133,9 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                             controller.formatDateTime(
                               dateTime: controller
                                   .thongbaoModelList[index].createdAt!,
+                            ),
+                            style: TextStyle(
+                              color: ColorResources.BLACK.withOpacity(0.6),
                             ),
                           )
                         ],
