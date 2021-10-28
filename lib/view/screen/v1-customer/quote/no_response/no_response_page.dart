@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -42,7 +41,7 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   Container(
                     alignment: Alignment.centerLeft,
@@ -64,7 +63,7 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   //text
                   _textField(
@@ -72,7 +71,7 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                     "Địa điểm nhận",
                     "${controller.tinhTp} - ${controller.quanHuyen}",
                   ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   //text
                   _textField(
@@ -80,7 +79,7 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                     "Thời gian nhận dự kiến",
                     "Từ ${controller.ngayBatDau} \tĐến ${controller.ngayKetThuc}",
                   ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // ngày
                   _textField(
@@ -88,23 +87,23 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                     "Nội dung yêu cầu",
                     controller.yeuCau,
                   ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // bảng khối lượng
                   bangKhoiLuong(),
 
                   _lineSplit(context, 2),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // hinh anh khoi luong
                   _hinhAnhKhoiLuong(),
 
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // file upload
                   _fileUpload(context),
 
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // bottom
                   Row(
@@ -122,52 +121,6 @@ class V1NoResponsePage extends GetView<V1NoResponseController> {
                       ),
                     ],
                   ),
-
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: ColorResources.WHITE,
-                    ),
-                    padding:
-                        const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                "Giá trị đơn hàng",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "${PriceConverter.convertPrice(context, controller.tongTien)} VND",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                                  color: ColorResources.RED,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-
-                        const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-
-                        // button update and accept
-                        _buttonUpdateAndAccept(context)
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
