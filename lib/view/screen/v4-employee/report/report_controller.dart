@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/request/loai_bao_cao_nhan_vien.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
@@ -19,10 +20,19 @@ class V4ReportController extends GetxController
   BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
 
   //Khai báo model báo cáo
-  List<BaoCaoNhanVienResponse> baocaonhanvienModelList = [];
+  List<BaoCaoNhanVienResponse> baoCaoNhanVienModelList = [];
+
   // Khai báo danh sách báo cáo
-  List<String> baoCao = ['Báo cáo tuần',
-    'Báo cáo theo yêu cầu',];
+  List<String> baoCao = ['Báo cáo công việc theo tuần',
+    'Báo cáo công việc theo yêu cầu',];
+
+  List<BaoCaoNhanVienModel> baoCaoNhanVienModel= [
+  BaoCaoNhanVienModel(id:"0",tieuDe: "Tất cả"),
+  BaoCaoNhanVienModel(id:"1",tieuDe: "Báo cáo yêu cầu"),
+  BaoCaoNhanVienModel(id:"2",tieuDe: "Báo cáo tuần"),
+  ];
+  BaoCaoNhanVienModel? nhanVienModel;
+
 
   //khai báo isLoading
   bool isLoading = true;
@@ -45,7 +55,8 @@ class V4ReportController extends GetxController
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getReport(isRefresh: true);
+    nhanVienModel=baoCaoNhanVienModel.first;
+    getReport(isRefresh: true, value: "0");
   }
 
   @override
@@ -57,19 +68,26 @@ class V4ReportController extends GetxController
   ///
   /// lấy danh sách báo báo all
   ///
-  void getReport({required bool isRefresh}) {
+  void getReport({required bool isRefresh, required String value} ) {
     //isRefresh
     if (isRefresh) {
       pageMax = 1;
-      baocaonhanvienModelList.clear();
+      baoCaoNhanVienModelList.clear();
     } else {
       //is load more
       pageMax++;
     }
+    String filter = "";
+    if(value == "0"){
+      filter = '&sortBy=created_at:desc';
+    }
+    else{
+      filter = '&loai=$value&sortBy=created_at:desc';
+    }
     baoCaoNhanVienProvider.paginate(
         page: pageMax,
         limit: limitMax,
-        filter: '&sortBy=created_at:desc',
+        filter: filter,
         onSuccess: (value) {
           //check isEmpty
           if (value.isEmpty) {
@@ -77,11 +95,11 @@ class V4ReportController extends GetxController
           } else {
             //is Refresh
             if (isRefresh) {
-              baocaonhanvienModelList = value;
+              baoCaoNhanVienModelList = value;
               refreshController.refreshCompleted();
             } else {
               //is load more
-              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
+              baoCaoNhanVienModelList = baoCaoNhanVienModelList.toList() + value;
               refreshController.loadComplete();
             }
           }
@@ -93,127 +111,26 @@ class V4ReportController extends GetxController
         });
   }
   ///
-  /// lấy danh sách báo báo theo yêu cầu loai 1
+  ///Click to onchanged
   ///
-  void getReportOnRequest({required bool isRefresh}) {
-    //isRefresh
-    if (isRefresh) {
-      pageMax = 1;
-      baocaonhanvienModelList.clear();
-    } else {
-      //is load more
-      pageMax++;
-    }
-    baocaonhanvienModelList.clear();
+  void onChanged ({required  BaoCaoNhanVienModel newValue}) {
+    nhanVienModel = newValue;
+    getReport(isRefresh: true, value: newValue.id.toString());
     update();
-    baoCaoNhanVienProvider.paginate(
-        page: pageMax,
-        limit: limitMax,
-        filter: '&loai=1&sortBy=created_at:desc',
-        onSuccess: (value) {
-          //check isEmpty
-          if (value.isEmpty) {
-            refreshController.loadNoData();
-          } else {
-            //is Refresh
-            if (isRefresh) {
-              baocaonhanvienModelList = value;
-              refreshController.refreshCompleted();
-            } else {
-              //is load more
-              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
-              refreshController.loadComplete();
-            }
-          }
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        });
-  }
-  ///
-  /// lấy danh sách báo báo theo ngày loai 2
-  ///
-  void getDailyReport({required bool isRefresh}) {
-    //isRefresh
-    if (isRefresh) {
-      pageMax = 1;
-      baocaonhanvienModelList.clear();
-    } else {
-      //is load more
-      pageMax++;
-    }
-    baocaonhanvienModelList.clear();
-    update();
-    baoCaoNhanVienProvider.paginate(
-        page: pageMax,
-        limit: limitMax,
-        filter: '&loai=2&sortBy=created_at:desc',
-        onSuccess: (value) {
-          //check isEmpty
-          if (value.isEmpty) {
-            refreshController.loadNoData();
-          } else {
-            //is Refresh
-            if (isRefresh) {
-              baocaonhanvienModelList = value;
-              refreshController.refreshCompleted();
-            } else {
-              //is load more
-              baocaonhanvienModelList = baocaonhanvienModelList.toList() + value;
-              refreshController.loadComplete();
-            }
-          }
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        });
-  }
-  ///
-  ///Click to onchanged lọc
-  ///
-  void onChanged(String? newValue) {
-    filterindex = newValue;
-    // getDailyReport(isRefresh: true);
-    // update();
-    if(baoCao.contains("Báo cáo tuần")){
-      getReportOnRequest(isRefresh: true);
-      update();
-    }
-    else if(baoCao.contains("Báo cáo theo yêu cầu")){
-      getDailyReport(isRefresh: true);
-      update();
-    }
-  }
-  ///
-  ///Click to onchanged lọc
-  ///
-  // void kiemTraLoc(BuildContext context) {
-  //   if(filterindex == baoCao.contains("Báo cáo tuần")){
-  //     getDailyReport(isRefresh: true);
-  //   }
-  //   if(filterindex == baoCao.contains("Báo cáo theo yêu cầu")){
-  //     getReportOnRequest(isRefresh: true);
-  //   }
-  //   // filterindex = newValue;
-  //   // update();
-  // }
 
+  }
   ///
   /// Set reload List
   ///
   Future<void> onRefresh() async {
     refreshController.resetNoData();
-    getReport(isRefresh: true);
+    getReport(isRefresh: true,value: nhanVienModel!.id.toString());
   }
   ///
   /// Set load more List
   ///
   Future<void> onLoading() async {
-    getReport(isRefresh: false);
+    getReport(isRefresh: false,value: nhanVienModel!.id.toString() );
   }
   ///
   ///Click to daily report
@@ -264,5 +181,12 @@ class V4ReportController extends GetxController
     return DateConverter.isoStringToLocalFullDateOnly(
         dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
+  }
+  ///
+  ///go to  detail notifications page
+  ///
+  void onClickDetailReport({required int index}) {
+    Get.toNamed(
+        "${AppRoutes.V4_DETAIL_REPORT}?id=${baoCaoNhanVienModelList[index].id}");
   }
 }

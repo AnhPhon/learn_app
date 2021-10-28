@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/common_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -13,25 +16,27 @@ import 'package:template/view/screen/v4-employee/report/report_controller.dart';
 class V4ReportPage extends GetView<V4ReportController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(
-        action: [
-          _filterlistreport(context),
-        ],
-        isNotBack: true,
-        title: "Danh sách báo cáo",
+    return GetBuilder(
+        init: V4ReportController(),
+        builder: (V4ReportController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            appBar: AppBarWidget(
+              action: [
+                _filterlistreport(context,controller),
+              ],
+              title: "Danh sách báo cáo",
+            ),
+            body: controller.isLoading ?
+            const Center(
+              child: CircularProgressIndicator(),
+            )
 
-        // centerTitle: true,
-      ),
-      body: GetBuilder<V4ReportController>(
-          init: V4ReportController(),
-          builder: (V4ReportController controller) {
-            if (controller.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Padding(
+                : Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
               ),
@@ -39,26 +44,25 @@ class V4ReportPage extends GetView<V4ReportController> {
 
               //danh sách báo cáo
               _listReport(controller),
-            );
-          }),
+            ),
 
-      //floating Action Button Thêm báo cáo
-      floatingActionButton: _floatingActionButtonReport(controller, context),
+            //floating Action Button Thêm báo cáo
+            floatingActionButton: _floatingActionButtonReport(controller,context),
+          );
+        }
     );
+
   }
 
   ///
   /// Lọc danh sách báo cáo hằng ngày hoặc báo cáo theo yêu cầu
   ///
-  Widget _filterlistreport(BuildContext context) {
+  Widget _filterlistreport(BuildContext context,V4ReportController controller) {
     return V4DropButtonAppBar(
-      data: controller.baoCao,
-      value: controller.filterindex,
-      onChanged:  controller.onChanged,
+      data: controller.baoCaoNhanVienModel,
+      value: controller.nhanVienModel,
+      onChanged: (value)=>  controller.onChanged(newValue:value!),
       hint: '',
-      // onPressed: (){
-      //   controller.kiemTraLoc(context);
-      // },
     );
   }
 }
@@ -74,126 +78,136 @@ Widget _listReport(V4ReportController controller) {
       controller: controller.refreshController,
     child: ListView.builder(
       shrinkWrap: true,
-      itemCount: controller.baocaonhanvienModelList.length,
+      itemCount: controller.baoCaoNhanVienModelList.length,
       itemBuilder: (BuildContext context, int index) {
-      return Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: Dimensions.PADDING_SIZE_LARGE,
-            ),
-            width: DeviceUtils.getScaledWidth(context, 1),
-            decoration: BoxDecoration(
-              borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              color: ColorResources.WHITE,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 2,
-                  offset: const Offset(0, 2),
-                  color: ColorResources.BLACK.withAlpha(60),
-                ),
-              ],
-            ),
-            child: Stack(
-              alignment: Alignment.centerRight,
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          ),
+          child: GestureDetector(
+            onTap: () {
+              controller.onClickDetailReport(index: index);
+            },
+            child: Column(
               children: [
-                // ignore: sized_box_for_whitespace
                 Container(
-                  width: DeviceUtils.getScaledWidth(context, 0.77),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Dimensions.PADDING_SIZE_LARGE,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //Tiêu đề báo cáo công việc theo yêu cầu
-                        Text(
-                          controller.baocaonhanvienModelList[index].idDuAnNhanVien!.tieuDe!,
-                          style: Dimensions.fontSizeStyle16w600(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_SMALL,
-                        ),
-
-                        // phụ đề báo cáo công việc
-                        Text(
-                          controller.baocaonhanvienModelList[index].idDuAnNhanVien!.moTa!,
-                          style: Dimensions.fontSizeStyle14(),
-                          maxLines: 1,
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-
-                        //chi tiết báo cáo
-                        Text(
-                          controller.baocaonhanvienModelList[index].noiDung!,
-                          style: Dimensions.fontSizeStyle14(),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(
-                          height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: Dimensions.PADDING_SIZE_SMALL,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: Dimensions.PADDING_SIZE_LARGE,
+                  ),
+                  width: DeviceUtils.getScaledWidth(context, 1),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    color: ColorResources.WHITE,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2,
+                        offset: const Offset(0, 2),
+                        color: ColorResources.BLACK.withAlpha(60),
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      // ignore: sized_box_for_whitespace
+                      Container(
+                        width: DeviceUtils.getScaledWidth(context, 0.77),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: Dimensions.PADDING_SIZE_LARGE,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                // ignore: prefer_const_literals_to_create_immutables
-                                children: [
-                                  const Icon(
-                                    Icons.place_sharp,
-                                    color: ColorResources.PRIMARY,
-                                    size: Dimensions.ICON_SIZE_EXTRA_SMALL,
-                                  ),
-                                  Text(
-                                    // địa chỉ
-
-                                    controller.baocaonhanvienModelList[index].idDuAnNhanVien!.diaChi!,
-                                    style: Dimensions.fontSizeStyle14w600(),
-                                  ),
-                                ],
-                              ),
+                              //Tiêu đề báo cáo công việc theo yêu cầu hoặc theo tuần
                               Text(
-                                // ngày báo cáo
-                                controller.formatDateTime(
-                                dateTime:
-                                controller.baocaonhanvienModelList[index].createdAt!,
+                                controller.baoCaoNhanVienModelList[index].loai.toString(),
+                                style: Dimensions.fontSizeStyle16w600(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_SMALL,
+                              ),
+                              // Html(
+                              //   data:CommonHelper().htmlUnescape(controller.baoCaoNhanVienModelList[index].idDuAnNhanVien!.moTa!.toString())  ,
+                              // ),
+                              //tên dự án
+                              Text(
+                                "Dự án: ${controller.baoCaoNhanVienModelList[index].idDuAnNhanVien}",
                                 style: Dimensions.fontSizeStyle14w600(),
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              ),
+
+                              //chi tiết báo cáo
+                              Text(
+                                controller.baoCaoNhanVienModelList[index].noiDung!,
+                                style: Dimensions.fontSizeStyle14(),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(
+                                height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: Dimensions.PADDING_SIZE_SMALL,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      children: [
+                                        const Icon(
+                                          Icons.place_sharp,
+                                          color: ColorResources.PRIMARY,
+                                          size: Dimensions.ICON_SIZE_EXTRA_SMALL,
+                                        ),
+                                        Text(
+                                          // địa chỉ
+
+                                          controller.baoCaoNhanVienModelList[index].idDuAnNhanVien!.diaChi!,
+                                          style: Dimensions.fontSizeStyle14w600(),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      // ngày báo cáo
+                                      controller.formatDateTime(
+                                      dateTime:
+                                      controller.baoCaoNhanVienModelList[index].createdAt!,
+                                    ),
+                                      style: Dimensions.fontSizeStyle14w600(),
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                      //Icon
+                      const Positioned(
+                        top: Dimensions.PADDING_SIZE_LARGE,
+                        left: Dimensions.PADDING_SIZE_LARGE,
+                        child: Icon(
+                          Icons.flag_outlined,
+                          size: Dimensions.ICON_SIZE_DEFAULT,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                //Icon
-                const Positioned(
-                  top: Dimensions.PADDING_SIZE_LARGE,
-                  left: Dimensions.PADDING_SIZE_LARGE,
-                  child: Icon(
-                    Icons.flag_outlined,
-                    size: Dimensions.ICON_SIZE_DEFAULT,
-                  ),
-                ),
+                //line Widget
+                _lineWidget(context),
               ],
             ),
           ),
-
-          //line Widget
-          _lineWidget(context),
-        ],
       );
     },
     ),
