@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+
 import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/data/model/response/cham_cong_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';

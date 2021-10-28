@@ -18,7 +18,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
+
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
@@ -461,6 +461,9 @@ class V4InfoController extends GetxController {
     }
   }
 
+  ///
+  ///Back
+  ///
   void backHome() {
     Get.back(result: nhanVienResponse.hinhDaiDien);
   }

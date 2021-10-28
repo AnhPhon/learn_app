@@ -19,8 +19,6 @@ class V4DetailWorkController extends GetxController {
   //Khai báo isLoading
   bool isLoading = true;
 
-  final contentDetailWork = TextEditingController();
-
   String? selectIndex;
 
   List<String> selectList = [
@@ -58,7 +56,7 @@ class V4DetailWorkController extends GetxController {
           } else if (moiTaoModel!.trangThai == "4") {
             selectIndex = "Chậm trễ";
           }
-          contentDetailWork.text = moiTaoModel!.noiDung.toString();
+
           print(selectIndex);
           isLoading = false;
           update();
@@ -97,7 +95,6 @@ class V4DetailWorkController extends GetxController {
         data: CongViecNhanVienRequest(
           id: id,
           trangThai: selectIndex,
-          noiDung: contentDetailWork.text,
         ),
         onSuccess: (value) {
           print(selectIndex);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -8,6 +9,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
+import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/details_work.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
 
 class V4DetailWorkPage extends GetView<V4DetailWorkController> {
@@ -39,7 +41,11 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                     //Tiêu đề THÔNG TIN
                     Text(
                       'Thông tin',
-                      style: Dimensions.fontSizeStyle16w600(),
+                      style: TextStyle(
+                        color: ColorResources.BLACK.withOpacity(.8),
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(
                       height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
@@ -62,23 +68,34 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                         ],
                       ),
                       padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_SMALL,
-                        vertical: Dimensions.PADDING_SIZE_SMALL,
+                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                        vertical: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  controller.moiTaoModel!.tieuDe.toString(),
-                                  style: Dimensions.fontSizeStyle20w600(),
-                                  textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    controller.moiTaoModel!.tieuDe.toString(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions
+                                          .FONT_SIZE_EXTRA_SUPER_LARGE,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             height: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -90,14 +107,21 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                             children: [
                               Text(
                                 "Thời gian bắt đầu:",
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Text(
                                 controller.formatDateTime(
                                   dateTime: controller.moiTaoModel!.ngayBatDau
                                       .toString(),
                                 ),
-                                style: Dimensions.fontSizeStyle16(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                ),
                               ),
                             ],
                           ),
@@ -111,14 +135,21 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                             children: [
                               Text(
                                 "Thời gian kết thúc:",
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Text(
                                 controller.formatDateTime(
                                   dateTime: controller.moiTaoModel!.ngayKetThuc
                                       .toString(),
                                 ),
-                                style: Dimensions.fontSizeStyle16(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                ),
                               ),
                             ],
                           ),
@@ -132,18 +163,15 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                             children: [
                               Text(
                                 "Trạng thái:",
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              DropDownButton1<String>(
-                                isShadow: true,
-                                isBorder: false,
-                                fillColor: ColorResources.WHITE,
-                                value: controller.selectIndex,
-                                data: controller.selectList,
-                                onChanged: (value) =>
-                                    controller.onStatusChange(value),
-                                width: 0.3,
-                              ),
+
+                              //Thay đổi trạng thái công việc
+                              _chonTrangThai(controller),
                             ],
                           ),
                         ],
@@ -154,32 +182,70 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                     ),
 
                     // Chi tiết công việc đang làm
-                    InputWidget(
-                      isBorder: false,
-                      isShadow: true,
-                      fillColor: ColorResources.WHITE,
-                      label: "Chi tiết",
-                      maxLine: 14,
-                      textEditingController: controller.contentDetailWork,
-                      width: 1,
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, 1),
+                      decoration: BoxDecoration(
+                        color: ColorResources.WHITE,
+                        borderRadius: BorderRadius.circular(
+                          Dimensions.BORDER_RADIUS_DEFAULT,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 2),
+                            color: ColorResources.BLACK.withAlpha(40),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          DetailWork(
+                            detailWork:
+                                controller.moiTaoModel!.noiDung.toString(),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       height: DeviceUtils.getScaledHeight(context, 0.05),
                     ),
 
                     //Button cập nhập
-                    LongButton(
-                      title: "Cập nhập",
-                      color: ColorResources.PRIMARYCOLOR,
-                      onPressed: () {
-                        controller.updateWork(context);
-                      },
-                    ),
+                    _btnCapNhap(controller, context),
                   ],
                 ),
               ),
             );
           }),
+    );
+  }
+
+  ///
+  ///Thay đổi trạng thái công việc
+  ///
+  Widget _chonTrangThai(V4DetailWorkController controller) {
+    return DropDownButton1<String>(
+      isColorFieldWhite: true,
+      isShadow: true,
+      isBorder: false,
+      fillColor: ColorResources.WHITE,
+      value: controller.selectIndex,
+      data: controller.selectList,
+      onChanged: (value) => controller.onStatusChange(value),
+      width: 0.4,
+    );
+  }
+
+  ///
+  ///Button cập nhập
+  ///
+  Widget _btnCapNhap(V4DetailWorkController controller, BuildContext context) {
+    return LongButton(
+      title: "Cập nhập",
+      color: ColorResources.PRIMARYCOLOR,
+      onPressed: () {
+        controller.updateWork(context);
+      },
     );
   }
 }

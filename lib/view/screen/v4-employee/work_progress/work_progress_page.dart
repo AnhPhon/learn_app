@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -18,7 +18,16 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
       initialIndex: controller.selectedIndex,
       length: 4,
       child: Scaffold(
-        appBar: const AppBarWidget(
+        appBar: AppBarWidget(
+          leading: IconButton(
+            onPressed: () {
+              controller.backHome();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: ColorResources.WHITE,
+            ),
+          ),
           title: "Tiến độ công việc",
         ),
         body: GetBuilder(
@@ -34,13 +43,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                   Container(
                     height: DeviceUtils.getScaledHeight(context, .08),
                     color: ColorResources.WHITE,
-
-                    // ignore: prefer_const_constructors
                     child: TabBar(
                       labelPadding: const EdgeInsets.symmetric(
                         horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                       ),
-                      labelStyle: Dimensions.fontSizeStyle16w600(),
+                      labelStyle: Dimensions.fontSizeStyle14w600(),
                       indicator: BoxDecoration(
                         color: ColorResources.APPBARCOLOR,
                         boxShadow: [
@@ -157,7 +164,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                   Text(
                                     controller.moiTaoModelList[index].tieuDe
                                         .toString(),
-                                    style: Dimensions.fontSizeStyle16w600(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -173,7 +185,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                   Text(
                                     controller.moiTaoModelList[index].tomTat
                                         .toString(),
-                                    style: Dimensions.fontSizeStyle14(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -193,7 +209,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Bắt đầu: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         controller.formatDateTime(
@@ -211,7 +232,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Kết thúc: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         controller.formatDateTime(
@@ -308,7 +334,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                               Text(
                                 controller.dangLamModelList[index].tieuDe
                                     .toString(),
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               const SizedBox(
                                 height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -320,7 +350,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                   Text(
                                     controller.dangLamModelList[index].tomTat
                                         .toString(),
-                                    style: Dimensions.fontSizeStyle14(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -340,7 +374,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Bắt đầu: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         controller.formatDateTime(
@@ -359,7 +398,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Hoàn thành: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         controller.formatDateTime(
@@ -456,7 +500,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                               Text(
                                 controller.hoanThanhModelList[index].tieuDe
                                     .toString(),
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               const SizedBox(
                                 height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -468,7 +516,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                   Text(
                                     controller.hoanThanhModelList[index].tomTat
                                         .toString(),
-                                    style: Dimensions.fontSizeStyle14(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -488,7 +540,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Tiến độ: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         "${controller.tienDo(
@@ -553,7 +610,12 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Hoàn thành: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         controller.formatDateTime(
@@ -651,7 +713,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                               Text(
                                 controller.chamTreModelList[index].tieuDe
                                     .toString(),
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: TextStyle(
+                                  color: ColorResources.BLACK.withOpacity(.8),
+                                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               const SizedBox(
                                 height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -663,7 +729,11 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                   Text(
                                     controller.chamTreModelList[index].tomTat
                                         .toString(),
-                                    style: Dimensions.fontSizeStyle14(),
+                                    style: TextStyle(
+                                      color:
+                                          ColorResources.BLACK.withOpacity(.8),
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -683,14 +753,16 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Tiến độ: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
                                         "${controller.tienDo(
-                                          startDate: controller
-                                              .chamTreModelList[index]
-                                              .ngayThucTe
-                                              .toString(),
+                                          startDate: controller.tienDoChamTre,
                                           endDate: controller
                                               .chamTreModelList[index]
                                               .ngayKetThuc
@@ -702,9 +774,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                               Dimensions.FONT_SIZE_DEFAULT,
                                           color: controller.tienDo(
                                                     startDate: controller
-                                                        .chamTreModelList[index]
-                                                        .ngayThucTe
-                                                        .toString(),
+                                                        .tienDoChamTre,
                                                     endDate: controller
                                                         .chamTreModelList[index]
                                                         .ngayKetThuc
@@ -723,9 +793,7 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                               Dimensions.FONT_SIZE_DEFAULT,
                                           color: controller.tienDo(
                                                     startDate: controller
-                                                        .chamTreModelList[index]
-                                                        .ngayThucTe
-                                                        .toString(),
+                                                        .tienDoChamTre,
                                                     endDate: controller
                                                         .chamTreModelList[index]
                                                         .ngayKetThuc
@@ -744,15 +812,15 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
                                     children: [
                                       Text(
                                         'Thực tế: ',
-                                        style: Dimensions.fontSizeStyle14w600(),
+                                        style: TextStyle(
+                                          color: ColorResources.BLACK
+                                              .withOpacity(.8),
+                                          fontSize:
+                                              Dimensions.FONT_SIZE_DEFAULT,
+                                        ),
                                       ),
                                       Text(
-                                        controller.formatDateTime(
-                                          dateTime: controller
-                                              .chamTreModelList[index]
-                                              .ngayThucTe
-                                              .toString(),
-                                        ),
+                                        controller.ngayThucTe,
                                         style: Dimensions.fontSizeStyle14(),
                                       ),
                                     ],

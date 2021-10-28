@@ -201,7 +201,11 @@ class V4HomeController extends GetxController {
   /// click to work progress page
   ///
   void onClickToWorkProgress(int index) {
-    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
+    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index")!.then((value) {
+      // init program run
+      initProgramRun();
+      print("Reset Home");
+    });
   }
 
   /// click to timekeeping
