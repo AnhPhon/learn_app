@@ -150,6 +150,18 @@ class SharedPreferenceHelper {
   Future<bool> removeTypeAccount() async {
     return _sharedPreference.remove(Preferences.typeAccount);
   }
+  // Reset password token: ----------------------------------------------------------
+  Future<String?> get resetPasswordToken async {
+    return _sharedPreference.getString(Preferences.resetPasswordToken);
+  }
+
+  Future<bool> saveResetPasswordToken(String resetPasswordToken) async {
+    return _sharedPreference.setString(Preferences.resetPasswordToken, resetPasswordToken);
+  }
+
+  Future<bool> removeResetPasswordToken() async {
+    return _sharedPreference.remove(Preferences.resetPasswordToken);
+  }
 
   // ProvinceId: ----------------------------------------------------------
   Future<String?> get provinceId async {

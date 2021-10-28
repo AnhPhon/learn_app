@@ -194,7 +194,7 @@ class UpdatePasswordPage extends GetView<UpdatePasswordController> {
                 obscureText: true,
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
-                controller: controller.passwordController,
+                controller: controller.repeatPasswordController,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
                   isDense: true,

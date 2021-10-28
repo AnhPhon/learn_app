@@ -48,6 +48,7 @@ class TaiKhoanResponse {
   String? updatedAt;
   String? access;
   String? refresh;
+  String? resetPasswordToken;
 
 
   TaiKhoanResponse(

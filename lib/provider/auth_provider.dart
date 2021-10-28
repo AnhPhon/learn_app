@@ -5,6 +5,7 @@ import 'package:template/data/model/request/account_request.dart';
 // import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
+import 'package:template/data/model/request/verify_otp_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/repository/auth_repository.dart';
@@ -98,6 +99,81 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       onSuccess(true);
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+  ///
+  /// Quên mật khẩu
+  ///
+  Future<void> forgetPassword({
+    required dynamic phone,
+    required Function(TaiKhoanResponse data) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await authRepository!.forgetPassword(phone);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      final TaiKhoanResponse account = TaiKhoanResponse();
+      account.resetPasswordToken= results['resetPasswordToken'].toString();
+      print("Token: ${results['otp'].toString()}");
+      onSuccess(account);
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+  ///
+  /// Verify OTP
+  ///
+  Future<void> verifyOTP({
+    required VerifyOtpRequest request,
+    required Function(bool data) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await authRepository!.verifyOTP(request);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      final bool status = results['status'] as bool;
+      onSuccess(status);
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+  ///
+  /// reset passowrd
+  ///
+  Future<void> resetPassword({
+    required VerifyOtpRequest request,
+    required Function() onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await authRepository!.resetPassword(request);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      onSuccess();
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+  ///
+  /// send otp
+  ///
+  Future<void> sendOTP({
+    required dynamic phone,
+    required Function() onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await authRepository!.sendOTP(phone);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      print(apiResponse.response.data);
+      onSuccess();
     } else {
       onError(apiResponse.error);
     }

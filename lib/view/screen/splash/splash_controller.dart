@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/auth_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -10,6 +12,8 @@ import 'package:template/utils/app_constants.dart';
 class SplashController extends GetxController
     with SingleGetTickerProviderMixin {
   late AnimationController? _animationController;
+  final AuthProvider authProvider = GetIt.I.get<AuthProvider>();
+
 
   @override
   void onInit() {
@@ -19,6 +23,9 @@ class SplashController extends GetxController
     );
 
     _animationController!.forward().whenComplete(() async {
+      // remove token reset password
+      sl.get<SharedPreferenceHelper>().removeResetPasswordToken();
+
       final bool? isFirst = await sl.get<SharedPreferenceHelper>().isFirst;
       final bool? isLogin = await sl.get<SharedPreferenceHelper>().isLogin;
       final String? idLoaiTaiKhoan = await sl.get<SharedPreferenceHelper>().typeAccount;
@@ -44,10 +51,13 @@ class SplashController extends GetxController
               return;
             }else{
               // Logout
+              // Khi không tự động nhập được thì logout clear() share để người dùng đăng nhập lại từ đầu
+              logout();
               update();
             }
           }else{
             // logout
+            logout();
             update();
           }
           //Get.offNamed(AppRoutes.DASHBOARD);
@@ -59,6 +69,33 @@ class SplashController extends GetxController
     });
 
     super.onInit();
+  }
+
+  ///
+  /// Logout
+  ///
+  void logout() {
+    sl.get<SharedPreferenceHelper>().refreshToken.then((value){
+      authProvider.logoutAccount(request: {
+        'refreshToken':value!
+      }, onSuccess: (status){
+        if(status){
+          sl.get<SharedPreferenceHelper>().removeIsLogin();
+          sl.get<SharedPreferenceHelper>().removeJwtToken();
+          sl.get<SharedPreferenceHelper>().removePassword();
+          sl.get<SharedPreferenceHelper>().removeUserId();
+          sl.get<SharedPreferenceHelper>().removeTypeAccount();
+          sl.get<SharedPreferenceHelper>().removeRefreshToken();
+
+          Alert.info(message: "Xin chào, ");
+          Get.offAllNamed(AppRoutes.LOGIN);
+        }else{
+          Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+        }
+      }, onError: (onError){
+        print("Lỗi đăng xuất $onError");
+      });
+    });
   }
 
   @override

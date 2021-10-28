@@ -27,6 +27,7 @@ import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/validate.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../di_container.dart';
@@ -231,7 +232,7 @@ class RegisterController extends GetxController {
   ///
   Future onAvatarPicker() async {
     try {
-      final picker = await ImagePicker().pickImage(source: ImageSource.camera);
+      final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (picker == null) return;
       avatarFile = File(picker.path);
       update();
@@ -240,7 +241,7 @@ class RegisterController extends GetxController {
     }
   }
   ///
-  /// on image picker
+  /// on face picker
   ///
   Future onFacePicker() async {
     try {
@@ -257,7 +258,7 @@ class RegisterController extends GetxController {
   ///
   Future onFrontCMNDPicker() async {
     try {
-      final picker = await ImagePicker().pickImage(source: ImageSource.camera);
+      final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (picker == null) return;
       frontCMND = File(picker.path);
       update();
@@ -270,7 +271,7 @@ class RegisterController extends GetxController {
   ///
   Future onbackSideCMNDPicker() async {
     try {
-      final picker = await ImagePicker().pickImage(source: ImageSource.camera);
+      final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (picker == null) return;
       backSideCMND= File(picker.path);
       update();
@@ -284,77 +285,96 @@ class RegisterController extends GetxController {
   ///
   bool onCheckValidate(){
     if(loaiTaiKhoan == null){
-      Alert.error(message: "Vui lòng chọn loại tài khoản");
+      Alert.info(message: "Vui lòng chọn loại tài khoản");
       return false;
     }else if(juridical == null){
-      Alert.error(message: "Vui lòng chọn loại pháp lý");
+      Alert.info(message: "Vui lòng chọn loại pháp lý");
       return false;
     }else if(enterpriseNameController.text.toString().isEmpty){
-      Alert.error(message: "Tên doanh nghiệp/đội trưởng/cá nhân không được để trống");
+      Alert.info(message: "Tên doanh nghiệp/đội trưởng/cá nhân không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.error(message: "Họ và tên không được để trống");
+      Alert.info(message: "Họ và tên không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.error(message: "Họ và tên không được để trống");
+      Alert.info(message: "Họ và tên không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.error(message: "Họ và tên không được để trống");
+      Alert.info(message: "Họ và tên không được để trống");
       return false;
     }else if(birthDateController.text.toString().isEmpty){
-      Alert.error(message: "Ngày sinh không được để trống");
+      Alert.info(message: "Ngày sinh không được để trống");
       return false;
     }else if(gender == null){
-      Alert.error(message: "Vui lòng chọn giới tính");
+      Alert.info(message: "Vui lòng chọn giới tính");
       return false;
     }else if(cmndController.text.toString().isEmpty){
-      Alert.error(message: "Số CMND/Căn cước không được để trống");
+      Alert.info(message: "Số CMND/Căn cước không được để trống");
       return false;
     }else if(cmndController.text.toString().length != 12 && cmndController.text.toString().length != 9){
-      Alert.error(message: "Số CMND/Căn cước không hợp lệ");
+      Alert.info(message: "Số CMND/Căn cước không hợp lệ");
       return false;
     }else if(dateRangeController.text.toString().isEmpty){
-      Alert.error(message: "Ngày cấp không được để trống");
+      Alert.info(message: "Ngày cấp không được để trống");
       return false;
     }else if(placeIssueController.text.toString().isEmpty){
-      Alert.error(message: "Nơi cấp không được để trống");
+      Alert.info(message: "Nơi cấp không được để trống");
       return false;
     }else if(phoneNumberController.text.toString().isEmpty){
-      Alert.error(message: "Số điện thoại không được để trống");
+      Alert.info(message: "Số điện thoại không được để trống");
       return false;
-    }else if(passwordController.text.toString().isEmpty){
+    }else if(!Validate.phone(phoneNumberController.text.toString())){
+      Alert.info(message: "Số điện thoại không Hợp lệ");
+      return false;
+    }else if(emailController.text.toString().isNotEmpty){
+      if(!Validate.email(emailController.text.toString())){
+        Alert.info(message: "Email không hợp lệ");
+        return false;
+      }
+    }
+    if(passwordController.text.toString().isEmpty){
       Alert.error(message: "Mật khẩu không được để trống");
       return false;
+    }else if(Validate.charactersLength(passwordController.text.toString()) == false){
+      Alert.info(message: 'Mật khẩu ít nhất 8 ký tự');
+      return false;
+    }else if(Validate.oneLowerCase(passwordController.text.toString()) == false){
+      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
+      return false;
+    }else if(Validate.oneUpperCase(passwordController.text.toString()) == false){
+      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
+      return false;
+    }else if(Validate.leastOneDigit(passwordController.text.toString()) == false){
+      Alert.info(message: 'Mật khẩu ít nhất phải có 1 số');
+      return false;
     }else if(passwordController.text.toString() != repeatPasswordController.text.toString()){
-      Alert.error(message: "Mật khẩu không trung khớp");
+      Alert.info(message: "Mật khẩu không trung khớp");
       return false;
     }else if(province == null){
-      Alert.error(message: "Vui lòng chọn tỉnh thành phố");
+      Alert.info(message: "Vui lòng chọn tỉnh thành phố");
       return false;
     }else if(district == null){
-      Alert.error(message: "Vui lòng chọn quận huyện");
+      Alert.info(message: "Vui lòng chọn quận huyện");
       return false;
     }else if(ward == null){
-      Alert.error(message: "Vui lòng chọn phường xã");
+      Alert.info(message: "Vui lòng chọn phường xã");
       return false;
     }else if(multipSelecteProvince.isEmpty){
-      Alert.error(message: "Vui lòng chọn khu vực tham gia");
+      Alert.info(message: "Vui lòng chọn khu vực tham gia");
       return false;
     }else if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('thợ thầu')){
       if(amountController.text.toString().isEmpty){
-        Alert.error(message: "Số lượng người không được để trống");
+        Alert.info(message: "Số lượng người không được để trống");
         return false;
       }else if(jobExpertsController.text.toString().isEmpty){
-        Alert.error(message: "Chuyên làm việc gì không được để trống");
+        Alert.info(message: "Chuyên làm việc gì không được để trống");
         return false;
       }else if(experienceController.text.toString().isEmpty){
-        Alert.error(message: "Năng lực/Kinh nghiệm không được để trống");
+        Alert.info(message: "Năng lực/Kinh nghiệm không được để trống");
         return false;
       }else if(readyWorkController.text.toString().isEmpty){
-        Alert.error(message: "Bạn sẵn sàng làm việc ở những tỉnh nào không được để trống");
+        Alert.info(message: "Bạn sẵn sàng làm việc ở những tỉnh nào không được để trống");
         return false;
-      }else{
-        return true;
       }
     }
     return true;
@@ -364,7 +384,7 @@ class RegisterController extends GetxController {
   ///
   /// on button register tap
   ///
-  void onBtnRegisterTap() async{
+  Future<void> onBtnRegisterTap() async{
     if(onCheckValidate()){
       final TaiKhoanRequest auth = TaiKhoanRequest();
       auth.idLoaiTaiKhoan = loaiTaiKhoan!.id;
@@ -411,32 +431,53 @@ class RegisterController extends GetxController {
           print("Upload image onError $onError");
         });
       }
+      // HÌnh ảnh khuôn mặt không có
 
-      Get.toNamed(AppRoutes.OTP_VERIFIER)!.then((value){
-          if(value == true){
-            EasyLoading.show(status: 'loading...');
-            // HÌnh ảnh khuôn mặt không có
-            Future.delayed(const Duration(milliseconds: 100)).then((value){
-              // Register account
-              taiKhoanProvider.add(data: auth, onSuccess: (user){
-                // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
-                // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
-                sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
-                // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
-                Alert.info(message: "Đăng ký Tài khoản thành công");
-                Get.back();
-                EasyLoading.dismiss();
-                
-              }, onError: (onError){
-                print("Đăng ký tài khoản $onError");
-              });
-            });
-          }else{
-            Alert.info(message: "Đăng ký tài khoản thất bại");
-          }
-      });
+      // Đăng ký tài khoản
+      registerAccount(auth);
 
     }
+  }
+
+
+  void registerAccount(TaiKhoanRequest account){
+    EasyLoading.show(status: 'loading...');
+    authProvider.sendOTP(phone: {
+        "phone":account.soDienThoai
+      }, onSuccess: (){
+        EasyLoading.dismiss();
+        Alert.info(message: "Mã xác thực gửi số điện thoại của bạn. Xác thực hoàn tất đăng ký");
+        // Go to verify page
+        Get.toNamed(AppRoutes.OTP_VERIFIER, arguments: true)!.then((value){
+            if(value == true){
+              EasyLoading.show(status: 'loading...');
+              Future.delayed(const Duration(milliseconds: 100)).then((value){
+                // Register account
+                taiKhoanProvider.add(data: account, onSuccess: (user){
+                  // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
+                  // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
+                  // sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
+                  // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
+                  Alert.info(message: "Đăng ký Tài khoản thành công");
+                  Get.back();
+                  EasyLoading.dismiss();
+                  
+                }, onError: (onError){
+                  EasyLoading.dismiss();
+                  print(" Lỗi đăng ký tài khoản $onError");
+                });
+              });
+            }else{
+              EasyLoading.dismiss();
+              Alert.info(message: "Đăng ký tài khoản thất bại");
+            }
+        });
+
+      }, onError: (onError){
+        Alert.error(message: "Đã xảy ra lỗi khi đăng ký tài khoản vui lòng thử lại sau");
+        EasyLoading.dismiss();
+        print("Lỗi đăng ký tài khoản $onError");
+      });
   }
 
 

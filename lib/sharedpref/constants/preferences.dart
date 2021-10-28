@@ -26,5 +26,6 @@ class Preferences {
   static const String giaTriDonHang = "giaTriDonHang";
   static const String idNewWork = "idNewWork";
   static const String typeAccount = "typeAccount";
+  static const String resetPasswordToken = "resetPasswordToken";
 
 }

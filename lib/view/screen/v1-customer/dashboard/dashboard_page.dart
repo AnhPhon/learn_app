@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/v1-customer/entertainment/entertainment_page.dart';
