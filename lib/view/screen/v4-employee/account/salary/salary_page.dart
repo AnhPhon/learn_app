@@ -7,8 +7,10 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
+
 import 'package:template/view/screen/v4-employee/account/salary/salary_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V4SalaryPage extends GetView<V4SalaryController> {
   @override
@@ -24,8 +26,6 @@ class V4SalaryPage extends GetView<V4SalaryController> {
                 const SizedBox(
                   height: Dimensions.PADDING_SIZE_LARGE,
                 ),
-                //chọn thời gian xem lương
-                _timeSalary(controller, context),
 
                 const SizedBox(
                   height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
@@ -54,24 +54,6 @@ class V4SalaryPage extends GetView<V4SalaryController> {
   }
 
   ///
-  /// Chọn thời gian xem lương
-  ///
-  Widget _timeSalary(V4SalaryController controller, BuildContext context) {
-    return TextFieldDate(
-      paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-      isDate: true,
-      allowEdit: true,
-      controller: controller.salaryController,
-      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: "12-11-2021",
-      label: "Xin vui lòng chọn thời gian",
-      obligatory: true,
-      typeInput: TextInputType.text,
-      width: DeviceUtils.getScaledWidth(context, 1),
-    );
-  }
-
-  ///
   ///Button xem
   ///
   Widget _btnXem() {
@@ -81,7 +63,11 @@ class V4SalaryPage extends GetView<V4SalaryController> {
       ),
       child: LongButton(
         color: ColorResources.PRIMARY,
-        onPressed: () {},
+        onPressed: () async => {
+          await launch(
+            controller.bangLuongResponse.file.toString(),
+          ),
+        },
         title: 'Xem',
       ),
     );

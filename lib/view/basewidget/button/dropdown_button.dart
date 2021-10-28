@@ -20,6 +20,7 @@ class DropDownButton1<T> extends StatelessWidget {
     this.fillColor,
     this.colorText,
     this.isColorFieldWhite,
+    this.isBoldHintText = false,
     this.height,
   });
 
@@ -27,7 +28,12 @@ class DropDownButton1<T> extends StatelessWidget {
   final Function(T? i)? onChanged;
   final List<T> data;
   final T? value;
-  final bool? obligatory, labelBold, isBorder, isShadow, isColorFieldWhite;
+  final bool? obligatory,
+      labelBold,
+      isBorder,
+      isShadow,
+      isColorFieldWhite,
+      isBoldHintText;
   final String? label;
   final Color? colorText;
   final Color? fillColor;
@@ -90,7 +96,9 @@ class DropDownButton1<T> extends StatelessWidget {
                 return InputDecorator(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: fillColor ?? Colors.transparent,
+                    fillColor: (isColorFieldWhite == true)
+                        ? ColorResources.WHITE
+                        : ColorResources.NOT_ALLOW_EDIT,
                     isDense: true,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -119,7 +127,18 @@ class DropDownButton1<T> extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<T>(
                         hint: hint.toString().isNotEmpty
-                            ? Text(hint.toString())
+                            ? Text(
+                                hint.toString(),
+                                style: TextStyle(
+                                  color: isBoldHintText == true
+                                      ? ColorResources.BLACK
+                                      : null,
+                                  fontSize: isBoldHintText == true
+                                      ? Dimensions.FONT_SIZE_DEFAULT
+                                      : null,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )
                             : null,
                         isDense: true,
                         isExpanded: true,
