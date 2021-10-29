@@ -27,6 +27,7 @@ class V4DetailReportController  extends GetxController {
   // Dự án của nhân viên
   List<DuAnNhanVienResponse> duAnNhanVienList = [];
   DuAnNhanVienResponse? duAnNhanVien;
+  String hintTextDuAnNhanVien = '';
 
   // khai báo is loading
   bool isLoading = true;
@@ -101,7 +102,7 @@ class V4DetailReportController  extends GetxController {
             ),
           );
           //  tên dự án
-
+          hintTextDuAnNhanVien  = value.idDuAnNhanVien!.tieuDe.toString();
           // nội dung
           contentDetailReport = TextEditingController(text: value.noiDung);
           isLoading = false;
@@ -130,17 +131,17 @@ class V4DetailReportController  extends GetxController {
       );
       return false;
     }
-    if (duAnNhanVien == null) {
+    if ( hintTextDuAnNhanVien == detailReportResponse.idDuAnNhanVien!.tieuDe.toString()) {
       Get.snackbar(
-        "Dự án không hơp lệ!", // title
-        "Vui lòng chọn dự án hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
+        "Tên dự án không hợp lệ!",
+        "Vui lòng chọn tên dự án hợp lệ!",
         duration: const Duration(seconds: 2),
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(
+          Icons.error_outline,
+        ),
       );
-      return false;
+      return true;
     }
     return true;
   }
@@ -155,9 +156,14 @@ class V4DetailReportController  extends GetxController {
           timeDetailReport.text.toString(),
         ),
       );
+      detailReportRequest.id = duAnNhanVien!.id;
       detailReportResponse.noiDung = contentDetailReport.text;
       baoCaoNhanVienProvider.update(
-        data: detailReportRequest,
+        data: BaoCaoNhanVienRequest(
+          id: idUser,
+          idDuAnNhanVien: duAnNhanVien!.id,
+          noiDung: contentDetailReport.text,
+        ),
         onSuccess: (value) {
           //show dialog
           showAnimatedDialog(
@@ -167,7 +173,10 @@ class V4DetailReportController  extends GetxController {
               title: "Hoàn tất",
               description: "Cập nhật thông tin thành công",
             ),
+            dismissible: false,
+            isFlip: true,
           );
+          // isLoading = true;
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

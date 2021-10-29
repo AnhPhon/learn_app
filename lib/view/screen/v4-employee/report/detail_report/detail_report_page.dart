@@ -64,26 +64,49 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
     );
   }
 
+  // ///
+  // /// tên dự án/văn phòng báo cáo theo yêu cầu
+  // ///
+  // Widget _projectDetailReport(V4DetailReportController controller,
+  //     BuildContext context) {
+  //   return DropDownButton1<DuAnNhanVienResponse>(
+  //     isColorFieldWhite: true,
+  //     labelBold: true,
+  //     hint: 'Vui lòng chọn dự án',
+  //     label: 'Tên dự án',
+  //     data: controller.duAnNhanVienList,
+  //     obligatory: true,
+  //     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
+  //     value: controller.duAnNhanVien,
+  //     width: DeviceUtils.getScaledWidth(context, 1),
+  //     padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
+  //         right: Dimensions.PADDING_SIZE_SMALL),
+  //   );
+  // }
   ///
-  /// tên dự án/văn phòng báo cáo theo yêu cầu
+  /// Tỉnh /TP
   ///
-  Widget _projectDetailReport(V4DetailReportController controller,
-      BuildContext context) {
+  Widget _projectDetailReport(V4DetailReportController controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
+      padding: const EdgeInsets.fromLTRB(
+        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
+        0,
+        0,
+      ),
       isColorFieldWhite: true,
-      labelBold: true,
-      hint: 'Vui lòng chọn dự án',
+      isBorder: false,
+      isShadow: true,
+      hint: controller.hintTextDuAnNhanVien,
       label: 'Tên dự án',
       data: controller.duAnNhanVienList,
       obligatory: true,
       onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
       value: controller.duAnNhanVien,
-      width: DeviceUtils.getScaledWidth(context, 1),
-      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
-          right: Dimensions.PADDING_SIZE_SMALL),
+      width:  DeviceUtils.getScaledWidth(context, 1),
+      isBoldHintText: true,
     );
   }
-
   ///
   /// Nhập nội dung báo cáo
   ///
@@ -114,7 +137,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
         onPressed: () {
           controller.onUpdate(context);
         },
-        title: 'Cập nhập',
+        title: 'Cập nhật',
       ),
     );
   }
