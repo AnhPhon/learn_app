@@ -24,20 +24,28 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
                       //chọn thời gian báo cáo theo yêu cầu
                       _timeDetailReport(controller, context),
 
+                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
                       // Tên dự án/văn phòng báo cáo theo yêu cầu
                       _projectDetailReport(controller, context),
+
+                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                       //nhập nội dung báo cáo theo yêu cầu
                       _contentDetailReport(controller, context),
 
                       Container(
-                        height: DeviceUtils.getScaledWidth(context, 0.6),
+                        height: DeviceUtils.getScaledWidth(context, 0.55),
                       ),
                       //button cập nhật
                       _btnUpdateDetailReport(controller,context),
+
+                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                     ],
                   ),
                 );
@@ -113,7 +121,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   Widget _contentDetailReport(V4DetailReportController controller,
       BuildContext context) {
     return InputWidget(
-      textEditingController: controller.contentDetailReport,
+      textEditingController: controller.contentDetailReport!,
       label: 'Nội dung báo cáo',
       hintText: 'Nội dung báo cáo',
       obligatory: true,

@@ -29,20 +29,27 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
             return SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                   //chọn thời gian báo cáo theo yêu cầu
                   _timeReportOnRequest(controller, context),
 
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
+
                   // Tên dự án/văn phòng báo cáo theo yêu cầu
                   _projectReportOnRequest(controller, context),
+
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   //nhập nội dung báo cáo theo yêu cầu
                   _contentReportOnRequest(controller, context),
 
                   Container(
-                    height: DeviceUtils.getScaledWidth(context, 0.6),
+                    height: DeviceUtils.getScaledWidth(context, 0.55),
                   ),
                   //button báo cáo theo yêu cầu
                   _btnReport(controller),
+
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                 ],
               ),
             );
@@ -62,7 +69,7 @@ Widget _timeReportOnRequest(
     obligatory: true,
     suffixIcon: const Icon(Icons.date_range,color: ColorResources.PRIMARY),
     isDate: false,
-    fillColor: ColorResources.LIGHT_GREY.withOpacity(0.7),
+    fillColor: ColorResources.LIGHT_GREY.withOpacity(0.1),
     allowEdit: false,
     padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
     width: DeviceUtils.getScaledWidth(context, 1),
@@ -99,6 +106,7 @@ Widget _contentReportOnRequest(
     hintText: 'Nội dung báo cáo',
     obligatory: true,
     maxLine: 7,
+    fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
     padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
   );

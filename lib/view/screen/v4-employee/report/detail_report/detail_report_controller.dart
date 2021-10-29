@@ -35,8 +35,9 @@ class V4DetailReportController  extends GetxController {
   String idUser= '';
 
   //khai báo TextEditingController
-  TextEditingController contentDetailReport = TextEditingController();
+  // TextEditingController contentDetailReport = TextEditingController();
   TextEditingController timeDetailReport = TextEditingController();
+  TextEditingController? contentDetailReport;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -119,7 +120,7 @@ class V4DetailReportController  extends GetxController {
   /// Check null value báo cáo
   ///
   bool validate() {
-    if (contentDetailReport.text.toString().isEmpty) {
+    if (contentDetailReport!.text.isEmpty) {
       Get.snackbar(
         "Nội dung báo cáo không hợp lệ!",
         "Vui lòng nhập nội dung báo cáo hợp lệ!",
@@ -131,38 +132,27 @@ class V4DetailReportController  extends GetxController {
       );
       return false;
     }
-    if ( hintTextDuAnNhanVien == detailReportResponse.idDuAnNhanVien!.tieuDe.toString()) {
-      Get.snackbar(
-        "Tên dự án không hợp lệ!",
-        "Vui lòng chọn tên dự án hợp lệ!",
-        duration: const Duration(seconds: 2),
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
-      );
-      return true;
-    }
     return true;
   }
   ///
   ///Update button
   ///
   void onUpdate(BuildContext context) {
-    if (validate()) {
-      //set data
+    if(validate()) {
+      // set data
       duAnNhanVien!.createdAt = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
           timeDetailReport.text.toString(),
         ),
       );
       detailReportRequest.id = duAnNhanVien!.id;
-      detailReportResponse.noiDung = contentDetailReport.text;
+      detailReportResponse.noiDung = contentDetailReport!.text;
+//     sl.get<SharedPreferenceHelper>().userId.then((userId) {
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
           id: idUser,
           idDuAnNhanVien: duAnNhanVien!.id,
-          noiDung: contentDetailReport.text,
+          noiDung: contentDetailReport!.text,
         ),
         onSuccess: (value) {
           //show dialog
