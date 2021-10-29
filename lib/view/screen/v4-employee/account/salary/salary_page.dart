@@ -23,14 +23,6 @@ class V4SalaryPage extends GetView<V4SalaryController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: Dimensions.PADDING_SIZE_LARGE,
-                ),
-
-                const SizedBox(
-                  height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
-                ),
-
                 //Text file tính toán bảng lương
                 const Padding(
                   padding: EdgeInsets.all(

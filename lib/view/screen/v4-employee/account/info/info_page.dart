@@ -425,7 +425,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Tỉnh/Tp',
       data: controller.tinhTpList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedTinhThanh(value!),
+      onChanged: controller.onChangedTinhThanh,
       value: controller.tinhTp,
       width: 0.42,
       isBoldHintText: true,
@@ -450,7 +450,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Quận/Huyện',
       data: controller.quanHuyenList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedQuanHuyen(value!),
+      onChanged: controller.onChangedQuanHuyen,
       value: controller.quanHuyen,
       width: 0.42,
       isBoldHintText: true,
@@ -475,7 +475,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Phường/Xã',
       data: controller.phuongXaList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedPhuongXa(value!),
+      onChanged: controller.onChangedPhuongXa,
       value: controller.phuongXa,
       width: 0.42,
       isBoldHintText: true,
@@ -538,7 +538,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                   )
                 : FadeInImage.assetNetwork(
                     placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse.anhMTCMND.toString(),
+                    image: controller.nhanVienResponse!.anhMTCMND.toString(),
                     fit: BoxFit.cover,
                     imageErrorBuilder: (c, o, s) => Container(
                       height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -605,7 +605,7 @@ class V4InfoPage extends GetView<V4InfoController> {
                   )
                 : FadeInImage.assetNetwork(
                     placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse.anhMSCMND.toString(),
+                    image: controller.nhanVienResponse!.anhMSCMND.toString(),
                     fit: BoxFit.cover,
                     imageErrorBuilder: (c, o, s) => Container(
                       height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -659,7 +659,8 @@ class V4InfoPage extends GetView<V4InfoController> {
                     )
                   : FadeInImage.assetNetwork(
                       placeholder: Images.placeholder,
-                      image: controller.nhanVienResponse.hinhDaiDien.toString(),
+                      image:
+                          controller.nhanVienResponse!.hinhDaiDien.toString(),
                       fit: BoxFit.cover,
                       imageErrorBuilder: (c, o, s) => const CircleAvatar(
                           backgroundImage: AssetImage(Images.placeholder))),
