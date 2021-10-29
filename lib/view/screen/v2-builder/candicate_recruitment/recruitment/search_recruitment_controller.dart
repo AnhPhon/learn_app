@@ -10,12 +10,14 @@ import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
+import 'package:template/data/model/response/tuyen_dung_response.dart';
 import 'package:template/provider/chuyen_nganh_chinh_provider.dart';
 import 'package:template/provider/hinh_thuc_lam_viec_provider.dart';
 import 'package:template/provider/muc_luong_du_kien_provider.dart';
 import 'package:template/provider/so_nam_kinh_nghiem_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
+import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';
 
@@ -35,6 +37,7 @@ class V2SearchRecruitmentController extends GetxController {
       GetIt.I.get<SoNamKinhNghiemProvider>();
   final HinhThucLamViecProvider hinhThucLamViecProvider =
       GetIt.I.get<HinhThucLamViecProvider>();
+  final TuyenDungProvider tuyenDungProvider = GetIt.I.get<TuyenDungProvider>();
 
   //model value
   List<HinhThucLamViecResponse> hinhThucLamViecListModel = [];
@@ -43,6 +46,7 @@ class V2SearchRecruitmentController extends GetxController {
   List<SoNamKinhNghiemResponse> soNamKinhNghiemListModel = [];
   List<MucLuongDuKienResponse> mucLuongDuKienListModel = [];
   List<TinhTpResponse> tinhTpListModel = [];
+   List<TuyenDungResponse> tuyenDungListModel = [];
 
   //model choose
   HinhThucLamViecResponse? hinhThucLamViec;
@@ -51,6 +55,9 @@ class V2SearchRecruitmentController extends GetxController {
   SoNamKinhNghiemResponse? soNamKinhNghiem;
   MucLuongDuKienResponse? mucLuongDuKien;
   TinhTpResponse? noiLamViec;
+
+  // Refresh
+  RefreshController refreshTinTuyenDungController = RefreshController();
 
   final searchController = TextEditingController();
   bool isSearch = false;
@@ -65,7 +72,7 @@ class V2SearchRecruitmentController extends GetxController {
   final tieuDeFocusNode = FocusNode();
   final congTyController = TextEditingController();
   final congTyFocusNode = FocusNode();
-
+  
   //loại tin tuyển dụng
   List<LoaiTinTuyenDungModel> loaiTinTuyenDung = [
     LoaiTinTuyenDungModel(id: '1', tieuDe: 'Tin hot'),
@@ -87,19 +94,22 @@ class V2SearchRecruitmentController extends GetxController {
   int limitMax = 5;
 
   //isLoading
-  bool isLoading = false;
+  bool isLoading = true;
 
   //isShowSearch
   bool isShowSearch = false;
+    //conditionFilter
+  String conditionFilter = '';
+  //isLoadingTuyenDung
+  bool isLoadingTuyenDung = true;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
     //binding refresh controller
-    refreshControllerList =
-        List.generate(loaiTinTuyenDung.length, (_) => RefreshController());
+    // refreshControllerList =
+    //     List.generate(loaiTinTuyenDung.length, (_) => RefreshController());
 
     //loadDataFiltter
     getDataHinhThucLamViec();
@@ -110,30 +120,62 @@ class V2SearchRecruitmentController extends GetxController {
     getDataMucLuongDuKien();
     getDataTinhTp();
     gioiTinh = gioiTinhModel.first;
+    onLoadDataTuyenDung(isRefresh: true);
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    tieuDeController.dispose();
-    congTyController.dispose();
-    tieuDeFocusNode.dispose();
-    congTyFocusNode.dispose();
-    super.onClose();
-  }
+  
 
   //onRefresh
   Future<void> onRefresh() async {
     //resetNoData
     refreshControllerList![currentIndex].resetNoData();
-    //get order isRefresh
-    // pullOrder(isRefresh: true);
+    onLoadDataTuyenDung(isRefresh: true);
+
   }
 
   //onLoading
   Future<void> onLoading() async {
-    //get order isLoading
-    // pullOrder(isRefresh: false);
+    onLoadDataTuyenDung(isRefresh: false);
+  }
+
+  ///
+  ///onLoadDataTuyenDung
+  ///
+  void onLoadDataTuyenDung({required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      tuyenDungListModel.clear();
+    } else {
+      //isLoading
+      pageMax++;
+    }
+    //load data tuyen dung
+    tuyenDungProvider.paginate(
+        page: pageMax,
+        limit: limitMax,
+        filter: '&sortBy=created_at:desc',
+        onSuccess: (value) {
+          print(value);
+          //check data empty
+          if (value.isEmpty) {
+            print('1 nodata');
+            refreshTinTuyenDungController.loadNoData();
+          } else if (isRefresh) {
+            //check refresh
+            tuyenDungListModel = value;
+            refreshTinTuyenDungController.refreshCompleted();
+            print('2 isRefresh');
+          } else {
+            tuyenDungListModel = tuyenDungListModel.toList() + value;
+            refreshTinTuyenDungController.loadComplete();
+            print('3 loading');
+          }
+          isLoadingTuyenDung = false;
+          update();
+        },
+        onError: (error) =>
+            print('V1CandidateController onLoadDataTuyenDung $error'));
   }
 
   ///
@@ -173,7 +215,7 @@ class V2SearchRecruitmentController extends GetxController {
           hinhThucLamViecListModel.insert(
               0, HinhThucLamViecResponse(id: '0', tieuDe: 'Hình thức'));
           hinhThucLamViec = hinhThucLamViecListModel.first;
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -193,7 +235,7 @@ class V2SearchRecruitmentController extends GetxController {
           trinhDoHocVanListModel.insert(
               0, TrinhDoHocVanResponse(id: '0', tieuDe: 'Trình độ'));
           trinhDoHocVan = trinhDoHocVanListModel.first;
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -213,7 +255,7 @@ class V2SearchRecruitmentController extends GetxController {
           chuyenNganhChinhListModel.insert(
               0, ChuyenNganhChinhResponse(id: '0', tieuDe: 'Chuyên ngành'));
           chuyenNganhChinh = chuyenNganhChinhListModel.first;
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -233,7 +275,7 @@ class V2SearchRecruitmentController extends GetxController {
           soNamKinhNghiemListModel.insert(
               0, SoNamKinhNghiemResponse(id: '0', tieuDe: 'Kinh nghiệm'));
           soNamKinhNghiem = soNamKinhNghiemListModel.first;
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -253,7 +295,7 @@ class V2SearchRecruitmentController extends GetxController {
           mucLuongDuKienListModel.insert(
               0, MucLuongDuKienResponse(id: '0', tieuDe: 'Mức lương'));
           mucLuongDuKien = mucLuongDuKienListModel.first;
-          // isLoading = false;
+          isLoading = false;
           update();
         },
         onError: (error) =>
@@ -272,11 +314,15 @@ class V2SearchRecruitmentController extends GetxController {
           //set id 0
           tinhTpListModel.insert(0, TinhTpResponse(id: '0', ten: 'Tỉnh/Tp'));
           noiLamViec = tinhTpListModel.first;
-          //isLoading = false
+          isLoading = false;
+          update();
         },
         onError: (error) =>
             print('V2RecruitmentController getDataTinhTp $error'));
   }
+
+
+/// Lọc
 
   ///
   ///chọn hình thức làm việc
@@ -361,5 +407,16 @@ class V2SearchRecruitmentController extends GetxController {
               Navigator.of(Get.context!).pop();
             },
             child: const Text("Tìm kiếm")));
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    tieuDeController.dispose();
+    congTyController.dispose();
+    tieuDeFocusNode.dispose();
+    congTyFocusNode.dispose();
+    refreshTinTuyenDungController.dispose();
+    super.onClose();
   }
 }

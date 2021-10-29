@@ -86,7 +86,7 @@ class DropDownButtonIcon<T> extends StatelessWidget {
                     onChanged: onChanged,
                     items: data
                         .map((e) => DropdownMenuItem<T>(
-                            value: e, child: Text(e.toString())))
+                            value: e, child: Text(e.toString(), overflow: TextOverflow.ellipsis,)))
                         .toList(),
                   ),
                 ));

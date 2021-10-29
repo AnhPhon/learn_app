@@ -56,34 +56,13 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
     );
   }
 
-  Widget filterProfile(BuildContext context,
-      {required V2SearchRecruitmentController controller}) {
-    return Expanded(
-      child: SizedBox(
-        height: DeviceUtils.getScaledHeight(context, 1),
-        child: ListView.builder(
-          itemCount: 7,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-                onTap: () {
-                  controller.onClickRecruitmentNews();
-                },
-                child: Container()
-                // V2RecruimentNewsCard(
-                //   index: index,
-                // ),
-                );
-          },
-        ),
-      ),
-    );
-  }
+  
 
   Widget recruitment(BuildContext context,
       {required V2SearchRecruitmentController controller}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![controller.currentIndex],
+        controller: controller.refreshTinTuyenDungController,
         enablePullUp: true,
         onRefresh: controller.onRefresh,
         onLoading: controller.onLoading,
@@ -93,111 +72,23 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
           canLoadingText: "Kéo lên để tải thêm dữ liệu",
         ),
         child: ListView.builder(
-          itemCount: controller.currentIndex == 1
-              ? 3
-              : controller.currentIndex == 2
-                  ? 5
-                  : 7,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-                onTap: () {
-                  controller.onClickRecruitmentNews();
+                itemCount: controller.tuyenDungListModel.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        controller.onClickRecruitmentNews();
+                      },
+                      child: V2RecruimentNewsCard(
+                        tuyenDungResponse: controller.tuyenDungListModel[index],
+                      ),
+                    );
                 },
-                child: Container()
-                // V2RecruimentNewsCard(
-                //   index: index,
-                // ),
-                );
-          },
-        ),
+              ),
       ),
     );
   }
 
-  // Khi chọn tab
-  Widget onSelectedTab(
-      {required BuildContext context,
-      required V2SearchRecruitmentController controller,
-      required String title,
-      required int index,
-      bool? isMT = false,
-      bool? isSelectedMN = false}) {
-    return GestureDetector(
-      onTap: () {
-        controller.onChangeTab(index);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble() / 3,
-        decoration: BoxDecoration(
-          borderRadius: isMT!
-              ? null
-              : isSelectedMN!
-                  ? const BorderRadius.only(
-                      topRight: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
-                      bottomRight:
-                          Radius.circular(Dimensions.BORDER_RADIUS_SMALL))
-                  : const BorderRadius.only(
-                      topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
-                      bottomLeft:
-                          Radius.circular(Dimensions.BORDER_RADIUS_SMALL)),
-          color: controller.currentIndex == index
-              ? ColorResources.PRIMARYCOLOR
-              : ColorResources.WHITE,
-          border: isMT
-              ? const Border(
-                  top: BorderSide(color: ColorResources.PRIMARYCOLOR),
-                  bottom: BorderSide(color: ColorResources.PRIMARYCOLOR))
-              : Border.all(color: ColorResources.PRIMARYCOLOR),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: controller.currentIndex == index
-                ? ColorResources.WHITE
-                : ColorResources.BLACK,
-            fontWeight: controller.currentIndex == index
-                ? FontWeight.bold
-                : FontWeight.normal,
-          ),
-        ),
-      ),
-    );
-  }
 
-  ///
-  /// Thanh tab bar
-  ///
-  Widget tabBarWidget(BuildContext context,
-      {required V2SearchRecruitmentController controller}) {
-    return Container(
-      alignment: Alignment.center,
-      width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, 0.1),
-      child: Container(
-          alignment: Alignment.center,
-          width: DeviceUtils.getScaledWidth(context, 0.9).roundToDouble(),
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ...List.generate(
-                  controller.loaiTinTuyenDung.length,
-                  (index) => onSelectedTab(
-                      controller: controller,
-                      context: context,
-                      title:
-                          controller.loaiTinTuyenDung[index].tieuDe.toString(),
-                      index: index,
-                      // ignore: avoid_bool_literals_in_conditional_expressions
-                      isMT: index == 1 ? true : false,
-                      // ignore: avoid_bool_literals_in_conditional_expressions
-                      isSelectedMN: index == 2 ? true : false))
-            ],
-          )),
-    );
-  }
 
   ///
   ///Bộ lọc
