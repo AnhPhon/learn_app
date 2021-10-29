@@ -51,6 +51,8 @@ class V1CandidateController extends GetxController {
 
   // refresh controller for load more refresh
   List<RefreshController>? refreshControllerList;
+  List<ScrollController> scrollControllerList =
+      List.generate(2, (_) => ScrollController());
 
   //model value
   List<NgoaiNguResponse> ngoaiNguListModel = [];
@@ -526,10 +528,16 @@ class V1CandidateController extends GetxController {
     this.salary = salary;
     //set isOnChangeSearch
     isOnChangeSearch = true;
+
+    //check tất cả
+    String tempSalary = '-1';
+    if (salary.toStringAsFixed(0) != '0') {
+      tempSalary = salary.toStringAsFixed(0);
+    }
     //add new conditions
     addNewConditions(
-        condition: TimKiemUngVienModel(
-            key: "mucLuongDeXuat", value: salary.toStringAsFixed(0)),
+        condition:
+            TimKiemUngVienModel(key: "mucLuongDeXuat", value: tempSalary),
         isButtonSearch: true);
     update();
   }
@@ -670,23 +678,25 @@ class V1CandidateController extends GetxController {
         filter: '$textFilter&sortBy=created_at:desc',
         onSuccess: (value) {
           print('dangKyViecMoiProvider value ${value.length}');
+          print('pageMaxSearch $pageMaxSearch');
           print('currentIndex $currentIndex');
           //check data empty
           if (value.isEmpty) {
-            print('1');
             refreshControllerList![currentIndex].loadNoData();
-            dangKyViecMoiListModel.clear();
-          } else if (isRefresh) {
-            print('2');
-            //check refresh
-            dangKyViecMoiListModel = value;
-            refreshControllerList![currentIndex].refreshCompleted();
+            print('1 no data');
           } else {
-            print('3');
-            // dangKyViecMoiListModel = dangKyViecMoiListModel.toList() + value;
-            dangKyViecMoiListModel.addAll(value);
-            refreshControllerList![currentIndex].loadComplete();
+            if (isRefresh || isOnChangeSearch) {
+              //check refresh
+              dangKyViecMoiListModel = value;
+              refreshControllerList![currentIndex].refreshCompleted();
+            } else {
+              dangKyViecMoiListModel = dangKyViecMoiListModel.toList() + value;
+              // dangKyViecMoiListModel.addAll(value);
+              refreshControllerList![currentIndex].loadComplete();
+              print('3 loading');
+            }
           }
+
           isLoadingCadidate = false;
           update();
         },

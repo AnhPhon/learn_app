@@ -31,7 +31,6 @@ import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/
 import 'package:template/view/screen/v1-customer/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_page.dart';
-import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_binding.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/job_application/candidate_profile/candidate_profile_page.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v1-customer/dashboard/dashboard_page.dart';
@@ -694,9 +693,9 @@ class AppPages {
     // Xem thông tin của hồ sơ
     // Trang chính tuyển dung ứng viên
     GetPage(
-        name: AppRoutes.V1_CANDICATE_PROFILE,
-        page: () => V1CandidateProfilePage(),
-        binding: V1CandidateProfileBinding()),
+      name: AppRoutes.V1_CANDICATE_PROFILE,
+      page: () => V1CandidateProfilePage(),
+    ),
 
     // Hình thức thanh toán
     GetPage(

@@ -7,6 +7,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/candicate_card.dart';
@@ -26,6 +27,11 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
       body: GetBuilder(
           init: V1CandidateProfileController(),
           builder: (V1CandidateProfileController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -66,13 +72,6 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     color: ColorResources.BLACK),
               ),
-              // TextHighlight(
-              //   title: "Điểm bị còn lại: ",
-              //   content: "100",
-              //   titleStyle: TextStyle(
-              //       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-              //       color: ColorResources.BLACK),
-              // ),
             ],
           ),
           if (controller.isView)
@@ -113,7 +112,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
           ...List.generate(
               controller.dangKyViecMoiResponse.idBangBangCaps!.length,
               (index) => Text(
-                    "\nTrình độ học vấn: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idTrinhDo.toString()} \nChuyên ngành: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idChuyenMon.toString()} \nTốt nghiệp loại: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idLoaiTotNghiep.toString()} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].donViDaoTao.toString()}",
+                    "\nTrình độ học vấn: ${controller.onChangeNameTrinhDo(controller.dangKyViecMoiResponse.idBangBangCaps![index].idTrinhDo.toString())} \nChuyên ngành: ${controller.onChangeNameChuyenMon(controller.dangKyViecMoiResponse.idBangBangCaps![index].idChuyenMon.toString())} \nTốt nghiệp loại: ${controller.onChangeNameLoaiTotNghiep(controller.dangKyViecMoiResponse.idBangBangCaps![index].idLoaiTotNghiep.toString())} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].donViDaoTao.toString()}",
                   )),
 
           TextHighlight(
@@ -182,7 +181,8 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
             content: "",
           ),
 
-          if (controller.dangKyViecMoiResponse.idBangBangCaps!.isNotEmpty)
+          if (controller.dangKyViecMoiResponse.idBangBangCaps!.isNotEmpty &&
+              controller.isView)
             ...List.generate(
               controller.dangKyViecMoiResponse.idBangBangCaps!.length,
               (index) => Padding(
@@ -194,24 +194,31 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                      child: Image.network(
-                        controller.dangKyViecMoiResponse.idBangBangCaps![index]
-                            .anhBangCap
+                      child: FadeInImageCustom(
+                        height: Dimensions.AVATAR_SQUARE_SIZE_LARGE,
+                        width: 1,
+                        urlImage: controller.dangKyViecMoiResponse
+                            .idBangBangCaps![index].anhBangCap
                             .toString(),
-                        fit: BoxFit.cover,
                       )),
                 ),
               ),
             )
           else
-            Container(),
+            const Text(
+              "Ảnh bằng cấp hiện tại không có hoặc bị ẩn",
+              style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  color: ColorResources.RED),
+            ),
 
           const Label(
             label: "Ảnh hồ sơ xin việc (nếu có)",
             obligatory: false,
             horizontalPadding: 0,
           ),
-          if (controller.dangKyViecMoiResponse.anhHoSoXinViecs!.isNotEmpty)
+          if (controller.dangKyViecMoiResponse.anhHoSoXinViecs!.isNotEmpty &&
+              controller.isView)
             ...List.generate(
                 controller.dangKyViecMoiResponse.anhHoSoXinViecs!.length,
                 (index) => SizedBox(
@@ -220,26 +227,33 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                          child: Image.network(
-                            controller
-                                .dangKyViecMoiResponse.anhHoSoXinViecs![index],
-                            fit: BoxFit.cover,
+                          child: FadeInImageCustom(
+                            height: Dimensions.AVATAR_SQUARE_SIZE_LARGE,
+                            width: 1,
+                            urlImage: controller
+                                .dangKyViecMoiResponse.anhHoSoXinViecs![index]
+                                .toString(),
                           )),
                     ))
           else
-            Container(),
+            const Text(
+              "Ảnh hồ sơ xin việc hiện tại không có hoặc bị ẩn",
+              style: TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  color: ColorResources.RED),
+            ),
           const Label(
             label: "File hồ sơ xin việc (nếu có)",
             obligatory: false,
             horizontalPadding: 0,
           ),
           if (controller.isView)
-            fileCv()
+            fileCv(controller: controller)
           else
             const Text(
               "File này hiện tại không có hoặc bị ẩn",
               style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
                   color: ColorResources.RED),
             ),
           // Tạo 1 khoảng trắng dưới khỏi ẩn 1 widget
@@ -255,7 +269,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
   /// Nút tải CV
   ///
 
-  Widget fileCv() {
+  Widget fileCv({required V1CandidateProfileController controller}) {
     return BoxShadowWidget(
       child: SizedBox(
         child: Padding(
@@ -269,6 +283,9 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                       fontWeight: FontWeight.bold,
                       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
               GestureDetector(
+                onTap: () => controller.onBtnDownloadCv(
+                    url: controller.dangKyViecMoiResponse.fileHoSoXinViec
+                        .toString()),
                 child: const Icon(Icons.download),
               )
             ],

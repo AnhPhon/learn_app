@@ -3,17 +3,26 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/danh_sach_xem_tuyen_dung_request.dart';
+import 'package:template/data/model/request/lich_su_vi_tien_request.dart';
 import 'package:template/data/model/request/vi_tien_request.dart';
+import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
+import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
+import 'package:template/data/model/response/trinh_do_response.dart';
 import 'package:template/data/model/response/vi_tien_response.dart';
 import 'package:template/data/repository/danh_sach_xem_tuyen_dung_repository.dart';
+import 'package:template/data/repository/lich_su_vi_tien_repository.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/chuyen_mon_provider.dart';
 import 'package:template/provider/danh_sach_xem_tuyen_dung_provider.dart';
+import 'package:template/provider/loai_tot_nghiep_provider.dart';
+import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'candidate_dialog_accept.dart';
 
@@ -21,6 +30,10 @@ class V1CandidateProfileController extends GetxController {
   //provider
   final danhSachXemTuyenDungProvider =
       GetIt.I.get<DanhSachXemTuyenDungProvider>();
+  final trinhDoProvider = GetIt.I.get<TrinhDoProvider>();
+  final chuyenMonProvider = GetIt.I.get<ChuyenMonProvider>();
+  final loaiTotNghiepProvider = GetIt.I.get<LoaiTotNghiepProvider>();
+  final viTienProvider = GetIt.I.get<ViTienProvider>();
 
   //Repository
   DanhSachXemTuyenDungRepository danhSachXemTuyenDungRepository =
@@ -30,16 +43,23 @@ class V1CandidateProfileController extends GetxController {
   DanhSachXemTuyenDungRequest danhSachXemTuyenDungRequest =
       DanhSachXemTuyenDungRequest();
 
-  //Provider
-  ViTienProvider viTienProvider = GetIt.I.get<ViTienProvider>();
   //Reponse
   ViTienResponse viTienResponse = ViTienResponse();
+
+  //value list model
+  List<ChuyenMonResponse> chuyenMonListModel = [];
+  List<TrinhDoResponse> trinhDoListModel = [];
+  List<LoaiTotNghiepResponse> loaiTotNghiepListModel = [];
 
   //update ví tiền
   ViTienRepository viTienRepository = ViTienRepository();
 
   //value ViTienRequest
   ViTienRequest viTienRequest = ViTienRequest();
+
+  //lichSuViTien
+  LichSuViTienRequest lichSuViTienRequest = LichSuViTienRequest();
+  LichSuViTienRepository lichSuViTienRepository = LichSuViTienRepository();
 
   // Trạng thái hồ sơ data ảo
   bool statusProfile = false;
@@ -66,23 +86,13 @@ class V1CandidateProfileController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
-    //set data đang ký việc mới
-    dangKyViecMoiResponse = Get.arguments as DangKyViecMoiResponse;
-    print('dangKyViecMoiResponse ${dangKyViecMoiResponse.toJson()}');
-    print(
-        'idBangBangCaps ${dangKyViecMoiResponse.idBangBangCaps![0].toJson()}');
-    print(
-        'nganhNgheMongMuons ${dangKyViecMoiResponse.idNganhNgheMongMuons!.length}');
-
+    //get data frist
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
         //set userId
         userId = value;
-        //check data is view tuyển dụng
-        checkDataViewTuyenDung(
-            idTaiKhoan: userId.toString(),
-            idDangKyViecMoi: dangKyViecMoiResponse.id.toString());
+        //get data trình độ
+        getDataTrinhDo();
       },
     );
   }
@@ -91,6 +101,89 @@ class V1CandidateProfileController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  ///
+  ///getDataTrinhDo
+  ///
+  void getDataTrinhDo() {
+    //get data trình độ
+    trinhDoProvider.all(
+        onSuccess: (value) {
+          trinhDoListModel = value;
+          print('trinhDoListModel ${trinhDoListModel.length}');
+          //getDataChuyenMon
+          getDataChuyenMon();
+        },
+        onError: (error) =>
+            print('V1CandidateProfileController getDataFristModel $error'));
+  }
+
+  ///
+  ///getDataChuyenMoc
+  ///
+  void getDataChuyenMon() {
+    //get data chuyên môn
+    chuyenMonProvider.all(
+        onSuccess: (value) {
+          chuyenMonListModel = value;
+          print('chuyenMonListModel ${chuyenMonListModel.length}');
+          //get data loại tốt nghiệp
+          getDataLoaiTotNghiep();
+        },
+        onError: (error) =>
+            print('V1CandidateProfileController getDataFristModel $error'));
+  }
+
+  ///
+  ///getDataLoaiTotNghiep
+  ///
+  void getDataLoaiTotNghiep() {
+    //get data loại tốt nghiệp
+    loaiTotNghiepProvider.all(
+        onSuccess: (value) {
+          loaiTotNghiepListModel = value;
+          print('loaiTotNghiepListModel ${loaiTotNghiepListModel.length}');
+
+          //set data đang ký việc mới
+          dangKyViecMoiResponse = Get.arguments as DangKyViecMoiResponse;
+
+          print(
+              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idBangBangCaps!.toList()}');
+          print(
+              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idBangBangCaps!.first.toJson()}');
+
+          //check data is view tuyển dụng
+          checkDataViewTuyenDung(
+              idTaiKhoan: userId.toString(),
+              idDangKyViecMoi: dangKyViecMoiResponse.id.toString());
+        },
+        onError: (error) =>
+            print('V1CandidateProfileController getDataFristModel $error'));
+  }
+
+  ///
+  ///onChangeNameTrinhDo
+  ///
+  String? onChangeNameTrinhDo(String id) {
+    print('onChangeNameTrinhDoid $id');
+    return trinhDoListModel.firstWhere((element) => element.id == id).tieuDe;
+  }
+
+  ///
+  ///onChangeNameChuyenMon
+  ///
+  String? onChangeNameChuyenMon(String id) {
+    return chuyenMonListModel.firstWhere((element) => element.id == id).tieuDe;
+  }
+
+  ///
+  ///onChangeNameLoaiTotNghiep
+  ///
+  String? onChangeNameLoaiTotNghiep(String id) {
+    return loaiTotNghiepListModel
+        .firstWhere((element) => element.id == id)
+        .tieuDe;
   }
 
   ///
@@ -103,6 +196,8 @@ class V1CandidateProfileController extends GetxController {
         limit: 5,
         filter: '&idTaiKhoan=$idTaiKhoan&idDangKyViecMoi=$idDangKyViecMoi',
         onSuccess: (value) {
+          print('vvvvv $value');
+          print('vvvvv ${value.length}');
           if (value.isNotEmpty) {
             isView = true;
           } else {
@@ -178,10 +273,27 @@ class V1CandidateProfileController extends GetxController {
                     .add(danhSachXemTuyenDungRequest)
                     .then((value) {
                   if (value.response.data != null) {
-                    EasyLoading.dismiss();
-                    Get.back();
-                    isView = true;
-                    update();
+                    //set data lịch sử ví tiền
+                    lichSuViTienRequest.idTaiKhoan = userId;
+                    lichSuViTienRequest.idViTien = viTienResponse.id;
+                    lichSuViTienRequest.noiDung =
+                        "Thanh toán xem tin tuyển dụng";
+                    lichSuViTienRequest.loaiGiaoDich = "2";
+                    lichSuViTienRequest.trangThai = "2";
+                    lichSuViTienRequest.soTien = tongTienThanhToan.toString();
+                    //insert db lịch sử ví tiền
+                    lichSuViTienRepository
+                        .add(lichSuViTienRequest)
+                        .then((value) {
+                      if (value.response.data != null) {
+                        EasyLoading.dismiss();
+                        Get.back();
+                        isView = true;
+                        update();
+                      } else {
+                        Alert.error(message: 'Vui lòng thực hiện lại');
+                      }
+                    });
                   } else {
                     Alert.error(message: 'Vui lòng thực hiện lại');
                   }
@@ -201,6 +313,17 @@ class V1CandidateProfileController extends GetxController {
           },
           child: const Text("Hủy")),
     );
+  }
+
+  ///
+  ///onBtnDownCv
+  ///
+  Future<void> onBtnDownloadCv({required String url}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   ///

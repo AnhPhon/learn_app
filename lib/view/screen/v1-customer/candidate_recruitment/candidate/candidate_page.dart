@@ -28,11 +28,9 @@ class V1CandidatePage extends GetView<V1CandidateController> {
                 children: [
                   tabBarWidget(context: context, controller: controller),
                   if (controller.currentIndex == 0)
-                    news(context,
-                        controller: controller, index: controller.currentIndex)
+                    news(context, controller: controller, index: 0)
                   else
-                    listOfCandidates(context,
-                        controller: controller, index: controller.currentIndex)
+                    listOfCandidates(context, controller: controller, index: 1)
                 ],
               ),
             );
@@ -70,7 +68,8 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![index],
+        controller: controller.refreshControllerList![0],
+        scrollController: controller.scrollControllerList[index],
         enablePullUp: true,
         onLoading: controller.onLoading,
         onRefresh: controller.onRefresh,
@@ -79,25 +78,35 @@ class V1CandidatePage extends GetView<V1CandidateController> {
           noDataText: "Không có dữ liệu",
           canLoadingText: 'Đang tải...',
         ),
-        child: controller.isLoadingTuyenDung
-            ? const Padding(
-                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Center(
-                  child: CircularProgressIndicator(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (controller.isLoadingTuyenDung)
+                const Padding(
+                  padding:
+                      EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.tuyenDungListModel.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => controller.onTapViewTuyenDung(
+                          tuyendungModel: controller.tuyenDungListModel[index]),
+                      child: RecruimentNewsCard(
+                          tuyenDungResponse:
+                              controller.tuyenDungListModel[index]),
+                    );
+                  },
                 ),
-              )
-            : ListView.builder(
-                itemCount: controller.tuyenDungListModel.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => controller.onTapViewTuyenDung(
-                        tuyendungModel: controller.tuyenDungListModel[index]),
-                    child: RecruimentNewsCard(
-                        tuyenDungResponse:
-                            controller.tuyenDungListModel[index]),
-                  );
-                },
-              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -109,8 +118,9 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![index],
+        controller: controller.refreshControllerList![1],
         enablePullUp: true,
+        scrollController: controller.scrollControllerList[index],
         onLoading: controller.onLoading,
         onRefresh: controller.onRefresh,
         footer: const ClassicFooter(
