@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
+import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/hon_nhan_model.dart';
@@ -9,14 +14,21 @@ import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/repository/dang_ky_viec_moi_repository.dart';
+import 'package:template/data/repository/danh_sach_ung_tuyen_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
+import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/provider/hinh_thuc_lam_viec_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/color_resources.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/cadidate_recruitment_dialog_accept.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V2CvController extends GetxController {
   //Provider
@@ -47,20 +59,33 @@ class V2CvController extends GetxController {
   QuanHuyenResponse? quanHuyenResponse;
   PhuongXaResponse? phuongXaResponse;
 
+  //value hôn nhân
   List<HonNhanModel> honNhanListModel = [
     HonNhanModel(id: '1', tieuDe: 'Độc thân'),
     HonNhanModel(id: '2', tieuDe: 'Đã lập gia đình'),
     HonNhanModel(id: '3', tieuDe: 'Khác'),
   ];
+  HonNhanModel honNhanModel = HonNhanModel();
+
+  //DanhSachUngTuyen
+  final danhSachUngTuyenProvider = GetIt.I.get<DanhSachUngTuyenProvider>();
+  final danhSachUngTuyenRepository = DanhSachUngTuyenRepository();
+  DanhSachUngTuyenRequest danhSachUngTuyenRequest = DanhSachUngTuyenRequest();
 
   // Tiêu đề
   final titleController = TextEditingController();
   // địa chỉ
   final addressController = TextEditingController();
+  // địa chỉ
+  final mucTieuController = TextEditingController();
 
   //foscusNode
   final titleFocusNode = FocusNode();
   final addressFocusNode = FocusNode();
+  final mucTieuFocusNode = FocusNode();
+
+  //ImageUpdateProvider
+  final imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
 
   //idTuyenDung
   String? idTuyenDung;
@@ -70,6 +95,9 @@ class V2CvController extends GetxController {
 
   //isLoading
   bool isLoading = true;
+
+  //fileCv
+  File? fileCv;
 
   @override
   void onInit() {
@@ -89,6 +117,24 @@ class V2CvController extends GetxController {
   }
 
   ///
+  ///pick image
+  ///
+  // Future pickFile() async {
+  //   final FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  //   if (result != null) {
+  //     final PlatformFile file = result.files.first;
+  //     if (file.size > 100240000) {
+  //       Alert.error(message: 'Dung lượng file không quá 100 MB, vui lòng chọn file khác');
+  //     } else {
+  //       imageUpdateProvider.add(file: file, onSuccess: onSuccess, onError: onError)
+  //     }
+  //   } else {
+  //     // User canceled the picker
+  //   }
+  // }
+
+  ///
   ///getDataUserViecMoi
   ///
   void getDataUserViecMoi() {
@@ -101,7 +147,18 @@ class V2CvController extends GetxController {
 
           //set địa chỉ
           addressController.text = dangKyViecMoiResponse.diaChi.toString();
+          //set tiêu đề
+          titleController.text = dangKyViecMoiResponse.tieuDe.toString();
+          //set mục tiêu
+          mucTieuController.text =
+              dangKyViecMoiResponse.mucTieuNgheNghiep.toString();
           print('dangKyViecMoiResponse ${dangKyViecMoiResponse.toJson()}');
+          print(
+              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idHinhThucLamViec}');
+
+          //set hôn nhân
+          honNhanModel = honNhanListModel.firstWhere((element) =>
+              element.id == dangKyViecMoiResponse.honNhan.toString());
           getDataHinhThucLamViec();
           update();
         },
@@ -117,6 +174,11 @@ class V2CvController extends GetxController {
         onSuccess: (value) {
           //add list
           hinhThucLamViecListModel = value;
+
+          //set hình thức việc làm
+          hinhThucLamViec = hinhThucLamViecListModel.firstWhere((element) =>
+              element.id ==
+              dangKyViecMoiResponse.idHinhThucLamViec!.id.toString());
           // isLoading = false;
           getDataTinhTp(isLoadFrist: true);
           update();
@@ -252,9 +314,109 @@ class V2CvController extends GetxController {
   }
 
   ///
+  ///Thay đổi hôn nhân
+  ///
+  void onChangedHonNhan(HonNhanModel honnhan) {
+    honNhanModel = honnhan;
+    update();
+  }
+
+  ///
   /// Xem trươc
   ///
   void onClickPreviewButton() {
     Get.toNamed(AppRoutes.V2_PREVIEW);
+  }
+
+  ///
+  ///onBtnDownCv
+  ///
+  Future<void> onBtnDownloadCv({required String url}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  ///
+  ///onBtnSummit
+  ///
+  void onBtnSummit({required int number}) {
+    //check validate
+    if (titleController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập tiêu đề');
+    } else if (tinhTp == null) {
+      Alert.error(message: 'Vui lòng chọn tỉnh thành phố');
+    } else if (quanHuyenResponse == null) {
+      Alert.error(message: 'Vui lòng chọn quận huyện');
+    } else if (phuongXaResponse == null) {
+      Alert.error(message: 'Vui lòng chọn phường xã');
+    } else if (addressController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập địa chỉ');
+    } else if (hinhThucLamViec == null) {
+      Alert.error(message: 'Vui lòng chọn hình thức việc làm');
+    } else if (mucTieuController.text.isEmpty) {
+      Alert.error(message: 'Vui lòng nhập mục tiêu nghề nghiệp');
+    } else {
+      if (number == 1) {
+      } else {
+        //show dialog
+        Get.defaultDialog(
+            title: "Xác nhận thông tin",
+            content: CandidateRecruitmentDialogAccept(
+              textContent: 'Bạn chắc chắn đồng ý nộp hồ sơ ứng tuyển',
+            ),
+            confirm: ElevatedButton(
+                onPressed: () {
+                  EasyLoading.show(status: 'loading...');
+                  //check xem có lưu chưa
+                  danhSachUngTuyenProvider.paginate(
+                      page: 1,
+                      limit: 5,
+                      filter:
+                          '&idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId',
+                      onSuccess: (value) {
+                        if (value.isNotEmpty) {
+                          //set data
+                          danhSachUngTuyenRequest.idTuyenDung = idTuyenDung;
+                          danhSachUngTuyenRequest.idTaiKhoanUngTuyen = userId;
+                          //insert db
+                          danhSachUngTuyenRepository
+                              .add(danhSachUngTuyenRequest)
+                              .then((value) => {
+                                    if (value.response.data != null)
+                                      {
+                                        Alert.success(
+                                            message:
+                                                'Nộp hồ sơ ứng tuyển thành công'),
+                                        Get.back()
+                                      }
+                                    else
+                                      {
+                                        EasyLoading.dismiss(),
+                                        Alert.error(message: 'Vui lòng thử lại')
+                                      }
+                                  });
+                        } else {
+                          Alert.info(
+                              message:
+                                  'Bạn đã ứng tuyển tin tuyển dụng này rồi');
+                        }
+                      },
+                      onError: (error) =>
+                          print('V2CvController onBtnSummit $error'));
+                },
+                child: const Text("Đồng ý")),
+            cancel: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: ColorResources.GREY,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Hủy")));
+      }
+    }
   }
 }

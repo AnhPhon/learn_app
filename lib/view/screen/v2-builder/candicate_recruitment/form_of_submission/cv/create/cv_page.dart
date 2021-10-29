@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
+import 'package:template/data/model/response/hon_nhan_model.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -91,11 +94,25 @@ class V2CvPage extends GetView<V2CvController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text(title: "Tên ứng viên: ", content: "Nguyễn Văn A"),
-              text(title: "Giới tính: ", content: "Nam"),
-              text(title: "Ngày sinh: ", content: "20/10/1992"),
-              text(title: "Điện thoại: ", content: "0932132132"),
-              text(title: "Email: ", content: "Exmaple@gmail.com"),
+              text(
+                  title: "Tên ứng viên: ",
+                  content:
+                      controller.dangKyViecMoiResponse.tenUngVien.toString()),
+              text(
+                  title: "Giới tính: ",
+                  content:
+                      controller.dangKyViecMoiResponse.gioiTinh.toString() ==
+                              '1'
+                          ? 'Nam'
+                          : 'Nữ'),
+              text(
+                  title: "Ngày sinh: ",
+                  content: DateConverter.readMongoToString(
+                      controller.dangKyViecMoiResponse.ngaySinh.toString())),
+              text(title: "Điện thoại: ", content: 'api hiện chưa trả về '),
+              text(
+                  title: "Email: ",
+                  content: controller.dangKyViecMoiResponse.email.toString()),
             ],
           ),
         ),
@@ -103,7 +120,9 @@ class V2CvPage extends GetView<V2CvController> {
         // Địa chỉ chọn tỉnh
         DropDownButton<TinhTpResponse>(
             onChanged: (item) => controller.onChangedTinhTp(item!),
-            data: controller.tinhTpListModel,
+            data: controller.tinhTpListModel.isNotEmpty
+                ? controller.tinhTpListModel
+                : [],
             width: DeviceUtils.getScaledWidth(context, 1),
             value: controller.tinhTp,
             obligatory: true,
@@ -117,7 +136,9 @@ class V2CvPage extends GetView<V2CvController> {
         // Địa chỉ chọn huyện
         DropDownButton<QuanHuyenResponse>(
             onChanged: (item) => controller.onChangedQuanHuyen(item!),
-            data: controller.quanHuyenListModel,
+            data: controller.quanHuyenListModel.isNotEmpty
+                ? controller.quanHuyenListModel
+                : [],
             width: DeviceUtils.getScaledWidth(context, 1),
             value: controller.quanHuyenResponse,
             obligatory: true,
@@ -130,7 +151,9 @@ class V2CvPage extends GetView<V2CvController> {
         // Địa chỉ chọn xã
         DropDownButton<PhuongXaResponse>(
             onChanged: (item) => controller.onChangedPhuongXa(item!),
-            data: controller.phuongXaListModel,
+            data: controller.phuongXaListModel.isNotEmpty
+                ? controller.phuongXaListModel
+                : [],
             width: DeviceUtils.getScaledWidth(context, 1),
             value: controller.phuongXaResponse,
             obligatory: true,
@@ -157,48 +180,77 @@ class V2CvPage extends GetView<V2CvController> {
         ),
 
         // hôn nhân
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
-          width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Độc thân",
-          obligatory: true,
-          label: "Hôn nhân",
-          hint: "Độc thân",
-        ),
+        DropDownButton<HonNhanModel>(
+            onChanged: (item) => controller.onChangedHonNhan(item!),
+            data: controller.honNhanListModel,
+            width: DeviceUtils.getScaledWidth(context, 1),
+            value: controller.honNhanModel,
+            obligatory: true,
+            label: "Hôn nhân",
+            hint: "Chọn tình trạng hôn nhân",
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_LARGE)),
 
         // Hình thức làm việc
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
-          width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Bán thời gian",
-          obligatory: true,
-          label: "Hình thức làm việc",
-          hint: "Hình thức làm việc",
-        ),
+        DropDownButton<HinhThucLamViecResponse>(
+            onChanged: (item) => controller.onChangeHinhThucLamViec(item!),
+            data: controller.hinhThucLamViecListModel.isNotEmpty
+                ? controller.hinhThucLamViecListModel
+                : [],
+            width: DeviceUtils.getScaledWidth(context, 1),
+            value: controller.hinhThucLamViec,
+            obligatory: true,
+            label: "Hình thức việc làm",
+            hint: "Chọn hình thức việc làm",
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_LARGE)),
 
-        const Label(label: "Mục tiêu nghê nghiệp", obligatory: true),
-        const Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxShadowWidget(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text(
-                "Được làm việc trong môi trường chuyên nghiệp, có chế độ tốt.Nâng cao được trình độ, kỹ năng chuyên môn Cống hiến năng lực bản thân và mong có cơ hội thăng tiến",
-                style: TextStyle(
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                )),
-          ),
+        //mục tiêu nghề nghiệp
+        InputField(
+          allowEdit: true,
+          allowMultiline: false,
+          controller: controller.mucTieuController,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
+          holdplacer: "Nhập mục tiêu nghê nghiệp",
+          hidden: false,
+          label: "Mục tiêu nghê nghiệp",
+          obligatory: true,
+          typeInput: TextInputType.text,
+          width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
+          focusNode: controller.mucTieuFocusNode,
         ),
 
         // file hô so xin việc
         const Label(label: "File hồ sơ xin việc", obligatory: true),
         // Cập nhật Cv đầy đủ thông tin
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: SizedBox(
+            width: DeviceUtils.getScaledWidth(context, 1),
+            child: GestureDetector(
+              onTap: () => controller.onBtnDownloadCv(
+                  url: controller.dangKyViecMoiResponse.fileHoSoXinViec
+                      .toString()),
+              child: BoxShadowWidget(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                child: Text(
+                    controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
+                    style: const TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                    )),
+              ),
+            ),
+          ),
+        ),
+
         CustomFileButton(
-            title: "Cập nhật file CV đầy đủ thông tin", onTap: () {}),
-        CustomFileButton(
-            title: "Thêm file",
+            title: "Cập nhật file",
             verticalPadding: Dimensions.PADDING_SIZE_DEFAULT,
             onTap: () {})
       ],
@@ -223,7 +275,7 @@ class V2CvPage extends GetView<V2CvController> {
           SmallButton(
               title: "Nộp hồ sơ",
               color: ColorResources.PRIMARYCOLOR,
-              onPressed: () {}),
+              onPressed: () => controller.onBtnSummit(number: 2)),
         ],
       ),
     );

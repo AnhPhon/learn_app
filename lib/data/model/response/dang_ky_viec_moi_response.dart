@@ -1,4 +1,5 @@
 import 'package:template/data/model/response/chuyen_mon_response.dart';
+import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
@@ -40,6 +41,7 @@ class DangKyViecMoiResponse {
   TinHocResponse? idTinHoc;
   String? maSoHoSo;
   List<ChuyenMonResponse>? idNganhNgheMongMuons;
+  HinhThucLamViecResponse? idHinhThucLamViec;
 
   String? createdAt;
   String? updatedAt;
@@ -73,6 +75,7 @@ class DangKyViecMoiResponse {
       this.idNganhNgheMongMuons,
       this.idTinHoc,
       this.maSoHoSo,
+      this.idHinhThucLamViec,
       this.createdAt,
       this.updatedAt});
 
@@ -227,6 +230,16 @@ class DangKyViecMoiResponse {
       idNganhNgheMongMuons = null;
     }
 
+    // mapping idHinhThucLamViec
+    if (json['idHinhThucLamViec'] != null &&
+        json['idHinhThucLamViec'].toString().length != 24) {
+      print('bbbbb ${json['idHinhThucLamViec']}');
+      idHinhThucLamViec = HinhThucLamViecResponse.fromJson(
+          json['idHinhThucLamViec'] as Map<String, dynamic>);
+    } else {
+      idHinhThucLamViec = null;
+    }
+
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
   }
@@ -313,6 +326,9 @@ class DangKyViecMoiResponse {
 
     // check null idNgoaiNgus
     if (idNgoaiNgus != null) data['idNgoaiNgus'] = idNgoaiNgus;
+    // check null idNgoaiNgus
+    if (idHinhThucLamViec != null)
+      data['idHinhThucLamViec'] = idHinhThucLamViec;
 
     // check null idTinHoc
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;

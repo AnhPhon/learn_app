@@ -76,8 +76,7 @@ class CandidateCard extends StatelessWidget {
                         TextHighlight(
                             title: "Ngày sinh: ",
                             content: DateConverter.readMongoToString(
-                                dangKyViecMoiResponse!.idTaiKhoan!.ngaySinh
-                                    .toString())),
+                                dangKyViecMoiResponse!.ngaySinh.toString())),
                         TextHighlight(
                             title: "Điện thoại: ",
                             content: showEmailAndPass!
