@@ -72,7 +72,8 @@ class V1G4OrderQuoteController extends GetxController{
   void onNextPage(){
     if(validate()){
       request!.tieuDe = work!.tenCongViec;
-      request!.idBangGiaDonHang  = work!.id;
+      //request!.loaiCongViec = work.id;
+      //request!.idBangGiaDonHang  = work!.id;
       request!.moTa = descController.text.toString();
       request!.soTien = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();//priceController.text.toString().replaceAll(',', '');//work.giaTien;
       request!.soLuongYeuCau = personNumberController.text.toString();
