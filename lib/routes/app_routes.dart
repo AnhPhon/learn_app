@@ -83,7 +83,8 @@ class AppRoutes {
   //
 
   //
-  static const String V1_FORMAL_FEEDBACK_PAYMENT = "/v1_formal_feedback_payment";
+  static const String V1_FORMAL_FEEDBACK_PAYMENT =
+      "/v1_formal_feedback_payment";
   static const String V1_DETAIL_NOTIFICATION = "/v1_detail_notification";
 
   static const String ACCOUNT = '/account';
@@ -289,6 +290,9 @@ class AppRoutes {
   //Xem lịch sử tin đã ứng tuyển và đã lưu
   static const String V2_HISTORY_RECRUITMENT_NEWS =
       '/v2_history_recruitment_news';
+  //Tìm kiếm tin đã ứng tuyển
+  static const String V2_SEARCH_RECRUITMENT_NEWS =
+      '/v2_search_recruitment_news';
 
   // Hình thức ứng tuyển
   static const String V2_FORM_OF_SUBMITSSION = '/v2_form_of_submitssion';
