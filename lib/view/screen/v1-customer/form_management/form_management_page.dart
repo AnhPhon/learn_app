@@ -138,6 +138,7 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
                     dateTime:
                         controller.donDichVuList[index].createdAt.toString(),
                   ),
+                  isSpaceBetween: true,
                 ),
               );
             },

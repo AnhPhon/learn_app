@@ -39,7 +39,7 @@ class V1ServiceReviewG4Controller extends GetxController {
     }
   }
 
-    ///
+  ///
   ///gioi tinh
   ///
   void gioiTinh() {
