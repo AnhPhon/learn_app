@@ -70,6 +70,7 @@ class V1G1ReviewController extends GetxController{
     dichVuRequest.idTaiKhoan = previewServiceRequest!.idTaiKhoan;
     dichVuRequest.tieuDe = previewServiceRequest!.tieuDe;
     dichVuRequest.diaChiCuThe = previewServiceRequest!.diaChiCuThe ;
+    dichVuRequest.idTaiKhoanNhanDon = previewServiceRequest!.idTaiKhoanNhanDon;
 
     dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
     dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;

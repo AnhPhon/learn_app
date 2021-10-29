@@ -82,6 +82,7 @@ class V1G1CreateWorkController extends GetxController{
     previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
     previewServiceRequest.hinhAnhBanKhoiLuong = images;
     previewServiceRequest.bangKhoiLuong = massList;
+    previewServiceRequest.idTaiKhoanNhanDon = serviceApplication!.idTaiKhoanNhanDon;
     previewServiceRequest.hinhAnhBanVe  = drawingImages;
     if(file != null){
       previewServiceRequest.file = file ;

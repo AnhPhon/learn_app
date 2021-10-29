@@ -47,6 +47,7 @@ class DonDichVuRequest {
   String? tienCoc;
   String? diaChiCuThe;
   String? idLoaiCongViec;
+  String? idTaiKhoanNhanDon;
 
   DonDichVuRequest(
       {this.id,
@@ -89,6 +90,7 @@ class DonDichVuRequest {
       this.taiKhoanNhanDon,
       this.idLoaiCongViec,
       this.tienCoc,
+      this.idTaiKhoanNhanDon,
       this.diaChiCuThe});
 
   ///
@@ -144,6 +146,7 @@ class DonDichVuRequest {
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
     idLoaiCongViec = json['idLoaiCongViec'].toString();
+    idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
   }
 
   ///
@@ -284,6 +287,7 @@ class DonDichVuRequest {
     // check dịa chi cụ the
     if (diaChiCuThe != null) data['diaChiCuThe'] = diaChiCuThe;
     if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec;
+    if (idTaiKhoanNhanDon != null) data['idTaiKhoanNhanDon'] = idTaiKhoanNhanDon;
     return data;
   }
 }

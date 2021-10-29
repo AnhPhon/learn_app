@@ -43,6 +43,7 @@ class PreviewServiceRequest {
   String? taiKhoanNhanDon;
   String? tienCoc;
   String? diaChiCuThe;
+  String? idTaiKhoanNhanDon;
 
   PreviewServiceRequest({
       this.id,
@@ -84,7 +85,8 @@ class PreviewServiceRequest {
       this.taiKhoanNhanDon,
       this.tienCoc,
       this.diaChiCuThe,
-      this.bangKhoiLuong
+      this.bangKhoiLuong,
+      this.idTaiKhoanNhanDon
       });
   
   ///
@@ -130,6 +132,7 @@ class PreviewServiceRequest {
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
+    idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
     bangKhoiLuong = json['bangKhoiLuong'] as List<VatTuResponse>;
   }
 
@@ -251,6 +254,8 @@ class PreviewServiceRequest {
 
     // check null tienCoc
     if (tienCoc != null) data['tienCoc'] = tienCoc; 
+    // Id tài khoản nhận đơn
+    if (idTaiKhoanNhanDon != null) data['idTaiKhoanNhanDon'] = idTaiKhoanNhanDon; 
     // check dịa chi cụ the
     if(diaChiCuThe != null) data['diaChiCuThe'] = diaChiCuThe;
     return data;

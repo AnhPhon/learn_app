@@ -225,7 +225,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
       SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
         child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
+          actionPane: const SlidableDrawerActionPane(),
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: 'Xoá',
