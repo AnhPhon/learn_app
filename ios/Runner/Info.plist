@@ -40,6 +40,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Cho phép ứng dụng sử dung thư viện ảnh</string>
