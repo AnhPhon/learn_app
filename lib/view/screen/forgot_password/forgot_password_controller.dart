@@ -30,7 +30,7 @@ class ForgotPasswordController extends GetxController {
       authProvider.forgetPassword(phone: {
         'phone':phoneController.text.toString()
       }, onSuccess: (data){
-        sl.get<SharedPreferenceHelper>().saveResetPasswordToken(data.resetPasswordToken!).then((value){
+        sl.get<SharedPreferenceHelper>().saveResetPasswordToken(data).then((value){
           Get.toNamed(AppRoutes.OTP_VERIFIER);
         });
       }, onError: (onError){

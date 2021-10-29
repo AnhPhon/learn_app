@@ -27,6 +27,8 @@ class Preferences {
   static const String idNewWork = "idNewWork";
   static const String typeAccount = "typeAccount";
   static const String resetPasswordToken = "resetPasswordToken";
+  static const String registerToken = "resetPasswordToken";
+  static const String isRegister = "isRegister";
   static const String remember = "remember";
 
 }

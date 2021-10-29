@@ -10,6 +10,7 @@ import 'package:template/data/model/request/verify_otp_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/constants/preferences.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 
@@ -25,13 +26,15 @@ class OTPVerifierController extends GetxController {
 
   /// Kiểm tra đăng ký hay quên mật khẩu
   bool isRegister = false;
+  String registerToken = '';
 
   @override
   void onInit() {
     // init error pin code controller
     if(Get.arguments != null){
       // isRegister = true;
-      isRegister = Get.arguments as bool;
+      isRegister = Get.arguments[Preferences.isRegister] as bool;
+      registerToken = Get.arguments[Preferences.registerToken] as String;
     }
     errorController = StreamController<ErrorAnimationType>();
     super.onInit();

@@ -113,7 +113,7 @@ class AuthProvider with ChangeNotifier {
   ///
   Future<void> forgetPassword({
     required dynamic phone,
-    required Function(TaiKhoanResponse data) onSuccess,
+    required Function(String data) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await authRepository!.forgetPassword(phone);
@@ -121,10 +121,11 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      final TaiKhoanResponse account = TaiKhoanResponse();
-      account.resetPasswordToken= results['resetPasswordToken'].toString();
+      // final TaiKhoanResponse account = TaiKhoanResponse();
+      // account.resetPasswordToken= results['resetPasswordToken'].toString();
+      final String resetPasswordToken = results['resetPasswordToken'].toString();
       print("Token: ${results['otp'].toString()}");
-      onSuccess(account);
+      onSuccess(resetPasswordToken);
     } else {
       onError(apiResponse.error);
     }
@@ -170,15 +171,16 @@ class AuthProvider with ChangeNotifier {
   ///
   Future<void> sendOTP({
     required dynamic phone,
-    required Function() onSuccess,
+    required Function(String registerToken) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await authRepository!.sendOTP(phone);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      print(apiResponse.response.data);
-      onSuccess();
+      final results = apiResponse.response.data as dynamic;
+      print(apiResponse.response.data['otp']);
+      onSuccess(results['registerToken'] as String);
     } else {
       onError(apiResponse.error);
     }

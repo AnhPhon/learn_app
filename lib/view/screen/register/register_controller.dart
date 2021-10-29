@@ -24,9 +24,13 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/constants/preferences.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/validate.dart';
+
+import '../../../di_container.dart';
 
 class RegisterController extends GetxController {
   // Provider
@@ -465,11 +469,11 @@ class RegisterController extends GetxController {
     EasyLoading.show(status: 'loading...');
     authProvider.sendOTP(phone: {
         "phone":account.soDienThoai
-      }, onSuccess: (){
+      }, onSuccess: (String registerToken){
         EasyLoading.dismiss();
         Alert.info(message: "Mã xác thực gửi số điện thoại của bạn. Xác thực hoàn tất đăng ký");
         // Go to verify page
-        Get.toNamed(AppRoutes.OTP_VERIFIER, arguments: true)!.then((value){
+        Get.toNamed(AppRoutes.OTP_VERIFIER, arguments: {Preferences.isRegister: true,Preferences.registerToken:registerToken})!.then((value){
             if(value == true){
               EasyLoading.show(status: 'loading...');
               Future.delayed(const Duration(milliseconds: 100)).then((value){
@@ -491,6 +495,7 @@ class RegisterController extends GetxController {
             }else{
               EasyLoading.dismiss();
               Alert.info(message: "Đăng ký tài khoản thất bại");
+              // sl.get<SharedPreferenceHelper>().removeIdNewWork()
             }
         });
 
