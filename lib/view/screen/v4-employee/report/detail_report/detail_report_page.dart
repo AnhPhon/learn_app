@@ -16,7 +16,15 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Báo cáo theo yêu cầu"),
+      appBar: AppBarWidget(title: "Báo cáo theo yêu cầu",
+      leading: IconButton(
+          onPressed: () {
+            Get.back(result: true);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: ColorResources.WHITE,
+          ),),),
       body: SingleChildScrollView(
           child: GetBuilder<V4DetailReportController>(
               init: V4DetailReportController(),
@@ -24,17 +32,12 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                       //chọn thời gian báo cáo theo yêu cầu
                       _timeDetailReport(controller, context),
 
-                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-
                       // Tên dự án/văn phòng báo cáo theo yêu cầu
                       _projectDetailReport(controller, context),
-
-                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                       //nhập nội dung báo cáo theo yêu cầu
                       _contentDetailReport(controller, context),
@@ -44,8 +47,6 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
                       ),
                       //button cập nhật
                       _btnUpdateDetailReport(controller,context),
-
-                      const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                     ],
                   ),
                 );
@@ -66,33 +67,12 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
       isDate: false,
       fillColor: ColorResources.LIGHT_GREY.withOpacity(0.7),
       allowEdit: false,
-      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
-          right: Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
       width: DeviceUtils.getScaledWidth(context, 1),
     );
   }
-
-  // ///
-  // /// tên dự án/văn phòng báo cáo theo yêu cầu
-  // ///
-  // Widget _projectDetailReport(V4DetailReportController controller,
-  //     BuildContext context) {
-  //   return DropDownButton1<DuAnNhanVienResponse>(
-  //     isColorFieldWhite: true,
-  //     labelBold: true,
-  //     hint: 'Vui lòng chọn dự án',
-  //     label: 'Tên dự án',
-  //     data: controller.duAnNhanVienList,
-  //     obligatory: true,
-  //     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
-  //     value: controller.duAnNhanVien,
-  //     width: DeviceUtils.getScaledWidth(context, 1),
-  //     padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
-  //         right: Dimensions.PADDING_SIZE_SMALL),
-  //   );
-  // }
   ///
-  /// Tỉnh /TP
+  /// tên dự án/văn phòng báo cáo theo yêu cầu
   ///
   Widget _projectDetailReport(V4DetailReportController controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
@@ -121,14 +101,14 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   Widget _contentDetailReport(V4DetailReportController controller,
       BuildContext context) {
     return InputWidget(
-      textEditingController: controller.contentDetailReport!,
+      textEditingController: controller.contentDetailReport,
       label: 'Nội dung báo cáo',
       hintText: 'Nội dung báo cáo',
       obligatory: true,
       maxLine: 7,
+      fillColor: ColorResources.WHITE,
       width: DeviceUtils.getScaledWidth(context, 1),
-      padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,
-          right: Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
     );
   }
 

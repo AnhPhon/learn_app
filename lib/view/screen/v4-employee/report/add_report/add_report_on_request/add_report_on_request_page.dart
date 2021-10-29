@@ -29,16 +29,11 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                   //chọn thời gian báo cáo theo yêu cầu
                   _timeReportOnRequest(controller, context),
 
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
-
                   // Tên dự án/văn phòng báo cáo theo yêu cầu
                   _projectReportOnRequest(controller, context),
-
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   //nhập nội dung báo cáo theo yêu cầu
                   _contentReportOnRequest(controller, context),
@@ -48,8 +43,6 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
                   ),
                   //button báo cáo theo yêu cầu
                   _btnReport(controller),
-
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
                 ],
               ),
             );
@@ -69,9 +62,9 @@ Widget _timeReportOnRequest(
     obligatory: true,
     suffixIcon: const Icon(Icons.date_range,color: ColorResources.PRIMARY),
     isDate: false,
-    fillColor: ColorResources.LIGHT_GREY.withOpacity(0.1),
+    fillColor: ColorResources.LIGHT_GREY.withOpacity(0.4),
     allowEdit: false,
-    padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
     width: DeviceUtils.getScaledWidth(context, 1),
   );
 }
@@ -91,7 +84,7 @@ Widget _projectReportOnRequest(
     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
     value: controller.duAnNhanVien,
     width: DeviceUtils.getScaledWidth(context, 1),
-    padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );
 }
 
@@ -108,7 +101,7 @@ Widget _contentReportOnRequest(
     maxLine: 7,
     fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
-    padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );
 }
 

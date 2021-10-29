@@ -125,7 +125,7 @@ Widget _listReport(V4ReportController controller) {
                               //Tiêu đề báo cáo công việc theo yêu cầu hoặc theo tuần
                               Text(
                                 "Báo cáo công việc theo yêu cầu",
-                                style: Dimensions.fontSizeStyle16w600(),
+                                style: Dimensions.fontSizeStyle18w600(),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),

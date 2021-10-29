@@ -27,6 +27,7 @@ class V4DetailReportController  extends GetxController {
   // Dự án của nhân viên
   List<DuAnNhanVienResponse> duAnNhanVienList = [];
   DuAnNhanVienResponse? duAnNhanVien;
+
   String hintTextDuAnNhanVien = '';
 
   // khai báo is loading
@@ -35,9 +36,8 @@ class V4DetailReportController  extends GetxController {
   String idUser= '';
 
   //khai báo TextEditingController
-  // TextEditingController contentDetailReport = TextEditingController();
+  TextEditingController contentDetailReport = TextEditingController();
   TextEditingController timeDetailReport = TextEditingController();
-  TextEditingController? contentDetailReport;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -120,7 +120,7 @@ class V4DetailReportController  extends GetxController {
   /// Check null value báo cáo
   ///
   bool validate() {
-    if (contentDetailReport!.text.isEmpty) {
+    if (contentDetailReport.text.isEmpty) {
       Get.snackbar(
         "Nội dung báo cáo không hợp lệ!",
         "Vui lòng nhập nội dung báo cáo hợp lệ!",
@@ -138,23 +138,29 @@ class V4DetailReportController  extends GetxController {
   ///Update button
   ///
   void onUpdate(BuildContext context) {
+    // print(detailReportResponse.idDuAnNhanVien!.id);
+    // print(detailReportResponse.id);
+    // print(contentDetailReport.text);
     if(validate()) {
       // set data
-      duAnNhanVien!.createdAt = DateConverter.formatDate(
+      detailReportResponse.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
           timeDetailReport.text.toString(),
         ),
       );
-      detailReportRequest.id = duAnNhanVien!.id;
-      detailReportResponse.noiDung = contentDetailReport!.text;
+      // detailReportRequest.id = duAnNhanVien!.id;
+      // detailReportResponse.noiDung = contentDetailReport.text;
 //     sl.get<SharedPreferenceHelper>().userId.then((userId) {
+//       print(duAnNhanVien!.id);
+//       print();
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
-          id: idUser,
-          idDuAnNhanVien: duAnNhanVien!.id,
-          noiDung: contentDetailReport!.text,
+          id: detailReportResponse.id,
+          idDuAnNhanVien: detailReportResponse.idDuAnNhanVien!.id,
+          noiDung: contentDetailReport.text,
         ),
         onSuccess: (value) {
+          Get.back(result: true);
           //show dialog
           showAnimatedDialog(
             context,
@@ -166,6 +172,8 @@ class V4DetailReportController  extends GetxController {
             dismissible: false,
             isFlip: true,
           );
+          // Get.back();
+          // Get.back(result: true);
           // isLoading = true;
         },
         onError: (error) {
@@ -182,4 +190,5 @@ class V4DetailReportController  extends GetxController {
         dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }
+
 }

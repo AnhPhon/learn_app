@@ -172,6 +172,7 @@ class V4ReportController extends GetxController
           isFlip: true,
         );
         update();
+        getReport(isRefresh: true, value: "1");
       }
     });
   }
@@ -189,8 +190,10 @@ class V4ReportController extends GetxController
   ///
   void onClickDetailReport(String idUser) {
     sl.get<SharedPreferenceHelper>().saveUserId(idUser);
-    // Get.toNamed(
-    //     "${AppRoutes.V4_DETAIL_REPORT}?id=${baoCaoNhanVienModelList[index].id}");
-    Get.toNamed(AppRoutes.V4_DETAIL_REPORT);
+    Get.toNamed(AppRoutes.V4_DETAIL_REPORT)!.then((value) {
+      if (value == true){
+        getReport(isRefresh: true, value: "1");
+      }
+    });
   }
 }
