@@ -117,6 +117,7 @@ class V1HomePage extends GetView<V1HomeController> {
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
+              iconColor: ColorResources.BLACK,
             ),
           );
         },

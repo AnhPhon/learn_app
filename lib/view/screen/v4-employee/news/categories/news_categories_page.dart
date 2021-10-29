@@ -42,7 +42,6 @@ class _V4NewsCategoriesPageState extends State<V4NewsCategoriesPage>
     super.build(context);
     if (!mounted) return const SizedBox();
     return SmartRefresher(
-      key: UniqueKey(),
       controller: controller!.refreshController,
       enablePullUp: true,
       onLoading: controller!.onLoading,

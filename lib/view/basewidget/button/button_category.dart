@@ -5,11 +5,13 @@ class BtnCategory extends StatelessWidget {
   final Gradient gradient;
   final List<String> label;
   final IconData icon;
+  Color? iconColor;
 
-  const BtnCategory({
+  BtnCategory({
     required this.gradient,
     required this.label,
     required this.icon,
+    this.iconColor,
   });
 
   @override
@@ -33,7 +35,7 @@ class BtnCategory extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: Colors.white,
+            color: iconColor ?? Colors.white,
           ),
           const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
           Container(

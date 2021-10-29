@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -27,18 +28,15 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Hero(
-                    tag: controller.thongBaoModel.hinhDaiDien!,
-                    child: Container(
-                      width: DeviceUtils.getScaledWidth(context, 1),
-                      height: DeviceUtils.getScaledHeight(context, 0.3),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            controller.thongBaoModel.hinhDaiDien.toString(),
-                          ),
-                          fit: BoxFit.cover,
+                  Container(
+                    width: DeviceUtils.getScaledWidth(context, 1),
+                    height: DeviceUtils.getScaledHeight(context, 0.3),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          controller.thongBaoModel.hinhDaiDien.toString(),
                         ),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

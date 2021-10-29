@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+
 class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool? centerTitle;
   final bool? isNotBack;
   final List<Widget>? action;
+  final Widget? leading;
   final VoidCallback? onPressed;
   const AppBarWidget({
     Key? key,
@@ -15,6 +17,7 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.action = const [],
     this.isNotBack = false,
+    this.leading,
     this.onPressed,
   }) : super(key: key);
   @override
@@ -22,6 +25,7 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class _CustomAppBarState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
@@ -73,12 +77,15 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.isNotBack == false)
                   Builder(
                     builder: (context) {
-                      return IconButton(
-                          onPressed: widget.onPressed ?? () => Get.back(),
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorResources.WHITE,
-                          ));
+                      return widget.leading ??
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: ColorResources.WHITE,
+                              ));
                     },
                   ),
                 Expanded(
