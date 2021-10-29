@@ -56,7 +56,6 @@ class OTPVerifierController extends GetxController {
         authProvider.verifyOTP(request: request, onSuccess: (status){
           if(status){
             if(isRegister){
-              //Nếu chính xác OPT thì => true else false
               Get.back(result: true);
             }else{
               Get.offAndToNamed(AppRoutes.UPDATE_PASSWORD, arguments: request);
