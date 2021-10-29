@@ -16,7 +16,7 @@ import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/validate.dart';
 
-class LoginController extends GetxController {
+class LoginEmployeeController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
   final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
   final LoaiTaiKhoanProvider typeAccountProvider = GetIt.I.get<LoaiTaiKhoanProvider>();
@@ -25,13 +25,12 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
   bool isRemember = false;
 
-  bool isLoading = true;
 
-  @override
-  void onInit() {
-    phoneController.text = '2';
-    // passwordController.text = 'password';
-    super.onInit();
+  ///
+  /// on button forgot password tap
+  ///
+  void onBtnForgotPasswordTap() {
+    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
   }
 
   ///
@@ -45,26 +44,12 @@ class LoginController extends GetxController {
     }
     update();
   }
-
+  
   ///
-  /// on button forgot password tap
+  /// onBtnLogin
   ///
-  void onBtnForgotPasswordTap() {
-    Get.toNamed(AppRoutes.FORGOT_PASSWORD);
-  }
-
-  ///
-  /// on button register tap
-  ///
-  void onBtnRegisterTap() {
-    Get.toNamed(AppRoutes.REGISTER);
-  }
-
-  ///
-  /// on button register tap
-  ///
-  void onBtnLoginEmployee() {
-    Get.toNamed(AppRoutes.LOGIN_EMPLOYEE);
+  void onBtnLogin() {
+    Get.toNamed(AppRoutes.LOGIN);
   }
 
   ///
@@ -117,19 +102,7 @@ class LoginController extends GetxController {
               }
 
               if(account.idLoaiTaiKhoan != null){
-                if (account.idLoaiTaiKhoan == KHACH_HANG) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
-                  return;
-                } else if (account.idLoaiTaiKhoan == THO_THAU) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
-                  return;   
-                } else if (account.idLoaiTaiKhoan == DAI_LY) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
-                  return;
-                }else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
+                if (account.idLoaiTaiKhoan == NHAN_VIEN) {
                   EasyLoading.dismiss();
                   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
                   return;

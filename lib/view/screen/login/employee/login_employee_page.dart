@@ -6,14 +6,14 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 
-import 'login_controller.dart';
+import 'login_employee_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginEmployeePage extends GetView<LoginEmployeeController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(
-        init: LoginController(),
-        builder: (LoginController value) {
+    return GetBuilder<LoginEmployeeController>(
+        init: LoginEmployeeController(),
+        builder: (LoginEmployeeController value) {
           return Scaffold(
             body: Stack(children: [
               // background
@@ -55,14 +55,13 @@ class LoginPage extends GetView<LoginController> {
                       // input password
                       _passwordEnterWidget(context),
 
-                      // remember password
+
+                       // remember password
                       _rememberAndForgotPasswordWidget(context),
 
                       // login button
                       _onBtnLoginTap(context),
 
-                      // register arial
-                      _registerWidget(context),
                     ],
                   ),
                 ),
@@ -70,7 +69,7 @@ class LoginPage extends GetView<LoginController> {
               Positioned(
                 bottom: 30,
                 left: DeviceUtils.getScaledWidth(context, 0.15),
-                child: _onBtnLoginEmployee(context),
+                child: _onBtnLogin(context),
               )
             ]),
           );
@@ -284,6 +283,7 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
+
   ///
   /// _on Btn Login Tap
   ///
@@ -326,13 +326,15 @@ class LoginPage extends GetView<LoginController> {
       ),
     );
   }
+
+
   ///
-  /// _on Btn Login employee
+  /// _on Btn Login
   ///
-  Widget _onBtnLoginEmployee(BuildContext context) {
+  Widget _onBtnLogin(BuildContext context) {
     return GestureDetector(
       // onLoginBtnClick
-      onTap: () => controller.onBtnLoginEmployee(),
+      onTap: () => controller.onBtnLogin(),
       child: Container(
         margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
         width: DeviceUtils.getScaledWidth(context, 0.7),
@@ -347,66 +349,21 @@ class LoginPage extends GetView<LoginController> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: const Color(0xff0d5da0),
+                //color: ColorResources.WHITE.withOpacity(0.3)
               ),
               padding: const EdgeInsets.only(
                 top: 12,
                 bottom: 9,
               ),
               child: const Text(
-                "Đăng nhập nhân viên",
+                "Đăng nhập thợ, khách, đại lý",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: ColorResources.WHITE,//Color(0xff0d5da0),
+                  color: ColorResources.WHITE,
                   fontSize: 18,
                   fontFamily: "Nunito Sans",
                   fontWeight: FontWeight.w700,
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ///
-  /// _on Btn Login Tap
-  ///
-  Widget _registerWidget(BuildContext context) {
-    return GestureDetector(
-      // onBtnRegisterTap
-      onTap: () => controller.onBtnRegisterTap(),
-      child: Container(
-        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
-        width: DeviceUtils.getScaledWidth(context, 0.7),
-        height: 25,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            const Text(
-              "Bạn chưa có tài khoản?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff2a3547),
-                fontSize: Dimensions.FONT_SIZE_LARGE,
-              ),
-            ),
-
-            const SizedBox(width: 4),
-
-            // ignore: prefer_const_literals_to_create_immutables
-            const Text(
-              "Đăng ký",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff0f90f3),
-                fontSize: Dimensions.FONT_SIZE_LARGE,
-                decoration: TextDecoration.underline,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
               ),
             ),
           ],
