@@ -83,6 +83,7 @@ class V1FormalPaymentController extends GetxController{
                 {
                   //set trạng thái đã thanh toán
                   dichVuRequest!.idTrangThaiThanhToan = DA_THANH_TOAN,
+                  dichVuRequest!.idTrangThaiDonDichVu = CHUA_PHAN_HOI,
                   dichVuRequest!.phiDichVu = value['phiDichVu'].toString(),
                   dichVuRequest!.khuyenMai = value['khuyenMai'].toString(),
                   dichVuRequest!.tongDon = value['tongTien'].toString(),
@@ -102,6 +103,7 @@ class V1FormalPaymentController extends GetxController{
               else if (value != null && value['type'] == 2)
                 {
                   //set trạng thái chưa thanh toán
+                  dichVuRequest!.idTrangThaiDonDichVu = CHUA_PHAN_HOI,
                   dichVuRequest!.idTrangThaiThanhToan = CHUA_THANH_TOAN,
                   dichVuRequest!.phiDichVu = value['phiDichVu'].toString(),
                   dichVuRequest!.khuyenMai = value['khuyenMai'].toString(),
