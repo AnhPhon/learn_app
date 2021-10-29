@@ -46,9 +46,9 @@ class ForgotPasswordController extends GetxController {
     if (phoneController.text == '') {
       Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
-    } else if(Validate.phone(phoneController.text.toString())){
+    } else if(!Validate.phone(phoneController.text.toString())){
       Alert.info(message: "Số điện thoại không hợp lệ");
-      return true;
+      return false;
     }
     return true;
   }

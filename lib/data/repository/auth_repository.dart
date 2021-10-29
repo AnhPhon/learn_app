@@ -68,6 +68,18 @@ class AuthRepository {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+  ///
+  /// Đăng ký bằng tài khoản số điện thoại
+  ///
+  Future<ApiResponse> registerAccount(TaiKhoanRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/register', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 
   ///
   /// Đăng xuất tài khoản số điện thoại

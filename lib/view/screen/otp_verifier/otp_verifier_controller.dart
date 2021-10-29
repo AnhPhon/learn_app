@@ -54,22 +54,22 @@ class OTPVerifierController extends GetxController {
   void onBtnCompleteTap() {
     validateOTP();
     if(hasError == false) {
-      sl.get<SharedPreferenceHelper>().resetPasswordToken.then((val){
-        final VerifyOtpRequest request = VerifyOtpRequest(otp: textEditingController.text.toString(), resetPasswordToken: val);
-        authProvider.verifyOTP(request: request, onSuccess: (status){
-          if(status){
-            if(isRegister){
-              Get.back(result: true);
-            }else{
+      if(isRegister){
+        Get.back(result: [true,textEditingController.text.toString()]);
+      }else{
+        sl.get<SharedPreferenceHelper>().resetPasswordToken.then((val){
+          final VerifyOtpRequest request = VerifyOtpRequest(otp: textEditingController.text.toString(), resetPasswordToken: val);
+          authProvider.verifyOTP(request: request, onSuccess: (status){
+            if(status){
               Get.offAndToNamed(AppRoutes.UPDATE_PASSWORD, arguments: request);
+            }else{
+              Alert.error(message: "Lỗi xác thực otp vui lòng thử lại");
             }
-          }else{
-            Alert.error(message: "Lỗi xác thực otp vui lòng thử lại");
-          }
-        }, onError: (onError){
-          print("Lỗi xác thực otp $onError");
+          }, onError: (onError){
+            print("Lỗi xác thực otp $onError");
+          });
         });
-      });
+      } 
     }
   }
     

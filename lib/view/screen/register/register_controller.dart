@@ -425,39 +425,7 @@ class RegisterController extends GetxController {
       }
       auth.diaChi = '${province!.ten!} - ${district!.ten} - ${ward!.ten}';
 
-      if(frontCMND != null){
-        imageUpdateProvider.add(file: frontCMND!, onSuccess: (data){
-           auth.hinhCMNDTruoc = data.data;
-        }, onError: (onError){
-          print("Upload CMND truoc onError $onError");
-        });
-       
-      }
-      // Upload CMND
-      if(backSideCMND != null){
-        imageUpdateProvider.add(file: backSideCMND!, onSuccess: (data){
-           auth.hinhCMNDSau = data.data;
-        }, onError: (onError){
-          print("Upload CMND sau onError $onError");
-        });
-      }
-      // Upload avatar
-      if(avatarFile != null){
-        imageUpdateProvider.add(file: avatarFile!, onSuccess: (data){
-           auth.hinhDaiDien = data.data;
-        }, onError: (onError){
-          print("Upload avatar onError $onError");
-        });
-      }
-
-      // Upload hình ảnh khuôn mat
-      if(faceFile != null){
-        imageUpdateProvider.add(file: faceFile!, onSuccess: (data){
-           auth.hinhAnhKhuonMat = data.data;
-        }, onError: (onError){
-          print("Upload khuôn mặt onError $onError");
-        });
-      }
+      
       // Đăng ký tài khoản
       registerAccount(auth);
 
@@ -471,14 +439,52 @@ class RegisterController extends GetxController {
         "phone":account.soDienThoai
       }, onSuccess: (String registerToken){
         EasyLoading.dismiss();
-        Alert.info(message: "Mã xác thực gửi số điện thoại của bạn. Xác thực hoàn tất đăng ký");
+        Alert.info(message: "Mã xác thực gửi số điện thoại của bạn. Vui lòng xác thực hoàn tất đăng ký");
+
+        account.registerToken = registerToken;
         // Go to verify page
         Get.toNamed(AppRoutes.OTP_VERIFIER, arguments: {Preferences.isRegister: true,Preferences.registerToken:registerToken})!.then((value){
-            if(value == true){
-              EasyLoading.show(status: 'loading...');
-              Future.delayed(const Duration(milliseconds: 100)).then((value){
+            if(value[0] == true && value[0] != null){
+                EasyLoading.show(status: 'loading...');
+                account.otp = value[1].toString();
+
+                // Upload Image
+                if(frontCMND != null){
+                    imageUpdateProvider.add(file: frontCMND!, onSuccess: (data){
+                      account.hinhCMNDTruoc = data.data;
+                    }, onError: (onError){
+                      print("Upload CMND truoc onError $onError");
+                    });
+                  
+                  }
+                  // Upload CMND
+                  if(backSideCMND != null){
+                    imageUpdateProvider.add(file: backSideCMND!, onSuccess: (data){
+                      account.hinhCMNDSau = data.data;
+                    }, onError: (onError){
+                      print("Upload CMND sau onError $onError");
+                    });
+                  }
+                  // Upload avatar
+                  if(avatarFile != null){
+                    imageUpdateProvider.add(file: avatarFile!, onSuccess: (data){
+                      account.hinhDaiDien = data.data;
+                    }, onError: (onError){
+                      print("Upload avatar onError $onError");
+                    });
+                  }
+
+                  // Upload hình ảnh khuôn mat
+                  if(faceFile != null){
+                    imageUpdateProvider.add(file: faceFile!, onSuccess: (data){
+                      account.hinhAnhKhuonMat = data.data;
+                    }, onError: (onError){
+                      print("Upload khuôn mặt onError $onError");
+                    });
+                  }
+
                 // Register account
-                taiKhoanProvider.add(data: account, onSuccess: (user){
+                authProvider.registerAccount(request: account, onSuccess: (user){
                   // sl.get<SharedPreferenceHelper>().saveJwtToken(user.access!);
                   // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
                   // sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
@@ -489,13 +495,13 @@ class RegisterController extends GetxController {
                   
                 }, onError: (onError){
                   EasyLoading.dismiss();
+                  Alert.error(message: "Đăng ký tài khoản thất bại");
                   print(" Lỗi đăng ký tài khoản $onError");
                 });
-              });
+
             }else{
               EasyLoading.dismiss();
               Alert.info(message: "Đăng ký tài khoản thất bại");
-              // sl.get<SharedPreferenceHelper>().removeIdNewWork()
             }
         });
 

@@ -90,6 +90,32 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
+  ///
+  /// Đăng ký tài khoản (SĐT)
+  ///
+  Future<void> registerAccount({
+    required TaiKhoanRequest request,
+    required Function(TaiKhoanResponse auth) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await authRepository!.registerAccount(request);
+    if(apiResponse.response.statusCode == null){
+      onError(apiResponse.error);
+      //EasyLoading.dismiss();
+    }
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      final TaiKhoanResponse account =
+          TaiKhoanResponse.fromJson(results['taiKhoan'] as Map<String, dynamic>);
+      account.access = results['tokens']['access']['token'].toString();
+      account.refresh = results['tokens']['refresh']['token'].toString();
+      onSuccess(account);
+    } else {
+      onError(apiResponse.error);
+    }
+  }
 
   ///
   /// Dăng xuất bằng ttài khoản (SĐT)
