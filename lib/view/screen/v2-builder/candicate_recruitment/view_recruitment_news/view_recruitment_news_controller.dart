@@ -13,7 +13,7 @@ import 'package:template/utils/alert.dart';
 
 class V2ViewRecruitmentNewsController extends GetxController {
   //Provider
-  final DanhSachLuuTinTuyenDungProvider danhSachLuuTinTuyenDungProvider =
+  final danhSachLuuTinTuyenDungProvider =
       GetIt.I.get<DanhSachLuuTinTuyenDungProvider>();
   //Repository
   DanhSachLuuTinTuyenDungRepository danhSachLuuTinTuyenDungRepository =
@@ -225,6 +225,6 @@ class V2ViewRecruitmentNewsController extends GetxController {
   /// Nhán vào nút ứng tuyển
   ///
   void onClickRecuitmentButton() {
-    Get.toNamed(AppRoutes.V2_FORM_OF_SUBMITSSION);
+    Get.toNamed('${AppRoutes.V2_FORM_OF_SUBMITSSION}?idTuyenDung=$idTuyenDung');
   }
 }

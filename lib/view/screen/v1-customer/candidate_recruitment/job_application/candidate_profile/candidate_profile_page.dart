@@ -112,7 +112,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
           ...List.generate(
               controller.dangKyViecMoiResponse.idBangBangCaps!.length,
               (index) => Text(
-                    "\nTrình độ học vấn: ${controller.onChangeNameTrinhDo(controller.dangKyViecMoiResponse.idBangBangCaps![index].idTrinhDo.toString())} \nChuyên ngành: ${controller.onChangeNameChuyenMon(controller.dangKyViecMoiResponse.idBangBangCaps![index].idChuyenMon.toString())} \nTốt nghiệp loại: ${controller.onChangeNameLoaiTotNghiep(controller.dangKyViecMoiResponse.idBangBangCaps![index].idLoaiTotNghiep.toString())} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].donViDaoTao.toString()}",
+                    "\nTrình độ học vấn: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idTrinhDo.toString()} \nChuyên ngành: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idChuyenMon.toString()} \nTốt nghiệp loại: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].idLoaiTotNghiep.toString()} \nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].donViDaoTao.toString()}",
                   )),
 
           TextHighlight(

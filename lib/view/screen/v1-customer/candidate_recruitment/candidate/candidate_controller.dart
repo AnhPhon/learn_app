@@ -49,10 +49,13 @@ class V1CandidateController extends GetxController {
   //index tab
   int currentIndex = 0;
 
-  // refresh controller for load more refresh
-  List<RefreshController>? refreshControllerList;
-  List<ScrollController> scrollControllerList =
-      List.generate(2, (_) => ScrollController());
+  //refresh
+  RefreshController refreshTinTuyenDungController = RefreshController();
+  RefreshController refreshTimUngVienController = RefreshController();
+
+  //scrollController
+  ScrollController scrollTinTuyenDungController = ScrollController();
+  ScrollController scrollTimUngVienController = ScrollController();
 
   //model value
   List<NgoaiNguResponse> ngoaiNguListModel = [];
@@ -107,9 +110,6 @@ class V1CandidateController extends GetxController {
   //isLoadingTuyenDung
   bool isLoadingTuyenDung = true;
 
-  // refresh controller for load more refresh
-  RefreshController? refreshController;
-
   //tenChuyeNganhPhu
   String tenChuyenNganhPhu = '';
 
@@ -120,11 +120,14 @@ class V1CandidateController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    refreshController ??= RefreshController();
-    //binding refresh controller
-    refreshControllerList = List.generate(2, (_) => RefreshController());
 
-    //load data tinhTp
+    //set value frist giới tính
+    gioiTinh = gioiTinhModel.first;
+    getDataNgoaiNgu();
+    getDataHinhThucLamViec();
+    getDataChuyenMon();
+    getDataSoNamKinhNghiem();
+    getDataTrinhDo();
     getDataTinhTp();
     //get userId
     sl.get<SharedPreferenceHelper>().userId.then(
@@ -135,7 +138,8 @@ class V1CandidateController extends GetxController {
           onSuccess: (value) {
             // set user
             taiKhoanResponse = value;
-            onLoadDataWithTab(select: currentIndex, isRefresh: true);
+            // onLoadDataWithTab(select: currentIndex, isRefresh: true);
+            onLoadDataTuyenDung(isRefresh: true);
             //load data frist
           },
           onError: (error) {
@@ -155,8 +159,10 @@ class V1CandidateController extends GetxController {
     // TODO: implement onClose
     searchController.dispose();
     searchFocusNode.dispose();
-    refreshController!.dispose();
-    refreshControllerList!.clear();
+    refreshTimUngVienController.dispose();
+    refreshTinTuyenDungController.dispose();
+    scrollTimUngVienController.dispose();
+    scrollTinTuyenDungController.dispose();
     super.onClose();
   }
 
@@ -174,16 +180,11 @@ class V1CandidateController extends GetxController {
     currentIndex = index;
     //load data fillter ứng viên
     if (index == 1) {
-      getDataNgoaiNgu();
-      getDataHinhThucLamViec();
-      // getDataTinhTp();
-      getDataChuyenMon();
-      getDataSoNamKinhNghiem();
-      getDataTrinhDo();
-      //set value frist giới tính
-      gioiTinh = gioiTinhModel.first;
+      //get data ứng viên
+      getDataSeach(textFilter: '', isRefresh: true);
+    } else {
+      onLoadDataTuyenDung(isRefresh: true);
     }
-    onLoadDataWithTab(select: index, isRefresh: true);
     update();
   }
 
@@ -207,14 +208,17 @@ class V1CandidateController extends GetxController {
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {
-            refreshControllerList![currentIndex].loadNoData();
+            print('1 nodata');
+            refreshTinTuyenDungController.loadNoData();
           } else if (isRefresh) {
             //check refresh
             tuyenDungListModel = value;
-            refreshControllerList![currentIndex].refreshCompleted();
+            refreshTinTuyenDungController.refreshCompleted();
+            print('2 isRefresh');
           } else {
             tuyenDungListModel = tuyenDungListModel.toList() + value;
-            refreshControllerList![currentIndex].loadComplete();
+            refreshTinTuyenDungController.loadComplete();
+            print('3 loading');
           }
           isLoadingTuyenDung = false;
           update();
@@ -224,18 +228,33 @@ class V1CandidateController extends GetxController {
   }
 
   ///
-  ///onRefresh
+  ///onRefreshTinTuyenDung
   ///
-  Future onRefresh() async {
-    refreshControllerList![currentIndex].resetNoData();
-    onLoadDataWithTab(select: currentIndex, isRefresh: true);
+  Future onRefreshTinTuyenDung() async {
+    refreshTinTuyenDungController.resetNoData();
+    onLoadDataTuyenDung(isRefresh: true);
   }
 
   ///
-  ///onLoadDataTuyenDung
+  ///onLoadingTinTuyenDung
   ///
-  Future onLoading() async {
-    onLoadDataWithTab(select: currentIndex, isRefresh: false);
+  Future onLoadingTinTuyenDung() async {
+    onLoadDataTuyenDung(isRefresh: false);
+  }
+
+  ///
+  ///onRefreshTimUngVien
+  ///
+  Future onRefreshTimUngVien() async {
+    refreshTimUngVienController.resetNoData();
+    getDataSeach(textFilter: '', isRefresh: true);
+  }
+
+  ///
+  ///onLoadingTimUngVien
+  ///
+  Future onLoadingTimUngVien() async {
+    getDataSeach(textFilter: conditionFilter, isRefresh: false);
   }
 
   ///
@@ -256,6 +275,7 @@ class V1CandidateController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
+    print('onChangeNameTinhTp');
     return tinhTpListModel.firstWhere((element) => element.id == id).ten;
   }
 
@@ -682,17 +702,17 @@ class V1CandidateController extends GetxController {
           print('currentIndex $currentIndex');
           //check data empty
           if (value.isEmpty) {
-            refreshControllerList![currentIndex].loadNoData();
+            refreshTimUngVienController.loadNoData();
             print('1 no data');
           } else {
             if (isRefresh || isOnChangeSearch) {
               //check refresh
               dangKyViecMoiListModel = value;
-              refreshControllerList![currentIndex].refreshCompleted();
+              refreshTimUngVienController.refreshCompleted();
+              print('2 isRefresh');
             } else {
               dangKyViecMoiListModel = dangKyViecMoiListModel.toList() + value;
-              // dangKyViecMoiListModel.addAll(value);
-              refreshControllerList![currentIndex].loadComplete();
+              refreshTimUngVienController.loadComplete();
               print('3 loading');
             }
           }

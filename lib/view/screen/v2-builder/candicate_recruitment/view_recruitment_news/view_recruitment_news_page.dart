@@ -248,7 +248,7 @@ class V2ViewRecruitmentNewsPage
           SmallButton(
             title: 'Ứng tuyển',
             color: ColorResources.RED,
-            onPressed: () => {},
+            onPressed: controller.onClickRecuitmentButton,
           )
         ],
       ),

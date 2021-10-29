@@ -68,11 +68,11 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![0],
-        scrollController: controller.scrollControllerList[index],
+        controller: controller.refreshTinTuyenDungController,
+        scrollController: controller.scrollTinTuyenDungController,
         enablePullUp: true,
-        onLoading: controller.onLoading,
-        onRefresh: controller.onRefresh,
+        onRefresh: controller.onRefreshTinTuyenDung,
+        onLoading: controller.onLoadingTinTuyenDung,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",
@@ -118,11 +118,11 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![1],
+        controller: controller.refreshTimUngVienController,
         enablePullUp: true,
-        scrollController: controller.scrollControllerList[index],
-        onLoading: controller.onLoading,
-        onRefresh: controller.onRefresh,
+        scrollController: controller.scrollTimUngVienController,
+        onLoading: controller.onLoadingTimUngVien,
+        onRefresh: controller.onRefreshTimUngVien,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",

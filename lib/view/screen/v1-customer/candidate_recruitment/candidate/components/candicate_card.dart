@@ -52,7 +52,7 @@ class CandidateCard extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
                         child: Text(
-                          "${dangKyViecMoiResponse!.maSoHoSo}",
+                          dangKyViecMoiResponse!.maSoHoSo.toString(),
                           style: const TextStyle(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT,
                           ),
