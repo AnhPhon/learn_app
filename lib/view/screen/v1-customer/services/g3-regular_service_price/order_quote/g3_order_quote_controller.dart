@@ -108,6 +108,7 @@ class V1G3OrderQuoteController extends GetxController{
   ///
   void onNextPage(){
     if(validate()){
+      request!.idBangGiaDonHang = subServices!.id;
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
       request!.soLuongYeuCau = personNumberController.text.toString();
