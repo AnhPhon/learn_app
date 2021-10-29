@@ -75,26 +75,58 @@ class V4HomeController extends GetxController {
     // init program run
     initProgramRun();
 
+    //Reset isSelected
+    resetIsSelected();
+
     //Check isSelected
     getIsSelected();
+
+    //Reset isReport
+    resetIsReport();
 
     //Check isReport
     getIsReport();
   }
 
   ///
-  /// Get isSelected
+  ///Reset isSelected
   ///
-  void getIsSelected() {
+  void resetIsSelected() {
     if (TimeOfDay.now().hour.toDouble() +
             (TimeOfDay.now().minute.toDouble() / 60) >
         17) {
-      isSelected = false;
-      print("Phone 1: $isSelected");
-    } else {
+      sl.get<SharedPreferenceHelper>().saveIsSelected(isSelected: false);
       sl.get<SharedPreferenceHelper>().isSelected.then((value) {
         isSelected = value;
-        print("Phone 2 : $isSelected");
+        print("Phone1: $isSelected");
+      });
+    }
+  }
+
+  ///
+  /// Get isSelected
+  ///
+  void getIsSelected() {
+    sl.get<SharedPreferenceHelper>().isSelected.then((value) {
+      isSelected = value;
+      print("Phone 2 : $isSelected");
+    });
+  }
+
+  ///
+  ///Reset IsReprot
+  ///
+  void resetIsReport() {
+    if (7 <
+            TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) &&
+        TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) <
+            17) {
+      sl.get<SharedPreferenceHelper>().saveIsReport(isReport: false);
+      sl.get<SharedPreferenceHelper>().isReport.then((value) {
+        isReport = value;
+        print("Phone3: $isReport");
       });
     }
   }
@@ -103,20 +135,10 @@ class V4HomeController extends GetxController {
   /// Get isReport
   ///
   void getIsReport() {
-    if (7 <
-            TimeOfDay.now().hour.toDouble() +
-                (TimeOfDay.now().minute.toDouble() / 60) &&
-        TimeOfDay.now().hour.toDouble() +
-                (TimeOfDay.now().minute.toDouble() / 60) <
-            17) {
-      isReport = false;
-      print("phon2: $isReport");
-    } else {
-      sl.get<SharedPreferenceHelper>().isReport.then((value) {
-        isReport = value;
-        print("Phone2: $isReport");
-      });
-    }
+    sl.get<SharedPreferenceHelper>().isReport.then((value) {
+      isReport = value;
+      print("Phone4: $isReport");
+    });
   }
 
   ///
