@@ -75,10 +75,10 @@ class V1G4OrderQuoteController extends GetxController{
       request!.idBangGiaDonHang  = work!.id;
       request!.moTa = descController.text.toString();
       request!.soTien = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();//priceController.text.toString().replaceAll(',', '');//work.giaTien;
+      request!.soLuongYeuCau = personNumberController.text.toString();
+      request!.soNgay = timeNumberController.text.toString();
       //request!.phiDichVu = '0';
       //request!.khuyenMai = '0';
-      // request!.soLuongYeuCau = personNumberController.text.toString();
-      // request!.soNgay = timeNumberController.text.toString();
       //request!.tongDon = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();
       Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: request);
       
