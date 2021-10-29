@@ -161,6 +161,12 @@ class AppRoutes {
   static const String V1_ACCOUNT = '/v1_account_page';
   static const String V1_REFERENCE_PRICE_TABLE = '/v1_reference_price_table';
   static const String V1_ORDER_DETAIL = '/v1_order_detail';
+  static const String V1_SERVICE_REVIEW_G1 = '/v1_service_review_g1';
+  static const String V1_SERVICE_REVIEW_G2 = '/v1_service_review_g2';
+  static const String V1_SERVICE_REVIEW_G3 = '/v1_service_review_g3';
+  static const String V1_SERVICE_REVIEW_G4 = '/v1_service_review_g4';
+  static const String V1_SERVICE_REVIEW_G5 = '/v1_service_review_g5';
+  static const String V1_SERVICE_REVIEW_G6 = '/v1_service_review_g6';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';

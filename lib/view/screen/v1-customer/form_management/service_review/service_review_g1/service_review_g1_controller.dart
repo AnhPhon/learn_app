@@ -5,7 +5,7 @@ import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class V1JobDetailController extends GetxController {
+class V1ServiceReviewG1Controller extends GetxController {
   //DonDichVu
   DonDichVuResponse donDichVuResponse = DonDichVuResponse();
   List<String> hinhAnhBanVe = [];
@@ -14,27 +14,21 @@ class V1JobDetailController extends GetxController {
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   List<VatTuResponse> vatTuList = [];
 
-  //title appbar
-  String title = "Xem đơn công việc";
-
   //loading
   bool isLoading = true;
-
-  //note
-  String note =
-      "Đối với dự án có khối lượng lớn, gửi bản vẽ qua email baogia5sao@gmail.com; chúng tôi sẽ có đội ngũ đến khảo sát và báo giá.\nHoặc khách hàng yêu cầu chúng tôi sẽ đến khảo sát báo giá trực tiếp ";
 
   @override
   void onInit() {
     super.onInit();
-    donDichVuResponse = Get.arguments as DonDichVuResponse;
+    if (Get.arguments != null) {
+      donDichVuResponse = Get.arguments as DonDichVuResponse;
+    }
     // lấy hình ảnh bảng vẽ
     for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
       if (banVe.trim().isNotEmpty) {
         hinhAnhBanVe.add(banVe);
       }
     }
-    getVatTu();
   }
 
   ///

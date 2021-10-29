@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/image_list_horizontal.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_controller.dart';
 
 class V1JobDetailPage extends GetView<V1JobDetailController> {
-  ///
-  ///build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1JobDetailController>(
@@ -24,7 +23,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                   //title
                   _textTitle(
                     context,
-                    title: "Dịch vụ xây dựng toàn diện",
+                    title: controller.donDichVuResponse.tieuDe.toString(),
                   ),
 
                   //title list
@@ -34,7 +33,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _richText(
                         context,
                         text1: "Công việc: ",
-                        text2: "Thợ ốp lát công trình 5 sao",
+                        text2: controller.donDichVuResponse.moTa.toString(),
                       ),
 
                       const SizedBox(
@@ -44,7 +43,8 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _richText(
                         context,
                         text1: "Mô tả công việc: ",
-                        text2: "Thợ ốp công trình 5 sao của công trình",
+                        text2:
+                            controller.donDichVuResponse.moTaChiTiet.toString(),
                       ),
                       const SizedBox(
                         height: Dimensions.MARGIN_SIZE_SMALL,
@@ -53,7 +53,10 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       _richText(
                         context,
                         text1: "Thời gian: ",
-                        text2: "12-09-2021 đến 10-11-2021",
+                        listText2: controller
+                            .donDichVuResponse.idThoiGianLamViecs!
+                            .map((e) => e.tieuDe.toString())
+                            .toList(),
                       ),
 
                       const SizedBox(
@@ -74,17 +77,24 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                       ),
 
                       //job container
-                      _jobContainer(context,
-                          name: "Xi măng",
-                          specifications: "Kim đỉnh",
-                          quanlity: "5",
-                          unit: "Tấn"),
-
-                      _jobContainer(context,
-                          name: "Xi măng",
-                          specifications: "Kim đỉnh",
-                          quanlity: "5",
-                          unit: "Tấn"),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.vatTuList.length,
+                        itemBuilder: (BuildContext ctx, int index) {
+                          return _jobContainer(
+                            context,
+                            name:
+                                controller.vatTuList[index].tenVatTu.toString(),
+                            specifications:
+                                controller.vatTuList[index].quyCach.toString(),
+                            weight: "controller.vatTuList[index].",
+                            unit: controller.vatTuList[index].donVi.toString(),
+                            price:
+                                controller.vatTuList[index].donGia.toString(),
+                          );
+                        },
+                      ),
 
                       //file picker
                       _filePicker(context),
@@ -93,21 +103,14 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         height: Dimensions.MARGIN_SIZE_DEFAULT,
                       ),
 
-                      // title image container
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: Text(
-                          "Hình ảnh bảng khối lượng\n(Bảng in hoặc viết bằng tay nếu có)",
-                          style: TextStyle(
-                              fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
-                              fontWeight: FontWeight.w600),
-                        ),
+                      //hinh anh bang khoi luong
+                      ImageListHorizontal(
+                        label:
+                            "Hình ảnh bảng khối lượng\n(Bảng in hoặc viết bằng tay nếu có)",
+                        labelBold: true,
+                        imageList:
+                            controller.donDichVuResponse.hinhAnhBanKhoiLuongs!,
                       ),
-
-                      //image list
-                      _imageList(context),
 
                       const SizedBox(
                         height: Dimensions.MARGIN_SIZE_SMALL,
@@ -126,8 +129,12 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                         ),
                       ),
 
-                      //image list
-                      _imageList(context),
+                      //hinh anh ban ve
+                      ImageListHorizontal(
+                        label: "Hình ảnh bản vẽ (nếu có)",
+                        labelBold: true,
+                        imageList: controller.hinhAnhBanVe,
+                      ),
 
                       //title note
                       const Padding(
@@ -179,7 +186,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   ///rich text title
   ///
   Widget _richText(BuildContext context,
-      {required String text1, required String text2}) {
+      {required String text1, String? text2, List<String>? listText2}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -192,12 +199,29 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                 fontSize: Dimensions.FONT_SIZE_LARGE,
                 fontWeight: FontWeight.bold),
             children: [
-              TextSpan(
+              if (listText2 != null)
+                ...listText2
+                    .map(
+                      (e) => TextSpan(
+                        text:
+                            "$e${e != controller.donDichVuResponse.idThoiGianLamViecs!.last.tieuDe ? ', ' : ''}",
+                        style: TextStyle(
+                          height: 1.5,
+                          color: ColorResources.BLACK.withOpacity(.75),
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              if (text2 != null)
+                TextSpan(
                   text: text2,
                   style: TextStyle(
-                      height: 1.5,
-                      color: ColorResources.BLACK.withOpacity(.75),
-                      fontSize: Dimensions.FONT_SIZE_LARGE))
+                    height: 1.5,
+                    color: ColorResources.BLACK.withOpacity(.75),
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                  ),
+                ),
             ]),
       ),
     );
@@ -210,8 +234,9 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
     BuildContext context, {
     required String name,
     required String unit,
-    required String quanlity,
+    required String weight,
     required String specifications,
+    required String price,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -242,9 +267,12 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
             const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
             Text("Quy cách: $specifications"),
             const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-            Text("Số lượng: $quanlity"),
+            Text("Khối lượng: $weight"),
             const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
             Text("Đơn vị: $unit"),
+            const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+            Text(
+                "Đơn giá: ${PriceConverter.convertPrice(context, double.parse(price))}"),
             const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
           ],
         ),
@@ -256,26 +284,32 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   ///file picker
   ///
   Widget _filePicker(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+    return GestureDetector(
+      onTap: () => controller.downloadFile(
+        url: controller.donDichVuResponse.file.toString(),
       ),
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-      ),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-        color: ColorResources.WHITE,
-        boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
-        ],
-      ),
-      child: const Text(
-        "File báo giá khối lượng.doc",
-        style: TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_SMALL,
+          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: Dimensions.PADDING_SIZE_SMALL,
+        ),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          color: ColorResources.WHITE,
+          boxShadow: [
+            BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
+          ],
+        ),
+        child: const Text(
+          "File báo giá khối lượng.doc",
+          style: TextStyle(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+        ),
       ),
     );
   }
@@ -283,7 +317,10 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   ///
   ///image list
   ///
-  Widget _imageList(BuildContext context) {
+  Widget _imageList(
+    BuildContext context, {
+    required List imageList,
+  }) {
     return Container(
       padding: EdgeInsets.all(DeviceUtils.getScaledSize(context, 0.025)),
       margin: const EdgeInsets.symmetric(
@@ -298,20 +335,15 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: 5,
+          itemCount: imageList.length,
           itemBuilder: (BuildContext context, index) {
             return Padding(
               padding: const EdgeInsets.only(
                   right: Dimensions.PADDING_SIZE_EXTRA_SMALL + 3),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                child: Image.asset(
-                  Images.newsTemplate,
-                  fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, .122),
-                  width: DeviceUtils.getScaledWidth(context, .254),
-                ),
-              ),
+              child: FadeInImageCustom(
+                  urlImage: imageList[index].toString(),
+                  height: .122,
+                  width: .254),
             );
           }),
     );
