@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/date_converter.dart';
@@ -75,7 +76,11 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
   Widget thongSoKyThuat({required V1ServiceReviewG6Controller controller}) {
     return Column(
       children: [
-        const Label(label: "Thông số kỹ thuật", obligatory: true),
+        const Label(
+          label: "Thông số kỹ thuật",
+          obligatory: true,
+          topPadding: 0,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_LARGE * 2,
@@ -103,7 +108,11 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
   Widget thoiGianLamViec({required V1ServiceReviewG6Controller controller}) {
     return Column(
       children: [
-        const Label(label: "Thời gian làm trong ngày", obligatory: true),
+        const Label(
+          label: "Thời gian làm trong ngày",
+          obligatory: true,
+          topPadding: 0,
+        ),
         Padding(
           padding:
               const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
@@ -137,8 +146,8 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
   Widget workContent({required V1ServiceReviewG6Controller controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -160,11 +169,11 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+          Padding(
+            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Bề rộng mặt đường làm việc: ",
-              content: "khôngtimf thấy",
+              content: "${controller.donDichVuResponse.beRongDiemNhan}m",
             ),
           ),
           Padding(
@@ -189,9 +198,10 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Label(
-                  label: "Hình ảnh bản vẽ (nếu có)",
-                  obligatory: false,
-                  paddingTitle: 0),
+                label: "Hình ảnh bản vẽ",
+                obligatory: false,
+                paddingTitle: 0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_DEFAULT),

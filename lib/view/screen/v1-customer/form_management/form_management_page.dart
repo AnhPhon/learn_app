@@ -125,14 +125,19 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
             shrinkWrap: true,
             itemCount: controller.donDichVuList.length,
             itemBuilder: (BuildContext ctx, int index) {
-              return ItemListWidget(
-                title: controller.donDichVuList[index].tieuDe.toString(),
-                onTap: () => controller.onProductResponseClick(index: index),
-                urlImage:
-                    controller.donDichVuList[index].hinhAnhBaoGia.toString(),
-                rowText2: DateConverter.formatDateTimeFull(
-                  dateTime:
-                      controller.donDichVuList[index].createdAt.toString(),
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: ItemListWidget(
+                  title: controller.donDichVuList[index].tieuDe.toString(),
+                  onTap: () => controller.onProductResponseClick(index: index),
+                  urlImage:
+                      controller.donDichVuList[index].hinhAnhBaoGia.toString(),
+                  rowText2: DateConverter.formatDateTimeFull(
+                    dateTime:
+                        controller.donDichVuList[index].createdAt.toString(),
+                  ),
                 ),
               );
             },

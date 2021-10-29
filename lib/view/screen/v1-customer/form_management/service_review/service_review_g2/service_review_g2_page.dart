@@ -37,7 +37,7 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
                 //hinh anh bang khoi luong cong viec
                 imageMaterial(controller: controller),
 
-                //thieu hinh anh hien trang, hinh anh san pham mau, mo ta khoi luong cong viec
+                //hinh anh san pham mau, mo ta khoi luong cong viec
 
                 //file
                 attchFile(context, controller: controller),
@@ -52,7 +52,10 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///
   Widget tieuDeCongViec({required V1ServiceReviewG2Controller controller}) {
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+      padding: const EdgeInsets.only(
+        top: Dimensions.PADDING_SIZE_SMALL,
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: TextHighlight(
           title: "Tiêu đề công việc: ",
           content: controller.donDichVuResponse.tieuDe!),
@@ -118,14 +121,50 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   }
 
   ///
+  ///hinhAnhHienTrang
+  ///
+  Widget hinhAnhHienTrang({required V1ServiceReviewG2Controller controller}) {
+    return controller.hinhAnhChiTiet.isEmpty
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Label(
+                label: "Hình ảnh hiện trạng",
+                obligatory: false,
+                paddingTitle: 0,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: Text(
+                  "(Những công viêc mang tính chất cải tạo cần nhiều hình ảnh chi tiết, cụ thể, rõ ràng để báo giá sát nhất,...)",
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: ImageListHorizontal(
+                  imageList: controller.hinhAnhChiTiet,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+          );
+  }
+
+  ///
   ///mo ta cong viec
   ///
   Widget moTaYeuCau({required V1ServiceReviewG2Controller controller}) {
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: TextHighlight(
-          title: "Mô tả yêu cầu công việc: ",
-          content: controller.donDichVuResponse.moTa!,),
+        title: "Mô tả yêu cầu công việc: ",
+        content: controller.donDichVuResponse.moTa!,
+      ),
     );
   }
 
@@ -144,12 +183,14 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
                   paddingTitle: 0),
               const Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_DEFAULT,),
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
                 child: Text("(Bảng in hoặc viết bằng tay nếu có)"),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_DEFAULT,),
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
                 child: ImageListHorizontal(
                   imageList: controller.donDichVuResponse.hinhAnhBanKhoiLuongs!,
                   padding: EdgeInsets.zero,

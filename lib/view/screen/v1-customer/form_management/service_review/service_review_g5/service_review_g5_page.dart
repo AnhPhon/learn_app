@@ -71,7 +71,11 @@ class V1ServiceReviewG5Page extends GetView<V1ServiceReviewG5Controller> {
   Widget thongSoKyThuat({required V1ServiceReviewG5Controller controller}) {
     return Column(
       children: [
-        const Label(label: "Thông số kỹ thuật", obligatory: true),
+        const Label(
+          label: "Thông số kỹ thuật",
+          obligatory: true,
+          topPadding: 0,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_LARGE * 2,
@@ -99,7 +103,11 @@ class V1ServiceReviewG5Page extends GetView<V1ServiceReviewG5Controller> {
   Widget thoiGianLamViec({required V1ServiceReviewG5Controller controller}) {
     return Column(
       children: [
-        const Label(label: "Thời gian làm trong ngày", obligatory: true),
+        const Label(
+          label: "Thời gian làm trong ngày",
+          obligatory: true,
+          topPadding: 0,
+        ),
         Padding(
           padding:
               const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
@@ -133,8 +141,8 @@ class V1ServiceReviewG5Page extends GetView<V1ServiceReviewG5Controller> {
   Widget workContent({required V1ServiceReviewG5Controller controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

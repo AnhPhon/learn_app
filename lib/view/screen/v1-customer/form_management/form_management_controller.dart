@@ -68,7 +68,7 @@ class V1FormManagementController extends GetxController {
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
+          "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
       // "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
       onSuccess: (data) {
         print(data.length);
@@ -134,8 +134,9 @@ class V1FormManagementController extends GetxController {
   /// go to Product Response
   ///
   void onProductResponseClick({required int index}) {
-    print(donDichVuList[index].idNhomDichVu!.id);
+    print(donDichVuList[index].id);
     if (donDichVuList[index].idNhomDichVu!.id == NHOM_1) {
+      print("NHOM_1");
       Get.toNamed(
         (currentIndex == 0)
             ? AppRoutes.V1_BUILD_ORDER_FEEDBACK
@@ -143,6 +144,7 @@ class V1FormManagementController extends GetxController {
         arguments: donDichVuList[index],
       );
     } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_2) {
+      print("NHOM_2");
       Get.toNamed(
         (currentIndex == 0)
             ? AppRoutes.V1_BUILD_ORDER_FEEDBACK
@@ -151,17 +153,20 @@ class V1FormManagementController extends GetxController {
       );
     } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_3 &&
         currentIndex == 1) {
+      print("NHOM_3");
       Get.toNamed(
         AppRoutes.V1_SERVICE_REVIEW_G3,
         arguments: donDichVuList[index],
       );
     } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_4 &&
         currentIndex == 1) {
+      print("NHOM_4");
       Get.toNamed(
         AppRoutes.V1_SERVICE_REVIEW_G4,
         arguments: donDichVuList[index],
       );
     } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_5) {
+      print("NHOM_5");
       Get.toNamed(
         (currentIndex == 0)
             ? AppRoutes.V1_GROUP_ORDER_FEEDBACK5
@@ -169,6 +174,7 @@ class V1FormManagementController extends GetxController {
         arguments: donDichVuList[index],
       );
     } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_6) {
+      print("NHOM_6");
       Get.toNamed(
         (currentIndex == 0)
             ? AppRoutes.V1_GROUP_ORDER_FEEDBACK6

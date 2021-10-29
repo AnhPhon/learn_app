@@ -1,22 +1,18 @@
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/data/model/response/loai_cong_viec_response.dart';
-import 'package:template/provider/loai_cong_viec_provider.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 
 class V1ServiceReviewG3Controller extends GetxController {
   //DonDichVu
   DonDichVuResponse donDichVuResponse = DonDichVuResponse();
 
-  //loai cong viec
-  LoaiCongViecProvider loaiCongViecProvider =
-      GetIt.I.get<LoaiCongViecProvider>();
-  LoaiCongViecResponse loaiCongViecResponse = LoaiCongViecResponse();
-
   // Chọn thời gian làm việc
   bool tommorow = false;
   bool afternoon = false;
   bool tonight = false;
+
+  // 1 nam 2 nữ 3 khác
+  GENDER gender = GENDER.Khac;
 
   @override
   void onInit() {
@@ -24,8 +20,8 @@ class V1ServiceReviewG3Controller extends GetxController {
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
     }
-    getLoaiDichVu();
     thoiGianLamViec();
+    gioiTinh();
   }
 
   ///
@@ -44,18 +40,18 @@ class V1ServiceReviewG3Controller extends GetxController {
   }
 
   ///
-  ///loai dich vu
+  ///gioi tinh
   ///
-  void getLoaiDichVu() {
-    loaiCongViecProvider.find(
-      id: donDichVuResponse.idBangGiaDonHang!.idLoaiCongViec.toString(),
-      onSuccess: (data) {
-        loaiCongViecResponse = data;
-        update();
-      },
-      onError: (error) {
-        print("V1ServiceReviewG3Controller getLoaiDichVu onError $error");
-      },
-    );
+  void gioiTinh() {
+    if (donDichVuResponse.gioiTinh!
+        .toLowerCase()
+        .contains('Nam'.toLowerCase())) {
+      gender = GENDER.Nam;
+    } else if (donDichVuResponse.gioiTinh!
+        .toLowerCase()
+        .contains('Nữ'.toLowerCase())) {
+      gender = GENDER.Nu;
+    }
+    update();
   }
 }

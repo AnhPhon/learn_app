@@ -29,6 +29,7 @@ class V1ServiceReviewG1Controller extends GetxController {
         hinhAnhBanVe.add(banVe);
       }
     }
+    getVatTu();
   }
 
   ///
@@ -40,6 +41,7 @@ class V1ServiceReviewG1Controller extends GetxController {
       limit: 100,
       filter: "&idDonDichVu=${donDichVuResponse.id}",
       onSuccess: (data) {
+        print(data.length);
         vatTuList = data;
         isLoading = false;
         update();
