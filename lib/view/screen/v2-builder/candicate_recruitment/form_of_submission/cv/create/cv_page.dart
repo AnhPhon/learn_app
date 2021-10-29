@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -14,22 +17,30 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/components
 import 'package:template/view/screen/v2-builder/candicate_recruitment/form_of_submission/cv/create/cv_controller.dart';
 
 class V2CvPage extends GetView<V2CvController> {
-  final _controller = Get.find<V2CvController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Tin tuyển dụng"),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            form(context, _controller),
-            button(),
-            const SizedBox(
-              height: Dimensions.SIZE_LARGE,
-            )
-          ],
-        ),
-      ),
+      body: GetBuilder(
+          init: V2CvController(),
+          builder: (V2CvController controller) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  form(context, controller),
+                  button(controller: controller),
+                  const SizedBox(
+                    height: Dimensions.SIZE_LARGE,
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 
@@ -38,9 +49,14 @@ class V2CvPage extends GetView<V2CvController> {
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
       child: TextHighlight(
         title: title,
+        titleStyle: const TextStyle(
+          fontSize: Dimensions.FONT_SIZE_LARGE,
+          color: ColorResources.BLACK,
+          fontWeight: FontWeight.bold,
+        ),
         content: content,
         style: const TextStyle(
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
         ),
       ),
     );
@@ -55,16 +71,18 @@ class V2CvPage extends GetView<V2CvController> {
       children: [
         // Tiêu đề cần tuyển
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "Tiêu đề công việc",
+          fontSize: Dimensions.FONT_SIZE_LARGE,
+          holdplacer: "Nhập tiêu đề",
           hidden: false,
           label: "Tiêu đề",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
+          focusNode: controller.titleFocusNode,
         ),
 
         Padding(
@@ -82,18 +100,60 @@ class V2CvPage extends GetView<V2CvController> {
           ),
         ),
 
-        //Chỗ ở hiện tại
+        // Địa chỉ chọn tỉnh
+        DropDownButton<TinhTpResponse>(
+            onChanged: (item) => controller.onChangedTinhTp(item!),
+            data: controller.tinhTpListModel,
+            width: DeviceUtils.getScaledWidth(context, 1),
+            value: controller.tinhTp,
+            obligatory: true,
+            label: "Tỉnh/Tp",
+            hint: "Chọn tỉnh",
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_LARGE)),
+
+        // Địa chỉ chọn huyện
+        DropDownButton<QuanHuyenResponse>(
+            onChanged: (item) => controller.onChangedQuanHuyen(item!),
+            data: controller.quanHuyenListModel,
+            width: DeviceUtils.getScaledWidth(context, 1),
+            value: controller.quanHuyenResponse,
+            obligatory: true,
+            label: "Quận/Huyện",
+            hint: "Chọn quận/huyện",
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_LARGE)),
+        // Địa chỉ chọn xã
+        DropDownButton<PhuongXaResponse>(
+            onChanged: (item) => controller.onChangedPhuongXa(item!),
+            data: controller.phuongXaListModel,
+            width: DeviceUtils.getScaledWidth(context, 1),
+            value: controller.phuongXaResponse,
+            obligatory: true,
+            label: "Phường/Xã",
+            hint: "Chọn phường/xã",
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+                top: Dimensions.PADDING_SIZE_LARGE)),
+        //Địa chỉ
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          holdplacer: "123B/22 Thanh Khê - Đà Nẵng",
+          focusNode: controller.addressFocusNode,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
+          holdplacer: "Nhập địa chỉ",
           hidden: false,
-          label: "Chỗ ở hiện tại",
-          obligatory: true,
+          label: "Địa chỉ",
+          obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+          textInputAction: TextInputAction.next,
         ),
 
         // hôn nhân
@@ -148,7 +208,7 @@ class V2CvPage extends GetView<V2CvController> {
   ///
   /// Button
   ///
-  Widget button() {
+  Widget button({required V2CvController controller}) {
     return Padding(
       padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       child: Row(
@@ -158,7 +218,7 @@ class V2CvPage extends GetView<V2CvController> {
               title: "Xem trước",
               color: ColorResources.RED,
               onPressed: () {
-                _controller.onClickPreviewButton();
+                controller.onClickPreviewButton();
               }),
           SmallButton(
               title: "Nộp hồ sơ",
