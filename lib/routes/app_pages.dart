@@ -176,6 +176,12 @@ import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56
 import 'package:template/view/screen/v2-builder/shorthanded_group5/shorthanded_group5_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/winning_bid/winning_bid_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group6/shorthanded_group6_page.dart';
+import 'package:template/view/screen/v2-builder/work_register/create/work_create_binding.dart';
+import 'package:template/view/screen/v2-builder/work_register/create/work_create_page.dart';
+import 'package:template/view/screen/v2-builder/work_register/done/work_done_binding.dart';
+import 'package:template/view/screen/v2-builder/work_register/done/work_done_page.dart';
+import 'package:template/view/screen/v2-builder/work_register/preview/work_preview_binding.dart';
+import 'package:template/view/screen/v2-builder/work_register/preview/work_preview_page.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_binding.dart';
 import 'package:template/view/screen/v2-builder/work_register/work_register_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/detail_work_done/detail_work_done_binding.dart';
@@ -544,6 +550,7 @@ class AppPages {
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
     ),
+
     ///
     /// Xem chi tiết thông báo
     ///
@@ -954,6 +961,21 @@ class AppPages {
       name: AppRoutes.V2_WORK_REGISTER,
       page: () => V2WorkRegisterPage(),
       binding: V2WorkRegisterBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_CREATE,
+      page: () => V2WorkCreatePage(),
+      binding: V2WorkCreateBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_WORK_PREVIEW,
+      page: () => V2WorkPreviewPage(),
+      binding: V2WorkPreviewBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_REGISTER_DONE,
+      page: () => V2RegisterDonePage(),
+      binding: V2RegisterDoneBinding(),
     ),
 
     GetPage(

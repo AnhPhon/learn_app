@@ -39,11 +39,7 @@ class TextFieldDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-<<<<<<< HEAD
-      padding: EdgeInsets.only(top: paddingTop!),
-=======
       padding: padding ?? EdgeInsets.zero,
->>>>>>> origin/develop
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,21 +69,8 @@ class TextFieldDate extends StatelessWidget {
                 ],
               ),
             ),
-<<<<<<< HEAD
-          TextField(
-            readOnly: true,
-            enableInteractiveSelection: false,
-            textInputAction: TextInputAction.done,
-            keyboardType: isDate ? null : typeInput,
-            textAlignVertical: TextAlignVertical.center,
-            maxLines: area! ? 3 : 1,
-            enabled: allowEdit,
-            controller: controller,
-            onTap: (isDate == true)
-=======
           GestureDetector(
             onTap: isDate
->>>>>>> origin/develop
                 ? () {
                     showDatePicker(
                       context: context,
@@ -95,10 +78,6 @@ class TextFieldDate extends StatelessWidget {
                       firstDate: DateTime(2001),
                       lastDate: DateTime(2100),
                     ).then((value) {
-<<<<<<< HEAD
-                      controller.text = formatDate(
-                          "${value!.year}-${value.month}-${value.day}");
-=======
                       isToHour!
                           ? controller.text =
                               "${value!.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
@@ -112,7 +91,6 @@ class TextFieldDate extends StatelessWidget {
                               "${value.hour}:${value.minute} ${value.day}-${value.month}-${value.year}"
                           : controller.text =
                               "${value.day}-${value.month}-${value.year}";
->>>>>>> origin/develop
                     });
                   }
                 : () {},
@@ -144,48 +122,6 @@ class TextFieldDate extends StatelessWidget {
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
-<<<<<<< HEAD
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.LIGHT_BLACK),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.LIGHT_BLACK),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: ColorResources.LIGHT_BLACK),
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                ),
-                hintText: holdplacer,
-                filled: true,
-                fillColor: Colors.transparent,
-                suffixIconConstraints: const BoxConstraints(
-                  maxHeight: Dimensions.PADDING_SIZE_LARGE,
-                ),
-                suffixIcon: (isDate == true)
-                    ? const Padding(
-                        padding: EdgeInsets.only(
-                            right: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                        child: Icon(
-                          Icons.date_range,
-                          size: Dimensions.ICON_SIZE_SMALL,
-                          color: ColorResources.LIGHT_BLACK,
-                        ),
-                      )
-                    : null),
-=======
                     vertical: Dimensions.PADDING_SIZE_DEFAULT + 3,
                   ),
                   border: OutlineInputBorder(
@@ -230,7 +166,6 @@ class TextFieldDate extends StatelessWidget {
                         )
                       : null),
             ),
->>>>>>> origin/develop
           ),
         ],
       ),

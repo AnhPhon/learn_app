@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/drop_down_button_hide_under_line_widget.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/basewidget/widgets/label_dropdown.dart';
 import 'package:template/view/basewidget/widgets/label_input.dart';
@@ -16,132 +22,130 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const DrawerWidget(),
-        appBar: AppBarWidget(title: controller.title),
-        body: GetBuilder<V2WorkRegisterController>(
-            init: V2WorkRegisterController(),
-            builder: (V2WorkRegisterController controller) {
-              if (controller.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return SingleChildScrollView(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Column(
-                    children: [
-                      // nhóm công việc phù hợp
-                      _dropdownWidget(
-                        "Nhóm công việc phù hợp",
-                        controller.nhomCongViecController,
-                        true,
-                        context,
-                        controller.idNhomCongViec,
-                        controller.nhomDichVu
-                            .map((e) => [e.id!, e.tenDichVu!])
-                            .toList(),
-                        controller.onNhomCongViecChange,
-                      ),
-
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // Công việc phù hợp
-                      _dropdownWidget(
-                        "Chọn công việc phù hợp",
-                        controller.congViecPhuHopController,
-                        false,
-                        context,
-                        controller.idCongViec,
-                        controller.dichVuList
-                            .map((e) => [e.id!, e.tieuDe!])
-                            .toList(),
-                        controller.onCongViecChange,
-                      ),
-
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // thời gian bắt đầu
-                      _timeStart(context),
-
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // thời gian bắt đầu
-                      _timeEnd(context),
-
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      LabelInput(
-                        label: "Số lượng",
-                        labelText: "Số lượng",
-                        controller: controller.soLuongController,
-                        isRequire: true,
-                        isNumber: true,
-                      ),
-
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // điểm đăng ký làm việc
-                      _diemDangKy(context, "Điểm đăng ký làm việc"),
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // Thêm địa điểm khác
-                      _dropdownWidget(
-                        "Thêm địa điểm khác \n(chọn được nhiều địa điểm)",
-                        controller.diaDiemKhacController,
-                        false,
-                        context,
-                        "",
-                        [
-                          ["", ""]
-                        ],
-                        (value) {},
-                      ),
-                      SizedBox(
-                        height: DeviceUtils.getScaledHeight(
-                          context,
-                          Dimensions.SCALE_DEFAULT,
-                        ),
-                      ),
-
-                      // nut đăng ký
-                      _dangKyButton(context),
-                    ],
+      drawer: const DrawerWidget(),
+      appBar: AppBarWidget(title: controller.title),
+      body: GetBuilder<V2WorkRegisterController>(
+        init: V2WorkRegisterController(),
+        builder: (V2WorkRegisterController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SingleChildScrollView(
+            child: Container(
+              width: DeviceUtils.getScaledWidth(context, 1),
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              child: Column(
+                children: [
+                  // nhóm công việc phù hợp
+                  _dropdownWidget(
+                    "Nhóm công việc phù hợp",
+                    controller.nhomCongViecController,
+                    true,
+                    context,
+                    controller.idNhomCongViec,
+                    controller.nhomDichVu
+                        .map((e) => [e.id!, e.tenDichVu!])
+                        .toList(),
+                    controller.onNhomCongViecChange,
                   ),
-                ),
-              );
-            }));
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // Công việc phù hợp
+                  _dropdownWidget(
+                    "Chọn công việc phù hợp",
+                    controller.congViecPhuHopController,
+                    false,
+                    context,
+                    controller.idCongViec,
+                    controller.congViecList
+                        .map((e) => [e.id!, e.tenCongViec!])
+                        .toList(),
+                    controller.onCongViecChange,
+                  ),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // thời gian bắt đầu
+                  _timeStart(context),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // thời gian bắt đầu
+                  _timeEnd(context),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  LabelInput(
+                    label: "Số lượng",
+                    labelText: "Số lượng",
+                    controller: controller.soLuongController,
+                    isRequire: true,
+                    isNumber: true,
+                  ),
+
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // điểm đăng ký làm việc
+                  _diemDangKy(context, "Điểm đăng ký làm việc"),
+
+                  // drop down field
+                  DropDownField(context),
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // chọn được nhiều địa điểm khác
+                  diaDiemKhacWidget(
+                    label: "Chọn địa điểm khác",
+                    context: context,
+                  ),
+                  SizedBox(
+                    height: DeviceUtils.getScaledHeight(
+                      context,
+                      Dimensions.SCALE_DEFAULT,
+                    ),
+                  ),
+
+                  // nut đăng ký
+                  _dangKyButton(context),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   ///
@@ -150,109 +154,25 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   Widget _diemDangKy(BuildContext context, String label) {
     return LabelContent(
       title: label,
-      content: Column(
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                Text('Tỉnh/TP', style: Dimensions.textNormalStyle()),
-                const Text(
-                  '*',
-                  style: TextStyle(
-                    color: ColorResources.RED,
-                  ),
-                )
-              ],
+      content: Container(
+        alignment: Alignment.centerLeft,
+        child: Row(
+          children: const [
+            Text(
+              'Tỉnh/TP',
+              style: TextStyle(
+                color: ColorResources.BLACKGREY,
+                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+              ),
             ),
-          ),
-          SizedBox(
-            height: DeviceUtils.getScaledHeight(
-              context,
-              Dimensions.SCALE_DEFAULT,
-            ),
-          ),
-          _tinhThanhCheckBox(
-            context,
-            controller.tphcmCheck,
-            "TP.HCM",
-            (value) => controller.onCheckBoxChange(0, value: value!),
-            [
-              (val) {
-                controller.onQuanHuyenCheckBoxChange(0, value: val!);
-              },
-              (val) {
-                controller.onPhuongXaCheckBoxChange(0, value: val!);
-              },
-            ],
-            [
-              controller.quanHCM.map((e) => [e.id!, e.ten!]).toList(),
-              controller.phuongHCM.map((e) => [e.id!, e.ten!]).toList()
-            ],
-            [
-              controller.quanHuyenHCM,
-              controller.phuongXaHCM,
-            ],
-          ),
-          _tinhThanhCheckBox(
-            context,
-            controller.hanoiCheck,
-            "Hà Nội",
-            (value) => controller.onCheckBoxChange(1, value: value!),
-            [
-              (val) {
-                controller.onQuanHuyenCheckBoxChange(1, value: val!);
-              },
-              (val) {
-                controller.onPhuongXaCheckBoxChange(1, value: val!);
-              },
-            ],
-            [
-              controller.quanHN.map((e) => [e.id!, e.ten!]).toList(),
-              controller.phuongHN.map((e) => [e.id!, e.ten!]).toList()
-            ],
-            [
-              controller.quanHuyenHaNoi,
-              controller.phuongXaHaNoi,
-            ],
-          ),
-          _tinhThanhCheckBox(
-            context,
-            controller.danangCheck,
-            "Đà Nẵng",
-            (value) => controller.onCheckBoxChange(2, value: value!),
-            [
-              (val) {
-                controller.onQuanHuyenCheckBoxChange(2, value: val!);
-              },
-              (val) {
-                controller.onPhuongXaCheckBoxChange(2, value: val!);
-              },
-            ],
-            [
-              controller.quanDN.map((e) => [e.id!, e.ten!]).toList(),
-              controller.phuongDN.map((e) => [e.id!, e.ten!]).toList()
-            ],
-            [
-              controller.quanHuyenDaNang,
-              controller.phuongXaDaNang,
-            ],
-          ),
-          _tinhThanhKhacCheckBox(context, controller.tinhKhacCheck, "Tỉnh khác",
-              (value) => controller.onCheckBoxChange(3, value: value!), [
-            (value) {},
-            (value) {},
-            (value) {}
-          ], [
-            [],
-            [],
-            []
-          ], [
-            "",
-            "",
-            "",
-          ]),
-        ],
+            Text(
+              '*',
+              style: TextStyle(
+                color: ColorResources.RED,
+              ),
+            )
+          ],
+        ),
       ),
       isRequired: false,
     );
@@ -278,6 +198,63 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
       currencies: data,
       currentSelectvalue: selectValue,
       onChanged: onChanged,
+    );
+  }
+
+  ///
+  /// Loại công trình
+  ///
+  Widget diaDiemKhacWidget({
+    required String label,
+    required BuildContext context,
+  }) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+        MultiSelectDialogField<TinhTpResponse?>(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+            border: const Border(
+              bottom: BorderSide(
+                color: ColorResources.LIGHT_GREY,
+              ),
+              left: BorderSide(
+                color: ColorResources.LIGHT_GREY,
+              ),
+              right: BorderSide(
+                color: ColorResources.LIGHT_GREY,
+              ),
+              top: BorderSide(
+                color: ColorResources.LIGHT_GREY,
+              ),
+            ),
+          ),
+          closeSearchIcon: const Icon(Icons.close),
+          items: controller.tinhTps!
+              .map((e) => MultiSelectItem(e, e.ten!))
+              .toList(),
+          listType: MultiSelectListType.CHIP,
+          onConfirm: (values) {
+            controller.tinhTpsSelected = values;
+          },
+          buttonIcon: const Icon(Icons.arrow_drop_down),
+          buttonText: const Text("Chọn tỉnh"),
+          cancelText: const Text("Hủy bỏ"),
+          confirmText: const Text("Chọn"),
+          title: const Text("Chọn tỉnh"),
+        ),
+      ],
     );
   }
 
@@ -348,175 +325,256 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
   }
 
   ///
-  /// check box tỉnh thành
+  /// hcm field
   ///
-  Widget _tinhThanhCheckBox(
-    BuildContext context,
-    bool firstValue,
-    String label,
-    Function(bool?) onchange,
-    List<Function(String?)> selectFunctionList,
-    List<List<List<String>>> dataList,
-    List<String> selectIndex,
-  ) {
-    return Stack(
-      children: [
-        Checkbox(
-          value: firstValue,
-          onChanged: onchange,
-          fillColor: MaterialStateProperty.all(
-            ColorResources.THEME_DEFAULT,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(
-            left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-            top: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          child: LabelContent(
-            title: label,
-            content: _labelSelect(
-              context,
-              ["Quận/huyện", "Phường/xã"],
-              selectFunctionList,
-              dataList,
-              selectIndex,
-            ),
-            isRequired: false,
-          ),
-        )
-      ],
-    );
-  }
-
-  ///
-  /// check box tỉnh thành
-  ///
-  Widget _tinhThanhKhacCheckBox(
-    BuildContext context,
-    bool firstValue,
-    String label,
-    Function(bool?) onchange,
-    List<Function(dynamic)> selectFunctionList,
-    List<List<List<String>>> dataList,
-    List<String> selectIndex,
-  ) {
-    return Stack(
-      children: [
-        Checkbox(
-          value: firstValue,
-          onChanged: onchange,
-          fillColor: MaterialStateProperty.all(
-            ColorResources.THEME_DEFAULT,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(
-            left: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-            top: Dimensions.MARGIN_SIZE_SMALL,
-          ),
-          child: LabelContent(
-            title: label,
-            content: _labelSelect(
-              context,
-              ["Tỉnh/TP", "Quận/huyện", "Phường/xã"],
-              selectFunctionList,
-              dataList,
-              selectIndex,
-            ),
-            isRequired: false,
-          ),
-        )
-      ],
-    );
-  }
-
-  ///
-  /// labelSelect
-  ///
-  Widget _labelSelect(
-    BuildContext context,
-    List<String> labels,
-    List<Function(String?)> onChangedList,
-    List<List<List<String>>> onList,
-    List<String> selectIndex,
-  ) {
+  Widget DropDownField(BuildContext context) {
     return SizedBox(
-      height: 100,
-      child: GridView.builder(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: onList.length,
-          mainAxisExtent: 100,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-        ),
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: onList.length,
-        itemBuilder: (BuildContext ctx, index) {
-          return LabelContent(
-            title: labels[index],
-            content: _formField(
-              labels[index],
-              onChangedList[index],
-              onList[index],
-              selectIndex[index],
-            ),
-            isRequired: false,
-          );
-        },
-      ),
-    );
-  }
-
-  ///
-  /// form field
-  ///
-  Widget _formField(
-    String label,
-    Function(String?) onChanged,
-    List<List<String>> contentList,
-    String selectIndex,
-  ) {
-    return SizedBox(
-      height: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
-      child: FormField<String>(
-        builder: (FormFieldState<String> state) {
-          return InputDecorator(
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-              labelStyle: Dimensions.textNormalStyle(),
-              errorStyle: const TextStyle(
-                color: Colors.redAccent,
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_SMALL,
+      width: DeviceUtils.getScaledWidth(context, 1),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              children: [
+                // hồ chí minh
+                onSelectedWorkLocation(
+                  context,
+                  city: "Hồ Chí Minh",
+                  district: controller.quanHuyenHCMList!,
+                  ward: controller.phuongXaHCMList!,
+                  value: controller.tphcmCheck,
+                  onChanged: (val) {
+                    controller.checkboxChange(1, val: val!);
+                  },
+                  onChangedHuyen: (QuanHuyenResponse? val) =>
+                      controller.onChangedQuanHuyenHCM(val!),
+                  onChangedPhuong: (PhuongXaResponse? val) =>
+                      controller.onChangedPhuongXaHCM(val!),
+                  phuong: controller.phuongXaHCM,
+                  huyen: controller.quanHuyenHCM,
                 ),
-              ),
+                SizedBox(
+                  height: DeviceUtils.getScaledHeight(
+                    context,
+                    Dimensions.SCALE_DEFAULT,
+                  ),
+                ),
+
+                // hà nội
+                onSelectedWorkLocation(
+                  context,
+                  city: "Hà Nội",
+                  district: controller.quanHuyenHaNoiList!,
+                  ward: controller.phuongXaHaNoiList!,
+                  value: controller.hanoiCheck,
+                  onChanged: (val) {
+                    controller.checkboxChange(2, val: val!);
+                  },
+                  onChangedHuyen: (QuanHuyenResponse? val) =>
+                      controller.onChangedQuanHuyenHaNoi(val!),
+                  onChangedPhuong: (PhuongXaResponse? val) =>
+                      controller.onChangedPhuongXaHaNoi(val!),
+                  phuong: controller.phuongXaHaNoi,
+                  huyen: controller.quanHuyenHaNoi,
+                ),
+                SizedBox(
+                  height: DeviceUtils.getScaledHeight(
+                    context,
+                    Dimensions.SCALE_DEFAULT,
+                  ),
+                ),
+
+                // đà nẵng
+                onSelectedWorkLocation(
+                  context,
+                  city: "Đà Nẵng",
+                  district: controller.quanHuyenDaNangList!,
+                  ward: controller.phuongXaDaNangList!,
+                  value: controller.danangCheck,
+                  onChanged: (val) {
+                    controller.checkboxChange(3, val: val!);
+                  },
+                  onChangedHuyen: (QuanHuyenResponse? val) =>
+                      controller.onChangedQuanHuyenDaNang(val!),
+                  onChangedPhuong: (PhuongXaResponse? val) =>
+                      controller.onChangedPhuongXaDaNang(val!),
+                  phuong: controller.phuongXaDaNang,
+                  huyen: controller.quanHuyenDaNang,
+                ),
+                SizedBox(
+                  height: DeviceUtils.getScaledHeight(
+                    context,
+                    Dimensions.SCALE_DEFAULT,
+                  ),
+                ),
+
+                // tỉnh khác
+                onSelectedWorkLocation(
+                  context,
+                  city: "Tỉnh khác",
+                  district: controller.quanHuyenKhacList!,
+                  ward: controller.phuongXaKhacList!,
+                  tinhList: controller.tinhTpsKhac,
+                  value: controller.tinhKhacCheck,
+                  onChanged: (val) {
+                    controller.checkboxChange(4, val: val!);
+                  },
+                  onChangedProvince: (TinhTpResponse? val) =>
+                      controller.onChangedTinhThanh(val!),
+                  onChangedHuyen: (QuanHuyenResponse? val) =>
+                      controller.onChangedQuanHuyenKhac(val!),
+                  onChangedPhuong: (PhuongXaResponse? val) =>
+                      controller.onChangedPhuongXaKhac(val!),
+                  phuong: controller.phuongXaKhac,
+                  huyen: controller.quanHuyenKhac,
+                  tinh: controller.tinhTpKhac,
+                  isRadio: false,
+                ),
+                SizedBox(
+                  height: DeviceUtils.getScaledHeight(
+                    context,
+                    Dimensions.SCALE_DEFAULT,
+                  ),
+                ),
+              ],
             ),
-            isEmpty: label == '',
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: selectIndex,
-                isDense: true,
-                onChanged: (val) {
-                  onChanged(val);
-                },
-                items: contentList.map((value) {
-                  return DropdownMenuItem<String>(
-                    value: value[0],
-                    child: Text(value[1]),
-                  );
-                }).toList(),
-              ),
-            ),
-          );
-        },
+          )
+        ],
       ),
+    );
+  }
+
+  ///
+  /// Radio button chon đia điểm làm việc
+  ///
+  Widget onSelectedWorkLocation(
+    BuildContext context, {
+    required List<QuanHuyenResponse> district,
+    required String city,
+    required List<PhuongXaResponse> ward,
+    required bool value,
+    QuanHuyenResponse? huyen,
+    PhuongXaResponse? phuong,
+    required Function(bool? val) onChanged,
+    required Function(QuanHuyenResponse? val) onChangedHuyen,
+    required Function(PhuongXaResponse? val) onChangedPhuong,
+    bool? isRadio = true,
+    List<TinhTpResponse>? tinhList,
+    TinhTpResponse? tinh,
+    Function(TinhTpResponse? val)? onChangedProvince,
+  }) {
+    const double scale = 1;
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            width: DeviceUtils.getScaledWidth(context, scale),
+            child: CheckBoxCustom(
+              status: value,
+              title: city,
+              onChanged: (val) => onChanged(val),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2),
+            width: DeviceUtils.getScaledWidth(context, scale),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                if (isRadio == false)
+                  DropDownButtonHideUnderLineWidget<TinhTpResponse>(
+                    data: tinhList!,
+                    onChanged: value == true
+                        ? (TinhTpResponse? val) => onChangedProvince!(val)
+                        : null,
+                    value: tinh,
+                    hint: "Chọn tỉnh khác",
+                    width: DeviceUtils.getScaledWidth(context, scale / 4),
+                  ),
+                DropDownButtonHideUnderLineWidget<QuanHuyenResponse>(
+                  data: district,
+                  onChanged: value == true
+                      ? (QuanHuyenResponse? val) => onChangedHuyen(val)
+                      : null,
+                  value: huyen,
+                  hint: "Quận/Huyện",
+                  width: DeviceUtils.getScaledWidth(context, scale / 4),
+                ),
+                DropDownButtonHideUnderLineWidget<PhuongXaResponse>(
+                  data: ward,
+                  onChanged: value == true
+                      ? (PhuongXaResponse? val) => onChangedPhuong(val)
+                      : null,
+                  value: phuong,
+                  hint: "Phường/xa",
+                  width: DeviceUtils.getScaledWidth(context, scale / 4),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// select province
+  ///
+  Widget dropDownProvinceField(
+    BuildContext context,
+    bool value,
+    TinhTpResponse index,
+    List<TinhTpResponse>? data,
+    Function(TinhTpResponse) onChanged,
+  ) {
+    return DropDownButtonHideUnderLineWidget<TinhTpResponse>(
+      data: data!,
+      onChanged: value ? (TinhTpResponse? val) => onChanged(val!) : null,
+      value: index,
+      hint: "Chọn huyện khác",
+      width: DeviceUtils.getScaledWidth(context, 0.83),
+    );
+  }
+
+  ///
+  /// select district
+  ///
+  Widget dropDownDistrictField(
+    BuildContext context,
+    bool value,
+    QuanHuyenResponse index,
+    List<QuanHuyenResponse>? data,
+    Function(QuanHuyenResponse) onChanged,
+  ) {
+    return DropDownButtonHideUnderLineWidget<QuanHuyenResponse>(
+      data: data!,
+      onChanged: value ? (QuanHuyenResponse? val) => onChanged(val!) : null,
+      value: index,
+      hint: "Chọn huyện khác",
+      width: DeviceUtils.getScaledWidth(context, 0.83),
+    );
+  }
+
+  ///
+  /// select phuong xa
+  ///
+  Widget dropDownPhuongXaField(
+    BuildContext context,
+    bool value,
+    PhuongXaResponse index,
+    List<PhuongXaResponse>? data,
+    Function(PhuongXaResponse) onChanged,
+  ) {
+    return DropDownButtonHideUnderLineWidget<PhuongXaResponse>(
+      data: data!,
+      onChanged: value ? (PhuongXaResponse? val) => onChanged(val!) : null,
+      value: index,
+      hint: "Chọn huyện khác",
+      width: DeviceUtils.getScaledWidth(context, 0.83),
     );
   }
 
@@ -530,17 +588,20 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            child: const Text(
-              "Nếu bạn là thầu thợ  thì hãy nhấn nút “Đăng ký”",
-              style: TextStyle(
+            child: Text(
+              controller.noteLabel.toString(),
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: Dimensions.FONT_SIZE_LARGE,
               ),
             ),
           ),
           SizedBox(
-              height: DeviceUtils.getScaledHeight(
-                  context, Dimensions.SCALE_DEFAULT)),
+            height: DeviceUtils.getScaledHeight(
+              context,
+              Dimensions.SCALE_DEFAULT,
+            ),
+          ),
           GestureDetector(
             onTap: controller.onRegisterClick,
             child: Container(
@@ -552,9 +613,9 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
                       Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
               child: Container(
                 alignment: Alignment.center,
-                child: const Text(
-                  "Đăng ký",
-                  style: TextStyle(
+                child: Text(
+                  controller.btnLabel.toString(),
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),

@@ -3,113 +3,159 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/nhom_dich_vu_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/routes/app_routes.dart';
 
 class V2WorkRegisterController extends GetxController {
   // provider
   NhomDichVuProvider nhomDichVuProvider = GetIt.I.get<NhomDichVuProvider>();
   LoaiCongViecProvider loaiCongViecProvider =
       GetIt.I.get<LoaiCongViecProvider>();
-  TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
-  QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
-  PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
+  final TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
+  final QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
+  final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
   // text editing controller
-  TextEditingController tieuDeBaoGiaController = TextEditingController();
-  TextEditingController loaiCongTrinhController = TextEditingController();
-  TextEditingController fromDateController = TextEditingController();
-  TextEditingController toDateController = TextEditingController();
   TextEditingController nhomCongViecController = TextEditingController();
   TextEditingController congViecPhuHopController = TextEditingController();
-  TextEditingController toanTinhController = TextEditingController();
   TextEditingController timeStartController = TextEditingController();
   TextEditingController timeEndController = TextEditingController();
-  TextEditingController soLuongController = TextEditingController();
-  TextEditingController diaDiemKhacController = TextEditingController();
-
-  // List
-  List<String>? currencies;
-  List<bool>? checkList;
+  TextEditingController soLuongController = TextEditingController(text: "0");
 
   List<NhomDichVuResponse> nhomDichVu = [];
-  List<DonDichVuResponse> dichVuList = [];
+  List<LoaiCongViecResponse> congViecList = [];
 
-  List<QuanHuyenResponse> quanHCM = [];
-  List<PhuongXaResponse> phuongHCM = [];
+  List<QuanHuyenResponse>? quanHuyenHCMList = [];
+  List<PhuongXaResponse>? phuongXaHCMList = [];
 
-  List<QuanHuyenResponse> quanHN = [];
-  List<PhuongXaResponse> phuongHN = [];
+  List<QuanHuyenResponse>? quanHuyenHaNoiList = [];
+  List<PhuongXaResponse>? phuongXaHaNoiList = [];
 
-  List<QuanHuyenResponse> quanDN = [];
-  List<PhuongXaResponse> phuongDN = [];
+  List<QuanHuyenResponse>? quanHuyenDaNangList = [];
+  List<PhuongXaResponse>? phuongXaDaNangList = [];
 
-  List<TinhTpResponse> tinhKhac = [];
-  List<QuanHuyenResponse> quanKhac = [];
-  List<PhuongXaResponse> phuongKhac = [];
+  List<QuanHuyenResponse>? quanHuyenKhacList = [];
+  List<PhuongXaResponse>? phuongXaKhacList = [];
+  List<TinhTpResponse>? tinhTpsKhac = [];
+  List<TinhTpResponse>? tinhTps = [];
+  List<TinhTpResponse?> tinhTpsSelected = [];
+
+  QuanHuyenResponse? quanHuyenHCM;
+  PhuongXaResponse? phuongXaHCM;
+
+  QuanHuyenResponse? quanHuyenHaNoi;
+  PhuongXaResponse? phuongXaHaNoi;
+
+  QuanHuyenResponse? quanHuyenDaNang;
+  PhuongXaResponse? phuongXaDaNang;
+
+  QuanHuyenResponse? quanHuyenKhac;
+  PhuongXaResponse? phuongXaKhac;
+  TinhTpResponse? tinhTpKhac;
+  TinhTpResponse? tinhTp;
 
   // String
-  String? firstSelect;
   String title = "Đăng ký việc";
-
-  // value first for checkbox
-  String idNhomCongViec = "";
-  String idCongViec = "";
-  String quanHuyenHCM = "";
-  String phuongXaHCM = "";
-  String quanHuyenHaNoi = "";
-  String phuongXaHaNoi = "";
-  String quanHuyenDaNang = "";
-  String phuongXaDaNang = "";
-  String quanHuyenTinhKhac = "";
-  String phuongXaTinhKhac = "";
 
   // string id tương ứng khi checkbox
   String hoChiMinhId = "61606932763ce5dc10c529f5";
   String haNoiid = "6160f286f58f581ebf6d74f4";
   String daNangId = "615d6a143e28b243e76682e1";
-  String tinhKhacId = "";
+  String idNhomCongViec = "";
+  String idCongViec = "";
+
+  String note1 = "Nếu bạn là thầu thợ thì hãy nhấn nút đăng ký";
+  String note2 =
+      "Nếu bạn là ứng viên kỹ sư, cử nhân, kế toán, kinh doanh, sinh viên mới ra trường, ... thì tạo hồ sơ ứng viên dưới đây";
+
+  String btnNote1 = 'Đăng ký';
+  String btnNote2 = 'Cập nhật thông tin';
+
+  String? btnLabel;
+  String? noteLabel;
 
   // bool
   bool tphcmCheck = false;
   bool hanoiCheck = false;
   bool danangCheck = false;
   bool tinhKhacCheck = false;
-  bool isLoading = true;
+  bool isLoading = false;
+  bool isRegister = true;
 
   @override
   void onInit() {
     super.onInit();
+
+    // set value default into time end field
+    timeStartController = TextEditingController(
+      text: DateConverter.estimatedDateMonthYear(
+        DateTime.now(),
+      ),
+    );
+
+    // set value default into time end field
+    timeEndController = TextEditingController(
+      text: DateConverter.estimatedDateMonthYear(
+        DateTime.now(),
+      ),
+    );
+
+    btnLabel = btnNote1;
+    noteLabel = note1;
+
+    // get id avaiable for hcm, hanoi, danang
+    getIdAvaliable();
+
     // load nhom cong viec phu hop
     _loadNhomCongViecPhuHop();
+
+    // load tỉnh thành ở dưới cùng
+    getTinhThanhBottom();
+  }
+
+  ///
+  /// get id avaliable
+  ///
+  void getIdAvaliable() {
+    tinhTpProvider.all(onSuccess: (data) {
+      for (final element in data) {
+        hoChiMinhId = element.id!;
+        haNoiid = element.id!;
+        daNangId = element.id!;
+      }
+
+      update();
+    }, onError: (error) {
+      print("TermsAndPolicyController getTermsAndPolicy onError $error");
+    });
   }
 
   ///
   /// load nhóm công việc phù hợp
   ///
   void _loadNhomCongViecPhuHop() {
-    // get all nhóm dịch vụ
     nhomDichVuProvider.paginate(
       page: 1,
       limit: 30,
-      filter: "",
+      filter: '',
       onSuccess: (models) {
         nhomDichVu = models;
-
         if (nhomDichVu.isNotEmpty) {
-          idNhomCongViec = nhomDichVu[0].id!;
-          _loadCongViecPhuHop(idNhomCongViec);
-          update();
+          idNhomCongViec = nhomDichVu.first.id!;
+          // load công việc phù hợp theo nhóm công việc
+          _loadCongViecPhuHop(nhomDichVu.first.id!);
         }
         update();
       },
@@ -123,41 +169,14 @@ class V2WorkRegisterController extends GetxController {
   /// load công việc phù hợp - load theo nhóm công việc
   ///
   void _loadCongViecPhuHop(String idNhomCongViec) {
-    // get all nhóm dịch vụ
-    donDichVuProvider.paginate(
+    loaiCongViecProvider.paginate(
       page: 1,
       limit: 30,
-      filter: "&idNhomDichVu=$idNhomCongViec",
+      filter: '&idNhomDichVu=$idNhomCongViec',
       onSuccess: (models) {
-        dichVuList = models;
-        if (dichVuList.isNotEmpty) {
-          idCongViec = dichVuList[0].id!;
-        }
-
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
-  /// load quận huyện TPHCM
-  ///
-  void _loadQuanHuyenHCM(String idTpHCM) {
-    quanHuyenProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idTinhTp=$idTpHCM&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          quanHuyenHCM = models[0].id!;
-          quanHCM = models;
-          _loadPhuongXaHCM(quanHuyenHCM);
-        } else {
-          quanHCM = [];
+        congViecList = models;
+        if (congViecList.isNotEmpty) {
+          idCongViec = congViecList.first.id!;
         }
         update();
       },
@@ -168,207 +187,126 @@ class V2WorkRegisterController extends GetxController {
   }
 
   ///
-  /// load phương xã theo huận huyện TP.HCM
+  ///Thay đổi tỉnh thành
   ///
-  void _loadPhuongXaHCM(String idQuanHuyen) {
-    phuongXaProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idQuanHuyen=$idQuanHuyen&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          phuongXaHCM = models[0].id!;
-          phuongHCM = models;
-        } else {
-          phuongHCM = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedTinhThanh(TinhTpResponse tinhTp) {
+    tinhTpKhac = tinhTp;
+    quanHuyenKhac = null;
+    phuongXaKhac = null;
+    phuongXaKhacList!.clear();
+    quanHuyenKhacList!.clear();
+    getQuanHuyenKhac(filter: "&idTinhTp=${tinhTpKhac!.id}");
+    update();
   }
 
   ///
-  /// load quận huyện Hà Nội
+  ///Thay đổi tỉnh thành
   ///
-  void _loadQuanHuyenHaNoi(String idHaNoi) {
-    quanHuyenProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idTinhTp=$idHaNoi&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          quanHuyenHaNoi = models[0].id!;
-          quanHN = models;
-          _loadPhuongXaHaNoi(quanHuyenHaNoi);
-        } else {
-          quanHN = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedTinhThanhBottom(TinhTpResponse tinhTp) {
+    tinhTpKhac = tinhTp;
+    quanHuyenKhac = null;
+    phuongXaKhac = null;
+    phuongXaKhacList!.clear();
+    quanHuyenKhacList!.clear();
+    update();
   }
 
   ///
-  /// load phương xã theo huận huyện Hà Nội
+  ///Thay đổi quận huyện hồ chí minh
   ///
-  void _loadPhuongXaHaNoi(String idQuanHuyenHaNoi) {
-    phuongXaProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idQuanHuyen=$idQuanHuyenHaNoi&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          phuongXaHaNoi = models[0].id!;
-          phuongHN = models;
-        } else {
-          phuongHN = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedQuanHuyenHCM(QuanHuyenResponse huyen) {
+    quanHuyenHCM = huyen;
+    getPhuongXa(1, filter: "&idQuanHuyen=${quanHuyenHCM!.id}");
+    update();
   }
 
   ///
-  /// load quận huyện Đà Nẵng
+  ///Thay đổi quận huyện hà nội
   ///
-  void _loadQuanHuyenDaNang(String idDaNang) {
-    quanHuyenProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idTinhTp=$idDaNang&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          quanHuyenDaNang = models[0].id!;
-          quanDN = models;
-          _loadPhuongXaDaNang(quanHuyenDaNang);
-        } else {
-          quanDN = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedQuanHuyenHaNoi(QuanHuyenResponse huyen) {
+    quanHuyenHaNoi = huyen;
+    getPhuongXa(2, filter: "&idQuanHuyen=${quanHuyenHaNoi!.id}");
+
+    update();
   }
 
   ///
-  /// load phương xã theo huận huyện Đà Nẵng
+  ///Thay đổi quận huyện
   ///
-  void _loadPhuongXaDaNang(String idQuanHuyenDaNang) {
-    phuongXaProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idQuanHuyen=$idQuanHuyenDaNang&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          phuongXaDaNang = models[0].id!;
-          phuongDN = models;
-        } else {
-          phuongDN = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedQuanHuyenDaNang(QuanHuyenResponse huyen) {
+    quanHuyenDaNang = huyen;
+    getPhuongXa(3, filter: "&idQuanHuyen=${quanHuyenDaNang!.id}");
+    update();
   }
 
   ///
-  /// load Tỉnh khác (trừ 3 tỉnh trên)
+  ///Thay đổi phường xã khác
   ///
-  void _loadTinhKhac(List<String> _idSubList) {
-    tinhTpProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          tinhKhacId = models[0].id!;
-          for (final model in models) {
-            if (!_idSubList.contains(model.id)) {
-              tinhKhac.add(model);
-            }
-          }
-        } else {
-          tinhKhac = [];
-        }
-
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedQuanHuyenKhac(QuanHuyenResponse huyen) {
+    quanHuyenKhac = huyen;
+    getPhuongXa(4, filter: "&idQuanHuyen=${quanHuyenKhac!.id}");
+    update();
   }
 
   ///
-  /// load quận huyện Tỉnh khác
+  ///Thay đổi phường xã hồ chí minh
   ///
-  void _loadQuanHuyenTinhKhac(String idTinhKhac) {
-    quanHuyenProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idTinhTp=$idTinhKhac&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          quanHuyenTinhKhac = models[0].id!;
-          quanKhac = models;
-        } else {
-          quanKhac = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedPhuongXaHCM(PhuongXaResponse phuong) {
+    phuongXaHCM = phuong;
+    update();
   }
 
   ///
-  /// load phương xã theo huận huyện Tỉnh khác
+  ///Thay đổi phường xã hà nội
   ///
-  void _loadPhuongXaTinhKhac(String idQuanHuyenTinhKhac) {
-    phuongXaProvider.paginate(
-      page: 1,
-      limit: 50,
-      filter: "&idQuanHuyen=$idQuanHuyenTinhKhac&sortBy=created_by:desc",
-      onSuccess: (models) {
-        if (models.isNotEmpty) {
-          phuongXaTinhKhac = models[0].id!;
-          phuongKhac = models;
-        } else {
-          phuongKhac = [];
-        }
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
+  void onChangedPhuongXaHaNoi(PhuongXaResponse phuong) {
+    phuongXaHaNoi = phuong;
+
+    update();
   }
 
   ///
-  /// load dia diem khac - loại các tĩnh được chọn
+  ///Thay đổi quận huyện
   ///
-  void _loadDiaDiemKhac(List<String> _idList) {}
+  void onChangedPhuongXaDaNang(PhuongXaResponse phuong) {
+    phuongXaDaNang = phuong;
+    update();
+  }
+
+  ///
+  ///Thay đổi phường xã khác
+  ///
+  void onChangedPhuongXaKhac(PhuongXaResponse phuong) {
+    phuongXaKhac = phuong;
+    update();
+  }
 
   ///
   /// on nhom cong viec phu hop change
   ///
   void onNhomCongViecChange(String? value) {
     idNhomCongViec = value!;
-    _loadCongViecPhuHop(idNhomCongViec);
+    _loadCongViecPhuHop(value);
+
+    nhomDichVuProvider.find(
+      id: idNhomCongViec,
+      onSuccess: (data) {
+        if (data.tenDichVu.toString().toLowerCase().contains("nhóm 7")) {
+          btnLabel = btnNote2;
+          noteLabel = note2;
+          isRegister = false;
+        } else {
+          btnLabel = btnNote1;
+          noteLabel = note1;
+          isRegister = true;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
     update();
   }
 
@@ -381,130 +319,285 @@ class V2WorkRegisterController extends GetxController {
   }
 
   ///
-  /// onCheckBoxChange
-  ///
-  void onCheckBoxChange(int index, {required bool value}) {
-    final List<String> subList = [];
-    if (value == true) {}
-    if (index == 0) {
-      tphcmCheck = value;
-      subList.add(hoChiMinhId);
-      _loadQuanHuyenHCM(hoChiMinhId);
-
-      if (value == false) {
-        subList.remove(hoChiMinhId);
-        quanHCM = [];
-        phuongHCM = [];
-        update();
-      }
-    }
-
-    if (index == 1) {
-      hanoiCheck = value;
-      subList.add(haNoiid);
-      quanHuyenHaNoi = haNoiid;
-      _loadQuanHuyenHaNoi(haNoiid);
-
-      if (value == false) {
-        subList.remove(haNoiid);
-        quanHN = [];
-        phuongHN = [];
-        update();
-      }
-    }
-
-    if (index == 2) {
-      danangCheck = value;
-      subList.add(daNangId);
-      quanHuyenDaNang = daNangId;
-      _loadQuanHuyenDaNang(daNangId);
-
-      if (value == false) {
-        subList.remove(daNangId);
-        quanDN = [];
-        phuongDN = [];
-        update();
-      }
-    }
-
-    if (index == 3) {
-      tinhKhacCheck = value;
-      _loadTinhKhac(subList);
-
-      if (value == false) {
-        tinhKhac = [];
-        quanKhac = [];
-        phuongKhac = [];
-        update();
-      }
-    }
-  }
-
-  ///
-  /// onCheckBoxChange
-  ///
-  void onQuanHuyenCheckBoxChange(int index, {required String value}) {
-    if (index == 0) {
-      quanHuyenHCM = value;
-      _loadPhuongXaHCM(value);
-    } else {
-      phuongHCM = [];
-    }
-
-    if (index == 1) {
-      quanHuyenHaNoi = value;
-      _loadQuanHuyenHaNoi(value);
-    } else {
-      phuongHN = [];
-    }
-
-    if (index == 2) {
-      quanHuyenDaNang = value;
-      _loadQuanHuyenDaNang(value);
-    } else {
-      phuongDN = [];
-    }
-
-    if (index == 3) {
-      quanHuyenTinhKhac = value;
-      _loadQuanHuyenTinhKhac(value);
-    } else {
-      phuongKhac = [];
-    }
-  }
-
-  ///
-  /// onCheckBoxChange
-  ///
-  void onPhuongXaCheckBoxChange(int index, {required String value}) {
-    if (index == 0) {
-      phuongXaHCM = value;
-      _loadPhuongXaHCM(value);
-    }
-
-    if (index == 1) {
-      phuongXaHaNoi = value;
-      _loadPhuongXaHaNoi(value);
-    }
-
-    if (index == 2) {
-      phuongXaDaNang = value;
-      _loadPhuongXaDaNang(value);
-    }
-
-    if (index == 3) {
-      phuongXaTinhKhac = value;
-      _loadPhuongXaTinhKhac(value);
-    }
-  }
-
-  ///
   /// on register click
   ///
   void onRegisterClick() {
     if (_validate()) {
-      EasyLoading.showSuccess("Đăng ký thành công");
+      if (isRegister) {
+        EasyLoading.showSuccess("Đăng ký thành công");
+      } else {
+        Get.toNamed(AppRoutes.V2_WORK_CREATE);
+      }
     }
+  }
+
+  ///
+  /// Lấy tất cả tỉnh thành phố
+  ///
+  void getTinhThanh() {
+    tinhTpsKhac = [];
+    tinhTpProvider.all(onSuccess: (responses) {
+      for (final response in responses) {
+        if (tinhKhacCheck) {
+          tinhTpsKhac!.add(response);
+        }
+
+        if (tphcmCheck && response.ten!.toLowerCase().contains('hồ chí minh')) {
+          tinhTpsKhac!.remove(response);
+        }
+
+        if (hanoiCheck && response.ten!.toLowerCase().contains('hà nội')) {
+          tinhTpsKhac!.remove(response);
+        }
+
+        if (danangCheck && response.ten!.toLowerCase().contains('đà nẵng')) {
+          tinhTpsKhac!.remove(response);
+        }
+      }
+
+      if (tinhTpsKhac!.isNotEmpty) {
+        tinhTpKhac = tinhTpsKhac!.first;
+      }
+
+      update();
+    }, onError: (error) {
+      print("TermsAndPolicyController getTermsAndPolicy onError $error");
+    });
+  }
+
+  ///
+  /// Lấy tất cả tỉnh thành phố
+  ///
+  void getTinhThanhBottom() {
+    tinhTps = [];
+    tinhTpProvider.all(onSuccess: (responses) {
+      for (final response in responses) {
+        tinhTps!.add(response);
+
+        if (tphcmCheck && response.ten!.toLowerCase().contains('hồ chí minh')) {
+          tinhTps!.remove(response);
+        }
+
+        if (hanoiCheck && response.ten!.toLowerCase().contains('hà nội')) {
+          tinhTps!.remove(response);
+        }
+
+        if (danangCheck && response.ten!.toLowerCase().contains('đà nẵng')) {
+          tinhTps!.remove(response);
+        }
+      }
+
+      if (tinhTpsKhac!.isNotEmpty) {
+        tinhTp = tinhTps!.first;
+      }
+      isLoading = false;
+      update();
+    }, onError: (error) {
+      print("TermsAndPolicyController getTermsAndPolicy onError $error");
+    });
+  }
+
+  ///
+  /// Lấy tất cả quận huyện của hồ chí minh
+  ///
+  void getQuanHuyenHCM() {
+    quanHuyenHCMList!.clear();
+    quanHuyenProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: '&idTinhTp=$hoChiMinhId',
+      onSuccess: (responses) {
+        quanHuyenHCMList = responses;
+        if (quanHuyenHCMList!.isNotEmpty) {
+          quanHuyenHCM = responses[0];
+          getPhuongXa(1, filter: "&idQuanHuyen=${quanHuyenHCM!.id!}");
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// Lấy tất cả quận huyện của hồ chí minh
+  ///
+  void getQuanHuyenHaNoi() {
+    quanHuyenHaNoiList!.clear();
+    quanHuyenProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: '&idTinhTp=$haNoiid',
+      onSuccess: (responses) {
+        quanHuyenHaNoiList = responses;
+        if (quanHuyenHaNoiList!.isNotEmpty) {
+          quanHuyenHaNoi = responses[0];
+          getPhuongXa(2, filter: "&idQuanHuyen=${quanHuyenHaNoi!.id!}");
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// Lấy tất cả quận huyện của hồ chí minh
+  ///
+  void getQuanHuyenDaNang() {
+    quanHuyenDaNangList!.clear();
+    quanHuyenProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: '&idTinhTp=$daNangId',
+      onSuccess: (responses) {
+        quanHuyenDaNangList = responses;
+        if (quanHuyenDaNangList!.isNotEmpty) {
+          quanHuyenDaNang = responses[0];
+          getPhuongXa(3, filter: "&idQuanHuyen=${quanHuyenDaNang!.id!}");
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// Lấy tất cả quận huyện của hồ chí minh
+  ///
+  void getQuanHuyenKhac({String? filter = ''}) {
+    quanHuyenProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: filter!,
+      onSuccess: (responses) {
+        quanHuyenKhacList = responses;
+        if (quanHuyenKhacList!.isNotEmpty) {
+          quanHuyenKhac = responses[0];
+          getPhuongXa(4, filter: "&idQuanHuyen=${quanHuyenKhac!.id}");
+        }
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// Lấy tất cả phường xa
+  ///
+  void getPhuongXa(int index, {String? filter = ''}) {
+    phuongXaProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: filter!,
+      onSuccess: (responses) {
+        if (index == 1) {
+          phuongXaHCMList!.clear();
+          phuongXaHCMList = responses;
+          if (phuongXaHCMList!.isNotEmpty) {
+            phuongXaHCM = phuongXaHCMList!.first;
+          } else {
+            phuongXaHCM = null;
+          }
+        }
+
+        if (index == 2) {
+          phuongXaHaNoiList!.clear();
+          phuongXaHaNoiList = responses;
+          if (phuongXaHaNoiList!.isNotEmpty) {
+            phuongXaHaNoi = phuongXaHaNoiList!.first;
+          } else {
+            phuongXaHaNoi = null;
+          }
+        }
+
+        if (index == 3) {
+          phuongXaDaNangList!.clear();
+          phuongXaDaNangList = responses;
+          if (phuongXaDaNangList!.isNotEmpty) {
+            phuongXaDaNang = phuongXaDaNangList!.first;
+          } else {
+            phuongXaDaNang = null;
+          }
+        }
+
+        if (index == 4) {
+          phuongXaKhacList = responses;
+          if (phuongXaKhacList!.isNotEmpty) {
+            phuongXaKhac = phuongXaKhacList!.first;
+          } else {
+            phuongXaKhac = null;
+          }
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+  }
+
+  ///
+  /// change checkbox
+  ///
+  void checkboxChange(int index, {required bool val}) {
+    if (index == 1) {
+      tphcmCheck = val;
+      if (val == false) {
+        quanHuyenHCMList = [];
+        phuongXaHCMList = [];
+        quanHuyenHCM = null;
+        phuongXaHCM = null;
+      } else {
+        getQuanHuyenHCM();
+      }
+    }
+
+    if (index == 2) {
+      hanoiCheck = val;
+      if (val == false) {
+        quanHuyenHaNoiList = [];
+        phuongXaHaNoiList = [];
+        quanHuyenHaNoi = null;
+        phuongXaHaNoi = null;
+      } else {
+        getQuanHuyenHaNoi();
+      }
+    }
+
+    if (index == 3) {
+      danangCheck = val;
+      if (val == false) {
+        quanHuyenDaNangList = [];
+        phuongXaDaNangList = [];
+        quanHuyenDaNang = null;
+        phuongXaDaNang = null;
+      } else {
+        getQuanHuyenDaNang();
+      }
+    }
+
+    if (index == 4) {
+      tinhKhacCheck = val;
+      if (val == false) {
+        tinhTpsKhac = [];
+        quanHuyenKhacList = [];
+        phuongXaKhacList = [];
+        phuongXaKhac = null;
+        quanHuyenKhac = null;
+        tinhTpKhac = null;
+      } else {
+        getTinhThanh();
+      }
+    }
+
+    getTinhThanhBottom();
+    update();
   }
 
   ///
