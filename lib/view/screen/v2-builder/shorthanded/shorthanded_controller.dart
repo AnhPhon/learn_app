@@ -16,6 +16,7 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 
 class V2ShorthandedController extends GetxController {
   List<Map<String, dynamic>> shorthandedGroupList = [
@@ -23,8 +24,7 @@ class V2ShorthandedController extends GetxController {
       "group": "1",
       "status": "Đang tuyển",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -32,8 +32,7 @@ class V2ShorthandedController extends GetxController {
       "group": "6",
       "status": "Khảo sát báo giá",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -41,8 +40,7 @@ class V2ShorthandedController extends GetxController {
       "group": "2",
       "status": "Khảo sát báo giá",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -50,8 +48,7 @@ class V2ShorthandedController extends GetxController {
       "group": "5",
       "status": "Đang tuyển",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -59,8 +56,7 @@ class V2ShorthandedController extends GetxController {
       "group": "2",
       "status": "Khảo sát báo giá",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -68,8 +64,7 @@ class V2ShorthandedController extends GetxController {
       "group": "6",
       "status": "Khảo sát báo giá",
       "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image":
-          "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
+      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
       "icon": const Icon(Icons.location_on),
       "location": "Ngũ Hành Sơn",
     },
@@ -105,7 +100,9 @@ class V2ShorthandedController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getDonDichVu();
+    if(checkFilter() == true){
+      getDonDichVu();
+    }
     getNhomDichVu();
     getTinhThanhPho();
   }
@@ -119,8 +116,7 @@ class V2ShorthandedController extends GetxController {
   ///go to shorthanded group
   ///
   void onShorthandedGroup(int index) {
-    Get.toNamed(
-        "${AppRoutes.V2_SHORTHANDED}_group${shorthandedGroupList[index]['group']}");
+    Get.toNamed("${AppRoutes.V2_SHORTHANDED}_group${shorthandedGroupList[index]['group']}");
   }
 
   /// Goi api lay tat ca don dich vu
@@ -193,13 +189,14 @@ class V2ShorthandedController extends GetxController {
     update();
   }
 
-
   /// Goi api lay tat ca tnh thanh pho
   void getTinhThanhPho() {
     tinhTpProvider.all(
       onSuccess: (data) {
         if (data.isNotEmpty) {
-          tinhTpResponse = [TinhTpResponse.fromJson({'ten': '-- Không có --'})];
+          tinhTpResponse = [
+            TinhTpResponse.fromJson({'ten': '-- Không có --'})
+          ];
           tinhTpResponse!.addAll(data);
         }
         currentQuanHuyenResponse = QuanHuyenResponse.fromJson({});
@@ -214,14 +211,16 @@ class V2ShorthandedController extends GetxController {
 
   /// Goi api lay tat ca quan huyen
   void getQuanHuyen() {
-    if(currentTinhTpResponse == null || currentTinhTpResponse.id == null || currentTinhTpResponse.id!.isEmpty) return;
+    if (currentTinhTpResponse == null || currentTinhTpResponse.id == null || currentTinhTpResponse.id!.isEmpty) return;
     quanHuyenProvider.paginate(
       filter: '&idTinhTp=${currentTinhTpResponse.id.toString()}',
       limit: 500,
       page: 1,
       onSuccess: (data) {
         if (data.isNotEmpty) {
-          quanHuyenResponse = [QuanHuyenResponse.fromJson({'ten': '-- Không có --'})];
+          quanHuyenResponse = [
+            QuanHuyenResponse.fromJson({'ten': '-- Không có --'})
+          ];
           quanHuyenResponse!.addAll(data);
         }
         update();
@@ -234,15 +233,17 @@ class V2ShorthandedController extends GetxController {
 
   /// Goi api lay tat ca phuong xa
   void getPhuongXa() {
-    if(currentTinhTpResponse == null || currentTinhTpResponse.id == null || currentTinhTpResponse.id!.isEmpty) return;
-    if(currentQuanHuyenResponse == null || currentQuanHuyenResponse.id == null || currentQuanHuyenResponse.id!.isEmpty) return;
+    if (currentTinhTpResponse == null || currentTinhTpResponse.id == null || currentTinhTpResponse.id!.isEmpty) return;
+    if (currentQuanHuyenResponse == null || currentQuanHuyenResponse.id == null || currentQuanHuyenResponse.id!.isEmpty) return;
     phuongXaProvider.paginate(
       filter: '&idQuanHuyen=${currentQuanHuyenResponse.id.toString()}',
       limit: 500,
       page: 1,
       onSuccess: (data) {
         if (data.isNotEmpty) {
-          phuongXaResponse = [PhuongXaResponse.fromJson({'ten': '-- Không có --'})];
+          phuongXaResponse = [
+            PhuongXaResponse.fromJson({'ten': '-- Không có --'})
+          ];
           phuongXaResponse!.addAll(data);
         }
         update();
@@ -279,21 +280,46 @@ class V2ShorthandedController extends GetxController {
     update();
   }
 
-
   /// Filter data
   void filterData() {
-    update();
+    if(checkFilter() == true){
+      getDonDichVu();
+    }
+  }
+
+  /// Kiem tra cac dieu kien loc du lieu
+  bool checkFilter() {
+    if (currentPhuongXaResponse.id != null && currentPhuongXaResponse.id!.isEmpty) {
+      Alert.error(message: 'Bắt buộc chọn 1 phường/xã');
+      return false;
+    }
+    if (currentQuanHuyenResponse.id != null && currentQuanHuyenResponse.id!.isEmpty) {
+      Alert.error(message: 'Bắt buộc chọn 1 quận/huyện');
+      return false;
+    }
+    if (currentTinhTpResponse.id == null && currentTinhTpResponse.id!.isEmpty) {
+      Alert.error(message: 'Bắt buộc chọn 1 tỉnh/thành phố');
+      return false;
+    }
+    if (currentNhomDichVuResponse.id != null && currentNhomDichVuResponse.id!.isEmpty) {
+      Alert.error(message: 'Bắt buộc chọn 1 nhóm công việc');
+      return false;
+    }
+    if (currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isEmpty) {
+      Alert.error(message: 'Bắt buộc chọn 1 công việc');
+      return false;
+    }
+
+    return true;
   }
 
   String getFilter() {
     String _s = '';
-    if(currentPhuongXaResponse.id != null && currentPhuongXaResponse.id!.isEmpty) _s += '&idPhuongXa=${currentPhuongXaResponse.id}';
-    if(currentQuanHuyenResponse.id != null && currentQuanHuyenResponse.id!.isEmpty) _s += '&idQuanHuyen=${currentQuanHuyenResponse.id}';
-    if(currentTinhTpResponse.id != null && currentTinhTpResponse.id!.isEmpty) _s += '&idTinhTp=${currentTinhTpResponse.id}';
-    if(currentNhomDichVuResponse.id != null && currentNhomDichVuResponse.id!.isEmpty) _s += '&idNhomDichVu=${currentNhomDichVuResponse.id}';
-    if(currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isEmpty) _s += '&idLoaiCongViec=${currentLoaiCongViecResponse!.id}';
+    if (currentPhuongXaResponse.id != null && currentPhuongXaResponse.id!.isNotEmpty) _s += '&idPhuongXa=${currentPhuongXaResponse.id}';
+    if (currentQuanHuyenResponse.id != null && currentQuanHuyenResponse.id!.isNotEmpty) _s += '&idQuanHuyen=${currentQuanHuyenResponse.id}';
+    if (currentTinhTpResponse.id != null && currentTinhTpResponse.id!.isNotEmpty) _s += '&idTinhTp=${currentTinhTpResponse.id}';
+    if (currentNhomDichVuResponse.id != null && currentNhomDichVuResponse.id!.isNotEmpty) _s += '&idNhomDichVu=${currentNhomDichVuResponse.id}';
+    if (currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isNotEmpty) _s += '&idLoaiCongViec=${currentLoaiCongViecResponse!.id}';
     return _s;
   }
-
-
 }

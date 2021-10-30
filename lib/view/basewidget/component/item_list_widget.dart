@@ -3,6 +3,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 class ItemListWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -13,6 +14,7 @@ class ItemListWidget extends StatelessWidget {
   final String urlImage;
   final Color? colorRowText1;
   final Color? colorRowText2;
+  final Color? colorSubTitle;
   final Icon? icon1;
   final Icon? icon2;
   final bool? isSpaceBetween;
@@ -36,6 +38,7 @@ class ItemListWidget extends StatelessWidget {
     this.subTitle,
     this.padding,
     this.margin,
+    this.colorSubTitle,
   }) : super(key: key);
 
   @override
@@ -61,136 +64,125 @@ class ItemListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                ),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: urlImage,
-                  height: double.infinity,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                  ),
+                  child: FadeInImageCustom(
+                    urlImage: urlImage,
                     height: double.infinity,
                     width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+                  )),
             ),
             const SizedBox(
               width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Expanded(
-              flex: 8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                        top: Dimensions.PADDING_SIZE_SMALL,
-                      ),
-                      child: Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              flex: 9,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Dimensions.PADDING_SIZE_SMALL,
+                  horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          ),
                         ),
-                      ),
+                        if (subTitle != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
+                            child: Text(
+                              subTitle.toString(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                color: colorSubTitle ?? ColorResources.GREY,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                  ),
-                  if (subTitle != null)
-                    Padding(
-                      padding: const EdgeInsets.all(
-                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      ),
-                      child: Text(
-                        subTitle.toString(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                          color: ColorResources.GREY,
-                        ),
-                      ),
-                    ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    ),
-                    child: Row(
+                    Row(
                       mainAxisAlignment: isSpaceBetween == true
                           ? MainAxisAlignment.spaceBetween
                           : isStart == true
                               ? MainAxisAlignment.start
                               : MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              if (icon1 != null) icon1!,
-                              if (icon1 != null && rowText1 != null)
+                        if (icon1 != null || rowText1 != null)
+                          Expanded(
+                            child: Row(
+                              children: [
+                                if (icon1 != null) icon1!,
+                                if (icon1 != null && rowText1 != null)
+                                  const SizedBox(
+                                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                  ),
+                                if (rowText1 != null)
+                                  Flexible(
+                                    child: Text(
+                                      rowText1!,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                        color: colorRowText1,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        if (icon2 != null || rowText2 != null)
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: (isSpaceBetween == true)
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                              children: [
+                                if (icon2 != null) icon2!,
+                                if (icon2 != null && rowText2 != null)
+                                  const SizedBox(
+                                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                  ),
+                                if (rowText2 != null)
+                                  Flexible(
+                                    child: Text(
+                                      rowText2!,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: colorRowText2,
+                                        fontSize: Dimensions.FONT_SIZE_SMALL,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                 const SizedBox(
                                   width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                                 ),
-                              if (rowText1 != null)
-                                Flexible(
-                                  child: Text(
-                                    rowText1!,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                      color: colorRowText1,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: (isSpaceBetween == true)
-                                ? MainAxisAlignment.end
-                                : MainAxisAlignment.start,
-                            children: [
-                              if (icon2 != null) icon2!,
-                              if (icon2 != null && rowText2 != null)
-                                const SizedBox(
-                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                                ),
-                              if (rowText2 != null)
-                                Flexible(
-                                  child: Text(
-                                    rowText2!,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: colorRowText2,
-                                      fontSize: Dimensions.FONT_SIZE_SMALL,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              const SizedBox(
-                                width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

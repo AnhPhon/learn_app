@@ -56,6 +56,7 @@ class V1ServiceReviewG1Controller extends GetxController {
   ///download file
   ///
   Future<void> downloadFile({required String url}) async {
+    print(url);
     if (await canLaunch(url)) {
       await launch(url);
     } else {

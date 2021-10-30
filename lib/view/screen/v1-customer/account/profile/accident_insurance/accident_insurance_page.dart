@@ -6,8 +6,8 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/btn_component_border.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
 import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_controller.dart';
-import 'package:template/view/screen/v1-customer/account/profile/accident_insurance/accident_insurance_specification.dart';
 
 class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
   @override
@@ -122,16 +122,12 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
   Widget _tabView() {
     return Expanded(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            AccidentInsuranceSpecification(
-              accidentInsuranceSpecification: (controller.currentIndex == 1)
-                  ? controller.baoHiemResponse[0].quyenLoi.toString()
-                  : (controller.currentIndex == 2)
-                      ? controller.baoHiemResponse[0].boiThuong.toString()
-                      : controller.baoHiemResponse[0].gioiThieu.toString(),
-            ),
-          ],
+        child: Specification(
+          specification: (controller.currentIndex == 1)
+              ? controller.baoHiemResponse.quyenLoi.toString()
+              : (controller.currentIndex == 2)
+                  ? controller.baoHiemResponse.boiThuong.toString()
+                  : controller.baoHiemResponse.gioiThieu.toString(),
         ),
       ),
     );
@@ -150,7 +146,7 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BtnCustomBorder(
-            onTap: () => controller.onYourInsurancePageClick(),
+            onTap: () => controller.onBtnClick(currentIndex: 0),
             text: "Bảo hiểm của bạn",
             width: DeviceUtils.getScaledWidth(context, .4),
           ),
@@ -158,7 +154,7 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
             width: Dimensions.MARGIN_SIZE_LARGE,
           ),
           BtnCustom(
-            onTap: () => controller.onRegisterClick(),
+            onTap: () => controller.onBtnClick(currentIndex: 1),
             color: ColorResources.PRIMARY,
             text: "Đăng ký mua",
             width: DeviceUtils.getScaledWidth(context, .4),

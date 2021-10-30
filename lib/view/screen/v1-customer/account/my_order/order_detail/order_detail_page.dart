@@ -30,6 +30,10 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
                   //thong tin chung
                   const Label(
                     label: "Thông tin chung",
@@ -38,7 +42,7 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
                   _thongTinChung(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //shipping
@@ -49,7 +53,7 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
                   _shipping(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //product info
@@ -60,7 +64,7 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
                   _productInfo(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
 
                   //payment detail
@@ -71,7 +75,7 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
                   _paymentDetail(context, controller),
 
                   const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
                 ],
               ),
