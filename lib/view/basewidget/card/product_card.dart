@@ -13,32 +13,33 @@ class ProductCard extends StatelessWidget {
     required this.image,
     required this.cost,
   });
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(.5),
-                blurRadius: 10,
-                offset: const Offset(0, -Dimensions.MARGIN_SIZE_SMALL))
-          ],
-          borderRadius: const BorderRadius.all(
-              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
+      decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.5), blurRadius: 10, offset: const Offset(0, -Dimensions.MARGIN_SIZE_SMALL))], borderRadius: const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT))),
       child: Column(
         children: [
-          SizedBox(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-              ),
-              child: FadeInImage.assetNetwork(
-                placeholder: Images.logo,
-                image: image,
-                height: 160,
-                fit: BoxFit.cover,
+          Expanded(
+            child: SizedBox(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                ),
+                child: (image.isEmpty || image == 'null')
+                    ? Image.asset(
+                        'assets/images/placeholder.jpg',
+                        height: 160,
+                        fit: BoxFit.cover,
+                      )
+                    : FadeInImage.assetNetwork(
+                        placeholder: Images.logo,
+                        image: image,
+                        height: 160,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
