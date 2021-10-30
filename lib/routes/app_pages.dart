@@ -45,6 +45,12 @@ import 'package:template/view/screen/v1-customer/form_management/form_management
 import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/payment_method/payment_method_page.dart';
 import 'package:template/view/screen/v1-customer/form_management/product_response/product_response_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g1/service_review_g1_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g2/service_review_g2_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g3/service_review_g3_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g4/service_review_g4_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g5/service_review_g5_page.dart';
+import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g6/service_review_g6_page.dart';
 import 'package:template/view/screen/v1-customer/home/home_page.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v1-customer/news/news_page.dart';
@@ -439,6 +445,30 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_ORDER_DETAIL,
       page: () => V1OrderDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G1,
+      page: () => V1ServiceReviewG1Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G2,
+      page: () => V1ServiceReviewG2Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G3,
+      page: () => V1ServiceReviewG3Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G4,
+      page: () => V1ServiceReviewG4Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G5,
+      page: () => V1ServiceReviewG5Page(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_SERVICE_REVIEW_G6,
+      page: () => V1ServiceReviewG6Page(),
     ),
 
     //builder
