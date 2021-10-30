@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -152,9 +151,6 @@ class V2CvController extends GetxController {
           //set mục tiêu
           mucTieuController.text =
               dangKyViecMoiResponse.mucTieuNgheNghiep.toString();
-          print('dangKyViecMoiResponse ${dangKyViecMoiResponse.toJson()}');
-          print(
-              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idHinhThucLamViec}');
 
           //set hôn nhân
           honNhanModel = honNhanListModel.firstWhere((element) =>
@@ -360,6 +356,12 @@ class V2CvController extends GetxController {
       Alert.error(message: 'Vui lòng nhập mục tiêu nghề nghiệp');
     } else {
       if (number == 1) {
+        //chuyển qua trang review
+        Get.toNamed('${AppRoutes.V2_PREVIEW}?idTuyenDung=$idTuyenDung',
+                arguments: dangKyViecMoiResponse)!
+            .then((value) => {
+                  if (value != null && value == true) {Get.back(result: true)}
+                });
       } else {
         //show dialog
         Get.defaultDialog(
@@ -377,6 +379,8 @@ class V2CvController extends GetxController {
                       filter:
                           '&idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId',
                       onSuccess: (value) {
+                        print(
+                            'filter &idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId');
                         if (value.isNotEmpty) {
                           //set data
                           danhSachUngTuyenRequest.idTuyenDung = idTuyenDung;
@@ -390,7 +394,8 @@ class V2CvController extends GetxController {
                                         Alert.success(
                                             message:
                                                 'Nộp hồ sơ ứng tuyển thành công'),
-                                        Get.back()
+                                        Get.back(),
+                                        Get.back(result: true)
                                       }
                                     else
                                       {

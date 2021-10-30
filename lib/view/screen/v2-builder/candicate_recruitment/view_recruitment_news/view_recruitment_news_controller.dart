@@ -225,6 +225,9 @@ class V2ViewRecruitmentNewsController extends GetxController {
   /// Nhán vào nút ứng tuyển
   ///
   void onClickRecuitmentButton() {
-    Get.toNamed('${AppRoutes.V2_FORM_OF_SUBMITSSION}?idTuyenDung=$idTuyenDung');
+    Get.toNamed('${AppRoutes.V2_FORM_OF_SUBMITSSION}?idTuyenDung=$idTuyenDung')!
+        .then((value) => {
+              if (value != null && value == true) {Get.back(result: true)}
+            });
   }
 }

@@ -109,7 +109,11 @@ class V2CvPage extends GetView<V2CvController> {
                   title: "Ngày sinh: ",
                   content: DateConverter.readMongoToString(
                       controller.dangKyViecMoiResponse.ngaySinh.toString())),
-              text(title: "Điện thoại: ", content: 'api hiện chưa trả về '),
+              text(
+                  title: "Điện thoại: ",
+                  content: controller
+                      .dangKyViecMoiResponse.idTaiKhoan!.soDienThoai
+                      .toString()),
               text(
                   title: "Email: ",
                   content: controller.dangKyViecMoiResponse.email.toString()),
@@ -269,9 +273,7 @@ class V2CvPage extends GetView<V2CvController> {
           SmallButton(
               title: "Xem trước",
               color: ColorResources.RED,
-              onPressed: () {
-                controller.onClickPreviewButton();
-              }),
+              onPressed: () => controller.onBtnSummit(number: 1)),
           SmallButton(
               title: "Nộp hồ sơ",
               color: ColorResources.PRIMARYCOLOR,

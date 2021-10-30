@@ -101,7 +101,14 @@ class CandidateCard extends StatelessWidget {
                                 '${dangKyViecMoiResponse!.idTaiKhoan!.diaChi}, ${dangKyViecMoiResponse!.idTaiKhoan!.idPhuongXa}, ${dangKyViecMoiResponse!.idTaiKhoan!.idQuanHuyen}, ${dangKyViecMoiResponse!.idTaiKhoan!.idTinhTp}'),
                         TextHighlight(
                             title: "Hôn nhân: ",
-                            content: dangKyViecMoiResponse!.honNhan.toString()),
+                            content:
+                                dangKyViecMoiResponse!.honNhan.toString() == '1'
+                                    ? 'Độc thân'
+                                    : dangKyViecMoiResponse!.honNhan
+                                                .toString() ==
+                                            '2'
+                                        ? 'Đã lập gia đình'
+                                        : 'Khác'),
                       ],
                     ),
                   ),
