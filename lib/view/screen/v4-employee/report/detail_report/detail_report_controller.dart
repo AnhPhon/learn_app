@@ -47,10 +47,7 @@ class V4DetailReportController  extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    detailReportResponse =
-    (Get.arguments != null) ? Get.arguments as BaoCaoNhanVienResponse : null;
-    mappingAddress();
-    // getThongTinBaoCao();
+    getThongTinBaoCao();
   }
   @override
   void onClose() {
@@ -64,16 +61,8 @@ class V4DetailReportController  extends GetxController {
   Future<void> mappingAddress() async {
     //get user id
     idUser = (await sl.get<SharedPreferenceHelper>().userId)!;
-    print("chi tiết dự án$detailReportResponse");
-
     if (detailReportResponse != null) {
-      timeDetailReport = TextEditingController(
-        text: DateConverter.formatDateTime(
-          detailReportResponse!.createdAt.toString(),
-        ),
-      );
       getBaoCaoNhanVien(isFisrt: true);
-      contentDetailReport.text = detailReportResponse!.noiDung!;
     } else {
       getBaoCaoNhanVien();
     }
@@ -95,36 +84,17 @@ class V4DetailReportController  extends GetxController {
     duAnNhanVienProvider.all(
       onSuccess: (data) {
         duAnNhanVienList = data;
-
         if (detailReportResponse != null && isFisrt == true) {
           duAnNhanVien = duAnNhanVienList[duAnNhanVienList.indexWhere(
                   (element) => element.id == detailReportResponse!.idDuAnNhanVien!.id)];
         }
         update();
-        print("dự án nhân viên: $duAnNhanVien");
       },
       onError: (error) {
         print("V4DetailReportController getDuAnNhanVien onError $error");
       },
     );
   }
-  // void getDuAnNhanVien({bool? isFisrt = false}) {
-  //   duAnNhanVienProvider.all(
-  //     onSuccess: (value) {
-  //       duAnNhanVienList.clear();
-  //       if (value.isNotEmpty) {
-  //         duAnNhanVienList.addAll(value);
-  //       }
-  //       isLoading = false;
-  //       update();
-  //     },
-  //     onError: (error) {
-  //       print("TermsAndPolicyController getTermsAndPolicy onError $error");
-  //       update();
-  //     },
-  //   );
-  // }
-
   ///
   ///Get thông tin báo cáo
   ///
@@ -142,14 +112,9 @@ class V4DetailReportController  extends GetxController {
               value.createdAt.toString(),
             ),
           );
-          //  tên dự án
-          // hintTextDuAnNhanVien  = value.idDuAnNhanVien!.tieuDe.toString();
-          // duAnNhanVien = value.idDuAnNhanVien;
-
-          // print(duAnNhanVien);
-          // print(duAnNhanVienList);
           // nội dung
           contentDetailReport = TextEditingController(text: value.noiDung);
+          mappingAddress();
           isLoading = false;
           update();
         },
@@ -159,7 +124,6 @@ class V4DetailReportController  extends GetxController {
       );
     });
   }
-
   ///
   /// Check null value báo cáo
   ///
@@ -194,9 +158,6 @@ class V4DetailReportController  extends GetxController {
   ///Update button
   ///
   void onUpdate(BuildContext context) {
-    // print(detailReportResponse.idDuAnNhanVien!.id);
-    // print(detailReportResponse.id);
-    // print(contentDetailReport.text);
     if(validate()) {
       // set data
       detailReportResponse!.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
@@ -204,17 +165,9 @@ class V4DetailReportController  extends GetxController {
           timeDetailReport.text.toString(),
         ),
       );
-      // duAnNhanVien =detailReportResponse.idDuAnNhanVien;
-      // detailReportRequest.idDuAnNhanVien = duAnNhanVien!.id;
-      // detailReportResponse.noiDung = contentDetailReport.text;
-//     sl.get<SharedPreferenceHelper>().userId.then((userId) {
-//       print(duAnNhanVien!.id);
-//       print();
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
-
           id: detailReportResponse!.id,
-          // idDuAnNhanVien: detailReportResponse.idDuAnNhanVien!.id,
           idDuAnNhanVien: duAnNhanVien!.id,
           noiDung: contentDetailReport.text,
         ),
@@ -233,9 +186,6 @@ class V4DetailReportController  extends GetxController {
             dismissible: false,
             isFlip: true,
           );
-          // Get.back();
-          // Get.back(result: true);
-          // isLoading = true;
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
