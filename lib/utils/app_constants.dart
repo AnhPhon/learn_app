@@ -24,8 +24,8 @@ enum TYPEFORMAL { CREATE, FEEDBACK }
 
 const String DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
 const String CHUA_THANH_TOAN = '61615180e87a9124404abe82';
-const String DA_PHAN_HOI = '617286ebf5c09a07f815e825';
-const String CHUA_PHAN_HOI = '617286fdf5c09a07f815e826';
+const String DA_PHAN_HOI = '616ce813cbb2cf21dad90cdf';
+const String CHUA_PHAN_HOI = '6170c4bbb3b6a47374f4e677';
 
 // sharePreference
 const String TOKEN = 'token';
@@ -85,3 +85,14 @@ const dynamic TRANG_THAI_DU_AN = {
 
 const String TUYEN_DUNG_DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
 const String TUYEN_DUNG_CHUA_THANH_TOAN = '61615180e87a9124404abe82';
+
+//Nhóm dịch vụ
+
+const String NHOM_1 = '616cd0267aade64ebae7bd81';
+const String NHOM_2 = '6168ecdd7cb8ed05dbf3bba5';
+const String NHOM_3 = '61693a7c3391622ae9201fe7';
+const String NHOM_4 = '616049b2c8e6fa122227e283';
+const String NHOM_5 = '616049b6c8e6fa122227e286';
+const String NHOM_6 = '616049bac8e6fa122227e289';
+const String NHOM_7 = '6168f03c7cb8ed05dbf3bcc7';
+const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
