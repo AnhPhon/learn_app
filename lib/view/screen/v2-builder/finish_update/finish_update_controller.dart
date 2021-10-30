@@ -29,6 +29,8 @@ class V2FinishUpdateController extends GetxController {
   bool sanPhamMauValid = false;
   bool bangGiaValid = false;
 
+  bool isLoading = true;
+
   @override
   void onInit() {
     super.onInit();
@@ -141,9 +143,10 @@ class V2FinishUpdateController extends GetxController {
         if (models.isNotEmpty) {
           if (models[0].trangThai == '1') {
             chungNhanValid = true;
-            update();
           }
         }
+        isLoading = false;
+        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");

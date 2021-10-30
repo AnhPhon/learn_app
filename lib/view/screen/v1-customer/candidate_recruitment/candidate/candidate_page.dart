@@ -28,9 +28,9 @@ class V1CandidatePage extends GetView<V1CandidateController> {
                 children: [
                   tabBarWidget(context: context, controller: controller),
                   if (controller.currentIndex == 0)
-                    news(context, controller: controller)
+                    news(context, controller: controller, index: 0)
                   else
-                    listOfCandidates(context, controller: controller)
+                    listOfCandidates(context, controller: controller, index: 1)
                 ],
               ),
             );
@@ -65,33 +65,48 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   /// Tin tuyển dụng
   ///
   Widget news(BuildContext context,
-      {required V1CandidateController controller}) {
+      {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshController!,
+        controller: controller.refreshTinTuyenDungController,
+        scrollController: controller.scrollTinTuyenDungController,
         enablePullUp: true,
-        onLoading: controller.onLoadingTuyenDung,
-        onRefresh: controller.onRefreshTuyenDung,
+        onRefresh: controller.onRefreshTinTuyenDung,
+        onLoading: controller.onLoadingTinTuyenDung,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",
+          canLoadingText: 'Đang tải...',
         ),
-        child: controller.isLoadingTuyenDung
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                itemCount: controller.tuyenDungListModel.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => controller.onTapViewTuyenDung(
-                        tuyendungModel: controller.tuyenDungListModel[index]),
-                    child: RecruimentNewsCard(
-                        tuyenDungResponse:
-                            controller.tuyenDungListModel[index]),
-                  );
-                },
-              ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (controller.isLoadingTuyenDung)
+                const Padding(
+                  padding:
+                      EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.tuyenDungListModel.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => controller.onTapViewTuyenDung(
+                          tuyendungModel: controller.tuyenDungListModel[index]),
+                      child: RecruimentNewsCard(
+                          tuyenDungResponse:
+                              controller.tuyenDungListModel[index]),
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -100,54 +115,58 @@ class V1CandidatePage extends GetView<V1CandidateController> {
   /// Danh sách ứng tuyển
   ///
   Widget listOfCandidates(BuildContext context,
-      {required V1CandidateController controller}) {
+      {required V1CandidateController controller, required int index}) {
     return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Tìm kiếm
-            search(context, controller: controller),
-            // Bộ lọc
-            filter(context, controller: controller),
-            // dánh sách ứng viên
-            if (controller.isLoadingCadidate)
-              const Padding(
-                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            else if (!controller.isLoadingCadidate &&
-                controller.dangKyViecMoiListModel.isEmpty)
-              const Center(
-                child: Padding(
+      child: SmartRefresher(
+        controller: controller.refreshTimUngVienController,
+        enablePullUp: true,
+        scrollController: controller.scrollTimUngVienController,
+        onLoading: controller.onLoadingTimUngVien,
+        onRefresh: controller.onRefreshTimUngVien,
+        footer: const ClassicFooter(
+          loadingText: "Đang tải...",
+          noDataText: "Không có dữ liệu",
+          canLoadingText: 'Đang tải...',
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Tìm kiếm
+              search(context, controller: controller),
+              // Bộ lọc
+              filter(context, controller: controller),
+              // dánh sách ứng viên
+              if (controller.isLoadingCadidate)
+                const Padding(
                   padding:
                       EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Text('Không có dữ liệu'),
-                ),
-              )
-            else
-              SizedBox(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.dangKyViecMoiListModel.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        onTap: () {
-                          controller.onClickProfile(
-                              dangKyViecMoiModel:
-                                  controller.dangKyViecMoiListModel[index]);
-                        },
-                        child: CandidateCard(
-                          dangKyViecMoiResponse:
-                              controller.dangKyViecMoiListModel[index],
-                          showEmailAndPass: false,
-                        ));
-                  },
-                ),
-              )
-          ],
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                SizedBox(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.dangKyViecMoiListModel.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            controller.onClickProfile(
+                                dangKyViecMoiModel:
+                                    controller.dangKyViecMoiListModel[index]);
+                          },
+                          child: CandidateCard(
+                            dangKyViecMoiResponse:
+                                controller.dangKyViecMoiListModel[index],
+                            showEmailAndPass: false,
+                          ));
+                    },
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );
@@ -187,7 +206,7 @@ class V1CandidatePage extends GetView<V1CandidateController> {
             color: controller.currentIndex == index
                 ? ColorResources.WHITE
                 : ColorResources.GREY,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+            fontSize: Dimensions.FONT_SIZE_LARGE,
           ),
         ),
       ),

@@ -160,6 +160,11 @@ class RechargeController extends GetxController {
           lichSuViTienRequest.hinhAnhHoaDon = image.data;
           lichSuViTienRequest.trangThai = "1";
 
+          final Map<String, dynamic> param = {
+            'type': 2,
+            'status': true,
+            'hinhAnhHoaDon': image.data
+          };
           //add
           lichSuViTienProvider.add(
             data: lichSuViTienRequest,
@@ -168,7 +173,7 @@ class RechargeController extends GetxController {
               EasyLoading.dismiss();
               Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=1')!
                   .then((value) => {
-                        if (value == true) {Get.back(result: true)}
+                        if (value == true) {Get.back(result: param)}
                       });
             },
             onError: (error) {

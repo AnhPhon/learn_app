@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
 
 class PaymentSuccessController extends GetxController {
   String title = "Thông báo thành công";

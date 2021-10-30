@@ -10,7 +10,7 @@ class V4NewsCategoriesController extends GetxController
     with SingleGetTickerProviderMixin {
   DanhMucTinTucResponse? danhMucTinTucList;
 
-  RefreshController refreshController = RefreshController();
+  RefreshController refreshController = RefreshController(initialRefresh: true);
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
 
   RxList<TinTucResponse> tinTucModelList = <TinTucResponse>[].obs;

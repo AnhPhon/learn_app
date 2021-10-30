@@ -87,12 +87,15 @@ class ItemListWidget extends StatelessWidget {
             Expanded(
               flex: 8,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      padding: const EdgeInsets.only(
+                        left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                        top: Dimensions.PADDING_SIZE_SMALL,
+                      ),
                       child: Text(
                         title,
                         maxLines: 2,
@@ -105,8 +108,8 @@ class ItemListWidget extends StatelessWidget {
                   ),
                   if (subTitle != null)
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                      padding: const EdgeInsets.all(
+                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
                       ),
                       child: Text(
                         subTitle.toString(),
@@ -118,65 +121,73 @@ class ItemListWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     ),
-                    child: Container(
-                      // color: Colors.red,
-                      child: Row(
-                        mainAxisAlignment: isSpaceBetween == true
-                            ? MainAxisAlignment.spaceBetween
-                            : isStart == true
-                                ? MainAxisAlignment.start
-                                : MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: Row(
-                              children: [
-                                if (icon1 != null) icon1!,
-                                if (icon1 != null && rowText1 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                if (rowText1 != null)
-                                  Expanded(
-                                    child: Text(
-                                      rowText1!,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                        color: colorRowText1,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      mainAxisAlignment: isSpaceBetween == true
+                          ? MainAxisAlignment.spaceBetween
+                          : isStart == true
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              if (icon1 != null) icon1!,
+                              if (icon1 != null && rowText1 != null)
+                                const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
+                              if (rowText1 != null)
+                                Flexible(
+                                  child: Text(
+                                    rowText1!,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                      color: colorRowText1,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                              ],
-                            ),
+                                ),
+                            ],
                           ),
-                          Expanded(
-                            flex: 5,
-                            child: Row(
-                              children: [
-                                if (icon2 != null) icon2!,
-                                if (icon2 != null && rowText2 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                if (rowText2 != null)
-                                  Expanded(
-                                    child: Text(
-                                      rowText2!,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: colorRowText2,
-                                        fontSize: Dimensions.FONT_SIZE_SMALL,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: (isSpaceBetween == true)
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.start,
+                            children: [
+                              if (icon2 != null) icon2!,
+                              if (icon2 != null && rowText2 != null)
+                                const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
+                              if (rowText2 != null)
+                                Flexible(
+                                  child: Text(
+                                    rowText2!,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: colorRowText2,
+                                      fontSize: Dimensions.FONT_SIZE_SMALL,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                              ],
-                            ),
+                                ),
+                              const SizedBox(
+                                width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -25,7 +25,15 @@ class V1CartPage extends GetView<V1CartController> {
           return Scaffold(
             appBar: AppBarWidget(
               title: controller.title,
-              onPressed: () => Get.back(result: true),
+              leading: IconButton(
+                onPressed: () {
+                  Get.back(result: true);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: ColorResources.WHITE,
+                ),
+              ),
             ),
             body: (controller.chiTietDonHangList.isEmpty ||
                     controller.donHangResponse == null)

@@ -10,12 +10,12 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/bill_widget.dart';
 import 'package:template/view/screen/v1-customer/notifications/order_feedback_contractors/components/order_content.dart';
 
-class OrderInformationPage extends GetView<OrderInformationController> {
+class V1OrderInformationPage extends GetView<V1OrderInformationController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: OrderInformationController(),
-        builder: (OrderInformationController controller) {
+        init: V1OrderInformationController(),
+        builder: (V1OrderInformationController controller) {
           if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),

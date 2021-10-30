@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/chuyen_mon_response.dart';
+
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
 import 'quan_huyen_response.dart';
@@ -24,19 +26,20 @@ class DangKyViecMoiResponse {
   String? honNhan;
   LoaiNhanVienResponse? idLoaiNhanVien;
   String? mucTieuNgheNghiep;
-  List<BangBangCapResponse>? idBangBangCap;
+  List<BangBangCapResponse>? idBangBangCaps;
   String? chucVuHienTai;
   String? chucVuMongMuon;
   SoNamKinhNghiemResponse? idSoNamKinhNghiem;
   String? noiLamViec;
   String? mucLuongDeXuat;
-  List<KeKhaiKinhNghiemResponse>? idKeKhaiKinhNghiem;
-  String? anhHoSoXinViec;
+  List<KeKhaiKinhNghiemResponse>? idKeKhaiKinhNghiems;
+  String? anhHoSoXinViecs;
   String? fileHoSoXinViec;
   String? kyNangSoTruong;
-  List<NgoaiNguResponse>? idNgoaiNgu;
+  List<NgoaiNguResponse>? idNgoaiNgus;
   TinHocResponse? idTinHoc;
-  String? mSHS;
+  String? maSoHoSo;
+  List<ChuyenMonResponse>? idNganhNgheMongMuons;
 
   String? createdAt;
   String? updatedAt;
@@ -56,19 +59,20 @@ class DangKyViecMoiResponse {
       this.honNhan,
       this.idLoaiNhanVien,
       this.mucTieuNgheNghiep,
-      this.idBangBangCap,
+      this.idBangBangCaps,
       this.chucVuHienTai,
       this.chucVuMongMuon,
       this.idSoNamKinhNghiem,
       this.noiLamViec,
       this.mucLuongDeXuat,
-      this.idKeKhaiKinhNghiem,
-      this.anhHoSoXinViec,
+      this.idKeKhaiKinhNghiems,
+      this.anhHoSoXinViecs,
       this.fileHoSoXinViec,
       this.kyNangSoTruong,
-      this.idNgoaiNgu,
+      this.idNgoaiNgus,
+      this.idNganhNgheMongMuons,
       this.idTinHoc,
-      this.mSHS,
+      this.maSoHoSo,
       this.createdAt,
       this.updatedAt});
 
@@ -130,24 +134,24 @@ class DangKyViecMoiResponse {
     }
     mucTieuNgheNghiep = json['mucTieuNgheNghiep'].toString();
 
-    // mapping idBangBangCap
-    if (json['idBangBangCap'] != null &&
-        json['idBangBangCap'].toString().length != 24) {
-      idBangBangCap = (json['idBangBangCap'] as List<dynamic>)
-          .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+    // mapping idBangBangCaps
+    if (json['idBangBangCaps'] != null &&
+        json['idBangBangCaps'].toString().length != 24) {
+      // idBangBangCaps = (json['idBangBangCaps'] as List<dynamic>)
+      //     .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
+      //     .toList();
 
-      //add list Bằng cấp
-      // idBangBangCap = [];
-      // final results = json['idBangBangCap'] as List<dynamic>;
-      // for (final element in results) {
-      //   if (element != null && element.toString().length != 24) {
-      //     idBangBangCap!.add(BangBangCapResponse.fromJson(
-      //         element as Map<String, dynamic>));
-      //   }
-      // }
+      // add list Bằng cấp
+      idBangBangCaps = [];
+      final results = json['idBangBangCaps'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idBangBangCaps!.add(
+              BangBangCapResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idBangBangCap = null;
+      idBangBangCaps = null;
     }
     chucVuHienTai = json['chucVuHienTai'].toString();
     chucVuMongMuon = json['chucVuMongMuon'].toString();
@@ -163,32 +167,38 @@ class DangKyViecMoiResponse {
     noiLamViec = json['noiLamViec'].toString();
     mucLuongDeXuat = json['mucLuongDeXuat'].toString();
 
-    // mapping idKeKhaiKinhNghiem
-    if (json['idKeKhaiKinhNghiem'] != null &&
-        json['idKeKhaiKinhNghiem'].toString().length != 24) {
-      // idKeKhaiKinhNghiem = KeKhaiKinhNghiemResponse.fromJson(
-      //     json['idKeKhaiKinhNghiem'] as Map<String, dynamic>);
-      idKeKhaiKinhNghiem = (json['idKeKhaiKinhNghiem'] as List<dynamic>)
-          .map((e) =>
-              KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+    // mapping idKeKhaiKinhNghiems
+    if (json['idKeKhaiKinhNghiems'] != null &&
+        json['idKeKhaiKinhNghiems'].toString().length != 24) {
+      // add list kê khai kinh nghiệm
+      idKeKhaiKinhNghiems = [];
+      final results = json['idKeKhaiKinhNghiems'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idKeKhaiKinhNghiems!.add(KeKhaiKinhNghiemResponse.fromJson(
+              element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idKeKhaiKinhNghiem = null;
+      idKeKhaiKinhNghiems = null;
     }
-    anhHoSoXinViec = json['anhHoSoXinViec'].toString();
+    anhHoSoXinViecs = json['anhHoSoXinViecs'].toString();
     fileHoSoXinViec = json['fileHoSoXinViec'].toString();
     kyNangSoTruong = json['kyNangSoTruong'].toString();
 
-    // mapping idNgoaiNgu
-    if (json['idNgoaiNgu'] != null &&
-        json['idNgoaiNgu'].toString().length != 24) {
-      // idNgoaiNgu =
-      //     NgoaiNguResponse.fromJson(json['idNgoaiNgu'] as Map<String, dynamic>);
-      idNgoaiNgu = (json['idNgoaiNgu'] as List<dynamic>)
-          .map((e) => NgoaiNguResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+    // mapping idNgoaiNgus
+    if (json['idNgoaiNgus'] != null &&
+        json['idNgoaiNgus'].toString().length != 24) {
+      idNgoaiNgus = [];
+      final results = json['idNgoaiNgus'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idNgoaiNgus!
+              .add(NgoaiNguResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idNgoaiNgu = null;
+      idNgoaiNgus = null;
     }
 
     // mapping idTinHoc
@@ -199,7 +209,23 @@ class DangKyViecMoiResponse {
       idTinHoc = null;
     }
 
-    mSHS = json['mSHS'].toString();
+    maSoHoSo = json['maSoHoSo'].toString();
+
+    // mapping nganhNgheMongMuons
+    if (json['idNganhNgheMongMuons'] != null &&
+        json['idNganhNgheMongMuons'].toString().length != 24) {
+      //add list nghành nghề mong muốn
+      idNganhNgheMongMuons = [];
+      final results = json['idNganhNgheMongMuons'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idNganhNgheMongMuons!
+              .add(ChuyenMonResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
+    } else {
+      idNganhNgheMongMuons = null;
+    }
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -253,8 +279,8 @@ class DangKyViecMoiResponse {
     if (mucTieuNgheNghiep != null)
       data['mucTieuNgheNghiep'] = mucTieuNgheNghiep;
 
-    // check null idBangBangCap
-    if (idBangBangCap != null) data['idBangBangCap'] = idBangBangCap;
+    // check null idBangBangCaps
+    if (idBangBangCaps != null) data['idBangBangCaps'] = idBangBangCaps;
 
     // check null chucVuHienTai
     if (chucVuHienTai != null) data['chucVuHienTai'] = chucVuHienTai;
@@ -272,12 +298,12 @@ class DangKyViecMoiResponse {
     // check null mucLuongDeXuat
     if (mucLuongDeXuat != null) data['mucLuongDeXuat'] = mucLuongDeXuat;
 
-    // check null idKeKhaiKinhNghiem
-    if (idKeKhaiKinhNghiem != null)
-      data['idKeKhaiKinhNghiem'] = idKeKhaiKinhNghiem;
+    // check null idKeKhaiKinhNghiems
+    if (idKeKhaiKinhNghiems != null)
+      data['idKeKhaiKinhNghiems'] = idKeKhaiKinhNghiems;
 
-    // check null anhHoSoXinViec
-    if (anhHoSoXinViec != null) data['anhHoSoXinViec'] = anhHoSoXinViec;
+    // check null anhHoSoXinViecs
+    if (anhHoSoXinViecs != null) data['anhHoSoXinViecs'] = anhHoSoXinViecs;
 
     // check null fileHoSoXinViec
     if (fileHoSoXinViec != null) data['fileHoSoXinViec'] = fileHoSoXinViec;
@@ -285,12 +311,14 @@ class DangKyViecMoiResponse {
     // check null kyNangSoTruong
     if (kyNangSoTruong != null) data['kyNangSoTruong'] = kyNangSoTruong;
 
-    // check null idNgoaiNgu
-    if (idNgoaiNgu != null) data['idNgoaiNgu'] = idNgoaiNgu;
+    // check null idNgoaiNgus
+    if (idNgoaiNgus != null) data['idNgoaiNgus'] = idNgoaiNgus;
 
     // check null idTinHoc
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;
-    if (mSHS != null) data['mSHS'] = mSHS;
+    if (maSoHoSo != null) data['maSoHoSo'] = maSoHoSo;
+    if (idNganhNgheMongMuons != null)
+      data['idNganhNgheMongMuons'] = idNganhNgheMongMuons;
 
     return data;
   }
