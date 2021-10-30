@@ -17,6 +17,8 @@ class ItemListWidget extends StatelessWidget {
   final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   const ItemListWidget({
     Key? key,
@@ -32,6 +34,8 @@ class ItemListWidget extends StatelessWidget {
     this.icon2,
     required this.urlImage,
     this.subTitle,
+    this.padding,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -39,19 +43,18 @@ class ItemListWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(
+        margin: margin ?? const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
+        padding: padding ?? const EdgeInsets.symmetric(
+          vertical: 0,
         ),
         height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 2)),
+            BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 2)),
           ],
         ),
         child: Row(
@@ -89,8 +92,7 @@ class ItemListWidget extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.all(
-                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                       child: Text(
                         title,
                         maxLines: 2,
@@ -134,10 +136,7 @@ class ItemListWidget extends StatelessWidget {
                             child: Row(
                               children: [
                                 if (icon1 != null) icon1!,
-                                if (icon1 != null && rowText1 != null)
-                                  const SizedBox(
-                                      width:
-                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                if (icon1 != null && rowText1 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                                 if (rowText1 != null)
                                   Expanded(
                                     child: Text(
@@ -159,10 +158,7 @@ class ItemListWidget extends StatelessWidget {
                             child: Row(
                               children: [
                                 if (icon2 != null) icon2!,
-                                if (icon2 != null && rowText2 != null)
-                                  const SizedBox(
-                                      width:
-                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                if (icon2 != null && rowText2 != null) const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                                 if (rowText2 != null)
                                   Expanded(
                                     child: Text(
