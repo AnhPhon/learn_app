@@ -79,10 +79,10 @@ Widget _projectReportOnRequest(
     labelBold: true,
     hint: 'Vui lòng chọn dự án',
     label: 'Tên dự án',
-    data: controller.duAnNhanVienList,
+    data: controller.duAnNhanVienList1,
     obligatory: true,
     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
-    value: controller.duAnNhanVien,
+    value: controller.duAnNhanVien1,
     width: DeviceUtils.getScaledWidth(context, 1),
     padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );

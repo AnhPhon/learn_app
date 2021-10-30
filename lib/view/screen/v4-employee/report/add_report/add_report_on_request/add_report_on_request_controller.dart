@@ -20,8 +20,8 @@ class V4AddReportOnRequestController extends GetxController{
   DuAnNhanVienProvider duAnNhanVienProvider = GetIt.I.get<DuAnNhanVienProvider>();
 
   // Dự án của nhân viên
-  List<DuAnNhanVienResponse> duAnNhanVienList = [];
-  DuAnNhanVienResponse? duAnNhanVien;
+  List<DuAnNhanVienResponse> duAnNhanVienList1 = [];
+  DuAnNhanVienResponse? duAnNhanVien1;
 
   //khai báo biến isLoading
   bool isLoading = true;
@@ -55,7 +55,7 @@ class V4AddReportOnRequestController extends GetxController{
   ///Thay đổi dự án nhân viên
   ///
   void onChangedDuAnNhanVien(DuAnNhanVienResponse duAnNhanVien) {
-    this.duAnNhanVien = duAnNhanVien;
+    this.duAnNhanVien1 = duAnNhanVien;
     update();
   }
 
@@ -65,9 +65,9 @@ class V4AddReportOnRequestController extends GetxController{
   void getDuAnNhanVien() {
     duAnNhanVienProvider.all(
       onSuccess: (value) {
-        duAnNhanVienList.clear();
+        duAnNhanVienList1.clear();
         if (value.isNotEmpty) {
-          duAnNhanVienList.addAll(value);
+          duAnNhanVienList1.addAll(value);
         }
         isLoading = false;
         update();
@@ -95,7 +95,7 @@ class V4AddReportOnRequestController extends GetxController{
       );
       return false;
     }
-    if (duAnNhanVien == null) {
+    if (duAnNhanVien1 == null) {
       Get.snackbar(
         "Dự án không hơp lệ!", // title
         "Vui lòng chọn dự án hợp lệ!", // message
@@ -117,7 +117,7 @@ class V4AddReportOnRequestController extends GetxController{
       baoCaoNhanVienProvider.add(
         data: BaoCaoNhanVienRequest(
           idNhanVien: idUser,
-          idDuAnNhanVien: duAnNhanVien!.id,
+          idDuAnNhanVien: duAnNhanVien1!.id,
           loai: "1",
           noiDung: contentReportOnRequest.text,
         ),

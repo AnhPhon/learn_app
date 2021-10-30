@@ -32,12 +32,7 @@ class V4ReportPage extends GetView<V4ReportController> {
               title: "Danh sách báo cáo",
               isNotBack: true,
             ),
-            body: controller.isLoading ?
-            const Center(
-              child: CircularProgressIndicator(),
-            )
-
-                : Padding(
+            body: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimensions.PADDING_SIZE_LARGE,
               ),

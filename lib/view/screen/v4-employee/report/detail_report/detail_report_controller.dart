@@ -20,8 +20,9 @@ class V4DetailReportController  extends GetxController {
   BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
   List<BaoCaoNhanVienResponse> detailReportModel = [];
 
-  BaoCaoNhanVienResponse detailReportResponse = BaoCaoNhanVienResponse();
+
   BaoCaoNhanVienRequest detailReportRequest = BaoCaoNhanVienRequest();
+  BaoCaoNhanVienResponse? detailReportResponse;
 
   DuAnNhanVienProvider duAnNhanVienProvider = GetIt.I.get<DuAnNhanVienProvider>();
   // Dự án của nhân viên
@@ -29,6 +30,10 @@ class V4DetailReportController  extends GetxController {
   DuAnNhanVienResponse? duAnNhanVien;
 
   String hintTextDuAnNhanVien = '';
+
+  // page for for load more refresh
+  int pageMax = 1;
+  int limitMax = 5;
 
   // khai báo is loading
   bool isLoading = true;
@@ -42,56 +47,91 @@ class V4DetailReportController  extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getidUser();
-    getDuAnNhanVien();
-    getThongTinBaoCao();
+    detailReportResponse =
+    (Get.arguments != null) ? Get.arguments as BaoCaoNhanVienResponse : null;
+    mappingAddress();
+    // getThongTinBaoCao();
   }
+  @override
+  void onClose() {
+    contentDetailReport.dispose();
+    super.onClose();
+  }
+
   ///
-  /// get id user
+  ///mapping address
   ///
-  void getidUser() {
-    sl.get<SharedPreferenceHelper>().userId.then((value) {
-      idUser = value!;
-      print(value);
-    });
+  Future<void> mappingAddress() async {
+    //get user id
+    idUser = (await sl.get<SharedPreferenceHelper>().userId)!;
+    print("chi tiết dự án$detailReportResponse");
+
+    if (detailReportResponse != null) {
+      timeDetailReport = TextEditingController(
+        text: DateConverter.formatDateTime(
+          detailReportResponse!.createdAt.toString(),
+        ),
+      );
+      getBaoCaoNhanVien(isFisrt: true);
+      contentDetailReport.text = detailReportResponse!.noiDung!;
+    } else {
+      getBaoCaoNhanVien();
+    }
   }
   ///
   ///Thay đổi dự án nhân viên
   ///
-  void onChangedDuAnNhanVien(DuAnNhanVienResponse duAnNhanVien) {
-    this.duAnNhanVien = duAnNhanVien;
+  void onChangedDuAnNhanVien(DuAnNhanVienResponse? value) {
+    this.duAnNhanVien = value;
     update();
   }
 
   ///
   ///Lấy dự án của nhân viên
   ///
-  void getDuAnNhanVien() {
+  ///
+  void getBaoCaoNhanVien({bool? isFisrt = false}) {
+    //get DuAnNhanVien
     duAnNhanVienProvider.all(
-      onSuccess: (value) {
-        duAnNhanVienList.clear();
-        if (value.isNotEmpty) {
-          duAnNhanVienList.addAll(value);
+      onSuccess: (data) {
+        duAnNhanVienList = data;
+
+        if (detailReportResponse != null && isFisrt == true) {
+          duAnNhanVien = duAnNhanVienList[duAnNhanVienList.indexWhere(
+                  (element) => element.id == detailReportResponse!.idDuAnNhanVien!.id)];
         }
-        isLoading = false;
         update();
+        print("dự án nhân viên: $duAnNhanVien");
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        update();
+        print("V4DetailReportController getDuAnNhanVien onError $error");
       },
     );
   }
+  // void getDuAnNhanVien({bool? isFisrt = false}) {
+  //   duAnNhanVienProvider.all(
+  //     onSuccess: (value) {
+  //       duAnNhanVienList.clear();
+  //       if (value.isNotEmpty) {
+  //         duAnNhanVienList.addAll(value);
+  //       }
+  //       isLoading = false;
+  //       update();
+  //     },
+  //     onError: (error) {
+  //       print("TermsAndPolicyController getTermsAndPolicy onError $error");
+  //       update();
+  //     },
+  //   );
+  // }
 
   ///
   ///Get thông tin báo cáo
   ///
   void getThongTinBaoCao() {
-    sl.get<SharedPreferenceHelper>().userId.then((userId) {
-      //get User Id
-      idUser = userId!;
-
-      //Get thông tin nhân viên theo id
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      //get  Id
+      idUser = id!;
       baoCaoNhanVienProvider.find(
         id: idUser,
         onSuccess: (value) {
@@ -103,7 +143,11 @@ class V4DetailReportController  extends GetxController {
             ),
           );
           //  tên dự án
-          hintTextDuAnNhanVien  = value.idDuAnNhanVien!.tieuDe.toString();
+          // hintTextDuAnNhanVien  = value.idDuAnNhanVien!.tieuDe.toString();
+          // duAnNhanVien = value.idDuAnNhanVien;
+
+          // print(duAnNhanVien);
+          // print(duAnNhanVienList);
           // nội dung
           contentDetailReport = TextEditingController(text: value.noiDung);
           isLoading = false;
@@ -132,6 +176,18 @@ class V4DetailReportController  extends GetxController {
       );
       return false;
     }
+    if (duAnNhanVien == null) {
+      Get.snackbar(
+        "Dự án không hơp lệ!", // title
+        "Vui lòng chọn dự án cần cập nhật!", // message
+        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
+        icon: const Icon(Icons.error_outline),
+        shouldIconPulse: true,
+        isDismissible: true,
+        duration: const Duration(seconds: 2),
+      );
+      return false;
+    }
     return true;
   }
   ///
@@ -143,23 +199,28 @@ class V4DetailReportController  extends GetxController {
     // print(contentDetailReport.text);
     if(validate()) {
       // set data
-      detailReportResponse.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
+      detailReportResponse!.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
           timeDetailReport.text.toString(),
         ),
       );
-      // detailReportRequest.id = duAnNhanVien!.id;
+      // duAnNhanVien =detailReportResponse.idDuAnNhanVien;
+      // detailReportRequest.idDuAnNhanVien = duAnNhanVien!.id;
       // detailReportResponse.noiDung = contentDetailReport.text;
 //     sl.get<SharedPreferenceHelper>().userId.then((userId) {
 //       print(duAnNhanVien!.id);
 //       print();
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
-          id: detailReportResponse.id,
-          idDuAnNhanVien: detailReportResponse.idDuAnNhanVien!.id,
+
+          id: detailReportResponse!.id,
+          // idDuAnNhanVien: detailReportResponse.idDuAnNhanVien!.id,
+          idDuAnNhanVien: duAnNhanVien!.id,
           noiDung: contentDetailReport.text,
         ),
         onSuccess: (value) {
+          print(duAnNhanVien!.id);
+          print(contentDetailReport);
           Get.back(result: true);
           //show dialog
           showAnimatedDialog(

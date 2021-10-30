@@ -85,7 +85,7 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
       isColorFieldWhite: true,
       isBorder: false,
       isShadow: true,
-      hint: controller.hintTextDuAnNhanVien,
+      hint: "Chọn tên dự án",
       label: 'Tên dự án',
       data: controller.duAnNhanVienList,
       obligatory: true,

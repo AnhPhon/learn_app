@@ -311,4 +311,17 @@ class SharedPreferenceHelper {
   Future<bool> removeIdNewWork() async {
     return _sharedPreference.remove(Preferences.idNewWork);
   }
+
+  // report id : -----------------------------------------------
+  Future<String?> get idReport async {
+    return _sharedPreference.getString(Preferences.idReport);
+  }
+
+  Future<bool> saveIdReport({required String id}) async {
+    return _sharedPreference.setString(Preferences.idReport, id);
+  }
+
+  Future<bool> removeIdReport() async {
+    return _sharedPreference.remove(Preferences.idReport);
+  }
 }
