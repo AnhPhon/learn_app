@@ -213,8 +213,8 @@ class V1G2CreateWorkController extends GetxController {
   Future<DonDichVuRequest> request(){
       final List<String> workTime = [];
       List<String> massImagesLink = [];
-      String productImagesLink = '';
-      String currentStatusimages ='';
+      List<String> productImagesLink = [];
+      List<String> currentStatusimages = [];
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
@@ -244,7 +244,7 @@ class V1G2CreateWorkController extends GetxController {
       imageUpdateProvider.add(
           file: element,
           onSuccess: (data) {
-            currentStatusimages = "$currentStatusimages${data.data},";
+            currentStatusimages.add(data.data!);
           },
           onError: (onError) {
             print("V1G2CreateWorkController request hiện trạng $onError");
@@ -257,7 +257,7 @@ class V1G2CreateWorkController extends GetxController {
       imageUpdateProvider.add(
           file: element,
           onSuccess: (data) {
-            productImagesLink = "$productImagesLink${data.data},";
+            productImagesLink.add(data.data!);
           },
           onError: (onError) {
             print("V1G2CreateWorkController request ảnh sản phẩm mẫu $onError");
@@ -293,9 +293,9 @@ class V1G2CreateWorkController extends GetxController {
 
     return Future.delayed(const Duration(seconds: 1), () {
       dichVuRequest.hinhAnhBanKhoiLuongs = massImagesLink;
-      dichVuRequest.hinhAnhBanVe =
+      dichVuRequest.hinhAnhBanVes =
           productImagesLink; // Hình ảnh bản vẽ là hình ảnh sản phẩm mẫu
-      dichVuRequest.hinhAnhChiTiet =
+      dichVuRequest.hinhAnhThucTes =
           currentStatusimages; // Hình ảnh chi tiết cho là hình ảnh hiện trạng
       return dichVuRequest;
     });

@@ -21,7 +21,11 @@ class DonDichVuResponse {
   String? ngayBatDau;
   String? ngayKetThuc;
   List<String>? hinhAnhBanKhoiLuongs;
-  String? hinhAnhBanVe;
+  List<String>? hinhAnhBanVes;
+  List<String>? hinhAnhChiTiets;
+  List<String>? hinhAnhBaoGias;
+  List<String>? hinhAnhThucTes;
+  List<String>? hinhAnhBaoHanhs;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
@@ -65,7 +69,10 @@ class DonDichVuResponse {
       this.ngayBatDau,
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuongs,
-      this.hinhAnhBanVe,
+      this.hinhAnhBanVes,
+      this.hinhAnhBaoGias,
+      this.hinhAnhThucTes,
+      this.hinhAnhBaoHanhs,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
@@ -127,7 +134,10 @@ class DonDichVuResponse {
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString();
+    hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhBaoGias = (json[hinhAnhBaoGias] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhThucTes = (json[hinhAnhThucTes] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhBaoHanhs = (json[hinhAnhBaoHanhs] as List<dynamic>).map((e) => e.toString()).toList();
 
     // mapping idTrangThaiDonDichVu
     if (json['idTrangThaiDonDichVu'] != null &&
@@ -284,9 +294,21 @@ class DonDichVuResponse {
     if (hinhAnhBanKhoiLuongs != null) {
       data['hinhAnhBanKhoiLuongs'] = hinhAnhBanKhoiLuongs!.map((e) => e.toString()).toList();
     }
+    //hinhAnhBaoGias
+    if(hinhAnhBaoGias != null){
+      data['hinhAnhBaoGias'] = hinhAnhBaoGias!.map((e) => e.toString()).toList();
+    }
+    //hinhAnhThucTes
+    if(hinhAnhThucTes != null){
+      data['hinhAnhThucTes'] = hinhAnhThucTes!.map((e) => e.toString()).toList();
+    }
+    //hinhAnhBaoHanhs
+    if(hinhAnhBaoHanhs != null){
+      data['hinhAnhBaoHanhs'] = hinhAnhBaoHanhs!.map((e) => e.toString()).toList();
+    }
 
     // check null hinhAnhBanVe
-    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
+    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes!.map((e) => e.toString()).toList();;
 
     // check null idTrangThaiDonDichVu
     if (idTrangThaiDonDichVu != null)

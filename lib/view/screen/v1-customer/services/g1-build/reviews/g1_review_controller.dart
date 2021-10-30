@@ -42,7 +42,7 @@ class V1G1ReviewController extends GetxController{
   void onSave()async{
     EasyLoading.show(status: "Loading ...");
     dichVuProvider.add(data: await request(), onSuccess: (data){
-
+      print("Đã tạo dich vụ thanh công");
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
       Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
@@ -56,7 +56,7 @@ class V1G1ReviewController extends GetxController{
 
   Future<DonDichVuRequest> request(){
     List<String> massImages = [];
-    String drawingImages = '';
+    List<String> drawingImages = [];
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
     dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayBatDau!);
@@ -87,7 +87,7 @@ class V1G1ReviewController extends GetxController{
     // Ảnh bản vẽ
     previewServiceRequest!.hinhAnhBanVe!.forEach((element) { 
       imageUpdateProvider.add(file: element,onSuccess: (data){
-        drawingImages = "$drawingImages${data.data},";
+        drawingImages.add(data.data!);
       }, onError: (onError){
         print("V1G1ReviewController request  ảnh bản vẽ $onError");
       });
@@ -106,7 +106,7 @@ class V1G1ReviewController extends GetxController{
     // Delay
     return Future.delayed(const Duration(seconds: 1)).then((value){
       dichVuRequest.hinhAnhBanKhoiLuongs = massImages;
-      dichVuRequest.hinhAnhBanVe  = drawingImages;
+      dichVuRequest.hinhAnhBanVes  = drawingImages;
       return dichVuRequest;
     });
   }

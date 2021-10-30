@@ -13,6 +13,7 @@ class PreviewServiceRequest {
   List<VatTuResponse>? bangKhoiLuong;
   List<File>? hinhAnhBanKhoiLuong;
   List<File>? hinhAnhBanVe;
+  String? hinhAnhChiTiet;
   String? idTrangThaiDonDichVu;
   String? idHinhThucThanhToan;
   String? idTrangThaiThanhToan;
@@ -21,7 +22,6 @@ class PreviewServiceRequest {
   String? idQuanHuyen;
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
-  String? hinhAnhChiTiet;
   String? moTaChiTiet;
   File? file;
   String? soLuongYeuCau;
