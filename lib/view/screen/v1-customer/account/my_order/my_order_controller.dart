@@ -37,7 +37,7 @@ class V1MyOrderController extends GetxController
     "Xác nhận": const Color(0xff007D3A),
     "Chuẩn bị hàng": const Color(0xff0D5BB5),
     "Đang giao": const Color(0xffCC8100),
-    "Đã giao": const Color(0xff39e3c9),
+    "Đã giao": const Color(0xff831e8a),
     "Huỷ đơn": const Color(0xffBF1D28),
     "Trả hàng": const Color(0xffA6A6B0),
   };
@@ -47,9 +47,9 @@ class V1MyOrderController extends GetxController
     "Xác nhận": const Color(0x1f007D3A),
     "Chuẩn bị hàng": const Color(0x1f0D5BB5),
     "Đang giao": const Color(0x1fCC8100),
-    "Đã giao": const Color(0x1f39e3c9),
+    "Đã giao": const Color(0x2f831e8a),
     "Huỷ đơn": const Color(0x1fBF1D28),
-    "Trả hàng": const Color(0x1fA6A6B0),
+    "Trả hàng": const Color(0x3fA6A6B0),
   };
 
   //title app bar
