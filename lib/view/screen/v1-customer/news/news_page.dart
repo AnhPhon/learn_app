@@ -25,6 +25,7 @@ class V1NewsPage extends GetView<V1NewsController> {
             : Scaffold(
                 appBar: AppBarWithTabBar(
                   title: controller.title,
+                  automaticallyImplyLeading: false,
                   bottom: TabBar(
                     controller: controller.tabController,
                     isScrollable: true,
@@ -77,6 +78,7 @@ class V1NewsPage extends GetView<V1NewsController> {
                   loadingText: "Đang tải...",
                   noDataText: "Không có dữ liệu",
                   canLoadingText: "Kéo lên để tải thêm dữ liệu",
+                  loadStyle: LoadStyle.ShowWhenLoading,
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -94,8 +96,7 @@ class V1NewsPage extends GetView<V1NewsController> {
                               horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                             ),
                             child: ItemListWidget(
-                              onTap: () {},
-                              // controller.onNewsDetailClick(index: index),
+                              onTap: () => controller.onNewsClick(index: index),
                               urlImage: controller.tinTucList[index].hinhAnh
                                   .toString(),
                               title: controller.tinTucList[index].tieuDe

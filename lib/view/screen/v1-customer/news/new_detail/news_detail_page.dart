@@ -21,7 +21,18 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
             );
           }
           return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
+            appBar: AppBarWidget(
+              title: controller.title,
+              leading: IconButton(
+                onPressed: () {
+                  Get.back(result: true);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: ColorResources.WHITE,
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -31,15 +42,26 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
                   //title news
                   _titleNews(controller: controller),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //view and like
-                      _author(context, controller: controller),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //view and like
+                        _author(context, controller: controller),
 
-                      //authors and time
-                      _views(controller: controller),
-                    ],
+                        const SizedBox(
+                          width: Dimensions.MARGIN_SIZE_DEFAULT,
+                        ),
+
+                        //authors and time
+                        _views(controller: controller),
+                      ],
+                    ),
                   ),
 
                   //content
@@ -57,7 +79,7 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   Widget _imageNews(BuildContext context) {
     return FadeInImage.assetNetwork(
       placeholder: Images.placeholder,
-      image: controller.tinTucModel.hinhAnh.toString(),
+      image: controller.tinTucResponse.hinhAnh.toString(),
       height: DeviceUtils.getScaledHeight(context, .35),
       width: double.infinity,
       fit: BoxFit.fill,
@@ -81,8 +103,9 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
         right: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
-        controller.tinTucModel.tieuDe.toString(),
+        controller.tinTucResponse.tieuDe.toString(),
         textAlign: TextAlign.center,
+        overflow: TextOverflow.clip,
         style: Dimensions.fontSizeStyle22w600(),
       ),
     );
@@ -93,13 +116,11 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///
   Widget _author(BuildContext context,
       {required V1NewsDetailController controller}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+    return Flexible(
       child: Text(
-        controller.tinTucModel.tacGia.toString(),
+        controller.tinTucResponse.tacGia.toString(),
+        maxLines: 2,
+        textAlign: TextAlign.left,
         style: Dimensions.fontSizeStyle16w600()
             .copyWith(color: ColorResources.BLACK),
       ),
@@ -110,41 +131,36 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///view and time
   ///
   Widget _views({required V1NewsDetailController controller}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Text(
-              DateConverter.formatDateTime(
-                controller.tinTucModel.createdAt.toString(),
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Text(
+            DateConverter.formatDateTime(
+              controller.tinTucResponse.createdAt.toString(),
+            ),
+            style: Dimensions.fontSizeStyle16w600().copyWith(
+              color: ColorResources.GREY,
+            ),
+          ),
+          const VerticalDivider(
+            thickness: 2,
+          ),
+          Row(
+            children: [
+              //view
+              const Icon(
+                Icons.remove_red_eye_sharp,
+                color: ColorResources.PRIMARYCOLOR,
               ),
-              style: Dimensions.fontSizeStyle16w600().copyWith(
-                color: ColorResources.GREY,
+              const SizedBox(
+                width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
               ),
-            ),
-            const VerticalDivider(
-              thickness: 2,
-            ),
-            Row(
-              children: [
-                //view
-                const Icon(
-                  Icons.remove_red_eye_sharp,
-                  color: ColorResources.PRIMARYCOLOR,
-                ),
-                const SizedBox(
-                  width: Dimensions.MARGIN_SIZE_SMALL,
-                ),
-                Text(
-                  controller.tinTucModel.luotXem.toString(),
-                ),
-              ],
-            ),
-          ],
-        ),
+              Text(
+                controller.tinTucRequest.luotXem.toString(),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -154,7 +170,7 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///
   Widget _content({required V1NewsDetailController controller}) {
     return Specification(
-      specification: controller.tinTucModel.noiDung.toString(),
+      specification: controller.tinTucResponse.noiDung.toString(),
     );
   }
 }

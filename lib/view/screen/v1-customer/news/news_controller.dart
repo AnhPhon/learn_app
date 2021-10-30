@@ -152,13 +152,21 @@ class V1NewsController extends GetxController
   //onLoading
   Future<void> onLoading() async {
     //get order isLoading
-    getNews();
+    getNews(isRefresh: false);
   }
 
   ///
   ///on news click
   ///
   void onNewsClick({required int index}) {
-    Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: tinTucList[index]);
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: tinTucList[index])!.then(
+      (value) {
+        if (value == true) {
+          isLoadingNews = true;
+          update();
+          getNews();
+        }
+      },
+    );
   }
 }
