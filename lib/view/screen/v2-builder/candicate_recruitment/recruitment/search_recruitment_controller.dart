@@ -5,7 +5,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/gioi_tinh_model.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
-import 'package:template/data/model/response/loai_tin_tuyen_dung_model.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
@@ -19,7 +18,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';
+import 'package:tiengviet/tiengviet.dart';
 
 class V2SearchRecruitmentController extends GetxController {
   // refresh controller for load more refresh
@@ -55,11 +54,12 @@ class V2SearchRecruitmentController extends GetxController {
   SoNamKinhNghiemResponse? soNamKinhNghiem;
   MucLuongDuKienResponse? mucLuongDuKien;
   TinhTpResponse? noiLamViec;
+  String term = '';
+  String termCompany ='';
 
   // Refresh
   RefreshController refreshTinTuyenDungController = RefreshController();
 
-  final searchController = TextEditingController();
   bool isSearch = false;
 
   //currentIndex
@@ -73,18 +73,12 @@ class V2SearchRecruitmentController extends GetxController {
   final congTyController = TextEditingController();
   final congTyFocusNode = FocusNode();
   
-  //loại tin tuyển dụng
-  List<LoaiTinTuyenDungModel> loaiTinTuyenDung = [
-    LoaiTinTuyenDungModel(id: '1', tieuDe: 'Tin hot'),
-    LoaiTinTuyenDungModel(id: '2', tieuDe: 'Mới nhất'),
-    LoaiTinTuyenDungModel(id: '3', tieuDe: 'Tuyển dụng'),
-  ];
 
   //set default giới tính
   List<GioiTinhModel> gioiTinhModel = [
     GioiTinhModel(key: '0', value: 'Giới tính'),
-    GioiTinhModel(key: 'gioiTinh', value: 'Nam'),
-    GioiTinhModel(key: 'gioiTinh', value: 'Nữ'),
+    GioiTinhModel(key: '1', value: 'Nam'),
+    GioiTinhModel(key: '2', value: 'Nữ'),
   ];
 
   GioiTinhModel? gioiTinh;
@@ -97,9 +91,8 @@ class V2SearchRecruitmentController extends GetxController {
   bool isLoading = true;
 
   //isShowSearch
-  bool isShowSearch = false;
+  //bool isShowSearch = false;
     //conditionFilter
-  String conditionFilter = '';
   //isLoadingTuyenDung
   bool isLoadingTuyenDung = true;
 
@@ -107,9 +100,6 @@ class V2SearchRecruitmentController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //binding refresh controller
-    // refreshControllerList =
-    //     List.generate(loaiTinTuyenDung.length, (_) => RefreshController());
 
     //loadDataFiltter
     getDataHinhThucLamViec();
@@ -128,7 +118,6 @@ class V2SearchRecruitmentController extends GetxController {
   //onRefresh
   Future<void> onRefresh() async {
     //resetNoData
-    refreshControllerList![currentIndex].resetNoData();
     onLoadDataTuyenDung(isRefresh: true);
 
   }
@@ -142,65 +131,48 @@ class V2SearchRecruitmentController extends GetxController {
   ///onLoadDataTuyenDung
   ///
   void onLoadDataTuyenDung({required bool isRefresh}) {
-    //isRefresh
-    if (isRefresh) {
-      pageMax = 1;
-      tuyenDungListModel.clear();
-    } else {
-      //isLoading
-      pageMax++;
+    if(!isLoading){
+      if(
+        hinhThucLamViec!.id.toString() == '0' &&
+        trinhDoHocVan!.id.toString() == '0'  &&
+        chuyenNganhChinh!.id.toString() == '0'  &&
+        gioiTinh!.key.toString() == '0' &&
+        mucLuongDuKien!.id.toString() == '0' &&
+        noiLamViec!.id.toString() == '0'  &&
+        soNamKinhNghiem!.id.toString() == '0'  &&
+        term.isEmpty && termCompany.isEmpty
+      ){
+        onSearch(isRefresh: isRefresh);
+      }else{
+        onSearch(
+          term: term,
+          idHinhThucLamViec: hinhThucLamViec!.id!,
+          idTrinhDoHocVan: trinhDoHocVan!.id!, 
+          idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+          idGioiTinh: gioiTinh!.key!,
+          idMucLuongDuKien: mucLuongDuKien!.id!,
+          idNoiLamViec: noiLamViec!.id!,
+          idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+          termCompany: termCompany,
+          isRefresh: isRefresh
+        );
+      }
+    }else{
+      //isRefresh
+      onSearch(isRefresh: isRefresh);
     }
-    //load data tuyen dung
-    tuyenDungProvider.paginate(
-        page: pageMax,
-        limit: limitMax,
-        filter: '&sortBy=created_at:desc',
-        onSuccess: (value) {
-          print(value);
-          //check data empty
-          if (value.isEmpty) {
-            print('1 nodata');
-            refreshTinTuyenDungController.loadNoData();
-          } else if (isRefresh) {
-            //check refresh
-            tuyenDungListModel = value;
-            refreshTinTuyenDungController.refreshCompleted();
-            print('2 isRefresh');
-          } else {
-            tuyenDungListModel = tuyenDungListModel.toList() + value;
-            refreshTinTuyenDungController.loadComplete();
-            print('3 loading');
-          }
-          isLoadingTuyenDung = false;
-          update();
-        },
-        onError: (error) =>
-            print('V1CandidateController onLoadDataTuyenDung $error'));
   }
 
-  ///
-  ///Thay đổi vị trí tab
-  ///
-  void onChangeTab(int index) {
-    currentIndex = index;
-    update();
-  }
 
-  ///
-  /// thay đổi lương
-  ///
-  void onChangedSalary(double salary) {
-    this.salary = salary;
-    update();
-  }
+  
 
-  ///
-  /// Thay đồi trạng thái là tìm kiếm
-  ///
-  void onChangedSearch() {
-    isShowSearch = !isShowSearch;
-    update();
-  }
+  // ///
+  // /// Thay đồi trạng thái là tìm kiếm
+  // ///
+  // void onChangedSearch() {
+  //   isShowSearch = !isShowSearch;
+  //   update();
+  // }
 
   ///
   /// load data hình thức làm việc
@@ -329,14 +301,39 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangeHinhThucLamViec(HinhThucLamViecResponse item) {
     hinhThucLamViec = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: item.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
+
 
   ///
   ///chọn hình thức làm việc
   ///
   void onChangeTrinhDoHocVan(TrinhDoHocVanResponse item) {
     trinhDoHocVan = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: item.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
 
@@ -345,6 +342,18 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangeChuyenNganhChinh(ChuyenNganhChinhResponse item) {
     chuyenNganhChinh = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
 
@@ -353,6 +362,18 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangeSoNamKinhNghiem(SoNamKinhNghiemResponse item) {
     soNamKinhNghiem = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
 
@@ -361,6 +382,18 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangeMucLuongDuKien(MucLuongDuKienResponse item) {
     mucLuongDuKien = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
 
@@ -369,6 +402,18 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangeTinhTp(TinhTpResponse item) {
     noiLamViec = item;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
     update();
   }
 
@@ -377,7 +422,156 @@ class V2SearchRecruitmentController extends GetxController {
   ///
   void onChangedSex(GioiTinhModel text) {
     gioiTinh = text;
+    onSearch(
+      term: term,
+      idHinhThucLamViec: hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan!.id!, 
+      idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+      idGioiTinh: gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      termCompany: termCompany,
+      isRefresh: true,
+    );
+    update();
+  }
 
+
+
+  ///
+  /// Search
+  ///
+  void onSearch({ bool isRefresh = false,
+                  String idHinhThucLamViec='', // Hình thức làm việc
+                  String idTrinhDoHocVan= '',  // Trình độ
+                  String idChuyenNganhChinh = '', // Chuyên ngành
+                  String idSoNamKinhNghiem = '', // Kinh nghiệm
+                  String idMucLuongDuKien = '', // Lương
+                  String idNoiLamViec = '', // Tỉnh thành phố
+                  String idGioiTinh = '', // Giới tính
+                  String term = '', // Từ khoá
+                  String termCompany = '', // Công ty
+
+  }){
+    String condition = '';
+    print('Noid dung 2 $term');
+    if(idHinhThucLamViec.isNotEmpty && idHinhThucLamViec != '0'){
+      condition = '&idHinhThucLamViec=$idHinhThucLamViec';
+    } 
+    if(idTrinhDoHocVan.isNotEmpty && idTrinhDoHocVan != '0'){
+      condition = '$condition&idTrinhDoHocVan=$idTrinhDoHocVan';
+    }
+    if(idChuyenNganhChinh.isNotEmpty && idChuyenNganhChinh != '0'){
+      condition = '$condition&idChuyenNganhChinh=$idChuyenNganhChinh';
+    }
+    if(idSoNamKinhNghiem.isNotEmpty && idSoNamKinhNghiem != '0'){
+      condition = '$condition&idSoNamKinhNghiem=$idSoNamKinhNghiem';
+    }
+    if(idMucLuongDuKien.isNotEmpty && idMucLuongDuKien != '0'){
+      condition = '$condition&idMucLuongDuKien=$idMucLuongDuKien';
+    }
+    if(idNoiLamViec.isNotEmpty && idNoiLamViec != '0'){
+      condition = '$condition&idNoiLamViec=$idNoiLamViec';
+    }
+    if(idGioiTinh.isNotEmpty && idGioiTinh != '0'){
+      condition = '$condition&gioiTinh=$idGioiTinh';
+    }
+    if(term.isNotEmpty){
+      condition = '$condition&tieuDe=$term';
+    }
+    if(termCompany.isNotEmpty){
+      condition = '$condition&congTy=$termCompany';
+    }
+    //load data tuyen dung
+    print('DK $condition $term' );
+    if (isRefresh) {
+      pageMax = 1;
+      tuyenDungListModel.clear();
+    } else {
+      //isLoading
+      pageMax++;
+    }
+    tuyenDungProvider.paginate(
+        page: pageMax,
+        limit: limitMax,
+        filter: '&sortBy=created_at:desc$condition',
+        onSuccess: (value) {
+          print(value.length);
+          if (value.isEmpty) {
+            print('1 nodata');
+            refreshTinTuyenDungController.loadNoData();
+          } else if (isRefresh) {
+            //check refresh
+            refreshTinTuyenDungController.resetNoData();
+            tuyenDungListModel = value;
+            refreshTinTuyenDungController.refreshCompleted();
+            print('2 isRefresh');
+          } else {
+            tuyenDungListModel = tuyenDungListModel.toList() + value;
+            refreshTinTuyenDungController.loadComplete();
+            print('3 loading');
+          }
+          //tuyenDungListModel = value;
+          update();
+        },
+        onError: (error) =>
+            print('V1CandidateController onLoadDataTuyenDung $error'));
+  }
+
+
+  ///
+  ///tìm kiếm theo tiêu đề
+  ///
+  void onChangeTieuDe(String text, BuildContext context) {
+    if (text != '' && text.isNotEmpty) {
+      term = TiengViet.parse(text);
+      //add new conditions
+      onSearch(
+        term: term,
+        idHinhThucLamViec: hinhThucLamViec!.id!,
+        idTrinhDoHocVan: trinhDoHocVan!.id!, 
+        idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+        idGioiTinh: gioiTinh!.key!,
+        idMucLuongDuKien: mucLuongDuKien!.id!,
+        idNoiLamViec: noiLamViec!.id!,
+        idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+        termCompany: termCompany,
+        isRefresh: true,
+      );
+    } else if (text == '') {
+      onSearch(isRefresh: true);
+    } else {
+      //Alert.error(message: 'Từ khoá không hợp lệ');
+      // Từ khó tìm không có
+    }
+    update();
+  }
+  ///
+  ///tìm kiếm theo công ty
+  ///
+  void onChangeCompany(String text, BuildContext context) {
+    if (text != '' && text.isNotEmpty) {
+      termCompany = TiengViet.parse(text);
+      //add new conditions
+      onSearch(
+        term: term,
+        idHinhThucLamViec: hinhThucLamViec!.id!,
+        idTrinhDoHocVan: trinhDoHocVan!.id!, 
+        idChuyenNganhChinh: chuyenNganhChinh!.id!, 
+        idGioiTinh: gioiTinh!.key!,
+        idMucLuongDuKien: mucLuongDuKien!.id!,
+        idNoiLamViec: noiLamViec!.id!,
+        idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+        termCompany: termCompany,
+        isRefresh: true,
+      );
+    } else if (text == '') {
+      onSearch(isRefresh: true);
+    } else {
+      //Alert.error(message: 'Từ khoá không hợp lệ');
+      // Từ khó tìm không có
+    }
     update();
   }
 
@@ -395,19 +589,6 @@ class V2SearchRecruitmentController extends GetxController {
     Get.toNamed(AppRoutes.V2_HISTORY_RECRUITMENT_NEWS);
   }
 
-  ///
-  ///  Hiẻn thị bộ lọc
-  ///
-  void showDialog() {
-    Get.defaultDialog(
-        title: "",
-        content: const DialogContent(),
-        cancel: ElevatedButton(
-            onPressed: () {
-              Navigator.of(Get.context!).pop();
-            },
-            child: const Text("Tìm kiếm")));
-  }
 
   @override
   void onClose() {

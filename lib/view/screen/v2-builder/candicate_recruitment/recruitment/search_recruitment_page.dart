@@ -112,12 +112,15 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
                 keyboardType: TextInputType.text,
                 textAlignVertical: TextAlignVertical.top,
                 controller: controller.tieuDeController,
-                onSubmitted: (val) => {},
+                onSubmitted: (val) => controller.onChangeTieuDe(
+                          val, context),
+                onChanged: (val)=> controller.onChangeTieuDe(
+                          val, context),
                 focusNode: controller.tieuDeFocusNode,
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
-                      // onTap: () => controller.onChangeTieuDe(
-                      //     controller.searchController.text, context),
+                      onTap: () => controller.onChangeTieuDe(
+                          controller.tieuDeController.text, context),
                       child: const Icon(Icons.search)),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_SMALL,
@@ -167,12 +170,15 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
                         keyboardType: TextInputType.text,
                         textAlignVertical: TextAlignVertical.top,
                         controller: controller.congTyController,
-                        onSubmitted: (val) => {},
+                        onChanged: (val)=> controller.onChangeCompany(
+                                  val, context),
+                        onSubmitted: (val) => controller.onChangeCompany(
+                                  val, context),
                         focusNode: controller.congTyFocusNode,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
-                              // onTap: () => controller.onChangeTieuDe(
-                              //     controller.searchController.text, context),
+                              onTap: () => controller.onChangeCompany(
+                                  controller.congTyController.text , context),
                               child: const Icon(Icons.search)),
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_SMALL,
