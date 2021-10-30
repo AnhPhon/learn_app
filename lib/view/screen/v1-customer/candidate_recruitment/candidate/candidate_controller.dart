@@ -208,17 +208,14 @@ class V1CandidateController extends GetxController {
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {
-            print('1 nodata');
             refreshTinTuyenDungController.loadNoData();
           } else if (isRefresh) {
             //check refresh
             tuyenDungListModel = value;
             refreshTinTuyenDungController.refreshCompleted();
-            print('2 isRefresh');
           } else {
             tuyenDungListModel = tuyenDungListModel.toList() + value;
             refreshTinTuyenDungController.loadComplete();
-            print('3 loading');
           }
           isLoadingTuyenDung = false;
           update();
@@ -275,7 +272,6 @@ class V1CandidateController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
-    print('onChangeNameTinhTp');
     return tinhTpListModel.firstWhere((element) => element.id == id).ten;
   }
 
@@ -484,8 +480,7 @@ class V1CandidateController extends GetxController {
     isOnChangeSearch = true;
     //add new conditions
     addNewConditions(
-        condition:
-            TimKiemUngVienModel(key: "idDiaDiemDangKyLamViecs", value: item.id),
+        condition: TimKiemUngVienModel(key: "idDiaDiemLamViec", value: item.id),
         isButtonSearch: false);
     update();
   }
@@ -690,30 +685,22 @@ class V1CandidateController extends GetxController {
       textFilter = '&$textFilter';
     }
 
-    print('có vô ko $textFilter');
-
     dangKyViecMoiProvider.paginate(
         page: pageMaxSearch,
         limit: limit,
         filter: '$textFilter&sortBy=created_at:desc',
         onSuccess: (value) {
-          print('dangKyViecMoiProvider value ${value.length}');
-          print('pageMaxSearch $pageMaxSearch');
-          print('currentIndex $currentIndex');
           //check data empty
           if (value.isEmpty) {
             refreshTimUngVienController.loadNoData();
-            print('1 no data');
           } else {
             if (isRefresh || isOnChangeSearch) {
               //check refresh
               dangKyViecMoiListModel = value;
               refreshTimUngVienController.refreshCompleted();
-              print('2 isRefresh');
             } else {
               dangKyViecMoiListModel = dangKyViecMoiListModel.toList() + value;
               refreshTimUngVienController.loadComplete();
-              print('3 loading');
             }
           }
 

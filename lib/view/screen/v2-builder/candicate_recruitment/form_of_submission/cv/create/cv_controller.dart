@@ -399,6 +399,8 @@ class V2CvController extends GetxController {
                                       }
                                   });
                         } else {
+                          EasyLoading.dismiss();
+                          Get.back();
                           Alert.info(
                               message:
                                   'Bạn đã ứng tuyển tin tuyển dụng này rồi');

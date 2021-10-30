@@ -9,6 +9,7 @@ import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
 class CandidateCard extends StatelessWidget {
   DangKyViecMoiResponse? dangKyViecMoiResponse;
+
   CandidateCard(
       {Key? key, this.dangKyViecMoiResponse, this.showEmailAndPass = true})
       : super(key: key);
