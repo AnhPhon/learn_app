@@ -204,9 +204,7 @@ class InputWidget extends StatelessWidget {
                           : BorderSide.none),
                   hintText: hintText,
                   filled: true,
-                  fillColor: (isColorFieldWhite == true)
-                      ? ColorResources.WHITE
-                      : ColorResources.NOT_ALLOW_EDIT,
+                  fillColor: fillColor ?? ColorResources.NOT_ALLOW_EDIT,
                 ),
               ),
             ),

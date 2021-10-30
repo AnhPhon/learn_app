@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
 import 'package:template/view/screen/v1-customer/news/new_detail/news_detail_controller.dart';
-import 'package:template/view/screen/v1-customer/news/new_detail/news_specification.dart';
 
 class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   @override
@@ -117,8 +118,8 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
         child: Row(
           children: [
             Text(
-              controller.formatDateTime(
-                dateTime: controller.tinTucModel.createdAt.toString(),
+              DateConverter.formatDateTime(
+                controller.tinTucModel.createdAt.toString(),
               ),
               style: Dimensions.fontSizeStyle16w600().copyWith(
                 color: ColorResources.GREY,
@@ -152,8 +153,8 @@ class V1NewsDetailPage extends GetView<V1NewsDetailController> {
   ///content
   ///
   Widget _content({required V1NewsDetailController controller}) {
-    return NewsSpecification(
-      newsSpecification: controller.tinTucModel.noiDung.toString(),
+    return Specification(
+      specification: controller.tinTucModel.noiDung.toString(),
     );
   }
 }
