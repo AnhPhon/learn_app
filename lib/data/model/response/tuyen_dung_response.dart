@@ -258,21 +258,17 @@ class TuyenDungResponse {
     // mapping idChuyenNganhPhus
     if (json['idChuyenNganhPhus'] != null &&
         json['idChuyenNganhPhus'].toString().length != 24) {
-      // idChuyenNganhPhus = [];
-      // final results = json['idChuyenNganhPhus'] as List<dynamic>;
+      idChuyenNganhPhus = [];
+      final results = json['idChuyenNganhPhus'] as List<dynamic>;
 
-      // for (final element in results) {
-      //   if (element != null && element.toString().length != 24) {
-      //     idChuyenNganhPhus!.add(
-      //         ChuyenNganhPhuResponse.fromJson(element as Map<String, dynamic>));
-      //   }
-      // }
-      idChuyenNganhPhus = (json['idChuyenNganhPhus'] as List<dynamic>)
-          .map(
-              (e) => ChuyenNganhPhuResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idChuyenNganhPhus!.add(
+              ChuyenNganhPhuResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idPhuongXa = null;
+      idChuyenNganhPhus = null;
     }
 
     createdAt = json['created_at'].toString();

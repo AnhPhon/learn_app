@@ -21,7 +21,7 @@ class V1InsuranceRegisterController extends GetxController {
 
   //BaoHiem
   BaoHiemProvider baoHiemProvider = BaoHiemProvider();
-  List<BaoHiemResponse>? baoHiemResponse;
+  BaoHiemResponse? baoHiemResponse;
 
   //
   String title0 = "Bảo hiểm của bạn";
@@ -56,10 +56,12 @@ class V1InsuranceRegisterController extends GetxController {
     currentIndex = int.parse(Get.parameters['currentIndex']!);
 
     //get arguments
-    baoHiemResponse = Get.arguments as List<BaoHiemResponse>;
+    if (Get.arguments != null) {
+      baoHiemResponse = Get.arguments as BaoHiemResponse;
+    }
 
     //get load data
-    getYourInsurance(isRefresh:  true);
+    getYourInsurance(isRefresh: true);
   }
 
   ///
@@ -81,7 +83,7 @@ class V1InsuranceRegisterController extends GetxController {
     dangKyBaoHiemProvider.paginate(
       page: pageMax,
       limit: limitMax,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      filter: "&idTaiKhoan=$userId&trangThai=1&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is empty
         if (value.isEmpty) {
@@ -145,17 +147,19 @@ class V1InsuranceRegisterController extends GetxController {
   ///
   void onCheckoutClick(BuildContext context) {
     Get.toNamed(
-            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse![indexFee].phi}&url${AppRoutes.V1_PROFILE}")!
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse!.phis![indexFee]}")!
         .then(
       (value) {
-        //set data
+        if (value !=null) {
+          //set data
         dangKyBaoHiemRequest.idTaiKhoan = userId;
-        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse![indexFee].id;
+        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse!.id;
         dangKyBaoHiemRequest.trangThai = "0";
+        dangKyBaoHiemRequest.phi = baoHiemResponse!.phis![indexFee];
         //insert
         dangKyBaoHiemProvider.add(
           data: dangKyBaoHiemRequest,
-          onSuccess: (value) {
+          onSuccess: (data) {
             Get.offAllNamed(
               AppRoutes.V1_PROFILE,
               predicate: ModalRoute.withName(AppRoutes.V1_PROFILE),
@@ -166,6 +170,8 @@ class V1InsuranceRegisterController extends GetxController {
                 "V1InsuranceRegisterController onCheckoutClick onError $error");
           },
         );
+        }
+        
       },
     );
   }

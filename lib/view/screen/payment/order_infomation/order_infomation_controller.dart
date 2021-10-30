@@ -15,7 +15,6 @@ import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/payment/payment%20account/patment_dialog_accept.dart';
@@ -192,7 +191,7 @@ class OrderInformationController extends GetxController {
         title: "Xác nhận thông tin",
         content: DialogContentPriceAccept(
           textContent:
-              'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
+              'Bạn chắc chắn đồng ý ${isTuyenDung ? 'đăng tin tuyển dụng' : 'thanh toán đơn hàng'} với tổng số tiền',
           price: tongTien,
         ),
         confirm: ElevatedButton(

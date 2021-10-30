@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/chuyen_mon_response.dart';
+
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
 import 'quan_huyen_response.dart';
@@ -36,8 +38,8 @@ class DangKyViecMoiResponse {
   String? kyNangSoTruong;
   List<NgoaiNguResponse>? idNgoaiNgus;
   TinHocResponse? idTinHoc;
-  String? mSHS;
-  List<dynamic>? nganhNgheMongMuons;
+  String? maSoHoSo;
+  List<ChuyenMonResponse>? idNganhNgheMongMuons;
 
   String? createdAt;
   String? updatedAt;
@@ -68,9 +70,9 @@ class DangKyViecMoiResponse {
       this.fileHoSoXinViec,
       this.kyNangSoTruong,
       this.idNgoaiNgus,
-      this.nganhNgheMongMuons,
+      this.idNganhNgheMongMuons,
       this.idTinHoc,
-      this.mSHS,
+      this.maSoHoSo,
       this.createdAt,
       this.updatedAt});
 
@@ -135,20 +137,19 @@ class DangKyViecMoiResponse {
     // mapping idBangBangCaps
     if (json['idBangBangCaps'] != null &&
         json['idBangBangCaps'].toString().length != 24) {
-      print('idBangBangCaps ${json['idBangBangCaps']}');
-      idBangBangCaps = (json['idBangBangCaps'] as List<dynamic>)
-          .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
-      print('idBangBangCaps ${idBangBangCaps!.length}');
-      //add list Bằng cấp
-      // idBangBangCaps = [];
-      // final results = json['idBangBangCaps'] as List<dynamic>;
-      // for (final element in results) {
-      //   if (element != null && element.toString().length != 24) {
-      //     idBangBangCaps!.add(BangBangCapResponse.fromJson(
-      //         element as Map<String, dynamic>));
-      //   }
-      // }
+      // idBangBangCaps = (json['idBangBangCaps'] as List<dynamic>)
+      //     .map((e) => BangBangCapResponse.fromJson(e as Map<String, dynamic>))
+      //     .toList();
+
+      // add list Bằng cấp
+      idBangBangCaps = [];
+      final results = json['idBangBangCaps'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idBangBangCaps!.add(
+              BangBangCapResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
       idBangBangCaps = null;
     }
@@ -169,12 +170,15 @@ class DangKyViecMoiResponse {
     // mapping idKeKhaiKinhNghiems
     if (json['idKeKhaiKinhNghiems'] != null &&
         json['idKeKhaiKinhNghiems'].toString().length != 24) {
-      // idKeKhaiKinhNghiems = KeKhaiKinhNghiemResponse.fromJson(
-      //     json['idKeKhaiKinhNghiems'] as Map<String, dynamic>);
-      idKeKhaiKinhNghiems = (json['idKeKhaiKinhNghiems'] as List<dynamic>)
-          .map((e) =>
-              KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+      // add list kê khai kinh nghiệm
+      idKeKhaiKinhNghiems = [];
+      final results = json['idKeKhaiKinhNghiems'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idKeKhaiKinhNghiems!.add(KeKhaiKinhNghiemResponse.fromJson(
+              element as Map<String, dynamic>));
+        }
+      }
     } else {
       idKeKhaiKinhNghiems = null;
     }
@@ -185,12 +189,14 @@ class DangKyViecMoiResponse {
     // mapping idNgoaiNgus
     if (json['idNgoaiNgus'] != null &&
         json['idNgoaiNgus'].toString().length != 24) {
-      print('bbbbb ${json['idNgoaiNgus']}');
-      // idNgoaiNgus =
-      //     NgoaiNguResponse.fromJson(json['idNgoaiNgus'] as Map<String, dynamic>);
-      idNgoaiNgus = (json['idNgoaiNgus'] as List<dynamic>)
-          .map((e) => NgoaiNguResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+      idNgoaiNgus = [];
+      final results = json['idNgoaiNgus'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idNgoaiNgus!
+              .add(NgoaiNguResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
       idNgoaiNgus = null;
     }
@@ -203,21 +209,22 @@ class DangKyViecMoiResponse {
       idTinHoc = null;
     }
 
-    mSHS = json['mSHS'].toString();
+    maSoHoSo = json['maSoHoSo'].toString();
 
     // mapping nganhNgheMongMuons
-    if (json['nganhNgheMongMuons'] != null &&
-        json['nganhNgheMongMuons'].toString().length != 24) {
+    if (json['idNganhNgheMongMuons'] != null &&
+        json['idNganhNgheMongMuons'].toString().length != 24) {
       //add list nghành nghề mong muốn
-      nganhNgheMongMuons = [];
-      final results = json['nganhNgheMongMuons'] as List<dynamic>;
+      idNganhNgheMongMuons = [];
+      final results = json['idNganhNgheMongMuons'] as List<dynamic>;
       for (final element in results) {
         if (element != null && element.toString().length != 24) {
-          nganhNgheMongMuons!.add(element as Map<String, dynamic>);
+          idNganhNgheMongMuons!
+              .add(ChuyenMonResponse.fromJson(element as Map<String, dynamic>));
         }
       }
     } else {
-      idBangBangCaps = null;
+      idNganhNgheMongMuons = null;
     }
 
     createdAt = json['created_at'].toString();
@@ -309,7 +316,9 @@ class DangKyViecMoiResponse {
 
     // check null idTinHoc
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;
-    if (mSHS != null) data['mSHS'] = mSHS;
+    if (maSoHoSo != null) data['maSoHoSo'] = maSoHoSo;
+    if (idNganhNgheMongMuons != null)
+      data['idNganhNgheMongMuons'] = idNganhNgheMongMuons;
 
     return data;
   }

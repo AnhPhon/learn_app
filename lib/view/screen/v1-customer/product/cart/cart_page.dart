@@ -25,7 +25,15 @@ class V1CartPage extends GetView<V1CartController> {
           return Scaffold(
             appBar: AppBarWidget(
               title: controller.title,
-              onPressed: () => Get.back(result: true),
+              leading: IconButton(
+                onPressed: () {
+                  Get.back(result: true);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: ColorResources.WHITE,
+                ),
+              ),
             ),
             body: (controller.chiTietDonHangList.isEmpty ||
                     controller.donHangResponse == null)
@@ -41,7 +49,6 @@ class V1CartPage extends GetView<V1CartController> {
                           label: "Chi tiết về shipping",
                           obligatory: false,
                           topPadding: Dimensions.PADDING_SIZE_DEFAULT,
-                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //shipping detail
@@ -52,7 +59,6 @@ class V1CartPage extends GetView<V1CartController> {
                           label: "Chi tiết đơn hàng",
                           obligatory: false,
                           topPadding: Dimensions.PADDING_SIZE_DEFAULT,
-                          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                         ),
 
                         //order product detail
