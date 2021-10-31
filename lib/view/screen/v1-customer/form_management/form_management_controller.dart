@@ -63,15 +63,14 @@ class V1FormManagementController extends GetxController {
       //isLoadmore
       pageMax++;
     }
-    print(currentIndex);
+
+    //get donDichVu
     donDichVuProvider.paginate(
       page: pageMax,
       limit: limitMax,
       filter:
           "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
-      // "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
       onSuccess: (data) {
-        print(data.length);
         if (data.isEmpty) {
           refreshController.loadNoData();
         } else {
@@ -106,7 +105,16 @@ class V1FormManagementController extends GetxController {
   /// changed tab
   ///
   void onChangeTab(int index) {
+    //set index
     currentIndex = index;
+
+    //loading
+    isLoading = true;
+
+    //resetNoData
+    refreshController.resetNoData();
+
+    //getDonDichVu
     getDonDichVu();
     update();
   }
@@ -135,6 +143,7 @@ class V1FormManagementController extends GetxController {
   ///
   void onProductResponseClick({required int index}) {
     print(donDichVuList[index].id);
+    print(donDichVuList[index].idNhomDichVu!.id);
     if (donDichVuList[index].idNhomDichVu!.id == NHOM_1) {
       print("NHOM_1");
       Get.toNamed(

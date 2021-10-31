@@ -109,18 +109,18 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   const Label(
                     label: "Chọn mặt hàng đặc trưng",
                     obligatory: true,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
-                    child: MultiSelectDialogField<MatHangDacTrungResponse?>(
+                    child: MultiSelectDialogField<String?>(
                       initialValue: controller.matHangDacTrungResponse,
                       listType: MultiSelectListType.CHIP,
                       items: controller.matHangDacTrungList
-                          .map((e) => MultiSelectItem(e, e!.tieuDe!))
+                          .map((e) => MultiSelectItem<String?>(
+                              e!.id!.toString(), e.tieuDe!))
                           .toList(),
                       title: const Text("Chọn mặt hàng đặc trưng"),
                       selectedColor: Colors.blue,
@@ -134,8 +134,9 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                           fontSize: 16,
                         ),
                       ),
-                      onConfirm: (List<MatHangDacTrungResponse?> results) {
+                      onConfirm: (List<String?> results) {
                         controller.matHangDacTrungResponse = results;
+                        print(controller.matHangDacTrungResponse);
                       },
                     ),
                   ),
