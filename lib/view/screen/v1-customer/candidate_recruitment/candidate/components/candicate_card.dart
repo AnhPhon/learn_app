@@ -9,6 +9,7 @@ import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
 class CandidateCard extends StatelessWidget {
   DangKyViecMoiResponse? dangKyViecMoiResponse;
+
   CandidateCard(
       {Key? key, this.dangKyViecMoiResponse, this.showEmailAndPass = true})
       : super(key: key);
@@ -76,8 +77,7 @@ class CandidateCard extends StatelessWidget {
                         TextHighlight(
                             title: "Ngày sinh: ",
                             content: DateConverter.readMongoToString(
-                                dangKyViecMoiResponse!.idTaiKhoan!.ngaySinh
-                                    .toString())),
+                                dangKyViecMoiResponse!.ngaySinh.toString())),
                         TextHighlight(
                             title: "Điện thoại: ",
                             content: showEmailAndPass!
@@ -101,7 +101,14 @@ class CandidateCard extends StatelessWidget {
                                 '${dangKyViecMoiResponse!.idTaiKhoan!.diaChi}, ${dangKyViecMoiResponse!.idTaiKhoan!.idPhuongXa}, ${dangKyViecMoiResponse!.idTaiKhoan!.idQuanHuyen}, ${dangKyViecMoiResponse!.idTaiKhoan!.idTinhTp}'),
                         TextHighlight(
                             title: "Hôn nhân: ",
-                            content: dangKyViecMoiResponse!.honNhan.toString()),
+                            content:
+                                dangKyViecMoiResponse!.honNhan.toString() == '1'
+                                    ? 'Độc thân'
+                                    : dangKyViecMoiResponse!.honNhan
+                                                .toString() ==
+                                            '2'
+                                        ? 'Đã lập gia đình'
+                                        : 'Khác'),
                       ],
                     ),
                   ),

@@ -82,6 +82,9 @@ class V1CandidateProfileController extends GetxController {
   double soDuConLai = 0;
   double tongTienThanhToan = 5000;
 
+  //tenNganhNgheMongMuon
+  String tenNganhNgheMongMuon = '';
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -111,7 +114,6 @@ class V1CandidateProfileController extends GetxController {
     trinhDoProvider.all(
         onSuccess: (value) {
           trinhDoListModel = value;
-          print('trinhDoListModel ${trinhDoListModel.length}');
           //getDataChuyenMon
           getDataChuyenMon();
         },
@@ -143,15 +145,22 @@ class V1CandidateProfileController extends GetxController {
     loaiTotNghiepProvider.all(
         onSuccess: (value) {
           loaiTotNghiepListModel = value;
-          print('loaiTotNghiepListModel ${loaiTotNghiepListModel.length}');
 
           //set data đang ký việc mới
           dangKyViecMoiResponse = Get.arguments as DangKyViecMoiResponse;
 
-          print(
-              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idBangBangCaps!.toList()}');
-          print(
-              'dangKyViecMoiResponse ${dangKyViecMoiResponse.idBangBangCaps!.first.toJson()}');
+          for (int i = 0;
+              i < dangKyViecMoiResponse.idNganhNgheMongMuons!.length;
+              i++) {
+            if (i == 0) {
+              tenNganhNgheMongMuon = dangKyViecMoiResponse
+                  .idNganhNgheMongMuons![i].tieuDe
+                  .toString();
+            } else {
+              tenNganhNgheMongMuon +=
+                  ', ${dangKyViecMoiResponse.idNganhNgheMongMuons![i].tieuDe}';
+            }
+          }
 
           //check data is view tuyển dụng
           checkDataViewTuyenDung(
@@ -166,7 +175,6 @@ class V1CandidateProfileController extends GetxController {
   ///onChangeNameTrinhDo
   ///
   String? onChangeNameTrinhDo(String id) {
-    print('onChangeNameTrinhDoid $id');
     return trinhDoListModel.firstWhere((element) => element.id == id).tieuDe;
   }
 
@@ -196,8 +204,6 @@ class V1CandidateProfileController extends GetxController {
         limit: 5,
         filter: '&idTaiKhoan=$idTaiKhoan&idDangKyViecMoi=$idDangKyViecMoi',
         onSuccess: (value) {
-          print('vvvvv $value');
-          print('vvvvv ${value.length}');
           if (value.isNotEmpty) {
             isView = true;
           } else {
