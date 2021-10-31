@@ -108,6 +108,7 @@ class V2PreviewController extends GetxController {
                       //set data
                       danhSachUngTuyenRequest.idTuyenDung = idTuyenDung;
                       danhSachUngTuyenRequest.idTaiKhoanUngTuyen = userId;
+                      danhSachUngTuyenRequest.daXem = '0';
                       //insert db
                       danhSachUngTuyenRepository
                           .add(danhSachUngTuyenRequest)

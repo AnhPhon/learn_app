@@ -427,6 +427,7 @@ class V2CvController extends GetxController {
                                             idTuyenDung;
                                         danhSachUngTuyenRequest
                                             .idTaiKhoanUngTuyen = userId;
+                                        danhSachUngTuyenRequest.daXem = '0';
                                         //insert db
                                         danhSachUngTuyenRepository
                                             .add(danhSachUngTuyenRequest)
