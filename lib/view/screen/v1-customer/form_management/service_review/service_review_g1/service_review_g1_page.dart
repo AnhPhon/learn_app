@@ -102,19 +102,19 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
 
   Widget attchFile(BuildContext context,
       {required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.file != null
-        ? Padding(
+    return controller.donDichVuResponse.file == null || controller.donDichVuResponse.file == "null"
+        ? const SizedBox.shrink()
+        : Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE),
             child: AttachButton(
-              title: "File báo giá khổi lượng",
+              title: "File báo giá khối lượng",
               color: ColorResources.WHITE,
               onPressed: () => controller.downloadFile(
                 url: controller.donDichVuResponse.file.toString(),
               ),
               horizontal: Dimensions.PADDING_SIZE_DEFAULT,
             ),
-          )
-        : Container();
+          );
   }
 
   ///

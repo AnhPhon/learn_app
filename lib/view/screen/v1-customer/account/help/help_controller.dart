@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/response/lien_he_cong_ty_response.dart';
-import 'package:template/provider/lien_he_cong_ty_provider.dart';
+import 'package:template/data/model/response/thong_tin_f_s_s_response.dart';
+import 'package:template/provider/thong_tin_f_s_s_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V1HelpController extends GetxController {
-  //LienHeCongTy
-  LienHeCongTyProvider lienHeCongTyProvider =
-      GetIt.I.get<LienHeCongTyProvider>();
-  LienHeCongTyResponse lienHeCongTyResponse = LienHeCongTyResponse();
+  //thong tin ffs
+  ThongTinFSSProvider thongTinFSSProvider = GetIt.I.get<ThongTinFSSProvider>();
+  ThongTinFSSResponse thongTinFSSResponse = ThongTinFSSResponse();
 
   //CircularProgressIndicator
   bool isLoading = true;
@@ -21,36 +20,25 @@ class V1HelpController extends GetxController {
     super.onInit();
 
     //get load data
-    getContact();
+    getHelp();
   }
 
   ///
-  ///get contact
+  ///get help
   ///
-  void getContact() {
-    lienHeCongTyProvider.all(
-      onSuccess: (value) {
+  void getHelp() {
+    thongTinFSSProvider.all(
+      onSuccess: (data) {
         //check is not empty
-        if (value.isNotEmpty) {
-          lienHeCongTyResponse = value.first;
+        if (data.isNotEmpty) {
+          thongTinFSSResponse = data.first;
         }
         isLoading = false;
         update();
       },
-      onError: (error) {
-        print("V1HelpController getContact onError $error");
+      onError: (error){
+        print("V1PersonalInfoController getHelp onError $error");
       },
     );
-  }
-
-  ///
-  ///btn contact
-  ///
-  Future<void> btnContact({required String url}) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'V1HelpController btnContact Could not launch $url';
-    }
   }
 }
