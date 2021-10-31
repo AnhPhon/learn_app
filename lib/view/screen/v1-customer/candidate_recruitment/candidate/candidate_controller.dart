@@ -575,7 +575,7 @@ class V1CandidateController extends GetxController {
     } else if (text == '') {
       //add new conditions
       addNewConditions(
-          condition: TimKiemUngVienModel(key: "tieuDeSearch", value: '0'),
+          condition: TimKiemUngVienModel(key: "tieuDeSearch", value: '-1'),
           isButtonSearch: false);
     } else {
       Alert.error(message: 'Tiêu đề tối thiểu 3 ký tự');
