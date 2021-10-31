@@ -147,7 +147,7 @@ class V1InsuranceRegisterController extends GetxController {
   ///
   void onCheckoutClick(BuildContext context) {
     Get.toNamed(
-            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse!.phis![indexFee]}")!
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse!.phis![indexFee]}&tienCoc=0")!
         .then(
       (value) {
         if (value !=null) {
