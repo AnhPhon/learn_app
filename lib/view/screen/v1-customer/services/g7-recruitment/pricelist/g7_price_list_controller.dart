@@ -207,7 +207,7 @@ class V1G7PriceListController extends GetxController {
 
                   //insert db
                   tuyenDungRepository.add(tuyenDungRequest).then((value) => {
-                        if (value.response.data == 5)
+                        if (value.response.data != null)
                           {
                             Get.back(result: true),
                             Alert.success(

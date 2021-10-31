@@ -30,6 +30,9 @@ class V2FormOfSubmitssionController extends GetxController {
   /// Nhấn vào nút nộp cv
   ///
   void onClickCvButton() {
-    Get.toNamed('${AppRoutes.V2_CV}?idTuyenDung=$idTuyenDung');
+    Get.toNamed('${AppRoutes.V2_CV}?idTuyenDung=$idTuyenDung')!
+        .then((value) => {
+              if (value != null && value == true) {Get.back(result: true)}
+            });
   }
 }

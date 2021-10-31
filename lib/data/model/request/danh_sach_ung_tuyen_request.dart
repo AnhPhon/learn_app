@@ -1,22 +1,19 @@
 class DanhSachUngTuyenRequest {
   String? id;
   String? idTuyenDung;
-  String? taiKhoanUngTuyen;
+  String? idTaiKhoanUngTuyen;
   String? daXem;
 
-  DanhSachUngTuyenRequest({
-      this.id,
-      this.idTuyenDung,
-      this.taiKhoanUngTuyen,
-      this.daXem});
-  
+  DanhSachUngTuyenRequest(
+      {this.id, this.idTuyenDung, this.idTaiKhoanUngTuyen, this.daXem});
+
   ///
   /// From JSON
   ///
   DanhSachUngTuyenRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     idTuyenDung = json['idTuyenDung'].toString();
-    taiKhoanUngTuyen = json['taiKhoanUngTuyen'].toString();
+    idTaiKhoanUngTuyen = json['idTaiKhoanUngTuyen'].toString();
     daXem = json['daXem'].toString();
   }
 
@@ -26,17 +23,17 @@ class DanhSachUngTuyenRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTuyenDung
-    if (idTuyenDung != null) data['idTuyenDung'] = idTuyenDung; 
+    if (idTuyenDung != null) data['idTuyenDung'] = idTuyenDung;
 
-    // check null taiKhoanUngTuyen
-    if (taiKhoanUngTuyen != null) data['taiKhoanUngTuyen'] = taiKhoanUngTuyen; 
+    // check null idTaiKhoanUngTuyen
+    if (idTaiKhoanUngTuyen != null)
+      data['idTaiKhoanUngTuyen'] = idTaiKhoanUngTuyen;
 
     // check null daXem
-    if (daXem != null) data['daXem'] = daXem; 
-
+    if (daXem != null) data['daXem'] = daXem;
 
     return data;
   }

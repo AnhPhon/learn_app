@@ -4,6 +4,7 @@ class DangKyBaoHiemRequest {
   String? idBaoHiem;
   String? file;
   String? trangThai;
+  String? phi;
 
   DangKyBaoHiemRequest({this.id, this.idTaiKhoan, this.file, this.trangThai});
 
@@ -16,6 +17,7 @@ class DangKyBaoHiemRequest {
     idBaoHiem = json['idBaoHiem'].toString();
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();
+    phi = json['phi'].toString();
   }
 
   ///
@@ -37,6 +39,9 @@ class DangKyBaoHiemRequest {
 
     // check null trangThai
     if (trangThai != null) data['trangThai'] = trangThai;
+
+    // check null phi
+    if (phi != null) data['phi'] = phi;
 
     return data;
   }

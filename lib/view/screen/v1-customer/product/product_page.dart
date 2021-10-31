@@ -14,9 +14,6 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
 
 class V1ProductPage extends GetView<V1ProductController> {
-  ///
-  ///build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1ProductController>(
@@ -45,6 +42,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                       data: controller.danhMucList,
                       width: double.infinity,
                       isBorder: false,
+                      fillColor: ColorResources.WHITE,
                     ),
 
                     const Padding(
@@ -75,6 +73,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                       // onChanged: (value) => controller.onChangeSearch(value.toString()),
                       width: double.infinity,
                       isBorder: false,
+                      fillColor: ColorResources.WHITE,
                     ),
                   ],
                 ),
@@ -82,27 +81,31 @@ class V1ProductPage extends GetView<V1ProductController> {
 
               //product list
               Expanded(
-                child: Scrollbar(
-                  child: SmartRefresher(
-                    controller: controller.refreshController,
-                    enablePullUp: true,
-                    onRefresh: () => controller.onRefresh(context),
-                    onLoading: () => controller.onLoading(context),
-                    footer: const ClassicFooter(
-                      loadingText: "Đang tải...",
-                      noDataText: "Không có dữ liệu",
-                      canLoadingText: "Kéo lên để tải thêm dữ liệu",
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: Dimensions.MARGIN_SIZE_DEFAULT,
-                          ),
-
-                          //product list
-                          _productList(context),
-                        ],
+                // flex: 7,
+                child: Container(
+                  height: double.infinity,
+                  color: ColorResources.WHITE,
+                  child: Scrollbar(
+                    child: SmartRefresher(
+                      controller: controller.refreshController,
+                      enablePullUp: true,
+                      onRefresh: () => controller.onRefresh(context),
+                      onLoading: () => controller.onLoading(context),
+                      footer: const ClassicFooter(
+                        loadingText: "Đang tải...",
+                        noDataText: "Không có dữ liệu",
+                        canLoadingText: "Kéo lên để tải thêm dữ liệu",
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              color: ColorResources.GREY.withOpacity(.15),
+                              height: Dimensions.MARGIN_SIZE_DEFAULT,
+                            ),
+                            _productList(context),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -119,26 +122,21 @@ class V1ProductPage extends GetView<V1ProductController> {
   ///product list
   ///
   Widget _productList(BuildContext context) {
-    return GetBuilder<V1ProductController>(builder: (controller) {
-      if (controller.isSPLoading) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      return controller.sanPhamList.isEmpty
-          ? const SizedBox.shrink()
-          : Container(
-              color: ColorResources.WHITE,
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-              ),
-              child: Column(
+    return GetBuilder<V1ProductController>(
+      builder: (controller) {
+        if (controller.isSPLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return controller.sanPhamList.isEmpty
+            ? const SizedBox.shrink()
+            : Column(
                 children: [
                   //label
                   const Label(
                     label: "Danh sách sản phẩm",
                     obligatory: false,
-                    horizontalPadding: 0,
                     paddingTitle: 0,
                     topPadding: Dimensions.PADDING_SIZE_DEFAULT,
                   ),
@@ -158,23 +156,30 @@ class V1ProductPage extends GetView<V1ProductController> {
                       ),
                       itemCount: controller.sanPhamList.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () => controller.onProductDetailClick(
-                              controller.sanPhamList[index]),
-                          child: ProductWidget(
-                            imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
-                                .toString(),
-                            name: controller.sanPhamList[index].ten!,
-                            price: "${PriceConverter.convertPrice(
-                              context,
-                              double.parse(controller.sanPhamList[index].gia!),
-                            )} vnđ",
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                          ),
+                          child: GestureDetector(
+                            onTap: () => controller.onProductDetailClick(
+                                controller.sanPhamList[index]),
+                            child: ProductWidget(
+                              imgUrl: controller
+                                  .sanPhamList[index].hinhAnhDaiDien
+                                  .toString(),
+                              name: controller.sanPhamList[index].ten!,
+                              price: "${PriceConverter.convertPrice(
+                                context,
+                                double.parse(
+                                    controller.sanPhamList[index].gia!),
+                              )} vnđ",
+                            ),
                           ),
                         );
                       }),
                 ],
-              ),
-            );
-    });
+              );
+      },
+    );
   }
 }

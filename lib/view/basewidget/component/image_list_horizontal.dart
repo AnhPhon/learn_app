@@ -8,20 +8,23 @@ class ImageListHorizontal extends StatelessWidget {
   final List imageList;
   final String? label;
   final bool? labelBold, obligatory;
+  final EdgeInsetsGeometry? padding;
   const ImageListHorizontal({
     Key? key,
     required this.imageList,
     this.label,
     this.labelBold = false,
     this.obligatory = false,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
-      ),
+      padding: padding ??
+          const EdgeInsets.symmetric(
+            horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
+          ),
       child: Column(
         children: [
           if (label != null)
@@ -85,6 +88,10 @@ class ImageListHorizontal extends StatelessWidget {
                             fit: BoxFit.fill,
                             imageErrorBuilder: (c, o, s) => Image.asset(
                               Images.placeholder,
+                              height:
+                                  DeviceUtils.getScaledHeight(context, .122),
+                              width: DeviceUtils.getScaledWidth(context, .254),
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
