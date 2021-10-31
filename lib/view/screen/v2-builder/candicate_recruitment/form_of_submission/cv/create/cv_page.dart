@@ -84,7 +84,7 @@ class V2CvPage extends GetView<V2CvController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           focusNode: controller.titleFocusNode,
         ),
 
@@ -180,7 +180,7 @@ class V2CvPage extends GetView<V2CvController> {
           obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
         ),
 
         // hôn nhân
@@ -225,7 +225,7 @@ class V2CvPage extends GetView<V2CvController> {
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           focusNode: controller.mucTieuFocusNode,
         ),
 
@@ -256,7 +256,7 @@ class V2CvPage extends GetView<V2CvController> {
         CustomFileButton(
             title: "Cập nhật file",
             verticalPadding: Dimensions.PADDING_SIZE_DEFAULT,
-            onTap: () {})
+            onTap: () => controller.pickImage())
       ],
     );
   }

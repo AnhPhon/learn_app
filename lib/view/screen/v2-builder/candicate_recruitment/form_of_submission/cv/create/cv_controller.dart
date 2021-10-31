@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
@@ -118,20 +120,29 @@ class V2CvController extends GetxController {
   ///
   ///pick image
   ///
-  // Future pickFile() async {
-  //   final FilePickerResult? result = await FilePicker.platform.pickFiles();
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      EasyLoading.show(status: 'loading...');
+      imageUpdateProvider.add(
+          file: imageTemporary,
+          onSuccess: (value) {
+            EasyLoading.dismiss();
+            dangKyViecMoiResponse.fileHoSoXinViec = value.data;
+            update();
+          },
+          onError: (e) {
+            EasyLoading.dismiss();
+            Alert.error(message: 'Vui lòng chọn lại file');
+          });
 
-  //   if (result != null) {
-  //     final PlatformFile file = result.files.first;
-  //     if (file.size > 100240000) {
-  //       Alert.error(message: 'Dung lượng file không quá 100 MB, vui lòng chọn file khác');
-  //     } else {
-  //       imageUpdateProvider.add(file: file, onSuccess: onSuccess, onError: onError)
-  //     }
-  //   } else {
-  //     // User canceled the picker
-  //   }
-  // }
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
 
   ///
   ///getDataUserViecMoi
@@ -180,7 +191,7 @@ class V2CvController extends GetxController {
           update();
         },
         onError: (error) =>
-            print('V1G7RecruitmentController getDataHinhThucLamViec $error'));
+            print('V2CvController getDataHinhThucLamViec $error'));
   }
 
   ///
@@ -204,8 +215,7 @@ class V2CvController extends GetxController {
 
           update();
         },
-        onError: (error) =>
-            print('V1G7RecruitmentController getDataTinhTp $error'));
+        onError: (error) => print('V2CvController getDataTinhTp $error'));
   }
 
   ///
@@ -241,8 +251,7 @@ class V2CvController extends GetxController {
 
           update();
         },
-        onError: (error) =>
-            print('V1G7RecruitmentController getDataQuanHuyen $error'));
+        onError: (error) => print('V2CvController getDataQuanHuyen $error'));
   }
 
   ///
@@ -271,8 +280,7 @@ class V2CvController extends GetxController {
           isLoading = false;
           update();
         },
-        onError: (error) =>
-            print('V1G7RecruitmentController getDataPhuongXa $error'));
+        onError: (error) => print('V2CvController getDataPhuongXa $error'));
   }
 
   ///
@@ -355,13 +363,40 @@ class V2CvController extends GetxController {
     } else if (mucTieuController.text.isEmpty) {
       Alert.error(message: 'Vui lòng nhập mục tiêu nghề nghiệp');
     } else {
+      //set data request
+      dangKyViecMoiRequest.id = dangKyViecMoiResponse.id;
+      dangKyViecMoiRequest.tieuDe = titleController.text.trim();
+      dangKyViecMoiRequest.idTinhTp = tinhTp!.id;
+      dangKyViecMoiRequest.idQuanHuyen = quanHuyenResponse!.id;
+      dangKyViecMoiRequest.idPhuongXa = phuongXaResponse!.id;
+      dangKyViecMoiRequest.diaChi = addressController.text.trim();
+      dangKyViecMoiRequest.honNhan = honNhanModel.id;
+      dangKyViecMoiRequest.idHinhThucLamViec = hinhThucLamViec!.id;
+      dangKyViecMoiRequest.mucTieuNgheNghiep = mucTieuController.text.trim();
+      dangKyViecMoiRequest.fileHoSoXinViec =
+          dangKyViecMoiResponse.fileHoSoXinViec;
+
       if (number == 1) {
-        //chuyển qua trang review
-        Get.toNamed('${AppRoutes.V2_PREVIEW}?idTuyenDung=$idTuyenDung',
-                arguments: dangKyViecMoiResponse)!
-            .then((value) => {
-                  if (value != null && value == true) {Get.back(result: true)}
-                });
+        EasyLoading.show(status: 'loading...');
+        // update thông tin
+        dangKyViecMoiRepository.update(dangKyViecMoiRequest).then((value) => {
+              if (value.response.data != null)
+                {
+                  EasyLoading.dismiss(),
+                  //chuyển qua trang review
+                  Get.toNamed(
+                          '${AppRoutes.V2_PREVIEW}?idTuyenDung=$idTuyenDung')!
+                      .then((value) => {
+                            if (value != null && value == true)
+                              {Get.back(result: true)}
+                          }),
+                }
+              else
+                {
+                  EasyLoading.dismiss(),
+                  Alert.error(message: 'Vui lòng thử lại')
+                }
+            });
       } else {
         //show dialog
         Get.defaultDialog(
@@ -372,47 +407,65 @@ class V2CvController extends GetxController {
             confirm: ElevatedButton(
                 onPressed: () {
                   EasyLoading.show(status: 'loading...');
-                  //check xem có lưu chưa
-                  danhSachUngTuyenProvider.paginate(
-                      page: 1,
-                      limit: 5,
-                      filter:
-                          '&idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId',
-                      onSuccess: (value) {
-                        print(
-                            'filter &idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId');
-                        if (value.isNotEmpty) {
-                          //set data
-                          danhSachUngTuyenRequest.idTuyenDung = idTuyenDung;
-                          danhSachUngTuyenRequest.idTaiKhoanUngTuyen = userId;
-                          //insert db
-                          danhSachUngTuyenRepository
-                              .add(danhSachUngTuyenRequest)
-                              .then((value) => {
-                                    if (value.response.data != null)
-                                      {
-                                        Alert.success(
+
+                  // update thông tin
+                  dangKyViecMoiRepository
+                      .update(dangKyViecMoiRequest)
+                      .then((value) => {
+                            if (value.response.data != null)
+                              {
+                                //check xem có lưu chưa
+                                danhSachUngTuyenProvider.paginate(
+                                    page: 1,
+                                    limit: 5,
+                                    filter:
+                                        '&idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId',
+                                    onSuccess: (value) {
+                                      if (value.isEmpty) {
+                                        //set data
+                                        danhSachUngTuyenRequest.idTuyenDung =
+                                            idTuyenDung;
+                                        danhSachUngTuyenRequest
+                                            .idTaiKhoanUngTuyen = userId;
+                                        //insert db
+                                        danhSachUngTuyenRepository
+                                            .add(danhSachUngTuyenRequest)
+                                            .then((value) => {
+                                                  if (value.response.data !=
+                                                      null)
+                                                    {
+                                                      EasyLoading.dismiss(),
+                                                      Alert.success(
+                                                          message:
+                                                              'Nộp hồ sơ ứng tuyển thành công'),
+                                                      Get.back(),
+                                                      Get.back(result: true)
+                                                    }
+                                                  else
+                                                    {
+                                                      EasyLoading.dismiss(),
+                                                      Alert.error(
+                                                          message:
+                                                              'Vui lòng thử lại')
+                                                    }
+                                                });
+                                      } else {
+                                        EasyLoading.dismiss();
+                                        Get.back();
+                                        Alert.info(
                                             message:
-                                                'Nộp hồ sơ ứng tuyển thành công'),
-                                        Get.back(),
-                                        Get.back(result: true)
+                                                'Bạn đã ứng tuyển tin tuyển dụng này rồi');
                                       }
-                                    else
-                                      {
-                                        EasyLoading.dismiss(),
-                                        Alert.error(message: 'Vui lòng thử lại')
-                                      }
-                                  });
-                        } else {
-                          EasyLoading.dismiss();
-                          Get.back();
-                          Alert.info(
-                              message:
-                                  'Bạn đã ứng tuyển tin tuyển dụng này rồi');
-                        }
-                      },
-                      onError: (error) =>
-                          print('V2CvController onBtnSummit $error'));
+                                    },
+                                    onError: (error) => print(
+                                        'V2CvController onBtnSummit $error')),
+                              }
+                            else
+                              {
+                                EasyLoading.dismiss(),
+                                Alert.error(message: 'Vui lòng thử lại')
+                              }
+                          });
                 },
                 child: const Text("Đồng ý")),
             cancel: ElevatedButton(

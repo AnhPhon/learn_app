@@ -6,6 +6,7 @@ import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
 import 'package:template/data/repository/danh_sach_ung_tuyen_repository.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -14,6 +15,9 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/components
 import 'package:url_launcher/url_launcher.dart';
 
 class V2PreviewController extends GetxController {
+  //provider
+  //Provider
+  final dangKyViecMoiProvider = GetIt.I.get<DangKyViecMoiProvider>();
   //DanhSachUngTuyen
   final danhSachUngTuyenProvider = GetIt.I.get<DanhSachUngTuyenProvider>();
   final danhSachUngTuyenRepository = DanhSachUngTuyenRepository();
@@ -42,9 +46,7 @@ class V2PreviewController extends GetxController {
     idTuyenDung = Get.parameters['idTuyenDung'];
     sl.get<SharedPreferenceHelper>().userId.then((value) {
       userId = value;
-      dangKyViecMoiResponse = Get.arguments as DangKyViecMoiResponse;
-      isLoading = false;
-      update();
+      getDataUserViecMoi();
     });
   }
 
@@ -52,6 +54,23 @@ class V2PreviewController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  ///
+  ///getDataUserViecMoi
+  ///
+  void getDataUserViecMoi() {
+    dangKyViecMoiProvider.paginate(
+        page: 1,
+        limit: 1,
+        filter: '&idTaiKhoan=$userId',
+        onSuccess: (value) {
+          dangKyViecMoiResponse = value.first;
+          isLoading = false;
+          update();
+        },
+        onError: (error) =>
+            print('V2PreviewController getDataUserViecMoi $error'));
   }
 
   ///
@@ -85,7 +104,7 @@ class V2PreviewController extends GetxController {
                   filter:
                       '&idTuyenDung=$idTuyenDung&idTaiKhoanUngTuyen=$userId',
                   onSuccess: (value) {
-                    if (value.isNotEmpty) {
+                    if (value.isEmpty) {
                       //set data
                       danhSachUngTuyenRequest.idTuyenDung = idTuyenDung;
                       danhSachUngTuyenRequest.idTaiKhoanUngTuyen = userId;
@@ -95,6 +114,7 @@ class V2PreviewController extends GetxController {
                           .then((value) => {
                                 if (value.response.data != null)
                                   {
+                                    EasyLoading.dismiss(),
                                     Alert.success(
                                         message:
                                             'Nộp hồ sơ ứng tuyển thành công'),
