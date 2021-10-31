@@ -6,11 +6,15 @@ import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
 import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/chi_tiet_don_hang_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
+import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
+import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/provider/kho_hang_dai_ly_provider.dart';
+import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -39,6 +43,12 @@ class V1ProductDetailController extends GetxController {
   DonHangResponse? donHangResponse;
   DonHangRequest donHangRequest = DonHangRequest();
 
+  //NhapKhoHangDaiLy
+  NhapKhoHangDaiLyProvider nhapKhoHangDaiLyProvider =
+      GetIt.I.get<NhapKhoHangDaiLyProvider>();
+  List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLyList = [];
+  int stock = 0;
+
   //ChiTietDonHang
   ChiTietDonHangProvider chiTietDonHangProvider =
       GetIt.I.get<ChiTietDonHangProvider>();
@@ -51,6 +61,7 @@ class V1ProductDetailController extends GetxController {
   //loading
   bool isLoading = true;
   bool isLoadingMore = false;
+  bool isLoadingStock = true;
 
   //page for for load more refresh
   int pageMax = 1;
@@ -72,6 +83,7 @@ class V1ProductDetailController extends GetxController {
     sanPhamResponse = Get.arguments as SanPhamResponse;
 
     //get load data
+    getStock();
     getTaiKhoan().then((value) => getDonHang());
     getMoreProduct(isRefresh: true);
   }
@@ -143,6 +155,34 @@ class V1ProductDetailController extends GetxController {
   }
 
   ///
+  ///get stock
+  ///
+  void getStock() {
+    nhapKhoHangDaiLyProvider.paginate(
+      page: 1,
+      limit: 100,
+      filter:
+          "&idTaiKhoan=${sanPhamResponse.idTaiKhoan!.id}&idSanPham=${sanPhamResponse.id}",
+      onSuccess: (data) {
+        print(data.length);
+        //check is not empty
+        if (data.isNotEmpty) {
+          nhapKhoHangDaiLyList = data;
+          for (final item in data) {
+            stock += int.parse(item.soLuong.toString());
+          }
+        }
+
+        isLoadingStock = false;
+        update();
+      },
+      onError: (error) {
+        print("V1ProductDetailController getStock onError $error");
+      },
+    );
+  }
+
+  ///
   ///get more product
   ///
   void getMoreProduct({required bool isRefresh}) {
@@ -157,7 +197,7 @@ class V1ProductDetailController extends GetxController {
 
     //check is not empty
     if (sanPhamResponse.idDanhMucSanPham != null) {
-//load sanPhamList
+      //load sanPhamList
       sanPhamProvider.paginate(
         page: pageMax,
         limit: limitMax,
@@ -167,7 +207,9 @@ class V1ProductDetailController extends GetxController {
           data.removeWhere((element) => element.id == sanPhamResponse.id);
           //check is empty
           if (data.isEmpty) {
-            refreshController.loadNoData();
+            if (isRefresh == false) {
+              refreshController.loadNoData();
+            }
           } else {
             //isRefresh
             if (isRefresh) {

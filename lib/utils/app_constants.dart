@@ -100,3 +100,9 @@ const String NHOM_5 = '616049b6c8e6fa122227e286';
 const String NHOM_6 = '616049bac8e6fa122227e289';
 const String NHOM_7 = '6168f03c7cb8ed05dbf3bcc7';
 const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
+
+//tình trạng sản phẩm
+const dynamic TINH_TRANG_SAN_PHAM = {
+  "0": "Mới",
+  "1": "Thanh lý",
+};

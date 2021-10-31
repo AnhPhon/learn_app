@@ -14,9 +14,6 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/product/product_controller.dart';
 
 class V1ProductPage extends GetView<V1ProductController> {
-  ///
-  ///build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1ProductController>(
@@ -45,6 +42,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                       data: controller.danhMucList,
                       width: double.infinity,
                       isBorder: false,
+                      fillColor: ColorResources.WHITE,
                     ),
 
                     const Padding(
@@ -75,6 +73,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                       // onChanged: (value) => controller.onChangeSearch(value.toString()),
                       width: double.infinity,
                       isBorder: false,
+                      fillColor: ColorResources.WHITE,
                     ),
                   ],
                 ),
