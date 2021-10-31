@@ -22,11 +22,6 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
     return GetBuilder(
       init: V2SearchRecruitmentController(),
       builder: (V2SearchRecruitmentController controller) {
-        if (controller.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Scaffold(
           appBar: AppBarWidget(
             title: "Tìm kiếm tin tuyển dụng",
@@ -48,15 +43,21 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
               child: Column(
             children: [
               filter(context, controller: controller),
-              recruitment(context, controller: controller)
+              if (controller.isLoading)
+                const Padding(
+                  padding: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                recruitment(context, controller: controller)
             ],
           )),
         );
       },
     );
   }
-
-  
 
   Widget recruitment(BuildContext context,
       {required V2SearchRecruitmentController controller}) {
@@ -72,23 +73,22 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
           canLoadingText: "Kéo lên để tải thêm dữ liệu",
         ),
         child: ListView.builder(
-                itemCount: controller.tuyenDungListModel.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                      onTap: () {
-                        controller.onClickRecruitmentNews(controller.tuyenDungListModel[index]);
-                      },
-                      child: V2RecruimentNewsCard(
-                        tuyenDungResponse: controller.tuyenDungListModel[index],
-                      ),
-                    );
-                },
+          itemCount: controller.tuyenDungListModel.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                controller.onClickRecruitmentNews(
+                    controller.tuyenDungListModel[index]);
+              },
+              child: V2RecruimentNewsCard(
+                tuyenDungResponse: controller.tuyenDungListModel[index],
               ),
+            );
+          },
+        ),
       ),
     );
   }
-
-
 
   ///
   ///Bộ lọc
@@ -112,10 +112,8 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
                 keyboardType: TextInputType.text,
                 textAlignVertical: TextAlignVertical.top,
                 controller: controller.tieuDeController,
-                onSubmitted: (val) => controller.onChangeTieuDe(
-                          val, context),
-                onChanged: (val)=> controller.onChangeTieuDe(
-                          val, context),
+                onSubmitted: (val) => controller.onChangeTieuDe(val, context),
+                // onChanged: (val) => controller.onChangeTieuDe(val, context),
                 focusNode: controller.tieuDeFocusNode,
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
@@ -170,15 +168,15 @@ class V2SearchRecruitmentPage extends GetView<V2SearchRecruitmentController> {
                         keyboardType: TextInputType.text,
                         textAlignVertical: TextAlignVertical.top,
                         controller: controller.congTyController,
-                        onChanged: (val)=> controller.onChangeCompany(
-                                  val, context),
-                        onSubmitted: (val) => controller.onChangeCompany(
-                                  val, context),
+                        // onChanged: (val) =>
+                        //     controller.onChangeCompany(val, context),
+                        onSubmitted: (val) =>
+                            controller.onChangeCompany(val, context),
                         focusNode: controller.congTyFocusNode,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                               onTap: () => controller.onChangeCompany(
-                                  controller.congTyController.text , context),
+                                  controller.congTyController.text, context),
                               child: const Icon(Icons.search)),
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_SMALL,
