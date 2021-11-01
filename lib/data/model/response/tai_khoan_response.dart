@@ -7,7 +7,7 @@ import 'mat_hang_dac_trung_response.dart';
 
 class TaiKhoanResponse {
   String? id;
-  String? idLoaiTaiKhoan;
+  dynamic? idLoaiTaiKhoan;
   String? tinhTpHoatDong;
   TinhTpResponse? idTinhTp;
   QuanHuyenResponse? idQuanHuyen;
@@ -108,7 +108,10 @@ class TaiKhoanResponse {
     // } else {
     //   idLoaiTaiKhoan = null;
     // }
-    if(json['idLoaiTaiKhoan'] != null){
+    if(json['idLoaiTaiKhoan'] != null && json['idLoaiTaiKhoan'].toString().length!=24 ){
+      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(json['idLoaiTaiKhoan'] as Map<String, dynamic>);
+    }else{
+      print(json['idLoaiTaiKhoan'].toString());
       idLoaiTaiKhoan = json['idLoaiTaiKhoan'].toString();
     }
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();

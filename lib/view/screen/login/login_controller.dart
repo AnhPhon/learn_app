@@ -111,7 +111,7 @@ class LoginController extends GetxController {
               // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
               if(isRemember){
                 sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
-                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
+                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
                 sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
               }
 
@@ -137,10 +137,12 @@ class LoginController extends GetxController {
                 // }
                 else{
                   //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
+                  EasyLoading.dismiss();
                   Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
                 }
               }else{
                 // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
+                EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
         },
