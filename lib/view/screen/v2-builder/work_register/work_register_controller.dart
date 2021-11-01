@@ -83,6 +83,8 @@ class V2WorkRegisterController extends GetxController {
   // String
   String title = "Đăng ký việc";
 
+  final List<String> ids = [];
+
   // string id tương ứng khi checkbox
   String hoChiMinhId = "";
   String haNoiid = "";
@@ -659,31 +661,20 @@ class V2WorkRegisterController extends GetxController {
                   thoiGianBatDau: timeStart.join("-"),
                   thoiGianKetThuc: timeEnd.join("-"),
                   tieuDe: '...',
-                  tenUngVien: taiKhoan.hoTen,
-                  gioiTinh: taiKhoan.gioiTinh,
-                  ngaySinh: taiKhoan.ngaySinh,
-                  email: taiKhoan.email,
-                  diaChi: taiKhoan.diaChi,
-                  idTinhTp: taiKhoan.idTinhTp!.id,
-                  idQuanHuyen: taiKhoan.idQuanHuyen!.id,
-                  idPhuongXa: taiKhoan.idPhuongXa!.id,
-                  honNhan: '...',
-                  idLoaiNhanVien: taiKhoan.idLoaiTaiKhoan.toString(),
-                  mucTieuNgheNghiep: "...",
-                  chucVuHienTai: "...",
-                  idSoNamKinhNghiem: "...",
-                  noiLamViec: taiKhoan.noiLamViec,
-                  mucLuongDeXuat: "...",
-                  fileHoSoXinViec: "...",
-                  kyNangSoTruong: "...",
-                  idTinHoc: '...',
-                  idHinhThucLamViec: '...',
-                  tieuDeSearch: '...',
+                  tenUngVien: taiKhoan.hoTen ?? "",
+                  gioiTinh: taiKhoan.gioiTinh ?? "",
+                  ngaySinh: taiKhoan.ngaySinh ?? "",
+                  email: taiKhoan.email ?? "",
+                  diaChi: taiKhoan.diaChi ?? "",
                 ),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
-                  updateDiaDiem(data.id!);
-                  Get.back();
+                  Future.delayed(const Duration(milliseconds: 1000))
+                      .then((value) {
+                    updateDiaDiem(data.id!);
+                    EasyLoading.showSuccess("Thêm thành công");
+                    Get.back();
+                  });
                 },
                 onError: (error) {
                   print(
@@ -714,12 +705,21 @@ class V2WorkRegisterController extends GetxController {
       if (tphcmCheck) {
         diaDiemDangKyLamViecProvider.add(
           data: DiaDiemDangKyLamViecRequest(
-            idDangKyViecMoi: viecMoiId,
-            idQuanHuyen: quanHuyenHCM != null ? quanHuyenHCM!.id! : "",
-            idPhuongXa: phuongXaHCM != null ? phuongXaHCM!.id : "",
+            idQuanHuyen: quanHuyenHCM != null
+                ? quanHuyenHCM!.id!
+                : "616a5d88000118120619cb91",
+            idPhuongXa: phuongXaHCM != null
+                ? phuongXaHCM!.id
+                : "61694d453391622ae9202d81",
             idTinhTp: hoChiMinhId,
           ),
-          onSuccess: (data) {},
+          onSuccess: (data) {
+            sl.get<SharedPreferenceHelper>().ids.then((value) {
+              String vals = value.toString().replaceAll("null", "");
+              vals += "${data.id!},";
+              sl.get<SharedPreferenceHelper>().saveIds(id: vals);
+            });
+          },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
           },
@@ -729,12 +729,21 @@ class V2WorkRegisterController extends GetxController {
       if (hanoiCheck) {
         diaDiemDangKyLamViecProvider.add(
           data: DiaDiemDangKyLamViecRequest(
-            idDangKyViecMoi: viecMoiId,
-            idQuanHuyen: quanHuyenHaNoi != null ? quanHuyenHaNoi!.id : "",
-            idPhuongXa: phuongXaHaNoi != null ? phuongXaHaNoi!.id : "",
+            idQuanHuyen: quanHuyenHaNoi != null
+                ? quanHuyenHaNoi!.id
+                : "616a5d88000118120619cb91",
+            idPhuongXa: phuongXaHaNoi != null
+                ? phuongXaHaNoi!.id
+                : "61694d453391622ae9202d81",
             idTinhTp: haNoiid,
           ),
-          onSuccess: (data) {},
+          onSuccess: (data) {
+            sl.get<SharedPreferenceHelper>().ids.then((value) {
+              String vals = value.toString().replaceAll("null", "");
+              vals += "${data.id!},";
+              sl.get<SharedPreferenceHelper>().saveIds(id: vals);
+            });
+          },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
           },
@@ -744,12 +753,21 @@ class V2WorkRegisterController extends GetxController {
       if (danangCheck) {
         diaDiemDangKyLamViecProvider.add(
           data: DiaDiemDangKyLamViecRequest(
-            idDangKyViecMoi: viecMoiId,
-            idQuanHuyen: quanHuyenDaNang != null ? quanHuyenDaNang!.id : "",
-            idPhuongXa: phuongXaDaNang != null ? phuongXaDaNang!.id : "",
+            idQuanHuyen: quanHuyenDaNang != null
+                ? quanHuyenDaNang!.id
+                : "616a5d88000118120619cb91",
+            idPhuongXa: phuongXaDaNang != null
+                ? phuongXaDaNang!.id
+                : "61694d453391622ae9202d81",
             idTinhTp: daNangId,
           ),
-          onSuccess: (data) {},
+          onSuccess: (data) {
+            sl.get<SharedPreferenceHelper>().ids.then((value) {
+              String vals = value.toString().replaceAll("null", "");
+              vals += "${data.id!},";
+              sl.get<SharedPreferenceHelper>().saveIds(id: vals);
+            });
+          },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
           },
@@ -759,12 +777,23 @@ class V2WorkRegisterController extends GetxController {
       if (tinhKhacCheck) {
         diaDiemDangKyLamViecProvider.add(
           data: DiaDiemDangKyLamViecRequest(
-            idDangKyViecMoi: viecMoiId,
-            idQuanHuyen: quanHuyenKhac != null ? quanHuyenKhac!.id : "",
-            idPhuongXa: phuongXaKhac != null ? phuongXaKhac!.id : "",
-            idTinhTp: tinhTpKhac!.id,
+            idQuanHuyen: quanHuyenKhac != null
+                ? quanHuyenKhac!.id
+                : "616a5d88000118120619cb91",
+            idPhuongXa: phuongXaKhac != null
+                ? phuongXaKhac!.id
+                : "61694d453391622ae9202d81",
+            idTinhTp: tinhTpKhac != null
+                ? tinhTpKhac!.id
+                : "6160f286f58f581ebf6d74e1",
           ),
-          onSuccess: (data) {},
+          onSuccess: (data) {
+            sl.get<SharedPreferenceHelper>().ids.then((value) {
+              String vals = value.toString().replaceAll("null", "");
+              vals += "${data.id!},";
+              sl.get<SharedPreferenceHelper>().saveIds(id: vals);
+            });
+          },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
           },
@@ -777,21 +806,31 @@ class V2WorkRegisterController extends GetxController {
   /// update dia diem
   ///
   void updateDiaDiem(String viecMoiId) {
-    print("&idDangKyViecMoi=$viecMoiId");
     diaDiemDangKyLamViecProvider.paginate(
       page: 1,
       limit: 30,
-      filter: "&idDangKyViecMoi=$viecMoiId",
+      filter: "",
       onSuccess: (data) {
-        dangKyViecMoiProvider.update(
-          data: DangKyViecMoiRequest(
+        sl.get<SharedPreferenceHelper>().ids.then((value) {
+          final List<String> ids = value!
+              .replaceAll(",", " ")
+              .replaceAll("[]", "")
+              .trim()
+              .split(" ");
+          dangKyViecMoiProvider.update(
+            data: DangKyViecMoiRequest(
               id: viecMoiId,
-              idDiaDiemDangKyLamViecs: data.map((e) => e.id!).toList()),
-          onSuccess: (data) {},
-          onError: (error) {
-            print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          },
-        );
+              idDiaDiemDangKyLamViecs: ids,
+            ),
+            onSuccess: (data) {},
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+        });
+
+        sl.get<SharedPreferenceHelper>().saveIds(id: "");
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");

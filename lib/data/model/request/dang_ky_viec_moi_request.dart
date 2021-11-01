@@ -250,7 +250,7 @@ class DangKyViecMoiRequest {
 
     // check null idDiaDiemDangKyLamViecs
     if (idDiaDiemDangKyLamViecs != null) {
-      data['idDiaDiemDangKyLamViecs'] = [];
+      data['idDiaDiemDangKyLamViecs'] = idDiaDiemDangKyLamViecs;
     }
 
     // check null tieuDeSearch
