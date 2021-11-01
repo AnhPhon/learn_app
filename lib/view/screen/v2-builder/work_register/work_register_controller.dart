@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
+import 'package:template/data/model/request/dia_diem_dang_ky_lam_viec_request.dart';
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/nhom_dich_vu_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
@@ -12,11 +13,13 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
+import 'package:template/provider/dia_diem_dang_ky_lam_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -32,6 +35,9 @@ class V2WorkRegisterController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DangKyViecMoiProvider dangKyViecMoiProvider =
       GetIt.I.get<DangKyViecMoiProvider>();
+  DiaDiemDangKyLamViecProvider diaDiemDangKyLamViecProvider =
+      GetIt.I.get<DiaDiemDangKyLamViecProvider>();
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   // text editing controller
   TextEditingController nhomCongViecController = TextEditingController();
@@ -72,13 +78,15 @@ class V2WorkRegisterController extends GetxController {
   TinhTpResponse? tinhTpKhac;
   TinhTpResponse? tinhTp;
 
+  List<String> idDiaDiemDangKyLamViecs = [];
+
   // String
   String title = "Đăng ký việc";
 
   // string id tương ứng khi checkbox
-  String hoChiMinhId = "61606932763ce5dc10c529f5";
-  String haNoiid = "6160f286f58f581ebf6d74f4";
-  String daNangId = "615d6a143e28b243e76682e1";
+  String hoChiMinhId = "";
+  String haNoiid = "";
+  String daNangId = "";
   String idNhomCongViec = "";
   String idCongViec = "";
 
@@ -137,9 +145,22 @@ class V2WorkRegisterController extends GetxController {
   void getIdAvaliable() {
     tinhTpProvider.all(onSuccess: (data) {
       for (final element in data) {
-        hoChiMinhId = element.id!;
-        haNoiid = element.id!;
-        daNangId = element.id!;
+        final String ten = element.ten.toString().toLowerCase();
+
+        // get id hochiminh
+        if (ten.contains("hồ chí minh")) {
+          hoChiMinhId = element.id!;
+        }
+
+        // get id ha noi
+        if (ten.contains("hà nội")) {
+          haNoiid = element.id!;
+        }
+
+        // get id da nang
+        if (ten.contains("đà nẵng")) {
+          daNangId = element.id!;
+        }
       }
 
       update();
@@ -201,7 +222,11 @@ class V2WorkRegisterController extends GetxController {
     phuongXaKhac = null;
     phuongXaKhacList!.clear();
     quanHuyenKhacList!.clear();
+    idDiaDiemDangKyLamViecs.remove(tinhTpKhac!.id);
+
     getQuanHuyenKhac(filter: "&idTinhTp=${tinhTpKhac!.id}");
+    idDiaDiemDangKyLamViecs.add(tinhTpKhac!.id!);
+
     update();
   }
 
@@ -325,34 +350,6 @@ class V2WorkRegisterController extends GetxController {
   }
 
   ///
-  /// on register click
-  ///
-  void onRegisterClick() {
-    if (_validate()) {
-      if (isRegister) {
-        // get user id
-        sl.get<SharedPreferenceHelper>().userId.then((userId) {
-          // đăng ký việc mới
-          dangKyViecMoiProvider.add(
-            data: DangKyViecMoiRequest(
-              idTaiKhoan: userId,
-            ),
-            onSuccess: (data) {
-              EasyLoading.showSuccess("Thêm thành công");
-            },
-            onError: (error) {
-              print(
-                  "TermsAndPolicyController getTermsAndPolicy onError $error");
-            },
-          );
-        });
-      } else {
-        Get.toNamed(AppRoutes.V2_WORK_CREATE);
-      }
-    }
-  }
-
-  ///
   /// Lấy tất cả tỉnh thành phố
   ///
   void getTinhThanh() {
@@ -378,6 +375,7 @@ class V2WorkRegisterController extends GetxController {
 
       if (tinhTpsKhac!.isNotEmpty) {
         tinhTpKhac = tinhTpsKhac!.first;
+        idDiaDiemDangKyLamViecs.add(tinhTpKhac!.id!);
       }
 
       update();
@@ -574,7 +572,9 @@ class V2WorkRegisterController extends GetxController {
         phuongXaHCMList = [];
         quanHuyenHCM = null;
         phuongXaHCM = null;
+        idDiaDiemDangKyLamViecs.remove(hoChiMinhId);
       } else {
+        idDiaDiemDangKyLamViecs.add(hoChiMinhId);
         getQuanHuyenHCM();
       }
     }
@@ -586,7 +586,9 @@ class V2WorkRegisterController extends GetxController {
         phuongXaHaNoiList = [];
         quanHuyenHaNoi = null;
         phuongXaHaNoi = null;
+        idDiaDiemDangKyLamViecs.remove(haNoiid);
       } else {
+        idDiaDiemDangKyLamViecs.add(haNoiid);
         getQuanHuyenHaNoi();
       }
     }
@@ -598,7 +600,9 @@ class V2WorkRegisterController extends GetxController {
         phuongXaDaNangList = [];
         quanHuyenDaNang = null;
         phuongXaDaNang = null;
+        idDiaDiemDangKyLamViecs.remove(haNoiid);
       } else {
+        idDiaDiemDangKyLamViecs.add(haNoiid);
         getQuanHuyenDaNang();
       }
     }
@@ -619,6 +623,180 @@ class V2WorkRegisterController extends GetxController {
 
     getTinhThanhBottom();
     update();
+  }
+
+  ///
+  /// on register click
+  ///
+  void onRegisterClick() {
+    if (_validate()) {
+      if (isRegister) {
+        // get user id
+        sl.get<SharedPreferenceHelper>().userId.then((userId) {
+          final List<String> split1 = timeStartController.text.split("/");
+          final List<String> split2 = timeEndController.text.split("/");
+
+          final List<String> timeStart = [];
+          for (int i = split1.length - 1; i >= 0; i--) {
+            timeStart.add(split1[i]);
+          }
+
+          final List<String> timeEnd = [];
+          for (int i = split2.length - 1; i >= 0; i--) {
+            timeEnd.add(split2[i]);
+          }
+
+          taiKhoanProvider.find(
+            id: userId!,
+            onSuccess: (taiKhoan) {
+              // đăng ký việc mới
+              dangKyViecMoiProvider.add(
+                data: DangKyViecMoiRequest(
+                  idTaiKhoan: userId,
+                  idNhomDichVu: idNhomCongViec,
+                  idLoaiCongViec: idCongViec,
+                  soLuong: soLuongController.text,
+                  thoiGianBatDau: timeStart.join("-"),
+                  thoiGianKetThuc: timeEnd.join("-"),
+                  tieuDe: '...',
+                  tenUngVien: taiKhoan.hoTen,
+                  gioiTinh: taiKhoan.gioiTinh,
+                  ngaySinh: taiKhoan.ngaySinh,
+                  email: taiKhoan.email,
+                  diaChi: taiKhoan.diaChi,
+                  idTinhTp: taiKhoan.idTinhTp!.id,
+                  idQuanHuyen: taiKhoan.idQuanHuyen!.id,
+                  idPhuongXa: taiKhoan.idPhuongXa!.id,
+                  honNhan: '...',
+                  idLoaiNhanVien: taiKhoan.idLoaiTaiKhoan.toString(),
+                  mucTieuNgheNghiep: "...",
+                  chucVuHienTai: "...",
+                  idSoNamKinhNghiem: "...",
+                  noiLamViec: taiKhoan.noiLamViec,
+                  mucLuongDeXuat: "...",
+                  fileHoSoXinViec: "...",
+                  kyNangSoTruong: "...",
+                  idTinHoc: '...',
+                  idHinhThucLamViec: '...',
+                  tieuDeSearch: '...',
+                ),
+                onSuccess: (data) {
+                  themDiaDiemDangKyLamViec(data.id!);
+                  updateDiaDiem(data.id!);
+                  Get.back();
+                },
+                onError: (error) {
+                  print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error");
+                },
+              );
+            },
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+        });
+      } else {
+        Get.toNamed(AppRoutes.V2_WORK_CREATE);
+      }
+    }
+  }
+
+  ///
+  /// thêm địa điểm đăng ký làm việc
+  ///
+  void themDiaDiemDangKyLamViec(String viecMoiId) {
+    // validate ít nhất phải chọn một nơi làm việc
+    if (checkProvince()) {
+      Get.snackbar("Thông báo", "Cần ít nhất một nơi làm việc");
+    } else {
+      if (tphcmCheck) {
+        diaDiemDangKyLamViecProvider.add(
+          data: DiaDiemDangKyLamViecRequest(
+            idDangKyViecMoi: viecMoiId,
+            idQuanHuyen: quanHuyenHCM != null ? quanHuyenHCM!.id! : "",
+            idPhuongXa: phuongXaHCM != null ? phuongXaHCM!.id : "",
+            idTinhTp: hoChiMinhId,
+          ),
+          onSuccess: (data) {},
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      }
+
+      if (hanoiCheck) {
+        diaDiemDangKyLamViecProvider.add(
+          data: DiaDiemDangKyLamViecRequest(
+            idDangKyViecMoi: viecMoiId,
+            idQuanHuyen: quanHuyenHaNoi != null ? quanHuyenHaNoi!.id : "",
+            idPhuongXa: phuongXaHaNoi != null ? phuongXaHaNoi!.id : "",
+            idTinhTp: haNoiid,
+          ),
+          onSuccess: (data) {},
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      }
+
+      if (danangCheck) {
+        diaDiemDangKyLamViecProvider.add(
+          data: DiaDiemDangKyLamViecRequest(
+            idDangKyViecMoi: viecMoiId,
+            idQuanHuyen: quanHuyenDaNang != null ? quanHuyenDaNang!.id : "",
+            idPhuongXa: phuongXaDaNang != null ? phuongXaDaNang!.id : "",
+            idTinhTp: daNangId,
+          ),
+          onSuccess: (data) {},
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      }
+
+      if (tinhKhacCheck) {
+        diaDiemDangKyLamViecProvider.add(
+          data: DiaDiemDangKyLamViecRequest(
+            idDangKyViecMoi: viecMoiId,
+            idQuanHuyen: quanHuyenKhac != null ? quanHuyenKhac!.id : "",
+            idPhuongXa: phuongXaKhac != null ? phuongXaKhac!.id : "",
+            idTinhTp: tinhTpKhac!.id,
+          ),
+          onSuccess: (data) {},
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      }
+    }
+  }
+
+  ///
+  /// update dia diem
+  ///
+  void updateDiaDiem(String viecMoiId) {
+    print("&idDangKyViecMoi=$viecMoiId");
+    diaDiemDangKyLamViecProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idDangKyViecMoi=$viecMoiId",
+      onSuccess: (data) {
+        dangKyViecMoiProvider.update(
+          data: DangKyViecMoiRequest(
+              id: viecMoiId,
+              idDiaDiemDangKyLamViecs: data.map((e) => e.id!).toList()),
+          onSuccess: (data) {},
+          onError: (error) {
+            print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          },
+        );
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
   }
 
   ///
@@ -650,7 +828,22 @@ class V2WorkRegisterController extends GetxController {
     }
 
     // validate ít nhất phải chọn một nơi làm việc
+    if (checkProvince()) {
+      Get.snackbar("Thông báo", "Cần ít nhất một nơi làm việc");
+      return false;
+    }
 
     return true;
+  }
+
+  ///
+  /// check exist province selected
+  ///
+  bool checkProvince() {
+    return tphcmCheck == false &&
+        hanoiCheck == false &&
+        danangCheck == false &&
+        tinhKhacCheck == false &&
+        tinhTpsSelected.isEmpty;
   }
 }
