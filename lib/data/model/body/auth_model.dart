@@ -45,7 +45,7 @@ class AuthModel {
       this.refresh});
 
   AuthModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idUser = json['idUser'].toString();
     idRole = json['idRole'].toString();
     idOptionalRole = json['idOptionalRole'].toString();

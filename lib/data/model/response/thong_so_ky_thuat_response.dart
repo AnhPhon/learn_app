@@ -16,7 +16,7 @@ class ThongSoKyThuatResponse {
   /// From JSON
   ///
   ThongSoKyThuatResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
 
     createdAt = json['created_at'].toString();

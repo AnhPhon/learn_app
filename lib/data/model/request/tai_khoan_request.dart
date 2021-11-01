@@ -81,7 +81,7 @@ class TaiKhoanRequest {
   /// From JSON
   ///
   TaiKhoanRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idLoaiTaiKhoan = json['idLoaiTaiKhoan'].toString();
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();
     idTinhTp = json['idTinhTp'].toString();

@@ -26,7 +26,7 @@ class ThongTinFSSResponse {
   /// From JSON
   ///
   ThongTinFSSResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     doiTuong = json['doiTuong'].toString();
     gioiThieuTomTatCoCheHoatDong = json['gioiThieuTomTatCoCheHoatDong'].toString();
     quyenNghiaVuFSS = json['quyenNghiaVuFSS'].toString();

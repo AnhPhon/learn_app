@@ -32,7 +32,7 @@ class SanPhamRequest {
   /// From JSON
   ///
   SanPhamRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idDanhMucSanPham = json['idDanhMucSanPham'].toString();
     ten = json['ten'].toString();

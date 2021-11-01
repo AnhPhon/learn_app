@@ -20,7 +20,7 @@ class LienHeCongTyResponse {
   /// From JSON
   ///
   LienHeCongTyResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     diaChi = json['diaChi'].toString();
     email = json['email'].toString();
     soDienThoai = json['soDienThoai'].toString();

@@ -13,7 +13,7 @@ class BangGiaDangTinResponse {
   /// From JSON
   ///
   BangGiaDangTinResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
     donGia = json['donGia'].toString();
 

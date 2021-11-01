@@ -19,7 +19,7 @@ class KhoHangResponse {
   /// From JSON
   ///
   KhoHangResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idDuAnNhanVien
     if (json['idDuAnNhanVien'] != null &&
