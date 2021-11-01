@@ -183,6 +183,14 @@ class V2WorkRegisterController extends GetxController {
         nhomDichVu = models;
         if (nhomDichVu.isNotEmpty) {
           idNhomCongViec = nhomDichVu.first.id!;
+          if (nhomDichVu.first.tenDichVu
+              .toString()
+              .toLowerCase()
+              .contains("nhóm 7")) {
+            sl.get<SharedPreferenceHelper>().saveNhom7(id: true);
+          } else {
+            sl.get<SharedPreferenceHelper>().saveNhom7(id: false);
+          }
           // load công việc phù hợp theo nhóm công việc
           _loadCongViecPhuHop(nhomDichVu.first.id!);
         }
@@ -325,21 +333,43 @@ class V2WorkRegisterController extends GetxController {
       id: idNhomCongViec,
       onSuccess: (data) {
         if (data.tenDichVu.toString().toLowerCase().contains("nhóm 7")) {
+          sl.get<SharedPreferenceHelper>().saveNhom7(id: true);
           btnLabel = btnNote2;
           noteLabel = note2;
-          isRegister = false;
+
+          // check với userid và nhomDichVu la 7 tồn tại data không
+          // tồn tại là cập nhật ngược lại là đăng ký
+          sl.get<SharedPreferenceHelper>().userId.then((userId) {
+            print("&idNhomDichVu=${data.id}&idTaiKhoan=$userId");
+            dangKyViecMoiProvider.paginate(
+              page: 1,
+              limit: 30,
+              filter: "&idNhomDichVu=${data.id}&idTaiKhoan=$userId",
+              onSuccess: (data) {
+                print(data.isNotEmpty);
+                if (data.isNotEmpty) {
+                  isRegister = false;
+                  update();
+                }
+              },
+              onError: (error) {
+                print(
+                    "TermsAndPolicyController getTermsAndPolicy onError $error");
+              },
+            );
+          });
         } else {
+          sl.get<SharedPreferenceHelper>().saveNhom7(id: false);
           btnLabel = btnNote1;
           noteLabel = note1;
           isRegister = true;
+          update();
         }
-        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
       },
     );
-
     update();
   }
 
@@ -632,7 +662,7 @@ class V2WorkRegisterController extends GetxController {
   ///
   void onRegisterClick() {
     if (_validate()) {
-      if (isRegister) {
+      if (isRegister == true) {
         // get user id
         sl.get<SharedPreferenceHelper>().userId.then((userId) {
           final List<String> split1 = timeStartController.text.split("/");
@@ -669,11 +699,17 @@ class V2WorkRegisterController extends GetxController {
                 ),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
-                  Future.delayed(const Duration(milliseconds: 1000))
+                  Future.delayed(const Duration(milliseconds: 500))
                       .then((value) {
                     updateDiaDiem(data.id!);
                     EasyLoading.showSuccess("Thêm thành công");
-                    Get.back();
+                    sl.get<SharedPreferenceHelper>().nhom7.then((nhom7) {
+                      if (nhom7 == true) {
+                        Get.toNamed(AppRoutes.V2_WORK_CREATE);
+                      } else {
+                        Get.back();
+                      }
+                    });
                   });
                 },
                 onError: (error) {

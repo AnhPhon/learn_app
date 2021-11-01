@@ -364,4 +364,17 @@ class SharedPreferenceHelper {
   Future<bool> removeIds() async {
     return _sharedPreference.remove(Preferences.ids);
   }
+
+  // LÀ NHÓM 7  : -----------------------------------------------
+  Future<bool?> get nhom7 async {
+    return _sharedPreference.getBool(Preferences.nhom7);
+  }
+
+  Future<bool> saveNhom7({required bool id}) async {
+    return _sharedPreference.setBool(Preferences.nhom7, id);
+  }
+
+  Future<bool> removeNhom7() async {
+    return _sharedPreference.remove(Preferences.nhom7);
+  }
 }
