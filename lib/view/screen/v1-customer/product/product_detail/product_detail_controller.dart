@@ -405,10 +405,6 @@ class V1ProductDetailController extends GetxController {
               getDonHang();
 
               //show snackbar
-              SnackBarUtils.showSnackBarSuccess(
-                title: "Thành công",
-                message: "Thêm sản phẩm vào giỏ hàng thành công",
-              );
               Alert.success(message: 'Thêm sản phẩm vào giỏ hàng thành công');
             },
             onError: (error) {

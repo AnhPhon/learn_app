@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/snack_bar.dart';
 import 'package:template/utils/alert.dart';
 
 class V1BeforeRechargeController extends GetxController {

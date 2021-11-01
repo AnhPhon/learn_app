@@ -10,8 +10,7 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
 
-class V2ProjectDetailTrienKhaiPage
-    extends GetView<V2ProjectDetailTrienKhaiController> {
+class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V2ProjectDetailTrienKhaiController>(
@@ -62,7 +61,7 @@ class V2ProjectDetailTrienKhaiPage
                       //title
                       _textTitle(),
 
-                      ///content
+                      //content
                       _content(),
                     ],
                   ),
@@ -75,8 +74,7 @@ class V2ProjectDetailTrienKhaiPage
   ///
   ///img product
   ///
-  Widget _imgProject(
-      BuildContext context, V2ProjectDetailTrienKhaiController controller) {
+  Widget _imgProject(BuildContext context, V2ProjectDetailTrienKhaiController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
@@ -110,10 +108,8 @@ class V2ProjectDetailTrienKhaiPage
   Widget _textTitle() {
     return Container(
       // color: Colors.red,
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-      margin:
-          const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Text(
         'Tên dự án: ' + controller.duAnKhachHangResponse!.ten.toString(),
         style: Dimensions.fontSizeStyle22w600(),
@@ -126,8 +122,7 @@ class V2ProjectDetailTrienKhaiPage
   ///
   Widget _content() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,18 +142,13 @@ class V2ProjectDetailTrienKhaiPage
           Row(
             children: [
               Text(
-                controller.kiemTraIdTrangThaiDuAnDangXayDung() == true
-                    ? "Dự kiến kết thúc: "
-                    : "Thời gian dự kiến triển khai: ",
+                controller.kiemTraIdTrangThaiDuAnDangXayDung() == true ? "Dự kiến kết thúc: " : "Thời gian dự kiến triển khai: ",
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18w600(),
               ),
               Text(
-                DateConverter.isoStringToddMMYYYY(controller
-                            .kiemTraIdTrangThaiDuAnDangXayDung() ==
-                        true
-                    ? controller.duAnKhachHangResponse!.ngayKetThuc.toString()
-                    : controller.duAnKhachHangResponse!.ngayBatDau.toString()),
+                DateConverter.isoStringToddMMYYYY(controller.kiemTraIdTrangThaiDuAnDangXayDung() == true ?
+                controller.duAnKhachHangResponse!.ngayKetThuc.toString() : controller.duAnKhachHangResponse!.ngayBatDau.toString()),
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18(),
               ),
@@ -204,8 +194,7 @@ class V2ProjectDetailTrienKhaiPage
             width: DeviceUtils.getScaledWidth(Get.context!, 1),
             child: Wrap(
               children: controller.kiemTraIdHangMucXayDungs()
-                  ? controller.duAnKhachHangResponse!.idHangMucXayDungs!
-                      .map((e) {
+                  ? controller.duAnKhachHangResponse!.idHangMucXayDungs!.map((e) {
                       return Container(
                         decoration: const BoxDecoration(
                           color: ColorResources.HOME_BG,

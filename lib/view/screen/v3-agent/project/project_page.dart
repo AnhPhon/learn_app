@@ -8,7 +8,6 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/component/tab_bar_widget.dart';
-
 import 'package:template/view/basewidget/getx_smart_refresh/getx_smart_refresh_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_controller.dart';
 
@@ -101,6 +100,7 @@ class V3ProjectPage extends GetView<V3ProjectController> {
       ),
     );
   }
+
   Widget listViewItemBuilder(V3ProjectController controller) {
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(

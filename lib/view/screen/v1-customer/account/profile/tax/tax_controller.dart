@@ -13,9 +13,6 @@ import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/utils/alert.dart';
 
 class V1TaxController extends GetxController {
@@ -160,10 +157,6 @@ class V1TaxController extends GetxController {
     } else {
       // show errors
       EasyLoading.dismiss();
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng điền mã số thuế",
-      );
       Alert.error(message: 'Vui lòng điền mã số thuế');
     }
   }

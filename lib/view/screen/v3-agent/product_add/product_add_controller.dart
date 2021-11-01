@@ -21,9 +21,6 @@ import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/utils/alert.dart';
 
 class V3ProductAddController extends GetxController {
@@ -354,9 +351,5 @@ class V3ProductAddController extends GetxController {
     khoHangDaiLyResponse = null;
     loaiVanChuyenResponse = null;
     update();
-  }
-
-  void printTest() {
-    print(khoHangDaiLyResponse!.id);
   }
 }

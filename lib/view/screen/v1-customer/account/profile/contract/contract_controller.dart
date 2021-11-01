@@ -9,9 +9,6 @@ import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
 import 'package:template/provider/thong_tin_dang_ky_hop_dong_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/utils/alert.dart';
 
 class V1ContractController extends GetxController {
@@ -155,10 +152,6 @@ class V1ContractController extends GetxController {
       }
     } else {
       // show errors
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng chọn đồng ý với tất cả nội dung",
-      );
       Alert.error(message: 'Vui lòng chọn đồng ý với tất cả nội dung');
     }
   }

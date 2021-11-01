@@ -20,9 +20,7 @@ class V4HomeController extends GetxController {
   CongViecNhanVienProvider congViecNhanVienProvider =
       GetIt.I.get<CongViecNhanVienProvider>();
 
-
   NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
-
 
   // refresh controller
   RefreshController? refreshController;

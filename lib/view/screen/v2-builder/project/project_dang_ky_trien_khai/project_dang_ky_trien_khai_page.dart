@@ -16,8 +16,7 @@ import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_controller.dart';
 
-class V2ProjectDangKyTrienKhaiPage
-    extends GetView<V2ProjectDangKyTrienKhaiController> {
+class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V2ProjectDangKyTrienKhaiController>(
@@ -80,8 +79,7 @@ class V2ProjectDangKyTrienKhaiPage
   ///
   ///img product
   ///
-  Widget _imgProject(
-      BuildContext context, V2ProjectDangKyTrienKhaiController controller) {
+  Widget _imgProject(BuildContext context, V2ProjectDangKyTrienKhaiController controller) {
     return SizedBox(
       width: double.infinity,
       child: CarouselSlider.builder(
@@ -115,10 +113,8 @@ class V2ProjectDangKyTrienKhaiPage
   Widget _textTitle() {
     return Container(
       // color: Colors.red,
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-      margin:
-          const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Text(
         'Tên dự án: ' + controller.duAnKhachHangResponse!.ten.toString(),
         style: Dimensions.fontSizeStyle22w600(),
@@ -132,8 +128,7 @@ class V2ProjectDangKyTrienKhaiPage
   Widget _content() {
     return Container(
       // color: Colors.red,
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       // margin: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,8 +167,7 @@ class V2ProjectDangKyTrienKhaiPage
                 style: Dimensions.fontSizeStyle18w600(),
               ),
               Text(
-                DateConverter.isoStringToddMMYYYY(
-                    controller.duAnKhachHangResponse!.ngayKetThuc.toString()),
+                DateConverter.isoStringToddMMYYYY(controller.duAnKhachHangResponse!.ngayKetThuc.toString()),
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18(),
               ),
@@ -192,8 +186,7 @@ class V2ProjectDangKyTrienKhaiPage
           ),
 
           // nhom cong viec
-          if (controller.nhomDichVuResponse != null &&
-              controller.nhomDichVuResponse!.length > 2)
+          if (controller.nhomDichVuResponse != null && controller.nhomDichVuResponse!.length > 2)
             DropDownButton<NhomDichVuResponse>(
               onChanged: (val) => controller.updateNhomDichVu(val!),
               data: controller.nhomDichVuResponse!,
@@ -216,15 +209,13 @@ class V2ProjectDangKyTrienKhaiPage
             ),
           ),
           // cong viec phu hop
-          if (controller.nhomDichVuResponse != null &&
-              controller.nhomDichVuResponse!.length > 2)
+          if (controller.nhomDichVuResponse != null && controller.nhomDichVuResponse!.length > 2)
             MultiSelectDialogField(
               listType: MultiSelectListType.CHIP,
               items: controller.loaiCongViecMultiSelectItem,
               title: const Text("Hãy chọn các công việc phù hợp"),
               selectedColor: Colors.blue,
-              selectedItemsTextStyle:
-                  const TextStyle(color: ColorResources.WHITE),
+              selectedItemsTextStyle: const TextStyle(color: ColorResources.WHITE),
               checkColor: ColorResources.WHITE,
               buttonText: const Text(
                 "Chọn công việc phù hợp",
@@ -289,21 +280,13 @@ class V2ProjectDangKyTrienKhaiPage
                   vertical: Dimensions.PADDING_SIZE_DEFAULT,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                      Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                  borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARY)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                    borderSide: const BorderSide(color: ColorResources.PRIMARY)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                     borderSide: const BorderSide(color: ColorResources.GREY)),
-                disabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
                     borderSide: const BorderSide(color: ColorResources.GREY)),
                 hintText: "Nhập số lượng người tham gia",
                 filled: true,
@@ -311,8 +294,7 @@ class V2ProjectDangKyTrienKhaiPage
               ),
               onChanged: (val) {
                 if (val.isNotEmpty && val.isNumericOnly) {
-                  controller.danhSachThoThauBaoGiaRequest.soLuongNguoi =
-                      int.parse(val);
+                  controller.danhSachThoThauBaoGiaRequest.soLuongNguoi = int.parse(val);
                 }
               },
             ),

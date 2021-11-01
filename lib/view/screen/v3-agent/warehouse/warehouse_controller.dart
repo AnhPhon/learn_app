@@ -41,7 +41,6 @@ class V3WarehouseController extends GetxController {
   bool isLoading = true;
   bool isLoadingProduct = true;
 
-
   @override
   void onInit() {
     super.onInit();

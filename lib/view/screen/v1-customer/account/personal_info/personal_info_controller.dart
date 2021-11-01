@@ -159,25 +159,6 @@ class V1PersonalInfoController extends GetxController {
   void updateAccount(BuildContext context) {
     //validate
     if (nameCompanyController!.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân",
-      );
-    } else if (fullNameController!.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng nhập họ và tên",
-      );
-    } else if (phoneController!.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng nhập số điện thoại",
-      );
-    } else if (emailController!.text.isEmpty) {
-      SnackBarUtils.showSnackBar(
-        title: "Vui lòng kiểm tra lại",
-        message: "Vui lòng nhập email",
-      );
       Alert.error(
           message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
     } else if (fullNameController!.text.isEmpty) {
