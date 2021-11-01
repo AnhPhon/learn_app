@@ -188,6 +188,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _name(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -216,6 +217,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _birthday(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -332,6 +334,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _phoneNumber(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -359,6 +362,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _email(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -385,6 +389,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _addresss(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -412,6 +417,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _city(V4InfoController controller, BuildContext context) {
     return DropDownButton1<TinhTpResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -437,6 +443,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _district(V4InfoController controller, BuildContext context) {
     return DropDownButton1<QuanHuyenResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         0,
         0,
@@ -462,6 +469,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _ward(V4InfoController controller, BuildContext context) {
     return DropDownButton1<PhuongXaResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,

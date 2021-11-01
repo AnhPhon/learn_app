@@ -122,7 +122,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Icon(
-                            Icons.notifications_active_outlined,
+                            Icons.date_range,
                             color: ColorResources.BLACK.withOpacity(0.6),
                           ),
                           const SizedBox(

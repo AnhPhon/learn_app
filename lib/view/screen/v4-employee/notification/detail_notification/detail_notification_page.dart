@@ -48,7 +48,7 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Icon(
-                          Icons.watch_later_outlined,
+                          Icons.date_range,
                         ),
                         const SizedBox(
                           width: Dimensions.PADDING_SIZE_EXTRA_SMALL,

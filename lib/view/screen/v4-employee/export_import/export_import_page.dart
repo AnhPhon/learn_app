@@ -400,7 +400,7 @@ Widget _customSoLuong(
               left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
               right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
-            width: DeviceUtils.getScaledWidth(context, 0.28),
+            width: DeviceUtils.getScaledWidth(context, 0.24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -518,7 +518,7 @@ Widget _customDonVi(V4ExportImportControleer controller, BuildContext context) {
               left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
               right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
-            width: DeviceUtils.getScaledWidth(context, 0.17),
+            width: DeviceUtils.getScaledWidth(context, 0.2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

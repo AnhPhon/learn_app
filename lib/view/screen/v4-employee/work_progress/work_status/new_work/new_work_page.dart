@@ -8,8 +8,9 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/component/input_widget.dart';
-import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/details_work.dart';
+
+import 'package:template/view/basewidget/format/format_html.dart';
+
 import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
 
 class V4DetailWorkPage extends GetView<V4DetailWorkController> {
@@ -181,6 +182,19 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                       height: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
 
+                    //Chi tiết
+                    Text(
+                      'Chi tiết',
+                      style: TextStyle(
+                        color: ColorResources.BLACK.withOpacity(.8),
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                    ),
+
                     // Chi tiết công việc đang làm
                     Container(
                       width: DeviceUtils.getScaledWidth(context, 1),
@@ -201,8 +215,8 @@ class V4DetailWorkPage extends GetView<V4DetailWorkController> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            DetailWork(
-                              detailWork:
+                            Specification(
+                              specification:
                                   controller.moiTaoModel!.noiDung.toString(),
                             ),
                           ],
