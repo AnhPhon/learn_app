@@ -14,7 +14,7 @@ class DangKyHopDongSBSRequest {
   /// From JSON
   ///
   DangKyHopDongSBSRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();

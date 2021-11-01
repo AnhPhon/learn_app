@@ -25,11 +25,11 @@ class ProductWidget extends StatelessWidget {
             placeholder: Images.placeholder,
             image: imgUrl,
             fit: BoxFit.fill,
-            height: DeviceUtils.getScaledHeight(context, .197),
+            height: DeviceUtils.getScaledHeight(context, .2),
             width: double.infinity,
             imageErrorBuilder: (c, o, s) => Image.asset(
               Images.placeholder,
-              height: DeviceUtils.getScaledSize(context, .33),
+              height: DeviceUtils.getScaledHeight(context, .2),
               width: double.infinity,
               fit: BoxFit.fill,
             ),

@@ -43,7 +43,7 @@ class DanhSachThoThauBaoGiaRequest {
   /// From JSON
   ///
   DanhSachThoThauBaoGiaRequest.fromJson(Map<String, dynamic> json) {
-    if(json['id'] != null) id = json['id'].toString();
+    if(json['id'] != null) id = (json['id'] == null) ? null : json['id'].toString();
     if(json['idDuAnKhachHang'] != null) idDuAnKhachHang = json['idDuAnKhachHang'].toString();
     if(json['idTaiKhoanBaoGia'] != null) idTaiKhoanBaoGia = json['idTaiKhoanBaoGia'].toString();
     if(json['idTrangThaiBaoGia'] != null) idTrangThaiBaoGia = json['idTrangThaiBaoGia'].toString();

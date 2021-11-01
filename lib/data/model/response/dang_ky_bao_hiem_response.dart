@@ -8,6 +8,7 @@ class DangKyBaoHiemResponse {
   String? file;
   String? trangThai;
   String? ngayHetHan;
+  String? phi;
 
   String? createdAt;
   String? updatedAt;
@@ -26,7 +27,7 @@ class DangKyBaoHiemResponse {
   /// From JSON
   ///
   DangKyBaoHiemResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTaiKhoan
     if (json['idTaiKhoan'] != null &&
@@ -48,6 +49,7 @@ class DangKyBaoHiemResponse {
     file = json['file'].toString();
     trangThai = json['trangThai'].toString();
     ngayHetHan = json['ngayHetHan'].toString();
+    phi = json['phi'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -75,6 +77,9 @@ class DangKyBaoHiemResponse {
 
     // check null ngayHetHan
     if (ngayHetHan != null) data['ngayHetHan'] = ngayHetHan;
+
+    // check null phi
+    if (phi != null) data['phi'] = phi;
 
     return data;
   }
