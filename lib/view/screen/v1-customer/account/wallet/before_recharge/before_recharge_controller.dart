@@ -83,13 +83,18 @@ class V1BeforeRechargeController extends GetxController {
     } else {
       EasyLoading.dismiss();
       Get.toNamed(
-              "${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}&url=${AppRoutes.V1_WALLET}")!
-          .then((value) {
-        Get.offAllNamed(
-          AppRoutes.V1_WALLET,
-          predicate: ModalRoute.withName(AppRoutes.V1_WALLET),
-        );
-      });
+              "${AppRoutes.PAYMENT_RECHARGE}?soTien=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}&tienCoc=0")!
+          .then(
+        (value) {
+          if (value != null && value['type'] == 1) {
+            Get.offAllNamed(
+              AppRoutes.V1_WALLET,
+              predicate: ModalRoute.withName(AppRoutes.V1_WALLET),
+            );
+            Get.back();
+          }
+        },
+      );
     }
   }
 }

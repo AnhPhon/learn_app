@@ -95,9 +95,15 @@ class V2RecruimentNewsCard extends GetView<V2RecruitmentController> {
                                                 padding: const EdgeInsets.only(
                                                     left: Dimensions
                                                         .PADDING_SIZE_EXTRA_SMALL),
-                                                child: Text(tuyenDungResponse
-                                                    .idMucLuongDuKien!.tieuDe
-                                                    .toString()),
+                                                child: Text(
+                                                    tuyenDungResponse
+                                                        .idMucLuongDuKien!
+                                                        .tieuDe
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: Dimensions
+                                                          .FONT_SIZE_DEFAULT,
+                                                    )),
                                               ),
                                             ],
                                           ),
@@ -113,12 +119,19 @@ class V2RecruimentNewsCard extends GetView<V2RecruitmentController> {
                                                     left: Dimensions
                                                         .PADDING_SIZE_EXTRA_SMALL),
                                                 child: Text(
-                                                  tuyenDungResponse
-                                                      .idHinhThucLamViec!.tieuDe
-                                                      .toString(),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
+                                                    controller
+                                                        .onCutString(
+                                                            tuyenDungResponse
+                                                                .idHinhThucLamViec!
+                                                                .tieuDe
+                                                                .toString())
+                                                        .toString(),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: Dimensions
+                                                          .FONT_SIZE_DEFAULT,
+                                                    )),
                                               ),
                                             ],
                                           )

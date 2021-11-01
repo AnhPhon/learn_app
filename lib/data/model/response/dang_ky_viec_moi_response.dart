@@ -1,4 +1,6 @@
 import 'package:template/data/model/response/chuyen_mon_response.dart';
+import 'package:template/data/model/response/dia_diem_dang_ky_lam_viec_response.dart';
+import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 
 import 'tai_khoan_response.dart';
 import 'tinh_tp_response.dart';
@@ -33,13 +35,15 @@ class DangKyViecMoiResponse {
   String? noiLamViec;
   String? mucLuongDeXuat;
   List<KeKhaiKinhNghiemResponse>? idKeKhaiKinhNghiems;
-  String? anhHoSoXinViecs;
+  List<dynamic>? anhHoSoXinViecs;
   String? fileHoSoXinViec;
   String? kyNangSoTruong;
   List<NgoaiNguResponse>? idNgoaiNgus;
   TinHocResponse? idTinHoc;
   String? maSoHoSo;
   List<ChuyenMonResponse>? idNganhNgheMongMuons;
+  HinhThucLamViecResponse? idHinhThucLamViec;
+  List<DiaDiemDangKyLamViecResponse>? idDiaDiemDangKyLamViecs;
 
   String? createdAt;
   String? updatedAt;
@@ -73,6 +77,8 @@ class DangKyViecMoiResponse {
       this.idNganhNgheMongMuons,
       this.idTinHoc,
       this.maSoHoSo,
+      this.idHinhThucLamViec,
+      this.idDiaDiemDangKyLamViecs,
       this.createdAt,
       this.updatedAt});
 
@@ -182,7 +188,20 @@ class DangKyViecMoiResponse {
     } else {
       idKeKhaiKinhNghiems = null;
     }
-    anhHoSoXinViecs = json['anhHoSoXinViecs'].toString();
+    // mapping idTinHoc
+    if (json['anhHoSoXinViecs'] != null) {
+      // add list kê khai kinh nghiệm
+      anhHoSoXinViecs = [];
+      final results = json['anhHoSoXinViecs'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null) {
+          anhHoSoXinViecs!.add(element.toString());
+        }
+      }
+    } else {
+      anhHoSoXinViecs = null;
+    }
+
     fileHoSoXinViec = json['fileHoSoXinViec'].toString();
     kyNangSoTruong = json['kyNangSoTruong'].toString();
 
@@ -225,6 +244,31 @@ class DangKyViecMoiResponse {
       }
     } else {
       idNganhNgheMongMuons = null;
+    }
+
+    // mapping idHinhThucLamViec
+    if (json['idHinhThucLamViec'] != null &&
+        json['idHinhThucLamViec'].toString().length != 24) { 
+      idHinhThucLamViec = HinhThucLamViecResponse.fromJson(
+          json['idHinhThucLamViec'] as Map<String, dynamic>);
+    } else {
+      idHinhThucLamViec = null;
+    }
+
+      // mapping idDiaDiemDangKyLamViecs
+    if (json['idDiaDiemDangKyLamViecs'] != null &&
+        json['idDiaDiemDangKyLamViecs'].toString().length != 24) {
+      // add list 
+      idDiaDiemDangKyLamViecs = [];
+      final results = json['idDiaDiemDangKyLamViecs'] as List<dynamic>;
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idDiaDiemDangKyLamViecs!.add(DiaDiemDangKyLamViecResponse.fromJson(
+              element as Map<String, dynamic>));
+        }
+      }
+    } else {
+      idKeKhaiKinhNghiems = null;
     }
 
     createdAt = json['created_at'].toString();
@@ -313,6 +357,9 @@ class DangKyViecMoiResponse {
 
     // check null idNgoaiNgus
     if (idNgoaiNgus != null) data['idNgoaiNgus'] = idNgoaiNgus;
+    // check null idNgoaiNgus
+    if (idHinhThucLamViec != null)
+      data['idHinhThucLamViec'] = idHinhThucLamViec;
 
     // check null idTinHoc
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;

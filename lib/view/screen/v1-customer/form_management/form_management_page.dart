@@ -111,6 +111,11 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
   Widget _itemList() {
     return GetBuilder<V1FormManagementController>(
       builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return SmartRefresher(
           controller: controller.refreshController,
           enablePullUp: true,

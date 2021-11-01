@@ -368,11 +368,11 @@ class V1CartPage extends GetView<V1CartController> {
           ),
 
           //Phí dịch vụ
-          rowText(
-            text1: "Phí dịch vụ",
-            text2:
-                "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse!.phiDichVu.toString()))} vnđ",
-          ),
+          // rowText(
+          //   text1: "Phí dịch vụ",
+          //   text2:
+          //       "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse!.phiDichVu.toString()))} vnđ",
+          // ),
 
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_SMALL,
