@@ -30,6 +30,7 @@ import 'package:template/utils/alert.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/components/dialog_content.dart';
 import 'package:tiengviet/tiengviet.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V1CandidateController extends GetxController {
   //provider
@@ -181,7 +182,7 @@ class V1CandidateController extends GetxController {
     //load data fillter ứng viên
     if (index == 1) {
       //get data ứng viên
-      getDataSeach(textFilter: '', isRefresh: true);
+      getDataSearch(textFilter: '', isRefresh: true);
     } else {
       onLoadDataTuyenDung(isRefresh: true);
     }
@@ -244,14 +245,14 @@ class V1CandidateController extends GetxController {
   ///
   Future onRefreshTimUngVien() async {
     refreshTimUngVienController.resetNoData();
-    getDataSeach(textFilter: '', isRefresh: true);
+    getDataSearch(textFilter: '', isRefresh: true);
   }
 
   ///
   ///onLoadingTimUngVien
   ///
   Future onLoadingTimUngVien() async {
-    getDataSeach(textFilter: conditionFilter, isRefresh: false);
+    getDataSearch(textFilter: conditionFilter, isRefresh: false);
   }
 
   ///
@@ -260,7 +261,7 @@ class V1CandidateController extends GetxController {
   void onLoadDataWithTab({required int select, required bool isRefresh}) {
     if (select == 1) {
       //get data ứng viên
-      getDataSeach(textFilter: '', isRefresh: isRefresh);
+      getDataSearch(textFilter: '', isRefresh: isRefresh);
       update();
     } else {
       onLoadDataTuyenDung(isRefresh: isRefresh);
@@ -664,13 +665,13 @@ class V1CandidateController extends GetxController {
       }
     }
 
-    getDataSeach(textFilter: conditionFilter, isRefresh: false);
+    getDataSearch(textFilter: conditionFilter, isRefresh: false);
   }
 
   ///
-  ///getDataSeach
+  ///getDataSearch
   ///
-  void getDataSeach({required String textFilter, required bool isRefresh}) {
+  void getDataSearch({required String textFilter, required bool isRefresh}) {
     //isRefresh
     if (isRefresh || isOnChangeSearch) {
       pageMaxSearch = 1;
@@ -688,7 +689,8 @@ class V1CandidateController extends GetxController {
     dangKyViecMoiProvider.paginate(
         page: pageMaxSearch,
         limit: limit,
-        filter: '$textFilter&sortBy=created_at:desc',
+        filter:
+            '$textFilter&idNhomDichVu=${app_constants.NHOM_7}&sortBy=created_at:desc',
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {
@@ -707,7 +709,8 @@ class V1CandidateController extends GetxController {
           isLoadingCadidate = false;
           update();
         },
-        onError: (error) => print('V1CandidateController getDataSeach $error'));
+        onError: (error) =>
+            print('V1CandidateController getDataSearch $error'));
   }
 
   ///

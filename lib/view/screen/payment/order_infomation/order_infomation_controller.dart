@@ -80,6 +80,8 @@ class OrderInformationController extends GetxController {
     if (Get.parameters['isTuyenDung'] != null &&
         Get.parameters['isTuyenDung'] == 'true') {
       isTuyenDung = true;
+    } else {
+      isTuyenDung = false;
     }
 
     //get data khuyến mãi
@@ -125,15 +127,21 @@ class OrderInformationController extends GetxController {
             phiDichVu = 0;
           }
           //tinh khuyến mãi
-          if (phanTramKhuyenMai != 0 && phiDichVu != 0) {
+          if (phanTramKhuyenMai != 0 && phiDichVu != 0 && !isTuyenDung) {
             khuyenMai = phiDichVu * phanTramKhuyenMai;
+          } else if (isTuyenDung) {
+            //tuyển dụng nhân với phí đăng tin
+            khuyenMai = soTien * phanTramKhuyenMai;
           } else {
             khuyenMai = 0;
           }
 
           //tổng tiền nếu tiền cọc = 0 là các dịch vụ ko cần cọc
-          if (tienCoc == 0) {
+          if (tienCoc == 0 && !isTuyenDung) {
             tongTien = soTien + phiDichVu - khuyenMai;
+          } else if (isTuyenDung) {
+            //tuyển dụng thì trừ thẳng vào phí đăng tin
+            tongTien = soTien - khuyenMai;
           } else {
             tongTien = tienCoc + phiDichVu - khuyenMai;
           }

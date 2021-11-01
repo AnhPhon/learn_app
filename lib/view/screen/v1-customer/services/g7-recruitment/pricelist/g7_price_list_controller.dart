@@ -201,6 +201,8 @@ class V1G7PriceListController extends GetxController {
                   //set trạng thái đã thanh toán
                   tuyenDungRequest.idTrangThaiThanhToan =
                       app_constants.TUYEN_DUNG_DA_THANH_TOAN,
+                  tuyenDungRequest.idTrangThaiTuyenDung =
+                      app_constants.TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET,
                   tuyenDungRequest.phiDichVu = value['phiDichVu'].toString(),
                   tuyenDungRequest.khuyenMai = value['khuyenMai'].toString(),
                   tuyenDungRequest.tongDon = value['tongTien'].toString(),
@@ -250,6 +252,8 @@ class V1G7PriceListController extends GetxController {
                   //set trạng thái chưa thanh toán
                   tuyenDungRequest.idTrangThaiThanhToan =
                       app_constants.TUYEN_DUNG_CHUA_THANH_TOAN,
+                  tuyenDungRequest.idTrangThaiTuyenDung =
+                      app_constants.TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET,
                   tuyenDungRequest.phiDichVu = value['phiDichVu'].toString(),
                   tuyenDungRequest.khuyenMai = value['khuyenMai'].toString(),
                   tuyenDungRequest.tongDon = value['tongTien'].toString(),
