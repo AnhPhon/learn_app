@@ -35,7 +35,7 @@ class TaskNeedWorker extends StatelessWidget {
         ),
       ),
       margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_DEFAULT),
-      padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+      // padding: const EdgeInsets.only(right: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
       child: Row(
         children: <Widget>[
           Container(
@@ -49,67 +49,79 @@ class TaskNeedWorker extends StatelessWidget {
                 topLeft: Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
               ),
               image: DecorationImage(
-                image: NetworkImage(imageURL!),
+                image: (imageURL == null || imageURL!.isEmpty || imageURL == 'null' ) ? AssetImage('assets/images/placeholder.jpg') as ImageProvider : NetworkImage(imageURL!) as ImageProvider,
                 fit: BoxFit.fill,
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            width: DeviceUtils.getScaledWidth(context, .67),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    tenTask,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      color: Color.fromRGBO(42, 53, 71, 1),
-                      fontSize: Dimensions.FONT_SIZE_LARGE,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
+          Expanded(
+            child: Container(
+              // color: Colors.red,
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              // width: DeviceUtils.getScaledWidth(context, .65),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      tenTask,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(42, 53, 71, 1),
+                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                        fontWeight: FontWeight.bold,
+                        height: 1,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                ),
-                const Spacer(),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      Text(
-                        "Dự án: $maTask",
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.7),
-                          fontSize: Dimensions.FONT_SIZE_SMALL,
-                          letterSpacing: -0.3,
-                          fontWeight: FontWeight.normal,
-                          height: 1,
+                  const Spacer(),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Dự án: $maTask",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                            letterSpacing: -0.3,
+                            fontWeight: FontWeight.normal,
+                            height: 1,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.person_search,
-                              color: Color(0xff8E8A8A),
-                            ),
-                            Text(
-                              trangThai,
-                              style: const TextStyle(
+                        const Spacer(),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.person_search,
                                 color: Color(0xff8E8A8A),
+                                size: Dimensions.ICON_SIZE_DEFAULT,
                               ),
-                            )
-                          ],
+                              Text(
+                                trangThai,
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                  letterSpacing: -0.3,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

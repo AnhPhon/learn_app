@@ -91,7 +91,7 @@ class PreviewServiceRequest {
   /// From JSON
   ///
   PreviewServiceRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idNhomDichVu = json['idNhomDichVu'].toString();
     tieuDe = json['tieuDe'].toString();

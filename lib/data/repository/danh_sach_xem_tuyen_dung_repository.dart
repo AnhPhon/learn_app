@@ -10,11 +10,11 @@ class DanhSachXemTuyenDungRepository {
   DanhSachXemTuyenDungRepository();
 
   ///
-  /// Get all danh-sach-xem-tuyen-dungs
+  /// Get all danh-sach-xem-tin-tuyen-dungs
   ///
   Future<ApiResponse> get() async {
     try {
-      final response = await dioClient!.get('/danh-sach-xem-tuyen-dungs');
+      final response = await dioClient!.get('/danh-sach-xem-tin-tuyen-dungs');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -27,7 +27,7 @@ class DanhSachXemTuyenDungRepository {
   Future<ApiResponse> add(DanhSachXemTuyenDungRequest data) async {
     try {
       final response = await dioClient!
-          .post('/danh-sach-xem-tuyen-dungs', data: data.toJson());
+          .post('/danh-sach-xem-tin-tuyen-dungs', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -40,7 +40,7 @@ class DanhSachXemTuyenDungRepository {
   Future<ApiResponse> update(DanhSachXemTuyenDungRequest data) async {
     try {
       final response = await dioClient!
-          .put('/danh-sach-xem-tuyen-dungs', data: data.toJson());
+          .put('/danh-sach-xem-tin-tuyen-dungs', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -53,7 +53,7 @@ class DanhSachXemTuyenDungRepository {
   Future<ApiResponse> delete(String id) async {
     try {
       final response =
-          await dioClient!.delete('/danh-sach-xem-tuyen-dungs/$id');
+          await dioClient!.delete('/danh-sach-xem-tin-tuyen-dungs/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -61,17 +61,18 @@ class DanhSachXemTuyenDungRepository {
   }
 
   ///
-  /// Get paginate danh-sach-xem-tuyen-dungs "page": 1, "limit": 10, filter
+  /// Get paginate danh-sach-xem-tin-tuyen-dungs "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/danh-sach-xem-tuyen-dungs/paginate?page=$page&limit=$limit'
-          .toString();
+      String uri =
+          '/danh-sach-xem-tin-tuyen-dungs/paginate?page=$page&limit=$limit'
+              .toString();
 
       // add condition filter
       if (filter != '') {
         uri =
-            '/danh-sach-xem-tuyen-dungs/paginate?page=$page&limit=$limit$filter';
+            '/danh-sach-xem-tin-tuyen-dungs/paginate?page=$page&limit=$limit$filter';
       }
 
       final response = await dioClient!.get(uri);
@@ -86,7 +87,7 @@ class DanhSachXemTuyenDungRepository {
   ///
   Future<ApiResponse> find(String id) async {
     try {
-      final String uri = '/danh-sach-xem-tuyen-dungs/$id';
+      final String uri = '/danh-sach-xem-tin-tuyen-dungs/$id';
       final response = await dioClient!.get(uri);
       return ApiResponse.withSuccess(response);
     } catch (e) {

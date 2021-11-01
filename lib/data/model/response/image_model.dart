@@ -5,7 +5,7 @@ class ImageUpdateModel {
   ImageUpdateModel({this.id, this.data});
 
   ImageUpdateModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     data = json['data'].toString();
   }
 

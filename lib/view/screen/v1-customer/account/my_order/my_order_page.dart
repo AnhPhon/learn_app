@@ -6,7 +6,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_controller.dart';
@@ -72,6 +71,7 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
           footer: const ClassicFooter(
             loadingText: "Đang tải...",
             noDataText: "Không có dữ liệu",
+            canLoadingText: "Kéo lên để tải thêm dữ liệu",
           ),
           child: (controller.donHangResponse.isEmpty)
               ? const Center(
@@ -102,9 +102,13 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                             : controller.donHangResponse[index]
                                 .idTrangThaiThanhToan!.tieuDe
                                 .toString(),
-                        urlImage: controller.donHangResponse[index]
-                            .idTaiKhoanMuaHang!.hinhDaiDien
-                            .toString(),
+                        urlImage: (controller
+                                    .donHangResponse[index].idTaiKhoanMuaHang ==
+                                null)
+                            ? ""
+                            : controller.donHangResponse[index]
+                                .idTaiKhoanMuaHang!.hinhDaiDien
+                                .toString(),
                       ),
                     );
                   }),

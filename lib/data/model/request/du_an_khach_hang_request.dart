@@ -40,7 +40,7 @@ class DuAnKhachHangRequest {
   /// From JSON
   ///
   DuAnKhachHangRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     ten = json['ten'].toString();
     idTinhTp = json['idTinhTp'].toString();

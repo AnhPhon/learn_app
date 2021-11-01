@@ -14,7 +14,7 @@ class HopThuRequest {
   /// From JSON
   ///
   HopThuRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     hoTen = json['hoTen'].toString();
     noiDungTuVan = json['noiDungTuVan'].toString();
     sdt = json['sdt'].toString();
