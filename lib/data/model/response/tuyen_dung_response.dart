@@ -53,6 +53,7 @@ class TuyenDungResponse {
   String? idTrangThaiTuyenDung;
   String? thoiGianThuViec;
   String? hinhAnhDaiDien;
+  bool? isUngTuyen;
 
   String? createdAt;
   String? updatedAt;
@@ -98,6 +99,7 @@ class TuyenDungResponse {
       this.thoiGianThuViec,
       this.idChuyenNganhPhus,
       this.hinhAnhDaiDien,
+      this.isUngTuyen,
       this.createdAt,
       this.updatedAt});
 
@@ -258,21 +260,17 @@ class TuyenDungResponse {
     // mapping idChuyenNganhPhus
     if (json['idChuyenNganhPhus'] != null &&
         json['idChuyenNganhPhus'].toString().length != 24) {
-      // idChuyenNganhPhus = [];
-      // final results = json['idChuyenNganhPhus'] as List<dynamic>;
+      idChuyenNganhPhus = [];
+      final results = json['idChuyenNganhPhus'] as List<dynamic>;
 
-      // for (final element in results) {
-      //   if (element != null && element.toString().length != 24) {
-      //     idChuyenNganhPhus!.add(
-      //         ChuyenNganhPhuResponse.fromJson(element as Map<String, dynamic>));
-      //   }
-      // }
-      idChuyenNganhPhus = (json['idChuyenNganhPhus'] as List<dynamic>)
-          .map(
-              (e) => ChuyenNganhPhuResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+      for (final element in results) {
+        if (element != null && element.toString().length != 24) {
+          idChuyenNganhPhus!.add(
+              ChuyenNganhPhuResponse.fromJson(element as Map<String, dynamic>));
+        }
+      }
     } else {
-      idPhuongXa = null;
+      idChuyenNganhPhus = null;
     }
 
     createdAt = json['created_at'].toString();
@@ -403,6 +401,9 @@ class TuyenDungResponse {
 
     // check null tongDon
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null tongDon
+    if (isUngTuyen != null) data['isUngTuyen'] = isUngTuyen;
+
     if (idTrangThaiTuyenDung != null)
       data['idTrangThaiTuyenDung'] = idTrangThaiTuyenDung;
 

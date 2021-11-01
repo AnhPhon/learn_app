@@ -1,3 +1,4 @@
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
 
 import 'tai_khoan_response.dart';
@@ -16,6 +17,7 @@ class DonDichVuResponse {
   String? id;
   TaiKhoanResponse? idTaiKhoan;
   NhomDichVuResponse? idNhomDichVu;
+  LoaiCongViecResponse? idLoaiCongViec;
   String? tieuDe;
   String? moTa;
   String? ngayBatDau;
@@ -64,6 +66,7 @@ class DonDichVuResponse {
       {this.id,
       this.idTaiKhoan,
       this.idNhomDichVu,
+      this.idLoaiCongViec,
       this.tieuDe,
       this.moTa,
       this.ngayBatDau,
@@ -128,6 +131,15 @@ class DonDichVuResponse {
           json['idNhomDichVu'] as Map<String, dynamic>);
     } else {
       idNhomDichVu = null;
+    }
+
+    // mapping idLoaiCongViec
+    if (json['idLoaiCongViec'] != null &&
+        json['idLoaiCongViec'].toString().length != 24) {
+      idLoaiCongViec = LoaiCongViecResponse.fromJson(
+          json['idLoaiCongViec'] as Map<String, dynamic>);
+    } else {
+      idLoaiCongViec = null;
     }
     tieuDe = json['tieuDe'].toString();
     moTa = json['moTa'].toString();
@@ -277,6 +289,9 @@ class DonDichVuResponse {
 
     // check null idNhomDichVu
     if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
+
+    // check null idLoaiCongViec
+    if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec;
 
     // check null tieuDe
     if (tieuDe != null) data['tieuDe'] = tieuDe;

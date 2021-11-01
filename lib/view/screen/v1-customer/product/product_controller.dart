@@ -46,6 +46,10 @@ class V1ProductController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //get agument
+    danhMucSanPhamResponse = (Get.arguments != null)
+        ? Get.arguments as DanhMucSanPhamResponse
+        : null;
     loadDanhMucSanPham();
     loadSanPham(isRefresh: true, isFirst: true);
   }
@@ -65,7 +69,10 @@ class V1ProductController extends GetxController {
     danhMucSanPhamProvider.all(
       onSuccess: (values) {
         danhMucList = values;
-
+        if (danhMucSanPhamResponse != null) {
+          danhMucSanPhamResponse = danhMucList.firstWhere(
+              (element) => element.id == danhMucSanPhamResponse!.id);
+        }
         isLoading = false;
         update();
       },

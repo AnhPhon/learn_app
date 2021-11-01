@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -79,11 +80,18 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
                                           .dangKyBaoHiemResponse[index]
                                           .idBaoHiem!
                                           .ten!,
-                                      rowText1:
-                                          "${controller.dangKyBaoHiemResponse[index].idBaoHiem!.phi}vnđ",
-                                      colorRowText1: ColorResources.RED,
-                                      rowText2:
-                                          "Ngày hết hạn: ${controller.dangKyBaoHiemResponse[index].ngayHetHan}",
+                                      subTitle:
+                                          "${controller.dangKyBaoHiemResponse[index].phi}vnđ",
+                                      colorSubTitle: ColorResources.RED,
+                                      rowText2: (controller
+                                                  .dangKyBaoHiemResponse[index]
+                                                  .ngayHetHan ==
+                                              "null")
+                                          ? controller
+                                              .dangKyBaoHiemResponse[index]
+                                              .ngayHetHan
+                                              .toString()
+                                          : "Ngày hết hạn: ${DateConverter.formatDateTime(controller.dangKyBaoHiemResponse[index].ngayHetHan.toString())}",
                                       isSpaceBetween: true,
                                     ),
                                   );
@@ -159,14 +167,19 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
       {required V1InsuranceRegisterController controller}) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: controller.baoHiemResponse!.length,
+        itemCount: controller.baoHiemResponse!.phis!.length,
         itemBuilder: (BuildContext ctx, int index) {
           return RadioListTile(
             title: Text(
-              "${PriceConverter.convertPrice(
+              "Phí ${PriceConverter.convertPrice(
                 context,
                 double.parse(
-                  controller.baoHiemResponse![index].phi.toString(),
+                  controller.baoHiemResponse!.phis![index].toString(),
+                ),
+              )} vnđ. STBH: ${PriceConverter.convertPrice(
+                context,
+                double.parse(
+                  controller.baoHiemResponse!.soTienBaoHiems![index].toString(),
                 ),
               )} vnđ",
             ),

@@ -33,8 +33,8 @@ class ChuyenNganhPhuResponse {
     return data;
   }
 
-  @override
-  String toString() {
-    return tieuDe!;
-  }
+  // @override
+  // String toString() {
+  //   return tieuDe!;
+  // }
 }
