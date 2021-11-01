@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/nhom_dich_vu_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
@@ -16,6 +19,7 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2WorkRegisterController extends GetxController {
   // provider
@@ -26,6 +30,8 @@ class V2WorkRegisterController extends GetxController {
   final QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
   final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  DangKyViecMoiProvider dangKyViecMoiProvider =
+      GetIt.I.get<DangKyViecMoiProvider>();
 
   // text editing controller
   TextEditingController nhomCongViecController = TextEditingController();
@@ -324,7 +330,22 @@ class V2WorkRegisterController extends GetxController {
   void onRegisterClick() {
     if (_validate()) {
       if (isRegister) {
-        EasyLoading.showSuccess("Đăng ký thành công");
+        // get user id
+        sl.get<SharedPreferenceHelper>().userId.then((userId) {
+          // đăng ký việc mới
+          dangKyViecMoiProvider.add(
+            data: DangKyViecMoiRequest(
+              idTaiKhoan: userId,
+            ),
+            onSuccess: (data) {
+              EasyLoading.showSuccess("Thêm thành công");
+            },
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+        });
       } else {
         Get.toNamed(AppRoutes.V2_WORK_CREATE);
       }
