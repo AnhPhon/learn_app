@@ -24,9 +24,6 @@ class V4ReportController extends GetxController
   //Khai báo model báo cáo
   List<BaoCaoNhanVienResponse> baoCaoNhanVienModelList = [];
 
-  // Khai báo danh sách báo cáo
-  List<String> baoCao = ['Báo cáo công việc theo tuần',
-    'Báo cáo công việc theo yêu cầu',];
 
   List<BaoCaoNhanVienModel> baoCaoNhanVienModel= [
   BaoCaoNhanVienModel(id:"0",tieuDe: "Tất cả"),
