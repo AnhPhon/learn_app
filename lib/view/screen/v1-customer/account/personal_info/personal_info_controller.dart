@@ -13,9 +13,6 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 import 'package:template/utils/alert.dart';
 
 class V1PersonalInfoController extends GetxController {
@@ -159,8 +156,7 @@ class V1PersonalInfoController extends GetxController {
   void updateAccount(BuildContext context) {
     //validate
     if (nameCompanyController!.text.isEmpty) {
-      Alert.error(
-          message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
+      Alert.error(message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
     } else if (fullNameController!.text.isEmpty) {
       Alert.error(message: 'Vui lòng nhập họ và tên');
     } else if (phoneController!.text.isEmpty) {

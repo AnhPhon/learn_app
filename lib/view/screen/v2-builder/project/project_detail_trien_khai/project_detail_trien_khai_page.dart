@@ -5,7 +5,6 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
@@ -54,7 +53,6 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ///title
                       //image
                       _imgProject(context, controller),
 
@@ -148,7 +146,7 @@ class V2ProjectDetailTrienKhaiPage extends GetView<V2ProjectDetailTrienKhaiContr
               ),
               Text(
                 DateConverter.isoStringToddMMYYYY(controller.kiemTraIdTrangThaiDuAnDangXayDung() == true ?
-                controller.duAnKhachHangResponse!.ngayKetThuc.toString() : controller.duAnKhachHangResponse!.ngayBatDau.toString()),
+controller.duAnKhachHangResponse!.ngayKetThuc.toString() : controller.duAnKhachHangResponse!.ngayBatDau.toString()),
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18(),
               ),

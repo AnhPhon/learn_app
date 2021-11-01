@@ -102,8 +102,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
   /// Kiem tra id hang muc xay dung co gia tri hay k0
   bool kiemTraIdHangMucXayDungs() {
-    if (duAnKhachHangResponse!.idHangMucXayDungs != null &&
-        duAnKhachHangResponse!.idHangMucXayDungs!.isNotEmpty) {
+    if (duAnKhachHangResponse!.idHangMucXayDungs != null && duAnKhachHangResponse!.idHangMucXayDungs!.isNotEmpty) {
       return true;
     } else {
       return false;
@@ -154,8 +153,6 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
           Future.delayed(Duration.zero, () {
             Get.back();
-            // Get.back();
-            Get.back();
           });
 
         },
@@ -185,7 +182,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         if (data.isNotEmpty) {
           loaiCongViecResponse = data;
           loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e,
-              e.tenCongViec.toString())).toList();
+e.tenCongViec.toString())).toList();
         }
 
         update();
