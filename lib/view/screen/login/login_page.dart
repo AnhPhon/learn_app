@@ -69,6 +69,7 @@ class LoginPage extends GetView<LoginController> {
               ),
               Positioned(
                 bottom: 30,
+                top: DeviceUtils.getScaledWidth(context, 1.4),
                 left: DeviceUtils.getScaledWidth(context, 0.15),
                 child: _onBtnLoginEmployee(context),
               )

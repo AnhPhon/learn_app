@@ -29,8 +29,6 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    phoneController.text = '2';
-    // passwordController.text = 'password';
     super.onInit();
   }
 
@@ -64,7 +62,7 @@ class LoginController extends GetxController {
   /// on button register tap
   ///
   void onBtnLoginEmployee() {
-    Get.toNamed(AppRoutes.LOGIN_EMPLOYEE);
+    Get.offAndToNamed(AppRoutes.LOGIN_EMPLOYEE);
   }
 
   ///
@@ -110,12 +108,14 @@ class LoginController extends GetxController {
               
               // sl.get<SharedPreferenceHelper>().savePassword(password)
               // sl.get<SharedPreferenceHelper>().saveUsername(username)
+              // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
               if(isRemember){
                 sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
                 sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
                 sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
               }
 
+              // Kiểm tra loại tài khoản người dùng
               if(account.idLoaiTaiKhoan != null){
                 if (account.idLoaiTaiKhoan == KHACH_HANG) {
                   EasyLoading.dismiss();
@@ -129,14 +129,18 @@ class LoginController extends GetxController {
                   EasyLoading.dismiss();
                   Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
                   return;
-                }else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-                  return;
-                }else{
+                }
+                // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
+                //   EasyLoading.dismiss();
+                //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
+                //   return;
+                // }
+                else{
+                  //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                   Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
                 }
               }else{
+                // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
         },

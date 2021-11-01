@@ -32,7 +32,7 @@ class AuthRepository {
   // }
 
   ///
-  /// Insert user to database
+  /// Login with email
   ///
   Future<ApiResponse> login(AuthRequest request) async {
     try {

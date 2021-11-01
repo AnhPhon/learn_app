@@ -25,6 +25,8 @@ class SplashController extends GetxController
     _animationController!.forward().whenComplete(() async {
       // remove token reset password
       sl.get<SharedPreferenceHelper>().removeResetPasswordToken();
+      // Để testing đăng nhập nhân viên vì nhân viên không có đăng xuất
+      //sl.get<SharedPreferenceHelper>().removeRememberAccount();
 
       final bool? isFirst = await sl.get<SharedPreferenceHelper>().isFirst;
       final bool? isLogin = await sl.get<SharedPreferenceHelper>().isLogin;
@@ -40,6 +42,7 @@ class SplashController extends GetxController
             // check if is login
             if (isLogin != null && isLogin) {
               if(idLoaiTaiKhoan != null){
+                print(idLoaiTaiKhoan);
                 if (idLoaiTaiKhoan == KHACH_HANG) {
                   Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
                   return;
@@ -65,7 +68,7 @@ class SplashController extends GetxController
               }
               //Get.offNamed(AppRoutes.DASHBOARD);
             } else {
-              // is not login
+              // Nếu người dùng chưa đăng nhập lần trước đó
               Get.offAllNamed(AppRoutes.LOGIN);
             }
           }

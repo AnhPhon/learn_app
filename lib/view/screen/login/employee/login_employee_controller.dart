@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/account_request.dart';
+import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
@@ -21,7 +22,7 @@ class LoginEmployeeController extends GetxController {
   final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
   final LoaiTaiKhoanProvider typeAccountProvider = GetIt.I.get<LoaiTaiKhoanProvider>();
 
-  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isRemember = false;
 
@@ -49,7 +50,7 @@ class LoginEmployeeController extends GetxController {
   /// onBtnLogin
   ///
   void onBtnLogin() {
-    Get.toNamed(AppRoutes.LOGIN);
+    Get.offAndToNamed(AppRoutes.LOGIN);
   }
 
   ///
@@ -65,11 +66,11 @@ class LoginEmployeeController extends GetxController {
   ///
   bool onValidateLogin(){
     //validate infomation username password
-    if (phoneController.text == '' || passwordController.text == '') {
-      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+    if (emailController.text == '' || passwordController.text == '') {
+      Alert.info(message: "Vui lòng điền đầy đủ email và mật khẩu");
       return false;
-    } else if(!Validate.phone(phoneController.text.toString())){
-      Alert.info(message: "Số điện thoại không hợp lệ");
+    } else if(!Validate.email(emailController.text.toString())){
+      Alert.info(message: "Địa chỉ email không hợp lệ !");
       return false;
     }
     return true;
@@ -81,11 +82,11 @@ class LoginEmployeeController extends GetxController {
   void onLogin(){
     if(onValidateLogin()){
       EasyLoading.show(status: "Đăng nhập");
-      final AccountRequest accountRequest = AccountRequest();
-      accountRequest.soDienThoai = phoneController.text.toString();
-      accountRequest.matKhau = passwordController.text.toString();
-      authProvider.loginAccount(
-        request: accountRequest,
+      final AuthRequest authRequest = AuthRequest();
+      authRequest.email = emailController.text.toString();
+      authRequest.password= passwordController.text.toString();
+      authProvider.login(
+        request: authRequest,
         onSuccess: (account) {
 
               // save info token and info user
@@ -95,23 +96,16 @@ class LoginEmployeeController extends GetxController {
               
               // sl.get<SharedPreferenceHelper>().savePassword(password)
               // sl.get<SharedPreferenceHelper>().saveUsername(username)
-              if(isRemember){
-                sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
-                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!);
-                sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
-              }
+              // if(isRemember){
+              //   sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idRole!);
+              //   sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
+              // }
+              sl.get<SharedPreferenceHelper>().saveRememberAccount(true);
+              sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
+              sl.get<SharedPreferenceHelper>().saveTypeAccount(NHAN_VIEN);
 
-              if(account.idLoaiTaiKhoan != null){
-                if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-                  return;
-                }else{
-                  Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
-                }
-              }else{
-                Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
-              }
+              EasyLoading.dismiss();
+              Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
         },
         onError: (error) {
           Alert.error(message: "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");

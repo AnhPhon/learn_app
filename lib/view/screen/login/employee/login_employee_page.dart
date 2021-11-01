@@ -68,6 +68,7 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
               ),
               Positioned(
                 bottom: 30,
+                top: DeviceUtils.getScaledWidth(context, 1.4),
                 left: DeviceUtils.getScaledWidth(context, 0.15),
                 child: _onBtnLogin(context),
               )
@@ -155,13 +156,13 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
               child: TextField(
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
-                controller: controller.phoneController,
+                controller: controller.emailController,
                 keyboardType: TextInputType.number,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
                   isDense: true,
                   border: InputBorder.none,
-                  hintText: "Nhập số điện thoại",
+                  hintText: "Nhập email",
                   filled: true,
                   fillColor: Colors.transparent,
                 ),
@@ -222,59 +223,61 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
       margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_SMALL),
       width: DeviceUtils.getScaledWidth(context, 0.7),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          GestureDetector(
-            // on click checkbox remember password
-            onTap: () => controller.onCheckBoxRememberClick(),
-            child: SizedBox(
-              height: 25,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Checkbox(
-                      checkColor: Colors.white,
-                      value: controller.isRemember,
-                      onChanged: (bool? value) {
-                        // onCheckBoxRememberClick
-                        controller.onCheckBoxRememberClick();
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 2),
-                  const Text(
-                    "Nhớ mật khẩu",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xff2a3547),
-                      fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   // on click checkbox remember password
+          //   onTap: () => controller.onCheckBoxRememberClick(),
+          //   child: SizedBox(
+          //     height: 25,
+          //     child: Row(
+          //       mainAxisSize: MainAxisSize.min,
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         Container(
+          //           width: 24,
+          //           height: 24,
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(8),
+          //           ),
+          //           child: Checkbox(
+          //             checkColor: Colors.white,
+          //             value: controller.isRemember,
+          //             onChanged: (bool? value) {
+          //               // onCheckBoxRememberClick
+          //               controller.onCheckBoxRememberClick();
+          //             },
+          //           ),
+          //         ),
+          //         const SizedBox(width: 2),
+          //         const Text(
+          //           "Nhớ mật khẩu",
+          //           textAlign: TextAlign.center,
+          //           style: TextStyle(
+          //             color: Color(0xff2a3547),
+          //             fontSize: Dimensions.FONT_SIZE_DEFAULT,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           // link forgot password
-          GestureDetector(
-            // on tap button forgot password
-            onTap: () => controller.onBtnForgotPasswordTap(),
-            child: const Text(
-              "Quên mật khẩu?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff0f90f3),
-                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                decoration: TextDecoration.underline,
-                fontFamily: "Nunito Sans",
-                fontWeight: FontWeight.w700,
+          Align(
+            child: GestureDetector(
+              // on tap button forgot password
+              onTap: () => controller.onBtnForgotPasswordTap(),
+              child: const Text(
+                "Quên mật khẩu?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xff0f90f3),
+                  fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                  decoration: TextDecoration.underline,
+                  fontFamily: "Nunito Sans",
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           )
