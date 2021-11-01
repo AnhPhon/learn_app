@@ -142,7 +142,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
               child: TextField(
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
-                controller: controller.usernameController,
+                controller: controller.phoneController,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
                   isDense: true,

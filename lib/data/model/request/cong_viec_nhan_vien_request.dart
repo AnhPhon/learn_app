@@ -26,7 +26,7 @@ class CongViecNhanVienRequest {
   /// From JSON
   ///
   CongViecNhanVienRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idNhanVien = json['idNhanVien'].toString();
     idDuAnNhanVien = json['idDuAnNhanVien'].toString();
     trangThai = json['trangThai'].toString();

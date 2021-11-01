@@ -16,7 +16,7 @@ class LoaiTaiKhoanResponse {
   /// From JSON
   ///
   LoaiTaiKhoanResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
 
     createdAt = json['created_at'].toString();
@@ -36,5 +36,11 @@ class LoaiTaiKhoanResponse {
 
 
     return data;
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return tieuDe!;
   }
 }

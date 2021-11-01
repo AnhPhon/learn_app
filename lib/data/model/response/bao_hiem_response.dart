@@ -32,7 +32,7 @@ class BaoHiemResponse {
   /// From JSON
   ///
   BaoHiemResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     ten = json['ten'].toString();
     hinhAnh = json['hinhAnh'].toString();
     phis = (json['phis'] as List<dynamic>).map((e) => e.toString()).toList();

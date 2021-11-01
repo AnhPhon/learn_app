@@ -12,7 +12,7 @@ class BangLuongRequest {
   /// From JSON
   ///
   BangLuongRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idNhanVien = json['idNhanVien'].toString();
     file = json['file'].toString();
   }

@@ -22,7 +22,7 @@ class BangGiaPhiVanChuyenResponse {
   /// From JSON
   ///
   BangGiaPhiVanChuyenResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idLoaiVanChuyen                                                              
     if (json['idLoaiVanChuyen'] != null && json['idLoaiVanChuyen'].toString().length!=24) {                                                  

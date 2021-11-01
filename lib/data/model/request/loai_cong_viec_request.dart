@@ -12,7 +12,7 @@ class LoaiCongViecRequest {
   /// From JSON
   ///
   LoaiCongViecRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idNhomDichVu = json['idNhomDichVu'].toString();
     tenCongViec = json['tenCongViec'].toString();
   }

@@ -22,7 +22,7 @@ class ChiTietVatTuResponse {
   /// From JSON
   ///
   ChiTietVatTuResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idDonDichVu                                                              
     if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {                                                  

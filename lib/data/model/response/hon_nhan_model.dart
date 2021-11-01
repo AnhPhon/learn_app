@@ -11,7 +11,7 @@ class HonNhanModel {
   /// From JSON
   ///
   HonNhanModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
   }
 

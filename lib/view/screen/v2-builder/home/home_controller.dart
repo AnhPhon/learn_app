@@ -107,7 +107,7 @@ class V2HomeController extends GetxController {
           // chứng nhận sức khỏe
           chungNhanSucKhoe(id);
 
-          readThongBao(value.idLoaiTaiKhoan!.tieuDe.toString().toLowerCase());
+          readThongBao(value.idLoaiTaiKhoan!.tieuDe!.toString().toLowerCase());
 
           // khoi tao three feature
           _initThreeFeatures();
