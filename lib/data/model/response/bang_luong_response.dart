@@ -19,7 +19,7 @@ class BangLuongResponse {
   /// From JSON
   ///
   BangLuongResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idNhanVien                                                              
     if (json['idNhanVien'] != null && json['idNhanVien'].toString().length!=24) {                                                  

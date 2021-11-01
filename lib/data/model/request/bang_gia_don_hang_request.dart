@@ -16,7 +16,7 @@ class BangGiaDonHangRequest {
   /// From JSON
   ///
   BangGiaDonHangRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
     giaTien = json['giaTien'].toString();
     donViTinh = json['donViTinh'].toString();

@@ -23,7 +23,7 @@ class LichSuViTienRequest {
   /// From JSON
   ///
   LichSuViTienRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idViTien = json['idViTien'].toString();
     loaiGiaoDich = json['loaiGiaoDich'].toString();

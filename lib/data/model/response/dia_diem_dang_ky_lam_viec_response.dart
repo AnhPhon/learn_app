@@ -24,7 +24,7 @@ class DiaDiemDangKyLamViecResponse {
   /// From JSON
   ///
   DiaDiemDangKyLamViecResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTinhTp
     if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {

@@ -27,7 +27,7 @@ class NhapKhoHangDaiLyResponse {
   /// From JSON
   ///
   NhapKhoHangDaiLyResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     // mapping idKhoHangDaiLy
     if (json['idKhoHangDaiLy'] != null &&
         json['idKhoHangDaiLy'].toString().length != 24) {

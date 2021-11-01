@@ -14,7 +14,7 @@ class ViTienRequest {
   /// From JSON
   ///
   ViTienRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     tongTien = json['tongTien'].toString();
     trangThai = json['trangThai'].toString();

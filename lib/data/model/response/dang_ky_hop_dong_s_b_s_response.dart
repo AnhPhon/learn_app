@@ -21,7 +21,7 @@ class DangKyHopDongSBSResponse {
   /// From JSON
   ///
   DangKyHopDongSBSResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTaiKhoan                                                              
     if (json['idTaiKhoan'] != null && json['idTaiKhoan'].toString().length!=24) {                                                  
