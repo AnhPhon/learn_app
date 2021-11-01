@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
@@ -93,7 +94,7 @@ class V3HomeController extends GetxController {
           chungNhanSucKhoe(id);
 
           // load notification
-          readThongBao(taiKhoanResponse.idLoaiTaiKhoan!.tieuDe!.toLowerCase());
+          readThongBao((taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse).tieuDe!.toLowerCase());
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

@@ -10,7 +10,7 @@ class CaiDatChungRequest {
   /// From JSON
   ///
   CaiDatChungRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     khuyenMai = json['khuyenMai'].toString();
   }
 

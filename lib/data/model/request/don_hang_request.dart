@@ -38,7 +38,7 @@ class DonHangRequest {
   /// From JSON
   ///
   DonHangRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idTaiKhoanMuaHang = json['idTaiKhoanMuaHang'].toString();
     idTinhTp = json['idTinhTp'].toString();

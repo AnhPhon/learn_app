@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/utils/device_utils.dart';
+import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/button/drop_down_button.dart';
 
 import 'auth_controller.dart';
 
 class AuthPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
-    // final AuthController _controller = Get.find();
 
     return Scaffold(
-      body: SizedBox(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() => Text("Counter ${controller.counter.value}")),
-              MaterialButton(
-                onPressed: () => controller.increaseCounter(),
-                child: const Text("Increase"),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: GetBuilder(
+        builder: (AuthController controller) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                DropDownButton<String>(
+                  data: const ["m2","m3",'Tấn','Tạ','Kg'],
+                  obligatory: true,
+                  onChanged: (unit)=> {},
+                  value: null,
+                  width: DeviceUtils.getScaledSize(context,0.5),
+                  label: "Đơn vị",
+                  hint: 'Chọn đơn vị',
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+                ),
+              ],
+            ),
+          );
+        },
+      )
     );
   }
 }

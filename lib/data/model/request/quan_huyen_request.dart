@@ -12,7 +12,7 @@ class QuanHuyenRequest {
   /// From JSON
   ///
   QuanHuyenRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTinhTp = json['idTinhTp'].toString();
     ten = json['ten'].toString();
   }

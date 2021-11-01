@@ -7,7 +7,7 @@ import 'mat_hang_dac_trung_response.dart';
 
 class TaiKhoanResponse {
   String? id;
-  LoaiTaiKhoanResponse? idLoaiTaiKhoan;
+  dynamic? idLoaiTaiKhoan;
   String? tinhTpHoatDong;
   TinhTpResponse? idTinhTp;
   QuanHuyenResponse? idQuanHuyen;
@@ -43,9 +43,14 @@ class TaiKhoanResponse {
   String? diaDiemCuaHangChinh;
   List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
+  String? hinhAnhKhuonMat;
 
   String? createdAt;
   String? updatedAt;
+  String? access;
+  String? refresh;
+  String? resetPasswordToken;
+
 
   TaiKhoanResponse(
       {this.id,
@@ -85,6 +90,7 @@ class TaiKhoanResponse {
       this.diaDiemCuaHangChinh,
       this.hinhAnhCuaHangs,
       this.diaDiemCuThe,
+      this.hinhAnhKhuonMat,
       this.createdAt,
       this.updatedAt});
 
@@ -92,15 +98,21 @@ class TaiKhoanResponse {
   /// From JSON
   ///
   TaiKhoanResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idLoaiTaiKhoan
-    if (json['idLoaiTaiKhoan'] != null &&
-        json['idLoaiTaiKhoan'].toString().length != 24) {
-      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(
-          json['idLoaiTaiKhoan'] as Map<String, dynamic>);
-    } else {
-      idLoaiTaiKhoan = null;
+    // if (json['idLoaiTaiKhoan'] != null &&
+    //     json['idLoaiTaiKhoan'].toString().length != 24) {
+    //   idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(
+    //       json['idLoaiTaiKhoan'] as Map<String, dynamic>);
+    // } else {
+    //   idLoaiTaiKhoan = null;
+    // }
+    if(json['idLoaiTaiKhoan'] != null && json['idLoaiTaiKhoan'].toString().length!=24 ){
+      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(json['idLoaiTaiKhoan'] as Map<String, dynamic>);
+    }else{
+      print(json['idLoaiTaiKhoan'].toString());
+      idLoaiTaiKhoan = json['idLoaiTaiKhoan'].toString();
     }
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();
 
@@ -188,6 +200,10 @@ class TaiKhoanResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    access = json['access'].toString();
+    refresh = json['refresh'].toString();
+    hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
+
   }
 
   ///
@@ -306,10 +322,13 @@ class TaiKhoanResponse {
 
     // check null hinhAnhCuaHangs
     if (hinhAnhCuaHangs != null) data['hinhAnhCuaHangs'] = hinhAnhCuaHangs;
+    // check null hinhAnhKhuonMat
+    if (hinhAnhKhuonMat != null) data['hinhAnhKhuonMat'] = hinhAnhKhuonMat;
 
     // check null diaDiemCuThe
     if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
-
+    if (access != null) data['access'] = access;
+    if (refresh != null) data['refresh'] = refresh;
     return data;
   }
 }

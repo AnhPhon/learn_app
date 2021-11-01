@@ -43,7 +43,7 @@ class ThongBaoResponse {
   /// From JSON
   ///
   ThongBaoResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     doiTuong = json['doiTuong'].toString();
 
     // mapping idDonDichVu                                                              

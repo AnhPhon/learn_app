@@ -22,7 +22,7 @@ class NgoaiNguRequest {
   /// From JSON
   ///
   NgoaiNguRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     loaiNgoaiNgu = json['loaiNgoaiNgu'].toString();
     trinhDo = json['trinhDo'].toString();

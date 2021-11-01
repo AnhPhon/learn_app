@@ -18,7 +18,7 @@ class VatTuRequest {
   /// From JSON
   ///
   VatTuRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tenVatTu = json['tenVatTu'].toString();
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
