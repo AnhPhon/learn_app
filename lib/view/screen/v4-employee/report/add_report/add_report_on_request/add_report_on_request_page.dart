@@ -83,6 +83,7 @@ Widget _projectReportOnRequest(
     obligatory: true,
     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
     value: controller.duAnNhanVien1,
+    fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
     padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );

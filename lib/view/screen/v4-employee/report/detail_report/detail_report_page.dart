@@ -76,12 +76,6 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
   ///
   Widget _projectDetailReport(V4DetailReportController controller, BuildContext context) {
     return DropDownButton1<DuAnNhanVienResponse>(
-      padding: const EdgeInsets.fromLTRB(
-        Dimensions.PADDING_SIZE_DEFAULT,
-        0,
-        0,
-        0,
-      ),
       isColorFieldWhite: true,
       isBorder: false,
       isShadow: true,
@@ -93,6 +87,8 @@ class V4DetailReportPage extends GetView<V4DetailReportController> {
       value: controller.duAnNhanVien,
       width:  DeviceUtils.getScaledWidth(context, 1),
       isBoldHintText: true,
+      fillColor: ColorResources.WHITE,
+      padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
     );
   }
   ///
