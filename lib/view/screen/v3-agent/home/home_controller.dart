@@ -94,7 +94,10 @@ class V3HomeController extends GetxController {
           chungNhanSucKhoe(id);
 
           // load notification
-          readThongBao((taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse).tieuDe!.toLowerCase());
+          readThongBao(
+              (taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse)
+                  .tieuDe!
+                  .toLowerCase());
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -343,15 +346,16 @@ class V3HomeController extends GetxController {
   ///
   void onClickHotNewsDetail(String id) {
     // goto detail news
-    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: id);
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///
   /// Nhấn nút sản phẩm
   ///
   void onClickHotProductDetail(String id) {
-    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
     // goto detail news
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
@@ -380,7 +384,10 @@ class V3HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///
