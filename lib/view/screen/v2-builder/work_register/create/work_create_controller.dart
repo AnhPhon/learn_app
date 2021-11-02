@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/bang_bang_cap_request.dart';
-import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/request/ke_khai_kinh_nghiem_request.dart';
 import 'package:template/data/model/request/ngoai_ngu_request.dart';
 import 'package:template/data/model/request/tin_hoc_request.dart';
@@ -18,6 +17,7 @@ import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/ngoai_ngu_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
+import 'package:template/data/model/response/tin_hoc_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/data/model/response/trinh_do_response.dart';
 import 'package:template/di_container.dart';
@@ -152,9 +152,11 @@ class V2WorkCreateController extends GetxController {
   TrinhDoResponse? trinhDoResponseIndex;
 
   List<NgoaiNguResponse> ngoaiNguResponseList = [];
+  List<NgoaiNguRequest> ngoaiNguList = [];
   NgoaiNguResponse? ngoaiNguResponseIndex;
 
-  List<NgoaiNguRequest> ngoaiNguList = [];
+  List<TinHocRequest> tinHocList = [];
+  List<TinHocResponse> tinHocResponseList = [];
   TinHocRequest? tinHocRequest;
 
   String tenUngVien = "";
@@ -768,6 +770,45 @@ class V2WorkCreateController extends GetxController {
 
     return true;
   }
+
+  ///
+  /// ky nag va so truong lam viec - ngoai ngu
+  ///
+  bool kyNangSoTruongNgoaiNgu() {
+    if (ngoaiNguResponseIndex != null) {
+      Get.snackbar("Thông báo", "Ngoại ngữ không được rỗng");
+      return false;
+    }
+
+    // validate Phần mềm hỗ trợ
+    if (phanMemHoTroController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Phần mềm hỗ trợ không được rỗng");
+      return false;
+    }
+
+    // validate sở thích thể hiện trình độ
+    if (soThichTheHienTrinhDoController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện trình độ không được rỗng");
+      return false;
+    }
+
+    // sở thích thể hiện kỹ năng
+    if (soThichTheHienKyNangController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện kỹ năng không được rỗng");
+      return false;
+    }
+
+    // sở thích thể hiện tính cách
+    if (soThichTheHienTinhCachController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện tính cách không được rỗng");
+      return false;
+    }
+    return true;
+  }
+
+  ///
+  /// ky nag va so truong lam viec - tin hoc
+  ///
 
   ///
   /// Xem trươc

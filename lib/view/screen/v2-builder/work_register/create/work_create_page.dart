@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/request/ngoai_ngu_request.dart';
 import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
@@ -8,8 +9,10 @@ import 'package:template/data/model/response/dia_diem_dang_ky_lam_viec_response.
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
+import 'package:template/data/model/response/ngoai_ngu_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
+import 'package:template/data/model/response/trinh_do_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -650,7 +653,8 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //Kỹ năng và sở trường làm việc
         const Label(label: "Kỹ năng và sở trường làm việc", obligatory: false),
-        if (controller.kyNangSotruong != "null")
+        if (controller.kyNangSotruong != "null" &&
+            controller.kyNangSotruong.isNotEmpty)
           Container(
             width: DeviceUtils.getScaledWidth(context, 1),
             padding: const EdgeInsets.symmetric(
@@ -678,23 +682,23 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         //Ngoại ngữ *
         const Label(label: "Ngoại ngữ", obligatory: true),
         // Chọn ngoại ngữ
-        DropDownButton<String>(
+        DropDownButton<NgoaiNguResponse>(
           paddingTop: 0,
           onChanged: (val) {},
-          data: const [],
+          data: controller.ngoaiNguResponseList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Chọn ngoại ngữ",
+          value: controller.ngoaiNguResponseIndex,
           obligatory: true,
           label: "Chọn ngoại ngữ",
           hint: "Chọn ngoại ngữ",
         ),
 
         // Trình độ
-        DropDownButton<String>(
+        DropDownButton<TrinhDoResponse>(
           onChanged: (val) {},
-          data: const [],
+          data: controller.trinhDoList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Trình độ",
+          value: controller.trinhDoResponseIndex,
           obligatory: true,
           label: "Trình độ",
           hint: "Trình độ",
@@ -806,34 +810,47 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         ),
         // List thêm
         Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                  vertical: Dimensions.PADDING_SIZE_SMALL),
-              child: BoxShadowWidget(
-                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                child: SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, 1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const TextHighlight(
-                        title: "Ngôn ngữ: ",
-                        content: "Tiếng anh",
-                      ),
-                      contentPrivew(title: "Trình độ: ", content: "B1"),
-                      contentPrivew(title: "Nghe: ", content: "Khá"),
-                      contentPrivew(title: "Nói: ", content: "Khá"),
-                      contentPrivew(title: "Đọc: ", content: "Giỏi"),
-                      contentPrivew(title: "Viết: ", content: "Khá"),
-                    ],
-                  ),
+            children: List.generate(
+          controller.ngoaiNguList.length,
+          (index) => Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_SMALL),
+            child: BoxShadowWidget(
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              child: SizedBox(
+                width: DeviceUtils.getScaledWidth(context, 1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TextHighlight(
+                      title: "Ngôn ngữ: ",
+                      content: "Tiếng anh",
+                    ),
+                    contentPrivew(
+                        title: "Trình độ: ",
+                        content:
+                            controller.ngoaiNguList[index].trinhDo.toString()),
+                    contentPrivew(
+                        title: "Nghe: ",
+                        content:
+                            controller.ngoaiNguList[index].nghe.toString()),
+                    contentPrivew(
+                        title: "Nói: ",
+                        content: controller.ngoaiNguList[index].noi.toString()),
+                    contentPrivew(
+                        title: "Đọc: ",
+                        content: controller.ngoaiNguList[index].doc.toString()),
+                    contentPrivew(
+                        title: "Viết: ",
+                        content:
+                            controller.ngoaiNguList[index].viet.toString()),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        )),
       ],
     );
   }
@@ -931,7 +948,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.titleController,
+          controller: controller.phanMemHoTroController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Phần mềm hỗ trợ công việc từng ngành",
           hidden: false,
@@ -945,7 +962,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.titleController,
+          controller: controller.soThichTheHienTrinhDoController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Sở thích thể hiện trình độ / khả năng tư duy",
           hidden: false,
@@ -959,7 +976,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.titleController,
+          controller: controller.soThichTheHienKyNangController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Sở thích thể hiện kỹ năng",
           hidden: false,
@@ -973,7 +990,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.titleController,
+          controller: controller.soThichTheHienTinhCachController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Sở thích thể hiện tích cách",
           hidden: false,
