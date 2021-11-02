@@ -11,6 +11,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/constants/enum_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
@@ -111,19 +112,19 @@ class V1G4CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian làm việc không được để trống");
+      Alert.info( message: "Thời gian làm việc không được để trống");
       return;
     }else if(startTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian bắt đầu không được để trống");
+      Alert.info( message: "Thời gian bắt đầu không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.info( message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return;
     }else if(endTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian kết thúc không được để trống");
+      Alert.info( message: "Thời gian kết thúc không được để trống");
       return;
-    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
+      Alert.info( message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
       return;
     }else{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);

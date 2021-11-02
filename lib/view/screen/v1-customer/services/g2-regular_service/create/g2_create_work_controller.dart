@@ -12,6 +12,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
@@ -106,7 +107,8 @@ class V1G2CreateWorkController extends GetxController {
       update();
       // return fileName;
     } else {
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
+      print("Thêm file thất bại V1G2CreateWorkController PickerFile");
+      Alert.error(message: "Thêm file thất bại");
     }
   }
 
@@ -120,7 +122,8 @@ class V1G2CreateWorkController extends GetxController {
       files.addAll(result.paths.map((path) => File(path!)).toList());
       update();
     } else {
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
+      print("Thêm file thất bại V1G2CreateWorkController");
+      Alert.error( message: "Thêm file thất bại");
     }
   }
 
@@ -129,7 +132,7 @@ class V1G2CreateWorkController extends GetxController {
   ///
   void onDeleteImage({required File file, required List<File> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    SnackBarUtils.showSnackBarSuccess(title: "Xoá", message: "Xoá ảnh thành công");
+    Alert.success( message: "Xoá ảnh thành công");
     update();
   }
 
@@ -164,25 +167,25 @@ class V1G2CreateWorkController extends GetxController {
   ///
   bool validate(){
     if(tommorow == false && afternoon == false && tonight == false){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc trong ngày");
+      Alert.info(message: "Bạn phải chọn thời gian làm việc trong ngày");
       return false;
     }else if(startTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu dự kiến");
+      Alert.info(message: "Bạn phải chọn thời gian bắt đầu dự kiến");
       return false;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.info(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     }else if(endTime.text.toString().isNotEmpty){
-      if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
+        Alert.info(message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
         return false;
       }else if(workDesc.text.toString().isEmpty){
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
+        Alert.info(message: "Mô tả công việc không được để trống");
         return false;
       }
       return true;
     }else if(workDesc.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
+      Alert.info(message: "Mô tả công việc không được để trống");
       return false;
     }else{
       return true;
@@ -197,12 +200,11 @@ class V1G2CreateWorkController extends GetxController {
       final DonDichVuRequest data = await request();
       donDichVuProvider.add(data: data, onSuccess: (data){
         EasyLoading.dismiss();
-        SnackBarUtils.showSnackBarSuccess(title: "Tạo dich đơn thành công", message: "Chúng tôi sẽ phản hồi bạn sơm nhất có thể");
+        Alert.success(message: "Tạo dich đơn thành công. Chúng tôi sẽ phản hồi bạn sơm nhất có thể");
         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){
         EasyLoading.dismiss();
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: onError.toString());
         print("V1G2CreateWorkController onClickContinueButton $onError");
       });
   }
@@ -212,9 +214,9 @@ class V1G2CreateWorkController extends GetxController {
   ///
   Future<DonDichVuRequest> request(){
       final List<String> workTime = [];
-      List<String> massImagesLink = [];
-      List<String> productImagesLink = [];
-      List<String> currentStatusimages = [];
+      final List<String> massImagesLink = [];
+      final List<String> productImagesLink = [];
+      final List<String> currentStatusimages = [];
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){

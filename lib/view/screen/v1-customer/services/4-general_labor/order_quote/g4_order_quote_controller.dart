@@ -6,6 +6,7 @@ import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V1G4OrderQuoteController extends GetxController{
@@ -52,7 +53,6 @@ class V1G4OrderQuoteController extends GetxController{
       print("V1G4OrderQuoteController getAllWorkType onError $error");
       isLoading = false;
       update();
-      Get.snackbar("Error",error.message.toString(),);
     });
   }
 
@@ -91,13 +91,13 @@ class V1G4OrderQuoteController extends GetxController{
   ///
   bool validate(){
     if(timeNumberController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thời gian yêu cầu");
+      Alert.info(message: "Bản phải chọn thời gian yêu cầu");
       return false;
     }else if(personNumberController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
+      Alert.info(message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
+      Alert.info(message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;

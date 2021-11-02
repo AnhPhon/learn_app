@@ -15,6 +15,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/snack_bar.dart';
 import '../../../../di_container.dart';
@@ -196,10 +197,7 @@ class CreateWorkController extends GetxController {
     }, onError: (error) {
       isLoadingNhomDichVu = false;
       update();
-      SnackBarUtils.showSnackBar(
-        title:"Error",
-        message:error.message.toString(),
-      );
+      print('getNhomDichVu CreateWorkController $error');
     });
   }
 
@@ -223,10 +221,6 @@ class CreateWorkController extends GetxController {
         onError: (error) {
           print("CreateWorkController getLoaiCongViec onError $error");
           update();
-          SnackBarUtils.showSnackBar(
-            title:"Error",
-            message:error.message.toString(),
-          );
         });
   }
 
@@ -345,22 +339,22 @@ class CreateWorkController extends GetxController {
   ///
   void onClickContinue() async{
       if(dichvu == null){
-        SnackBarUtils.showSnackBar(title:"Nhóm dich vụ bắt buộc",message:"Vui lòng chọn dịch vụ");
+        Alert.info(message:"Vui lòng chọn dịch vụ");
         return; 
       }else if(hcmProvince == null && otherProvince == null && haNoiProvince == null && daNangProvince == null){
-        SnackBarUtils.showSnackBar(title:"Trường tỉnh bắt buộc",message:"Vui lòng chọn tỉnh");
+        Alert.info(message:"Vui lòng chọn tỉnh");
         return; 
       }else if(hcmHuyen == null && khacHuyen == null && haNoiHuyen == null && daNangHuyen == null){
-        SnackBarUtils.showSnackBar(title:"Trường quận huyện bắt buộc",message:"Vui lòng chọn quận huyện");
+        Alert.info(message:"Vui lòng chọn quận huyện");
         return; 
       }else if(hcmPhuong == null && khacPhuong == null && haNoiPhuong == null && daNangPhuong == null){
-        SnackBarUtils.showSnackBar(title:"Trường phường xã bắt buộc",message:"Vui lòng phường xã");
+        Alert.info(message:"Vui lòng phường xã");
         return; 
       }else if(loaiCongViec == null){
-         SnackBarUtils.showSnackBar(title:"Trường công việc bắt buộc",message:"Vui lòng chọn công việc");
+         Alert.info(message:"Vui lòng chọn công việc");
         return; 
       }else if(addressController.text.toString().isEmpty){
-        SnackBarUtils.showSnackBar(title:"Trường địa chỉ bắt buộc",message:"Vui lòng điền địa chỉ cụ thể");
+        Alert.info(message:"Vui lòng điền địa chỉ cụ thể");
         return; 
       }else{
         if(dichvu!.nhomDichVu! == '1'){
