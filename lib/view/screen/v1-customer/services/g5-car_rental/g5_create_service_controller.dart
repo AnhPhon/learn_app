@@ -144,7 +144,7 @@ class V1G5CreateServiceController extends GetxController{
     }else if(startWorkController.text.toString().isEmpty){
       Alert.info( message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info( message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.info( message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
       Alert.info( message: "Địa điểm bốc hàng dự kiến không được để trống");
     }else if(estimatedDeliveryLocation.text.toString().isEmpty){

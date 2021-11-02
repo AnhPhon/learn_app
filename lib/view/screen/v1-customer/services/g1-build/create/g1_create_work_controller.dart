@@ -56,7 +56,7 @@ class V1G1CreateWorkController extends GetxController{
       Alert.info(message:"Trường thời gian bắt đầu không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.info(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       return;
     } 
     if(endTimeController.text.toString().isNotEmpty){

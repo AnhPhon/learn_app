@@ -115,13 +115,13 @@ class V1G3CreateServiceController extends GetxController {
       Alert.info(message: "Bạn phải chọn thời gian bắt đầu");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.info(message: "Ngày bắt đầu lớn hơn ngày hiện tại");
       return;
     }else if(endTime.text.toString().isEmpty){
       Alert.info(message: "Thời gian kết thúc không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
-      Alert.info(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      Alert.info(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
       return;
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
