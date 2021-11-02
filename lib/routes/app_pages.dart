@@ -1015,11 +1015,6 @@ class AppPages {
       binding: V2WorkCreateBinding(),
     ),
     GetPage(
-      name: AppRoutes.V2_WORK_PREVIEW,
-      page: () => V2WorkPreviewPage(),
-      binding: V2WorkPreviewBinding(),
-    ),
-    GetPage(
       name: AppRoutes.V2_REGISTER_DONE,
       page: () => V2RegisterDonePage(),
       binding: V2RegisterDoneBinding(),

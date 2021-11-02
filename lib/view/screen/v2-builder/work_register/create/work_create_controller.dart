@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/dang_ky_viec_moi_model.dart';
 import 'package:template/data/model/request/bang_bang_cap_request.dart';
 import 'package:template/data/model/request/ke_khai_kinh_nghiem_request.dart';
 import 'package:template/data/model/request/ngoai_ngu_request.dart';
@@ -36,6 +37,7 @@ import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/screen/v2-builder/work_register/preview/work_preview_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V2WorkCreateController extends GetxController {
@@ -163,6 +165,7 @@ class V2WorkCreateController extends GetxController {
   String gioiTinh = "";
   String ngaySinh = "";
   String dienThoai = "";
+  String noiOHienTai = "";
   String email = "";
   String mucTieuNgheNghiep = "";
   String donVi = "";
@@ -243,6 +246,11 @@ class V2WorkCreateController extends GetxController {
         id: value.toString(),
         onSuccess: (data) {
           tenUngVien = data.hoTen.toString();
+          if (data.idTinhTp == null) {
+            noiOHienTai = "";
+          } else {
+            noiOHienTai = data.idTinhTp!.ten!;
+          }
           if (data.gioiTinh != null) {
             gioiTinh = gioiTinhRefer[int.parse(data.gioiTinh.toString())];
           } else {
@@ -254,7 +262,6 @@ class V2WorkCreateController extends GetxController {
 
           addressController =
               TextEditingController(text: data.diaChi.toString());
-          // isLoading = false;
           update();
         },
         onError: (error) {
@@ -619,6 +626,7 @@ class V2WorkCreateController extends GetxController {
             trinhDoResponseIndex == null ? "..." : trinhDoResponseIndex!.id,
         viet: status[ngoaiNguWriteSkill - 1],
       ));
+      update();
     });
   }
 
@@ -774,7 +782,7 @@ class V2WorkCreateController extends GetxController {
   ///
   /// ky nag va so truong lam viec - ngoai ngu
   ///
-  bool kyNangSoTruongNgoaiNgu() {
+  bool kyNangSoTruong() {
     if (ngoaiNguResponseIndex != null) {
       Get.snackbar("Thông báo", "Ngoại ngữ không được rỗng");
       return false;
@@ -807,28 +815,83 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// ky nag va so truong lam viec - tin hoc
-  ///
-
-  ///
   /// Xem trươc
   ///
   void onClickPreviewButton() {
-    Get.toNamed("${AppRoutes.V2_WORK_PREVIEW}?tuyenDung=false");
-  }
-}
+    // Get.toNamed("${AppRoutes.V2_WORK_PREVIEW}?tuyenDung=false");
 
-class DangKyViecMoiModel {
-  String? tieuDe;
-  String? tenUngVien;
-  String? gioiTinh;
-  String? ngaySinh;
-  String? dienThoai;
-  String? email;
-  String? choOHienTai;
-  String? honNhan;
-  String? hinhThucLamViec;
-  String? mucTieuNgheNghiep;
-  List<BangBangCapRequest>? bangBangCaps;
-  
+    if (validateGoto()) {
+      Get.to(
+        V2WorkPreviewPage(
+          dangKyModel: DangKyViecMoiModel(
+            bangBangCaps: bangBangCap,
+            choOHienTai: noiOHienTai,
+            dienThoai: dienThoai,
+            email: email,
+            gioiTinh: gioiTinh,
+            hinhThucLamViec: hinhThucLamViecIndex.toString(),
+            honNhan: honNhan,
+            keKhaiKinhNghiems: keKhaiKinhNghiemDisplay,
+            mucTieuNgheNghiep: mucTieuNgheNghiep,
+            ngaySinh: ngaySinh,
+            ngoaiNguList: ngoaiNguList,
+            phanMemHoTro: phanMemHoTroController.text,
+            soThichTheHienKyNang: soThichTheHienKyNangController.text,
+            soThichTheHienTinhCach: soThichTheHienTinhCachController.text,
+            soThichTheHienTrinhDo: soThichTheHienTrinhDoController.text,
+            tenUngVien: tenUngVien,
+            tieuDe: titleController.text,
+            tinHoc: tinHocRequest,
+          ),
+        ),
+      );
+    }
+  }
+
+  ///
+  /// validate goto
+  ///
+  bool validateGoto() {
+    if (bangBangCap.isEmpty) {
+      Get.snackbar("Thông báo", "Bằng cấp không được rỗng!");
+      return false;
+    }
+
+    if (hinhThucLamViecIndex.toString().isEmpty) {
+      Get.snackbar("Thông báo", "Hình thức làm việc không được rỗng!");
+      return false;
+    }
+
+    if (keKhaiKinhNghiemDisplay.isEmpty) {
+      Get.snackbar("Thông báo", "Kê khai kinh nghiệm không được rỗng!");
+      return false;
+    }
+
+    if (ngoaiNguList.isEmpty) {
+      Get.snackbar("Thông báo", "Ngoại ngữ không được rỗng!");
+      return false;
+    }
+
+    if (phanMemHoTroController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Phần mềm hỗ trợ không được rỗng!");
+      return false;
+    }
+
+    if (soThichTheHienKyNangController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện kỹ năng không được rỗng!");
+      return false;
+    }
+
+    if (soThichTheHienTinhCachController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện tính cách không được rỗng!");
+      return false;
+    }
+
+    if (soThichTheHienTrinhDoController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Sở thích thể hiện trình độ không được rỗng!");
+      return false;
+    }
+
+    return true;
+  }
 }

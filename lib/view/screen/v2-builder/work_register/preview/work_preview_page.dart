@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/body/dang_ky_viec_moi_model.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -12,34 +13,35 @@ import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v2-builder/work_register/preview/work_preview_controller.dart';
 
 class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
+  DangKyViecMoiModel? dangKyModel;
+  @override
+  V2WorkPreviewController controller = Get.put(V2WorkPreviewController());
+
+  V2WorkPreviewPage({this.dangKyModel});
   @override
   Widget build(BuildContext context) {
+    print(dangKyModel);
     return Scaffold(
       appBar: const AppBarWidget(title: "Hồ sơ ứng tuyển"),
-      body: GetBuilder(
-        builder: (V2WorkPreviewController controller) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                // Thông tin người
-                // CandidateCard(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Thông tin người
+            // CandidateCard(),
 
-                // Nội dung hồ sơ
-                content(context, controller: controller),
-                Padding(
-                  padding:
-                      const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                  child: LongButton(
-                      title: "Hoàn thiện và lưu trữ ứng tuyển",
-                      color: ColorResources.PRIMARYCOLOR,
-                      onPressed: () {
-                        controller.toDonePage();
-                      }),
-                )
-              ],
-            ),
-          );
-        },
+            // Nội dung hồ sơ
+            content(context),
+            Padding(
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              child: LongButton(
+                  title: "Hoàn thiện và lưu trữ ứng tuyển",
+                  color: ColorResources.PRIMARYCOLOR,
+                  onPressed: () {
+                    controller.toDonePage();
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -48,8 +50,7 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
   ///Nội dung hồ sơ
   ///
 
-  Widget content(BuildContext context,
-      {required V2WorkPreviewController controller}) {
+  Widget content(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_DEFAULT),

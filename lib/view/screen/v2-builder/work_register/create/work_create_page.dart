@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/request/ngoai_ngu_request.dart';
 import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
@@ -85,6 +84,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
   /// form tiêu đề công việc và mô tả công việc , Thời gian
   ///
   Widget form(BuildContext context, V2WorkCreateController controller) {
+    print("2321321321321 ${controller.ngaySinh.replaceAll("T", " ")}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -112,9 +112,11 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
               text(title: "Giới tính: ", content: controller.gioiTinh),
               text(
                 title: "Ngày sinh: ",
-                content: DateConverter.isoStringToVNDateOnly(
-                  controller.ngaySinh.replaceAll("T", " "),
-                ),
+                content: controller.ngaySinh.toString().trim().isEmpty
+                    ? ""
+                    : DateConverter.isoStringToVNDateOnly(
+                        controller.ngaySinh.replaceAll("T", " "),
+                      ),
               ),
               text(title: "Điện thoại: ", content: controller.dienThoai),
               text(title: "Email: ", content: controller.email),
@@ -811,7 +813,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           child: LongButton(
             title: "Thêm bằng tiếng anh",
             color: ColorResources.THEME_DEFAULT,
-            onPressed: () {},
+            onPressed: () {
+              controller.ngoaiNguThem();
+            },
           ),
         ),
         // List thêm
