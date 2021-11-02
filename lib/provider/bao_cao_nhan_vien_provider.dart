@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
 
 class BaoCaoNhanVienProvider {
-  BaoCaoNhanVienRepository? repository = GetIt.I.get<BaoCaoNhanVienRepository>();
+  BaoCaoNhanVienRepository? repository =
+      GetIt.I.get<BaoCaoNhanVienRepository>();
 
   BaoCaoNhanVienProvider();
 
@@ -22,7 +23,8 @@ class BaoCaoNhanVienProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => BaoCaoNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => BaoCaoNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class BaoCaoNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class BaoCaoNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class BaoCaoNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BaoCaoNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class BaoCaoNhanVienProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => BaoCaoNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => BaoCaoNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class BaoCaoNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BaoCaoNhanVienResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BaoCaoNhanVienResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

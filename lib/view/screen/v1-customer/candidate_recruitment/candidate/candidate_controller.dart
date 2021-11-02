@@ -173,6 +173,7 @@ class V1CandidateController extends GetxController {
   void onChangeTab(int index) {
     if (index == 1) {
       isLoadingCadidate = true;
+      searchController.text = '';
     } else {
       isLoadingTuyenDung = true;
     }
@@ -245,6 +246,7 @@ class V1CandidateController extends GetxController {
   ///
   Future onRefreshTimUngVien() async {
     refreshTimUngVienController.resetNoData();
+    searchController.text = '';
     getDataSearch(textFilter: '', isRefresh: true);
   }
 
@@ -674,6 +676,7 @@ class V1CandidateController extends GetxController {
   void getDataSearch({required String textFilter, required bool isRefresh}) {
     //isRefresh
     if (isRefresh || isOnChangeSearch) {
+      refreshTimUngVienController.resetNoData();
       pageMaxSearch = 1;
       dangKyViecMoiListModel.clear();
     } else {
@@ -685,7 +688,6 @@ class V1CandidateController extends GetxController {
       // ignore: parameter_assignments
       textFilter = '&$textFilter';
     }
-
     dangKyViecMoiProvider.paginate(
         page: pageMaxSearch,
         limit: limit,

@@ -65,6 +65,9 @@ class OrderInformationController extends GetxController {
   //type
   String type = '0';
 
+  //idDonDichVu
+  String? idDonDichVu;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -86,12 +89,6 @@ class OrderInformationController extends GetxController {
     } else {
       isTuyenDung = false;
     }
-
-    //check Type
-    if (Get.parameters['type'] != null) {
-      type = Get.parameters['type'].toString();
-    }
-
     //get data khuyến mãi
     getDataKhuyenMai();
   }
@@ -189,14 +186,6 @@ class OrderInformationController extends GetxController {
               Get.back();
             },
             child: const Text("Hủy thanh toán")));
-  }
-
-  ///
-  ///onBtnGoHome
-  ///
-  void onBtnGoHome() {
-    Get.offAllNamed(AppRoutes.V1_DASHBOARD,
-        predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
   }
 
   ///

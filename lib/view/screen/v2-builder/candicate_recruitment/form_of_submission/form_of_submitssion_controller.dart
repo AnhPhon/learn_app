@@ -63,7 +63,7 @@ class V2FormOfSubmitssionController extends GetxController {
   /// Nhân nút đánh văn bản
   ///
   void onClickTextTyingButton() {
-    Get.toNamed(AppRoutes.V2_TEXT_TYING);
+    // Get.toNamed('${AppRoutes.V2_WORK_CREATE}?tuyenDung=true');
   }
 
   ///

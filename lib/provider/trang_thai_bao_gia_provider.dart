@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/trang_thai_bao_gia_repository.dart';
 
 class TrangThaiBaoGiaProvider {
-  TrangThaiBaoGiaRepository? repository = GetIt.I.get<TrangThaiBaoGiaRepository>();
+  TrangThaiBaoGiaRepository? repository =
+      GetIt.I.get<TrangThaiBaoGiaRepository>();
 
   TrangThaiBaoGiaProvider();
 
@@ -22,7 +23,8 @@ class TrangThaiBaoGiaProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => TrangThaiBaoGiaResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TrangThaiBaoGiaResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class TrangThaiBaoGiaProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class TrangThaiBaoGiaProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class TrangThaiBaoGiaProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiBaoGiaRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class TrangThaiBaoGiaProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => TrangThaiBaoGiaResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TrangThaiBaoGiaResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class TrangThaiBaoGiaProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(TrangThaiBaoGiaResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          TrangThaiBaoGiaResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
