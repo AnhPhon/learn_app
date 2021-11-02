@@ -8,4 +8,5 @@ class CommonHelper {
     final unescape = HtmlUnescape();
     return unescape.convert(htmlString);
   }
+
 }

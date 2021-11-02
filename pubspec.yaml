@@ -60,6 +60,7 @@ dependencies:
   tiengviet: ^0.5.0
   flutter_styled_toast: ^2.0.0
   geolocator: ^7.7.1
+  uuid: ^3.0.5
 
 
 
