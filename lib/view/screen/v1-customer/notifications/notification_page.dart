@@ -65,7 +65,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                 ),
                 children: [
                   TextSpan(
-                    text: StringCut.stringCut120(CommonHelper().htmlUnescape(controller.notifications[index].noiDung.toString())),
+                    text: StringCut.stringCut90(CommonHelper().htmlUnescape(controller.notifications[index].noiDung.toString())),
                     style: const TextStyle(
                       fontWeight: FontWeight.normal,
                     )
