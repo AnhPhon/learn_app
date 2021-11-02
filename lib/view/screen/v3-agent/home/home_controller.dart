@@ -317,7 +317,7 @@ class V3HomeController extends GetxController {
   /// on Click News
   ///
   void onClickNews() {
-    Get.toNamed(AppRoutes.V3_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
@@ -338,7 +338,7 @@ class V3HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
