@@ -434,7 +434,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         TextFieldDate(
           paddingTop: 0,
           allowEdit: true,
-          controller: controller.endTimeController,
+          controller: controller.startTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-12-2021",
           label: "Từ",
@@ -461,7 +461,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.addressController,
+          controller: controller.donViController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Đơn vị",
           hidden: false,
@@ -475,7 +475,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.addressController,
+          controller: controller.chucVuController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Chức vụ",
           hidden: false,
@@ -491,7 +491,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             InputField(
               allowEdit: true,
               allowMultiline: false,
-              controller: controller.addressController,
+              controller: controller.mucLuongController,
               fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
               holdplacer: "Mức lương",
               hidden: false,
@@ -517,7 +517,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.addressController,
+          controller: controller.congViecPhuTrachController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Công việc phụ trách",
           hidden: false,
@@ -531,7 +531,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.addressController,
+          controller: controller.ketQuaController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Kết quả / thành tích đạt được",
           hidden: false,
@@ -541,15 +541,21 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
 
-        AddInfoButton(title: "Thêm kê khai kinh nghiệm", onPress: () {}),
+        AddInfoButton(
+            title: "Thêm kê khai kinh nghiệm",
+            onPress: () {
+              controller.themKeKhaiKinhNghiem();
+            }),
 
         // List thêm
         Column(
-          children: [
-            Padding(
+          children: List.generate(
+            controller.keKhaiKinhNghiemDisplay.length,
+            (index) => Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                  vertical: Dimensions.PADDING_SIZE_SMALL),
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_SMALL,
+              ),
               child: BoxShadowWidget(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 child: SizedBox(
@@ -557,20 +563,30 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const TextHighlight(
-                        title: "Chức vụ hiện tại: ",
-                        content: "Giám đốc",
-                      ),
                       contentPrivew(
-                          title: "Chức vụ mong muốn: ", content: "Chủ tịch"),
+                          title: "Chức vụ hiện tại: ",
+                          content:
+                              "${controller.keKhaiKinhNghiemDisplay[index]['chucVuHienTai']}"),
                       contentPrivew(
-                          title: "Năm kinh nghiệm: ", content: "100 năm"),
+                          title: "Chức vụ mong muốn: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['chucVuMongMuon']
+                              .toString()),
                       contentPrivew(
-                          title: "Mức lương đề xuất: ", content: "200000 USD"),
-                      contentPrivew(title: "Nơi làm việc: ", content: "Nhà"),
+                          title: "Số năm kinh nghiệm: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['soNamKinhNghiem']
+                              .toString()),
                       contentPrivew(
-                          title: "Ngành nghề mong muốn ứng tuyển: ",
-                          content: "Phụ hồ"),
+                          title: "Ngành nghề mong muốn: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['nganhNgheMongMuon']
+                              .toString()),
+                      contentPrivew(
+                          title: "Nơi Làm Việc: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['noiLamViec']
+                              .toString()),
                       contentPrivew(
                         title:
                             "Kê khai kinh nghiệm (kê khai rõ - cơ hội tuyển dụng lớn)",
@@ -578,22 +594,39 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
                       ),
                       contentPrivew(
                           title: "Thời gian: ",
-                          content: "12-12-1991 - 12-12-2-2021"),
-                      contentPrivew(title: "Đơn vị: ", content: "Không biết"),
-                      contentPrivew(title: "Chức vụ: ", content: "Chủ tịch"),
-                      contentPrivew(title: "Mức lương: ", content: "1000 USD"),
+                          content:
+                              "${controller.keKhaiKinhNghiemDisplay[index]['thoiGianBatDau']} - ${controller.keKhaiKinhNghiemDisplay[index]['thoiGianKetThuc']}"),
+                      contentPrivew(
+                          title: "Đơn vị: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['donVi']
+                              .toString()),
+                      contentPrivew(
+                          title: "Chức vụ: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['chucVu']
+                              .toString()),
+                      contentPrivew(
+                          title: "Mức lương: ",
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['mucLuong']
+                              .toString()),
                       contentPrivew(
                           title: "Công việc phụ trách: ",
-                          content: "Không biết"),
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['congViecPhuTrach']
+                              .toString()),
                       contentPrivew(
                           title: "Kết quả / thành tích đạt được: ",
-                          content: "VIP PRO"),
+                          content: controller.keKhaiKinhNghiemDisplay[index]
+                                  ['ketQua']
+                              .toString()),
                     ],
                   ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
 
         const Label(label: "Ảnh hồ sơ xin việc (nếu có)", obligatory: false),
@@ -608,25 +641,30 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //File hồ sơ xin việc (nếu có)
         CustomFileButton(
-          title: "Cv.pdf",
-          onTap: () {},
+          title: "Load file",
+          onTap: () {
+            controller.launchURL();
+          },
           verticalPadding: Dimensions.PADDING_SIZE_DEFAULT,
         ),
 
         //Kỹ năng và sở trường làm việc
         const Label(label: "Kỹ năng và sở trường làm việc", obligatory: false),
-        const Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxShadowWidget(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text(
-                "Kỹ năng giao tiếp tốt, sáng tạo trong công việc, làm việc độc lập, làm việc theo nhóm, giải quyết vấn đề linh hoạt, kỹ năng làm việc văn phòng, công trường, công nghệ,...",
-                style: TextStyle(
+        if (controller.kyNangSotruong != "null")
+          Container(
+            width: DeviceUtils.getScaledWidth(context, 1),
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+            child: BoxShadowWidget(
+              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+              child: Text(
+                controller.kyNangSotruong.toString(),
+                style: const TextStyle(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                )),
+                ),
+              ),
+            ),
           ),
-        ),
       ],
     );
   }

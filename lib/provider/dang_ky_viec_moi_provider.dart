@@ -123,7 +123,8 @@ class DangKyViecMoiProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DangKyViecMoiResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DangKyViecMoiResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

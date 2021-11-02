@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/bang_bang_cap_request.dart';
+import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
+import 'package:template/data/model/request/ke_khai_kinh_nghiem_request.dart';
 import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
@@ -28,6 +30,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V2WorkCreateController extends GetxController {
   // provider
@@ -70,6 +73,8 @@ class V2WorkCreateController extends GetxController {
   TextEditingController benifitController = TextEditingController();
   // Ưu tiên
   TextEditingController prioritizedController = TextEditingController();
+  // start
+  TextEditingController startTimeController = TextEditingController();
   // Hạn nộp
   TextEditingController endTimeController = TextEditingController();
   // name
@@ -82,6 +87,17 @@ class V2WorkCreateController extends GetxController {
   TextEditingController emailController = TextEditingController();
   // email
   TextEditingController amountController = TextEditingController();
+
+  // đơn vị
+  TextEditingController donViController = TextEditingController();
+  // chức vụ
+  TextEditingController chucVuController = TextEditingController();
+  // mức lương
+  TextEditingController mucLuongController = TextEditingController();
+  // công việc phụ trách
+  TextEditingController congViecPhuTrachController = TextEditingController();
+  // kết quả
+  TextEditingController ketQuaController = TextEditingController();
 
   // hon nhân refer
   final honNhanRefer = ["Độc thân", "Đã lập gia đình", "Khác"];
@@ -118,12 +134,22 @@ class V2WorkCreateController extends GetxController {
   ChuyenNganhChinhResponse? chuyenNganhChinhIndex;
   List<ChuyenNganhChinhResponse> chuyenNganhChinhList = [];
 
+  List<KeKhaiKinhNghiemRequest> keKhaiKinhNghiemRequestList = [];
+  List<Map<String, String>> keKhaiKinhNghiemDisplay = [];
+
   String tenUngVien = "";
   String gioiTinh = "";
   String ngaySinh = "";
   String dienThoai = "";
   String email = "";
   String mucTieuNgheNghiep = "";
+  String donVi = "";
+  String chucVu = "";
+  String mucLuong = "";
+  String congViecPhuTrach = "";
+  String ketQuaThanhTich = "";
+  String kyNangSotruong = "";
+  String filePath = "";
   String? honNhan;
 
   bool isLoading = true;
@@ -149,11 +175,16 @@ class V2WorkCreateController extends GetxController {
         onSuccess: (data) {
           titleController = TextEditingController(text: data.tieuDe.toString());
           mucTieuNgheNghiep = data.mucTieuNgheNghiep ?? "Không có";
+          kyNangSotruong = data.kyNangSoTruong ?? "không có";
 
           // load ảnh bằng cấp
           anhBangCap = data.idBangBangCaps!
               .map((e) => File(e.anhBangCap.toString()))
               .toList();
+
+          // reset file
+          filePath = data.fileHoSoXinViec.toString();
+
           // update
           update();
         },
@@ -359,7 +390,7 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// hình thức làm việc
+  /// thêm bằng cấp mới
   ///
   void themBangCapMoi() {
     // trinhDoIndex.tieuDe
@@ -393,7 +424,104 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// honNhanChange
+  /// thêm kê khai kinh nghiệm
+  ///
+  void themKeKhaiKinhNghiem() {
+    // trinhDoIndex.tieuDe
+
+    if (keKhaiValidate()) {
+      sl.get<SharedPreferenceHelper>().userId.then((value) {
+        keKhaiKinhNghiemRequestList.add(KeKhaiKinhNghiemRequest(
+          chucVu: chucVuController.text,
+          congViecPhuTrach: congViecPhuTrachController.text,
+          donVi: donViController.text,
+          idTaiKhoan: value.toString(),
+          ketQua: ketQuaController.text,
+          mucLuong: mucLuongController.text,
+          thoiGianBatDau:
+              startTimeController.text.split("-").reversed.toList().join("-"),
+          thoiGianKetThuc:
+              endTimeController.text.split("-").reversed.toList().join("-"),
+        ));
+
+        sl.get<SharedPreferenceHelper>().viecMoi.then((viecMoi) {
+          dangKyViecMoiProvider.update(
+            data: DangKyViecMoiRequest(
+              id: viecMoi.toString(),
+              chucVuHienTai: chucVuHienTaiIndex == null
+                  ? "..."
+                  : chucVuHienTaiIndex!.tieuDe.toString(),
+              chucVuMongMuon: chucVuMongMuonIndex == null
+                  ? "..."
+                  : chucVuMongMuonIndex!.tieuDe.toString(),
+              idSoNamKinhNghiem: soNamKinhNghiemIndex == null
+                  ? "..."
+                  : soNamKinhNghiemIndex!.id.toString(),
+              thoiGianBatDau: startTimeController.text
+                  .split("-")
+                  .reversed
+                  .toList()
+                  .join("-"),
+              thoiGianKetThuc:
+                  endTimeController.text.split("-").reversed.toList().join("-"),
+              noiLamViec: diaDiemDangKyLamViecIndex == null ||
+                      diaDiemDangKyLamViecIndex!.idTinhTp == null
+                  ? "..."
+                  : diaDiemDangKyLamViecIndex!.idTinhTp!.ten.toString(),
+            ),
+            onSuccess: (data) {},
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+          dangKyViecMoiProvider.find(
+            id: viecMoi.toString(),
+            onSuccess: (data) {
+              keKhaiKinhNghiemDisplay.add({
+                "chucVu": chucVuController.text,
+                "congViecPhuTrach": congViecPhuTrachController.text,
+                "donVi": donViController.text,
+                "idTaiKhoan": value.toString(),
+                "ketQua": ketQuaController.text,
+                "mucLuong": mucLuongController.text,
+                "thoiGianBatDau": startTimeController.text,
+                "thoiGianKetThuc": endTimeController.text,
+                "chucVuHienTai": chucVuHienTaiIndex == null
+                    ? ""
+                    : chucVuHienTaiIndex!.tieuDe.toString(),
+                "chucVuMongMuon": chucVuMongMuonIndex == null
+                    ? ""
+                    : chucVuMongMuonIndex!.tieuDe.toString(),
+                "soNamKinhNghiem": soNamKinhNghiemIndex == null
+                    ? ""
+                    : soNamKinhNghiemIndex!.tieuDe.toString(),
+                "noiLamViec": diaDiemDangKyLamViecIndex == null
+                    ? ""
+                    : diaDiemDangKyLamViecIndex!.idTinhTp.toString(),
+                "nganhNgheMongMuon": chuyenMonIndex == null
+                    ? ""
+                    : chuyenMonIndex!.tieuDe.toString(),
+              });
+              // update
+              update();
+            },
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+        });
+        update();
+      });
+    } else {
+      Get.snackbar("Thông báo", "Thời gian tốt nghiệp không được rỗng");
+    }
+    update();
+  }
+
+  ///
+  /// chức vụ hiện tại
   ///
   void onChucVuHienTaiChange(ChucVuResponse val) {
     chucVuHienTaiIndex = val;
@@ -401,7 +529,7 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// hình thức làm việc
+  /// chức vụ mong muốn
   ///
   void onChucVuMongMuonChange(ChucVuResponse val) {
     chucVuMongMuonIndex = val;
@@ -409,7 +537,7 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// trình độ
+  /// on Nam Kinh Nghiem Change
   ///
   void onNamKinhNghiemChange(SoNamKinhNghiemResponse val) {
     soNamKinhNghiemIndex = val;
@@ -417,7 +545,7 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// chuyên môn
+  /// on Muc Luong De Xuat Change
   ///
   void onMucLuongDeXuatChange(MucLuongDuKienResponse val) {
     mucLuongDuKienIndex = val;
@@ -425,7 +553,7 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// hình thức làm việc
+  /// on Noi Lam Viec Change
   ///
   void onNoiLamViecChange(DiaDiemDangKyLamViecResponse val) {
     diaDiemDangKyLamViecIndex = val;
@@ -433,11 +561,68 @@ class V2WorkCreateController extends GetxController {
   }
 
   ///
-  /// hình thức làm việc
+  /// on Nghe Nghiep Mong Muon Ung Tuyen Change
   ///
   void onNgheNghiepMongMuonUngTuyenChange(ChuyenNganhChinhResponse val) {
     chuyenNganhChinhIndex = val;
     update();
+  }
+
+  ///
+  /// onMucLuongChange
+  ///
+  void onMucLuongChange(ChuyenNganhChinhResponse val) {
+    chuyenNganhChinhIndex = val;
+    update();
+  }
+
+  ///
+  /// load file
+  ///
+  Future<void> launchURL() async => await canLaunch(filePath)
+      ? await launch(filePath)
+      : throw 'Could not launch $filePath';
+
+  ///
+  /// validate ke khai
+  ///
+  bool keKhaiValidate() {
+    if (startTimeController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Ngày bắt đầu không được rỗng");
+      return false;
+    }
+
+    if (endTimeController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Ngày kết thuc không được rỗng");
+      return false;
+    }
+
+    if (donViController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Đơn vị không được rỗng");
+      return false;
+    }
+
+    if (chucVuController.text.isEmpty) {
+      Get.snackbar("Thông báo", "kết quả / thành đát không được rỗng");
+      return false;
+    }
+
+    if (mucLuongController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Mức lương không được rỗng");
+      return false;
+    }
+
+    if (congViecPhuTrachController.text.isEmpty) {
+      Get.snackbar("Thông báo", "Công việc phụ trách không được rỗng");
+      return false;
+    }
+
+    if (ketQuaController.text.isEmpty) {
+      Get.snackbar("Thông báo", "kết quả / thành đát không được rỗng");
+      return false;
+    }
+
+    return true;
   }
 
   ///
