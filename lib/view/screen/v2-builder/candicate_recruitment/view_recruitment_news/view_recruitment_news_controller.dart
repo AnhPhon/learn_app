@@ -92,11 +92,19 @@ class V2ViewRecruitmentNewsController extends GetxController {
   //idTuyenDung
   String? idTuyenDung;
 
+  //isUngTuyen
+  bool isUngTuyen = false;
   @override
   void onInit() {
     super.onInit();
     //set data
     request = Get.arguments;
+    if (Get.parameters['isUngTuyen'] == 'true') {
+      isUngTuyen = true;
+    } else {
+      isUngTuyen = false;
+    }
+
     //load data
     getDataFrist(request: request);
     sl.get<SharedPreferenceHelper>().userId.then((value) {

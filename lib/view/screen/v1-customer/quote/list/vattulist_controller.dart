@@ -73,7 +73,6 @@ class V1VatTuListController extends GetxController {
           // run don dich vu list
           for (final ddv in donDichVuList) {
             if (ddv.idTrangThaiDonDichVu != null) {
-              print(ddv.idTrangThaiDonDichVu!.tieuDe.toString());
               if (ddv.idTrangThaiDonDichVu!.tieuDe.toString().toLowerCase() ==
                       daPhanHoiKey &&
                   !daPhanHoiDDV.contains(ddv)) {
@@ -129,6 +128,14 @@ class V1VatTuListController extends GetxController {
   void onProductResponseClick(String id) {
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: id);
     Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+  }
+
+  ///
+  /// go to Product Response
+  ///
+  void onProductNoResponseClick(String id) {
+    sl.get<SharedPreferenceHelper>().saveWorkFlow(id: id);
+    Get.toNamed(AppRoutes.V1_QUOTE_NO_RESPONSE);
   }
 
   ///
