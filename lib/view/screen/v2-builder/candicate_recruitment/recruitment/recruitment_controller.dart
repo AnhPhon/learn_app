@@ -107,6 +107,8 @@ class V2RecruitmentController extends GetxController {
   void onChangeTab({required int index}) {
     isLoading = true;
     currentIndex = index;
+    //resetNoData
+    refreshControllerList![index].resetNoData();
     getDataTuyenDung(
         loaiTin: loaiTinTuyenDung[currentIndex].id.toString(), isRefresh: true);
     update();
@@ -137,7 +139,6 @@ class V2RecruitmentController extends GetxController {
         limit: limitMax,
         filter: '&loaiTin=$loaiTin',
         onSuccess: (value) {
-          print('conditionFilter value ${value.length}');
           //check data empty
           if (value.isEmpty) {
             refreshControllerList![currentIndex].loadNoData();
@@ -242,5 +243,15 @@ class V2RecruitmentController extends GetxController {
               Navigator.of(Get.context!).pop();
             },
             child: const Text("Tìm kiếm")));
+  }
+
+  ///
+  ///onCutString
+  ///
+  String? onCutString(String text) {
+    if (text.length > 10) {
+      return '${text.substring(0, 10)}...';
+    }
+    return text;
   }
 }

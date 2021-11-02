@@ -21,7 +21,7 @@ class LoaiCongViecResponse {
   /// From JSON
   ///
   LoaiCongViecResponse.fromJson(Map<String, dynamic> json) {
-    if (json['id'] != null) id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idNhomDichVu                                                              
     if (json['idNhomDichVu'] != null && json['idNhomDichVu'].toString().length!=24) {                                                  

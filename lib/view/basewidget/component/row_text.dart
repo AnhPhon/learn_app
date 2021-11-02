@@ -22,7 +22,7 @@ class RowText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_SMALL,
-          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,),
       child: DefaultTextStyle(
         style: TextStyle(
             fontWeight: notFontWeight == true ? null : FontWeight.w600,
@@ -33,12 +33,12 @@ class RowText extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text1, textAlign: TextAlign.center),
+            Text(text1, textAlign: TextAlign.left),
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_SMALL,
             ),
             Text(text2,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
                 style: colorRed == true
                     ? const TextStyle(color: ColorResources.RED)
                     : null),

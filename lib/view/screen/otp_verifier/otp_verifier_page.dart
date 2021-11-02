@@ -165,56 +165,66 @@ class OTPVerifierPage extends GetView<OTPVerifierController> {
   /// _usernameEnterWidget
   ///
   Widget _usernameEnterWidget(BuildContext context) {
-    return Container(
-        width: DeviceUtils.getScaledWidth(context, 0.5),
+    return SizedBox(
+        width: DeviceUtils.getScaledWidth(context, 0.7),
         height: 58,
-        child: PinCodeTextField(
-          appContext: context,
-          pastedTextStyle: TextStyle(
-            color: Colors.green.shade600,
-            fontWeight: FontWeight.bold,
+        child: Form(
+          key: controller.formKey,
+          child: PinCodeTextField(
+            validator: (val){
+              if (val!.length < 6) {
+                return "";
+              } else {
+                return null;
+              }
+            },
+            appContext: context,
+            pastedTextStyle: TextStyle(
+              color: Colors.green.shade600,
+              fontWeight: FontWeight.bold,
+            ),
+            length: 6,
+            obscureText: true,
+            obscuringCharacter: '*',
+            // obscuringWidget: FlutterLogo(
+            //   size: 24,
+            // ),
+            blinkWhenObscuring: true,
+            animationType: AnimationType.fade,
+            pinTheme: PinTheme(
+              shape: PinCodeFieldShape.box,
+              borderRadius: BorderRadius.circular(5),
+              fieldHeight: 50,
+              fieldWidth: 40,
+              activeFillColor: Colors.white,
+            ),
+            cursorColor: Colors.black,
+            animationDuration: const Duration(milliseconds: 300),
+            enableActiveFill: true,
+            errorAnimationController: controller.errorController,
+            controller: controller.textEditingController,
+            keyboardType: TextInputType.number,
+            // ignore: prefer_const_literals_to_create_immutables
+            boxShadows: [
+              const BoxShadow(
+                offset: Offset(0, 1),
+                color: Colors.black12,
+                blurRadius: 10,
+              )
+            ],
+            onCompleted: (v) {
+              // print("Completed $v");
+              controller.onBtnCompleteTap();
+            }, 
+            onChanged: (value) {
+            },
+            beforeTextPaste: (text) {
+              // print("Allowing to paste $text");
+              //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+              //but you can show anything you want here, like your pop up saying wrong paste format or etc
+              return true;
+            },
           ),
-          length: 4,
-          obscureText: true,
-          obscuringCharacter: '*',
-          // obscuringWidget: FlutterLogo(
-          //   size: 24,
-          // ),
-          blinkWhenObscuring: true,
-          animationType: AnimationType.fade,
-          pinTheme: PinTheme(
-            shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(5),
-            fieldHeight: 50,
-            fieldWidth: 40,
-            activeFillColor: Colors.white,
-          ),
-          cursorColor: Colors.black,
-          animationDuration: const Duration(milliseconds: 300),
-          enableActiveFill: true,
-          errorAnimationController: controller.errorController,
-          controller: controller.textEditingController,
-          keyboardType: TextInputType.number,
-          // ignore: prefer_const_literals_to_create_immutables
-          boxShadows: [
-            const BoxShadow(
-              offset: Offset(0, 1),
-              color: Colors.black12,
-              blurRadius: 10,
-            )
-          ],
-          onCompleted: (v) {
-            // print("Completed $v");
-            controller.onBtnCompleteTap();
-          }, 
-          onChanged: (value) {
-          },
-          beforeTextPaste: (text) {
-            // print("Allowing to paste $text");
-            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-            //but you can show anything you want here, like your pop up saying wrong paste format or etc
-            return true;
-          },
         ));
   }
 

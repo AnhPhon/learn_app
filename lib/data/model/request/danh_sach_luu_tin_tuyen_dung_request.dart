@@ -12,7 +12,7 @@ class DanhSachLuuTinTuyenDungRequest {
   /// From JSON
   ///
   DanhSachLuuTinTuyenDungRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idTuyenDung = json['idTuyenDung'].toString();
   }

@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/chuyen_nganh_chinh_repository.dart';
 
 class ChuyenNganhChinhProvider {
-  ChuyenNganhChinhRepository? repository = GetIt.I.get<ChuyenNganhChinhRepository>();
+  ChuyenNganhChinhRepository? repository =
+      GetIt.I.get<ChuyenNganhChinhRepository>();
 
   ChuyenNganhChinhProvider();
 
@@ -13,7 +14,8 @@ class ChuyenNganhChinhProvider {
   /// Get all chuyenNganhChinhs
   ///
   Future<void> all({
-    required Function(List<ChuyenNganhChinhResponse> chuyenNganhChinhs) onSuccess,
+    required Function(List<ChuyenNganhChinhResponse> chuyenNganhChinhs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class ChuyenNganhChinhProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ChuyenNganhChinhResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              ChuyenNganhChinhResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class ChuyenNganhChinhProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class ChuyenNganhChinhProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class ChuyenNganhChinhProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChuyenNganhChinhRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class ChuyenNganhChinhProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ChuyenNganhChinhResponse> chuyenNganhChinhs) onSuccess,
+    required Function(List<ChuyenNganhChinhResponse> chuyenNganhChinhs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class ChuyenNganhChinhProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => ChuyenNganhChinhResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              ChuyenNganhChinhResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class ChuyenNganhChinhProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChuyenNganhChinhResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChuyenNganhChinhResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

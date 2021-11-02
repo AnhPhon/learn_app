@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
@@ -29,6 +30,18 @@ class ImageUpdateRepository {
   Future<ApiResponse> add(File file) async {
     try {
       final response = await dioClient!.uploadImage('/uploads', file: file);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Insert import-ware-house to database
+  ///
+  Future<ApiResponse> addFile(PlatformFile file) async {
+    try {
+      final response = await dioClient!.uploadFile('/uploads', file: file);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

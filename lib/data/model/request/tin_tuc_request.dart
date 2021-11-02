@@ -24,7 +24,7 @@ class TinTucRequest {
   /// From JSON
   ///
   TinTucRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     loai = json['loai'].toString();
     idDanhMucTinTuc = json['idDanhMucTinTuc'].toString();
     tacGia = json['tacGia'].toString();

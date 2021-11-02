@@ -12,7 +12,7 @@ class KhoHangRequest {
   /// From JSON
   ///
   KhoHangRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idDuAnNhanVien = json['idDuAnNhanVien'].toString();
     tenKho = json['tenKho'].toString();
   }

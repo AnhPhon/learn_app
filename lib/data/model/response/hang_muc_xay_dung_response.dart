@@ -18,7 +18,7 @@ class HangMucXayDungResponse {
   /// From JSON
   ///
   HangMucXayDungResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tieuDe = json['tieuDe'].toString();
     hinhAnh = json['hinhAnh'].toString();
 

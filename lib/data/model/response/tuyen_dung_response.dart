@@ -53,6 +53,7 @@ class TuyenDungResponse {
   String? idTrangThaiTuyenDung;
   String? thoiGianThuViec;
   String? hinhAnhDaiDien;
+  bool? isUngTuyen;
 
   String? createdAt;
   String? updatedAt;
@@ -98,6 +99,7 @@ class TuyenDungResponse {
       this.thoiGianThuViec,
       this.idChuyenNganhPhus,
       this.hinhAnhDaiDien,
+      this.isUngTuyen,
       this.createdAt,
       this.updatedAt});
 
@@ -105,7 +107,7 @@ class TuyenDungResponse {
   /// From JSON
   ///
   TuyenDungResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTaiKhoan
     if (json['idTaiKhoan'] != null &&
@@ -399,6 +401,9 @@ class TuyenDungResponse {
 
     // check null tongDon
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null tongDon
+    if (isUngTuyen != null) data['isUngTuyen'] = isUngTuyen;
+
     if (idTrangThaiTuyenDung != null)
       data['idTrangThaiTuyenDung'] = idTrangThaiTuyenDung;
 

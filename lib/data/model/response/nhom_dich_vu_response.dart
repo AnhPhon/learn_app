@@ -18,7 +18,7 @@ class NhomDichVuResponse {
   /// From JSON
   ///
   NhomDichVuResponse.fromJson(Map<String, dynamic> json) {
-    if (json['id'] != null) id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     tenDichVu = json['tenDichVu'].toString();
     nhomDichVu = json['nhomDichVu'].toString();

@@ -231,8 +231,8 @@ class V1VatTuListPage extends GetView<V1VatTuListController> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              controller
-                  .onProductResponseClick(controller.chuaPhanHoiDDV[index].id!);
+              controller.onProductNoResponseClick(
+                  controller.chuaPhanHoiDDV[index].id!);
             },
             child: Container(
               margin: const EdgeInsets.symmetric(
