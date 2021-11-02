@@ -151,7 +151,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///drawing
   ///
   Widget drawing({required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanVe!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,

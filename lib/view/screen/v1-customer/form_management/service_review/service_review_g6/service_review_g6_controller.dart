@@ -32,11 +32,12 @@ class V1ServiceReviewG6Controller extends GetxController{
       donDichVuResponse = Get.arguments as DonDichVuResponse;
     }
         // lấy hình ảnh bảng vẽ
-    for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
-      if (banVe.trim().isNotEmpty) {
-        hinhAnhBanVe.add(banVe);
-      }
-    }
+        hinhAnhBanVe = donDichVuResponse.hinhAnhBanVes!;
+    // for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
+    //   if (banVe.trim().isNotEmpty) {
+    //     hinhAnhBanVe.add(banVe);
+    //   }
+    // }
     thoiGianLamViec();
     getThongSoKyThuat();
   }

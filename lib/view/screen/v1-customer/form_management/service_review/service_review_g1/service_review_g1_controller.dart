@@ -24,11 +24,12 @@ class V1ServiceReviewG1Controller extends GetxController {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
     }
     // lấy hình ảnh bảng vẽ
-    for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
-      if (banVe.trim().isNotEmpty) {
-        hinhAnhBanVe.add(banVe);
-      }
-    }
+    hinhAnhBanVe = donDichVuResponse.hinhAnhBanVes!;
+    // for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
+    //   if (banVe.trim().isNotEmpty) {
+    //     hinhAnhBanVe.add(banVe);
+    //   }
+    // }
     getVatTu();
   }
 

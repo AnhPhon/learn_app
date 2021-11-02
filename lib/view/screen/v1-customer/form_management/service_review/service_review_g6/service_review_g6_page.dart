@@ -192,7 +192,7 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
   ///hinhAnhBanVe
   ///
   Widget hinhAnhBanVe({required V1ServiceReviewG6Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanVe!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
