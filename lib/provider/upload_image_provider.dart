@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/image_model.dart';
@@ -39,6 +40,25 @@ class ImageUpdateProvider {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await regionRepo!.add(file);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      onSuccess(ImageUpdateModel.fromJson(results as Map<String, dynamic>));
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// Insert UploadImage to database
+  ///
+  Future<void> addFile({
+    required PlatformFile file,
+    required Function(ImageUpdateModel uploadImage) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse = await regionRepo!.addFile(file);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -103,7 +123,9 @@ class ImageUpdateProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
           .map((e) => ImageUpdateModel.fromJson(e as Map<String, dynamic>))
           .toList());

@@ -159,6 +159,7 @@ class RechargeController extends GetxController {
           lichSuViTienRequest.soTien = soTienToiThieu.toString();
           lichSuViTienRequest.hinhAnhHoaDon = image.data;
           lichSuViTienRequest.trangThai = "1";
+          lichSuViTienRequest.type = '0';
 
           final Map<String, dynamic> param = {
             'type': 2,

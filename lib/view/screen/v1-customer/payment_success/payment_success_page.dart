@@ -56,6 +56,7 @@ class V1PaymentSuccessPage extends GetView<V1PaymentSuccessController> {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,

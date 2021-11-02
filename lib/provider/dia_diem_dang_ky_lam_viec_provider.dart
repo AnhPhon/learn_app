@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/dia_diem_dang_ky_lam_viec_repository.dart';
 
 class DiaDiemDangKyLamViecProvider {
-  DiaDiemDangKyLamViecRepository? repository = GetIt.I.get<DiaDiemDangKyLamViecRepository>();
+  DiaDiemDangKyLamViecRepository? repository =
+      GetIt.I.get<DiaDiemDangKyLamViecRepository>();
 
   DiaDiemDangKyLamViecProvider();
 
@@ -13,7 +14,8 @@ class DiaDiemDangKyLamViecProvider {
   /// Get all diaDiemDangKyLamViecs
   ///
   Future<void> all({
-    required Function(List<DiaDiemDangKyLamViecResponse> diaDiemDangKyLamViecs) onSuccess,
+    required Function(List<DiaDiemDangKyLamViecResponse> diaDiemDangKyLamViecs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class DiaDiemDangKyLamViecProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DiaDiemDangKyLamViecResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              DiaDiemDangKyLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -34,7 +37,8 @@ class DiaDiemDangKyLamViecProvider {
   ///
   Future<void> add({
     required DiaDiemDangKyLamViecRequest data,
-    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec) onSuccess,
+    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -42,7 +46,8 @@ class DiaDiemDangKyLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -53,7 +58,8 @@ class DiaDiemDangKyLamViecProvider {
   ///
   Future<void> update({
     required DiaDiemDangKyLamViecRequest data,
-    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec) onSuccess,
+    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -61,7 +67,8 @@ class DiaDiemDangKyLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -72,7 +79,8 @@ class DiaDiemDangKyLamViecProvider {
   ///
   Future<void> delete({
     required String id,
-    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec) onSuccess,
+    required Function(DiaDiemDangKyLamViecRequest diaDiemDangKyLamViec)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.delete(id);
@@ -80,7 +88,8 @@ class DiaDiemDangKyLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(DiaDiemDangKyLamViecRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +102,8 @@ class DiaDiemDangKyLamViecProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DiaDiemDangKyLamViecResponse> diaDiemDangKyLamViecs) onSuccess,
+    required Function(List<DiaDiemDangKyLamViecResponse> diaDiemDangKyLamViecs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +111,12 @@ class DiaDiemDangKyLamViecProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => DiaDiemDangKyLamViecResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              DiaDiemDangKyLamViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +128,8 @@ class DiaDiemDangKyLamViecProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(DiaDiemDangKyLamViecResponse diaDiemDangKyLamViec) onSuccess,
+    required Function(DiaDiemDangKyLamViecResponse diaDiemDangKyLamViec)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +137,8 @@ class DiaDiemDangKyLamViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DiaDiemDangKyLamViecResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(DiaDiemDangKyLamViecResponse.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

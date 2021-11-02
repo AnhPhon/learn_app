@@ -6,19 +6,21 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
-import 'package:template/data/model/response/phan_hoi_don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/snack_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V2WorkDoneController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   PhanHoiDonDichVuProvider phanHoiDonDichVuProvider =
       GetIt.I.get<PhanHoiDonDichVuProvider>();
+  TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
 
   //Khai báo isLoading
   bool isLoading = true;
@@ -147,7 +149,7 @@ class V2WorkDoneController extends GetxController {
           }
 
           if (data.khachHangDanhGia.toString() == "null" ||
-              data.khachHangDanhGia!.isEmpty) {
+              data.khachHangDanhGia.toString().isEmpty) {
             isKhachHangDisable = true;
             customerReviews = TextEditingController(text: "");
           } else {
@@ -249,28 +251,19 @@ class V2WorkDoneController extends GetxController {
   void onCustomerReviewSubmit() {
     if (_customerReviewValidate()) {
       sl.get<SharedPreferenceHelper>().userId.then((userId) {
-        sl
-            .get<SharedPreferenceHelper>()
-            .phanHoiDonDichVuId
-            .then((phanHoiDonDichVuId) {
-          phanHoiDonDichVuProvider.update(
-            data: PhanHoiDonDichVuRequest(
-              idTaiKhoan: userId,
-              khachHangDanhGia: customerReviews!.text,
-              id: phanHoiDonDichVuId,
-            ),
-            onSuccess: (data) {
-              sl.get<SharedPreferenceHelper>().savePhanHoiDonDichVuId(data.id!);
-            },
-            onError: (error) {
-              print(
-                "TermsAndPolicyController getTermsAndPolicy onError $error",
-              );
-            },
-          );
-        });
+        // number connect
+        taiKhoanProvider.find(
+          id: userId!,
+          onSuccess: (user) {
+            btnContact(url: "tel:${user.soDienThoai!}");
+          },
+          onError: (error) {
+            print(
+              "TermsAndPolicyController getTermsAndPolicy onError $error",
+            );
+          },
+        );
       });
-      Get.snackbar("Thông báo", "Gửi ý kiến khách hành thành công");
     }
   }
 
@@ -321,6 +314,17 @@ class V2WorkDoneController extends GetxController {
     files.removeWhere((element) => element.hashCode == file.hashCode);
     Get.snackbar("Xoá", "Xoá ảnh thành công");
     update();
+  }
+
+  ///
+  /// btn contact
+  ///
+  Future<void> btnContact({required String url}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'btnContact Could not launch $url';
+    }
   }
 
   ///
