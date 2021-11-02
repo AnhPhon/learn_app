@@ -5,8 +5,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
 import 'package:template/view/screen/v1-customer/account/profile/contract/contract_controller.dart';
-import 'package:template/view/screen/v1-customer/account/profile/contract/contract_specification.dart';
 
 class V1ContractPage extends GetView<V1ContractController> {
   @override
@@ -47,7 +47,7 @@ class V1ContractPage extends GetView<V1ContractController> {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE,
+        vertical: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
         title,
@@ -60,8 +60,8 @@ class V1ContractPage extends GetView<V1ContractController> {
   ///content
   ///
   Widget _content({required V1ContractController controller}) {
-    return ContractSpecification(
-      contractSpecification:
+    return Specification(
+      specification:
           controller.thongTinDangKyHopDongResponse!.noiDung.toString(),
     );
   }
@@ -72,11 +72,15 @@ class V1ContractPage extends GetView<V1ContractController> {
   Widget _bottomContract(BuildContext context,
       {required V1ContractController controller}) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, .25),
+      height: DeviceUtils.getScaledHeight(context, .27),
       color: ColorResources.WHITE,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+          ),
+
           //rules 1
           CheckboxListTile(
             checkColor: ColorResources.WHITE,
@@ -99,9 +103,7 @@ class V1ContractPage extends GetView<V1ContractController> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
 
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_SMALL,
-          ),
+          const Spacer(),
 
           //btn accept
           BtnCustom(
@@ -112,7 +114,7 @@ class V1ContractPage extends GetView<V1ContractController> {
           ),
 
           const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
+            height: Dimensions.MARGIN_SIZE_SMALL,
           ),
         ],
       ),

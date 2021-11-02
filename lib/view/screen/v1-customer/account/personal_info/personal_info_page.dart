@@ -120,6 +120,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                           allowEdit: false,
                           isBorder: false,
                           obligatory: true,
+                          isddMMyyyy: true,
                           textInputAction: TextInputAction.next,
                         ),
 

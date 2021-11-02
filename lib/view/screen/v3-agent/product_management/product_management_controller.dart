@@ -86,16 +86,18 @@ class V3ProductManagementController extends GetxController
   ///
   void listenerTabController() {
     //listen Tab
-    tabController!.addListener(() {
-      //check call fisrt times
-      if (tabController!.indexIsChanging) {
-        isLoadingProduct = true;
-        update();
+    tabController!.addListener(
+      () {
+        //check call fisrt times
+        if (tabController!.indexIsChanging) {
+          isLoadingProduct = true;
+          update();
 
-        //get product by idCategory
-        getProductByIdCategory(isRefresh: true);
-      }
-    });
+          //get product by idCategory
+          getProductByIdCategory(isRefresh: true);
+        }
+      },
+    );
   }
 
   ///

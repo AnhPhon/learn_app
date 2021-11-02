@@ -7,6 +7,7 @@ import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart'
 import 'package:template/di_container.dart';
 import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3WarehouseController extends GetxController {
@@ -157,5 +158,12 @@ class V3WarehouseController extends GetxController {
   Future<void> onLoading() async {
     //get product more
     getProductByIdKhoHang(isRefresh: false);
+  }
+
+  ///
+  ///go to to receive page
+  ///
+  void onToReceiveClick() {
+    Get.toNamed(AppRoutes.V3_TO_RECEIVE);
   }
 }

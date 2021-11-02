@@ -61,6 +61,9 @@ class V3ProductAddController extends GetxController {
   List<LoaiVanChuyenResponse> loaiVanChuyenList = [];
   LoaiVanChuyenResponse? loaiVanChuyenResponse;
 
+  //TinhTrangSanPham
+  String? tinhTrangSanPham;
+
   //TextEditingController
   TextEditingController name = TextEditingController();
   TextEditingController branch = TextEditingController();
@@ -148,6 +151,14 @@ class V3ProductAddController extends GetxController {
         print("V3ProductAddController getShippingMethod onError $error");
       },
     );
+  }
+
+  ///
+  ///onchanged tinh trang san pham
+  ///
+  void onchangedTinhTrangSanPham(String? value) {
+    tinhTrangSanPham = value;
+    update();
   }
 
   ///
@@ -254,6 +265,7 @@ class V3ProductAddController extends GetxController {
       nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
       nhapKhoHangDaiLyRequest.idTaiKhoan = userId;
       nhapKhoHangDaiLyRequest.soLuong = stock.text;
+      nhapKhoHangDaiLyRequest.tinhTrangSanPham = tinhTrangSanPham;
 
       //check product already exits
       nhapKhoHangDaiLyProvider.paginate(

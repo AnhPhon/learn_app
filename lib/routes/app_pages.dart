@@ -214,6 +214,7 @@ import 'package:template/view/screen/v3-agent/quote/response/quote_response_page
 import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
 import 'package:template/view/screen/v3-agent/store/store_page.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
+import 'package:template/view/screen/v3-agent/warehouse/to_receive/to_receive_page.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
@@ -973,6 +974,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_DETAIL,
       page: () => V3ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TO_RECEIVE,
+      page: () => V3ToReceivePage(),
     ),
     // Xem trươc đánh văn bản
     GetPage(

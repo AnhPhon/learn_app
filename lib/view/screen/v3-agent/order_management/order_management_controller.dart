@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -188,6 +187,8 @@ class V3OrderManagementController extends GetxController
     tabController!.addListener(() {
       //check call fisrt times
       if (tabController!.indexIsChanging) {
+        //reset no data
+        refreshController![tabController!.index].resetNoData();
         isLoadingOrder = true;
         update();
 

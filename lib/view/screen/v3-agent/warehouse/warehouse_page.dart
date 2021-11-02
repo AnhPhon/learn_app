@@ -7,7 +7,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
@@ -51,7 +50,6 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 ),
 
                 //item
-
                 Expanded(
                   child: (controller.khoHangDaiLyList.isEmpty)
                       ? Center(
@@ -65,6 +63,7 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 ),
               ],
             ),
+            floatingActionButton: actionButton(controller: controller),
           );
         });
   }
@@ -206,6 +205,48 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
               ),
             );
           }),
+    );
+  }
+
+  ///
+  ///floatingActionButton
+  ///
+  Widget actionButton({required V3WarehouseController controller}) {
+    return InkWell(
+      onTap: () => controller.onToReceiveClick(),
+      child: Material(
+        color: ColorResources.LIGHT_SKY_BLUE,
+        elevation: 5,
+        borderRadius: BorderRadius.circular(50),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            padding: const EdgeInsets.all(
+              Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
+            decoration: const BoxDecoration(
+              color: ColorResources.PRIMARY,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: Dimensions.ICON_SIZE_LARGE,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: Text(
+              "Nhập kho",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+              ),
+            ),
+          ),
+        ]),
+      ),
     );
   }
 }

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:template/data/model/request/kho_hang_dai_ly_request.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
 import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
+import 'package:template/data/model/response/kho_hang_model.dart';
 import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
 import 'package:template/data/model/response/nhom_cua_hang_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
@@ -159,17 +160,33 @@ class V3StoreInfomationController extends GetxController {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //getMatHangDacTrung
-    getMatHangDacTrung();
+    taiKhoanProvider.find(
+      id: userId,
+      onSuccess: (data) {
+        taiKhoanResponse = data;
+        //mapping hinhAnhCuaHang
+        if (data.hinhAnhCuaHangs!.isNotEmpty) {
+          urlImage = data.hinhAnhCuaHangs!;
+        }
 
-    //getNhomCuaHang
-    getNhomCuaHang();
+        //getNhomCuaHang
+        getNhomCuaHang();
 
-    //getTinhTp
-    getTinhTp();
+        //getMatHangDacTrung
+        getMatHangDacTrung();
 
-    //getKhoHang
-    getKhoHangDaiLy();
+        //getTinhTp
+        getTinhTp();
+
+        //getKhoHang
+        getKhoHangDaiLy();
+
+        update();
+      },
+      onError: (error) {
+        print("V3StoreInfomationController getUserInfomation onError $error");
+      },
+    );
   }
 
   ///
@@ -257,39 +274,21 @@ class V3StoreInfomationController extends GetxController {
     matHangDacTrungProvider.all(
       onSuccess: (value) {
         matHangDacTrungList = value;
+
+        //binding data TextEditingController
+        nameController.text = taiKhoanResponse.hoTen.toString();
+        legalRepresentativeController.text =
+            taiKhoanResponse.tenPhapLy.toString();
+        phoneController.text = taiKhoanResponse.soDienThoai.toString();
+        emailController.text = taiKhoanResponse.email ?? "";
+        addressController.text = taiKhoanResponse.diaChi.toString();
+
+        taiKhoanResponse.idMatHangDacTrungs!
+            .map((e) => matHangDacTrungResponse.add(e.id))
+            .toList();
+
+        isLoading = false;
         update();
-
-        //get user infomation
-        taiKhoanProvider
-            .find(
-          id: userId,
-          onSuccess: (value) {
-            //binding data TextEditingController
-            taiKhoanResponse = value;
-            nameController.text = value.hoTen.toString();
-            legalRepresentativeController.text = value.tenPhapLy.toString();
-            phoneController.text = value.soDienThoai.toString();
-            emailController.text = value.email ?? "";
-            addressController.text = value.diaChi.toString();
-
-            value.idMatHangDacTrungs!
-                .map((e) => matHangDacTrungResponse.add(e.id))
-                .toList();
-            print('phuong ${matHangDacTrungResponse[0]!.toString()}');
-            print('phuong 1 ${matHangDacTrungList[0]!.toString()}');
-            update();
-          },
-          onError: (error) {
-            print(
-                "V3StoreInfomationController getUserInfomation onError $error");
-          },
-        )
-            .then(
-          (value) {
-            isLoading = false;
-            update();
-          },
-        );
       },
       onError: (error) {
         print("V3StoreInfomationController getMatHangDacTrung onError $error");
@@ -656,6 +655,7 @@ class V3StoreInfomationController extends GetxController {
       file: image,
       onSuccess: (value) {
         urlImage.add(value.data.toString());
+        update();
       },
       onError: (error) {
         print("V3StoreInfomationController uploadImage onError $error");
@@ -727,8 +727,12 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.soDienThoai = phoneController.text;
       taiKhoanRequest.email = emailController.text;
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
-      taiKhoanRequest.idMatHangDacTrungs!.addAll(matHangDacTrungResponse as List<String>);
-      // matHangDacTrungResponse.map((e) => e.toString()).toList();
+      matHangDacTrungResponse.map(
+        (element) {
+          taiKhoanRequest.idMatHangDacTrungs = [];
+          taiKhoanRequest.idMatHangDacTrungs!.add(element.toString());
+        },
+      ).toList();
 
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =
@@ -844,7 +848,7 @@ class V3StoreInfomationController extends GetxController {
   ///convert string to timeOfDay
   ///
   String timeDiff(String tod0, String tod1) {
-    final format = DateFormat.jm(); //"6:00 AM"
+    final format = DateFormat.jm();
     final timeFormat0 = TimeOfDay.fromDateTime(format.parse(tod0));
     final timeFormat1 = TimeOfDay.fromDateTime(format.parse(tod1));
     return ((abc(timeFormat1) - abc(timeFormat0)).toStringAsFixed(2))
@@ -852,27 +856,4 @@ class V3StoreInfomationController extends GetxController {
   }
 
   double abc(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
-}
-
-class KhoHangModel {
-  String? idKhoHang;
-  TextEditingController? warehouseAddress = TextEditingController();
-  TextEditingController? warehouseName = TextEditingController();
-  TinhTpResponse? tinhTpResponse;
-  QuanHuyenResponse? quanHuyenResponse;
-  PhuongXaResponse? phuongXaResponse;
-  List<TinhTpResponse>? tinhTpList;
-  List<QuanHuyenResponse>? quanHuyenList;
-  List<PhuongXaResponse>? phuongXaList;
-  KhoHangModel({
-    this.idKhoHang,
-    this.warehouseAddress,
-    this.warehouseName,
-    this.tinhTpResponse,
-    this.quanHuyenResponse,
-    this.phuongXaResponse,
-    this.tinhTpList,
-    this.quanHuyenList,
-    this.phuongXaList,
-  });
 }

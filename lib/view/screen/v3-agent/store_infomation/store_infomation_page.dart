@@ -136,7 +136,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       ),
                       onConfirm: (List<String?> results) {
                         controller.matHangDacTrungResponse = results;
-                        print(controller.matHangDacTrungResponse);
                       },
                     ),
                   ),
@@ -270,7 +269,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
         const Label(
           label: "Địa điểm cửa hàng chính",
           obligatory: true,
-          paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
           topPadding: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         const Padding(
@@ -410,6 +408,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 hint: "Chọn tỉnh khác",
                 width: .4,
                 isBorder: false,
+                fillColor: Colors.transparent,
               ),
             ],
           ),
@@ -429,6 +428,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 hint: "Quận/Huyện",
                 width: .4,
                 isBorder: false,
+                fillColor: Colors.transparent,
               ),
               DropDownButton1<PhuongXaResponse>(
                 data: ward,
@@ -439,6 +439,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                 hint: "Phường/xã",
                 width: .4,
                 isBorder: false,
+                fillColor: Colors.transparent,
               ),
             ],
           ),
@@ -492,7 +493,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                 flex: 5,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  // crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     //label
                     Text(
@@ -507,7 +508,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                     //filed
                     InputWidget(
                       height: .06,
-                      width: .34,
+                      width: .35,
                       textEditingController: controller.startController,
                       isTime: true,
                       allowEdit: false,
@@ -522,7 +523,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               Expanded(
                   flex: 5,
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       //label
@@ -538,7 +538,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       //filed
                       InputWidget(
                         height: .06,
-                        width: .34,
+                        width: .35,
                         textEditingController: controller.endController,
                         isTime: true,
                         allowEdit: false,
@@ -588,7 +588,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   obligatory: false,
                   topPadding: 0,
                   horizontalPadding: 0,
-                  paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                 ),
 
                 //btn remove
@@ -630,6 +629,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
               value: controller.khoHangModelList[index].tinhTpResponse,
               width: .4,
               isBorder: false,
+              fillColor: Colors.transparent,
             ),
 
             //district & ward
@@ -644,6 +644,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   value: controller.khoHangModelList[index].quanHuyenResponse,
                   width: .4,
                   isBorder: false,
+                  fillColor: Colors.transparent,
                 ),
                 DropDownButton1<PhuongXaResponse>(
                   hint: "Phường/xã",
@@ -653,13 +654,13 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   value: controller.khoHangModelList[index].phuongXaResponse,
                   width: .4,
                   isBorder: false,
+                  fillColor: Colors.transparent,
                 ),
               ],
             ),
 
             //warehouse address
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 //title
                 Text(
@@ -691,7 +692,6 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
 
             //warehouse name
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 //title
                 Text(
@@ -832,11 +832,11 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///
   Widget _uploadImage(
       BuildContext context, V3StoreInfomationController controller) {
-    return ImageListHorizontalAdd<File>(
+    return ImageListHorizontalAdd(
       label: "Hình ảnh cửa hàng",
       labelBold: true,
       pickImage: () => controller.pickImage(),
-      imageFileList: controller.fileImageList,
+      imageFileList: controller.urlImage,
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
         horizontal: Dimensions.PADDING_SIZE_SMALL,
