@@ -36,6 +36,9 @@ class TaiKhoanRequest {
   String? diaDiemCuaHangChinh;
   List<String>? hinhAnhCuaHangs;
   String? diaDiemCuThe;
+  String? hinhAnhKhuonMat;
+  String? registerToken;
+  String? otp;
 
   TaiKhoanRequest({
     this.id,
@@ -75,6 +78,9 @@ class TaiKhoanRequest {
     this.diaDiemCuaHangChinh,
     this.hinhAnhCuaHangs,
     this.diaDiemCuThe,
+    this.hinhAnhKhuonMat,
+    this.registerToken,
+    this.otp
   });
 
   ///
@@ -122,6 +128,9 @@ class TaiKhoanRequest {
         .map((e) => e as String)
         .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
+    hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
+    registerToken = json['registerToken'].toString();
+    otp = json['otp'].toString();
   }
 
   ///
@@ -242,7 +251,9 @@ class TaiKhoanRequest {
 
     // check null diaDiemCuThe
     if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
-
+    if (hinhAnhKhuonMat != null) data['hinhAnhKhuonMat'] = hinhAnhKhuonMat;
+    if (registerToken != null) data['registerToken'] = registerToken;
+    if (otp != null) data['otp'] = otp;
     return data;
   }
 }

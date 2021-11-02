@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/view/screen/forgot_password/forgot_password_page.dart';
 import 'package:template/view/screen/introduction/introduction_page.dart';
+import 'package:template/view/screen/login/employee/login_employee_page.dart';
 import 'package:template/view/screen/login/login_page.dart';
 import 'package:template/view/screen/otp_verifier/otp_verifier_page.dart';
 import 'package:template/view/screen/payment/order_infomation/order_infomation_page.dart';
@@ -247,7 +248,6 @@ import 'package:template/view/screen/v4-employee/timekeeping/timekeeping_page.da
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_binding.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_progress_page.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_binding.dart';
-import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_controller.dart';
 import 'package:template/view/screen/v4-employee/work_progress/work_status/new_work/new_work_page.dart';
 
 import 'app_routes.dart';
@@ -269,6 +269,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.LOGIN,
       page: () => LoginPage(),
+    ),
+    // auth
+    GetPage(
+      name: AppRoutes.LOGIN_EMPLOYEE,
+      page: () => LoginEmployeePage(),
     ),
     GetPage(
       name: AppRoutes.FORGOT_PASSWORD,

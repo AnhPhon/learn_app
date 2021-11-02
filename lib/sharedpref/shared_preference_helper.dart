@@ -138,6 +138,42 @@ class SharedPreferenceHelper {
   Future<bool> removeUserId() async {
     return _sharedPreference.remove(Preferences.userId);
   }
+  // type Account: ----------------------------------------------------------
+  Future<String?> get typeAccount async {
+    return _sharedPreference.getString(Preferences.typeAccount);
+  }
+
+  Future<bool> saveTypeAccount(String typeAccount) async {
+    return _sharedPreference.setString(Preferences.typeAccount, typeAccount);
+  }
+
+  Future<bool> removeTypeAccount() async {
+    return _sharedPreference.remove(Preferences.typeAccount);
+  }
+  // Reset password token: ----------------------------------------------------------
+  Future<String?> get resetPasswordToken async {
+    return _sharedPreference.getString(Preferences.resetPasswordToken);
+  }
+
+  Future<bool> saveResetPasswordToken(String resetPasswordToken) async {
+    return _sharedPreference.setString(Preferences.resetPasswordToken, resetPasswordToken);
+  }
+
+  Future<bool> removeResetPasswordToken() async {
+    return _sharedPreference.remove(Preferences.resetPasswordToken);
+  }
+  // remember password : ----------------------------------------------------------
+  Future<bool?> get rememberAccount async {
+    return _sharedPreference.getBool(Preferences.remember);
+  }
+
+  Future<bool> saveRememberAccount(bool remember) async {
+    return _sharedPreference.setBool(Preferences.remember, remember);
+  }
+
+  Future<bool> removeRememberAccount() async {
+    return _sharedPreference.remove(Preferences.remember);
+  }
 
   // ProvinceId: ----------------------------------------------------------
   Future<String?> get provinceId async {
@@ -310,18 +346,5 @@ class SharedPreferenceHelper {
 
   Future<bool> removeIdNewWork() async {
     return _sharedPreference.remove(Preferences.idNewWork);
-  }
-
-  // report id : -----------------------------------------------
-  Future<String?> get idReport async {
-    return _sharedPreference.getString(Preferences.idReport);
-  }
-
-  Future<bool> saveIdReport({required String id}) async {
-    return _sharedPreference.setString(Preferences.idReport, id);
-  }
-
-  Future<bool> removeIdReport() async {
-    return _sharedPreference.remove(Preferences.idReport);
   }
 }

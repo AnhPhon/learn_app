@@ -7,6 +7,7 @@ class AppRoutes {
   static const String OTP_VERIFIER = '/otp_verifier';
   static const String UPDATE_PASSWORD = '/update_password';
   static const String REGISTER = '/register';
+  static const String LOGIN_EMPLOYEE = '/login_employee';
 
   static const String DASHBOARD = '/dashboard';
   static const String HOME = "/home";
