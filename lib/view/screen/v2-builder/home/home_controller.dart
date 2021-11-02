@@ -410,6 +410,7 @@ class V2HomeController extends GetxController {
   /// xem chi tiết 1 sản phẩm
   ///
   void onClickProductDetail(String id) {
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
     Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
   }
 
@@ -417,14 +418,14 @@ class V2HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
   /// vào tin tức chi tiết
   ///
   void onClickHotNewsDetail(String idNews) {
-    Get.toNamed(AppRoutes.V2_NEWS_DETAIL);
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///
@@ -452,7 +453,10 @@ class V2HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///
