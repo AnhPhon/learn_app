@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/nhan_vien_request.dart';
 import 'package:template/data/model/response/nhan_vien_response.dart';
+import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -16,6 +20,8 @@ import 'package:template/view/screen/v4-employee/account/component/v4_small_butt
 class V4AccountController extends GetxController {
   GetIt sl = GetIt.instance;
 
+  AuthProvider authProvider = GetIt.I.get<AuthProvider>();
+
   //Nhân viên
   NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
   NhanVienResponse nhanVienResponse = NhanVienResponse();
@@ -24,8 +30,8 @@ class V4AccountController extends GetxController {
   //user id
   String idUser = "";
 
-  //Password
-  String password = "";
+  //Email
+  String email = "";
 
   //khai báo isLoading
   bool isLoading = true;
@@ -39,6 +45,7 @@ class V4AccountController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getAccountInformation();
+    getUsername();
   }
 
   void getAccountInformation() {
@@ -66,12 +73,12 @@ class V4AccountController extends GetxController {
   }
 
   ///
-  ///Get Password Nhân viên
+  ///Get Usename Nhân viên
   ///
-  void getPassword() {
-    sl.get<SharedPreferenceHelper>().password.then((value) {
-      password = value!;
-      print(value);
+  void getUsername() {
+    sl.get<SharedPreferenceHelper>().username.then((value) {
+      email = value!;
+      print("uername $value");
     });
   }
 
@@ -197,12 +204,48 @@ class V4AccountController extends GetxController {
   Widget _btnConfirm() {
     return V4SmallButton(
       color: ColorResources.PRIMARY,
-      onPressed: () {
-        if (passwordController.text == password) {
-          Get.toNamed(AppRoutes.V4_SALARY);
-        }
-      },
+      onPressed: () => onLogin(),
       title: 'Xác nhận',
     );
+  }
+
+  ///
+  /// Validate login
+  ///
+  bool onValidateLogin() {
+    //validate infomation username password
+    if (passwordController.text == '') {
+      Alert.info(message: "Vui lòng điền mật khẩu");
+      return false;
+    }
+    return true;
+  }
+
+  ///
+  /// Đăng nhập để xem bảng lương
+  ///
+  void onLogin() {
+    if (onValidateLogin()) {
+      EasyLoading.show(status: "Đăng nhập");
+      final AuthRequest authRequest = AuthRequest();
+      authRequest.email = email;
+      authRequest.password = passwordController.text.toString();
+      authProvider.login(
+          request: authRequest,
+          onSuccess: (account) {
+            EasyLoading.dismiss();
+            Get.toNamed(AppRoutes.V4_SALARY)!.then((value) {
+              if (value == true) {
+                Get.back();
+                passwordController.text = "";
+              }
+            });
+          },
+          onError: (error) {
+            EasyLoading.dismiss();
+            print("Lỗi đăng nhập onError $error");
+            update();
+          });
+    }
   }
 }

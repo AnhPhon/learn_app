@@ -285,7 +285,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
     return InputWidget(
       padding: const EdgeInsets.fromLTRB(
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -296,7 +296,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       allowEdit: false,
       label: "Ngày cấp",
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.dateIndentityController,
     );
   }
@@ -362,23 +362,24 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _email(V4InfoController controller, BuildContext context) {
     return InputWidget(
-      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
+      obligatory: true,
       textInputType: TextInputType.emailAddress,
       suffixIcon: const Icon(
         Icons.edit_outlined,
         size: Dimensions.ICON_SIZE_SMALL,
         color: ColorResources.PRIMARYCOLOR,
       ),
+      allowEdit: false,
       isShadow: true,
       isBorder: false,
       isColorFieldWhite: true,
-      label: 'Email(nếu có)',
+      label: 'Email',
       width: DeviceUtils.getScaledWidth(context, 0.5),
       textEditingController: controller.emailController,
     );

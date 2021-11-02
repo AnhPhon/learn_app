@@ -108,7 +108,7 @@ class V4InfoController extends GetxController {
         id: idUser,
         onSuccess: (value) {
           nhanVienResponse = value;
-
+          print("IDThongTIntaiKhoan $idUser");
           //set họ và tên
           nameController = TextEditingController(text: value.hoTen);
 
