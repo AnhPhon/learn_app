@@ -71,11 +71,11 @@ class V2ShorthandedController extends GetxController {
   ];
 
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-  List<DonDichVuResponse>? donDichVuResponse;
+  List<DonDichVuResponse>? donDichVuResponse = [];
 
   NhomDichVuProvider nhomDichVuProvider = GetIt.I.get<NhomDichVuProvider>();
   List<NhomDichVuResponse>? nhomDichVuResponse;
-  NhomDichVuResponse currentNhomDichVuResponse = NhomDichVuResponse.fromJson({});
+  NhomDichVuResponse? currentNhomDichVuResponse = NhomDichVuResponse.fromJson({'tenDichVu': '-- Không có --'});
 
   LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
   List<LoaiCongViecResponse>? loaiCongViecResponse;
@@ -100,11 +100,13 @@ class V2ShorthandedController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if(checkFilter() == true){
-      getDonDichVu();
-    }
     getNhomDichVu();
     getTinhThanhPho();
+    Future.delayed(Duration.zero, () {
+      if (checkFilter() == true) {
+        getDonDichVu();
+      }
+    });
   }
 
   @override
@@ -116,7 +118,11 @@ class V2ShorthandedController extends GetxController {
   ///go to shorthanded group
   ///
   void onShorthandedGroup(int index) {
-    Get.toNamed("${AppRoutes.V2_SHORTHANDED}_group${shorthandedGroupList[index]['group']}");
+    print('donDichVuResponse ${donDichVuResponse![index].toJson()}');
+    Get.toNamed(
+      "${AppRoutes.V2_SHORTHANDED}_group${donDichVuResponse![index].idNhomDichVu!.nhomDichVu.toString()}",
+      arguments: {'id': donDichVuResponse![index].id.toString(), 'title': 'Công việc đang cần người'},
+    );
   }
 
   /// Goi api lay tat ca don dich vu
@@ -126,7 +132,11 @@ class V2ShorthandedController extends GetxController {
       page: page,
       limit: limit,
       onSuccess: (data) {
-        donDichVuResponse = data;
+        // donDichVuResponse = [
+        //   DonDichVuResponse.fromJson({'tieuDe': '-- Không có --'})
+        // ];
+        donDichVuResponse!.addAll(data);
+
         print('donDichVuResponse $donDichVuResponse');
         update();
       },
@@ -140,11 +150,14 @@ class V2ShorthandedController extends GetxController {
   void getNhomDichVu() {
     nhomDichVuProvider.all(
       onSuccess: (data) {
+        nhomDichVuResponse = [
+          NhomDichVuResponse.fromJson({'tenDichVu': '-- Không có --'})
+        ];
         if (data.isNotEmpty) {
           /// Selectbox khong cho phep init null gia tri, nen chon 1 gia tri dau tien de init
           selectedNhomCongViec(data[0]);
+          nhomDichVuResponse!.addAll(data);
         }
-        nhomDichVuResponse = data;
         update();
       },
       onError: (error) {
@@ -162,25 +175,27 @@ class V2ShorthandedController extends GetxController {
 
   /// Chon nhom dich vu va lay danh sach cong viec
   void updateNhomDichVu() {
-    loaiCongViecProvider.paginate(
-      filter: '&idNhomDichVu=${currentNhomDichVuResponse.id.toString()}',
-      limit: 100,
-      page: 1,
-      onSuccess: (data) {
-        currentLoaiCongViecResponse = null;
-        loaiCongViecResponse = [];
-        loaiCongViecMultiSelectItem = [];
-        if (data.isNotEmpty) {
-          loaiCongViecResponse = data;
-          loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e, e.tenCongViec.toString())).toList();
-        }
+    if (currentNhomDichVuResponse != null && currentNhomDichVuResponse!.id != null && currentNhomDichVuResponse!.id!.isNotEmpty) {
+      loaiCongViecProvider.paginate(
+        filter: '&idNhomDichVu=${currentNhomDichVuResponse!.id.toString()}',
+        limit: 100,
+        page: 1,
+        onSuccess: (data) {
+          currentLoaiCongViecResponse = null;
+          loaiCongViecResponse = [];
+          loaiCongViecMultiSelectItem = [];
+          if (data.isNotEmpty) {
+            loaiCongViecResponse = data;
+            loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e, e.tenCongViec.toString())).toList();
+          }
 
-        update();
-      },
-      onError: (error) {
-        print('V2ShorthandedController loaiCongViecProvider onError all $error');
-      },
-    );
+          update();
+        },
+        onError: (error) {
+          print('V2ShorthandedController loaiCongViecProvider onError all $error');
+        },
+      );
+    }
   }
 
   /// Chon cac cong viec trong nhom cong viec
@@ -282,33 +297,34 @@ class V2ShorthandedController extends GetxController {
 
   /// Filter data
   void filterData() {
-    if(checkFilter() == true){
+    print('filterData');
+    if (checkFilter() == true) {
       getDonDichVu();
     }
   }
 
   /// Kiem tra cac dieu kien loc du lieu
   bool checkFilter() {
-    if (currentPhuongXaResponse.id != null && currentPhuongXaResponse.id!.isEmpty) {
-      Alert.error(message: 'Bắt buộc chọn 1 phường/xã');
-      return false;
-    }
-    if (currentQuanHuyenResponse.id != null && currentQuanHuyenResponse.id!.isEmpty) {
-      Alert.error(message: 'Bắt buộc chọn 1 quận/huyện');
-      return false;
-    }
-    if (currentTinhTpResponse.id == null && currentTinhTpResponse.id!.isEmpty) {
-      Alert.error(message: 'Bắt buộc chọn 1 tỉnh/thành phố');
-      return false;
-    }
-    if (currentNhomDichVuResponse.id != null && currentNhomDichVuResponse.id!.isEmpty) {
-      Alert.error(message: 'Bắt buộc chọn 1 nhóm công việc');
-      return false;
-    }
-    if (currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isEmpty) {
-      Alert.error(message: 'Bắt buộc chọn 1 công việc');
-      return false;
-    }
+    // if (currentPhuongXaResponse.id == null || currentPhuongXaResponse.id!.isEmpty) {
+    //   Alert.error(message: 'Bắt buộc chọn 1 phường/xã');
+    //   return false;
+    // }
+    // if (currentQuanHuyenResponse.id == null || currentQuanHuyenResponse.id!.isEmpty) {
+    //   Alert.error(message: 'Bắt buộc chọn 1 quận/huyện');
+    //   return false;
+    // }
+    // if (currentTinhTpResponse.id == null || currentTinhTpResponse.id!.isEmpty) {
+    //   Alert.error(message: 'Bắt buộc chọn 1 tỉnh/thành phố');
+    //   return false;
+    // }
+    // if (currentNhomDichVuResponse == null || currentNhomDichVuResponse!.id == null || currentNhomDichVuResponse!.id!.isEmpty) {
+    //   Alert.error(message: 'Bắt buộc chọn 1 nhóm công việc');
+    //   return false;
+    // }
+    // if (currentLoaiCongViecResponse == null || currentLoaiCongViecResponse!.id == null || currentLoaiCongViecResponse!.id!.isEmpty) {
+    //   Alert.error(message: 'Bắt buộc chọn 1 công việc');
+    //   return false;
+    // }
 
     return true;
   }
@@ -318,7 +334,7 @@ class V2ShorthandedController extends GetxController {
     if (currentPhuongXaResponse.id != null && currentPhuongXaResponse.id!.isNotEmpty) _s += '&idPhuongXa=${currentPhuongXaResponse.id}';
     if (currentQuanHuyenResponse.id != null && currentQuanHuyenResponse.id!.isNotEmpty) _s += '&idQuanHuyen=${currentQuanHuyenResponse.id}';
     if (currentTinhTpResponse.id != null && currentTinhTpResponse.id!.isNotEmpty) _s += '&idTinhTp=${currentTinhTpResponse.id}';
-    if (currentNhomDichVuResponse.id != null && currentNhomDichVuResponse.id!.isNotEmpty) _s += '&idNhomDichVu=${currentNhomDichVuResponse.id}';
+    if (currentNhomDichVuResponse != null && currentNhomDichVuResponse!.id != null && currentNhomDichVuResponse!.id!.isNotEmpty) _s += '&idNhomDichVu=${currentNhomDichVuResponse!.id}';
     if (currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isNotEmpty) _s += '&idLoaiCongViec=${currentLoaiCongViecResponse!.id}';
     return _s;
   }

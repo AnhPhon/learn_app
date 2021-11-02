@@ -82,7 +82,7 @@ class V2DetailWorkInProgressController extends GetxController {
         }
 
         // lấy hình ảnh bảng vẽ
-        for (final banVe in model.hinhAnhBanVe!.split(",")) {
+        for (final banVe in model.hinhAnhBanVes!) {
           if (banVe.trim().isNotEmpty) {
             urlHinhAnhBangVeList.add(banVe);
           }
@@ -115,8 +115,8 @@ class V2DetailWorkInProgressController extends GetxController {
           urlHinhAnhKhoiLuongList.addAll(
             element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
           );
-          urlHinhAnhBangVeList.add(
-            element.idDonDichVu!.hinhAnhBanVe!,
+          urlHinhAnhBangVeList.addAll(
+            element.idDonDichVu!.hinhAnhBanVes!,
           );
 
           // lấy các thông tin về vật tư

@@ -38,7 +38,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                       ),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.shorthandedGroupList.length,
+                      itemCount: controller.donDichVuResponse!.length,
                       itemBuilder: (BuildContext ctx, int index) {
                         return ItemListWidget(
                           margin: const EdgeInsets.only(
@@ -48,11 +48,11 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                           ),
                           isSpaceBetween: true,
                           onTap: () => controller.onShorthandedGroup(index),
-                          title: controller.shorthandedGroupList[index]['label'].toString(),
-                          icon1: controller.shorthandedGroupList[index]['icon'] as Icon,
-                          rowText1: controller.shorthandedGroupList[index]['location'].toString(),
-                          rowText2: controller.shorthandedGroupList[index]['status'].toString(),
-                          urlImage: '',
+                          title: controller.donDichVuResponse![index].tieuDe.toString(),
+                          // icon1: controller.donDichVuResponse![index].hinhAnhBaoGia as Icon,
+                          rowText1: controller.donDichVuResponse![index].diaDiemLamViec.toString(),
+                          rowText2: controller.donDichVuResponse![index].idTrangThaiDonDichVu == null ? '' : controller.donDichVuResponse![index].idTrangThaiDonDichVu!.tieuDe.toString(),
+                          urlImage: controller.donDichVuResponse![index].hinhAnhBaoGia.toString(),
                         );
                       }),
                 ],

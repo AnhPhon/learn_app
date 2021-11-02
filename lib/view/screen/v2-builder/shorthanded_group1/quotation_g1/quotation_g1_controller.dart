@@ -2,7 +2,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V2QuotationG1Controller extends GetxController {
@@ -16,6 +20,15 @@ class V2QuotationG1Controller extends GetxController {
   String orderValue = "0";
 
   String title = "Báo giá";
+
+  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
+  List<VatTuResponse>? vatTuResponse;
+
+  bool flagSeeMore = false;
+
+  String getDateOutput(String dateString) {
+    return DateConverter.isoStringToddMMYYYY(dateString.toString());
+  }
 
   @override
   void onInit() {
@@ -56,4 +69,5 @@ class V2QuotationG1Controller extends GetxController {
   void onDoneClick() {
     Get.offNamed(AppRoutes.V2_SHORTHANDED);
   }
+
 }
