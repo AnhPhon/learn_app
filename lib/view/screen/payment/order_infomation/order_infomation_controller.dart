@@ -62,6 +62,9 @@ class OrderInformationController extends GetxController {
   //isTuyenDung
   bool isTuyenDung = false;
 
+  //type
+  String type = '0';
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -82,6 +85,11 @@ class OrderInformationController extends GetxController {
       isTuyenDung = true;
     } else {
       isTuyenDung = false;
+    }
+
+    //check Type
+    if (Get.parameters['type'] != null) {
+      type = Get.parameters['type'].toString();
     }
 
     //get data khuyến mãi
