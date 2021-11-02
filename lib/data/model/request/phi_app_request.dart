@@ -14,7 +14,7 @@ class PhiAppRequest {
   /// From JSON
   ///
   PhiAppRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     donGiaBatDau = json['donGiaBatDau'].toString();
     donGiaKetThuc = json['donGiaKetThuc'].toString();
     phi = json['phi'].toString();

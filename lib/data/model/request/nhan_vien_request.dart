@@ -43,7 +43,7 @@ class NhanVienRequest {
   /// From JSON
   ///
   NhanVienRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTinhTp = json['idTinhTp'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();

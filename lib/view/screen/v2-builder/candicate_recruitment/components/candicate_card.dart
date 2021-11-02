@@ -1,19 +1,20 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
+import 'package:template/helper/date_converter.dart';
 
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
 class V2CandidateCard extends StatelessWidget {
-  const V2CandidateCard({
-    Key? key,
-    this.showEmailAndPass = true,
-  }) : super(key: key);
-  final bool ? showEmailAndPass;
+  V2CandidateCard(
+      {Key? key,
+      this.showEmailAndPass = true,
+      required this.dangKyViecMoiResponse})
+      : super(key: key);
+  final bool? showEmailAndPass;
+  DangKyViecMoiResponse? dangKyViecMoiResponse;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +24,13 @@ class V2CandidateCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TextHighlight(title: "Tiêu đề: ", content: "Kiến trúc sư tại Đà Nẵng, Quảng Nam"),
+            Padding(
+              padding: const EdgeInsets.only(
+                  bottom: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+              child: TextHighlight(
+                  title: "Tiêu đề: ",
+                  content: dangKyViecMoiResponse!.tieuDe.toString()),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -33,18 +40,25 @@ class V2CandidateCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        child: Image.asset(
-                          Images.admin_background,
-                          height: Dimensions.AVATAR_SQUARE_SIZE_EXTRA_LARGE,
-                          fit: BoxFit.cover,
+                        borderRadius: BorderRadius.circular(
+                            Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        child: FadeInImageCustom(
+                          height: 0.3,
+                          width: 1,
+                          urlImage: dangKyViecMoiResponse!
+                              .idTaiKhoan!.hinhDaiDien
+                              .toString(),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                        child: Text("MSHS: 123456789", style: TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_LARGE,
-                        ),),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_DEFAULT),
+                        child: Text(
+                          dangKyViecMoiResponse!.maSoHoSo.toString(),
+                          style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -53,18 +67,49 @@ class V2CandidateCard extends StatelessWidget {
                   flex: 6,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL
-                    ),
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TextHighlight(title: "Tên: ", content: "Đỗ Thanh Huy"),
-                        const TextHighlight(title: "Ngày sinh: ", content: "25/08/1997"),
-                        TextHighlight(title: "Điện thoại: ", content: showEmailAndPass! ? "0353932341" : "*********"),
-                        const TextHighlight(title: "Kinh nghiệm: ", content: "2 năm"),
-                        TextHighlight(title: "Email: ", content: showEmailAndPass! ?  "dothanhhuy@gmail.com" : "*************"),
-                        const TextHighlight(title: "Chỗ ở hiện tại: ", content: "51 Tố Hữu Đà Nẵng, Quảng Nam"),
-                        const TextHighlight(title: "Hôn nhân: ", content: "Độc thân"),
+                        TextHighlight(
+                            title: "Tên: ",
+                            content: dangKyViecMoiResponse!.idTaiKhoan!.hoTen
+                                .toString()),
+                        TextHighlight(
+                            title: "Ngày sinh: ",
+                            content: DateConverter.readMongoToString(
+                                dangKyViecMoiResponse!.ngaySinh.toString())),
+                        TextHighlight(
+                            title: "Điện thoại: ",
+                            content: showEmailAndPass!
+                                ? dangKyViecMoiResponse!.idTaiKhoan!.soDienThoai
+                                    .toString()
+                                : "*********"),
+                        TextHighlight(
+                            title: "Kinh nghiệm: ",
+                            content: dangKyViecMoiResponse!
+                                .idSoNamKinhNghiem!.tieuDe
+                                .toString()),
+                        TextHighlight(
+                            title: "Email: ",
+                            content: showEmailAndPass!
+                                ? dangKyViecMoiResponse!.idTaiKhoan!.email
+                                    .toString()
+                                : "*************"),
+                        TextHighlight(
+                            title: "Chỗ ở hiện tại: ",
+                            content:
+                                '${dangKyViecMoiResponse!.idTaiKhoan!.diaChi}, ${dangKyViecMoiResponse!.idTaiKhoan!.idPhuongXa}, ${dangKyViecMoiResponse!.idTaiKhoan!.idQuanHuyen}, ${dangKyViecMoiResponse!.idTaiKhoan!.idTinhTp}'),
+                        TextHighlight(
+                            title: "Hôn nhân: ",
+                            content:
+                                dangKyViecMoiResponse!.honNhan.toString() == '1'
+                                    ? 'Độc thân'
+                                    : dangKyViecMoiResponse!.honNhan
+                                                .toString() ==
+                                            '2'
+                                        ? 'Đã lập gia đình'
+                                        : 'Khác'),
                       ],
                     ),
                   ),

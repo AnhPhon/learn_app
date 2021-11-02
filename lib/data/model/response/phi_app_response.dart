@@ -19,7 +19,7 @@ class PhiAppResponse {
   /// From JSON
   ///
   PhiAppResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     if (json['donGiaBatDau'] != null) {
       donGiaBatDau = double.parse(json['donGiaBatDau'].toString());
     } else {
