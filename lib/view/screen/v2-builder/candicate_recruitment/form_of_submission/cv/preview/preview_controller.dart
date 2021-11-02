@@ -10,6 +10,7 @@ import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/cadidate_recruitment_dialog_accept.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,6 +40,9 @@ class V2PreviewController extends GetxController {
   //isLoading
   bool isLoading = true;
 
+  //tenFile
+  String? tenFile;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -63,9 +67,11 @@ class V2PreviewController extends GetxController {
     dangKyViecMoiProvider.paginate(
         page: 1,
         limit: 1,
-        filter: '&idTaiKhoan=$userId',
+        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_7}',
         onSuccess: (value) {
           dangKyViecMoiResponse = value.first;
+          //set tên file
+          tenFile = dangKyViecMoiResponse.fileHoSoXinViec!.split('/').last;
           isLoading = false;
           update();
         },

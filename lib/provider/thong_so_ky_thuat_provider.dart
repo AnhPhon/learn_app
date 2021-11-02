@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/thong_so_ky_thuat_repository.dart';
 
 class ThongSoKyThuatProvider {
-  ThongSoKyThuatRepository? repository = GetIt.I.get<ThongSoKyThuatRepository>();
+  ThongSoKyThuatRepository? repository =
+      GetIt.I.get<ThongSoKyThuatRepository>();
 
   ThongSoKyThuatProvider();
 
@@ -22,7 +23,8 @@ class ThongSoKyThuatProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class ThongSoKyThuatProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class ThongSoKyThuatProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class ThongSoKyThuatProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThongSoKyThuatRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class ThongSoKyThuatProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class ThongSoKyThuatProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ThongSoKyThuatResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ThongSoKyThuatResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
