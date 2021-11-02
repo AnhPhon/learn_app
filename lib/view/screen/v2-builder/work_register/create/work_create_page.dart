@@ -708,45 +708,101 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
                 title: "", ability: ["Giỏi", "Khá", "Trung", 'Yếu']),
             chooseAbility(context, title: "Nghe", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNghe,
+                  value: 1,
+                  groupValue: controller.ngoaiNguListenSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNghe,
+                  value: 2,
+                  groupValue: controller.ngoaiNguListenSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNghe,
+                  value: 3,
+                  groupValue: controller.ngoaiNguListenSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.ngoaiNguNghe,
+                  value: 4,
+                  groupValue: controller.ngoaiNguListenSkill)
             ]),
             chooseAbility(context, title: "Nói", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNoi,
+                  value: 1,
+                  groupValue: controller.ngoaiNguSpeakSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNoi,
+                  value: 2,
+                  groupValue: controller.ngoaiNguSpeakSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguNoi,
+                  value: 3,
+                  groupValue: controller.ngoaiNguSpeakSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.ngoaiNguNoi,
+                  value: 4,
+                  groupValue: controller.ngoaiNguSpeakSkill)
             ]),
             chooseAbility(context, title: "Đọc", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguDoc,
+                  value: 1,
+                  groupValue: controller.ngoaiNguReadSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguDoc,
+                  value: 2,
+                  groupValue: controller.ngoaiNguReadSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguDoc,
+                  value: 3,
+                  groupValue: controller.ngoaiNguReadSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.ngoaiNguDoc,
+                  value: 4,
+                  groupValue: controller.ngoaiNguReadSkill)
             ]),
             chooseAbility(context, title: "Viết", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguViet,
+                  value: 1,
+                  groupValue: controller.ngoaiNguWriteSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguViet,
+                  value: 2,
+                  groupValue: controller.ngoaiNguWriteSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.ngoaiNguViet,
+                  value: 3,
+                  groupValue: controller.ngoaiNguWriteSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.ngoaiNguViet,
+                  value: 4,
+                  groupValue: controller.ngoaiNguWriteSkill)
             ]),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+          child: LongButton(
+            title: "Thêm bằng tiếng anh",
+            color: ColorResources.THEME_DEFAULT,
+            onPressed: () {},
+          ),
         ),
         // List thêm
         Column(
@@ -796,35 +852,71 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           children: [
             chooseAbility(context,
                 title: "", ability: ["Giỏi", "Khá", "Trung", 'Yếu']),
-            chooseAbility(context, title: "Work", ability: [
+            chooseAbility(context, title: "Word", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocWord,
+                  value: 1,
+                  groupValue: controller.tinHocWordSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocWord,
+                  value: 2,
+                  groupValue: controller.tinHocWordSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocWord,
+                  value: 3,
+                  groupValue: controller.tinHocWordSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.tinHocWord,
+                  value: 4,
+                  groupValue: controller.tinHocWordSkill),
             ]),
             chooseAbility(context, title: "Excel", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocExcel,
+                  value: 1,
+                  groupValue: controller.tinHocExcelSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocExcel,
+                  value: 2,
+                  groupValue: controller.tinHocExcelSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocExcel,
+                  value: 3,
+                  groupValue: controller.tinHocExcelSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.tinHocExcel,
+                  value: 4,
+                  groupValue: controller.tinHocExcelSkill)
             ]),
             chooseAbility(context, title: "Internet", ability: [
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 1, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocInternet,
+                  value: 1,
+                  groupValue: controller.tinHocInternetSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 2, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocInternet,
+                  value: 2,
+                  groupValue: controller.tinHocInternetSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 3, groupValue: 1),
+                  title: "",
+                  onChanged: controller.tinHocInternet,
+                  value: 3,
+                  groupValue: controller.tinHocInternetSkill),
               RadioButton(
-                  title: "", onChanged: (val) {}, value: 4, groupValue: 1)
+                  title: "",
+                  onChanged: controller.tinHocInternet,
+                  value: 4,
+                  groupValue: controller.tinHocInternetSkill)
             ]),
           ],
         ),
