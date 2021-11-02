@@ -38,9 +38,17 @@ class V3WarehouseController extends GetxController {
   int pageMax = 1;
   int limitMax = 5;
 
+  //onchange icon (search or close)
+  bool isSearched = false;
+
+  //page for for load more refresh
+  int pageSearchMax = 1;
+  int limiSearchtMax = 8;
+
   //CircularProgressIndicator
   bool isLoading = true;
   bool isLoadingProduct = true;
+  bool isLoadingSearch = false;
 
   @override
   void onInit() {
@@ -119,6 +127,7 @@ class V3WarehouseController extends GetxController {
             refreshController.loadComplete();
           }
         }
+        isLoadingSearch = false;
         isLoadingProduct = false;
         update();
       },
@@ -126,6 +135,83 @@ class V3WarehouseController extends GetxController {
         print("V3WarehouseController getProduct onError $error");
       },
     );
+  }
+
+  ///
+  ///search product
+  ///
+  void searchProduct(
+    BuildContext context, {
+    required bool isRefresh,
+  }) {
+    //isRefresh
+    if (isRefresh) {
+      pageSearchMax = 1;
+      nhapKhoHangDaiLyList.clear();
+    } else {
+      pageSearchMax++;
+    }
+
+    //get data search
+    if (searchController.text.isNotEmpty) {
+      nhapKhoHangDaiLyProvider.paginate(
+        page: pageSearchMax,
+        limit: limiSearchtMax,
+        filter:
+            "&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&tenSearch=${searchController.text}&sortBy=created_at:desc",
+        onSuccess: (data) {
+          //check is empty
+          if (data.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //isRefresh
+            if (isRefresh) {
+              nhapKhoHangDaiLyList = data;
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              nhapKhoHangDaiLyList = nhapKhoHangDaiLyList.toList() + data;
+              refreshController.loadComplete();
+            }
+          }
+
+          FocusScope.of(context).requestFocus(FocusNode());
+          isSearched = true;
+          isLoadingSearch = false;
+          update();
+        },
+        onError: (error) {
+          print("V1ProductController searchProduct onError $error");
+        },
+      );
+    }
+  }
+
+  ///
+  ///btn search
+  ///
+  void btnSearch(BuildContext context) {
+    isLoadingSearch = true;
+    update();
+    searchProduct(context, isRefresh: true);
+  }
+
+  ///
+  ///clear search
+  ///
+  void clearSearch(BuildContext context) {
+    isLoadingSearch = true;
+    //clear text
+    searchController.text = "";
+    isSearched = false;
+
+    //reset noData
+    refreshController.resetNoData();
+
+    //reload
+    getProductByIdKhoHang(isRefresh: true);
+    FocusScope.of(context).requestFocus(FocusNode());
+    update();
   }
 
   ///
