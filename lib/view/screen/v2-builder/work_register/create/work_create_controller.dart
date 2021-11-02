@@ -814,6 +814,21 @@ class V2WorkCreateController extends GetxController {
   /// Xem trươc
   ///
   void onClickPreviewButton() {
-    Get.toNamed(AppRoutes.V2_WORK_PREVIEW);
+    Get.toNamed("${AppRoutes.V2_WORK_PREVIEW}?tuyenDung=false");
   }
+}
+
+class DangKyViecMoiModel {
+  String? tieuDe;
+  String? tenUngVien;
+  String? gioiTinh;
+  String? ngaySinh;
+  String? dienThoai;
+  String? email;
+  String? choOHienTai;
+  String? honNhan;
+  String? hinhThucLamViec;
+  String? mucTieuNgheNghiep;
+  List<BangBangCapRequest>? bangBangCaps;
+  
 }

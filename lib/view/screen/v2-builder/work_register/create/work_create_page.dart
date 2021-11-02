@@ -13,6 +13,7 @@ import 'package:template/data/model/response/ngoai_ngu_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/data/model/response/trinh_do_response.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -109,7 +110,12 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             children: [
               text(title: "Tên ứng viên: ", content: controller.tenUngVien),
               text(title: "Giới tính: ", content: controller.gioiTinh),
-              text(title: "Ngày sinh: ", content: controller.ngaySinh),
+              text(
+                title: "Ngày sinh: ",
+                content: DateConverter.isoStringToVNDateOnly(
+                  controller.ngaySinh.replaceAll("T", " "),
+                ),
+              ),
               text(title: "Điện thoại: ", content: controller.dienThoai),
               text(title: "Email: ", content: controller.email),
             ],
