@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/cong_viec_nhan_vien_repository.dart';
 
 class CongViecNhanVienProvider {
-  CongViecNhanVienRepository? repository = GetIt.I.get<CongViecNhanVienRepository>();
+  CongViecNhanVienRepository? repository =
+      GetIt.I.get<CongViecNhanVienRepository>();
 
   CongViecNhanVienProvider();
 
@@ -13,7 +14,8 @@ class CongViecNhanVienProvider {
   /// Get all congViecNhanViens
   ///
   Future<void> all({
-    required Function(List<CongViecNhanVienResponse> congViecNhanViens) onSuccess,
+    required Function(List<CongViecNhanVienResponse> congViecNhanViens)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class CongViecNhanVienProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => CongViecNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              CongViecNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class CongViecNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class CongViecNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class CongViecNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          CongViecNhanVienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class CongViecNhanVienProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<CongViecNhanVienResponse> congViecNhanViens) onSuccess,
+    required Function(List<CongViecNhanVienResponse> congViecNhanViens)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class CongViecNhanVienProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => CongViecNhanVienResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              CongViecNhanVienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class CongViecNhanVienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(CongViecNhanVienResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          CongViecNhanVienResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

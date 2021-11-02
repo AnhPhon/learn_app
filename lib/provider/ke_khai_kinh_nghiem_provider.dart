@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/ke_khai_kinh_nghiem_repository.dart';
 
 class KeKhaiKinhNghiemProvider {
-  KeKhaiKinhNghiemRepository? repository = GetIt.I.get<KeKhaiKinhNghiemRepository>();
+  KeKhaiKinhNghiemRepository? repository =
+      GetIt.I.get<KeKhaiKinhNghiemRepository>();
 
   KeKhaiKinhNghiemProvider();
 
@@ -13,7 +14,8 @@ class KeKhaiKinhNghiemProvider {
   /// Get all keKhaiKinhNghiems
   ///
   Future<void> all({
-    required Function(List<KeKhaiKinhNghiemResponse> keKhaiKinhNghiems) onSuccess,
+    required Function(List<KeKhaiKinhNghiemResponse> keKhaiKinhNghiems)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class KeKhaiKinhNghiemProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class KeKhaiKinhNghiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class KeKhaiKinhNghiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class KeKhaiKinhNghiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          KeKhaiKinhNghiemRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class KeKhaiKinhNghiemProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<KeKhaiKinhNghiemResponse> keKhaiKinhNghiems) onSuccess,
+    required Function(List<KeKhaiKinhNghiemResponse> keKhaiKinhNghiems)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class KeKhaiKinhNghiemProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              KeKhaiKinhNghiemResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class KeKhaiKinhNghiemProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(KeKhaiKinhNghiemResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          KeKhaiKinhNghiemResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

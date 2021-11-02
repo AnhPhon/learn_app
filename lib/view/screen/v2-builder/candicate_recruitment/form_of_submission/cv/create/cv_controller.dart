@@ -1,11 +1,9 @@
-import 'dart:io';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
@@ -27,6 +25,7 @@ import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/cadidate_recruitment_dialog_accept.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -97,8 +96,8 @@ class V2CvController extends GetxController {
   //isLoading
   bool isLoading = true;
 
-  //fileCv
-  File? fileCv;
+  //tên File
+  String? tenFile;
 
   @override
   void onInit() {
@@ -118,29 +117,40 @@ class V2CvController extends GetxController {
   }
 
   ///
-  ///pick image
+  ///pick pickFile
   ///
-  Future pickImage() async {
+  Future pickFile() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
+      final FilePickerResult? result = await FilePicker.platform.pickFiles();
+      if (result == null) return;
+      final PlatformFile file = result.files.first;
       EasyLoading.show(status: 'loading...');
-      imageUpdateProvider.add(
-          file: imageTemporary,
-          onSuccess: (value) {
-            EasyLoading.dismiss();
-            dangKyViecMoiResponse.fileHoSoXinViec = value.data;
-            update();
-          },
-          onError: (e) {
-            EasyLoading.dismiss();
-            Alert.error(message: 'Vui lòng chọn lại file');
-          });
+      if (file.size > 50240000) {
+        EasyLoading.dismiss();
+        Alert.error(
+            message:
+                'Dung lượng file không quá 50 MB, vui lòng chọn file khác');
+      } else {
+        // load file
+        imageUpdateProvider.addFile(
+            file: file,
+            onSuccess: (value) {
+              EasyLoading.dismiss();
+              dangKyViecMoiResponse.fileHoSoXinViec = value.data;
 
+              //set tên file
+              tenFile = value.data!.split('/').last;
+
+              update();
+            },
+            onError: (e) {
+              EasyLoading.dismiss();
+              Alert.error(message: 'Vui lòng chọn lại file');
+            });
+      }
       update();
     } on PlatformException catch (e) {
-      print("Failed to pick image: $e");
+      print("Failed to pick file: $e");
     }
   }
 
@@ -151,7 +161,7 @@ class V2CvController extends GetxController {
     dangKyViecMoiProvider.paginate(
         page: 1,
         limit: 1,
-        filter: '&idTaiKhoan=$userId',
+        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_7}',
         onSuccess: (value) {
           dangKyViecMoiResponse = value.first;
 
@@ -166,6 +176,9 @@ class V2CvController extends GetxController {
           //set hôn nhân
           honNhanModel = honNhanListModel.firstWhere((element) =>
               element.id == dangKyViecMoiResponse.honNhan.toString());
+
+          //set tên file
+          tenFile = dangKyViecMoiResponse.fileHoSoXinViec!.split('/').last;
           getDataHinhThucLamViec();
           update();
         },

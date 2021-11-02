@@ -157,6 +157,7 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_QUOTE_NO_RESPONSE = '/v1_quote_no_response';
   static const String V1_QUOTE_LIST = '/V1_QUOTE_LIST';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';

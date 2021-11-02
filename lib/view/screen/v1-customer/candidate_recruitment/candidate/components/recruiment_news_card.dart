@@ -66,7 +66,7 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                    top: Dimensions.PADDING_SIZE_SMALL),
                                 child: Text(tuyenDungResponse.tieuDe.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,

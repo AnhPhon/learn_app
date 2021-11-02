@@ -243,8 +243,7 @@ class V2CvPage extends GetView<V2CvController> {
                       .toString()),
               child: BoxShadowWidget(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                child: Text(
-                    controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
+                child: Text(controller.tenFile.toString(),
                     style: const TextStyle(
                       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     )),
@@ -256,7 +255,7 @@ class V2CvPage extends GetView<V2CvController> {
         CustomFileButton(
             title: "Cập nhật file",
             verticalPadding: Dimensions.PADDING_SIZE_DEFAULT,
-            onTap: () => controller.pickImage())
+            onTap: () => controller.pickFile())
       ],
     );
   }

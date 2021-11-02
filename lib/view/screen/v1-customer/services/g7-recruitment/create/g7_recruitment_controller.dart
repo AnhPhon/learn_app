@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -651,10 +652,12 @@ class V1G7RecruitmentController extends GetxController {
     } else if (image == null) {
       return Alert.error(message: "Vui lòng chọn ảnh đại diện");
     } else {
+      EasyLoading.show(status: 'loading....');
       //upload ảnh
       imageUpdateProvider.add(
           file: image!,
           onSuccess: (value) {
+            EasyLoading.dismiss();
             hinhAnhDaiDien = value.data;
 
             ///gán data tuyển dụng
@@ -707,6 +710,7 @@ class V1G7RecruitmentController extends GetxController {
                     });
           },
           onError: (error) {
+            EasyLoading.dismiss();
             print('V1G7RecruitmentController onClickContinueButton $error');
             Alert.error(message: "Vui lòng thực hiện lại");
           });

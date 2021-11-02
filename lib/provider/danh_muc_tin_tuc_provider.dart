@@ -101,7 +101,9 @@ class DanhMucTinTucProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
           .map((e) => DanhMucTinTucResponse.fromJson(e as Map<String, dynamic>))
           .toList());
@@ -123,7 +125,8 @@ class DanhMucTinTucProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhMucTinTucResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DanhMucTinTucResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
