@@ -10,10 +10,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
+import 'package:template/data/model/request/vi_tien_request.dart';
 import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
+import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/data/model/response/vi_tien_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
@@ -23,6 +26,7 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
+import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/constants/preferences.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -41,7 +45,9 @@ class RegisterController extends GetxController {
   final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
   final AuthProvider authProvider = GetIt.I.get<AuthProvider>();
   final TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final ViTienProvider viTienProvider = GetIt.I.get<ViTienProvider>();
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
+
   
   //TextEditController
   final enterpriseNameController = TextEditingController();
@@ -421,9 +427,22 @@ class RegisterController extends GetxController {
       auth.matKhau = passwordController.text.toString();
       // Khu vực tham gia chọn nhiều
       if(addressController.text.toString().isNotEmpty){
-        auth.diaDiemCuThe = addressController.text.toString();
+        auth.diaChi = addressController.text.toString();
       }
-      auth.diaChi = '${province!.ten!} - ${district!.ten} - ${ward!.ten}';
+      auth.idTinhTp = province!.id;
+      auth.idPhuongXa = ward!.ten;
+      auth.idQuanHuyen = province!.id;
+      multipSelectedProvinces.forEach((province) { 
+        auth.tinhTpHoatDong = '${auth.tinhTpHoatDong},${province!.ten}';
+      });
+
+      if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('thợ thầu') || loaiTaiKhoan!.id == THO_THAU){
+        auth.chuyenMon = jobExpertsController.text.toString();
+        // THiếu trường kinh nghiệm experienceController
+        auth.noiLamViec = readyWorkController.text.toString();
+        auth.soLuongNguoi = amountController.text.toString();
+      }
+      //'${province!.ten!} - ${district!.ten} - ${ward!.ten}';
 
       
       // Đăng ký tài khoản
@@ -474,6 +493,7 @@ class RegisterController extends GetxController {
                     });
                   }
 
+
                   // Upload hình ảnh khuôn mat
                   if(faceFile != null){
                     imageUpdateProvider.add(file: faceFile!, onSuccess: (data){
@@ -489,6 +509,7 @@ class RegisterController extends GetxController {
                   // sl.get<SharedPreferenceHelper>().saveRefreshToken(user.refresh!);
                   // sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
                   // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
+                  walletRequest(user: user);
                   Alert.info(message: "Đăng ký Tài khoản thành công");
                   Get.back();
                   EasyLoading.dismiss();
@@ -512,6 +533,21 @@ class RegisterController extends GetxController {
       });
   }
 
+
+  /// 
+  /// Tạo ví tiền
+  /// 
+  void walletRequest({required TaiKhoanResponse user}){
+    final ViTienRequest wallet  = ViTienRequest();
+    wallet.idTaiKhoan = user.id;
+    wallet.tongTien = '0';
+    wallet.trangThai = '1';
+    viTienProvider.add(data: wallet, onSuccess: (data){
+      print("Tạo thành công ví tiền");
+    }, onError: (onError){
+      print("Tạo ví tiền thất bại $onError}");
+    });
+  }
 
   @override
   void onClose() {
