@@ -5,16 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/bang_bang_cap_request.dart';
-import 'package:template/data/model/response/bang_bang_cap_response.dart';
+import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
+import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
+import 'package:template/data/model/response/dia_diem_dang_ky_lam_viec_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
+import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
+import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/chuc_vu_provider.dart';
 import 'package:template/provider/chuyen_mon_provider.dart';
+import 'package:template/provider/chuyen_nganh_chinh_provider.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
+import 'package:template/provider/dia_diem_dang_ky_lam_viec_provider.dart';
 import 'package:template/provider/hinh_thuc_lam_viec_provider.dart';
 import 'package:template/provider/loai_tot_nghiep_provider.dart';
+import 'package:template/provider/muc_luong_du_kien_provider.dart';
+import 'package:template/provider/so_nam_kinh_nghiem_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -33,6 +42,16 @@ class V2WorkCreateController extends GetxController {
   ChuyenMonProvider chuyenMonProvider = GetIt.I.get<ChuyenMonProvider>();
   LoaiTotNghiepProvider loaiTotNghiepProvider =
       GetIt.I.get<LoaiTotNghiepProvider>();
+
+  ChucVuProvider chucVuProvider = GetIt.I.get<ChucVuProvider>();
+  MucLuongDuKienProvider mucLuongDuKienProvider =
+      GetIt.I.get<MucLuongDuKienProvider>();
+  SoNamKinhNghiemProvider soNamKinhNghiemProvider =
+      GetIt.I.get<SoNamKinhNghiemProvider>();
+  DiaDiemDangKyLamViecProvider diaDiemDangKyLamViecProvider =
+      GetIt.I.get<DiaDiemDangKyLamViecProvider>();
+  ChuyenNganhChinhProvider chuyenNganhChinhProvider =
+      GetIt.I.get<ChuyenNganhChinhProvider>();
 
   // Tiêu đề
   TextEditingController titleController = TextEditingController();
@@ -83,6 +102,22 @@ class V2WorkCreateController extends GetxController {
   List<BangBangCapRequest> bangBangCap = [];
   List<Map<String, String>> bangBangCapDisplay = [];
 
+  ChucVuResponse? chucVuHienTaiIndex;
+  ChucVuResponse? chucVuMongMuonIndex;
+  List<ChucVuResponse> chucVuList = [];
+
+  MucLuongDuKienResponse? mucLuongDuKienIndex;
+  List<MucLuongDuKienResponse> mucLuongDuKienList = [];
+
+  SoNamKinhNghiemResponse? soNamKinhNghiemIndex;
+  List<SoNamKinhNghiemResponse> soNamKinhNghiemList = [];
+
+  DiaDiemDangKyLamViecResponse? diaDiemDangKyLamViecIndex;
+  List<DiaDiemDangKyLamViecResponse> diaDiemDangKyLamViecList = [];
+
+  ChuyenNganhChinhResponse? chuyenNganhChinhIndex;
+  List<ChuyenNganhChinhResponse> chuyenNganhChinhList = [];
+
   String tenUngVien = "";
   String gioiTinh = "";
   String ngaySinh = "";
@@ -119,7 +154,6 @@ class V2WorkCreateController extends GetxController {
           anhBangCap = data.idBangBangCaps!
               .map((e) => File(e.anhBangCap.toString()))
               .toList();
-          print(anhBangCap);
           // update
           update();
         },
@@ -159,7 +193,7 @@ class V2WorkCreateController extends GetxController {
 
           addressController =
               TextEditingController(text: data.diaChi.toString());
-          isLoading = false;
+          // isLoading = false;
           update();
         },
         onError: (error) {
@@ -202,6 +236,79 @@ class V2WorkCreateController extends GetxController {
         loaiTotNghiep = data;
         if (data.isNotEmpty) {
           loaiTotNghiepIndex = data.first;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
+    // Chức vụ kinh nghiệm mưc lương
+    // chức vụ hiện tại
+    chucVuProvider.all(
+      onSuccess: (data) {
+        chucVuList = data;
+        if (data.isNotEmpty) {
+          chucVuHienTaiIndex = data.first;
+          chucVuMongMuonIndex = data.first;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
+    // năm kinh nghiệm
+    soNamKinhNghiemProvider.all(
+      onSuccess: (data) {
+        soNamKinhNghiemList = data;
+        if (data.isNotEmpty) {
+          soNamKinhNghiemIndex = data.first;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
+    // mức lương đề xuất
+    mucLuongDuKienProvider.all(
+      onSuccess: (data) {
+        mucLuongDuKienList = data;
+        if (data.isNotEmpty) {
+          mucLuongDuKienIndex = data.first;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
+    // nơi làm việc
+    diaDiemDangKyLamViecProvider.all(
+      onSuccess: (data) {
+        diaDiemDangKyLamViecList = data;
+        if (data.isNotEmpty) {
+          diaDiemDangKyLamViecIndex = diaDiemDangKyLamViecList.first;
+        }
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
+
+    // ngành nghề muôn ứng chuyển tuyển
+    chuyenNganhChinhProvider.all(
+      onSuccess: (data) {
+        chuyenNganhChinhList = data;
+        if (data.isNotEmpty) {
+          isLoading = false;
+          chuyenNganhChinhIndex = chuyenNganhChinhList.first;
         }
         update();
       },
@@ -282,7 +389,54 @@ class V2WorkCreateController extends GetxController {
     } else {
       Get.snackbar("Thông báo", "Thời gian tốt nghiệp không được rỗng");
     }
+    update();
+  }
 
+  ///
+  /// honNhanChange
+  ///
+  void onChucVuHienTaiChange(ChucVuResponse val) {
+    chucVuHienTaiIndex = val;
+    update();
+  }
+
+  ///
+  /// hình thức làm việc
+  ///
+  void onChucVuMongMuonChange(ChucVuResponse val) {
+    chucVuMongMuonIndex = val;
+    update();
+  }
+
+  ///
+  /// trình độ
+  ///
+  void onNamKinhNghiemChange(SoNamKinhNghiemResponse val) {
+    soNamKinhNghiemIndex = val;
+    update();
+  }
+
+  ///
+  /// chuyên môn
+  ///
+  void onMucLuongDeXuatChange(MucLuongDuKienResponse val) {
+    mucLuongDuKienIndex = val;
+    update();
+  }
+
+  ///
+  /// hình thức làm việc
+  ///
+  void onNoiLamViecChange(DiaDiemDangKyLamViecResponse val) {
+    diaDiemDangKyLamViecIndex = val;
+    update();
+  }
+
+  ///
+  /// hình thức làm việc
+  ///
+  void onNgheNghiepMongMuonUngTuyenChange(ChuyenNganhChinhResponse val) {
+    chuyenNganhChinhIndex = val;
     update();
   }
 

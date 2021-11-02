@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/chuc_vu_response.dart';
 import 'package:template/data/model/response/chuyen_mon_response.dart';
+import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
+import 'package:template/data/model/response/dia_diem_dang_ky_lam_viec_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
+import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
+import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -189,67 +194,79 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         const Label(
             label: "Chọn chức vụ, kinh nghiệm, mức lương", obligatory: false),
         // Chức vụ hiện tại *
-        DropDownButton<String>(
+        DropDownButton<ChucVuResponse>(
           paddingTop: 0,
-          onChanged: (val) {},
-          data: const [],
+          onChanged: (val) {
+            controller.onChucVuHienTaiChange(val!);
+          },
+          data: controller.chucVuList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Chức vụ hiện tại",
+          value: controller.chucVuHienTaiIndex,
           obligatory: true,
           label: "Chức vụ hiện tại",
           hint: "Chức vụ hiện tại *",
         ),
 
         // Chức vụ mong muốn *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<ChucVuResponse>(
+          onChanged: (val) {
+            controller.onChucVuMongMuonChange(val!);
+          },
+          data: controller.chucVuList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Chức vụ mong muốn",
+          value: controller.chucVuMongMuonIndex,
           obligatory: true,
           label: "Chức vụ mong muốn",
           hint: "Chức vụ mong muốn",
         ),
 
         // Năm kinh nghiệm *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<SoNamKinhNghiemResponse>(
+          onChanged: (val) {
+            controller.onNamKinhNghiemChange(val!);
+          },
+          data: controller.soNamKinhNghiemList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Năm kinh nghiệm",
+          value: controller.soNamKinhNghiemIndex,
           obligatory: true,
           label: "Năm kinh nghiệm",
           hint: "Năm kinh nghiệm",
         ),
 
         // Mức lương đề xuất *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<MucLuongDuKienResponse>(
+          onChanged: (val) {
+            controller.onMucLuongDeXuatChange(val!);
+          },
+          data: controller.mucLuongDuKienList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Mức lương đề xuất",
+          value: controller.mucLuongDuKienIndex,
           obligatory: true,
           label: "Mức lương đề xuất",
           hint: "Mức lương đề xuất",
         ),
 
         // Nơi làm việc *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<DiaDiemDangKyLamViecResponse>(
+          onChanged: (val) {
+            controller.onNoiLamViecChange(val!);
+          },
+          data: controller.diaDiemDangKyLamViecList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Nơi làm việc",
+          value: controller.diaDiemDangKyLamViecIndex,
           obligatory: true,
           label: "Nơi làm việc",
           hint: "Chọn tỉnh/TP",
         ),
 
         // Ngành nghề mong muốn ứng tuyển *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<ChuyenNganhChinhResponse>(
+          onChanged: (val) {
+            controller.onNgheNghiepMongMuonUngTuyenChange(val!);
+          },
+          data: controller.chuyenNganhChinhList,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Ngành nghề mong muốn ứng tuyển",
+          value: controller.chuyenNganhChinhIndex,
           obligatory: true,
           label: "Ngành nghề mong muốn ứng tuyển",
           hint: "Chọn ngành nghề",
@@ -442,7 +459,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //Đơn vị  *
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -456,7 +473,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //Chức vụ *
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -472,7 +489,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         Row(
           children: [
             InputField(
-              allowEdit: false,
+              allowEdit: true,
               allowMultiline: false,
               controller: controller.addressController,
               fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -498,7 +515,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //Công việc phụ trách *
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -512,7 +529,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //thành tích đạt được *
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -782,7 +799,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
       children: [
         // Phần mềm hỗ trợ công việc từng ngành
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -796,7 +813,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Sở thích thể hiện trình độ / khả năng tư duy
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -810,7 +827,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Sở thích thể hiện kỹ năng
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -824,7 +841,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Sở thích thể hiện tích cách
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
