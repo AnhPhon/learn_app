@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -12,7 +13,7 @@ class DioClient {
   String? token;
   LoggingInterceptor? loggingInterceptor;
 
-  DioClient(){
+  DioClient() {
     _init();
   }
 
@@ -145,7 +146,37 @@ class DioClient {
       final String fileName = file.path.split('/').last;
       final FormData formData = FormData.fromMap({
         "image": await MultipartFile.fromFile(file.path, filename: fileName),
-      }); 
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadFile(
+    String uri, {
+    required PlatformFile file,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final String fileName = file.path!.split('/').last;
+      final FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(file.path.toString(),
+            filename: fileName),
+      });
 
       final response = await dio!.post(
         uri,

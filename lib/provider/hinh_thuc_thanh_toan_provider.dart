@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/hinh_thuc_thanh_toan_repository.dart';
 
 class HinhThucThanhToanProvider {
-  HinhThucThanhToanRepository? repository = GetIt.I.get<HinhThucThanhToanRepository>();
+  HinhThucThanhToanRepository? repository =
+      GetIt.I.get<HinhThucThanhToanRepository>();
 
   HinhThucThanhToanProvider();
 
@@ -13,7 +14,8 @@ class HinhThucThanhToanProvider {
   /// Get all hinhThucThanhToans
   ///
   Future<void> all({
-    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans) onSuccess,
+    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class HinhThucThanhToanProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HinhThucThanhToanRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class HinhThucThanhToanProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans) onSuccess,
+    required Function(List<HinhThucThanhToanResponse> hinhThucThanhToans)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class HinhThucThanhToanProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              HinhThucThanhToanResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class HinhThucThanhToanProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HinhThucThanhToanResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HinhThucThanhToanResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/hang_muc_xay_dung_repository.dart';
 
 class HangMucXayDungProvider {
-  HangMucXayDungRepository? repository = GetIt.I.get<HangMucXayDungRepository>();
+  HangMucXayDungRepository? repository =
+      GetIt.I.get<HangMucXayDungRepository>();
 
   HangMucXayDungProvider();
 
@@ -22,7 +23,8 @@ class HangMucXayDungProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => HangMucXayDungResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => HangMucXayDungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class HangMucXayDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class HangMucXayDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class HangMucXayDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HangMucXayDungRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class HangMucXayDungProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => HangMucXayDungResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => HangMucXayDungResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class HangMucXayDungProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(HangMucXayDungResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          HangMucXayDungResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

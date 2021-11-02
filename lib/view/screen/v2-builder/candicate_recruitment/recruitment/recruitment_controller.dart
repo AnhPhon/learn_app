@@ -107,6 +107,8 @@ class V2RecruitmentController extends GetxController {
   void onChangeTab({required int index}) {
     isLoading = true;
     currentIndex = index;
+    //resetNoData
+    refreshControllerList![index].resetNoData();
     getDataTuyenDung(
         loaiTin: loaiTinTuyenDung[currentIndex].id.toString(), isRefresh: true);
     update();

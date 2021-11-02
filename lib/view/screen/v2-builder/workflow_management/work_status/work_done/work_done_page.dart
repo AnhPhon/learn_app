@@ -23,18 +23,6 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
     return Scaffold(
       appBar: AppBarWidget(
         title: controller.appTitle,
-        // action: [
-        //   IconButton(
-        //     onPressed: () {
-        //       controller.onClickToDetailWorkDonePage();
-        //     },
-        //     icon: const Icon(
-        //       Icons.read_more_outlined,
-        //       color: ColorResources.WHITE,
-        //       size: Dimensions.ICON_SIZE_LARGE,
-        //     ),
-        //   ),
-        // ],
       ),
       body: GetBuilder<V2WorkDoneController>(
           init: V2WorkDoneController(),
@@ -190,7 +178,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     _line(context),
 
                     Text(
-                      'Đánh giá công tác bảo hàn',
+                      'Đánh giá công tác bảo hành',
                       style: Dimensions.fontSizeStyle16w600(),
                     ),
                     const SizedBox(
@@ -434,14 +422,22 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
   ///Button nhận thông tin và liên hệ khách hàng
   ///
   Widget _contactCustomers() {
+    // return V2LongButton(
+    //   color: (controller.isKhachHangDisable)
+    //       ? ColorResources.LIGHT_GREY
+    //       : ColorResources.THEME_DEFAULT,
+    //   onPressed: () {
+    //     if (!controller.isKhachHangDisable) {
+    //       controller.onCustomerReviewSubmit();
+    //     }
+    //   },
+    //   title: 'Nhận thông tin và liên hệ khách hàng',
+    // );
+
     return V2LongButton(
-      color: (controller.isKhachHangDisable)
-          ? ColorResources.LIGHT_GREY
-          : ColorResources.THEME_DEFAULT,
+      color: ColorResources.THEME_DEFAULT,
       onPressed: () {
-        if (!controller.isKhachHangDisable) {
-          controller.onCustomerReviewSubmit();
-        }
+        controller.onCustomerReviewSubmit();
       },
       title: 'Nhận thông tin và liên hệ khách hàng',
     );

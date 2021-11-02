@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/chi_tiet_don_hang_repository.dart';
 
 class ChiTietDonHangProvider {
-  ChiTietDonHangRepository? repository = GetIt.I.get<ChiTietDonHangRepository>();
+  ChiTietDonHangRepository? repository =
+      GetIt.I.get<ChiTietDonHangRepository>();
 
   ChiTietDonHangProvider();
 
@@ -22,7 +23,8 @@ class ChiTietDonHangProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ChiTietDonHangResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class ChiTietDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class ChiTietDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class ChiTietDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietDonHangRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class ChiTietDonHangProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => ChiTietDonHangResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietDonHangResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class ChiTietDonHangProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietDonHangResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietDonHangResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

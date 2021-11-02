@@ -160,7 +160,7 @@ class PaymentAccountController extends GetxController {
                   lichSuViTienRequest.loaiGiaoDich = "2";
                   lichSuViTienRequest.trangThai = "2";
                   lichSuViTienRequest.soTien = tongTienThanhToan.toString();
-
+                  lichSuViTienRequest.type = '0';
                   //set param back
                   final Map<String, dynamic> param = {
                     'type': 1,

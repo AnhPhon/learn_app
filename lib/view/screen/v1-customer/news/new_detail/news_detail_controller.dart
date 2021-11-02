@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/tin_tuc_request.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1NewsDetailController extends GetxController {
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
@@ -17,22 +19,29 @@ class V1NewsDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (Get.arguments != null) {
-      tinTucResponse = Get.arguments as TinTucResponse;
-    }
+    sl.get<SharedPreferenceHelper>().idTinTuc.then((idTinTuc) {
+      tinTucProvider.find(
+        id: idTinTuc.toString(),
+        onSuccess: (data) {
+          tinTucResponse = data;
 
-    countView();
+          tinTucRequest.id = tinTucResponse.id;
+          tinTucRequest.luotXem =
+              (int.parse(tinTucResponse.luotXem.toString()) + 1).toString();
+          countView();
+          update();
+        },
+        onError: (error) {
+          print("V1NewsDetailController tinTucProvider onError $error");
+        },
+      );
+    });
   }
 
   ///
   ///count view
   ///
   void countView() {
-    //set data
-    tinTucRequest.id = tinTucResponse.id;
-    tinTucRequest.luotXem =
-        (int.parse(tinTucResponse.luotXem.toString()) + 1).toString();
-
     //update view
     tinTucProvider.update(
       data: tinTucRequest,

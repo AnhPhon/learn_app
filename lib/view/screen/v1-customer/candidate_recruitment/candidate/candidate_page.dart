@@ -41,12 +41,12 @@ class V1CandidatePage extends GetView<V1CandidateController> {
             return controller.currentIndex == 0
                 ? FloatingActionButton.extended(
                     onPressed: controller.onClickFloatButton,
-                    tooltip: "Tạo đơn dịch vụ",
+                    tooltip: "Tạo tin tuyển dụng",
                     backgroundColor: ColorResources.PRIMARYCOLOR,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     elevation: 5,
                     label: const Text(
-                      'Tạo đơn',
+                      'Tạo tin',
                       style: TextStyle(
                           color: ColorResources.WHITE,
                           fontWeight: FontWeight.bold),

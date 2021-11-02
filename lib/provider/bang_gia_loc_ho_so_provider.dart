@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/bang_gia_loc_ho_so_repository.dart';
 
 class BangGiaLocHoSoProvider {
-  BangGiaLocHoSoRepository? repository = GetIt.I.get<BangGiaLocHoSoRepository>();
+  BangGiaLocHoSoRepository? repository =
+      GetIt.I.get<BangGiaLocHoSoRepository>();
 
   BangGiaLocHoSoProvider();
 
@@ -22,7 +23,8 @@ class BangGiaLocHoSoProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class BangGiaLocHoSoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class BangGiaLocHoSoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class BangGiaLocHoSoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BangGiaLocHoSoRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class BangGiaLocHoSoProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class BangGiaLocHoSoProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(BangGiaLocHoSoResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          BangGiaLocHoSoResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
