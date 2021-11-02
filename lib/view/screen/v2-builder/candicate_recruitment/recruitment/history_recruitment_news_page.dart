@@ -5,9 +5,8 @@ import 'package:template/view/basewidget/appbar/search_app_bar.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/recruiment_news_card.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/history_recruitment_news_controller.dart';
 
-class V2HistoryRectuitmentNewsPage extends GetView<V2HistoryRecruitmentNewsController>{
-
-
+class V2HistoryRectuitmentNewsPage
+    extends GetView<V2HistoryRecruitmentNewsController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -17,28 +16,31 @@ class V2HistoryRectuitmentNewsPage extends GetView<V2HistoryRecruitmentNewsContr
           init: V2HistoryRecruitmentNewsController(),
           builder: (V2HistoryRecruitmentNewsController controller) {
             return Scaffold(
-              appBar: SearchAppBarWidget(title: "Tin đã lưu", searchController: controller.searchController),
-              body: recruitment(context, controller: controller)
-            );
+                appBar: SearchAppBarWidget(
+                    title: "Tin đã lưu",
+                    searchController: controller.searchController),
+                body: recruitment(context, controller: controller));
           },
         );
       },
     );
   }
 
-
-  Widget recruitment(BuildContext context,{required V2HistoryRecruitmentNewsController controller}){
+  Widget recruitment(BuildContext context,
+      {required V2HistoryRecruitmentNewsController controller}) {
     return ListView.builder(
       itemCount: 7,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {
-            controller.onClickRecruitmentNews();
-          },
-          child: V2RecruimentNewsCard(index: index,)
-        );
+            onTap: () {
+              controller.onClickRecruitmentNews();
+            },
+            child: Container()
+            // V2RecruimentNewsCard(
+            //   index: index,
+            // ),
+            );
       },
     );
   }
-
 }

@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/screen/v1-customer/form_management/form_management_controller.dart';
 
 class V1FormManagementPage extends GetView<V1FormManagementController> {
-  ///
-  /// build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1FormManagementController>(
       init: V1FormManagementController(),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF6F6F7),
           appBar: AppBarWidget(title: controller.title),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                //tab
-                tabBarWidget(context: context, controller: controller),
+          body: Column(
+            children: [
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
 
-                //item list
-                ...List.generate(5, (index) => _itemList(context)),
-              ],
-            ),
+              //tab
+              tabBarWidget(context: context, controller: controller),
+
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
+
+              //item list
+              Expanded(child: _itemList()),
+            ],
           ),
         );
       },
@@ -87,106 +91,65 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
       required V1FormManagementController controller}) {
     return Container(
       alignment: Alignment.center,
-      width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, .1),
-      child: Container(
-        alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, .07),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            onSelectedTab(context, controller,
-                title: controller.titleTabBar['DPH']!,
-                index: 0,
-                isRight: false),
-            onSelectedTab(context, controller,
-                title: controller.titleTabBar['CPH']!, index: 1, isRight: true),
-          ],
-        ),
+      width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
+      height: DeviceUtils.getScaledHeight(context, .07),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          onSelectedTab(context, controller,
+              title: controller.titleTabBar['DPH']!, index: 0, isRight: false),
+          onSelectedTab(context, controller,
+              title: controller.titleTabBar['CPH']!, index: 1, isRight: true),
+        ],
       ),
     );
   }
 
   ///
-  /// item list
+  ///item list
   ///
-  Widget _itemList(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        controller.onProductResponseClick();
+  Widget _itemList() {
+    return GetBuilder<V1FormManagementController>(
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return SmartRefresher(
+          controller: controller.refreshController,
+          enablePullUp: true,
+          onRefresh: controller.onRefresh,
+          onLoading: controller.onLoading,
+          footer: const ClassicFooter(
+            loadingText: "Đang tải...",
+            noDataText: "Không có dữ liệu",
+            canLoadingText: "Kéo lên để tải thêm dữ liệu",
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.donDichVuList.length,
+            itemBuilder: (BuildContext ctx, int index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: ItemListWidget(
+                  title: controller.donDichVuList[index].tieuDe.toString(),
+                  onTap: () => controller.onProductResponseClick(index: index),
+                  urlImage:
+                      controller.donDichVuList[index].hinhAnhBaoGia.toString(),
+                  rowText2: DateConverter.formatDateTimeFull(
+                    dateTime:
+                        controller.donDichVuList[index].createdAt.toString(),
+                  ),
+                  isSpaceBetween: true,
+                ),
+              );
+            },
+          ),
+        );
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: Dimensions.MARGIN_SIZE_SMALL,
-            vertical: Dimensions.MARGIN_SIZE_SMALL),
-        height: DeviceUtils.getScaledHeight(context, .118),
-        decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          color: ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 2)),
-          ],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                ),
-                child: Image.asset(
-                  Images.newsTemplate,
-                  fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
-                  width: Dimensions.PADDING_SIZE_SMALL,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
-            Expanded(
-              flex: 8,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      child: Text(
-                        "Thợ ốp lát: Công trình khách hàng 5 sao",
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "7:00 20/09/2021",
-                        style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
-                      ),
-                      SizedBox(
-                        width: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

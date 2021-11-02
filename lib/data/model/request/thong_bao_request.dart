@@ -26,7 +26,7 @@ class ThongBaoRequest {
   /// From JSON
   ///
   ThongBaoRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     doiTuong = json['doiTuong'].toString();
     idDonDichVu = json['idDonDichVu'].toString();
     idDuAnKhachHang = json['idDuAnKhachHang'].toString();

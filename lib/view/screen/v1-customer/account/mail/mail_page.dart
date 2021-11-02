@@ -29,16 +29,13 @@ class V1MailPage extends GetView<V1MailController> {
                     style: Dimensions.fontSizeStyle20w600(),
                   ),
 
-                  // const SizedBox(
-                  //   height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                  // ),
-
                   //name
                   InputWidget(
                     hintText: "Họ và tên của bạn",
                     textEditingController: controller.nameController,
                     width: 1,
                     textInputAction: TextInputAction.next,
+                    fillColor: ColorResources.WHITE,
                     padding: const EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
@@ -51,6 +48,7 @@ class V1MailPage extends GetView<V1MailController> {
                     width: 1,
                     textInputType: TextInputType.number,
                     textInputAction: TextInputAction.next,
+                    fillColor: ColorResources.WHITE,
                     padding: const EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
@@ -62,6 +60,7 @@ class V1MailPage extends GetView<V1MailController> {
                     textEditingController: controller.contentController,
                     width: 1,
                     maxLine: 5,
+                    fillColor: ColorResources.WHITE,
                     padding: const EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),

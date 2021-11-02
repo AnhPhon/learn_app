@@ -28,7 +28,7 @@ class ChamCongRequest {
   /// From JSON
   ///
   ChamCongRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idNhanVien = json['idNhanVien'].toString();
     idDuAnNhanVien = json['idDuAnNhanVien'].toString();
     thoiGianBatDau = json['thoiGianBatDau'].toString();
