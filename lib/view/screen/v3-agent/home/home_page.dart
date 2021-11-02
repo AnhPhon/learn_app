@@ -46,6 +46,7 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // news widget
                   _newsWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
                   _productWidget()
