@@ -7,6 +7,7 @@ class BtnCustom extends StatelessWidget {
   final Color color;
   final String text;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final bool? isPadding;
@@ -19,6 +20,7 @@ class BtnCustom extends StatelessWidget {
     this.isPadding,
     this.margin,
     this.padding,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -33,9 +35,7 @@ class BtnCustom extends StatelessWidget {
           margin: margin,
           padding: padding ??
               const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-          height: isPadding == true
-              ? DeviceUtils.getScaledHeight(context, .1)
-              : DeviceUtils.getScaledHeight(context, .065),
+          height: DeviceUtils.getScaledHeight(context, height ?? .065),
           width: width,
           alignment: Alignment.center,
           decoration: BoxDecoration(

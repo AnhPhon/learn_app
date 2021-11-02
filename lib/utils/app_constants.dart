@@ -109,8 +109,20 @@ const String NHOM_DICH_VU_6 = '616049bac8e6fa122227e289';
 const String NHOM_DICH_VU_7 = '6168f03c7cb8ed05dbf3bcc7';
 const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
 
+//trang thai don hang moi tao
+const String TRANG_THAI_DON_HANG_MOI_TAO = '616a39faea30f845b562876d';
+
+//trang thai don hang hoan thanh
+const String TRANG_THAI_DON_HANG_HOAN_THANH = '6169a7843391622ae92038ef';
+
 //tình trạng sản phẩm
 const dynamic TINH_TRANG_SAN_PHAM = {
   "0": "Mới",
   "1": "Thanh lý",
+};
+
+//kiểu vận chuyển
+const Map<String, String> KIEU_VAN_CHUYEN = {
+  "0": "Không giao đc qua các đơn vị giao hàng (tự vận chuyển)",
+  "1": "Giao đc qua các đơn vị giao hàng",
 };

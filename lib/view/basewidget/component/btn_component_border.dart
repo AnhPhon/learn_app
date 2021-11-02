@@ -8,16 +8,18 @@ class BtnCustomBorder extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
   final double width;
+  final double? height;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
-  const BtnCustomBorder(
-      {Key? key,
-      required this.onTap,
-      required this.text,
-      required this.width,
-      this.margin,
-      this.padding})
-      : super(key: key);
+  const BtnCustomBorder({
+    Key? key,
+    required this.onTap,
+    required this.text,
+    required this.width,
+    this.margin,
+    this.padding,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class BtnCustomBorder extends StatelessWidget {
           fontSize: Dimensions.FONT_SIZE_LARGE,
         ),
         child: Container(
-          height: DeviceUtils.getScaledHeight(context, .065),
+          height: DeviceUtils.getScaledHeight(context, height ?? .065),
           width: width,
           margin: margin ?? EdgeInsets.zero,
           padding: padding ??

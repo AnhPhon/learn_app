@@ -129,10 +129,11 @@ class V3StoreInfomationController extends GetxController {
   bool isLoading = true;
   bool isLoadingAdd = false;
 
-  bool isLoadingWarehouse = true;
+  bool isLoadingWarehouse = false;
 
   //warehouse list
   List<Widget> warehouseList = [];
+  List<String> diaDiemCuaHangChinhList = [];
 
   @override
   void onInit() {
@@ -164,9 +165,44 @@ class V3StoreInfomationController extends GetxController {
       id: userId,
       onSuccess: (data) {
         taiKhoanResponse = data;
+
         //mapping hinhAnhCuaHang
         if (data.hinhAnhCuaHangs!.isNotEmpty) {
           urlImage = data.hinhAnhCuaHangs!;
+        }
+
+        //mapping thoi gian lam viec
+        if (data.thoiGianLamViec != "null") {
+          final thoiGianLamViecList = data.thoiGianLamViec!.split("-");
+          startController.text = thoiGianLamViecList[0].trim();
+          endController.text = thoiGianLamViecList[1].trim();
+        }
+
+        //mapping dia diem cua hang chinh
+        if (data.diaDiemCuaHangChinh != "null") {
+          //mapping tinhTp
+          diaDiemCuaHangChinhList = data.diaDiemCuaHangChinh!.split(",");
+          if (diaDiemCuaHangChinhList[0].contains("Hồ Chí Minh")) {
+            groupTinhTpValue = 0;
+
+            //getTinhTp
+            getTinhTp();
+          } else if (diaDiemCuaHangChinhList[0].contains("Hà Nội")) {
+            groupTinhTpValue = 1;
+
+            //getTinhTp
+            getTinhTp();
+          } else if (diaDiemCuaHangChinhList[0].contains("Đà Nẵng")) {
+            groupTinhTpValue = 2;
+
+            //getTinhTp
+            getTinhTp();
+          } else {
+            groupTinhTpValue = 3;
+
+            //getTinhTp
+            getTinhTp();
+          }
         }
 
         //getNhomCuaHang
@@ -174,9 +210,6 @@ class V3StoreInfomationController extends GetxController {
 
         //getMatHangDacTrung
         getMatHangDacTrung();
-
-        //getTinhTp
-        getTinhTp();
 
         //getKhoHang
         getKhoHangDaiLy();
@@ -193,13 +226,13 @@ class V3StoreInfomationController extends GetxController {
   ///get kho hang
   ///
   void getKhoHangDaiLy() {
-    isLoadingAdd = true;
     khoHangDaiLyProvider.paginate(
       page: 1,
       limit: 100,
       filter: "&idTaiKhoan=$userId",
       onSuccess: (value) {
         if (value.isNotEmpty) {
+          isLoadingWarehouse = true;
           khoHangDaiLyList = value;
           khoHangModelList =
               List<KhoHangModel>.generate(khoHangDaiLyList.length, (index) {
@@ -222,18 +255,19 @@ class V3StoreInfomationController extends GetxController {
 
             //mapping quanHuyenWareHouse
             getQuanHuyen(
-                idTinhTp: value[i].idTinhTp!.id.toString(),
-                indexWarehouse: i,
-                isWarehouse: true);
+              idTinhTp: value[i].idTinhTp!.id.toString(),
+              indexWarehouse: i,
+              isWarehouse: true,
+            );
 
             //mapping phuongXaWareHouse
             getPhuongXa(
-                idQuanHuyen: value[i].idQuanHuyen!.id.toString(),
-                indexWarehouse: i,
-                isWarehouse: true);
+              idQuanHuyen: value[i].idQuanHuyen!.id.toString(),
+              indexWarehouse: i,
+              isWarehouse: true,
+            );
           }
         }
-        isLoadingAdd = false;
         update();
       },
       onError: (error) {
@@ -251,12 +285,14 @@ class V3StoreInfomationController extends GetxController {
         nhomCuaHangList = value;
 
         //check nhomCuaHangResponse already exits
-        if (value.indexWhere((element) =>
-                element.id == taiKhoanResponse.idNhomCuaHang!.id) !=
-            -1) {
-          //binding nhomCuaHangResponse
-          nhomCuaHangResponse = value[value.indexWhere(
-              (element) => element.id == taiKhoanResponse.idNhomCuaHang!.id)];
+        if (value.isNotEmpty && taiKhoanResponse.idNhomCuaHang != null) {
+          if (value.indexWhere((element) =>
+                  element.id == taiKhoanResponse.idNhomCuaHang!.id) !=
+              -1) {
+            //binding nhomCuaHangResponse
+            nhomCuaHangResponse = value[value.indexWhere(
+                (element) => element.id == taiKhoanResponse.idNhomCuaHang!.id)];
+          }
         }
 
         update();
@@ -277,10 +313,16 @@ class V3StoreInfomationController extends GetxController {
 
         //binding data TextEditingController
         nameController.text = taiKhoanResponse.hoTen.toString();
-        legalRepresentativeController.text =
-            taiKhoanResponse.tenPhapLy.toString();
+        if (taiKhoanResponse.tenPhapLy != "null") {
+          legalRepresentativeController.text =
+              taiKhoanResponse.tenPhapLy.toString();
+        }
         phoneController.text = taiKhoanResponse.soDienThoai.toString();
-        emailController.text = taiKhoanResponse.email ?? "";
+
+        if (taiKhoanResponse.email != "null") {
+          emailController.text = taiKhoanResponse.email.toString();
+        }
+
         addressController.text = taiKhoanResponse.diaChi.toString();
 
         taiKhoanResponse.idMatHangDacTrungs!
@@ -306,7 +348,7 @@ class V3StoreInfomationController extends GetxController {
         otherProvinces.addAll(value);
         if (groupTinhTpValue == 0) {
           hcmProvince = tinhTpsList
-              .firstWhere((element) => element.ten!.contains("Hồ Chí Minh"));
+              .firstWhere((element) => element.ten!.contains("TP Hồ Chí Minh"));
           getQuanHuyen(idTinhTp: hcmProvince!.id!);
         } else if (groupTinhTpValue == 1) {
           haNoiProvince = tinhTpsList
@@ -317,7 +359,13 @@ class V3StoreInfomationController extends GetxController {
               .firstWhere((element) => element.ten!.contains("Đà Nẵng"));
           getQuanHuyen(idTinhTp: daNangProvince!.id!);
         } else {
-          otherProvince = null;
+          if (taiKhoanResponse.diaDiemCuaHangChinh != "null") {
+            otherProvince = otherProvinces.firstWhere(
+                (element) => element.ten!.contains(diaDiemCuaHangChinhList[0]));
+            getQuanHuyen(idTinhTp: otherProvince!.id.toString());
+          } else {
+            otherProvince = null;
+          }
         }
 
         update();
@@ -351,6 +399,25 @@ class V3StoreInfomationController extends GetxController {
             phuongXasList.clear();
             if (value.isNotEmpty) {
               quanHuyensList.addAll(value);
+              //mapping huyen
+              if (taiKhoanResponse.diaDiemCuaHangChinh != "null") {
+                if (groupTinhTpValue == 0) {
+                  hcmHuyen = quanHuyensList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[1].trim()));
+                  //get phuong xa
+                  getPhuongXa(idQuanHuyen: hcmHuyen!.id.toString());
+                } else if (groupTinhTpValue == 1) {
+                  haNoiHuyen = quanHuyensList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[1].trim()));
+                  //get phuong xa
+                  getPhuongXa(idQuanHuyen: haNoiHuyen!.id.toString());
+                } else if (groupTinhTpValue == 2) {
+                  daNangHuyen = quanHuyensList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[1].trim()));
+                  //get phuong xa
+                  getPhuongXa(idQuanHuyen: daNangHuyen!.id.toString());
+                }
+              }
             }
             update();
           } else {
@@ -358,6 +425,13 @@ class V3StoreInfomationController extends GetxController {
             khacPhuong = null;
             otherDistricts.clear();
             otherDistricts.addAll(value);
+            if (taiKhoanResponse.diaDiemCuaHangChinh != "null") {
+              //mapping huyen
+              khacHuyen = otherDistricts.firstWhere((element) =>
+                  element.ten!.contains(diaDiemCuaHangChinhList[1].trim()));
+              //get phuong xa
+              getPhuongXa(idQuanHuyen: khacHuyen!.id.toString());
+            }
             update();
           }
         } else {
@@ -406,12 +480,30 @@ class V3StoreInfomationController extends GetxController {
             phuongXasList.clear();
             if (value.isNotEmpty) {
               phuongXasList.addAll(value);
+              //mapping phuong xa
+              if (taiKhoanResponse.diaDiemCuaHangChinh != "null") {
+                if (groupTinhTpValue == 0) {
+                  hcmPhuong = phuongXasList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[2].trim()));
+                } else if (groupTinhTpValue == 1) {
+                  haNoiPhuong = phuongXasList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[2].trim()));
+                } else if (groupTinhTpValue == 2) {
+                  daNangPhuong = phuongXasList.firstWhere((element) =>
+                      element.ten!.contains(diaDiemCuaHangChinhList[2].trim()));
+                }
+              }
             }
             update();
           } else {
             khacPhuong = null;
             otherwards.clear();
             otherwards.addAll(value);
+            //mapping phuong xa
+            if (taiKhoanResponse.diaDiemCuaHangChinh != "null") {
+              khacPhuong = otherwards.firstWhere((element) =>
+                  element.ten!.contains(diaDiemCuaHangChinhList[2].trim()));
+            }
             update();
           }
         } else {
@@ -667,6 +759,7 @@ class V3StoreInfomationController extends GetxController {
   ///btn update
   ///
   void btnUpdate(BuildContext context) {
+    print(double.parse(timeDiff(startController.text, endController.text)));
     //validate
     if (nameController.text.isEmpty) {
       Alert.error(message: 'Trường tên không được để trống');
@@ -676,9 +769,6 @@ class V3StoreInfomationController extends GetxController {
       return;
     } else if (phoneController.text.isEmpty) {
       Alert.error(message: 'Trường số điện thoại không được để trống');
-      return;
-    } else if (emailController.text.isEmpty) {
-      Alert.error(message: 'Trường email không được để trống');
       return;
     } else if (nhomCuaHangResponse == null) {
       Alert.error(message: 'Trường nhóm không được để trống');
@@ -716,16 +806,15 @@ class V3StoreInfomationController extends GetxController {
         0) {
       Alert.error(message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
       return;
-    } else if (khoHangModelList.isNotEmpty) {
-      //show loading
-      EasyLoading.show(status: 'loading...');
-
+    } else {
       //set data
       taiKhoanRequest.id = userId;
       taiKhoanRequest.hoTen = nameController.text;
       taiKhoanRequest.tenPhapLy = legalRepresentativeController.text;
       taiKhoanRequest.soDienThoai = phoneController.text;
-      taiKhoanRequest.email = emailController.text;
+      if (emailController.text.isNotEmpty) {
+        taiKhoanRequest.email = emailController.text;
+      }
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
       matHangDacTrungResponse.map(
         (element) {
@@ -736,7 +825,7 @@ class V3StoreInfomationController extends GetxController {
 
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =
-          "${timeDiff(startController.text, endController.text)} giờ";
+          "${startController.text} - ${endController.text}";
 
       taiKhoanRequest.lamChieuThuBay = taiKhoanResponse.lamChieuThuBay;
       taiKhoanRequest.lamNgayChuNhat = taiKhoanResponse.lamNgayChuNhat;
@@ -757,89 +846,112 @@ class V3StoreInfomationController extends GetxController {
             "$hcmProvince, $hcmHuyen, $hcmPhuong";
       }
 
-      //set data
-      khoHangDaiLyRequest.idTaiKhoan = userId;
+      if (khoHangModelList.isNotEmpty) {
+        print("object");
+        //show loading
+        EasyLoading.show(status: 'loading...');
 
-      for (var i = 0; i < khoHangModelList.length; i++) {
-        //validate warehouse
-        if (khoHangModelList[i].tinhTpResponse == null ||
-            khoHangModelList[i].quanHuyenResponse == null ||
-            khoHangModelList[i].phuongXaResponse == null ||
-            khoHangModelList[i].warehouseAddress!.text.isEmpty ||
-            khoHangModelList[i].warehouseName!.text.isEmpty) {
-          EasyLoading.dismiss();
-          Alert.error(
-              message: 'Trường địa điểm kho hàng ${i + 1} không được để trống');
-          return;
-        }
         //set data
-        khoHangDaiLyRequest.idTinhTp = khoHangModelList[i].tinhTpResponse!.id;
-        khoHangDaiLyRequest.idQuanHuyen =
-            khoHangModelList[i].quanHuyenResponse!.id;
-        khoHangDaiLyRequest.idPhuongXa =
-            khoHangModelList[i].phuongXaResponse!.id;
-        khoHangDaiLyRequest.diaChi = khoHangModelList[i].warehouseAddress!.text;
-        khoHangDaiLyRequest.ten = khoHangModelList[i].warehouseName!.text;
-        khoHangDaiLyRequest.id = khoHangModelList[i].idKhoHang;
-        //if warehouse already exits
-        if (khoHangModelList[i].idKhoHang != null) {
-          //set data
+        khoHangDaiLyRequest.idTaiKhoan = userId;
 
-          //update warehouse already exits
-          khoHangDaiLyProvider.update(
-            data: khoHangDaiLyRequest,
-            onSuccess: (khoHangDaiLyUpdate) {
-              ////show dialog
-              if (khoHangModelList[i] == khoHangModelList.last) {
-                //update taiKhoan
-                taiKhoanProvider.update(
-                  data: taiKhoanRequest,
-                  onSuccess: (value) {},
-                  onError: (error) {
-                    EasyLoading.dismiss();
-                    print(
-                        "V3StoreInfomationController btnUpdate onError $error");
-                  },
-                );
+        for (var i = 0; i < khoHangModelList.length; i++) {
+          //validate warehouse
+          if (khoHangModelList[i].tinhTpResponse == null ||
+              khoHangModelList[i].quanHuyenResponse == null ||
+              khoHangModelList[i].phuongXaResponse == null ||
+              khoHangModelList[i].warehouseAddress!.text.isEmpty ||
+              khoHangModelList[i].warehouseName!.text.isEmpty) {
+            EasyLoading.dismiss();
+            Alert.error(
+                message:
+                    'Trường địa điểm kho hàng ${i + 1} không được để trống');
+            return;
+          }
+          //set data
+          khoHangDaiLyRequest.idTinhTp = khoHangModelList[i].tinhTpResponse!.id;
+          khoHangDaiLyRequest.idQuanHuyen =
+              khoHangModelList[i].quanHuyenResponse!.id;
+          khoHangDaiLyRequest.idPhuongXa =
+              khoHangModelList[i].phuongXaResponse!.id;
+          khoHangDaiLyRequest.diaChi =
+              khoHangModelList[i].warehouseAddress!.text;
+          khoHangDaiLyRequest.ten = khoHangModelList[i].warehouseName!.text;
+          khoHangDaiLyRequest.id = khoHangModelList[i].idKhoHang;
+          //if warehouse already exits
+          if (khoHangModelList[i].idKhoHang != null) {
+            //update warehouse already exits
+            khoHangDaiLyProvider.update(
+              data: khoHangDaiLyRequest,
+              onSuccess: (khoHangDaiLyUpdate) {
+                ////show dialog
+                if (khoHangModelList[i] == khoHangModelList.last) {
+                  //update taiKhoan
+                  taiKhoanProvider.update(
+                    data: taiKhoanRequest,
+                    onSuccess: (value) {},
+                    onError: (error) {
+                      EasyLoading.dismiss();
+                      print(
+                          "V3StoreInfomationController btnUpdate onError $error");
+                    },
+                  );
+                  EasyLoading.dismiss();
+                  Get.back();
+                  Alert.success(message: 'Cập nhật thông tin thành công');
+                }
+              },
+              onError: (error) {
                 EasyLoading.dismiss();
-                Get.back();
-                Alert.success(message: 'Cập nhật thông tin thành công');
-              }
-            },
-            onError: (error) {
-              EasyLoading.dismiss();
-              print(
-                  "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
-            },
-          );
-        } else {
-          //add khoHang
-          khoHangDaiLyProvider.add(
-            data: khoHangDaiLyRequest,
-            onSuccess: (khoHang) {
-              ////show dialog
-              if (khoHangModelList[i] == khoHangModelList.last) {
-                //update taiKhoan
-                taiKhoanProvider.update(
-                  data: taiKhoanRequest,
-                  onSuccess: (value) {},
-                  onError: (error) {
-                    EasyLoading.dismiss();
-                    print(
-                        "V3StoreInfomationController btnUpdate onError $error");
-                  },
-                );
+                print(
+                    "V3StoreInfomationController khoHangDaiLyUpdate onError $error");
+              },
+            );
+          } else {
+            //add khoHang
+            khoHangDaiLyProvider.add(
+              data: khoHangDaiLyRequest,
+              onSuccess: (khoHang) {
+                ////show dialog
+                if (khoHangModelList[i] == khoHangModelList.last) {
+                  //update taiKhoan
+                  taiKhoanProvider.update(
+                    data: taiKhoanRequest,
+                    onSuccess: (value) {},
+                    onError: (error) {
+                      EasyLoading.dismiss();
+                      print(
+                          "V3StoreInfomationController btnUpdate onError $error");
+                    },
+                  );
+                  EasyLoading.dismiss();
+                  Get.back();
+                  Alert.success(message: 'Cập nhật thông tin thành công');
+                }
+              },
+              onError: (error) {
                 EasyLoading.dismiss();
-                Get.back();
-                Alert.success(message: 'Cập nhật thông tin thành công');
-              }
-            },
-            onError: (error) {
-              EasyLoading.dismiss();
-              print("V3StoreInfomationController btnUpdate onError $error");
-            },
-          );
+                print("V3StoreInfomationController btnUpdate onError $error");
+              },
+            );
+          }
         }
+      } else {
+        print("okokok");
+        //show loading
+        EasyLoading.show(status: 'loading...');
+        //update taiKhoan
+        taiKhoanProvider.update(
+          data: taiKhoanRequest,
+          onSuccess: (value) {
+            EasyLoading.dismiss();
+            Get.back();
+            Alert.success(message: "Cập nhật thông tin thành công");
+          },
+          onError: (error) {
+            EasyLoading.dismiss();
+            print("V3StoreInfomationController btnUpdate onError $error");
+          },
+        );
       }
     }
   }

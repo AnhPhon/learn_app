@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3ProductManagementController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -33,6 +35,9 @@ class V3ProductManagementController extends GetxController
   bool isLoading = true;
   bool isLoadingProduct = true;
 
+  //user id
+  String userId = "";
+
   // title appbar
   String title = "Quản lý sản phẩm";
 
@@ -40,7 +45,11 @@ class V3ProductManagementController extends GetxController
   void onInit() {
     super.onInit();
     //get load data
-    getAllCategory();
+    getUserId().then(
+      (value) {
+        getAllCategory();
+      },
+    );
   }
 
   @override
@@ -48,6 +57,13 @@ class V3ProductManagementController extends GetxController
     tabController!.dispose();
     refreshControllerList!.clear();
     super.onClose();
+  }
+
+  ///
+  ///get user id
+  ///
+  Future<void> getUserId() async {
+    userId = (await sl.get<SharedPreferenceHelper>().userId)!;
   }
 
   ///
@@ -118,7 +134,7 @@ class V3ProductManagementController extends GetxController
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
+          "&idTaiKhoan=$userId&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is empty
         if (value.isEmpty) {

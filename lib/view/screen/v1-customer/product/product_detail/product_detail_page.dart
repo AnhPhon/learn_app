@@ -164,7 +164,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
     return Container(
       height: controller.isLoadingMore
           ? null
-          : DeviceUtils.getScaledHeight(context, .45),
+          : DeviceUtils.getScaledHeight(context, .5),
       color: ColorResources.WHITE,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,8 +380,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   top: 0,
                   right: Dimensions.PADDING_SIZE_LARGE,
                   child: Container(
-                    height: DeviceUtils.getScaledHeight(context, .019),
-                    width: DeviceUtils.getScaledWidth(context, .038),
+                    height: DeviceUtils.getScaledHeight(context, .025),
+                    width: DeviceUtils.getScaledWidth(context, .04),
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
@@ -411,7 +411,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   Widget _bottomCart(
       BuildContext context, V1ProductDetailController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, .08),
+      height: DeviceUtils.getScaledHeight(context, .1),
       padding: const EdgeInsets.symmetric(
           horizontal: Dimensions.PADDING_SIZE_SMALL,
           vertical: Dimensions.PADDING_SIZE_SMALL),
@@ -433,20 +433,22 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
 
           // button add to cart
           Expanded(
-              flex: 9,
-              child: BtnCustom(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        controller.quantityProduct = 1;
-                        return _modalBottomSheet(context);
-                      },
-                    );
+            flex: 9,
+            child: BtnCustom(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    controller.quantityProduct = 1;
+                    return _modalBottomSheet(context);
                   },
-                  color: ColorResources.PRIMARY,
-                  text: "Thêm vào giỏ hàng",
-                  width: double.infinity))
+                );
+              },
+              color: ColorResources.PRIMARY,
+              text: "Thêm vào giỏ hàng",
+              width: double.infinity,
+            ),
+          ),
         ],
       ),
     );

@@ -24,7 +24,7 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                vertical: Dimensions.PADDING_SIZE_SMALL,
               ),
               child: Column(
                 children: [
@@ -86,7 +86,6 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
       width: DeviceUtils.getScaledWidth(context, 1),
       height: DeviceUtils.getScaledHeight(context, .07),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _onSelectedTab(
             context,

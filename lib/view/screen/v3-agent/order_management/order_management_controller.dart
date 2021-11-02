@@ -88,7 +88,6 @@ class V3OrderManagementController extends GetxController
   Future<void> getAllOrder({bool? isRefresh = true}) async {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
-    print(userId);
 
     //isRefresh
     if (isRefresh!) {
@@ -105,7 +104,6 @@ class V3OrderManagementController extends GetxController
       limit: limitMax,
       filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
       onSuccess: (orderAll) {
-        print(orderAll.length);
         //check is empty
         if (orderAll.isEmpty) {
           refreshController![tabController!.index].loadNoData();

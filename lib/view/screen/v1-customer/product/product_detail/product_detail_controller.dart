@@ -20,6 +20,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V1ProductDetailController extends GetxController {
@@ -123,7 +124,7 @@ class V1ProductDetailController extends GetxController {
       page: 1,
       limit: 5,
       filter:
-          "&idTaiKhoanMuaHang=$userId&idTrangThaiDonHang=616a39faea30f845b562876d&sortBy=created_at:desc",
+          "&idTaiKhoanMuaHang=$userId&idTrangThaiDonHang=$TRANG_THAI_DON_HANG_MOI_TAO&sortBy=created_at:desc",
       onSuccess: (data) {
         if (data.isNotEmpty) {
           donHangResponse = data.first;
@@ -164,7 +165,6 @@ class V1ProductDetailController extends GetxController {
       filter:
           "&idTaiKhoan=${sanPhamResponse.idTaiKhoan!.id}&idSanPham=${sanPhamResponse.id}",
       onSuccess: (data) {
-        print(data.length);
         //check is not empty
         if (data.isNotEmpty) {
           nhapKhoHangDaiLyList = data;

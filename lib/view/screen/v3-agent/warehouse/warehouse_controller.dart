@@ -98,13 +98,12 @@ class V3WarehouseController extends GetxController {
       //is load more
       pageMax++;
     }
-
     //get product by idTaiKhoan
     nhapKhoHangDaiLyProvider.paginate(
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
+          "&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is empty
         if (value.isEmpty) {
@@ -164,6 +163,12 @@ class V3WarehouseController extends GetxController {
   ///go to to receive page
   ///
   void onToReceiveClick() {
-    Get.toNamed(AppRoutes.V3_TO_RECEIVE);
+    Get.toNamed(AppRoutes.V3_TO_RECEIVE)!.then((value) {
+      if (value == true) {
+        isLoadingProduct = true;
+        update();
+        getProductByIdKhoHang(isRefresh: true);
+      }
+    });
   }
 }

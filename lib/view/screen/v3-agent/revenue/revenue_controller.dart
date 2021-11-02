@@ -8,6 +8,7 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V3RevenueController extends GetxController {
@@ -96,7 +97,7 @@ class V3RevenueController extends GetxController {
     donHangProvider.paginate(
       page: 1,
       limit: 100,
-      filter: "&idTaiKhoan=$userId&dateStart=$startStamp&dateEnd=$endStamp",
+      filter: "&idTaiKhoan=$userId&idTrangThaiDonHang=$TRANG_THAI_DON_HANG_HOAN_THANH&dateStart=$startStamp&dateEnd=$endStamp",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {

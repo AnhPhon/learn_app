@@ -72,7 +72,7 @@ class V1ContractPage extends GetView<V1ContractController> {
   Widget _bottomContract(BuildContext context,
       {required V1ContractController controller}) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, .27),
+      height: DeviceUtils.getScaledHeight(context, .3),
       color: ColorResources.WHITE,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
