@@ -346,8 +346,10 @@ class V2WorkRegisterController extends GetxController {
               limit: 30,
               filter: "&idNhomDichVu=${data.id}&idTaiKhoan=$userId",
               onSuccess: (data) {
-                print(data.isNotEmpty);
                 if (data.isNotEmpty) {
+                  sl
+                      .get<SharedPreferenceHelper>()
+                      .saveViecMoi(id: data.first.id!);
                   isRegister = false;
                   update();
                 }
@@ -699,6 +701,13 @@ class V2WorkRegisterController extends GetxController {
                 ),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
+
+                  // save id
+                  sl
+                      .get<SharedPreferenceHelper>()
+                      .saveViecMoi(id: data.id.toString());
+
+                  // update thông tin địa điểm sau khi tạo
                   Future.delayed(const Duration(milliseconds: 500))
                       .then((value) {
                     updateDiaDiem(data.id!);

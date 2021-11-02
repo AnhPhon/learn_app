@@ -32,4 +32,5 @@ class Preferences {
   static const String remember = "remember";
   static const String ids = "ids";
   static const String nhom7 = "nhom7";
+  static const String viecMoi = "viecMoi";
 }

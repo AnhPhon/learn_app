@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/chuyen_mon_response.dart';
+import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
+import 'package:template/data/model/response/loai_tot_nghiep_response.dart';
+import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -20,21 +24,30 @@ import 'package:template/view/screen/v2-builder/candicate_recruitment/components
 import 'package:template/view/screen/v2-builder/work_register/create/work_create_controller.dart';
 
 class V2WorkCreatePage extends GetView<V2WorkCreateController> {
-  final _controller = Get.find<V2WorkCreateController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Đăng ký việc mới"),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            form(context, _controller),
-            priviewButton(),
-            const SizedBox(
-              height: Dimensions.SIZE_LARGE,
-            )
-          ],
-        ),
+      body: GetBuilder(
+        init: V2WorkCreateController(),
+        builder: (V2WorkCreateController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                form(context, controller),
+                priviewButton(),
+                const SizedBox(
+                  height: Dimensions.SIZE_LARGE,
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -68,7 +81,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
       children: [
         // Tiêu đề cần tuyển
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -86,18 +99,18 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text(title: "Tên ứng viên: ", content: "Nguyễn Văn A"),
-              text(title: "Giới tính: ", content: "Nam"),
-              text(title: "Ngày sinh: ", content: "20/10/1992"),
-              text(title: "Điện thoại: ", content: "0932132132"),
-              text(title: "Email: ", content: "Exmaple@gmail.com"),
+              text(title: "Tên ứng viên: ", content: controller.tenUngVien),
+              text(title: "Giới tính: ", content: controller.gioiTinh),
+              text(title: "Ngày sinh: ", content: controller.ngaySinh),
+              text(title: "Điện thoại: ", content: controller.dienThoai),
+              text(title: "Email: ", content: controller.email),
             ],
           ),
         ),
 
         //Chỗ ở hiện tại
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -111,35 +124,42 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // hôn nhân
         DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+          onChanged: (val) {
+            controller.honNhanChange(val.toString());
+          },
+          data: controller.honNhanRefer.toList(),
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Độc thân",
+          value: controller.honNhan,
           obligatory: true,
           label: "Hôn nhân",
-          hint: "Độc thân",
+          hint: controller.honNhan,
         ),
 
         // Hình thức làm việc
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<HinhThucLamViecResponse>(
+          onChanged: (val) {
+            controller.hinhThucLamViecChange(val!);
+          },
+          data: controller.hinhThucLamViec,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Bán thời gian",
+          value: controller.hinhThucLamViecIndex,
           obligatory: true,
           label: "Hình thức làm việc",
           hint: "Hình thức làm việc",
         ),
 
         const Label(label: "Mục tiêu nghê nghiệp", obligatory: true),
-        const Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+        Container(
+          width: DeviceUtils.getScaledWidth(context, 1),
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: BoxShadowWidget(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
             child: Text(
-                "Được làm việc trong môi trường chuyên nghiệp, có chế độ tốt.Nâng cao được trình độ, kỹ năng chuyên môn Cống hiến năng lực bản thân và mong có cơ hội thăng tiến",
-                style: TextStyle(
+                controller.mucTieuNgheNghiep
+                    .toString()
+                    .replaceAll("null", "Không có"),
+                style: const TextStyle(
                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                 )),
           ),
@@ -247,34 +267,42 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         const Label(label: "Bằng cấp và trình độ", obligatory: false),
 
         // Trình độ
-        DropDownButton<String>(
+        DropDownButton<TrinhDoHocVanResponse>(
           paddingTop: 0,
-          onChanged: (val) {},
-          data: const [],
+          onChanged: (val) {
+            controller.trinhDoChange(val!);
+          },
+          data: controller.trinhDo,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Mới học",
+          value: controller.trinhDoIndex,
           obligatory: true,
           label: "Trình độ",
           hint: "Cùi",
         ),
 
         // Chuyên môn *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<ChuyenMonResponse>(
+          paddingTop: 0,
+          onChanged: (val) {
+            controller.chuyenMonChange(val!);
+          },
+          data: controller.chuyenMon,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Chuyên môn",
+          value: controller.chuyenMonIndex,
           obligatory: true,
           label: "Chuyên môn",
           hint: "Chuyên môn",
         ),
 
         // Tốt nghiệp lọai *
-        DropDownButton<String>(
-          onChanged: (val) {},
-          data: const [],
+        DropDownButton<LoaiTotNghiepResponse>(
+          paddingTop: 0,
+          onChanged: (val) {
+            controller.loaiTotNghiepChange(val!);
+          },
+          data: controller.loaiTotNghiep,
           width: DeviceUtils.getScaledWidth(context, 1),
-          value: "Tốt nghiệp lọai",
+          value: controller.loaiTotNghiepIndex,
           obligatory: true,
           label: "Tốt nghiệp lọai",
           hint: "Tốt nghiệp lọai",
@@ -295,7 +323,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         //Đơn vị đào tạo *
         InputField(
-          allowEdit: false,
+          allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -307,42 +335,66 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
 
-        const Label(label: "Ảnh bằng cấp (nếu có)", obligatory: false),
-        const Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+        const Label(label: "Ảnh bằng cấp (nếu có)", obligatory: true),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: BoxImage(
-            images: [],
+            images: controller.anhBangCap,
             isAddImage: true,
           ),
         ),
 
-        AddInfoButton(title: "Thêm bằng cấp mới", onPress: () {}),
+        AddInfoButton(
+            title: "Thêm bằng cấp mới",
+            onPress: () {
+              controller.themBangCapMoi();
+            }),
 
         // List thêm
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-              vertical: Dimensions.PADDING_SIZE_SMALL),
-          child: BoxShadowWidget(
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            child: SizedBox(
-              width: DeviceUtils.getScaledWidth(context, 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const TextHighlight(
-                    title: "Trình độ: ",
-                    content: "Đại học",
+        Column(
+          children: List.generate(
+            controller.bangBangCapDisplay.length,
+            (index) => Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                  vertical: Dimensions.PADDING_SIZE_SMALL),
+              child: BoxShadowWidget(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: SizedBox(
+                  width: DeviceUtils.getScaledWidth(context, 1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextHighlight(
+                        title: "Trình độ: ",
+                        content: controller.bangBangCapDisplay[index]["trinhDo"]
+                            .toString(),
+                      ),
+                      contentPrivew(
+                          title: "Chuyên môn: ",
+                          content: controller.bangBangCapDisplay[index]
+                                  ["chuyenMon"]
+                              .toString()),
+                      contentPrivew(
+                          title: "Tốt nghiệp loại: ",
+                          content: controller.bangBangCapDisplay[index]
+                                  ["loaiTotNghiep"]
+                              .toString()),
+                      contentPrivew(
+                          title: "Năm tốt nghiệp: ",
+                          content: controller.bangBangCapDisplay[index]
+                                  ["namTotNghiep"]
+                              .toString()),
+                      contentPrivew(
+                        title: "Đơn vị đào tạo: ",
+                        content: controller.bangBangCapDisplay[index]
+                                ["donViDaoTao"]
+                            .toString(),
+                      ),
+                    ],
                   ),
-                  contentPrivew(
-                      title: "Chuyên môn: ",
-                      content: "chuyên môn in trên bằng cấp"),
-                  contentPrivew(title: "Tốt nghiệp loại: ", content: "giỏi"),
-                  contentPrivew(title: "Năm tốt nghiệp: ", content: "2021"),
-                  contentPrivew(
-                      title: "Đơn vị đào tạo: ", content: "trường đại học"),
-                ],
+                ),
               ),
             ),
           ),
@@ -792,12 +844,14 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
   ///
   Widget priviewButton() {
     return Padding(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        child: LongButton(
-            title: "Xem trước hồ sơ",
-            color: ColorResources.PRIMARYCOLOR,
-            onPressed: () {
-              _controller.onClickPreviewButton();
-            }));
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      child: LongButton(
+        title: "Xem trước hồ sơ",
+        color: ColorResources.PRIMARYCOLOR,
+        onPressed: () {
+          controller.onClickPreviewButton();
+        },
+      ),
+    );
   }
 }

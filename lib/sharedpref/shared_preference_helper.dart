@@ -377,4 +377,17 @@ class SharedPreferenceHelper {
   Future<bool> removeNhom7() async {
     return _sharedPreference.remove(Preferences.nhom7);
   }
+
+  // VIỆC MƠIZ  : -----------------------------------------------
+  Future<String?> get viecMoi async {
+    return _sharedPreference.getString(Preferences.viecMoi);
+  }
+
+  Future<bool> saveViecMoi({required String id}) async {
+    return _sharedPreference.setString(Preferences.viecMoi, id);
+  }
+
+  Future<bool> removeViecMoi() async {
+    return _sharedPreference.remove(Preferences.viecMoi);
+  }
 }
