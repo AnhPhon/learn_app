@@ -96,15 +96,6 @@ class LoginEmployeeController extends GetxController {
                 .get<SharedPreferenceHelper>()
                 .saveUsername(account.email.toString());
 
-            print(account.email.toString());
-            // sl
-            //     .get<SharedPreferenceHelper>()
-            //     .saveUsername(emailController.text.toString());
-            // print(emailController.text.toString());
-            sl
-                .get<SharedPreferenceHelper>()
-                .savePassword(account.matKhau.toString());
-            print(account.matKhau.toString());
             // sl.get<SharedPreferenceHelper>().saveUsername(username)
             // if(isRemember){
             //   sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idRole!);
