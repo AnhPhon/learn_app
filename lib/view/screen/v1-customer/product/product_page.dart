@@ -150,7 +150,7 @@ class V1ProductPage extends GetView<V1ProductController> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: .7,
+                        childAspectRatio: .8,
                         crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
                         crossAxisCount: 2,
                       ),

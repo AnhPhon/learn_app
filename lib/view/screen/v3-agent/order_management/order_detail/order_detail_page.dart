@@ -34,7 +34,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin chung",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
                   _thongTinChung(context, controller),
@@ -47,7 +46,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin shipping",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _shipping(context, controller),
@@ -60,7 +58,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin sản phẩm",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _productInfo(context, controller),
@@ -73,7 +70,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Chi tiết thanh toán",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _paymentDetail(context, controller),
@@ -130,8 +126,8 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
           Dimensions().paddingDivider(context),
           rowText(
             text1: "Ngày đặt hàng",
-            text2: DateConverter.formatDateTime(
-              controller.donHangResponse.createdAt.toString(),
+            text2: DateConverter.formatDateTimeFull(
+              dateTime: controller.donHangResponse.createdAt.toString(),
             ),
           ),
           Dimensions().paddingDivider(context),
@@ -398,6 +394,17 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
             text1: "Phí dịch vụ",
             text2:
                 "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.phiDichVu.toString()))} vnđ",
+          ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
+          //Khuyến mãi
+          rowText(
+            text1: "Khuyến mãi",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.khuyenMai.toString()))} vnđ",
           ),
 
           const SizedBox(

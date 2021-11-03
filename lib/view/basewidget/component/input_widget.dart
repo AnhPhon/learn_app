@@ -139,8 +139,8 @@ class InputWidget extends StatelessWidget {
                                 DateConverter.estimatedDateOnly(value!)
                             : textEditingController.text =
                                 DateConverter.formatDate(value!);
-                        textEditingController.text =
-                            DateConverter.estimatedDateOnly(value);
+                        // textEditingController.text =
+                        // DateConverter.estimatedDateOnly(value);
                       });
                     }
                   : (isTime == true)

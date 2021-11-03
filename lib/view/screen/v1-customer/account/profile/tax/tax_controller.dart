@@ -25,7 +25,6 @@ class V1TaxController extends GetxController {
 
   //ImageUpdate
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
-  List<String> imageUrlList = [];
 
   //DangKyThue
   DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
@@ -89,18 +88,17 @@ class V1TaxController extends GetxController {
   ///
   ///pick image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      //add file image to list
-      taxImageList.add(imageTemporary);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
 
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
       //convert file to url
-      uploadImage(imageFile: imageTemporary);
-      update();
+      uploadImage(imageFile: files);
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -109,14 +107,18 @@ class V1TaxController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File imageFile}) {
-    imageUpdateProvider.add(
-      file: imageFile,
+  void uploadImage({required List<File> imageFile}) {
+    imageUpdateProvider.addImages(
+      files: imageFile,
       onSuccess: (value) {
-        //add url to list
-        imageUrlList.add(value.data.toString());
+        EasyLoading.dismiss();
+        if (value.files != null && value.files!.isNotEmpty) {
+          dangKyThueRequest.hinhAnhs = value.files;
+        }
+        update();
       },
       onError: (error) {
+        EasyLoading.dismiss();
         print("V1TaxController uploadImage onError $error");
       },
     );
@@ -135,7 +137,6 @@ class V1TaxController extends GetxController {
       dangKyThueRequest.idTaiKhoan = userId;
       dangKyThueRequest.trangThai = "0";
       dangKyThueRequest.file = taxController.text;
-      dangKyThueRequest.hinhAnhs = imageUrlList;
       dangKyThueRequest.loai = "1";
       // dangKyThueRequest.
 

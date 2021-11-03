@@ -45,7 +45,7 @@ class V2FormOfSubmitssionController extends GetxController {
     dangKyViecMoiProvider.paginate(
         page: 1,
         limit: 5,
-        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_7}',
+        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_DICH_VU_7}',
         onSuccess: (value) {
           if (value.isNotEmpty) {
             isDangKyViecMoiWithUser = true;
