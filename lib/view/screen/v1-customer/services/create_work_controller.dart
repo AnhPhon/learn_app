@@ -75,16 +75,17 @@ class CreateWorkController extends GetxController {
     // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6 
     if(Get.arguments != null){
       services = Get.arguments as SERVICES;
+      /// Change Title App bar
+      if(services == SERVICES.REGULARLY){
+        titleAppBar = "Dịch vụ thường xuyên";
+      }else if(services == SERVICES.WORK){
+        titleAppBar = 'Tạo đơn công việc';
+      }
     }
     getNhomDichVu();
     getTinhThanh();
     getUserId();
-    /// Change Title App bar
-    if(services == SERVICES.REGULARLY){
-      titleAppBar = "Dịch vụ thường xuyên";
-    }else if(services == SERVICES.WORK){
-      titleAppBar = 'Tạo đơn công việc';
-    }
+    
   }
 
 

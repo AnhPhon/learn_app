@@ -91,7 +91,10 @@ class V1FormalPaymentController extends GetxController{
                   donDichVuRepository.add(dichVuRequest!).then((value) => {
                         if (value.response.data != null)
                           {
-                            Get.back(result: true),
+                            //Get.back(result: true),
+                            Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
+                            Get.back(),
+                            Get.back(),
                             Alert.success(
                                 message: 'Tạo đơn thành công'),
                           }
@@ -112,7 +115,10 @@ class V1FormalPaymentController extends GetxController{
                   donDichVuRepository.add(dichVuRequest!).then((value) => {
                         if (value.response.data != null)
                           {
-                            Get.back(result: true),
+                            //Get.back(result: true),
+                            Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
+                            Get.back(),
+                            Get.back(),
                             Alert.error(
                                 message: 'Tạo đơn thành công'),
                           }

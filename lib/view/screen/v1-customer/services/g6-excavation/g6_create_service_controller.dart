@@ -59,16 +59,19 @@ class V1G6CreateServiceController extends GetxController{
   List<File> productImages = [];
   // app bar title
   String appBarTitle = 'Tạo đơn công việc';
+
   @override
   void onInit() {
-    serviceApplication = Get.arguments as DonDichVuRequest;
-    workTitleController.text = serviceApplication!.tieuDe ?? '';
-    appBarTitle = Get.parameters['title'].toString();
-    print("fasfasdfasfsdfsfsfsa${appBarTitle}");
-    getWorkTime();
-    getAllThongSo();
-    super.onInit();
+    if(Get.arguments != null){
+      serviceApplication = Get.arguments as DonDichVuRequest;
+      print("Tiêu đề: ${serviceApplication!.tieuDe!}");
+      workTitleController.text = serviceApplication!.tieuDe ?? '';
+      appBarTitle = Get.parameters['appbar'].toString();
+      getWorkTime();
+      getAllThongSo();
+    }
   }
+
 
   ///
   ///// Chọn thời gian làm việc
@@ -123,6 +126,8 @@ class V1G6CreateServiceController extends GetxController{
   /// Get thông số kỹ thuật
   ///
   void getAllThongSo(){
+    appBarTitle = Get.parameters['appbar'].toString();
+    print("Running");
     thongSoKyThuatProvider.all(onSuccess: (data){
       thongSoKyThuatList.clear();
       if(data.isNotEmpty){
@@ -248,13 +253,13 @@ class V1G6CreateServiceController extends GetxController{
 
   @override
   void onClose() {
-    onClose();
     workTitleController.dispose();
     amountController.dispose();
     startTimeController.dispose();
     endTimeController.dispose();
     workWidthController.dispose();
     workDescController.dispose();
+    super.onClose();
   }
 }
 

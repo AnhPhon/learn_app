@@ -285,7 +285,7 @@ class V1G2CreateWorkController extends GetxController {
       imageUpdateProvider.add(
           file: file!,
           onSuccess: (data) {
-            dichVuRequest.file = data.data;
+            dichVuRequest.files = [data.data!];
           },
           onError: (onError) {
             EasyLoading.dismiss();

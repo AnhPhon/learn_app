@@ -10,6 +10,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
@@ -46,17 +47,17 @@ class V1G1ReviewController extends GetxController{
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
       Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
-      SnackBarUtils.showSnackBarSuccess(title: "Tạo đơn công việc thành công", message: "Chúng tôi sẽ phản hồi lại sớm nhất");
+      Alert.success(message: "Tạo đơn công việc thành công. Chúng tôi sẽ phản hồi lại sớm nhất");
     }, onError: (error){
       EasyLoading.dismiss();
-      SnackBarUtils.showSnackBar(title: "Lỗi", message: error.toString());
+      Alert.error(message: error.toString());
       print("V1G1ReviewController onSave $error");
     });
   }
 
   Future<DonDichVuRequest> request(){
-    List<String> massImages = [];
-    List<String> drawingImages = [];
+    final List<String> massImages = [];
+    final List<String> drawingImages = [];
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
     dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayBatDau!);
@@ -96,7 +97,7 @@ class V1G1ReviewController extends GetxController{
     // Tài file
     if(previewServiceRequest!.file != null){
       imageUpdateProvider.add(file: previewServiceRequest!.file!, onSuccess: (data){
-        dichVuRequest.file = data.data;
+        dichVuRequest.files = [data.data!];
       }, onError: (onError){
         SnackBarUtils.showSnackBar(title: "Lỗi", message: "Tải file thất bại");
         print("V1G1ReviewController request  tải file $onError");

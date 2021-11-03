@@ -16,6 +16,7 @@ class ReferencePriceTableController extends GetxController{
     super.onInit();
     if(Get.arguments != null){
       request = Get.arguments as DonDichVuRequest;
+      print(request!.toJson());
       id = Get.parameters['id'].toString();
       title = Get.parameters['title'].toString();
       appBarTitle = Get.parameters['appbar'].toString();
@@ -39,10 +40,10 @@ class ReferencePriceTableController extends GetxController{
       Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE,arguments: request);
     }else if(id.contains('5')){
       // Tạo đơn công viẹc và dịch nhóm 5
-      Get.toNamed("${AppRoutes.V1_G5_CREATE_SERVICE}?title=$appBarTitle", arguments: request);
+      Get.toNamed("${AppRoutes.V1_G5_CREATE_SERVICE}?appbar=$appBarTitle", arguments: request);
     }else if(id.contains('6')){
       // Tạo đơn công viẹc và dịch nhóm 6
-      Get.toNamed("${AppRoutes.V1_G6_CREATE_SERVICE}?title=$appBarTitle", arguments: request);
+      Get.toNamed("${AppRoutes.V1_G6_CREATE_SERVICE}?appbar=$appBarTitle", arguments: request);
     }
     // else if(id.contains('7')){
     //   // Tạo đơn công viẹc và dịch nhóm 7

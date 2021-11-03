@@ -30,7 +30,7 @@ class DonDichVuRequest {
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
   String? moTaChiTiet;
-  String? file;
+  List<String>? files;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -73,7 +73,7 @@ class DonDichVuRequest {
       this.giaTriKhachDeXuat,
       this.hinhAnhChiTiets,
       this.moTaChiTiet,
-      this.file,
+      this.files,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,
@@ -129,7 +129,7 @@ class DonDichVuRequest {
     idPhuongXa = json['idPhuongXa'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'].toString();
+    files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
@@ -236,8 +236,8 @@ class DonDichVuRequest {
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
 
-    // check null file
-    if (file != null) data['file'] = file;
+    // check null files
+    if (files != null) data['files'] = files;
 
     // check null soLuongYeuCau
     if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau;

@@ -55,7 +55,7 @@ class V1G5CreateServiceController extends GetxController{
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
-    appBarTitle = Get.parameters['title'].toString();
+    appBarTitle = Get.parameters['appbar'].toString();
     print(appBarTitle);
     getWorkTime();
     getAllThongSo();
@@ -213,7 +213,6 @@ class V1G5CreateServiceController extends GetxController{
 
   @override
   void onClose() {
-    onClose();
     workTitleController.dispose();
     amountController.dispose();
     startWorkController.dispose();
@@ -223,6 +222,7 @@ class V1G5CreateServiceController extends GetxController{
     workDescController.dispose();
     returnWidthController.dispose();
     receivingWidthController.dispose();
+    super.onClose();
   }
 }
 
