@@ -33,7 +33,6 @@ class V2HomeController extends GetxController {
       GetIt.I.get<DangKyHopDongSBSProvider>();
   GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
-
   ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   // refresh controller
@@ -411,7 +410,15 @@ class V2HomeController extends GetxController {
   ///
   void onClickProductDetail(String id) {
     sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    _sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -425,7 +432,16 @@ class V2HomeController extends GetxController {
   /// vào tin tức chi tiết
   ///
   void onClickHotNewsDetail(String idNews) {
-    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
+    _tinTucProvider.find(
+      id: idNews,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
