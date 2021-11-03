@@ -17,6 +17,7 @@ class AppRoutes {
   static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
+  static const String V2_NOTIFICATION = "/v2_notification";
 
   // Phản hồi dịch vụ thường xuyên click từ thông báo
   static const String V1_ORDER_FEEDBACK_CONTRACTORS =

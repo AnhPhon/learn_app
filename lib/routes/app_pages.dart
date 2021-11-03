@@ -161,6 +161,8 @@ import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
+import 'package:template/view/screen/v2-builder/notifications/notification_binding.dart';
+import 'package:template/view/screen/v2-builder/notifications/notification_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
 import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
@@ -585,6 +587,15 @@ class AppPages {
       name: AppRoutes.V1_NOTIFICATION,
       page: () => const V1NotificationPage(),
       binding: V1NotificationBinding(),
+    ),
+
+    ///
+    /// Thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V2_NOTIFICATION,
+      page: () => const V2NotificationPage(),
+      binding: V2NotificationBinding(),
     ),
 
     ///
