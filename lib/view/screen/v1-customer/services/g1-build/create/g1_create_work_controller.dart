@@ -13,9 +13,6 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G1CreateWorkController extends GetxController{
   final ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
@@ -57,18 +54,18 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onClickContinueButton(){
     if(descController.text.toString().isEmpty){
-      Alert.info(message:"Trường mô công việc không được để trống");
+      Alert.error(message:"Trường mô công việc không được để trống");
       return;
     }else if(startTimeController.text.toString().isEmpty){
-      Alert.info(message:"Trường thời gian bắt đầu không được để trống");
+      Alert.error(message:"Trường thời gian bắt đầu không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+      Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       return;
     } 
     if(endTimeController.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
-        Alert.info(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        Alert.error(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return;
       }
     }
@@ -95,8 +92,8 @@ class V1G1CreateWorkController extends GetxController{
     previewServiceRequest.bangKhoiLuong = massList;
     previewServiceRequest.idTaiKhoanNhanDon = serviceApplication!.idTaiKhoanNhanDon;
     previewServiceRequest.hinhAnhBanVes  = drawingImages;
-    if(files.isNotEmpty){
-      previewServiceRequest.files = files;
+    if(donDichVuFiles.isNotEmpty){
+      previewServiceRequest.files = donDichVuFiles;
     }
     Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
   }
@@ -115,13 +112,13 @@ class V1G1CreateWorkController extends GetxController{
   ///
   void onClickAddMass(){
     if(nameTitleController.text.toString().isEmpty){
-      return Alert.info(message: "Tên công việc không được để trống");
+      return Alert.error(message: "Tên công việc không được để trống");
     }else if(specificationController.text.toString().isEmpty){
-      return Alert.info(message:"Quy cách không được để trống");
+      return Alert.error(message:"Quy cách không được để trống");
     }else if(unit == null || unit!.isEmpty){
-      return Alert.info(message: 'Đơn vị không được để trống');
+      return Alert.error(message: 'Đơn vị không được để trống');
     }else if(massController.text.toString().isEmpty){
-      return Alert.info(message: "Khối lượng không được để trống");
+      return Alert.error(message: "Khối lượng không được để trống");
     }else{
       final VatTuResponse supplies = VatTuResponse(
         khoiLuong: massController.text.toString(),
@@ -158,10 +155,10 @@ class V1G1CreateWorkController extends GetxController{
       imageUpdateProvider.addFiles(
         files: files,
         onSuccess: (value) {
-          print('V2QuotationG1Controller pickFiles addFiles ${value.files}');
+          print('V1G1CreateWorkController pickFiles addFiles ${value.files}');
           EasyLoading.dismiss();
           if (value.files != null && value.files!.isNotEmpty) {
-            donDichVuFiles = value.files!;
+            donDichVuFiles.add(value.files!.first);
           }
           update();
         },
@@ -194,10 +191,10 @@ class V1G1CreateWorkController extends GetxController{
       imageUpdateProvider.addImages(
         files: files,
         onSuccess: (value) {
-          print('V2QuotationG1Controller pickImages addImages ${value.files}');
+          print('V1G1CreateWorkController pickImages addImages ${value.files}');
           EasyLoading.dismiss();
           if (value.files != null && value.files!.isNotEmpty) {
-            data = value.files!;
+            data.addAll(value.files!);
           }
           update();
         },
@@ -213,40 +210,13 @@ class V1G1CreateWorkController extends GetxController{
       Alert.error(message: e.toString());
     }
   }
-  // ///
-  // /// Chon file
-  // ///
-  // Future<void> pickerFile() async{
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
-  //   if (result != null) {
-  //     file = File(result.files.single.path!);
-  //     fileName = result.files.first.name;
-  //     update();
-  //     // return fileName;
-  //   } else {
-  //     Alert.error(message: "Thêm file thất bại");
-  //     print("Thêm file thất bại pickerFile V1G1CreateWorkController");
-  //   }
-  // }
-
-  // ///
-  // /// Chọn nhiều file (Image)
-  // ///
-  // Future<void> pickerMuilFile({required List<File> files})async{
-  //   final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
-  //   if (result != null) {
-  //     files.addAll(result.paths.map((path) => File(path!)).toList());
-  //     update();
-  //   } else {
-  //     Alert.error(message: "Thêm file thất bại pickerMuilFile V1G1CreateWorkController");
-  //   }
-  // }
+  
   ///
   /// Xoá hình ảnh
   ///
   void onDeleteImage({required String file, required List<String> files}){
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    //Alert.info(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
+    //Alert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 

@@ -109,22 +109,26 @@ class V1G3CreateServiceController extends GetxController {
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      Alert.info(message: "Bạn phải chọn thời gian làm việc");
+      Alert.error(message: "Bạn phải chọn thời gian làm việc");
       return;
     } else if(startTime.text.toString().isEmpty){
-      Alert.info(message: "Bạn phải chọn thời gian bắt đầu");
+      Alert.error(message: "Bạn phải chọn thời gian bắt đầu");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info(message: "Ngày bắt đầu lớn hơn ngày hiện tại");
+      Alert.error(message: "Ngày bắt đầu lớn hơn ngày hiện tại");
       return;
     }else if(endTime.text.toString().isEmpty){
-      Alert.info(message: "Thời gian kết thúc không được để trống");
+      Alert.error(message: "Thời gian kết thúc không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
-      Alert.info(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
+      Alert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
       return;
     }else{
-       Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
+       Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request())!.then((value){
+         if(value != null){
+           workTitleController.text = (value as DonDichVuRequest).tieuDe ?? '';
+         }
+       });
     }
   }
 
@@ -167,10 +171,10 @@ class V1G3CreateServiceController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     workTitleController.dispose();
     startTime.dispose();
     endTime.dispose();
+    super.onClose();
   }
 }
 

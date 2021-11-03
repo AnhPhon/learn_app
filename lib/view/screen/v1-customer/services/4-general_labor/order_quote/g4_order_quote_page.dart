@@ -14,11 +14,20 @@ import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_controller.dart';
 
 class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
+  final V1G4OrderQuoteController _controller = Get.find<V1G4OrderQuoteController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Báo giá đơn hàng"),
+      appBar: AppBarWidget(
+        title: "Báo giá đơn hàng",
+        leading: IconButton(onPressed: (){
+          _controller.onBack();
+        }, icon: const Icon(
+          Icons.arrow_back_ios
+          )
+        ),
+      ),
       body: GetBuilder(
         builder: (V1G4OrderQuoteController controller) {
           if(controller.isLoading){

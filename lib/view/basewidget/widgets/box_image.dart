@@ -20,7 +20,7 @@ class BoxImage extends StatelessWidget {
   final Function()? onPress;
   final List<String>? images;
   final List<String>? imagesUrl;
-  final Function(File file, List<String> files)? onDelete;
+  final Function(String file, List<String> files)? onDelete;
   @override
   Widget build(BuildContext context) {
     return Column(

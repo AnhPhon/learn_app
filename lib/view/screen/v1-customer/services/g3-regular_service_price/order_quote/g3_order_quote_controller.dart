@@ -5,13 +5,11 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bang_gia_don_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+
 
 class V1G3OrderQuoteController extends GetxController{
   final BangGiaDonHangProvider bangGiaDonHangProvider = GetIt.I.get<BangGiaDonHangProvider>();
@@ -46,7 +44,7 @@ class V1G3OrderQuoteController extends GetxController{
 
 
 
-  ////////////////////////////////
+  ///
   ///Lấy bảng giá đơn hàng
   ///
   void getAllBangGia(){
@@ -66,7 +64,7 @@ class V1G3OrderQuoteController extends GetxController{
   }
 
 
-  ////////////////////////////////
+  ///
   ///Lấy loại công việc
   ///
   void getAllWorkType(){
@@ -113,24 +111,30 @@ class V1G3OrderQuoteController extends GetxController{
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
       request!.soLuongYeuCau = personNumberController.text.toString();
-      request!.soTien = (double.parse(priceController.text.toString().replaceAll(",", '')) * double.parse(personNumberController.text.toString())).toString();//priceController.text.toString().replaceAll(",", '');//work.giaTien;
-      //request!.phiDichVu = '0';
-      //request!.khuyenMai = '0';
-      //request!.tongDon = (double.parse(priceController.text.toString().replaceAll(",", '')) * double.parse(personNumberController.text.toString())).toString();
-      //request!.tienCoc = (double.parse(request!.tongDon!.toString()) * 10 /100).toString();
+      request!.soTien = (double.parse(priceController.text.toString().replaceAll(",", '')) * double.parse(personNumberController.text.toString())).toString();
       Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: request);
     }
   }
 
   ///
+  ///onBack
+  ///
+  void onBack(){
+    request!.tieuDe = work!.tenCongViec;
+    Get.back(result: request);
+  }
+
+
+  ///
+  ///
   /// Check validate
   ///
   bool validate(){
     if(personNumberController.text.toString().isEmpty){
-      Alert.info(message: "Số lượng người yêu cầu không được để trống");
+      Alert.error(message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      Alert.info(message: "Nội dung miêu tả không được để trống");
+      Alert.error(message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;

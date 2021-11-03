@@ -134,25 +134,25 @@ class V1G5CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(thongSo.isEmpty){
-      Alert.info( message: "Bản phải chọn thông số kỹ thuật");
+      Alert.error( message: "Bản phải chọn thông số kỹ thuật");
     }else if(tommorow == false && afternoon == false && tonight == false){
-      Alert.info( message: "Thời làm việc không được để trống");
+      Alert.error( message: "Thời làm việc không được để trống");
     }else if(amountController.text.toString().isEmpty){
-      Alert.info( message: "Số lượng yêu cầu không được để trống");
+      Alert.error( message: "Số lượng yêu cầu không được để trống");
     }else if(int.parse(amountController.text.toString()) <= 0){
-      Alert.info( message: "Số lượng không hợp lệ");
+      Alert.error( message: "Số lượng không hợp lệ");
     }else if(startWorkController.text.toString().isEmpty){
-      Alert.info( message: "Ngày làm việc không được để trống");
+      Alert.error( message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.info( message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+      Alert.error( message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
-      Alert.info( message: "Địa điểm bốc hàng dự kiến không được để trống");
+      Alert.error( message: "Địa điểm bốc hàng dự kiến không được để trống");
     }else if(estimatedDeliveryLocation.text.toString().isEmpty){
-      Alert.info( message: "Địa điểm trả hàng dự kiến không được để trống");
+      Alert.error( message: "Địa điểm trả hàng dự kiến không được để trống");
     }else if(distanceController.text.toString().isEmpty){
-      Alert.info( message: "Cự ly vận chuyển tương đối không được để trống");
+      Alert.error( message: "Cự ly vận chuyển tương đối không được để trống");
     }else if(workDescController.text.toString().isEmpty){
-      Alert.info( message: "Mô tả yêu cầu cụ thể không được để trống");
+      Alert.error( message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{
       EasyLoading.show(status: "Loading ...");
       donDichVuProvider.add(data: request(), onSuccess: (data){

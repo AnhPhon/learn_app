@@ -42,7 +42,7 @@ class V1G1ReviewController extends GetxController{
   ///
   void onSave()async{
     EasyLoading.show(status: "Loading ...");
-    dichVuProvider.add(data: await request(), onSuccess: (data){
+    dichVuProvider.add(data: request(), onSuccess: (data){
       print("Đã tạo dich vụ thanh công");
       // Thệm bảng khối lượng công việc
       addMass(idDon: data.id!);
@@ -55,9 +55,7 @@ class V1G1ReviewController extends GetxController{
     });
   }
 
-  Future<DonDichVuRequest> request(){
-    final List<String> massImages = [];
-    final List<String> drawingImages = [];
+  DonDichVuRequest request(){
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.moTa = previewServiceRequest!.moTa;
     dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(previewServiceRequest!.ngayBatDau!);
@@ -75,41 +73,12 @@ class V1G1ReviewController extends GetxController{
 
     dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
     dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
-
-    // Hình ảnh bản khối lượng
-    previewServiceRequest!.hinhAnhBanKhoiLuong!.forEach((element) { 
-      imageUpdateProvider.add(file: element,onSuccess: (data){
-        massImages.add(data.data!);// = "$massImages${data.data},";
-      }, onError: (onError){
-        print("V1G1ReviewController request khối lượng $onError");
-      });
-    });
-
-    // Ảnh bản vẽ
-    previewServiceRequest!.hinhAnhBanVe!.forEach((element) { 
-      imageUpdateProvider.add(file: element,onSuccess: (data){
-        drawingImages.add(data.data!);
-      }, onError: (onError){
-        print("V1G1ReviewController request  ảnh bản vẽ $onError");
-      });
-    });
-
-    // Tài file
-    if(previewServiceRequest!.file != null){
-      imageUpdateProvider.add(file: previewServiceRequest!.file!, onSuccess: (data){
-        dichVuRequest.files = [data.data!];
-      }, onError: (onError){
-        SnackBarUtils.showSnackBar(title: "Lỗi", message: "Tải file thất bại");
-        print("V1G1ReviewController request  tải file $onError");
-      });
-    }
     
-    // Delay
-    return Future.delayed(const Duration(seconds: 1)).then((value){
-      dichVuRequest.hinhAnhBanKhoiLuongs = massImages;
-      dichVuRequest.hinhAnhBanVes  = drawingImages;
-      return dichVuRequest;
-    });
+    dichVuRequest.hinhAnhBanKhoiLuongs = previewServiceRequest!.hinhAnhBanKhoiLuongs;
+    dichVuRequest.hinhAnhBanVes  = previewServiceRequest!.hinhAnhBanVes;
+    dichVuRequest.files = previewServiceRequest!.files;
+    return dichVuRequest;
+    
   }
 
   void addMass({required String idDon}){

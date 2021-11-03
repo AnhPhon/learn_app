@@ -175,7 +175,12 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.images,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.images) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.currentStatusimages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.currentStatusimages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );
@@ -195,7 +200,12 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.productImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.productImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.productImages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.productImages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );
@@ -216,7 +226,12 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.massImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.massImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.massImages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.massImages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );
@@ -234,9 +249,9 @@ class V1G2CreateWorkPage extends GetView<V1G2CreateWorkController>{
           obligatory: false,
         ),
         AttachButton(
-          title: controller.file == null ? "Thêm tập tin" : controller.fileName!, 
+          title: controller.donDichVuFiles.isEmpty ? "Thêm tập tin" : controller.donDichVuFiles.first, 
           color: ColorResources.WHITE, 
-          onPressed: controller.pickerFile,
+          onPressed: controller.pickFiles,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         )
       ],

@@ -73,31 +73,36 @@ class V1G4OrderQuoteController extends GetxController{
     if(validate()){
       request!.tieuDe = work!.tenCongViec;
       request!.idLoaiCongViec = work!.id;
-      //request!.idBangGiaDonHang  = work!.id;
       request!.moTa = descController.text.toString();
-      request!.soTien = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();//priceController.text.toString().replaceAll(',', '');//work.giaTien;
+      request!.soTien = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();
       request!.soLuongYeuCau = personNumberController.text.toString();
       request!.soNgay = timeNumberController.text.toString();
-      //request!.phiDichVu = '0';
-      //request!.khuyenMai = '0';
-      //request!.tongDon = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();
       Get.toNamed(AppRoutes.V1_FORMAL_PAYMENT, arguments: request);
       
     }
   }
 
   ///
+  ///onBack
+  ///
+  void onBack(){
+    request!.tieuDe = work!.tenCongViec;
+    Get.back(result: request);
+  }
+
+
+  ///
   /// Check validate
   ///
   bool validate(){
     if(timeNumberController.text.toString().isEmpty){
-      Alert.info(message: "Bản phải chọn thời gian yêu cầu");
+      Alert.error(message: "Bản phải chọn thời gian yêu cầu");
       return false;
     }else if(personNumberController.text.toString().isEmpty){
-      Alert.info(message: "Số lượng người yêu cầu không được để trống");
+      Alert.error(message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      Alert.info(message: "Nội dung miêu tả không được để trống");
+      Alert.error(message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;

@@ -340,22 +340,22 @@ class CreateWorkController extends GetxController {
   ///
   void onClickContinue() async{
       if(dichvu == null){
-        Alert.info(message:"Vui lòng chọn dịch vụ");
+        Alert.error(message:"Vui lòng chọn dịch vụ");
         return; 
       }else if(hcmProvince == null && otherProvince == null && haNoiProvince == null && daNangProvince == null){
-        Alert.info(message:"Vui lòng chọn tỉnh");
+        Alert.error(message:"Vui lòng chọn tỉnh");
         return; 
       }else if(hcmHuyen == null && khacHuyen == null && haNoiHuyen == null && daNangHuyen == null){
-        Alert.info(message:"Vui lòng chọn quận huyện");
+        Alert.error(message:"Vui lòng chọn quận huyện");
         return; 
       }else if(hcmPhuong == null && khacPhuong == null && haNoiPhuong == null && daNangPhuong == null){
-        Alert.info(message:"Vui lòng phường xã");
+        Alert.error(message:"Vui lòng phường xã");
         return; 
       }else if(loaiCongViec == null){
-         Alert.info(message:"Vui lòng chọn công việc");
+         Alert.error(message:"Vui lòng chọn công việc");
         return; 
       }else if(addressController.text.toString().isEmpty){
-        Alert.info(message:"Vui lòng điền địa chỉ cụ thể");
+        Alert.error(message:"Vui lòng điền địa chỉ cụ thể");
         return; 
       }else{
         if(dichvu!.nhomDichVu! == '1'){

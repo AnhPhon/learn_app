@@ -247,7 +247,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: false,
         ),
         AttachButton(
-          title: controller.donDichVuFiles.isEmpty  ? "Thêm tập tin" : controller.fileName!, 
+          title: controller.donDichVuFiles.isEmpty  ? "Thêm tập tin" : controller.donDichVuFiles.first, 
           color: ColorResources.WHITE, 
           onPressed: controller.pickFiles,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -271,7 +271,11 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.anhKhoiLuong,isAddImage: true,onPress:()=> controller.pickImages(data: controller.anhKhoiLuong) ,),
+          child: BoxImage(
+            images: controller.anhKhoiLuong,
+            isAddImage: true,onPress:()=> controller.pickImages(data: controller.anhKhoiLuong),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,),
+          ),
         ),
       ],
     );
@@ -288,7 +292,12 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.drawingImages,isAddImage: true,onPress:()=> controller.pickImages(data: controller.drawingImages) ,),
+          child: BoxImage(
+            images: controller.drawingImages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.drawingImages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );
