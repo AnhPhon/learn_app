@@ -208,13 +208,10 @@ import 'package:template/view/screen/v3-agent/order_management/order_management_
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
-<<<<<<< HEAD
-import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_binding.dart';
-import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_page.dart';
-=======
 import 'package:template/view/screen/v3-agent/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
->>>>>>> origin/develop
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_binding.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_page.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
