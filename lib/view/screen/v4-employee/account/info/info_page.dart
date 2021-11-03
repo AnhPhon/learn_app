@@ -522,7 +522,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         GestureDetector(
           onTap: () {
-            controller.pickIndentiryFront();
+            controller.pickIdentityFront();
           },
           child: Container(
             height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -540,26 +540,21 @@ class V4InfoPage extends GetView<V4InfoController> {
                 ),
               ],
             ),
-            child: controller.imageIndentityFront != null
-                ? Image.file(
-                    controller.imageIndentityFront!,
+            child: FadeInImage.assetNetwork(
+              placeholder: Images.placeholder,
+              image: controller.nhanVienResponse!.anhMTCMND.toString(),
+              fit: BoxFit.cover,
+              imageErrorBuilder: (c, o, s) => Container(
+                height: DeviceUtils.getScaledHeight(context, 0.16),
+                width: DeviceUtils.getScaledWidth(context, 0.38),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Images.placeholder),
                     fit: BoxFit.cover,
-                  )
-                : FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse!.anhMTCMND.toString(),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => Container(
-                      height: DeviceUtils.getScaledHeight(context, 0.16),
-                      width: DeviceUtils.getScaledWidth(context, 0.38),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Images.placeholder),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -590,7 +585,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         GestureDetector(
           onTap: () {
-            controller.pickIndentiryAfter();
+            controller.pickIdentityAfter();
           },
           child: Container(
             height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -607,26 +602,21 @@ class V4InfoPage extends GetView<V4InfoController> {
                 ),
               ],
             ),
-            child: controller.imageIndentityAfter != null
-                ? Image.file(
-                    controller.imageIndentityAfter!,
+            child: FadeInImage.assetNetwork(
+              placeholder: Images.placeholder,
+              image: controller.nhanVienResponse!.anhMSCMND.toString(),
+              fit: BoxFit.cover,
+              imageErrorBuilder: (c, o, s) => Container(
+                height: DeviceUtils.getScaledHeight(context, 0.16),
+                width: DeviceUtils.getScaledWidth(context, 0.38),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Images.placeholder),
                     fit: BoxFit.cover,
-                  )
-                : FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse!.anhMSCMND.toString(),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => Container(
-                      height: DeviceUtils.getScaledHeight(context, 0.16),
-                      width: DeviceUtils.getScaledWidth(context, 0.38),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Images.placeholder),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -656,23 +646,17 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         //image
         GestureDetector(
-          onTap: () => controller.pickImage(),
+          onTap: () => controller.pickImages(),
           child: Container(
             height: DeviceUtils.getScaledSize(context, .2),
             width: DeviceUtils.getScaledSize(context, .2),
             child: ClipOval(
-              child: controller.avatarFile != null
-                  ? Image.file(
-                      controller.avatarFile!,
-                      fit: BoxFit.cover,
-                    )
-                  : FadeInImage.assetNetwork(
-                      placeholder: Images.placeholder,
-                      image:
-                          controller.nhanVienResponse!.hinhDaiDien.toString(),
-                      fit: BoxFit.cover,
-                      imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                          backgroundImage: AssetImage(Images.placeholder))),
+              child: FadeInImage.assetNetwork(
+                  placeholder: Images.placeholder,
+                  image: controller.nhanVienResponse!.hinhDaiDien.toString(),
+                  fit: BoxFit.cover,
+                  imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                      backgroundImage: AssetImage(Images.placeholder))),
             ),
           ),
         ),
@@ -682,7 +666,7 @@ class V4InfoPage extends GetView<V4InfoController> {
           right: 0,
           top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
           child: GestureDetector(
-            onTap: () => controller.pickImage(),
+            onTap: () => controller.pickImages(),
             child: Container(
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),

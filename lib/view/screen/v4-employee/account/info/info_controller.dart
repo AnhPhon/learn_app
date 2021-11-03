@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -61,15 +62,6 @@ class V4InfoController extends GetxController {
 
   //user id
   String idUser = "";
-
-  // Avatar file
-  File? avatarFile;
-
-  // Image Indentity Front File
-  File? imageIndentityFront;
-
-  // Image Indentity After File
-  File? imageIndentityAfter;
 
   // khai báo is loading
   bool isLoading = true;
@@ -294,106 +286,116 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///Pick Image Avatar
+  /// Pick Avatar Image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      avatarFile = File(image.path);
-      uploadImage(image: avatarFile!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print('V4Infor pickImages Avatar addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.hinhDaiDien = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  ///Upload Image Avatar
+  /// Pick front of Identity card
   ///
-  void uploadImage({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.hinhDaiDien = value.data;
-        EasyLoading.dismiss();
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
-  ///Pick CMND mặt trước
-  ///
-  Future pickIndentiryFront() async {
+  Future pickIdentityFront() async {
     try {
-      final imageFront =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (imageFront == null) return;
-      imageIndentityFront = File(imageFront.path);
-      uploadIndentiryFront(image: imageIndentityFront!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print(
+              'V4Infor pickImages Front Identity Card addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.anhMTCMND = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  ///Upload CMND mặt trước
+  /// Pick After of Identity card
   ///
-  void uploadIndentiryFront({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.anhMTCMND = value.data;
-        EasyLoading.dismiss();
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
-  ///Pick CMND mặt sau
-  ///
-  Future pickIndentiryAfter() async {
+  Future pickIdentityAfter() async {
     try {
-      final imageAfter =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (imageAfter == null) return;
-      imageIndentityAfter = File(imageAfter.path);
-      uploadIndentiryAfter(image: imageIndentityAfter!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print(
+              'V4Infor pickImages After Identity Card addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.anhMSCMND = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
-  }
-
-  ///
-  ///Upload CMND mặt sau
-  ///
-  void uploadIndentiryAfter({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.anhMSCMND = value.data;
-        EasyLoading.dismiss();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
   }
 
   ///
