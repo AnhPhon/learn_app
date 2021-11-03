@@ -23,7 +23,7 @@ class DonDichVuResponse {
   String? ngayBatDau;
   String? ngayKetThuc;
   List<String>? hinhAnhBanKhoiLuongs;
-  String? hinhAnhBanVe;
+  List<String>? hinhAnhBanVes;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
@@ -36,6 +36,7 @@ class DonDichVuResponse {
   String? giaTriKhachDeXuat;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
+  List<String>? files;
   String? file;
   String? soLuongYeuCau;
   String? soNgay;
@@ -68,7 +69,7 @@ class DonDichVuResponse {
       this.ngayBatDau,
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuongs,
-      this.hinhAnhBanVe,
+      this.hinhAnhBanVes,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
@@ -138,8 +139,12 @@ class DonDichVuResponse {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString();
+    if(json['hinhAnhBanKhoiLuongs'] != null){
+      hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    }
+    if(json['hinhAnhBanVes'] != null){
+      hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    }
 
     // mapping idTrangThaiDonDichVu
     if (json['idTrangThaiDonDichVu'] != null &&
@@ -301,7 +306,7 @@ class DonDichVuResponse {
     }
 
     // check null hinhAnhBanVe
-    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
+    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes;
 
     // check null idTrangThaiDonDichVu
     if (idTrangThaiDonDichVu != null)

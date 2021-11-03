@@ -19,6 +19,8 @@ class ItemListWidget extends StatelessWidget {
   final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   const ItemListWidget({
     Key? key,
@@ -34,6 +36,8 @@ class ItemListWidget extends StatelessWidget {
     this.icon2,
     required this.urlImage,
     this.subTitle,
+    this.padding,
+    this.margin,
     this.colorSubTitle,
   }) : super(key: key);
 
@@ -42,19 +46,18 @@ class ItemListWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(
+        margin: margin ?? const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
         ),
-        height: DeviceUtils.getScaledHeight(context, .15),
+        padding: padding ?? const EdgeInsets.symmetric(
+          vertical: 0,
+        ),
+        height: DeviceUtils.getScaledHeight(context, .13),
         decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
-            BoxShadow(
-                blurRadius: 2,
-                color: ColorResources.BLACK.withOpacity(.2),
-                offset: const Offset(0, 2)),
+            BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 2)),
           ],
         ),
         child: Row(

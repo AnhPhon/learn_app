@@ -49,6 +49,30 @@ class ImageUpdateRepository {
   }
 
   ///
+  /// Insert import-ware-house to database
+  ///
+  Future<ApiResponse> addImages(List<File> files) async {
+    try {
+      final response = await dioClient!.uploadImages('/uploads', files: files);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Insert import-ware-house to database
+  ///
+  Future<ApiResponse> addFiles(List<PlatformFile> files) async {
+    try {
+      final response = await dioClient!.uploadFiles('/uploads', files: files);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
   /// Update import-ware-house to database
   ///
   Future<ApiResponse> update(ImageUpdateModel data) async {

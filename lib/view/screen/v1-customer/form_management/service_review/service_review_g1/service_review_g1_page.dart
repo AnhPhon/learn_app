@@ -151,7 +151,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///drawing
   ///
   Widget drawing({required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanVe!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_DEFAULT),
                 child: ImageListHorizontal(
-                  imageList: controller.hinhAnhBanVe,
+                  imageList: controller.donDichVuResponse.hinhAnhBanVes!,
                   padding: EdgeInsets.zero,
                 ),
               ),
