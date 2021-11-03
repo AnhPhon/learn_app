@@ -14,6 +14,7 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
   final DonDichVuProvider _donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
   List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVuResponse = [];
+  List<DonDichVuResponse> donDichVus = [];
 
   Map<String, String> titleTabBar = {
     "DPH": "Đã phản hồi",
@@ -66,9 +67,20 @@ class V3QuotePhanHoiBaoGiaController extends GetxController {
         print(models);
         danhSachBaoGiaDonDichVuResponse = models;
 
-        models.forEach((model) {
-          _loadDonDichVu(model.idDonDichVu!.id!);
-        });
+        for (final model in models) {
+          _donDichVuProvider.find(
+            id: model.idDonDichVu.toString(),
+            onSuccess: (data) {
+              donDichVus.add(data);
+              update();
+            },
+            onError: (error) {
+              print(
+                  "V3QuotePhanHoiBaoGiaController _loadDanhSachDonGiaDichVu onError $error");
+            },
+          );
+          _loadDonDichVu(model.idDonDichVu.toString());
+        }
 
         update();
       },

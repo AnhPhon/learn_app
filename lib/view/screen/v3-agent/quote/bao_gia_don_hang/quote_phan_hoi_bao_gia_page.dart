@@ -29,8 +29,7 @@ class V3QuotePhanHoiBaoGiaPage extends GetView<V3QuotePhanHoiBaoGiaController> {
                   controller.danhSachBaoGiaDonDichVuResponse.length,
                   (index) => _itemList(
                     context,
-                    controller
-                        .danhSachBaoGiaDonDichVuResponse[index].idDonDichVu!,
+                    controller.donDichVus[index],
                     index,
                   ),
                 )

@@ -94,13 +94,13 @@ class V3QuoteRequestController extends GetxController {
       filter: "idDonDichVu=$donGiaDichVuId",
       onSuccess: (model) {
         danhSachBaoGiaDonDichVu = model[0];
-        tieuDeBaoGia = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
+        tieuDeBaoGia = danhSachBaoGiaDonDichVu!.idDonDichVu.toString();
         // loaiCongTrinh = danhSachBaoGiaDonDichVu!.idDonDichVu!.loa!;
 
         // tinhThanh = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
         // quan = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
         // phuong = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
-        
+
         // diaChiCuThe = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
         // phuong = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;
         // diaChiCuThe = danhSachBaoGiaDonDichVu!.idDonDichVu!.tieuDe!;

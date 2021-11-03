@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -21,37 +20,32 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
               child: CircularProgressIndicator(),
             );
           }
+
           return SizedBox(
             height: double.infinity,
             child: ListView.builder(
-              itemCount: controller.danhSachBaoGiaDonDichVuResponse.length,
+              itemCount: controller.donDichVus.length,
               shrinkWrap: true,
               itemBuilder: (
                 BuildContext ctx,
                 index,
               ) {
-                final DanhSachBaoGiaDonDichVuResponse responseIndex =
-                    controller.danhSachBaoGiaDonDichVuResponse[index];
-
-                final DonDichVuResponse _donDichVuResponse =
-                    responseIndex.idDonDichVu!;
-
+                final DonDichVuResponse donDichVuResponse =
+                    controller.donDichVus[index];
+                print(controller.donDichVus);
                 return BaoGiaCard(
-                  donHangName: _donDichVuResponse.tieuDe.toString(),
-                  donHangId:
-                      "BH${responseIndex.idDonDichVu!.id!.substring(0, 6)}",
-                  time: _donDichVuResponse.ngayKetThuc
-                      .toString()
-                      .substring(0, 10),
-                  date: _donDichVuResponse.ngayKetThuc
-                      .toString()
-                      .substring(0, 10),
-                  label: responseIndex.idDonDichVu!.tieuDe!,
-                  content: responseIndex.idDonDichVu!.moTa!,
-                  locationName: _donDichVuResponse.diaDiemBocHang!,
-                  image: _donDichVuResponse.hinhAnhBaoGia == null
+                  donHangName: donDichVuResponse.tieuDe.toString(),
+                  donHangId: "BH${donDichVuResponse.id!.substring(0, 6)}",
+                  time:
+                      donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  date:
+                      donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  label: donDichVuResponse.tieuDe!,
+                  content: donDichVuResponse.moTa!,
+                  locationName: donDichVuResponse.diaDiemBocHang.toString(),
+                  image: donDichVuResponse.hinhAnhBaoGia == null
                       ? Images.location_example
-                      : _donDichVuResponse.hinhAnhBaoGia!,
+                      : donDichVuResponse.hinhAnhBaoGia!,
                   onTap: () {},
                 );
               },
