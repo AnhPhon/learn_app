@@ -49,7 +49,7 @@ class V2QuotationG1Controller extends GetxController {
 
 
   String getFileNameBaoGia(){
-    if(danhSachBaoGiaDonDichVuRequest.file != null && danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty){
+    if(danhSachBaoGiaDonDichVuRequest.file != null && danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty && danhSachBaoGiaDonDichVuRequest.file.toString() != 'null'){
       final arrayNameSplit = danhSachBaoGiaDonDichVuRequest.file.toString().split('/');
       return arrayNameSplit[arrayNameSplit.length - 1];
     }
