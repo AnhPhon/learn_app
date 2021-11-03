@@ -13,6 +13,7 @@ import 'package:template/view/basewidget/button/drop_down_button_icon.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/cupertino_supreme/select_box_supreme.dart';
+import 'package:template/view/basewidget/getx_smart_refresh/getx_smart_refresh_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_controller.dart';
 
 class V2ShorthandedPage extends GetView<V2ShorthandedController> {
@@ -23,20 +24,26 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
         builder: (controller) {
           return Scaffold(
             appBar: const AppBarWidget(title: "Danh sách công việc"),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //filter
-                  _filter(context, controller: controller),
+            body: Column(
+              children: [
+                //filter
+                _filter(context, controller: controller),
 
-                  //item list
-                  ListView.builder(
+                Expanded(
+                  child: GetXSmartRefreshPage(
+                    key: const Key('GetXSmartRefreshV2ShorthandedPage'),
+                    enablePullUp: true,
+                    enablePullDown: true,
+                    onLoading: controller.onLoading,
+                    onRefresh: controller.onRefresh,
+                    child: ListView.builder(
                       padding: const EdgeInsets.only(
                         top: Dimensions.PADDING_SIZE_SMALL,
                         left: Dimensions.PADDING_SIZE_SMALL,
                         right: Dimensions.PADDING_SIZE_SMALL,
                       ),
                       shrinkWrap: true,
+                      primary: false,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: controller.donDichVuResponse!.length,
                       itemBuilder: (BuildContext ctx, int index) {
@@ -48,15 +55,17 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                           ),
                           isSpaceBetween: true,
                           onTap: () => controller.onShorthandedGroup(index),
-                          title: controller.donDichVuResponse![index].tieuDe.toString(),
+                          title: controller.donDichVuResponse![index].tieuDe.toString() + ' - Nhóm ' + controller.donDichVuResponse![index].idNhomDichVu!.nhomDichVu.toString(),
                           // icon1: controller.donDichVuResponse![index].hinhAnhBaoGia as Icon,
                           rowText1: controller.donDichVuResponse![index].diaDiemLamViec.toString(),
                           rowText2: controller.donDichVuResponse![index].idTrangThaiDonDichVu == null ? '' : controller.donDichVuResponse![index].idTrangThaiDonDichVu!.tieuDe.toString(),
                           urlImage: controller.donDichVuResponse![index].hinhAnhBaoGia.toString(),
                         );
-                      }),
-                ],
-              ),
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         });

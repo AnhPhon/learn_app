@@ -16,59 +16,8 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
 
 class V2ShorthandedController extends GetxController {
-  List<Map<String, dynamic>> shorthandedGroupList = [
-    {
-      "group": "1",
-      "status": "Đang tuyển",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-    {
-      "group": "6",
-      "status": "Khảo sát báo giá",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-    {
-      "group": "2",
-      "status": "Khảo sát báo giá",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-    {
-      "group": "5",
-      "status": "Đang tuyển",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-    {
-      "group": "2",
-      "status": "Khảo sát báo giá",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-    {
-      "group": "6",
-      "status": "Khảo sát báo giá",
-      "label": "Biệt thự 170 Nguyễn Đình Thi",
-      "image": "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg",
-      "icon": const Icon(Icons.location_on),
-      "location": "Ngũ Hành Sơn",
-    },
-  ];
 
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   List<DonDichVuResponse>? donDichVuResponse = [];
@@ -132,6 +81,7 @@ class V2ShorthandedController extends GetxController {
       page: page,
       limit: limit,
       onSuccess: (data) {
+
         // donDichVuResponse = [
         //   DonDichVuResponse.fromJson({'tieuDe': '-- Không có --'})
         // ];
@@ -155,8 +105,14 @@ class V2ShorthandedController extends GetxController {
         ];
         if (data.isNotEmpty) {
           /// Selectbox khong cho phep init null gia tri, nen chon 1 gia tri dau tien de init
-          selectedNhomCongViec(data[0]);
-          nhomDichVuResponse!.addAll(data);
+          for(var i = 0; i < data.length; i++){
+            if(data[i].nhomDichVu != '3' && data[i].nhomDichVu != '4' && data[i].nhomDichVu != '7'){
+              nhomDichVuResponse!.add(data[i]);
+            }
+          }
+          if(nhomDichVuResponse!.length > 0){
+            selectedNhomCongViec(nhomDichVuResponse![0]);
+          }
         }
         update();
       },
@@ -184,8 +140,11 @@ class V2ShorthandedController extends GetxController {
           currentLoaiCongViecResponse = null;
           loaiCongViecResponse = [];
           loaiCongViecMultiSelectItem = [];
+          loaiCongViecResponse = [
+            LoaiCongViecResponse.fromJson({'tenCongViec': '-- Không có --'})
+          ];
           if (data.isNotEmpty) {
-            loaiCongViecResponse = data;
+            loaiCongViecResponse!.addAll(data);
             loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e, e.tenCongViec.toString())).toList();
           }
 
@@ -299,7 +258,7 @@ class V2ShorthandedController extends GetxController {
   void filterData() {
     print('filterData');
     if (checkFilter() == true) {
-      getDonDichVu();
+      onRefresh();
     }
   }
 
@@ -337,5 +296,28 @@ class V2ShorthandedController extends GetxController {
     if (currentNhomDichVuResponse != null && currentNhomDichVuResponse!.id != null && currentNhomDichVuResponse!.id!.isNotEmpty) _s += '&idNhomDichVu=${currentNhomDichVuResponse!.id}';
     if (currentLoaiCongViecResponse != null && currentLoaiCongViecResponse!.id != null && currentLoaiCongViecResponse!.id!.isNotEmpty) _s += '&idLoaiCongViec=${currentLoaiCongViecResponse!.id}';
     return _s;
+  }
+
+
+  ///
+  ///reload
+  ///
+  Future<void> onRefresh() async {
+    print('V2ShorthandedController onRefresh');
+    // await getListDuAnKhachHang(currentIndex.value);
+    donDichVuResponse = [];
+    page = 1;
+    limit = 10;
+    getDonDichVu();
+  }
+
+  ///
+  ///load more
+  ///
+  Future<void> onLoading() async {
+    print('V2ShorthandedController onLoading');
+    // await getListLoadMoreDuAnKhachHang(currentIndex.value);
+    page += 1;
+    getDonDichVu();
   }
 }

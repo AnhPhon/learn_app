@@ -60,7 +60,7 @@ class V2ShorthandedGroup1Controller extends GetxController {
       onSuccess: (data) {
         donDichVuResponse = data;
         print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.toJson()}');
-        print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.idBangGiaDonHang!.toJson()}');
+        // print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.idBangGiaDonHang!.toJson()}');
         update();
         getVatTu();
       },

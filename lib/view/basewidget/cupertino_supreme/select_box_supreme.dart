@@ -176,16 +176,31 @@ class _SelectBoxSupremeState<T> extends State<SelectBoxSupreme<T?>> {
               //   widget.onChanged!(selectedItem as T);
               // }
             },
-            itemExtent: Dimensions.FONT_SIZE_LARGE * 3,
+            itemExtent: Dimensions.FONT_SIZE_LARGE * 4,
             useMagnifier: true,
             children: widget.items!
-                .map((e) => Center(
-                        child: Text(
-                      e.toString(),
-                      style: const TextStyle(
-                        fontSize: Dimensions.FONT_SIZE_LARGE,
+                .map(
+                  (e) => Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                            // top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                            left: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                            right: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                            // bottom: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                          ),
+                      child: Text(
+                        e.toString(),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                          color: ColorResources.BLACK,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    )))
+                    ),
+                  ),
+                )
                 .toList(),
           );
         },
