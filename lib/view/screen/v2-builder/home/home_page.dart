@@ -362,7 +362,8 @@ class V2HomePage extends GetView<V2HomeController> {
               children: [
                 ItemListWidget(
                   onTap: () {
-                    controller.onNewsDetailClick(index: index);
+                    controller.onClickHotNewsDetail(
+                        controller.tinTucList[index].id.toString());
                   },
                   title: controller.tinTucList[index].tieuDe!,
                   icon1: const Icon(Icons.remove_red_eye),
