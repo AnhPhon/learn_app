@@ -20,27 +20,212 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
   V2WorkPreviewPage({this.dangKyModel});
   @override
   Widget build(BuildContext context) {
-    print(dangKyModel);
+    print(dangKyModel.toString());
     return Scaffold(
       appBar: const AppBarWidget(title: "Hồ sơ ứng tuyển"),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Thông tin người
-            // CandidateCard(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_LARGE,
+              ),
 
-            // Nội dung hồ sơ
-            content(context),
-            Padding(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-              child: LongButton(
-                  title: "Hoàn thiện và lưu trữ ứng tuyển",
-                  color: ColorResources.PRIMARYCOLOR,
-                  onPressed: () {
-                    controller.toDonePage();
-                  }),
-            )
-          ],
+              //Tiêu đề hồ sơ ứng tuyển
+              TextHighlight(
+                title: "Tiều đề: ",
+                content: dangKyModel!.tieuDe.toString(),
+              ),
+              const SizedBox(
+                height: Dimensions.BORDER_RADIUS_DEFAULT,
+              ),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: DeviceUtils.getScaledWidth(context, .35),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: DeviceUtils.getScaledWidth(context, .33),
+                          height: DeviceUtils.getScaledWidth(context, .33),
+                          decoration: BoxDecoration(
+                            color: ColorResources.WHITE,
+                            borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                            ),
+                          ),
+                          child: const Image(
+                            image: AssetImage(Images.placeholder),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.BORDER_RADIUS_DEFAULT,
+                        ),
+
+                        // Mã số hồ sơ
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextHighlight(
+                                  title: "MSHS: ", content: "12345678"),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //Thông tin cá nhân ứng viên
+                  Container(
+                    width: DeviceUtils.getScaledWidth(context, .6),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //Tên ứng viên
+                        TextHighlight(
+                          title: "Tên ứng viên: ",
+                          content: dangKyModel!.tenUngVien.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Giới tinh
+                        TextHighlight(
+                          title: "Giới tính: ",
+                          content: dangKyModel!.gioiTinh.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Ngày Sinh
+                        TextHighlight(
+                          title: "Ngày sinh: ",
+                          content: controller.formatDateTime(
+                              dateTime: dangKyModel!.ngaySinh.toString()),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Điện thoại
+                        TextHighlight(
+                          title: "Điện thoại: ",
+                          content: dangKyModel!.dienThoai.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Email
+                        TextHighlight(
+                          title: "Email: ",
+                          content: dangKyModel!.email.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Chổ ở hiện nay
+                        TextHighlight(
+                          title: "Chổ ở hiện nay: ",
+                          content: dangKyModel!.choOHienTai.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+
+                        //Hôn nhân
+                        TextHighlight(
+                          title: "Hôn nhân: ",
+                          content: dangKyModel!.honNhan.toString(),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
+
+              //Mục tiêu nghề nghiệp
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Tiêu đề
+                  const Text(
+                    "Mục tiêu nghề nghiệp: ",
+                    style: TextStyle(
+                      color: ColorResources.BLACK,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                  ),
+
+                  //Nội dung
+                  Text(
+                    dangKyModel!.mucTieuNgheNghiep
+                        .toString()
+                        .replaceAll("null", "Không có"),
+                    style: const TextStyle(
+                      color: ColorResources.BLACK,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
+
+              //Bằng cấp và trình độ
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Tiêu đề
+                  const Text(
+                    "Bằng cấp và trình độ: ",
+                    style: TextStyle(
+                      color: ColorResources.BLACK,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                  ),
+
+                  //Nội dung
+                ],
+              ),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
+
+              //
+              const SizedBox(
+                height: 30,
+              ),
+
+              //Button hoàn thiện và lưu trữ ứng tuyển
+              _btnHoanThienVaLuuTru(),
+            ],
+          ),
         ),
       ),
     );
@@ -168,5 +353,17 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
         fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
       ),
     );
+  }
+
+  ///
+  ///Button hoàn thiện và lưu trữ ứng tuyển
+  ///
+  Widget _btnHoanThienVaLuuTru() {
+    return LongButton(
+        title: "Hoàn thiện và lưu trữ ứng tuyển",
+        color: ColorResources.PRIMARYCOLOR,
+        onPressed: () {
+          controller.toDonePage();
+        });
   }
 }

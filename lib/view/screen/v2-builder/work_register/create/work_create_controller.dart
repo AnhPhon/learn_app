@@ -72,6 +72,8 @@ class V2WorkCreateController extends GetxController {
   // địa chỉ
   TextEditingController addressController = TextEditingController();
 
+  TextEditingController donViDaotaoController = TextEditingController();
+
   // Tiêu đề
   // Công ty
   TextEditingController companyController = TextEditingController();
@@ -84,6 +86,9 @@ class V2WorkCreateController extends GetxController {
   TextEditingController benifitController = TextEditingController();
   // Ưu tiên
   TextEditingController prioritizedController = TextEditingController();
+
+  //năm tốt nghiệp
+  TextEditingController namTotNghiepController = TextEditingController();
   // start
   TextEditingController startTimeController = TextEditingController();
   // Hạn nộp
@@ -452,12 +457,12 @@ class V2WorkCreateController extends GetxController {
   void themBangCapMoi() {
     // trinhDoIndex.tieuDe
 
-    if (endTimeController.text.isNotEmpty) {
+    if (namTotNghiepController.text.isNotEmpty) {
       sl.get<SharedPreferenceHelper>().userId.then((value) {
         bangBangCap.add(BangBangCapRequest(
           anhBangCap: anhBangCap.map((e) => e.path).toList().join(","),
-          donViDaoTao: addressController.text,
-          namTotNghiep: endTimeController.text,
+          donViDaoTao: donViDaotaoController.text,
+          namTotNghiep: namTotNghiepController.text,
           idChuyenMon: chuyenMonIndex!.id,
           idLoaiTotNghiep: loaiTotNghiepIndex!.id,
           idTaiKhoan: value,
@@ -465,8 +470,8 @@ class V2WorkCreateController extends GetxController {
         ));
 
         bangBangCapDisplay.add({
-          "donViDaoTao": addressController.text,
-          "namTotNghiep": endTimeController.text,
+          "donViDaoTao": donViDaotaoController.text,
+          "namTotNghiep": namTotNghiepController.text,
           "chuyenMon": chuyenMonIndex!.tieuDe!,
           "loaiTotNghiep": loaiTotNghiepIndex!.tieuDe!,
           "taiKhoan": value!,

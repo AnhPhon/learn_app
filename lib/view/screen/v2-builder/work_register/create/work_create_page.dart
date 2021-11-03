@@ -339,7 +339,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         // Năm tốt nghiệp *
         TextFieldDate(
           allowEdit: true,
-          controller: controller.endTimeController,
+          controller: controller.namTotNghiepController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "12-12-2021",
           label: "Năm tốt nghiệp",
@@ -353,7 +353,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         InputField(
           allowEdit: true,
           allowMultiline: false,
-          controller: controller.addressController,
+          controller: controller.donViDaotaoController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
           holdplacer: "Đơn vị đào tạo",
           hidden: false,
