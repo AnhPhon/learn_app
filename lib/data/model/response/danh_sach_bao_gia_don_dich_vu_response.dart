@@ -8,6 +8,7 @@ class DanhSachBaoGiaDonDichVuResponse {
   String? ghiChu;
   String? file;
   String? daXem;
+  List<dynamic>? hinhAnhBaoGias;
 
   String? createdAt;
   String? updatedAt;
@@ -42,6 +43,9 @@ class DanhSachBaoGiaDonDichVuResponse {
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
     daXem = json['daXem'].toString();
+    if (json['hinhAnhBaoGias'] != null) {
+      hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<dynamic>;
+    }
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -72,6 +76,9 @@ class DanhSachBaoGiaDonDichVuResponse {
 
     // check null daXem
     if (daXem != null) data['daXem'] = daXem;
+
+    // check null daXem
+    if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;
 
     return data;
   }

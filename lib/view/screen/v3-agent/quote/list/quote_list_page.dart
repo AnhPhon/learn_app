@@ -47,6 +47,8 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                       : donDichVuResponse.hinhAnhBaoGia!,
                   onTap: () {
                     controller.onYeuCauBaoGiaPageClick(
+                        controller.danhSachBaoGiaDonDichVuResponse[index].id
+                            .toString(),
                         donDichVuResponse.id.toString());
                   },
                 );

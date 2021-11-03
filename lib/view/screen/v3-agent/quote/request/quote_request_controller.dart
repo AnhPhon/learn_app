@@ -4,6 +4,7 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 
@@ -55,7 +56,9 @@ class V3QuoteRequestController extends GetxController {
       },
       {
         "title": "Đồng ý báo giá",
-        "onTap": () {},
+        "onTap": () {
+          onPhanHoiClick();
+        },
         "color": ColorResources.THEME_DEFAULT
       },
     ];
@@ -63,7 +66,7 @@ class V3QuoteRequestController extends GetxController {
     // load thông tin
     sl.get<SharedPreferenceHelper>().idDonDichVu.then((idDonDichVu) {
       loadInfo(idDonDichVu.toString());
-      loadVatTu('6170dfa2adef7c58a3ddd7a7');
+      loadVatTu(idDonDichVu.toString());
     });
   }
 
@@ -71,39 +74,56 @@ class V3QuoteRequestController extends GetxController {
   /// load thongo tin don gia dich vu bằng id
   ///
   void loadInfo(String donGiaDichVuId) {
-    donDichVuProvider.find(
-      id: donGiaDichVuId,
-      onSuccess: (donDichVu) {
-        tieuDeBaoGia = donDichVu.tieuDe.toString();
-        loaiCongTrinh = donDichVu.loai.toString();
-        images = donDichVu.hinhAnhBanKhoiLuongs!;
+    sl.get<SharedPreferenceHelper>().idYeuCau.then((idYeuCau) {
+      danhSachBaoGiaDonDichVuProvider.find(
+        id: idYeuCau.toString(),
+        onSuccess: (data) {
+          images = data.hinhAnhBaoGias!.map((e) => e.toString()).toList();
 
-        if (donDichVu.idTaiKhoanNhanDon != null) {
-          if (donDichVu.idTaiKhoanNhanDon!.idTinhTp != null) {
-            tinhThanh = donDichVu.idTaiKhoanNhanDon!.idTinhTp!.ten.toString();
-          }
+          donDichVuProvider.find(
+            id: data.idDonDichVu!.id.toString(),
+            onSuccess: (donDichVu) {
+              tieuDeBaoGia = donDichVu.tieuDe.toString();
+              loaiCongTrinh = donDichVu.loai.toString();
 
-          if (donDichVu.idTaiKhoanNhanDon!.idQuanHuyen != null) {
-            quan = donDichVu.idTaiKhoanNhanDon!.idQuanHuyen!.ten.toString();
-          }
+              if (donDichVu.idTaiKhoanNhanDon != null) {
+                if (donDichVu.idTaiKhoanNhanDon!.idTinhTp != null) {
+                  tinhThanh =
+                      donDichVu.idTaiKhoanNhanDon!.idTinhTp!.ten.toString();
+                }
 
-          if (donDichVu.idTaiKhoanNhanDon!.idPhuongXa != null) {
-            phuong = donDichVu.idTaiKhoanNhanDon!.idPhuongXa!.ten.toString();
-          }
-          diaChiCuThe = donDichVu.idTaiKhoanNhanDon!.diaDiemCuThe.toString();
-        } else {
-          tinhThanh = "";
-          quan = "";
-          phuong = "";
-          diaChiCuThe = "";
-        }
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("V3QuoteRequestController loadInfo onError $error");
-      },
-    );
+                if (donDichVu.idTaiKhoanNhanDon!.idQuanHuyen != null) {
+                  quan =
+                      donDichVu.idTaiKhoanNhanDon!.idQuanHuyen!.ten.toString();
+                }
+
+                if (donDichVu.idTaiKhoanNhanDon!.idPhuongXa != null) {
+                  phuong =
+                      donDichVu.idTaiKhoanNhanDon!.idPhuongXa!.ten.toString();
+                }
+                diaChiCuThe =
+                    donDichVu.idTaiKhoanNhanDon!.diaDiemCuThe.toString();
+              } else {
+                tinhThanh = "";
+                quan = "";
+                phuong = "";
+                diaChiCuThe = "";
+              }
+              isLoading = false;
+              update();
+            },
+            onError: (error) {
+              print("V3QuoteRequestController loadInfo onError $error");
+            },
+          );
+          print(images);
+          update();
+        },
+        onError: (error) {
+          print("V3QuoteRequestController loadInfo onError $error");
+        },
+      );
+    });
   }
 
   ///
@@ -159,4 +179,7 @@ class V3QuoteRequestController extends GetxController {
   ///
   /// on phan hoi
   ///
+  void onPhanHoiClick() {
+    Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
+  }
 }

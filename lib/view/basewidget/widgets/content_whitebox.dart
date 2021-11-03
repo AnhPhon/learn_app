@@ -36,7 +36,7 @@ class _ContentWhiteBoxState extends State<ContentWhiteBox> {
             : List.generate(
                 widget.infoCard.length,
                 (index) {
-                  if (widget.infoCard[index]["input"] == false ||
+                  if (widget.infoCard[index]["input"] != false &&
                       widget.textController != null) {
                     widget.textController = TextEditingController(
                         text: widget.infoCard[index]['value'] as String);

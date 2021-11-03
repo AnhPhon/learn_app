@@ -28,8 +28,9 @@ class V3QuoteListController extends GetxController {
   ///
   /// go to reponse page
   ///
-  void onYeuCauBaoGiaPageClick(String idDonDichVu) {
+  void onYeuCauBaoGiaPageClick(String idYeuCau, String idDonDichVu) {
     sl.get<SharedPreferenceHelper>().saveIdDonDichVu(id: idDonDichVu);
+    sl.get<SharedPreferenceHelper>().saveIdYeuCau(id: idYeuCau);
     Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
   }
 

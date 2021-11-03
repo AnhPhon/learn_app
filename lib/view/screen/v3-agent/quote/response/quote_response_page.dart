@@ -20,6 +20,11 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
       body: GetBuilder<V3QuoteResponseController>(
         init: V3QuoteResponseController(),
         builder: (V3QuoteResponseController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -28,32 +33,46 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
                 children: [
                   // tiêu đề báo giá
                   _textWidget("Tiêu đề báo giá", controller.tieuDeBaoGia),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
-                  _bangBaoGia(context, controller.infoCard!),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  _bangBaoGia(context, controller.infoCard),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian giao hàng
                   _thoiGianGiaoHang(context, "09h30", "10h30", "12-09-2021"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // Thời gian hiệu cực
                   _baoGiaCoHieuLuc(context),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // tien do giao hang
                   _tienDoGiaoHang(context, "Giao cấp",
                       "${PriceConverter.convertPrice(context, 50000)} VNĐ"),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // Hinh Anh Khoi Luong
                   _hinhAnhKhoiLuong(),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
 
                   // feature
                   _giatriDonHang(context),
-                  SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
                 ],
               ),
             ),
@@ -86,12 +105,21 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   ///
   Widget _bangBaoGia(
     BuildContext context,
-    List<Map<String, dynamic>> infoCard,
+    List<List<Map<String, dynamic>>> infoCard,
   ) {
     return LabelContent(
       title: "Bảng báo giá",
       isRequired: false,
-      content: ContentWhiteBox(infoCard: infoCard),
+      content: Column(
+        children: List.generate(
+            infoCard.length,
+            (index) => Column(
+                  children: [
+                    ContentWhiteBox(infoCard: infoCard[index]),
+                    const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  ],
+                )),
+      ),
     );
   }
 
@@ -118,7 +146,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
             crossAxisSpacing: 10,
           ),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
+          itemCount: controller.images.length,
           itemBuilder: (BuildContext ctx, index) {
             return GestureDetector(
               onTap: () {},
@@ -127,7 +155,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
                     Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.example,
-                  image: Images.location_example,
+                  image: controller.images[index],
                   height: 90,
                   fit: BoxFit.fill,
                 ),
@@ -241,7 +269,9 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
               )
             ],
           ),
-          SizedBox(height: DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
+          SizedBox(
+              height: DeviceUtils.getScaledHeight(
+                  context, Dimensions.SCALE_DEFAULT)),
           Column(
             children: [
               Container(
@@ -373,8 +403,8 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius:
-              const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
+          borderRadius: const BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(.5),
@@ -388,9 +418,9 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
             children: [
               Text("Giá trị đơn hàng", style: Dimensions.textTitleStyleCard()),
               const Spacer(),
-              const Text(
-                "350.000vnđ",
-                style: TextStyle(
+              Text(
+                "${PriceConverter.convertPrice(context, controller.giaTriDonHang)} vnđ",
+                style: const TextStyle(
                   color: ColorResources.RED,
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                 ),

@@ -16,10 +16,15 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
+      appBar: AppBarWidget(title: controller.title),
       body: GetBuilder<V3QuoteCheckController>(
         init: V3QuoteCheckController(),
         builder: (V3QuoteCheckController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -33,7 +38,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // bảng báo giá
-                  _bangBaoGia(context, controller.infoCard!),
+                  _bangBaoGia(context, controller.infoCard),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -100,12 +105,21 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   ///
   Widget _bangBaoGia(
     BuildContext context,
-    List<Map<String, dynamic>> infoCard,
+    List<List<Map<String, dynamic>>> infoCard,
   ) {
     return LabelContent(
       title: "Bảng báo giá",
       isRequired: false,
-      content: ContentWhiteBox(infoCard: infoCard),
+      content: Column(
+        children: List.generate(
+            infoCard.length,
+            (index) => Column(
+                  children: [
+                    ContentWhiteBox(infoCard: infoCard[index]),
+                    const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  ],
+                )),
+      ),
     );
   }
 
@@ -293,7 +307,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  controller.dateTime,
+                  controller.datetimeController.text,
                   style: Dimensions.textNormalGreyStyleCard(),
                 ),
               ),
@@ -353,7 +367,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                     width: DeviceUtils.getScaledWidth(context, .35),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      PriceConverter.convertPrice(context, controller.cost),
+                      PriceConverter.convertPrice(context, 0),
                       style: Dimensions.textNormalStyle(),
                     ),
                   ),
@@ -373,8 +387,8 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius:
-              const BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
+          borderRadius: const BorderRadius.all(
+              Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(.5),

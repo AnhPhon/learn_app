@@ -1,49 +1,169 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:template/data/model/body/yeu_cau_bao_gia_model.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
+import 'package:template/provider/don_dich_vu_provider.dart';
+import 'package:template/provider/vat_tu_provider.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 
 class V3QuoteResponseController extends GetxController {
-  String tieuDeBaoGia = "Cần báo giá xi măng";
+  DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider =
+      GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
+  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
+
+  String tieuDeBaoGia = "Phản hồi báo giá";
 
   TextEditingController datetimeController = TextEditingController();
   TextEditingController costController = TextEditingController(text: "0");
 
-  List<Map<String, dynamic>>? infoCard;
   bool isCheck = true;
+  List<List<Map<String, dynamic>>> infoCard = [];
+  String loaiCongTrinh = "Nhà tư";
+  String tinhThanh = "TP. HCM";
+  String quan = "Quận Gò Vấp";
+  String phuong = "Phường 9";
+  String diaChiCuThe = "Đường Lê Lợi, P9, Quận Gò Vấp, TP.HCM";
+  String from = "25/08/2021";
+  String to = "20/09/2021";
+  String title = "Yêu cầu báo giá";
+  List<String>? noiDungYeuCau;
+  List<Map<String, dynamic>>? features;
+  List<String> images = [];
+  double giaTriDonHang = 0;
+
+  bool isLoading = true;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    infoCard = [
-      {
-        "label": "Tên vật liệu",
-        "value": "Xi măng",
-        "input": false,
+
+    // load thông tin
+    sl.get<SharedPreferenceHelper>().idDonDichVu.then((idDonDichVu) {
+      loadInfo(idDonDichVu.toString());
+      print(idDonDichVu);
+      loadVatTu(idDonDichVu.toString());
+    });
+  }
+
+  ///
+  /// loai vat tu
+  ///
+  void loadVatTu(String idDonDichVu) {
+    infoCard.clear();
+    vatTuProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: '&idDonDichVu=$idDonDichVu',
+      onSuccess: (models) {
+        final Map<String, int> local = {};
+
+        for (final model in models) {
+          if (local.containsKey(model.id) == false) {
+            local[model.id.toString()] = 1;
+          } else {
+            local[model.id.toString()] = local[model.id.toString()]! + 1;
+          }
+
+          giaTriDonHang +=
+              local[model.id.toString()]! * int.parse(model.donGia.toString());
+
+          infoCard.add([
+            {
+              "input": false,
+              "value": model.tenVatTu,
+              "label": "Tên vật liệu",
+            },
+            {
+              "input": false,
+              "value": model.quyCach,
+              "label": "Quy cách",
+            },
+            {
+              "input": false,
+              "value": local[model.id.toString()].toString(),
+              "label": "Số lượng",
+            },
+            {
+              "input": false,
+              "value": model.donVi,
+              "label": "Đơn vị",
+            },
+            {
+              "input": true,
+              "value": (local[model.id.toString()]! *
+                      int.parse(model.donGia.toString()))
+                  .toString(),
+              "label": "Đơn giá",
+            }
+          ]);
+        }
+        update();
       },
-      {
-        "label": "Quy cách",
-        "value": "Kim đỉnh",
-        "input": false,
+      onError: (error) {
+        print("V3QuoteRequestController loadVatTu onError $error");
       },
-      {
-        "label": "Số lượng",
-        "value": "5",
-        "input": false,
+    );
+  }
+
+  ///
+  /// load thongo tin don gia dich vu bằng id
+  ///
+  void loadInfo(String donGiaDichVuId) {
+    sl.get<SharedPreferenceHelper>().idYeuCau.then((idYeuCau) {
+      danhSachBaoGiaDonDichVuProvider.find(
+        id: idYeuCau.toString(),
+        onSuccess: (data) {
+          images = data.hinhAnhBaoGias!.map((e) => e.toString()).toList();
+          print(images);
+          update();
+        },
+        onError: (error) {
+          print("V3QuoteRequestController loadInfo onError $error");
+        },
+      );
+    });
+
+    donDichVuProvider.find(
+      id: donGiaDichVuId,
+      onSuccess: (donDichVu) {
+        tieuDeBaoGia = donDichVu.tieuDe.toString();
+        loaiCongTrinh = donDichVu.loai.toString();
+
+        if (donDichVu.idTaiKhoanNhanDon != null) {
+          if (donDichVu.idTaiKhoanNhanDon!.idTinhTp != null) {
+            tinhThanh = donDichVu.idTaiKhoanNhanDon!.idTinhTp!.ten.toString();
+          }
+
+          if (donDichVu.idTaiKhoanNhanDon!.idQuanHuyen != null) {
+            quan = donDichVu.idTaiKhoanNhanDon!.idQuanHuyen!.ten.toString();
+          }
+
+          if (donDichVu.idTaiKhoanNhanDon!.idPhuongXa != null) {
+            phuong = donDichVu.idTaiKhoanNhanDon!.idPhuongXa!.ten.toString();
+          }
+          diaChiCuThe = donDichVu.idTaiKhoanNhanDon!.diaDiemCuThe.toString();
+        } else {
+          tinhThanh = "";
+          quan = "";
+          phuong = "";
+          diaChiCuThe = "";
+        }
+        isLoading = false;
+        update();
       },
-      {
-        "label": "Đơn vị",
-        "value": "Tấn",
-        "input": false,
+      onError: (error) {
+        print("V3QuoteRequestController loadInfo onError $error");
       },
-      {
-        "label": "Đơn giá",
-        "value": "300.000 VND",
-        "input": true,
-      },
-    ];
+    );
   }
 
   ///
@@ -81,5 +201,46 @@ class V3QuoteResponseController extends GetxController {
   /// on Continue Click
   ///
   void onContinueClick() {
+    // Get.to(
+    //   () => V3QuoteCheckPage(
+    //     yeuCauBaoGiaModel: YeuCauBaoGiaModel(
+    //       diaChiCuThe: diaChiCuThe,
+    //       features: features,
+    //       from: from,
+    //       giaTriDonHang: giaTriDonHang,
+    //       images: images,
+    //       loaiCongTrinh: loaiCongTrinh,
+    //       noiDungYeuCau: noiDungYeuCau,
+    //       phuong: phuong,
+    //       quan: quan,
+    //       tinhThanh: tinhThanh,
+    //       title: title,
+    //       to: to,
+    //       infoCard: infoCard,
+    //       isCheck: isCheck,
+    //       tieuDeBaoGia: tieuDeBaoGia,
+    //     ),
+    //   ),
+    // );
+    Get.toNamed(
+      AppRoutes.V3_QUOTE_CHECK,
+      arguments: YeuCauBaoGiaModel(
+        diaChiCuThe: diaChiCuThe,
+        features: features,
+        from: from,
+        giaTriDonHang: giaTriDonHang,
+        images: images,
+        loaiCongTrinh: loaiCongTrinh,
+        noiDungYeuCau: noiDungYeuCau,
+        phuong: phuong,
+        quan: quan,
+        tinhThanh: tinhThanh,
+        title: title,
+        to: to,
+        infoCard: infoCard,
+        isCheck: isCheck,
+        tieuDeBaoGia: tieuDeBaoGia,
+      ),
+    );
   }
 }
