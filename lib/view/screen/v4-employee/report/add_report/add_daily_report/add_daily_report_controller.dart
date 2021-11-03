@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:isoweek/isoweek.dart';
 import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
@@ -14,10 +13,12 @@ import 'package:template/utils/color_resources.dart';
 
 class V4AddDailyReportController extends GetxController {
   GetIt sl = GetIt.instance;
-  BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
+  BaoCaoNhanVienProvider baoCaoNhanVienProvider =
+      GetIt.I.get<BaoCaoNhanVienProvider>();
   List<BaoCaoNhanVienResponse> baoCaoNhanVienList = [];
 
-  DuAnNhanVienProvider duAnNhanVienProvider = GetIt.I.get<DuAnNhanVienProvider>();
+  DuAnNhanVienProvider duAnNhanVienProvider =
+      GetIt.I.get<DuAnNhanVienProvider>();
   // Dự án của nhân viên
   List<DuAnNhanVienResponse> duAnNhanVienList = [];
   DuAnNhanVienResponse? duAnNhanVien;
@@ -29,7 +30,7 @@ class V4AddDailyReportController extends GetxController {
   //khai báo biến isLoading
   bool isLoading = true;
 
-  String idUser= '';
+  String idUser = '';
 
   int currentWeek = Week.current().weekNumber;
 
@@ -40,6 +41,7 @@ class V4AddDailyReportController extends GetxController {
     getidUser();
     getDuAnNhanVien();
   }
+
   ///
   /// get id user
   ///
@@ -49,6 +51,7 @@ class V4AddDailyReportController extends GetxController {
       print(value);
     });
   }
+
   ///
   ///Thay đổi dự án nhân viên
   ///
@@ -106,6 +109,7 @@ class V4AddDailyReportController extends GetxController {
     }
     return true;
   }
+
   ///
   /// Button báo cáo
   ///

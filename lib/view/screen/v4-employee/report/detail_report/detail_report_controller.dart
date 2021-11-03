@@ -36,6 +36,8 @@ class V4DetailReportController extends GetxController {
   bool isLoading = true;
   // idUser
   String idUser = '';
+  // idReport
+  String? idReport;
 
   //khai báo TextEditingController
   TextEditingController contentDetailReport = TextEditingController();
@@ -49,12 +51,25 @@ class V4DetailReportController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     //get agument
-    if (Get.arguments != null) {
-      detailReportResponse = Get.arguments as BaoCaoNhanVienResponse;
+    // if (Get.arguments != null) {
+    //   detailReportResponse = Get.arguments as BaoCaoNhanVienResponse;
+    // }
+    final dynamic arguments = Get.arguments;
+    if (arguments != null && arguments['idReport'] != null) {
+      idReport = arguments!['idReport'].toString();
+      print('V4DetailReportController onInit $idReport');
+
+      // baoCaoNhanVienProvider.find(
+      //   id: idReport.toString(),
+      //   onSuccess: (data) {
+      //     detailReportResponse = data;
+      //     update();
+      //   },
+      //   onError: (error) {
+      //     print('V4DetailReportController onInit onError $error');
+      //   },
+      // );
     }
-    // detailReportResponse = (Get.arguments != null)
-    //     ? Get.arguments as BaoCaoNhanVienResponse
-    //     : null;
     getidUser();
     getThongTinBaoCao();
   }
@@ -125,7 +140,7 @@ class V4DetailReportController extends GetxController {
   ///
   void getThongTinBaoCao() {
     baoCaoNhanVienProvider.find(
-      id: detailReportResponse!.id!,
+      id: idReport.toString(),
       onSuccess: (value) {
         detailReportResponse = value;
         //ngày

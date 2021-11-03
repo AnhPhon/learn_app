@@ -79,7 +79,7 @@ Widget _listReport(V4ReportController controller, BuildContext context) {
           child: GestureDetector(
             onTap: () {
               controller.onClickDetailReport(
-                  controller.baoCaoNhanVienModelList[index].id!);
+                  controller.baoCaoNhanVienModelList[index].id);
             },
             child: Column(
               children: [
