@@ -19,25 +19,29 @@ class DropDownMapButton<T> extends StatelessWidget {
     this.isBorder = true,
     this.isShadow = false,
     this.isColorFieldWhite = false,
+    this.padding,
+    this.margin,
+    this.height,
   }) : super(key: key);
 
   final String? hint;
   final String? label;
   final double width;
+  final double? height;
   final Color? fillColor;
   final Color? colorText;
   final Function(T? value) onChanged;
   final Map<T, String> data;
   final T? value;
   final bool? labelBold, obligatory, isBorder, isShadow, isColorFieldWhite;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_SMALL,
-        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-      ),
+      padding: padding ?? EdgeInsets.zero,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
             Wrap(
@@ -61,11 +65,16 @@ class DropDownMapButton<T> extends StatelessWidget {
                   ),
               ],
             ),
+          if (label != null)
+            const SizedBox(
+              height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            ),
           Container(
+              height: (height != null)
+                  ? DeviceUtils.getScaledHeight(context, height!)
+                  : null,
               width: DeviceUtils.getScaledWidth(context, width),
-              margin: EdgeInsets.symmetric(
-                vertical: DeviceUtils.getScaledSize(context, .025),
-              ),
+              margin: margin ?? EdgeInsets.zero,
               decoration: BoxDecoration(
                 boxShadow: (isShadow == true)
                     ? [
@@ -81,27 +90,19 @@ class DropDownMapButton<T> extends StatelessWidget {
                   return InputDecorator(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: (isColorFieldWhite == true)
-                          ? ColorResources.WHITE
-                          : Colors.transparent,
+                      fillColor: fillColor ?? Colors.transparent,
                       isDense: true,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                           borderSide: (isBorder == true)
-                              ? const BorderSide(
-                                  color: ColorResources.PRIMARY,
-                                  width: 2,
-                                )
+                              ? const BorderSide(color: ColorResources.PRIMARY)
                               : BorderSide.none),
                       disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                           borderSide: (isBorder == true)
-                              ? const BorderSide(
-                                  color: ColorResources.PRIMARY,
-                                  width: 2,
-                                )
+                              ? const BorderSide(color: ColorResources.PRIMARY)
                               : BorderSide.none),
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: DeviceUtils.getScaledSize(context, 0.025),
@@ -112,10 +113,7 @@ class DropDownMapButton<T> extends StatelessWidget {
                           borderRadius: BorderRadius.circular(
                               Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                           borderSide: (isBorder == true)
-                              ? const BorderSide(
-                                  color: ColorResources.PRIMARY,
-                                  width: 2,
-                                )
+                              ? const BorderSide(color: ColorResources.PRIMARY)
                               : BorderSide.none),
                     ),
                     child: DropdownButtonHideUnderline(

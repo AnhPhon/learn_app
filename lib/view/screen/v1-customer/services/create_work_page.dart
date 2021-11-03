@@ -18,20 +18,19 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/create_work_controller.dart';
 
 class CreateWorkPage extends GetView<CreateWorkController>{
-  // final CreateWorkController _controller = Get.put(CreateWorkController());
+  final CreateWorkController _controller = Get.put(CreateWorkController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn công việc",),
+      appBar: AppBarWidget(title: _controller.titleAppBar,),
       body: GetBuilder(
-        init: CreateWorkController(),
         builder: (CreateWorkController controller) {
           if(controller.isLoadingNhomDichVu || controller.isLoading){
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -70,6 +69,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn nhóm công việc phù hợp",
             hint: "Chọn nhóm công việc",
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           ),
           DropDownButton<LoaiCongViecResponse>(
             data: controller.loaiCongViecResponseList,
@@ -79,6 +79,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
             width: DeviceUtils.getScaledSize(context,1),
             label: "Chọn công việc phù hợp",
             hint: 'Chọn nhóm công việc',
+            padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
           ),
       ],
     );
@@ -120,8 +121,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.hcmPhuong,
+                  huyen: controller.hcmHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
@@ -133,8 +134,8 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.haNoiPhuong,
+                  huyen: controller.haNoiHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
@@ -146,25 +147,25 @@ class CreateWorkPage extends GetView<CreateWorkController>{
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen
+                  phuong: controller.daNangPhuong,
+                  huyen: controller.daNangHuyen
                 ),
                 onSelectedWorkLocation(
                   context,
-                  ward: controller.phuongXaList,
+                  ward: controller.otherwards,
                   city: "Tỉnh thành khách",
-                  district: controller.quanHuyenList,
+                  district: controller.otherDistricts,
                   value: 3,
                   groupValue: controller.groupTinhTpValue,
                   onChanged: (int? val)=> controller.onChangedGroup(val!),
                   onChangedHuyen: (QuanHuyenResponse? val)=> controller.onChangedQuanHuyen(val!),
                   onChangedPhuong: (PhuongXaResponse? val)=> controller.onChangedPhuongXa(val!),
-                  phuong: controller.phuongXa,
-                  huyen: controller.quanHuyen,
+                  phuong: controller.khacPhuong,
+                  huyen: controller.khacHuyen,
                   isRadio: false,
-                  tinh: controller.tinh,
+                  tinh: controller.otherProvince,
                   onChangedProvince: (TinhTpResponse? val)=> controller.onChangedTinhThanh(val!),
-                  tinhList: controller.tinhTps
+                  tinhList: controller.otherProvinces
                 ),
               ],
             ),
@@ -209,7 +210,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
               onChanged: (int? val)=> onChanged(val),
             ),
             DropDownButtonHideUnderLineWidget<TinhTpResponse>(
-              data: !(value == groupValue) ? [] : tinhList!,
+              data: tinhList!,
               onChanged: value == groupValue ?  (TinhTpResponse? val)=> onChangedProvince!(val): null,
               value: tinh,
               hint: "Chọn tỉnh khác",
@@ -264,7 +265,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
 
   Widget button(CreateWorkController controller){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: (){

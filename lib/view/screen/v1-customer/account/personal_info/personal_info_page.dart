@@ -5,9 +5,9 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/drop_down_map_data_button.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v1-customer/account/personal_info/personal_info_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
   @override
@@ -34,65 +34,73 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
               elevation: 0,
               automaticallyImplyLeading: false,
             ),
-            body: SizedBox(
-              height: double.infinity,
-              width: double.infinity,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //avatar
-                    _avatar(context, controller: controller),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //avatar
+                  _avatar(context, controller: controller),
 
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
+                  //title
+                  Text(
+                    "Thông tin cá nhân",
+                    style: Dimensions.fontSizeStyle22w600(),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
+                  //company name
+                  InputWidget(
+                    label: "Tên doanh nghiệp/đội trưởng/cá nhân",
+                    labelBold: true,
+                    textEditingController: controller.nameCompanyController!,
+                    suffixIcon: const Icon(
+                      Icons.edit,
+                      size: Dimensions.ICON_SIZE_DEFAULT,
+                      color: ColorResources.BLACK,
                     ),
+                    width: .9,
+                    fillColor: ColorResources.WHITE,
+                    isShadow: true,
+                    isBorder: false,
+                    obligatory: true,
+                    textInputAction: TextInputAction.next,
+                  ),
 
-                    //title
-                    Text(
-                      "Thông tin cá nhân",
-                      style: Dimensions.fontSizeStyle22w600(),
+                  //full name
+                  InputWidget(
+                    label: "Họ và tên",
+                    labelBold: true,
+                    textEditingController: controller.fullNameController!,
+                    suffixIcon: const Icon(
+                      Icons.edit,
+                      size: Dimensions.ICON_SIZE_DEFAULT,
+                      color: ColorResources.BLACK,
                     ),
-
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                    width: .9,
+                    fillColor: ColorResources.WHITE,
+                    isShadow: true,
+                    isBorder: false,
+                    obligatory: true,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                    textInputAction: TextInputAction.next,
+                  ),
 
-                    //company name
-                    InputWidget(
-                      label: "Tên doanh nghiệp/đội trưởng/cá nhân",
-                      labelBold: true,
-                      textEditingController: controller.nameCompanyController!,
-                      suffixIcon: const Icon(
-                        Icons.edit,
-                        size: Dimensions.ICON_SIZE_DEFAULT,
-                        color: ColorResources.BLACK,
-                      ),
-                      width: 1,
-                      isShadow: true,
-                      isColorFieldWhite: true,
-                      isBorder: false,
-                      obligatory: true,
+                  //born and sex
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: Dimensions.PADDING_SIZE_LARGE,
+                      right: Dimensions.PADDING_SIZE_LARGE,
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
-
-                    //full name
-                    InputWidget(
-                      label: "Họ và tên",
-                      labelBold: true,
-                      textEditingController: controller.fullNameController!,
-                      suffixIcon: const Icon(
-                        Icons.edit,
-                        size: Dimensions.ICON_SIZE_DEFAULT,
-                        color: ColorResources.BLACK,
-                      ),
-                      width: 1,
-                      isShadow: true,
-                      isColorFieldWhite: true,
-                      isBorder: false,
-                      obligatory: true,
-                    ),
-
-                    //born and sex
-                    Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //born
@@ -106,12 +114,13 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                             color: ColorResources.BLACK,
                           ),
                           width: .45,
+                          fillColor: ColorResources.WHITE,
                           isShadow: true,
-                          isColorFieldWhite: true,
                           isDate: true,
                           allowEdit: false,
                           isBorder: false,
                           obligatory: true,
+                          textInputAction: TextInputAction.next,
                         ),
 
                         //sex
@@ -124,87 +133,107 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                           data: controller.sexMap,
                           width: .35,
                           isShadow: true,
-                          isColorFieldWhite: true,
                           isBorder: false,
+                          fillColor: ColorResources.WHITE,
                         )
                       ],
                     ),
+                  ),
 
-                    //CMND va ngay cap
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //CMND
-                        InputWidget(
-                          label: "Số CMND/Căn cước",
-                          labelBold: true,
-                          textEditingController: controller.cMNDController!,
-                          width: .45,
-                          isShadow: true,
-                          isColorFieldWhite: true,
-                          isBorder: false,
-                          allowEdit: false,
+                  //CMND va ngay cap
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //CMND
+                      InputWidget(
+                        label: "Số CMND/Căn cước",
+                        labelBold: true,
+                        textEditingController: controller.cMNDController!,
+                        width: .45,
+                        fillColor: ColorResources.WHITE,
+                        isShadow: true,
+                        isBorder: false,
+                        allowEdit: false,
+                        padding: const EdgeInsets.only(
+                          left: Dimensions.PADDING_SIZE_LARGE,
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-
-                        //ngay cap
-                        InputWidget(
-                          label: "Ngày cấp",
-                          labelBold: true,
-                          textEditingController: controller.ngayCapController!,
-                          width: .38,
-                          isShadow: true,
-                          isColorFieldWhite: true,
-                          isBorder: false,
-                          allowEdit: false,
-                        ),
-                      ],
-                    ),
-
-                    //phone
-                    InputWidget(
-                      label: "Số điện thoại",
-                      labelBold: true,
-                      textEditingController: controller.phoneController!,
-                      width: 1,
-                      isShadow: true,
-                      obligatory: true,
-                      isColorFieldWhite: true,
-                      isBorder: false,
-                    ),
-
-                    //company name
-                    InputWidget(
-                      label: "Email",
-                      labelBold: true,
-                      textEditingController: controller.emailController!,
-                      suffixIcon: const Icon(
-                        Icons.edit,
-                        size: Dimensions.ICON_SIZE_DEFAULT,
-                        color: ColorResources.BLACK,
                       ),
-                      width: 1,
-                      isShadow: true,
-                      isColorFieldWhite: true,
-                      isBorder: false,
-                      obligatory: true,
-                    ),
 
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                    ),
+                      //ngay cap
+                      InputWidget(
+                        label: "Ngày cấp",
+                        labelBold: true,
+                        textEditingController: controller.ngayCapController!,
+                        width: .38,
+                        fillColor: ColorResources.WHITE,
+                        isShadow: true,
+                        isBorder: false,
+                        allowEdit: false,
+                        padding: const EdgeInsets.only(
+                          right: Dimensions.PADDING_SIZE_LARGE,
+                          top: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                      ),
+                    ],
+                  ),
 
-                    BtnCustom(
-                      onTap: () => controller.updateAccount(context),
-                      color: ColorResources.PRIMARY,
-                      text: "Cập nhật",
-                      width: DeviceUtils.getScaledWidth(context, .9),
+                  //phone
+                  InputWidget(
+                    label: "Số điện thoại",
+                    labelBold: true,
+                    textEditingController: controller.phoneController!,
+                    suffixIcon: const Icon(
+                      Icons.edit,
+                      size: Dimensions.ICON_SIZE_DEFAULT,
+                      color: ColorResources.BLACK,
                     ),
+                    width: .9,
+                    fillColor: ColorResources.WHITE,
+                    isShadow: true,
+                    obligatory: true,
+                    isBorder: false,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                    textInputAction: TextInputAction.next,
+                  ),
 
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  //company name
+                  InputWidget(
+                    label: "Email",
+                    labelBold: true,
+                    textEditingController: controller.emailController!,
+                    suffixIcon: const Icon(
+                      Icons.edit,
+                      size: Dimensions.ICON_SIZE_DEFAULT,
+                      color: ColorResources.BLACK,
                     ),
-                  ],
-                ),
+                    width: .9,
+                    fillColor: ColorResources.WHITE,
+                    isShadow: true,
+                    isBorder: false,
+                    obligatory: true,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  ),
+
+                  BtnCustom(
+                    onTap: () => controller.updateAccount(context),
+                    color: ColorResources.PRIMARY,
+                    text: "Cập nhật",
+                    width: DeviceUtils.getScaledWidth(context, .9),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  ),
+                ],
               ),
             ),
           );

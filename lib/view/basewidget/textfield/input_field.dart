@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/format/format_currency.dart';
-import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class InputField extends StatelessWidget {
   InputField(
@@ -23,8 +22,11 @@ class InputField extends StatelessWidget {
       required this.hidden,
       required this.obligatory,
       this.line = 5,
-      this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
+      this.textInputAction,
+      this.paddingTop = Dimensions.PADDING_SIZE_SMALL,
       this.isColorFieldWhite,
+      this.focusNode,
+      this.padding,
       required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
@@ -36,19 +38,22 @@ class InputField extends StatelessWidget {
   final double? paddingTop;
   final String? errorText;
   final int? line;
+  final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   bool? boldHinText;
   final bool? isColorFieldWhite;
   final bool? isFormatCurrency;
+  final FocusNode? focusNode;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT,
-          top: paddingTop!),
-      //padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL, left: Dimensions.PADDING_SIZE_SMALL, right: Dimensions.PADDING_SIZE_SMALL),
+      padding: padding ??
+          EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_DEFAULT,
+              right: Dimensions.PADDING_SIZE_DEFAULT,
+              top: paddingTop!),
       width: width,
       child: Column(
         children: [
@@ -88,7 +93,7 @@ class InputField extends StatelessWidget {
                         ]
                       : [FilteringTextInputFormatter.digitsOnly]
                   : null,
-              textInputAction: TextInputAction.done,
+              textInputAction: textInputAction,
               keyboardType: typeInput,
               maxLines: (allowMultiline == true) ? line : 1,
               textAlignVertical: TextAlignVertical.top,
@@ -96,6 +101,7 @@ class InputField extends StatelessWidget {
               controller: controller,
               obscureText: hidden,
               onChanged: onChanged,
+              focusNode: focusNode,
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_SMALL,
@@ -103,23 +109,33 @@ class InputField extends StatelessWidget {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                      Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),
                   disabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: ColorResources.PRIMARYCOLOR),
+                    borderSide: BorderSide(
+                      color: (allowEdit == false)
+                          ? ColorResources.LIGHT_GREY
+                          : ColorResources.THEME_DEFAULT,
+                    ),
                     borderRadius: BorderRadius.circular(
                         Dimensions.BORDER_RADIUS_EXTRA_SMALL),
                   ),

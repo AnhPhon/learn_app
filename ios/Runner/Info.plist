@@ -40,6 +40,22 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cho phép ứng dụng sử dung thư viện ảnh</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Cho phép ứng dụng sử dụng máy ảnh</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Cho phép ứng dụng sử dụng microphone </string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>YourPurposeKey</key>
+  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+</dict>
 </dict>
 </plist>

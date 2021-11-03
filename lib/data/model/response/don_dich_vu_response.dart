@@ -1,3 +1,4 @@
+import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
 
 import 'tai_khoan_response.dart';
@@ -16,11 +17,12 @@ class DonDichVuResponse {
   String? id;
   TaiKhoanResponse? idTaiKhoan;
   NhomDichVuResponse? idNhomDichVu;
+  LoaiCongViecResponse? idLoaiCongViec;
   String? tieuDe;
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  String? hinhAnhBanKhoiLuong;
+  List<String>? hinhAnhBanKhoiLuongs;
   String? hinhAnhBanVe;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
@@ -60,11 +62,12 @@ class DonDichVuResponse {
       {this.id,
       this.idTaiKhoan,
       this.idNhomDichVu,
+      this.idLoaiCongViec,
       this.tieuDe,
       this.moTa,
       this.ngayBatDau,
       this.ngayKetThuc,
-      this.hinhAnhBanKhoiLuong,
+      this.hinhAnhBanKhoiLuongs,
       this.hinhAnhBanVe,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
@@ -103,7 +106,7 @@ class DonDichVuResponse {
   /// From JSON
   ///
   DonDichVuResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTaiKhoan
     if (json['idTaiKhoan'] != null &&
@@ -122,11 +125,20 @@ class DonDichVuResponse {
     } else {
       idNhomDichVu = null;
     }
+
+    // mapping idLoaiCongViec
+    if (json['idLoaiCongViec'] != null &&
+        json['idLoaiCongViec'].toString().length != 24) {
+      idLoaiCongViec = LoaiCongViecResponse.fromJson(
+          json['idLoaiCongViec'] as Map<String, dynamic>);
+    } else {
+      idLoaiCongViec = null;
+    }
     tieuDe = json['tieuDe'].toString();
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'].toString();
+    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
 
     // mapping idTrangThaiDonDichVu
@@ -168,13 +180,21 @@ class DonDichVuResponse {
     // mapping idThoiGianLamViec
     if (json['idThoiGianLamViecs'] != null &&
         json['idThoiGianLamViecs'].toString().length != 24) {
-      idThoiGianLamViecs = (json['idThoiGianLamViecs'] as List<dynamic>)
-          .map((e) =>
-              ThoiGianLamViecResponse.fromJson(e as Map<String, dynamic>))
-          .toList();
+          idThoiGianLamViecs = [];
+      final result = (json['idThoiGianLamViecs'] as List<dynamic>);
+          result.forEach((element) {
+            if(element != null && element.toString().length != 24) {
+              //result.map((e) =>
+                  idThoiGianLamViecs!.add(ThoiGianLamViecResponse.fromJson(element as Map<String, dynamic>));
+            }
+          });
     } else {
-      idThoiGianLamViecs = null;
+      idThoiGianLamViecs = [];
     }
+    // final results = apiResponse.response.data as List<dynamic>;
+    //   onSuccess(results
+    //       .map((e) => BangGiaLocHoSoResponse.fromJson(e as Map<String, dynamic>))
+    //       .toList());
 
     // mapping idTinhTp
     if (json['idTinhTp'] != null && json['idTinhTp'].toString().length != 24) {
@@ -227,7 +247,7 @@ class DonDichVuResponse {
               (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
           .toList();
     } else {
-      idThongSoKyThuats = null;
+      idThongSoKyThuats = [];
     }
     diaDiemBocHang = json['diaDiemBocHang'].toString();
     diaDiemTraHang = json['diaDiemTraHang'].toString();
@@ -260,6 +280,9 @@ class DonDichVuResponse {
     // check null idNhomDichVu
     if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 
+    // check null idLoaiCongViec
+    if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec;
+
     // check null tieuDe
     if (tieuDe != null) data['tieuDe'] = tieuDe;
 
@@ -272,9 +295,10 @@ class DonDichVuResponse {
     // check null ngayKetThuc
     if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc;
 
-    // check null hinhAnhBanKhoiLuong
-    if (hinhAnhBanKhoiLuong != null)
-      data['hinhAnhBanKhoiLuong'] = hinhAnhBanKhoiLuong;
+    // check null hinhAnhBanKhoiLuongs
+    if (hinhAnhBanKhoiLuongs != null) {
+      data['hinhAnhBanKhoiLuongs'] = hinhAnhBanKhoiLuongs!.map((e) => e.toString()).toList();
+    }
 
     // check null hinhAnhBanVe
     if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;

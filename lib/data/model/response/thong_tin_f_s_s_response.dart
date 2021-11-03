@@ -6,6 +6,8 @@ class ThongTinFSSResponse {
   String? quyenNghiaVuFSS;
   String? quyTrinhSuDungGiaoDich;
   String? loiIchThamGiaFSS;
+  String? chiTietBaoHiem;
+  String? hoTro;
 
   String? createdAt;
   String? updatedAt;
@@ -24,12 +26,14 @@ class ThongTinFSSResponse {
   /// From JSON
   ///
   ThongTinFSSResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     doiTuong = json['doiTuong'].toString();
     gioiThieuTomTatCoCheHoatDong = json['gioiThieuTomTatCoCheHoatDong'].toString();
     quyenNghiaVuFSS = json['quyenNghiaVuFSS'].toString();
     quyTrinhSuDungGiaoDich = json['quyTrinhSuDungGiaoDich'].toString();
     loiIchThamGiaFSS = json['loiIchThamGiaFSS'].toString();
+    chiTietBaoHiem = json['chiTietBaoHiem'].toString();
+    hoTro = json['hoTro'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -57,6 +61,12 @@ class ThongTinFSSResponse {
 
     // check null loiIchThamGiaFSS
     if (loiIchThamGiaFSS != null) data['loiIchThamGiaFSS'] = loiIchThamGiaFSS; 
+
+    // check null chiTietBaoHiem
+    if (chiTietBaoHiem != null) data['chiTietBaoHiem'] = chiTietBaoHiem; 
+
+    // check null hoTro
+    if (hoTro != null) data['hoTro'] = hoTro; 
 
 
     return data;

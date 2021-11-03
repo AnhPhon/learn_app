@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
@@ -10,7 +12,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
 import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
+import 'package:template/view/basewidget/widgets/box_image.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/component/image_card_in_work_done_page.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/component/v2_long_button.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/work_status/work_done/work_done_controller.dart';
@@ -20,19 +22,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: "Việc đã làm",
-        action: [
-          IconButton(
-            onPressed: () {
-              controller.onClickToDetailWorkDonePage();
-            },
-            icon: const Icon(
-              Icons.read_more_outlined,
-              color: ColorResources.WHITE,
-              size: Dimensions.ICON_SIZE_LARGE,
-            ),
-          ),
-        ],
+        title: controller.appTitle,
       ),
       body: GetBuilder<V2WorkDoneController>(
           init: V2WorkDoneController(),
@@ -151,7 +141,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     ImageCardInWorkPage(
                       title: 'Hình ảnh thực tế',
                       isRequired: false,
-                      urlList: [],
+                      urlList: controller.yeuCauImages,
                     ),
                     const SizedBox(
                       height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
@@ -175,11 +165,8 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     ),
 
                     //Hình ảnh bảo hành
-                    ImageCardInWorkPage(
-                      title: 'Hình ảnh bảo hành(nếu có)',
-                      isRequired: false,
-                      urlList: [],
-                    ),
+                    _baoHanhImage(),
+
                     const SizedBox(
                       height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
                     ),
@@ -191,7 +178,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
                     _line(context),
 
                     Text(
-                      'Đánh giá công tác bảo hàn',
+                      'Đánh giá công tác bảo hành',
                       style: Dimensions.fontSizeStyle16w600(),
                     ),
                     const SizedBox(
@@ -328,7 +315,7 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
       line: 4,
       label: 'Yêu cầu thanh toán khi đã thi công nghiệm thu',
       holdplacer: "Thợ thầu yêu cầu thanh toán, số tiền bao nhiêu,...",
-      controller: controller.paymentRequest,
+      controller: controller.paymentRequest!,
       allowEdit: true,
       allowMultiline: true,
       typeInput: TextInputType.text,
@@ -361,8 +348,8 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
       line: 4,
       label: 'Ý kiến khách hàng',
       holdplacer: "Hiển thị từ khách hàng",
-      controller: controller.customerReviews,
-      allowEdit: true,
+      controller: controller.customerReviews!,
+      allowEdit: controller.isKhachHangDisable == false,
       allowMultiline: true,
       typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -378,26 +365,38 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
   Widget _radioButtonCustomerPay() {
     return Column(
       children: [
-        CheckBoxCustom(
+        RadioButton(
           title: "Đồng ý thanh toán 100%",
-          status: controller.checkBox1,
+          groupValue: 1,
+          value: controller.radioIndex,
           onChanged: (value) {
-            controller.onKhachHangThanhToanChange(1, value: value!);
+            if (!controller.isKhachHangDisable) {
+              controller.onKhachHangThanhToanChange(1);
+            }
           },
+          active: controller.isKhachHangDisable == false,
         ),
-        CheckBoxCustom(
+        RadioButton(
           title: "Đồng ý thanh toán theo thỏa thuận\n(có chứng từ thỏa thuận)",
-          status: controller.checkBox2,
+          groupValue: 2,
+          value: controller.radioIndex,
           onChanged: (value) {
-            controller.onKhachHangThanhToanChange(2, value: value!);
+            if (!controller.isKhachHangDisable) {
+              controller.onKhachHangThanhToanChange(2);
+            }
           },
+          active: controller.isKhachHangDisable == false,
         ),
-        CheckBoxCustom(
+        RadioButton(
           title: "Chưa có đồng ý thanh toán",
-          status: controller.checkBox3,
+          groupValue: 3,
+          value: controller.radioIndex,
           onChanged: (value) {
-            controller.onKhachHangThanhToanChange(3, value: value!);
+            if (!controller.isKhachHangDisable) {
+              controller.onKhachHangThanhToanChange(3);
+            }
           },
+          active: controller.isKhachHangDisable == false,
         ),
       ],
     );
@@ -423,8 +422,20 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
   ///Button nhận thông tin và liên hệ khách hàng
   ///
   Widget _contactCustomers() {
+    // return V2LongButton(
+    //   color: (controller.isKhachHangDisable)
+    //       ? ColorResources.LIGHT_GREY
+    //       : ColorResources.THEME_DEFAULT,
+    //   onPressed: () {
+    //     if (!controller.isKhachHangDisable) {
+    //       controller.onCustomerReviewSubmit();
+    //     }
+    //   },
+    //   title: 'Nhận thông tin và liên hệ khách hàng',
+    // );
+
     return V2LongButton(
-      color: ColorResources.PRIMARY,
+      color: ColorResources.THEME_DEFAULT,
       onPressed: () {
         controller.onCustomerReviewSubmit();
       },
@@ -441,8 +452,8 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
       line: 4,
       label: 'Nội dung',
       holdplacer: "Thợ thầu nhập nội dung đã bảo hành",
-      controller: controller.warrantyContents,
-      allowEdit: true,
+      controller: controller.warrantyContents!,
+      allowEdit: controller.isBaoHanhDisable == false,
       allowMultiline: true,
       typeInput: TextInputType.text,
       width: DeviceUtils.getScaledWidth(context, 1),
@@ -453,13 +464,47 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
   }
 
   ///
+  /// hỉnh ảnh bảo hành
+  ///
+  Widget _baoHanhImage() {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT),
+          child: const Text(
+            "Hình ảnh bảo hành (nếu có)",
+            style: TextStyle(
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+          child: BoxImage(
+            images: controller.images,
+            isAddImage: controller.isBaoHanhDisable == false,
+            onPress: () => controller.pickerMuilFile(files: controller.images),
+            onDelete: (File? file, List<File> files) =>
+                controller.onDeleteImage(file: file!, files: files),
+          ),
+        )
+      ],
+    );
+  }
+
+  ///
   ///Đã thực hiện bảo hành
   ///
   Widget _evaluation() {
     return V2LongButton(
-      color: ColorResources.PRIMARY,
+      color: (controller.isBaoHanhDisable)
+          ? ColorResources.LIGHT_GREY
+          : ColorResources.THEME_DEFAULT,
       onPressed: () {
-        controller.onWarrantyContentSubmit();
+        if (!controller.isBaoHanhDisable) controller.onWarrantyContentSubmit();
       },
       title: 'Đã thực hiện bảo hành',
     );

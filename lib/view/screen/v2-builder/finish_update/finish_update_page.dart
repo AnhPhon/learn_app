@@ -11,6 +11,14 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
     return GetBuilder<V2FinishUpdateController>(
       init: V2FinishUpdateController(),
       builder: (controller) {
+        // data is loading
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        // finish is loading
         return Scaffold(
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
@@ -58,7 +66,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   // bổ sung mã số thuế
                   _textOnClick(
                     "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                    controller.onDangKyHopDongClick,
+                    controller.onDangKyVaCamKetClick,
                     controller.maSoThueValid,
                   ),
 
@@ -97,14 +105,65 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
       },
       child: Container(
         alignment: Alignment.centerLeft,
-        child: Text(
-          label,
-          style: TextStyle(
-            color: (isPass == true)
-                ? const Color(Dimensions.TEXT_NORMAL_COLOR)
-                : ColorResources.RED,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+        decoration: const BoxDecoration(
+          color: ColorResources.WHITE,
+          boxShadow: [
+            BoxShadow(
+              color: ColorResources.LIGHT_GREY,
+              blurRadius: 5,
+            )
+          ],
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              Dimensions.BORDER_RADIUS_DEFAULT,
+            ),
           ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: (isPass == true)
+                      ? const Color(Dimensions.TEXT_NORMAL_COLOR)
+                      : ColorResources.RED,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: (isPass == true)
+                      ? ColorResources.GREEN
+                      : ColorResources.RED,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(
+                      Dimensions.BORDER_RADIUS_BIG,
+                    ),
+                  ),
+                ),
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: Container(
+                  width: 100,
+                  alignment: Alignment.center,
+                  child: Text(
+                    (isPass == true) ? "Đầy đủ" : "Cần bổ sung",
+                    style: const TextStyle(
+                      color: ColorResources.WHITE,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

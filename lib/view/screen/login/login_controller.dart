@@ -1,27 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:template/data/model/body/auth_model.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/account_request.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/auth_provider.dart';
+import 'package:template/provider/loai_tai_khoan_provider.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 // import 'package:template/provider/auth_provider.dart';
 // import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
+import 'package:template/utils/validate.dart';
 
 class LoginController extends GetxController {
-  // AuthProvider authProvider = GetIt.I.get<AuthProvider>();
-  // UserProvider userProvider = GetIt.I.get<UserProvider>();
-  final usernameController = TextEditingController();
+  AuthProvider authProvider = GetIt.I.get<AuthProvider>();
+  final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
+  final LoaiTaiKhoanProvider typeAccountProvider =
+      GetIt.I.get<LoaiTaiKhoanProvider>();
+
+  final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   bool isRemember = false;
 
-  AuthModel? auth;
   bool isLoading = true;
 
   @override
   void onInit() {
-    usernameController.text = '3';
-    // passwordController.text = 'password';
     super.onInit();
   }
 
@@ -52,132 +60,101 @@ class LoginController extends GetxController {
   }
 
   ///
+  /// on button register tap
+  ///
+  void onBtnLoginEmployee() {
+    Get.offAndToNamed(AppRoutes.LOGIN_EMPLOYEE);
+  }
+
+  ///
   /// on login click
   ///
   void onLoginBtnClick() {
-    sl.get<SharedPreferenceHelper>().saveUserId("616d99dd7e28e22b158543bb");
+    onLogin();
+  }
 
-    if (usernameController.text == '1') {
-      Get.toNamed(AppRoutes.V1_DASHBOARD);
-    } else if (usernameController.text == '2') {
-      Get.toNamed(AppRoutes.V2_DASHBOARD);
-    } else if (usernameController.text == '3') {
-      Get.toNamed(AppRoutes.V3_DASHBOARD);
-    } else if (usernameController.text == '4') {
-      Get.toNamed(AppRoutes.V4_DASHBOARD);
-    } else {}
+  ///
+  /// Validate login
+  ///
+  bool onValidateLogin() {
+    //validate infomation username password
+    if (phoneController.text == '' || passwordController.text == '') {
+      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      return false;
+    } else if (!Validate.phone(phoneController.text.toString())) {
+      Alert.info(message: "Số điện thoại không hợp lệ");
+      return false;
+    }
+    return true;
+  }
 
-    // // validate infomation username password
-    // if (usernameController.text == '' || passwordController.text == '') {
-    //   Get.snackbar(
-    //     "Thông báo!", // title
-    //     'Vui lòng nhập đầy đủ thông tin', // message
-    //     icon: const Icon(Icons.error_outline),
-    //     shouldIconPulse: true,
-    //     isDismissible: true,
-    //     duration: const Duration(seconds: 3),
-    //   );
-    // } else {
-    //   // login with info user input
-    //   final AuthRequest request = AuthRequest();
-    //   request.username = usernameController.text.toString();
-    //   request.password = passwordController.text.toString();
+  ///
+  /// Login
+  ///
+  void onLogin() {
+    if (onValidateLogin()) {
+      EasyLoading.show(status: "Đăng nhập");
+      final AccountRequest accountRequest = AccountRequest();
+      accountRequest.soDienThoai = phoneController.text.toString();
+      accountRequest.matKhau = passwordController.text.toString();
+      authProvider.loginAccount(
+          request: accountRequest,
+          onSuccess: (account) {
+            // save info token and info user
+            sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
+            sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
+            sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
-    //   authProvider.login(
-    //       request: request,
-    //       onSuccess: (auth) {
-    //         Get.snackbar(
-    //           "Thành công!", // title
-    //           'Đăng nhập thành công', // message
-    //           icon: const Icon(Icons.error_outline),
-    //           shouldIconPulse: true,
-    //           isDismissible: true,
-    //           duration: const Duration(seconds: 2),
-    //         );
+            // sl.get<SharedPreferenceHelper>().savePassword(password)
+            // sl.get<SharedPreferenceHelper>().saveUsername(username)
+            // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
+            if (isRemember) {
+              sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);
+              sl
+                  .get<SharedPreferenceHelper>()
+                  .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
+              sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
+            }
 
-    //         isLoading = false;
-    //         auth = auth;
-
-    //         // save info token and info user
-    //         sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
-    //         sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
-    //         sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
-    //         sl.get<SharedPreferenceHelper>().saveIsLogin(true);
-
-    //         update();
-
-    //         // go to dashboard
-    //         Get.toNamed(AppRoutes.DASHBOARD);
-    //       },
-    //       onError: (error) {
-    //         isLoading = false;
-    //         Get.snackbar(
-    //           "Hey i'm a Get SnackBar!", // title
-    //           error.toString(), // message
-    //           icon: const Icon(Icons.error_outline),
-    //           shouldIconPulse: true,
-    //           isDismissible: true,
-    //           duration: const Duration(seconds: 3),
-    //         );
-    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
-    //         update();
-    //       });
-    // }
-    // validate infomation username password
-    // if (usernameController.text == '' || passwordController.text == '') {
-    //   Get.snackbar(
-    //     "Thông báo!", // title
-    //     'Vui lòng nhập đầy đủ thông tin', // message
-    //     icon: const Icon(Icons.error_outline),
-    //     shouldIconPulse: true,
-    //     isDismissible: true,
-    //     duration: const Duration(seconds: 3),
-    //   );
-    // } else {
-    //   // // login with info user input
-    //   final AuthRequest request = AuthRequest();
-    //   request.username = usernameController.text.toString();
-    //   request.password = passwordController.text.toString();
-
-    //   authProvider.login(
-    //       request: request,
-    //       onSuccess: (auth) {
-    //         Get.snackbar(
-    //           "Thành công!", // title
-    //           'Đăng nhập thành công', // message
-    //           icon: const Icon(Icons.error_outline),
-    //           shouldIconPulse: true,
-    //           isDismissible: true,
-    //           duration: const Duration(seconds: 2),
-    //         );
-
-    //         isLoading = false;
-    //         auth = auth;
-
-    //         // save info token and info user
-    //         sl.get<SharedPreferenceHelper>().saveUserId(auth.id!);
-    //         sl.get<SharedPreferenceHelper>().saveJwtToken(auth.access!);
-    //         sl.get<SharedPreferenceHelper>().saveRefreshToken(auth.refresh!);
-    //         sl.get<SharedPreferenceHelper>().saveIsLogin(true);
-
-    //         update();
-
-    //         // go to dashboard
-    //         Get.toNamed(AppRoutes.DASHBOARD);
-    //       },
-    //       onError: (error) {
-    //         isLoading = false;
-    //         Get.snackbar(
-    //           "Hey i'm a Get SnackBar!", // title
-    //           error.toString(), // message
-    //           icon: const Icon(Icons.error_outline),
-    //           shouldIconPulse: true,
-    //           isDismissible: true,
-    //           duration: const Duration(seconds: 3),
-    //         );
-    //         print("TermsAndPolicyController getTermsAndPolicy onError $error");
-    //         update();
-    //       });
-    // }
+            // Kiểm tra loại tài khoản người dùng
+            if (account.idLoaiTaiKhoan != null) {
+              if (account.idLoaiTaiKhoan == KHACH_HANG) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                return;
+              } else if (account.idLoaiTaiKhoan == THO_THAU) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+                return;
+              } else if (account.idLoaiTaiKhoan == DAI_LY) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+                return;
+              }
+              // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
+              //   EasyLoading.dismiss();
+              //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
+              //   return;
+              // }
+              else {
+                //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
+                EasyLoading.dismiss();
+                Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+              }
+            } else {
+              // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
+              EasyLoading.dismiss();
+              Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+            }
+          },
+          onError: (error) {
+            Alert.error(
+                message:
+                    "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
+            EasyLoading.dismiss();
+            print("Lỗi đăng nhập onError $error");
+            update();
+          });
+    }
   }
 }

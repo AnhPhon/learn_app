@@ -19,34 +19,31 @@ import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/g6-excavation/g6_create_service_controller.dart';
 
 class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
-
+  final V1G6CreateServiceController _controller = Get.find<V1G6CreateServiceController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: AppBarWidget(title: _controller.appBarTitle),
       body: GetBuilder(
         builder: (V1G6CreateServiceController controller) {
           if(controller.isLoading || controller.isThongSo){
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-                  // Tiêu tề nhóm công việc
-                  const GroupTitle(title: "Dịch vụ xe đào, cầu nặng , máy khác"),
+                // Tiêu tề nhóm công việc
+                const GroupTitle(title: "Dịch vụ xe đào, cầu nặng , máy khác"),
 
-                  // Form nhập dữ 
-                  form(context, controller),
-                  
-                  // Button tiếp tục
-                  nextButton(controller: controller)
-                ],
-              ),
+                // Form nhập dữ 
+                form(context, controller),
+                
+                // Button tiếp tục
+                nextButton(controller: controller)
+              ],
             ),
           );
         },
@@ -66,7 +63,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowEdit: false,
           allowMultiline: false,
           controller: controller.workTitleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
@@ -85,6 +82,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
             horizontal: Dimensions.PADDING_SIZE_DEFAULT,
           ),
           child: MultiSelectDialogField(
+            buttonIcon: const Icon(Icons.arrow_drop_down),
             listType: MultiSelectListType.CHIP,
             items: controller.thongSoKyThuatList,
             title: const Text("Thông số kỹ thuật"),
@@ -130,7 +128,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.amountController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "5",
           hidden: false,
           label: "Số lượng yêu cầu",
@@ -144,12 +142,13 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           isDate: true,
           allowEdit: true,
           controller: controller.startTimeController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày làm việc",
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         // Ngày kết thúc dự kiến
@@ -157,12 +156,13 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           isDate: true,
           allowEdit: true,
           controller: controller.endTimeController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày kết thúc dự kiến",
           obligatory: true,
           typeInput: TextInputType.datetime,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
 
@@ -171,7 +171,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowEdit: true,
           allowMultiline: false,
           controller: controller.workWidthController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "100",
           hidden: false,
           label: "Bề rộng mặt đường làm việc(m)",
@@ -187,7 +187,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowEdit: true,
           allowMultiline: true,
           controller: controller.workDescController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Diện tích móng/ móng đơn bằng 1/2 phương bằng 2 phương",
           hidden: false,
           label: "Miêu tả yêu cầu công việc cụ thể",
@@ -227,7 +227,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
   ///
   Widget nextButton({required V1G6CreateServiceController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: controller.onClickContinueButton,

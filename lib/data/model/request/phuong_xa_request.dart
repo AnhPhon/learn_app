@@ -12,7 +12,7 @@ class PhuongXaRequest {
   /// From JSON
   ///
   PhuongXaRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idQuanHuyen = json['idQuanHuyen'].toString();
     ten = json['ten'].toString();
   }

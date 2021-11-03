@@ -58,7 +58,10 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   
   Widget workContent({required V1G1ReviewController controller}){
     return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -158,9 +161,10 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
           paddingTitle: 0
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-            vertical: Dimensions.PADDING_SIZE_DEFAULT
+          padding: EdgeInsets.only(
+            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+            left: Dimensions.PADDING_SIZE_DEFAULT,
+            right: Dimensions.PADDING_SIZE_DEFAULT,
           ),
           child: BoxShadowWidget(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),

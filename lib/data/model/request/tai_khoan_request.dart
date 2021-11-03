@@ -28,53 +28,66 @@ class TaiKhoanRequest {
   String? hinhCMNDTruoc;
   String? hinhCMNDSau;
   String? idNhomCuaHang;
-  String? idMatHangDacTrung;
+  List<String>? idMatHangDacTrungs;
   String? diaChiKhoHang;
   String? thoiGianLamViec;
   String? lamChieuThuBay;
   String? lamNgayChuNhat;
+  String? diaDiemCuaHangChinh;
+  List<String>? hinhAnhCuaHangs;
+  String? diaDiemCuThe;
+  String? hinhAnhKhuonMat;
+  String? registerToken;
+  String? otp;
 
-  TaiKhoanRequest(
-      {this.id,
-      this.idLoaiTaiKhoan,
-      this.tinhTpHoatDong,
-      this.idTinhTp,
-      this.idQuanHuyen,
-      this.idPhuongXa,
-      this.loaiPhapLy,
-      this.tenPhapLy,
-      this.mST,
-      this.hoTen,
-      this.ngaySinh,
-      this.gioiTinh,
-      this.cMND,
-      this.ngayCap,
-      this.noiCap,
-      this.soDienThoai,
-      this.email,
-      this.diaChi,
-      this.viTien,
-      this.hinhDaiDien,
-      this.matKhau,
-      this.tokenDevice,
-      this.soLuongNguoi,
-      this.chuyenMon,
-      this.gioiThieu,
-      this.noiLamViec,
-      this.hinhCMNDTruoc,
-      this.hinhCMNDSau,
-      this.idNhomCuaHang,
-      this.idMatHangDacTrung,
-      this.diaChiKhoHang,
-      this.thoiGianLamViec,
-      this.lamChieuThuBay,
-      this.lamNgayChuNhat});
+  TaiKhoanRequest({
+    this.id,
+    this.idLoaiTaiKhoan,
+    this.tinhTpHoatDong,
+    this.idTinhTp,
+    this.idQuanHuyen,
+    this.idPhuongXa,
+    this.loaiPhapLy,
+    this.tenPhapLy,
+    this.mST,
+    this.hoTen,
+    this.ngaySinh,
+    this.gioiTinh,
+    this.cMND,
+    this.ngayCap,
+    this.noiCap,
+    this.soDienThoai,
+    this.email,
+    this.diaChi,
+    this.viTien,
+    this.hinhDaiDien,
+    this.matKhau,
+    this.tokenDevice,
+    this.soLuongNguoi,
+    this.chuyenMon,
+    this.gioiThieu,
+    this.noiLamViec,
+    this.hinhCMNDTruoc,
+    this.hinhCMNDSau,
+    this.idNhomCuaHang,
+    this.idMatHangDacTrungs,
+    this.diaChiKhoHang,
+    this.thoiGianLamViec,
+    this.lamChieuThuBay,
+    this.lamNgayChuNhat,
+    this.diaDiemCuaHangChinh,
+    this.hinhAnhCuaHangs,
+    this.diaDiemCuThe,
+    this.hinhAnhKhuonMat,
+    this.registerToken,
+    this.otp
+  });
 
   ///
   /// From JSON
   ///
   TaiKhoanRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idLoaiTaiKhoan = json['idLoaiTaiKhoan'].toString();
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();
     idTinhTp = json['idTinhTp'].toString();
@@ -103,11 +116,21 @@ class TaiKhoanRequest {
     hinhCMNDTruoc = json['hinhCMNDTruoc'].toString();
     hinhCMNDSau = json['hinhCMNDSau'].toString();
     idNhomCuaHang = json['idNhomCuaHang'].toString();
-    idMatHangDacTrung = json['idMatHangDacTrung'].toString();
+    idMatHangDacTrungs = (json['idMatHangDacTrungs'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     diaChiKhoHang = json['diaChiKhoHang'].toString();
     thoiGianLamViec = json['thoiGianLamViec'].toString();
     lamChieuThuBay = json['lamChieuThuBay'].toString();
     lamNgayChuNhat = json['lamNgayChuNhat'].toString();
+    diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
+    hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
+    diaDiemCuThe = json['diaDiemCuThe'].toString();
+    hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
+    registerToken = json['registerToken'].toString();
+    otp = json['otp'].toString();
   }
 
   ///
@@ -202,9 +225,10 @@ class TaiKhoanRequest {
     // check null idNhomCuaHang
     if (idNhomCuaHang != null) data['idNhomCuaHang'] = idNhomCuaHang;
 
-    // check null idMatHangDacTrung
-    if (idMatHangDacTrung != null)
-      data['idMatHangDacTrung'] = idMatHangDacTrung;
+    // check null idMatHangDacTrungs
+    if (idMatHangDacTrungs != null) {
+      data['idMatHangDacTrungs'] = idMatHangDacTrungs;
+    }
 
     // check null diaChiKhoHang
     if (diaChiKhoHang != null) data['diaChiKhoHang'] = diaChiKhoHang;
@@ -218,6 +242,18 @@ class TaiKhoanRequest {
     // check null lamNgayChuNhat
     if (lamNgayChuNhat != null) data['lamNgayChuNhat'] = lamNgayChuNhat;
 
+    // check null diaDiemCuaHangChinh
+    if (diaDiemCuaHangChinh != null)
+      data['diaDiemCuaHangChinh'] = diaDiemCuaHangChinh;
+
+    // check null hinhAnhCuaHangs
+    if (hinhAnhCuaHangs != null) data['hinhAnhCuaHangs'] = hinhAnhCuaHangs;
+
+    // check null diaDiemCuThe
+    if (diaDiemCuThe != null) data['diaDiemCuThe'] = diaDiemCuThe;
+    if (hinhAnhKhuonMat != null) data['hinhAnhKhuonMat'] = hinhAnhKhuonMat;
+    if (registerToken != null) data['registerToken'] = registerToken;
+    if (otp != null) data['otp'] = otp;
     return data;
   }
 }

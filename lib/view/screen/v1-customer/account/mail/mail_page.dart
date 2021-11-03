@@ -4,10 +4,10 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/screen/v1-customer/account/mail/mail_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
 
 class V1MailPage extends GetView<V1MailController> {
   @override
@@ -29,15 +29,16 @@ class V1MailPage extends GetView<V1MailController> {
                     style: Dimensions.fontSizeStyle20w600(),
                   ),
 
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                  ),
-
                   //name
                   InputWidget(
                     hintText: "Họ và tên của bạn",
                     textEditingController: controller.nameController,
                     width: 1,
+                    textInputAction: TextInputAction.next,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //phone
@@ -46,6 +47,11 @@ class V1MailPage extends GetView<V1MailController> {
                     textEditingController: controller.phoneController,
                     width: 1,
                     textInputType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   //content
@@ -54,6 +60,10 @@ class V1MailPage extends GetView<V1MailController> {
                     textEditingController: controller.contentController,
                     width: 1,
                     maxLine: 5,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                   ),
 
                   const SizedBox(
@@ -64,7 +74,7 @@ class V1MailPage extends GetView<V1MailController> {
                     onTap: () => controller.onBtnSendClick(context),
                     color: ColorResources.PRIMARY,
                     text: "Gửi liên hệ",
-                    width: DeviceUtils.getScaledWidth(context, .8),
+                    width: DeviceUtils.getScaledWidth(context, .85),
                   ),
 
                   const SizedBox(

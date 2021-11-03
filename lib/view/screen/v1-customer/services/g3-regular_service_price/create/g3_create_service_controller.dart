@@ -8,6 +8,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/constants/enum_helper.dart';
+import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G3CreateServiceController extends GetxController {
@@ -107,21 +108,20 @@ class V1G3CreateServiceController extends GetxController {
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian làm việc");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc");
       return;
     } else if(startTime.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian bắt đầu");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      showSnackBar(title: "Lỗi", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return;
-    }else if(endTime.text.toString().isNotEmpty){
-      if(endTime.text.toString().isEmpty){
-        showSnackBar(title: "Lỗi", message: "Vui lòng chọn thời gian kết thúc");
-        return;
-      }else{
-        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
-      }
+    }else if(endTime.text.toString().isEmpty){
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian kết thúc không được để trống");
+      return;
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      return;
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request());
     }
@@ -161,7 +161,7 @@ class V1G3CreateServiceController extends GetxController {
     } else if (GENDER.Nu == gender) {
       return "Nữ";
     }
-    return 'Khác';
+    return 'Không yêu cầu';
   }
 
   @override

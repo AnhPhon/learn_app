@@ -20,6 +20,7 @@ class TaiKhoanProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
+      print('phuong4');
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
           .map((e) => TaiKhoanResponse.fromJson(e as Map<String, dynamic>))
@@ -101,7 +102,10 @@ class TaiKhoanProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      print('phuong5');
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
           .map((e) => TaiKhoanResponse.fromJson(e as Map<String, dynamic>))
           .toList());

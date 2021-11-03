@@ -1,8 +1,13 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:convert';
+
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:template/data/model/request/account_request.dart';
 import 'package:template/data/model/request/auth_request.dart';
+import 'package:template/data/model/request/tai_khoan_request.dart';
+import 'package:template/data/model/request/verify_otp_request.dart';
 // import 'package:template/data/model/body/user_model.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -27,12 +32,110 @@ class AuthRepository {
   // }
 
   ///
-  /// Insert user to database
+  /// Login with email
   ///
   Future<ApiResponse> login(AuthRequest request) async {
     try {
       final response =
           await dioClient!.post('/auth/login', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// register
+  ///
+  Future<ApiResponse> register(TaiKhoanRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/auth/register', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Đăng nhập bằng tài khoản số điện thoại
+  ///
+  Future<ApiResponse> loginAccount(AccountRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/login', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// Đăng ký bằng tài khoản số điện thoại
+  ///
+  Future<ApiResponse> registerAccount(TaiKhoanRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/register', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
+  /// Đăng xuất tài khoản số điện thoại
+  ///
+  Future<ApiResponse> logoutAccount(dynamic request) async {
+    try {
+      final response =
+          await dioClient!.post('/auth/logout', data: json.encode(request) );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// Forget password
+  ///
+  Future<ApiResponse> forgetPassword(dynamic phone) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/forgot-password', data: json.encode(phone));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// Verify otp
+  ///
+  Future<ApiResponse> verifyOTP(VerifyOtpRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/verifier-otp', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// reset pass
+  ///
+  Future<ApiResponse> resetPassword(VerifyOtpRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/reset-password', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  ///
+  /// send otp
+  ///
+  Future<ApiResponse> sendOTP(dynamic phone) async {
+    try {
+      final response =
+          await dioClient!.post('/tai-khoans/sent-otp', data: json.encode(phone));
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

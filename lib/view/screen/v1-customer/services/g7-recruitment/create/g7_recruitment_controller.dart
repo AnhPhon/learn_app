@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
+import 'package:template/data/model/response/phuong_xa_response.dart';
+import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
@@ -23,27 +30,25 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 
 class V1G7RecruitmentController extends GetxController {
   //Providers
-  final HinhThucLamViecProvider hinhThucLamViecProvider =
-      GetIt.I.get<HinhThucLamViecProvider>();
-  final TrinhDoHocVanProvider trinhDoHocVanProvider =
-      GetIt.I.get<TrinhDoHocVanProvider>();
-  final ChuyenNganhChinhProvider chuyenNganhChinhProvider =
-      GetIt.I.get<ChuyenNganhChinhProvider>();
-  final SoNamKinhNghiemProvider soNamKinhNghiemProvider =
-      GetIt.I.get<SoNamKinhNghiemProvider>();
-  final MucLuongDuKienProvider mucLuongDuKienProvider =
-      GetIt.I.get<MucLuongDuKienProvider>();
-  final TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
-  final ThoiGianLamViecProvider thoiGianLamViecProvider =
-      GetIt.I.get<ThoiGianLamViecProvider>();
-  final TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
-  final QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
-  final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
+  final hinhThucLamViecProvider = GetIt.I.get<HinhThucLamViecProvider>();
+  final trinhDoHocVanProvider = GetIt.I.get<TrinhDoHocVanProvider>();
+  final chuyenNganhChinhProvider = GetIt.I.get<ChuyenNganhChinhProvider>();
+  final soNamKinhNghiemProvider = GetIt.I.get<SoNamKinhNghiemProvider>();
+  final mucLuongDuKienProvider = GetIt.I.get<MucLuongDuKienProvider>();
+  final tinhTpProvider = GetIt.I.get<TinhTpProvider>();
+  final thoiGianLamViecProvider = GetIt.I.get<ThoiGianLamViecProvider>();
+  final taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
+  final phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
+
+  final imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
 
   //model value
   List<HinhThucLamViecResponse> hinhThucLamViecModel = [];
@@ -53,6 +58,8 @@ class V1G7RecruitmentController extends GetxController {
   List<MucLuongDuKienResponse> mucLuongDuKienModel = [];
   List<ThoiGianLamViecResponse> thoiGianLamViecModel = [];
   List<TinhTpResponse> tinhTpModel = [];
+  List<QuanHuyenResponse> quanHuyenModel = [];
+  List<PhuongXaResponse> phuongXaModel = [];
 
   TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
 
@@ -64,6 +71,9 @@ class V1G7RecruitmentController extends GetxController {
   MucLuongDuKienResponse? mucLuongDuKien;
   ThoiGianLamViecResponse? thoiGianLamViec;
   TinhTpResponse? tinhTp;
+  TinhTpResponse? tinhTpDiaChi;
+  QuanHuyenResponse? quanHuyenResponse;
+  PhuongXaResponse? phuongXaResponse;
 
   //value giới tính
   int chooseSex = 0;
@@ -106,6 +116,22 @@ class V1G7RecruitmentController extends GetxController {
   //thời gian thực tập
   final thoiGianThucTapController = TextEditingController();
 
+  //focusNode
+  FocusNode titleFocusNode = FocusNode();
+  FocusNode companyFocusNode = FocusNode();
+  FocusNode addressFocusNode = FocusNode();
+  FocusNode descFocusNode = FocusNode();
+  FocusNode requiredFocusNode = FocusNode();
+  FocusNode benifitFocusNode = FocusNode();
+  FocusNode prioritizedFocusNode = FocusNode();
+  FocusNode endTimeFocusNode = FocusNode();
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode contactFocusNodetroller = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode amountFocusNode = FocusNode();
+  FocusNode thoiGianThucTapFocusNode = FocusNode();
+
   //chọn ngày nộp hồ sơ
   DateTime selectedDate = DateTime.now();
   DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -116,6 +142,10 @@ class V1G7RecruitmentController extends GetxController {
   //value listChuyenNganhPhu
   List chuyenNganhPhus = [];
   List<ChuyenNganhChinhResponse> chuyenNganhPhuModel = [];
+
+  //hình ảnh
+  File? image;
+  String? hinhAnhDaiDien;
 
   @override
   void onInit() {
@@ -135,22 +165,22 @@ class V1G7RecruitmentController extends GetxController {
             companyController.text = taiKhoanResponse.tenPhapLy.toString();
 
             //set địa chỉ
-            addressController.text =
-                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
+            addressController.text = taiKhoanResponse.diaChi.toString();
 
             //set thông tin người liên hệ
             nameController.text = taiKhoanResponse.hoTen.toString();
             phoneController.text = taiKhoanResponse.soDienThoai.toString();
-            contactAddressController.text = addressController.text;
+            contactAddressController.text =
+                '${taiKhoanResponse.diaChi}, ${taiKhoanResponse.idPhuongXa}, ${taiKhoanResponse.idQuanHuyen}, ${taiKhoanResponse.idTinhTp}';
             emailController.text = taiKhoanResponse.email.toString();
 
             //load data frist
             getDataHinhThucLamViec();
             getDataTrinhDoHocVan();
-            getDataChuyenNangChinh();
+            getDataChuyenNganhChinh();
             getDataSoNamKinhNghiem();
             getDataMucLuongDuKien();
-            getDataTinhTp();
+            getDataTinhTp(isLoadFrist: true);
             getDataThoiGianLamViec();
           },
           onError: (error) {
@@ -168,7 +198,7 @@ class V1G7RecruitmentController extends GetxController {
   @override
   void onClose() {
     // TODO: implement onClose
-    super.onClose();
+
     titleController.dispose();
     companyController.dispose();
     addressController.dispose();
@@ -183,6 +213,23 @@ class V1G7RecruitmentController extends GetxController {
     emailController.dispose();
     amountController.dispose();
     thoiGianThucTapController.dispose();
+
+    //focusNode
+    titleFocusNode.dispose();
+    companyFocusNode.dispose();
+    addressFocusNode.dispose();
+    descFocusNode.dispose();
+    requiredFocusNode.dispose();
+    benifitFocusNode.dispose();
+    prioritizedFocusNode.dispose();
+    endTimeFocusNode.dispose();
+    nameFocusNode.dispose();
+    phoneFocusNode.dispose();
+    contactFocusNodetroller.dispose();
+    emailFocusNode.dispose();
+    amountFocusNode.dispose();
+    thoiGianThucTapFocusNode.dispose();
+    super.onClose();
   }
 
   ///
@@ -220,7 +267,7 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data chuyên ngành chính
   ///
-  void getDataChuyenNangChinh() {
+  void getDataChuyenNganhChinh() {
     //list hinh thuc lam iec
     chuyenNganhChinhProvider.all(
         onSuccess: (value) {
@@ -230,7 +277,7 @@ class V1G7RecruitmentController extends GetxController {
           update();
         },
         onError: (error) =>
-            print('V1G7RecruitmentController getDataChuyenNangChinh $error'));
+            print('V1G7RecruitmentController getDataChuyenNganhChinh $error'));
   }
 
   ///
@@ -266,9 +313,35 @@ class V1G7RecruitmentController extends GetxController {
   }
 
   ///
+  ///Thay đổi tỉnh thành
+  ///
+  void onChangedTinhThanh(TinhTpResponse tinhTp) {
+    tinhTpDiaChi = tinhTp;
+    getDataQuanHuyen(idTinh: tinhTp.id.toString(), isLoadFrist: false);
+    update();
+  }
+
+  ///
+  ///Thay đổi quận huyện
+  ///
+  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen) {
+    quanHuyenResponse = quanHuyen;
+    getDataPhuongXa(idHuyen: quanHuyen.id.toString(), isLoadFrist: false);
+    update();
+  }
+
+  ///
+  ///Thay đổi tỉnh thành
+  ///
+  void onChangedPhuongXa(PhuongXaResponse phuongXa) {
+    phuongXaResponse = phuongXa;
+    update();
+  }
+
+  ///
   /// load data tỉnh Tp
   ///
-  void getDataTinhTp() {
+  void getDataTinhTp({required bool isLoadFrist}) {
     //list hinh thuc lam iec
     tinhTpProvider.all(
         onSuccess: (value) {
@@ -276,14 +349,13 @@ class V1G7RecruitmentController extends GetxController {
           tinhTpModel = value;
           // isLoading = false;
 
-          //set idTinh
-          idTinhFind = value
-              .firstWhere((element) =>
-                  element.ten!.contains(taiKhoanResponse.idTinhTp.toString()))
-              .id;
+          if (isLoadFrist) {
+            //set idTinh
+            tinhTpDiaChi = value.firstWhere((element) =>
+                element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
 
-          if (idTinhFind != null) {
-            getDataQuanHuyen(idTinh: idTinhFind.toString());
+            getDataQuanHuyen(
+                idTinh: tinhTpDiaChi!.id.toString(), isLoadFrist: true);
           }
 
           update();
@@ -295,20 +367,35 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data quận huyện
   ///
-  void getDataQuanHuyen({required String idTinh}) {
+  void getDataQuanHuyen({required String idTinh, required bool isLoadFrist}) {
     quanHuyenProvider.paginate(
         page: 1,
         limit: 100,
         filter: '&idTinhTp=$idTinh',
         onSuccess: (value) {
-          //set id huyện
-          idHuyenFind = value
-              .firstWhere((element) => element.ten!
-                  .contains(taiKhoanResponse.idQuanHuyen.toString()))
-              .id;
-          if (idHuyenFind != null) {
-            getDataPhuongXa(idHuyen: idHuyenFind.toString());
+          quanHuyenResponse = null;
+          phuongXaResponse = null;
+          quanHuyenModel.clear();
+          phuongXaModel.clear();
+          if (value.isNotEmpty) {
+            quanHuyenModel.addAll(value);
+            quanHuyenResponse = quanHuyenModel.first;
+
+            //mapping quận huyện lần đầu
+            if (isLoadFrist) {
+              quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
+                  .ten!
+                  .contains(taiKhoanResponse.idQuanHuyen.toString()));
+              // xã khi chon huỵen
+              getDataPhuongXa(
+                  idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: true);
+            }
+            // xã khi chon huỵen
+            getDataPhuongXa(
+                idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: false);
           }
+
+          update();
         },
         onError: (error) =>
             print('V1G7RecruitmentController getDataQuanHuyen $error'));
@@ -317,17 +404,27 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data phường xã
   ///
-  void getDataPhuongXa({required String idHuyen}) {
+  void getDataPhuongXa({required String idHuyen, required bool isLoadFrist}) {
     phuongXaProvider.paginate(
         page: 1,
         limit: 100,
         filter: '&idQuanHuyen=$idHuyen',
         onSuccess: (value) {
-          //set id xã
-          idXaFind = value
-              .firstWhere((element) =>
-                  element.ten!.contains(taiKhoanResponse.idPhuongXa.toString()))
-              .id;
+          phuongXaResponse = null;
+          phuongXaModel.clear();
+          if (value.isNotEmpty) {
+            phuongXaModel.addAll(value);
+            phuongXaResponse = phuongXaModel.first;
+
+            //mapping xã phường lần đầu
+            if (isLoadFrist) {
+              phuongXaResponse = phuongXaModel.firstWhere((element) => element
+                  .ten!
+                  .contains(taiKhoanResponse.idPhuongXa.toString()));
+            }
+          }
+
+          update();
         },
         onError: (error) =>
             print('V1G7RecruitmentController getDataPhuongXa $error'));
@@ -432,7 +529,8 @@ class V1G7RecruitmentController extends GetxController {
         builder: (BuildContext? context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
             child: child!,
           );
@@ -466,9 +564,24 @@ class V1G7RecruitmentController extends GetxController {
   }
 
   ///
+  ///pick image
+  ///
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      this.image = imageTemporary;
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+    }
+  }
+
+  ///
   /// Nhấn tiếp tục
   ///
-  void onClickContinueButton() async {
+  void onClickContinueButton() {
     final List chuyenNganhPhuSend = [];
     String tenChuyenNganhPhu = '';
 
@@ -485,105 +598,122 @@ class V1G7RecruitmentController extends GetxController {
 
     //check validate
     if (titleController.text.isEmpty) {
-      return Get.snackbar("Tiêu đề bắt buộc", "Vui lòng nhập tiêu đề");
+      return Alert.error(message: "Vui lòng nhập tiêu đề");
+    } else if (companyController.text.isEmpty) {
+      return Alert.error(message: "Vui lòng nhập tên công ty");
+    } else if (tinhTpDiaChi == null) {
+      return Alert.error(message: "Vui lòng chọn tỉnh/tp");
+    } else if (quanHuyenResponse == null) {
+      return Alert.error(message: "Vui lòng chọn quận/huyện");
+    } else if (phuongXaResponse == null) {
+      return Alert.error(message: "Vui lòng chọn phường/xã");
+    } else if (addressController.text.isEmpty) {
+      return Alert.error(message: "Vui lòng nhập địa chỉ");
     } else if (chooseSex == 0) {
-      return Get.snackbar("Giới tính bắt buộc", "Vui lòng chọn giới tính");
+      return Alert.error(message: "Vui lòng chọn giới tính");
     } else if (amountController.text.isEmpty) {
-      return Get.snackbar("Số lượng bắt buộc", "Vui lòng nhập số lượng");
+      return Alert.error(message: "Vui lòng nhập số lượng");
     } else if (hinhThucLamViec == null) {
-      return Get.snackbar(
-          "Hình thức làm việc bắt buộc", "Vui lòng chọn hình thức làm việc");
+      return Alert.error(message: "Vui lòng chọn hình thức làm việc");
     } else if (trinhDoHocVan == null) {
-      return Get.snackbar(
-          "Trình độ học vấn bắt buộc", "Vui lòng chọn trình độ học vấn");
+      return Alert.error(message: "Vui lòng chọn trình độ học vấn");
     } else if (chuyenNgangChinh == null) {
-      return Get.snackbar(
-          "Chuyên ngành chính bắt buộc", "Vui lòng chọn chuyên ngành chính");
+      return Alert.error(message: "Vui lòng chọn chuyên ngành chính");
     } else if (chuyenNganhPhuSend.isEmpty) {
-      return Get.snackbar(
-          "Chuyên ngành phụ bắt buộc", "Vui lòng chọn chuyên ngành phụ");
+      return Alert.error(message: "Vui lòng chọn chuyên ngành phụ");
     } else if (soNamKinhNghiem == null) {
-      return Get.snackbar(
-          "Số năm kinh nghiệm bắt buộc", "Vui lòng chọn số năm kinh nghiệm");
+      return Alert.error(message: "Vui lòng chọn số năm kinh nghiệm");
     } else if (mucLuongDuKien == null) {
-      return Get.snackbar(
-          "Mức lương dự kiến bắt buộc", "Vui lòng chọn mức lương dự kiến");
+      return Alert.error(message: "Vui lòng chọn mức lương dự kiến");
     } else if (tinhTp == null) {
-      return Get.snackbar(
-          "Nơi làm việc bắt buộc", "Vui lòng chọn nơi làm việc");
+      return Alert.error(message: "Vui lòng chọn nơi làm việc");
     } else if (thoiGianLamViec == null) {
-      return Get.snackbar(
-          "Thời gian làm việc bắt buộc", "Vui lòng chọn thời gian làm việc");
+      return Alert.error(message: "Vui lòng chọn thời gian làm việc");
     } else if (descController.text.isEmpty) {
-      return Get.snackbar(
-          "Mô tả công việc bắt buộc", "Vui lòng nhập mô tả công việc");
+      return Alert.error(message: "Vui lòng nhập mô tả công việc");
     } else if (requiredController.text.isEmpty) {
-      return Get.snackbar(
-          "Yêu cầu công việc bắt buộc", "Vui lòng nhập yêu cầu công việc");
+      return Alert.error(message: "Vui lòng nhập yêu cầu công việc");
     } else if (benifitController.text.isEmpty) {
-      return Get.snackbar("Chế độ quyền lợi bắt buộc",
-          "Vui lòng nhập chế đô quyền lợi công việc");
+      return Alert.error(message: "Vui lòng nhập chế đô quyền lợi công việc");
     } else if (prioritizedController.text.isEmpty) {
-      return Get.snackbar("Ưu tiên bắt buộc", "Vui lòng nhập ưu tiên");
+      return Alert.error(message: "Vui lòng nhập ưu tiên");
     } else if (daysBetween(DateTime.now(), selectedDate) < 0) {
-      return Get.snackbar("Hạn nộp bắt buộc", "Vui lòng chọn hạn nộp");
+      return Alert.error(message: "Vui lòng chọn hạn nộp");
     } else if (thoiGianThucTapController.text.isEmpty) {
-      return Get.snackbar(
-          "Thời gian thực tập bắt buộc", "Vui lòng nhập thời gian thực tập");
+      return Alert.error(message: "Vui lòng nhập thời gian thực tập");
     } else if (nameController.text.isEmpty) {
-      return Get.snackbar(
-          "Tên người liên hệ bắt buộc", "Vui lòng nhập tên người liên hệ");
+      return Alert.error(message: "Vui lòng nhập tên người liên hệ");
     } else if (phoneController.text.isEmpty) {
-      return Get.snackbar("Số điện thoại người liên hệ bắt buộc",
-          "Vui lòng nhập số điện thoại");
+      return Alert.error(message: "Vui lòng nhập số điện thoại");
     } else if (contactAddressController.text.isEmpty) {
-      return Get.snackbar(
-          "Địa chỉ người liên hệ bắt buộc", "Vui lòng nhập địa chỉ");
+      return Alert.error(message: "Vui lòng nhập địa chỉ");
     } else if (emailController.text.isEmpty) {
-      return Get.snackbar(
-          "Email người liên hệ bắt buộc", "Vui lòng nhập email");
+      return Alert.error(message: "Vui lòng nhập email");
+    } else if (image == null) {
+      return Alert.error(message: "Vui lòng chọn ảnh đại diện");
     } else {
-      ///gán data tuyển dụng
-      Map<String, dynamic> param = {
-        "IdTaiKhoan": taiKhoanResponse.id,
-        "TieuDe": titleController.text.trim(),
-        "CongTy": companyController.text,
-        'TenDiaChiCongTy': addressController.text,
-        "DiaChi": taiKhoanResponse.diaChi,
-        "IdTinhTp": idTinhFind,
-        "IdQuanHuyen": idHuyenFind,
-        "IdPhuongXa": idXaFind,
-        "GioiTinh": chooseSex,
-        "SoLuong": amountController.text,
-        "IdHinhThucLamViec": hinhThucLamViec!.id,
-        "TenHinhThucLamViec": hinhThucLamViec!.tieuDe,
-        "IdTrinhDoHocVan": trinhDoHocVan!.id,
-        "TenTrinhDoHocVan": trinhDoHocVan!.tieuDe,
-        "IdChuyenNganhChinh": chuyenNgangChinh!.id,
-        "TenChuyenNganhChinh": chuyenNgangChinh!.tieuDe,
-        "IdChuyenNganhPhus": chuyenNganhPhuSend,
-        "TenChuyenNganhPhu": tenChuyenNganhPhu,
-        "IdSoNamKinhNghiem": soNamKinhNghiem!.id,
-        "TenSoNamKinhNghiem": soNamKinhNghiem!.tieuDe,
-        "IdMucLuongDuKien": mucLuongDuKien!.id,
-        "TenMucLuongDuKien": mucLuongDuKien!.tieuDe,
-        "NoiLamViec": tinhTp!.id,
-        "TenNoiLamViec": tinhTp!.ten,
-        "IdThoiGianLamViec": thoiGianLamViec!.id,
-        "TenThoiGianLamViec": thoiGianLamViec!.tieuDe,
-        "ThoiGianThuViec": thoiGianThucTapController.text,
-        "MoTaCongViec": descController.text.trim(),
-        "YeuCauCongViec": requiredController.text.trim(),
-        "QuyenLoi": benifitController.text.trim(),
-        "UuTien": prioritizedController.text.trim(),
-        "HanNopHoSo": dateFormat.format(selectedDate).toString(),
-        "HoTenLienHe": nameController.text.trim(),
-        "SoDienThoaiLienHe": phoneController.text.trim(),
-        "DiaChiLienHe": contactAddressController.text.trim(),
-        "EmailLienHe": emailController.text.trim(),
-      };
+      EasyLoading.show(status: 'loading....');
+      //upload ảnh
+      imageUpdateProvider.add(
+          file: image!,
+          onSuccess: (value) {
+            EasyLoading.dismiss();
+            hinhAnhDaiDien = value.data;
 
-      Get.toNamed(AppRoutes.V1_G7_REVIEW, arguments: param);
+            ///gán data tuyển dụng
+            Map<String, dynamic> param = {
+              "IdTaiKhoan": taiKhoanResponse.id,
+              "TieuDe": titleController.text.trim(),
+              "CongTy": companyController.text,
+              'TenDiaChiCongTy':
+                  '${addressController.text}, ${phuongXaResponse!.ten}, ${quanHuyenResponse!.ten}, ${tinhTpDiaChi!.ten}',
+              "DiaChi": addressController.text,
+              "IdTinhTp": tinhTpDiaChi!.id,
+              "IdQuanHuyen": quanHuyenResponse!.id,
+              "IdPhuongXa": phuongXaResponse!.id,
+              "GioiTinh": chooseSex,
+              "SoLuong": amountController.text,
+              "IdHinhThucLamViec": hinhThucLamViec!.id,
+              "TenHinhThucLamViec": hinhThucLamViec!.tieuDe,
+              "IdTrinhDoHocVan": trinhDoHocVan!.id,
+              "TenTrinhDoHocVan": trinhDoHocVan!.tieuDe,
+              "IdChuyenNganhChinh": chuyenNgangChinh!.id,
+              "TenChuyenNganhChinh": chuyenNgangChinh!.tieuDe,
+              "IdChuyenNganhPhus": chuyenNganhPhuSend,
+              "TenChuyenNganhPhu": tenChuyenNganhPhu,
+              "IdSoNamKinhNghiem": soNamKinhNghiem!.id,
+              "TenSoNamKinhNghiem": soNamKinhNghiem!.tieuDe,
+              "IdMucLuongDuKien": mucLuongDuKien!.id,
+              "TenMucLuongDuKien": mucLuongDuKien!.tieuDe,
+              "NoiLamViec": tinhTp!.id,
+              "TenNoiLamViec": tinhTp!.ten,
+              "IdThoiGianLamViec": thoiGianLamViec!.id,
+              "TenThoiGianLamViec": thoiGianLamViec!.tieuDe,
+              "ThoiGianThuViec": thoiGianThucTapController.text,
+              "MoTaCongViec": descController.text.trim(),
+              "YeuCauCongViec": requiredController.text.trim(),
+              "QuyenLoi": benifitController.text.trim(),
+              "UuTien": prioritizedController.text.trim(),
+              "HanNopHoSo": dateFormat.format(selectedDate).toString(),
+              "HoTenLienHe": nameController.text.trim(),
+              "SoDienThoaiLienHe": phoneController.text.trim(),
+              "DiaChiLienHe": contactAddressController.text.trim(),
+              "EmailLienHe": emailController.text.trim(),
+              "HinhAnhDaiDien": hinhAnhDaiDien
+            };
+
+            Get.toNamed('${AppRoutes.V1_G7_REVIEW}?isReview=true',
+                    arguments: param)!
+                .then((value) => {
+                      if (value != null && value == true)
+                        {Get.back(result: true)}
+                    });
+          },
+          onError: (error) {
+            EasyLoading.dismiss();
+            print('V1G7RecruitmentController onClickContinueButton $error');
+            Alert.error(message: "Vui lòng thực hiện lại");
+          });
     }
   }
 }

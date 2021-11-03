@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/input_widget.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v3-agent/revenue/revenue_controller.dart';
 
 class V3RevenuePage extends GetView<V3RevenueController> {
@@ -18,12 +18,15 @@ class V3RevenuePage extends GetView<V3RevenueController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InputWidget(
                         label: "Từ ngày ",
-                        width: .35,
+                        width: .4,
                         isDate: true,
                         allowEdit: false,
                         textEditingController: controller.startController,
@@ -31,16 +34,24 @@ class V3RevenuePage extends GetView<V3RevenueController> {
                         suffixIcon: const Icon(
                           Icons.calendar_today,
                         ),
+                        lastDate: DateTime.now(),
+                        padding: const EdgeInsets.only(
+                          left: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
                       ),
                       InputWidget(
                         label: "Đến ngày ",
-                        width: .35,
+                        width: .4,
                         isDate: true,
                         allowEdit: false,
                         textEditingController: controller.endController,
                         isColorFieldWhite: true,
                         suffixIcon: const Icon(
                           Icons.calendar_today,
+                        ),
+                        lastDate: DateTime.now(),
+                        padding: const EdgeInsets.only(
+                          right: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
                       ),
                     ],
@@ -57,8 +68,9 @@ class V3RevenuePage extends GetView<V3RevenueController> {
                       itemBuilder: (BuildContext ctx, int index) {
                         return _legend(
                           context,
-                          color: controller.revenueDataList[index].color,
-                          label: controller.revenueDataList[index].unit,
+                          color: controller.revenueDataList[index].color!,
+                          label:
+                              controller.revenueDataList[index].unit.toString(),
                         );
                       }),
                 ],
@@ -80,13 +92,16 @@ class V3RevenuePage extends GetView<V3RevenueController> {
         primaryXAxis: CategoryAxis(
           isVisible: false,
         ),
+        tooltipBehavior: TooltipBehavior(enable: true),
         series: <ColumnSeries<RevenueData, String>>[
           ColumnSeries<RevenueData, String>(
+            name: "Doanh thu",
             dataSource: controller.revenueDataList,
             xValueMapper: (RevenueData revenue, _) => revenue.unit,
             pointColorMapper: (RevenueData revenue, _) => revenue.color,
             yValueMapper: (RevenueData revenue, _) => revenue.money,
             dataLabelSettings: const DataLabelSettings(isVisible: true),
+            enableTooltip: true,
           ),
         ],
       ),

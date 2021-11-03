@@ -73,6 +73,21 @@ class V2DetailWorkInProgressController extends GetxController {
         // set end time
         endTime = formatDate(model.ngayKetThuc!);
         description = model.moTaChiTiet ?? model.moTa!;
+
+        // xử lý trường dữ liệu image
+        for (final image in model.hinhAnhBanKhoiLuongs!) {
+          if (image.toString().trim().isNotEmpty) {
+            urlHinhAnhKhoiLuongList.add(image.toString());
+          }
+        }
+
+        // lấy hình ảnh bảng vẽ
+        for (final banVe in model.hinhAnhBanVe!.split(",")) {
+          if (banVe.trim().isNotEmpty) {
+            urlHinhAnhBangVeList.add(banVe);
+          }
+        }
+        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -97,8 +112,8 @@ class V2DetailWorkInProgressController extends GetxController {
         }
         for (final element in models) {
           // lấy hình ảnh báo giá
-          urlHinhAnhKhoiLuongList.add(
-            element.idDonDichVu!.hinhAnhBanKhoiLuong!,
+          urlHinhAnhKhoiLuongList.addAll(
+            element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
           );
           urlHinhAnhBangVeList.add(
             element.idDonDichVu!.hinhAnhBanVe!,

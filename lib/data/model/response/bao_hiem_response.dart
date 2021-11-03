@@ -3,7 +3,8 @@ class BaoHiemResponse {
   String? id;
   String? ten;
   String? hinhAnh;
-  String? phi;
+  List<String>? phis;
+  List<String>? soTienBaoHiems;
   String? loai;
   String? quyenLoi;
   String? boiThuong;
@@ -17,7 +18,8 @@ class BaoHiemResponse {
       this.id,
       this.ten,
       this.hinhAnh,
-      this.phi,
+      this.phis,
+      this.soTienBaoHiems,
       this.loai,
       this.quyenLoi,
       this.boiThuong,
@@ -30,10 +32,11 @@ class BaoHiemResponse {
   /// From JSON
   ///
   BaoHiemResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     ten = json['ten'].toString();
     hinhAnh = json['hinhAnh'].toString();
-    phi = json['phi'].toString();
+    phis = (json['phis'] as List<dynamic>).map((e) => e.toString()).toList();
+    soTienBaoHiems = (json['soTienBaoHiems'] as List<dynamic>).map((e) => e.toString()).toList();
     loai = json['loai'].toString();
     quyenLoi = json['quyenLoi'].toString();
     boiThuong = json['boiThuong'].toString();
@@ -59,7 +62,14 @@ class BaoHiemResponse {
     if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
 
     // check null phi
-    if (phi != null) data['phi'] = phi; 
+    if (phis != null) {
+      data['phis'] = phis!.map((e) => e.toString()).toList();
+    }
+
+    // check null soTienBaoHiems
+    if (soTienBaoHiems != null) {
+      data['soTienBaoHiems'] = soTienBaoHiems!.map((e) => e.toString()).toList();
+    }
 
     // check null loai
     if (loai != null) data['loai'] = loai; 

@@ -1,46 +1,47 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/tin_tuc_request.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
-import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 
 class V1NewsDetailController extends GetxController {
+  //TinTuc
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
-  TinTucResponse tinTucModel = TinTucResponse();
-
+  TinTucResponse tinTucResponse = TinTucResponse();
+  TinTucRequest tinTucRequest = TinTucRequest();
+  //title appbar
   String title = "Chi tiết tin tức";
-
   bool isLoading = true;
-
   @override
   void onInit() {
     super.onInit();
-    getNewsById();
+    //get arguments
+    if (Get.arguments != null) {
+      tinTucResponse = Get.arguments as TinTucResponse;
+    }
+    //count view
+    countView();
   }
 
   ///
-  ///get news by id
+  ///count view
   ///
-  void getNewsById() {
-    tinTucProvider.find(
-      id: Get.parameters['id'].toString(),
-      onSuccess: (value) {
-        tinTucModel = value;
+  void countView() {
+    //set data
+    tinTucRequest.id = tinTucResponse.id;
+    tinTucRequest.luotXem =
+        (int.parse(tinTucResponse.luotXem.toString()) + 1).toString();
+    //update view
+    tinTucProvider.update(
+      data: tinTucRequest,
+      onSuccess: (data) {
+        print("update view success");
         isLoading = false;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V1NewsDetailController countView onError $error");
       },
     );
-  }
-
-  ///
-  ///format date time
-  ///
-  String formatDateTime({required String dateTime}) {
-    return DateConverter.isoStringToLocalFullDateOnly(
-            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
-        .toString();
   }
 }

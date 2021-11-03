@@ -6,7 +6,7 @@ class SanPhamRequest {
   String? thuongHieu;
   String? moTa;
   String? hinhAnhDaiDien;
-  String? hinhAnhSanPham;
+  List<String>? hinhAnhSanPhams;
   String? quyCach;
   String? gia;
   String? maSanPham;
@@ -21,7 +21,7 @@ class SanPhamRequest {
       this.thuongHieu,
       this.moTa,
       this.hinhAnhDaiDien,
-      this.hinhAnhSanPham,
+      this.hinhAnhSanPhams,
       this.quyCach,
       this.gia,
       this.maSanPham,
@@ -32,14 +32,16 @@ class SanPhamRequest {
   /// From JSON
   ///
   SanPhamRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idDanhMucSanPham = json['idDanhMucSanPham'].toString();
     ten = json['ten'].toString();
     thuongHieu = json['thuongHieu'].toString();
     moTa = json['moTa'].toString();
     hinhAnhDaiDien = json['hinhAnhDaiDien'].toString();
-    hinhAnhSanPham = json['hinhAnhSanPham'].toString();
+    hinhAnhSanPhams = (json['hinhAnhSanPhams'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList();
     quyCach = json['quyCach'].toString();
     gia = json['gia'].toString();
     maSanPham = json['maSanPham'].toString();
@@ -73,8 +75,8 @@ class SanPhamRequest {
     // check null hinhAnhDaiDien
     if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien; 
 
-    // check null hinhAnhSanPham
-    if (hinhAnhSanPham != null) data['hinhAnhSanPham'] = hinhAnhSanPham; 
+    // check null hinhAnhSanPhams
+    if (hinhAnhSanPhams != null) data['hinhAnhSanPhams'] = hinhAnhSanPhams; 
 
     // check null quyCach
     if (quyCach != null) data['quyCach'] = quyCach; 

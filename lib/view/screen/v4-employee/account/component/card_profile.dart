@@ -15,16 +15,16 @@ class CardProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           Dimensions.BORDER_RADIUS_SMALL,
         ),
       ),
       color: ColorResources.WHITE,
-      // shadowColor: ColorResources.BLACK.withOpacity(.4),
       margin: const EdgeInsets.symmetric(
-          horizontal: Dimensions.MARGIN_SIZE_LARGE,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      ),
       child: ListTile(
         onTap: press,
         leading: icon,

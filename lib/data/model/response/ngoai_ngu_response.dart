@@ -13,8 +13,8 @@ class NgoaiNguResponse {
   String? createdAt;
   String? updatedAt;
 
-  NgoaiNguResponse({
-      this.id,
+  NgoaiNguResponse(
+      {this.id,
       this.idTaiKhoan,
       this.loaiNgoaiNgu,
       this.trinhDo,
@@ -24,19 +24,21 @@ class NgoaiNguResponse {
       this.viet,
       this.createdAt,
       this.updatedAt});
-  
+
   ///
   /// From JSON
   ///
   NgoaiNguResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
-    // mapping idTaiKhoan                                                              
-    if (json['idTaiKhoan'] != null && json['idTaiKhoan'].toString().length!=24) {                                                  
-      idTaiKhoan = TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idTaiKhoan = null;                                                               
-    }                                                                                  
+    // mapping idTaiKhoan
+    if (json['idTaiKhoan'] != null &&
+        json['idTaiKhoan'].toString().length != 24) {
+      idTaiKhoan =
+          TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>);
+    } else {
+      idTaiKhoan = null;
+    }
     loaiNgoaiNgu = json['loaiNgoaiNgu'].toString();
     trinhDo = json['trinhDo'].toString();
     nghe = json['nghe'].toString();
@@ -54,30 +56,34 @@ class NgoaiNguResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null loaiNgoaiNgu
-    if (loaiNgoaiNgu != null) data['loaiNgoaiNgu'] = loaiNgoaiNgu; 
+    if (loaiNgoaiNgu != null) data['loaiNgoaiNgu'] = loaiNgoaiNgu;
 
     // check null trinhDo
-    if (trinhDo != null) data['trinhDo'] = trinhDo; 
+    if (trinhDo != null) data['trinhDo'] = trinhDo;
 
     // check null nghe
-    if (nghe != null) data['nghe'] = nghe; 
+    if (nghe != null) data['nghe'] = nghe;
 
     // check null noi
-    if (noi != null) data['noi'] = noi; 
+    if (noi != null) data['noi'] = noi;
 
     // check null doc
-    if (doc != null) data['doc'] = doc; 
+    if (doc != null) data['doc'] = doc;
 
     // check null viet
-    if (viet != null) data['viet'] = viet; 
-
+    if (viet != null) data['viet'] = viet;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return loaiNgoaiNgu!;
   }
 }

@@ -35,56 +35,56 @@ const robotoBold = TextStyle(
   fontWeight: FontWeight.w700,
 );
 
-const boxShadow =[
+const boxShadow = [
   BoxShadow(
-    color: ColorResources.LIGHT_BLACK,
-    blurRadius: Dimensions.BLUR_RADIUS_DEEP,
-    spreadRadius: Dimensions.SPREAD_RADIUS_ULTRA_LIGHT
-  )
+      color: ColorResources.LIGHT_BLACK,
+      blurRadius: Dimensions.BLUR_RADIUS_DEEP,
+      spreadRadius: Dimensions.SPREAD_RADIUS_ULTRA_LIGHT)
 ];
 const boxShadowMedium = [
   BoxShadow(
-    //offset: Offset(0, -1),
-    blurRadius: Dimensions.BLUR_RADIUS_MEDIUM,
-    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
-    color: ColorResources.LIGHT_BLACK
-  ),
+      //offset: Offset(0, -1),
+      blurRadius: Dimensions.BLUR_RADIUS_MEDIUM,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
+      color: ColorResources.LIGHT_BLACK),
 ];
 const boxShadowDeep = [
   BoxShadow(
+      //offset: Offset(0, -1),
+      blurRadius: Dimensions.BLUR_RADIUS_DEEP,
+      spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM_DEEP,
+      color: ColorResources.LIGHT_BLACK),
+];
+const boxShadowALitle = [
+  BoxShadow(
     //offset: Offset(0, -1),
-    blurRadius: Dimensions.BLUR_RADIUS_DEEP,
-    spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM_DEEP,
-    color: ColorResources.LIGHT_BLACK
+    color: ColorResources.LIGHT_BLACK,
+    blurRadius: 4,
+    offset: Offset(0, 4),
   ),
 ];
 
 const boxShadowText = [
-    BoxShadow(
+  BoxShadow(
       blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
       color: ColorResources.WHITE,
       spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
-      offset: Offset(-1,1)
-    ),
-    BoxShadow(
+      offset: Offset(-1, 1)),
+  BoxShadow(
       blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
       color: ColorResources.WHITE,
       spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
-      offset: Offset(1,-1)
-    ),
-    BoxShadow(
+      offset: Offset(1, -1)),
+  BoxShadow(
       blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
       color: ColorResources.WHITE,
       spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
-      offset: Offset(1,1)
-    ),
-    BoxShadow(
+      offset: Offset(1, 1)),
+  BoxShadow(
       blurRadius: Dimensions.BLUR_RADIUS_LIGHT,
       color: ColorResources.WHITE,
       spreadRadius: Dimensions.SPREAD_RADIUS_MEDIUM,
-      offset: Offset(-1,-1)
-    )
+      offset: Offset(-1, -1))
 ];
 
-
-const paddingSmall =  EdgeInsets.all(Dimensions.FONT_SIZE_SMALL);
+const paddingSmall = EdgeInsets.all(Dimensions.FONT_SIZE_EXTRA_SMALL);

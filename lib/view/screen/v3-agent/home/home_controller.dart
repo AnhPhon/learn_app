@@ -2,19 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
+import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
+import 'package:template/provider/dang_ky_thue_provider.dart';
+import 'package:template/provider/giay_chung_nhan_suc_khoe_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3HomeController extends GetxController {
+  // provider
   TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
   SanPhamProvider sanPhamProvider = GetIt.I.get<SanPhamProvider>();
+  ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
+
+  DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
+  DangKyBaoHiemProvider dangKyBaoHiemProvider =
+      GetIt.I.get<DangKyBaoHiemProvider>();
+  DangKyHopDongSBSProvider dangKyHopDongSBSProvider =
+      GetIt.I.get<DangKyHopDongSBSProvider>();
+  GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
+      GetIt.I.get<GiayChungNhanSucKhoeProvider>();
 
   // refresh controller
   RefreshController? refreshController;
@@ -23,6 +40,7 @@ class V3HomeController extends GetxController {
   List<Map<String, dynamic>>? threeFeatures;
   List<TinTucResponse> tinTucList = [];
   List<SanPhamResponse> sanPhamList = [];
+  List<ThongBaoResponse> thongBaoList = [];
 
   int number = 0;
 
@@ -32,6 +50,8 @@ class V3HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    number = 5 + 2;
 
     // init refreshController
     refreshController ??= RefreshController();
@@ -60,9 +80,27 @@ class V3HomeController extends GetxController {
 
           // binding three feature
           bindingThreeFeature();
+
+          // dang ky thue
+          dangKyThue(id);
+
+          // dang ky fss
+          dangKyFSS(id);
+
+          // dang ky bao hiem tai nan
+          dangKyBaoHiemTaiNan(id);
+
+          // chứng nhận sức khỏe
+          chungNhanSucKhoe(id);
+
+          // load notification
+          readThongBao(
+              (taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse)
+                  .tieuDe!
+                  .toLowerCase());
         },
         onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          print("V3HomeController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -82,7 +120,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -98,13 +136,47 @@ class V3HomeController extends GetxController {
       onSuccess: (sanPhamModels) {
         // get san pham list
         sanPhamList = sanPhamModels;
+        update();
+      },
+      onError: (error) {
+        print("V3HomeController getTermsAndPolicy onError $error");
+      },
+    );
+  }
 
+  ///
+  /// load thông báo
+  ///
+  void readThongBao(String tieuDe) {
+    String type = "1";
+    if (tieuDe == 'khách hàng') {
+      type = "1";
+    }
+
+    if (tieuDe == 'thợ thầu') {
+      type = "2";
+    }
+
+    if (tieuDe == 'đại lý') {
+      type = "3";
+    }
+
+    if (tieuDe == 'nhân viên') {
+      type = "4";
+    }
+
+    thongBaoProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&doiTuong=$type",
+      onSuccess: (data) {
+        thongBaoList = data;
         // set is loading
         isLoading = false;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -154,10 +226,98 @@ class V3HomeController extends GetxController {
   }
 
   ///
+  /// đăng ký thuế
+  ///
+  void dangKyThue(String id) {
+    dangKyThueProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1' && models[0].loai == '2') {
+            number -= 2;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("V3HomeController dangKyThue onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký fss
+  ///
+  void dangKyFSS(String id) {
+    dangKyHopDongSBSProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("V3HomeController dangKyFSS onError $error");
+      },
+    );
+  }
+
+  ///
+  /// đăng ký bảo hiểm tai nạn
+  ///
+  void dangKyBaoHiemTaiNan(String id) {
+    dangKyBaoHiemProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("V3HomeController dangKyBaoHiemTaiNan onError $error");
+      },
+    );
+  }
+
+  ///
+  /// chúng nhận sức khỏe
+  ///
+  void chungNhanSucKhoe(String id) {
+    giayChungNhanSucKhoeProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&idTaiKhoan=$id",
+      onSuccess: (models) {
+        if (models.isNotEmpty) {
+          if (models[0].trangThai == '1') {
+            number -= 1;
+            update();
+          }
+        }
+      },
+      onError: (error) {
+        print("V3HomeController chungNhanSucKhoe onError $error");
+      },
+    );
+  }
+
+  ///
   /// on Click News
   ///
   void onClickNews() {
-    Get.toNamed(AppRoutes.V3_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
@@ -178,15 +338,23 @@ class V3HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNewsDetail(String id) {
-    // goto detail news
-    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: id);
+    tinTucProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -194,8 +362,15 @@ class V3HomeController extends GetxController {
   ///
   void onClickHotProductDetail(String id) {
     sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
-    // goto detail news
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -223,7 +398,10 @@ class V3HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///

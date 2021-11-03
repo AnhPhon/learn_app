@@ -6,14 +6,14 @@ import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+import 'package:template/utils/snack_bar.dart';
 
 class V1G4OrderQuoteController extends GetxController{
 
   final LoaiCongViecProvider loaiCongViecProvider = GetIt.I.get<LoaiCongViecProvider>();
   final priceController = TextEditingController();
-  final timeNumberContrller = TextEditingController();
-  final personNumberContrller = TextEditingController();
+  final personNumberController = TextEditingController();
+  final timeNumberController = TextEditingController();
   final descController = TextEditingController();
 
 
@@ -45,7 +45,7 @@ class V1G4OrderQuoteController extends GetxController{
       work = workTypes.firstWhere((element){
         return element.tenCongViec!.contains(request!.tieuDe!);
       });
-      priceController.text = CurrencyConverter.currencyConverterVND(10000);
+      priceController.text = CurrencyConverter.currencyConverterVND(double.parse(work!.giaCongViec!));
       isLoading = false;
       update();
     }, onError:(error){
@@ -73,13 +73,14 @@ class V1G4OrderQuoteController extends GetxController{
     if(validate()){
       request!.tieuDe = work!.tenCongViec;
       request!.moTa = descController.text.toString();
-      request!.soLuongYeuCau = personNumberContrller.text.toString();
-      request!.soNgay = timeNumberContrller.text.toString();
-      request!.soTien = priceController.text.toString().replaceAll(',', '');//work.giaTien;
+      request!.soTien = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();//priceController.text.toString().replaceAll(',', '');//work.giaTien;
       request!.phiDichVu = '0';
       request!.khuyenMai = '0';
-      request!.tongDon = work!.giaCongViec!.replaceAll(",", '');
+      // request!.soLuongYeuCau = personNumberController.text.toString();
+      // request!.soNgay = timeNumberController.text.toString();
+      request!.tongDon = (double.parse(timeNumberController.text.toString()) * double.parse(personNumberController.text.toString()) * double.parse(priceController.text.toString().replaceAll(',', ''))).toString();
       Get.toNamed(AppRoutes.V1_G4_ORDER_DETAIL, arguments: request);
+      
     }
   }
 
@@ -87,14 +88,14 @@ class V1G4OrderQuoteController extends GetxController{
   /// Check validate
   ///
   bool validate(){
-    if(timeNumberContrller.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập thời gian yêu cầu");
+    if(timeNumberController.text.toString().isEmpty){
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thời gian yêu cầu");
       return false;
-    }else if(personNumberContrller.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập lượng người yêu cầu");
+    }else if(personNumberController.text.toString().isEmpty){
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng người yêu cầu không được để trống");
       return false;
     }else if(descController.text.toString().isEmpty){
-      showSnackBar(title: "Lỗi", message: "Vui lòng nhập nội dung miêu tả");
+      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;
@@ -104,8 +105,8 @@ class V1G4OrderQuoteController extends GetxController{
   void onClose() {
     super.onClose();
     priceController.dispose();
-    timeNumberContrller.dispose();
-    personNumberContrller.dispose();
+    personNumberController.dispose();
+    timeNumberController.dispose();
     descController.dispose();
   }
 

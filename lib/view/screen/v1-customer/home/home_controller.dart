@@ -14,9 +14,6 @@ import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/view/screen/v1-customer/dashboard/dashboard_binding.dart';
-import 'package:template/view/screen/v1-customer/product/product_controller.dart';
-import 'package:template/view/screen/v1-customer/project/project_controller.dart';
 
 class V1HomeController extends GetxController {
   // declare provider
@@ -124,7 +121,7 @@ class V1HomeController extends GetxController {
         ),
         "icon": Icons.work_outlined,
         "onTap": () {
-          Get.toNamed(AppRoutes.V1_QUOTE_RESPONSE);
+          Get.toNamed(AppRoutes.V1_QUOTE_LIST);
         }
       },
       {
@@ -251,18 +248,10 @@ class V1HomeController extends GetxController {
   }
 
   ///
-  /// go to Product detail Page
-  ///
-  void onMoreProductDetail(String s) {
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
-  }
-
-  ///
   /// xem thêm category sản phẩm
   ///
-  void onMoreCategoryProduct(String id) {
-    sl.get<SharedPreferenceHelper>().saveProductCategoryId(id);
-    Get.toNamed(AppRoutes.V1_PRODUCT);
+  void onMoreCategoryProduct({required int index}) {
+    Get.toNamed(AppRoutes.V1_PRODUCT, arguments: danhMucList[index]);
   }
 
   ///
@@ -284,7 +273,15 @@ class V1HomeController extends GetxController {
   ///
   void goToNewPageClick(String idNews) {
     sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=$idNews");
+    tinTucProvider.find(
+      id: idNews,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -292,7 +289,15 @@ class V1HomeController extends GetxController {
   ///
   void goToSanPhamPageClick(String idHangMucSanPham) {
     sl.get<SharedPreferenceHelper>().saveSanPham(id: idHangMucSanPham);
-    onMoreProductList();
+    sanPhamProvider.find(
+      id: idHangMucSanPham,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///

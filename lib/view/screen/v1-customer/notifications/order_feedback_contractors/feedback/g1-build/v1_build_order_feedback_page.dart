@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/currency_covert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -17,69 +18,98 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   V1BuildOrderFeedBackPage({Key? key}) : super(key: key);
 
   @override
-  final V1BuildOrderFeedBackController controller = Get.find<V1BuildOrderFeedBackController>();
-
-  
+  final V1BuildOrderFeedBackController controller =
+      Get.find<V1BuildOrderFeedBackController>();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      builder: (V1BuildOrderFeedBackController controller) {
-        return Scaffold(
-          backgroundColor: const Color(0xffF6F6F7),
-          appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
-          body: SizedBox(
-            //padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+    return Scaffold(
+      backgroundColor: ColorResources.BACKGROUND,
+      appBar: const AppBarWidget(title: "Phản hồi đơn hàng"),
+      body: GetBuilder(
+        builder: (V1BuildOrderFeedBackController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SizedBox(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Tiêu đề của nhóm
                   const GroupTitle(title: "Dịch vụ xây dựng toàn diện"),
-                    
+
                   // Tiêu đề báo giá
-                  header(),
+                  header(controller: controller),
                   // list Hình ảnh
-                  image(context),
+                  image(context, controller: controller),
                   // List vật liệu
-                  materialList(context),
+                  materialList(context, controller: controller),
                   // Khoản cách bottom sheet
-                  const SizedBox(height:150),
+                  const SizedBox(height: BOTTOMSHEET),
                 ],
               ),
             ),
+          );
+        },
+      ),
+      bottomSheet: OrderBottomSheet(
+        itemValue: controller
+            .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
+        children: 
+        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        // [
+        //   const Flexible(
+        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+        //   )
+        // ] :
+        controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
+        [
+          const Flexible(
+          child: Text("Bạn đã thanh toán đơn dich vụ. Cám ơn bạn đã tin dùng dịch vụ chúng tôi", 
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            ),
+          )
+        ] 
+        : 
+        [
+          SmallButton(
+            title: "Huỷ ", color: ColorResources.GREY, onPressed: (){
+              controller.onFeebacked();
+            }
           ),
-          bottomSheet: OrderBottomSheet(
-            itemValue: 100000000,
-            children: [
-              SmallButton(title: "Huỷ ", color: ColorResources.GREY,onPressed: (){}),
-              SmallButton(title: "Đồng ý đơn giá",color: ColorResources.PRIMARYCOLOR, onPressed: (){
-                print("aaa");
-                controller.onClickAgreeButton();
-              }),
-            ],
+          SmallButton(
+            title: "Đồng ý đơn giá",
+            color: ColorResources.PRIMARYCOLOR,
+            onPressed: () {
+              controller.onClickAgreeButton();
+            }
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
   ///
   /// Nội dung tiêu đề
   ///
-  Widget header(){
+  Widget header({required V1BuildOrderFeedBackController controller}) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: Dimensions.PADDING_SIZE_DEFAULT,
-        left: Dimensions.PADDING_SIZE_DEFAULT,
-        right: Dimensions.PADDING_SIZE_DEFAULT
-      ),
+          top: Dimensions.PADDING_SIZE_DEFAULT,
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           TextHighlight(
-            title: "Tiêu đề:",
-            content: "Thợ ốp lót công trình 5 sao",
+            title: "Tiêu đề: ",
+            content: controller.donDichVu!.tieuDe!,
           ),
         ],
       ),
@@ -89,35 +119,41 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
   /// List hình ảnh
   ///
-  Widget image(BuildContext context){
+  Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    controller.donDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
+      print("Hình ảnh $element");
+    });
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: Column(
+      child: controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text("Đơn giá bằng hình ảnh",style: TextStyle(
+        children:  [
+          const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
+            fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
-          BoxImage(images: []),
+          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );
   }
 
   ///
-  /// nội dung đơn hàng 
+  /// nội dung đơn hàng
   ///
-  Widget content({required String title, required String value}){
+  Widget content({required String title, required String value}) {
     return Row(
       children: [
-        Text(title, style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),),
+        Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         Text(" $value"),
       ],
     );
@@ -127,52 +163,78 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// Danh sách vật liệu
   ///
 
-  Widget materialList(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT,),
+  Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
+    return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
+      padding: const EdgeInsets.only(
+        left:Dimensions.PADDING_SIZE_DEFAULT,
+        right:Dimensions.PADDING_SIZE_DEFAULT,
+        top:Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Đơn giá phản hồi theo khách hàng cung cấp",
+          const Text(
+            "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE
-          ),),
+                fontWeight: FontWeight.bold,
+                fontSize: Dimensions.FONT_SIZE_LARGE),
+          ),
           Column(
             children: [
-              ...List.generate(10, (index) => Padding(
-                padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: BoxShadowWidget(
-                  child: SizedBox(
-                    height: 160,
-                    width: DeviceUtils.getScaledWidth(context, 1),
-                    child: Padding(
-                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          color: ColorResources.BLACK,
-                          fontSize: Dimensions.PADDING_SIZE_DEFAULT
+              ...List.generate(
+                  controller.workMass.length,
+                  (index) => Padding(
+                        padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_DEFAULT),
+                        child: BoxShadowWidget(
+                          child: SizedBox(
+                            height: 160,
+                            width: DeviceUtils.getScaledWidth(context, 1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                  Dimensions.PADDING_SIZE_SMALL),
+                              child: DefaultTextStyle(
+                                style: const TextStyle(
+                                    color: ColorResources.BLACK,
+                                    fontSize: Dimensions.PADDING_SIZE_DEFAULT),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextHighlight(
+                                      title: "Tên công việc:",
+                                      content:
+                                          controller.workMass[index].tenVatTu!,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                                    ),
+                                    TextHighlight(
+                                        title: "Quy cách:",
+                                        content:
+                                            controller.workMass[index].quyCach!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    TextHighlight(
+                                        title: "Khối lượng:",
+                                        content:
+                                            controller.workMass[index].donGia!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    TextHighlight(
+                                        title: "Đơn vị:",
+                                        content:
+                                            controller.workMass[index].donVi!,
+                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                    // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
+                                    //   color: ColorResources.RED,
+                                    //   fontSize: Dimensions.FONT_SIZE_LARGE
+                                    // ),),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            TextHighlight(title:"Tên công việc:" ,content:"Lót nền vệ sinh", fontSize: Dimensions.FONT_SIZE_LARGE, ),
-                            TextHighlight(title:"Quy cách:" ,content:"600 x 600",fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Khối lượng:" ,content:"20",fontSize: Dimensions.FONT_SIZE_LARGE ),
-                            TextHighlight(title:"Đơn vị:" ,content:"m2" ,fontSize: Dimensions.FONT_SIZE_LARGE),
-                            TextHighlight(title:"Đơn giá:" ,content:"500.000 VNĐ" , style: TextStyle(
-                              color: ColorResources.RED,
-                              fontSize: Dimensions.FONT_SIZE_LARGE
-                            ),),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ))
+                      ))
             ],
           )
         ],

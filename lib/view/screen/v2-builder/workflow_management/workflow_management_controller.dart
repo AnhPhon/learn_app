@@ -1,7 +1,7 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
@@ -74,7 +74,7 @@ class V2WorkflowManagementController extends GetxController
       donDichVuProvider.paginate(
         page: 1,
         limit: 30,
-        filter: "&idTaiKhoan=$id",
+        filter: "&idTaiKhoanNhanDon=$id",
         onSuccess: (values) {
           for (final value in values) {
             if (value.idTrangThaiDonDichVu != null &&
@@ -111,6 +111,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_DONE)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
@@ -123,6 +124,7 @@ class V2WorkflowManagementController extends GetxController
     sl.get<SharedPreferenceHelper>().saveWorkFlow(id: idDonDichVu);
     Get.toNamed(AppRoutes.V2_WORK_IN_PROGRESS)!.then((value) {
       if (value == true) {
+        _readCongViecNhanVien();
         EasyLoading.showSuccess("Gửi thành công");
       }
     });
@@ -140,7 +142,7 @@ class V2WorkflowManagementController extends GetxController
           ),
     );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   ///

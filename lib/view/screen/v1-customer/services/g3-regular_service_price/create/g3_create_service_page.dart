@@ -28,7 +28,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
         child: Column(
           children: [
             // Tiêu tề nhóm công việc
-                const GroupTitle(title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+                const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
       
                 // Nhập địa chỉ cụ thể
                 form(context, _controller),
@@ -51,11 +51,12 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           allowEdit: false,
           allowMultiline: false,
           controller: controller.workTitleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Xây nhà",
           hidden: false,
           label: "Tiêu đề công việc",
           obligatory: true,
+          textInputAction: TextInputAction.next,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
@@ -70,7 +71,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
                 children: [
                   RadioButton<GENDER>(title: "Nam", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nam, groupValue: controller.gender),
                   RadioButton<GENDER>(title: "Nữ", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Nu, groupValue: controller.gender),
-                  RadioButton<GENDER>(title: "Khác", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
+                  RadioButton<GENDER>(title: "Không yêu cầu", onChanged: (val)=>controller.onChangedGender(val!), value: GENDER.Khac, groupValue: controller.gender),
                 ],
               ),
             );
@@ -105,24 +106,26 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
           isDate: true,
           allowEdit: true,
           controller: controller.startTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-11-2021",
           label: "Ngày bắt đầu",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1),
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
 
         TextFieldDate(
           allowEdit: true,
           controller: controller.endTime,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "22-11-2021",
           label: "Ngày kết thúc",
-          obligatory: false,
+          obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context,1), 
           isDate: true,
+          padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
         ),
       ],
     );
@@ -136,7 +139,7 @@ class V1G3CreateServicePage extends GetView<V1G3CreateServiceController> {
 
   Widget nextButton({required V1G3CreateServiceController controller}){
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: LongButton(
         color: ColorResources.PRIMARYCOLOR,
         onPressed: controller.onClickContinueButton,

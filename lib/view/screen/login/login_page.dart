@@ -66,6 +66,12 @@ class LoginPage extends GetView<LoginController> {
                     ],
                   ),
                 ),
+              ),
+              Positioned(
+                bottom: 30,
+                top: DeviceUtils.getScaledWidth(context, 1.4),
+                left: DeviceUtils.getScaledWidth(context, 0.15),
+                child: _onBtnLoginEmployee(context),
               )
             ]),
           );
@@ -151,7 +157,7 @@ class LoginPage extends GetView<LoginController> {
               child: TextField(
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
-                controller: controller.usernameController,
+                controller: controller.phoneController,
                 keyboardType: TextInputType.number,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
@@ -311,6 +317,48 @@ class LoginPage extends GetView<LoginController> {
                 style: TextStyle(
                   color: Color(0xff0d5da0),
                   fontSize: 20,
+                  fontFamily: "Nunito Sans",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  ///
+  /// _on Btn Login employee
+  ///
+  Widget _onBtnLoginEmployee(BuildContext context) {
+    return GestureDetector(
+      // onLoginBtnClick
+      onTap: () => controller.onBtnLoginEmployee(),
+      child: Container(
+        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
+        width: DeviceUtils.getScaledWidth(context, 0.7),
+        height: 48,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: DeviceUtils.getScaledWidth(context, 0.7),
+              height: 48,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: const Color(0xff0d5da0),
+              ),
+              padding: const EdgeInsets.only(
+                top: 12,
+                bottom: 9,
+              ),
+              child: const Text(
+                "Đăng nhập nhân viên",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: ColorResources.WHITE,//Color(0xff0d5da0),
+                  fontSize: 18,
                   fontFamily: "Nunito Sans",
                   fontWeight: FontWeight.w700,
                 ),

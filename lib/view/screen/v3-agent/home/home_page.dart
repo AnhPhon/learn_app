@@ -9,11 +9,11 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 import 'package:template/view/basewidget/field_widget.dart';
 import 'package:template/view/basewidget/home/home_widget.dart';
 import 'package:template/view/basewidget/news/kho_san_pham.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
 
 import 'home_controller.dart';
 
@@ -34,6 +34,7 @@ class V3HomePage extends GetView<V3HomeController> {
             onRefresh: controller.onRefresh,
             child: HomeWidget(
               fullname: "DL, ${controller.fullname}",
+              soThongBao: controller.thongBaoList.length,
               content: Column(
                 children: [
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -44,14 +45,13 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // feature widget
                   _featuresWidget(),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
 
                   // news widget
                   _newsWidget(),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
-                  _productWidget(controller: controller)
+                  _productWidget()
                 ],
               ),
             ),
@@ -71,38 +71,39 @@ class V3HomePage extends GetView<V3HomeController> {
           color: Colors.white,
           borderRadius:
               BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_LARGE)),
-          boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x1f000000))]),
+          boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x3f000000))]),
       child: Row(
         children: [
           Row(
-            children: [
-              const Text(
-                "Bạn cần hoàn thiện ",
-                style: TextStyle(
-                  color: Color(0xff4D4D4D),
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                ),
-              ),
+            children: const [
               Text(
-                controller.number.toString(),
-                style: const TextStyle(
-                  color: ColorResources.RED,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
-                ),
-              ),
-              const Text(
-                " hồ sơ",
+                "Bạn cần hoàn thiện hồ sơ",
                 style: TextStyle(
                   color: Color(0xff4D4D4D),
                   fontWeight: FontWeight.bold,
-                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontSize: Dimensions.FONT_SIZE_SMALL,
                 ),
               ),
             ],
           ),
-          const Icon(CupertinoIcons.bell, color: Color(0xff4D4D4D)),
+          Stack(
+            children: [
+              const Icon(CupertinoIcons.bell_fill,
+                  color: ColorResources.PRIMARY),
+              Positioned(
+                right: 8,
+                top: 5,
+                child: Text(
+                  controller.number.toString(),
+                  style: const TextStyle(
+                    color: ColorResources.WHITE,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                  ),
+                ),
+              )
+            ],
+          ),
           const Spacer(),
           GestureDetector(
             onTap: controller.onNeedUpdateClick,
@@ -132,7 +133,7 @@ class V3HomePage extends GetView<V3HomeController> {
     return SizedBox(
       height: 120,
       child: GridView.builder(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisExtent: 100,
@@ -149,6 +150,7 @@ class V3HomePage extends GetView<V3HomeController> {
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
+              iconColor: ColorResources.BLACK,
             ),
           );
         },
@@ -172,39 +174,34 @@ class V3HomePage extends GetView<V3HomeController> {
         height: (len > 0) ? 130 * len : 0,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: length,
           itemBuilder: (
             BuildContext ctx,
             index,
           ) {
             return Padding(
-              padding:
-                  const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              child: Column(
-                children: [
-                  ItemListWidget(
-                    onTap: () {
-                      // call detail
-                      controller.onNewsDetailClick(index: index);
-                    },
-                    title: controller.tinTucList[index].tieuDe!,
-                    icon1: const Icon(Icons.remove_red_eye),
-                    rowText1: controller.tinTucList[index].luotXem,
-                    colorRowText1: ColorResources.BLACKGREY,
-                    icon2: const Icon(Icons.date_range),
-                    rowText2: DateFormat("dd/MM/yyy").format(
-                      DateTime.parse(controller.tinTucList[index].createdAt
-                          .toString()
-                          .substring(0, 10)),
-                    ),
-                    colorRowText2: ColorResources.BLACKGREY,
-                    isStart: true,
-                    urlImage: controller.tinTucList[index].hinhAnh!,
-                    isSpaceBetween: true,
-                  ),
-                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                ],
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              ),
+              child: ItemListWidget(
+                onTap: () {
+                  // call detail
+                  controller.onClickHotNewsDetail(
+                      controller.tinTucList[index].id.toString());
+                },
+                title: controller.tinTucList[index].tieuDe!,
+                icon1: const Icon(Icons.remove_red_eye),
+                rowText1: controller.tinTucList[index].luotXem,
+                colorRowText1: ColorResources.BLACKGREY,
+                icon2: const Icon(Icons.date_range_outlined),
+                rowText2: controller.tinTucList[index].createdAt
+                    .toString()
+                    .substring(0, 10),
+                colorRowText2: ColorResources.BLACKGREY,
+                isStart: true,
+                urlImage: controller.tinTucList[index].hinhAnh!,
+                isSpaceBetween: true,
               ),
             );
           },
@@ -216,10 +213,26 @@ class V3HomePage extends GetView<V3HomeController> {
   ///
   /// product widget
   ///
-  Widget _productWidget({required V3HomeController controller}) {
-    final int size =
-        controller.sanPhamList.length <= 2 ? controller.sanPhamList.length : 2;
+  Widget _productWidget() {
+    int size = 2;
+    if (controller.sanPhamList.length < 2) {
+      size = controller.sanPhamList.length;
+    }
 
+    // return notificaiotn widget 0 case
+    if (size == 0) {
+      return Container(
+        alignment: Alignment.centerLeft,
+        child: const Text(
+          "Kho sản phẩm rỗng",
+          style: TextStyle(
+            color: ColorResources.RED,
+          ),
+        ),
+      );
+    }
+
+    // backup
     return FieldWidget(
       title: "Kho sản phẩm",
       onTap: () {
@@ -229,7 +242,7 @@ class V3HomePage extends GetView<V3HomeController> {
         height: 110 * size + 20,
         child: ListView.builder(
           itemCount: size,
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (
             BuildContext ctx,
@@ -246,7 +259,11 @@ class V3HomePage extends GetView<V3HomeController> {
                 },
                 child: KhoSanPham(
                   tenSanPham: controller.sanPhamList[index].ten!,
-                  hinhAnh: controller.sanPhamList[index].hinhAnhSanPham!,
+                  hinhAnh: (controller
+                          .sanPhamList[index].hinhAnhSanPhams!.isNotEmpty)
+                      ? controller.sanPhamList[index].hinhAnhSanPhams![0]
+                          .toString()
+                      : "",
                   maSanPham: "${controller.sanPhamList[index].maSanPham}",
                   giaSanPham: "${PriceConverter.convertPrice(
                     ctx,

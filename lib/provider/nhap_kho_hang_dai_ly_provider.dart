@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/nhap_kho_hang_dai_ly_repository.dart';
 
 class NhapKhoHangDaiLyProvider {
-  NhapKhoHangDaiLyRepository? repository = GetIt.I.get<NhapKhoHangDaiLyRepository>();
+  NhapKhoHangDaiLyRepository? repository =
+      GetIt.I.get<NhapKhoHangDaiLyRepository>();
 
   NhapKhoHangDaiLyProvider();
 
@@ -13,7 +14,8 @@ class NhapKhoHangDaiLyProvider {
   /// Get all nhapKhoHangDaiLys
   ///
   Future<void> all({
-    required Function(List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLys) onSuccess,
+    required Function(List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLys)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class NhapKhoHangDaiLyProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => NhapKhoHangDaiLyResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              NhapKhoHangDaiLyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class NhapKhoHangDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class NhapKhoHangDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class NhapKhoHangDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          NhapKhoHangDaiLyRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class NhapKhoHangDaiLyProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLys) onSuccess,
+    required Function(List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLys)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class NhapKhoHangDaiLyProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => NhapKhoHangDaiLyResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              NhapKhoHangDaiLyResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class NhapKhoHangDaiLyProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(NhapKhoHangDaiLyResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          NhapKhoHangDaiLyResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

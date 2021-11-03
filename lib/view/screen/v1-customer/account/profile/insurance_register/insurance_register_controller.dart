@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/request/dang_ky_bao_hiem_request.dart';
 import 'package:template/data/model/response/bao_hiem_response.dart';
 import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
@@ -10,6 +11,9 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V1InsuranceRegisterController extends GetxController {
+  //refresh controller for load more refresh
+  RefreshController refreshController = RefreshController();
+
   //DangKyBaoHiem
   DangKyBaoHiemProvider dangKyBaoHiemProvider = DangKyBaoHiemProvider();
   List<DangKyBaoHiemResponse> dangKyBaoHiemResponse = [];
@@ -17,14 +21,13 @@ class V1InsuranceRegisterController extends GetxController {
 
   //BaoHiem
   BaoHiemProvider baoHiemProvider = BaoHiemProvider();
-  List<BaoHiemResponse> baoHiemResponse =
-      Get.arguments as List<BaoHiemResponse>;
+  BaoHiemResponse? baoHiemResponse;
 
   //
   String title0 = "Bảo hiểm của bạn";
   String title1 = "Đăng ký mua bảo hiểm";
 
-  //tab 
+  //tab
   List titleTabBar = [
     "Bảo hiểm của bạn",
     "Đăng ký mua",
@@ -35,6 +38,10 @@ class V1InsuranceRegisterController extends GetxController {
 
   //CircularProgressIndicator
   bool isLoading = true;
+
+  //page for for load more refresh
+  int pageMax = 1;
+  int limitMax = 6;
 
   //index tab
   int currentIndex = 0;
@@ -48,26 +55,47 @@ class V1InsuranceRegisterController extends GetxController {
     //get parameters
     currentIndex = int.parse(Get.parameters['currentIndex']!);
 
+    //get arguments
+    if (Get.arguments != null) {
+      baoHiemResponse = Get.arguments as BaoHiemResponse;
+    }
+
     //get load data
-    getYourInsurance();
+    getYourInsurance(isRefresh: true);
   }
 
   ///
   ///get your insurance
   ///
-  Future<void> getYourInsurance() async {
+  Future<void> getYourInsurance({required bool isRefresh}) async {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //get your insurance 
+    //
+    if (isRefresh) {
+      pageMax = 1;
+      dangKyBaoHiemResponse.clear();
+    } else {
+      pageMax++;
+    }
+
+    //get your insurance
     dangKyBaoHiemProvider.paginate(
-      page: 1,
-      limit: 5,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      page: pageMax,
+      limit: limitMax,
+      filter: "&idTaiKhoan=$userId&trangThai=1&sortBy=created_at:desc",
       onSuccess: (value) {
-        //check is not empty
-        if (value.isNotEmpty) {
-          dangKyBaoHiemResponse = value;
+        //check is empty
+        if (value.isEmpty) {
+          refreshController.loadNoData();
+        } else {
+          if (isRefresh) {
+            dangKyBaoHiemResponse = value;
+            refreshController.refreshCompleted();
+          } else {
+            dangKyBaoHiemResponse = dangKyBaoHiemResponse.toList() + value;
+            refreshController.loadComplete();
+          }
         }
 
         isLoading = false;
@@ -77,6 +105,25 @@ class V1InsuranceRegisterController extends GetxController {
         print("V1InsuranceRegisterController getYourInsurance onError $error");
       },
     );
+  }
+
+  ///
+  /// on refresh
+  ///
+  Future<void> onRefresh() async {
+    //reset noData
+    refreshController.resetNoData();
+
+    //getYourInsurance
+    getYourInsurance(isRefresh: true);
+  }
+
+  ///
+  /// on loading
+  ///
+  Future<void> onLoading() async {
+    //getYourInsurance
+    getYourInsurance(isRefresh: false);
   }
 
   ///
@@ -99,21 +146,32 @@ class V1InsuranceRegisterController extends GetxController {
   ///on checkout click
   ///
   void onCheckoutClick(BuildContext context) {
-
-    //set data
-    dangKyBaoHiemRequest.idTaiKhoan = userId;
-    dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse[indexFee].id;
-    dangKyBaoHiemRequest.trangThai = "0";
-
-    //insert
-    dangKyBaoHiemProvider.add(
-      data: dangKyBaoHiemRequest,
-      onSuccess: (value) {
-        Get.toNamed(
-            "${AppRoutes.V1_PAYMENT_ACCOUNT}?idInsurance=true&amountOfMoney=${baoHiemResponse[indexFee].phi}");
-      },
-      onError: (error) {
-        print("V1InsuranceRegisterController onCheckoutClick onError $error");
+    Get.toNamed(
+            "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse!.phis![indexFee]}&tienCoc=0")!
+        .then(
+      (value) {
+        if (value !=null) {
+          //set data
+        dangKyBaoHiemRequest.idTaiKhoan = userId;
+        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse!.id;
+        dangKyBaoHiemRequest.trangThai = "0";
+        dangKyBaoHiemRequest.phi = baoHiemResponse!.phis![indexFee];
+        //insert
+        dangKyBaoHiemProvider.add(
+          data: dangKyBaoHiemRequest,
+          onSuccess: (data) {
+            Get.offAllNamed(
+              AppRoutes.V1_PROFILE,
+              predicate: ModalRoute.withName(AppRoutes.V1_PROFILE),
+            );
+          },
+          onError: (error) {
+            print(
+                "V1InsuranceRegisterController onCheckoutClick onError $error");
+          },
+        );
+        }
+        
       },
     );
   }

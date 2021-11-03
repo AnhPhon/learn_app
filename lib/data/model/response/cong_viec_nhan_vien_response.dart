@@ -16,8 +16,8 @@ class CongViecNhanVienResponse {
   String? createdAt;
   String? updatedAt;
 
-  CongViecNhanVienResponse({
-      this.id,
+  CongViecNhanVienResponse(
+      {this.id,
       this.idNhanVien,
       this.idDuAnNhanVien,
       this.trangThai,
@@ -29,26 +29,30 @@ class CongViecNhanVienResponse {
       this.ngayThucTe,
       this.createdAt,
       this.updatedAt});
-  
+
   ///
   /// From JSON
   ///
   CongViecNhanVienResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
-    // mapping idNhanVien                                                              
-    if (json['idNhanVien'] != null && json['idNhanVien'].toString().length!=24) {                                                  
-      idNhanVien = NhanVienResponse.fromJson(json['idNhanVien'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idNhanVien = null;                                                               
-    }                                                                                  
+    // mapping idNhanVien
+    if (json['idNhanVien'] != null &&
+        json['idNhanVien'].toString().length != 24) {
+      idNhanVien =
+          NhanVienResponse.fromJson(json['idNhanVien'] as Map<String, dynamic>);
+    } else {
+      idNhanVien = null;
+    }
 
-    // mapping idDuAnNhanVien                                                              
-    if (json['idDuAnNhanVien'] != null && json['idDuAnNhanVien'].toString().length!=24) {                                                  
-      idDuAnNhanVien = DuAnNhanVienResponse.fromJson(json['idDuAnNhanVien'] as Map<String, dynamic>); 
-    } else {                                                                           
-      idDuAnNhanVien = null;                                                               
-    }                                                                                  
+    // mapping idDuAnNhanVien
+    if (json['idDuAnNhanVien'] != null &&
+        json['idDuAnNhanVien'].toString().length != 24) {
+      idDuAnNhanVien = DuAnNhanVienResponse.fromJson(
+          json['idDuAnNhanVien'] as Map<String, dynamic>);
+    } else {
+      idDuAnNhanVien = null;
+    }
     trangThai = json['trangThai'].toString();
     tieuDe = json['tieuDe'].toString();
     tomTat = json['tomTat'].toString();
@@ -67,36 +71,40 @@ class CongViecNhanVienResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idNhanVien
-    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien;
 
     // check null idDuAnNhanVien
-    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien;
 
     // check null trangThai
-    if (trangThai != null) data['trangThai'] = trangThai; 
+    if (trangThai != null) data['trangThai'] = trangThai;
 
     // check null tieuDe
-    if (tieuDe != null) data['tieuDe'] = tieuDe; 
+    if (tieuDe != null) data['tieuDe'] = tieuDe;
 
     // check null tomTat
-    if (tomTat != null) data['tomTat'] = tomTat; 
+    if (tomTat != null) data['tomTat'] = tomTat;
 
     // check null noiDung
-    if (noiDung != null) data['noiDung'] = noiDung; 
+    if (noiDung != null) data['noiDung'] = noiDung;
 
     // check null ngayBatDau
-    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau; 
+    if (ngayBatDau != null) data['ngayBatDau'] = ngayBatDau;
 
     // check null ngayKetThuc
-    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc; 
+    if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc;
 
     // check null ngayThucTe
-    if (ngayThucTe != null) data['ngayThucTe'] = ngayThucTe; 
-
+    if (ngayThucTe != null) data['ngayThucTe'] = ngayThucTe;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return trangThai!;
   }
 }

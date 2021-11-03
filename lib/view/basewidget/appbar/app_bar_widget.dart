@@ -9,17 +9,19 @@ class AppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final bool? isNotBack;
   final List<Widget>? action;
+  final Widget? leading;
+  final VoidCallback? onPressed;
   const AppBarWidget({
     Key? key,
     required this.title,
     this.centerTitle = true,
     this.action = const [],
     this.isNotBack = false,
+    this.leading,
+    this.onPressed,
   }) : super(key: key);
-
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
-
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
@@ -75,14 +77,15 @@ class _CustomAppBarState extends State<AppBarWidget> {
                 if (widget.isNotBack == false)
                   Builder(
                     builder: (context) {
-                      return IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorResources.WHITE,
-                          ));
+                      return widget.leading ??
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: ColorResources.WHITE,
+                              ));
                     },
                   ),
                 Expanded(

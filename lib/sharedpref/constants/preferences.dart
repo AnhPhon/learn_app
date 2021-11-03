@@ -22,4 +22,13 @@ class Preferences {
   static const String idDuAn = "idDuAn";
   static const String productCategoryId = "product_category_id";
   static const String productId = "productId";
+  static const String phanHoiDonDichVuId = "phanHoiDonDichVuId";
+  static const String giaTriDonHang = "giaTriDonHang";
+  static const String idNewWork = "idNewWork";
+  static const String typeAccount = "typeAccount";
+  static const String resetPasswordToken = "resetPasswordToken";
+  static const String registerToken = "resetPasswordToken";
+  static const String isRegister = "isRegister";
+  static const String remember = "remember";
+
 }

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/account/profile/insurance_register/insurance_register_controller.dart';
-import 'package:template/view/screen/v1-customer/component_customer/btn_component.dart';
-import 'package:template/view/screen/v1-customer/component_customer/item_list_widget.dart';
-import 'package:template/view/screen/v1-customer/component_customer/tab_bar_widget.dart';
 
 class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
   @override
@@ -27,59 +29,89 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
                   ? controller.title0
                   : controller.title1,
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_LARGE,
-                  ),
+            body: Column(
+              children: [
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
 
-                  //tab bar
-                  _tabBarWidget(context: context, controller: controller),
+                //tab bar
+                _tabBarWidget(context: context, controller: controller),
 
-                  if (controller.currentIndex == 0)
-                    (controller.dangKyBaoHiemResponse.isEmpty)
-                        ? const Padding(
-                            padding: EdgeInsets.only(
-                              top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                const SizedBox(
+                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                ),
+
+                if (controller.currentIndex == 0)
+                  (controller.dangKyBaoHiemResponse.isEmpty)
+                      ? const Padding(
+                          padding: EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                          ),
+                          child: Text("Bạn chưa mua bảo hiểm"),
+                        )
+                      : Expanded(
+                          child: SmartRefresher(
+                            controller: controller.refreshController,
+                            enablePullUp: true,
+                            onRefresh: controller.onRefresh,
+                            onLoading: controller.onLoading,
+                            footer: const ClassicFooter(
+                              loadingText: "Đang tải...",
+                              noDataText: "Không có dữ liệu",
+                              canLoadingText: "Kéo lên để tải thêm dữ liệu",
                             ),
-                            child: Text("Bạn chưa mua bảo hiểm"),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.dangKyBaoHiemResponse.length,
-                            itemBuilder: (BuildContext ctx, int index) {
-                              return ItemListWidget(
-                                onTap: () {},
-                                urlImage: controller
-                                    .dangKyBaoHiemResponse[index]
-                                    .idBaoHiem!
-                                    .hinhAnh!,
-                                title: controller.dangKyBaoHiemResponse[index]
-                                    .idBaoHiem!.ten!,
-                                rowText1:
-                                    "${controller.dangKyBaoHiemResponse[index].idBaoHiem!.phi}vnđ",
-                                colorRowText1: ColorResources.RED,
-                                rowText2:
-                                    "Ngày hết hạn: ${controller.dangKyBaoHiemResponse[index].ngayHetHan}",
-                                isSpaceBetween: true,
-                              );
-                            })
-                  else
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          //title
-                          _textTitle(context,
-                              title: "Bạn vui lòng chọn mức phí phù hợp"),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.dangKyBaoHiemResponse.length,
+                                itemBuilder: (BuildContext ctx, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                    ),
+                                    child: ItemListWidget(
+                                      onTap: () {},
+                                      urlImage: controller
+                                          .dangKyBaoHiemResponse[index]
+                                          .idBaoHiem!
+                                          .hinhAnh!,
+                                      title: controller
+                                          .dangKyBaoHiemResponse[index]
+                                          .idBaoHiem!
+                                          .ten!,
+                                      subTitle:
+                                          "${controller.dangKyBaoHiemResponse[index].phi}vnđ",
+                                      colorSubTitle: ColorResources.RED,
+                                      rowText2: (controller
+                                                  .dangKyBaoHiemResponse[index]
+                                                  .ngayHetHan ==
+                                              "null")
+                                          ? controller
+                                              .dangKyBaoHiemResponse[index]
+                                              .ngayHetHan
+                                              .toString()
+                                          : "Ngày hết hạn: ${DateConverter.formatDateTime(controller.dangKyBaoHiemResponse[index].ngayHetHan.toString())}",
+                                      isSpaceBetween: true,
+                                    ),
+                                  );
+                                }),
+                          ),
+                        )
+                else
+                  Expanded(
+                    child: Column(
+                      children: [
+                        //title
+                        _textTitle(context,
+                            title: "Bạn vui lòng chọn mức phí phù hợp"),
 
-                          //red fee list
-                          _radFeeList(context, controller: controller),
-                        ],
-                      ),
+                        //red fee list
+                        _radFeeList(context, controller: controller),
+                      ],
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
             bottomNavigationBar: (controller.currentIndex == 0)
                 ? null
@@ -135,14 +167,19 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
       {required V1InsuranceRegisterController controller}) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: controller.baoHiemResponse.length,
+        itemCount: controller.baoHiemResponse!.phis!.length,
         itemBuilder: (BuildContext ctx, int index) {
           return RadioListTile(
             title: Text(
-              "${PriceConverter.convertPrice(
+              "Phí ${PriceConverter.convertPrice(
                 context,
                 double.parse(
-                  controller.baoHiemResponse[index].phi.toString(),
+                  controller.baoHiemResponse!.phis![index].toString(),
+                ),
+              )} vnđ. STBH: ${PriceConverter.convertPrice(
+                context,
+                double.parse(
+                  controller.baoHiemResponse!.soTienBaoHiems![index].toString(),
                 ),
               )} vnđ",
             ),

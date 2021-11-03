@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/data/model/response/trang_thai_don_dich_vu_response.dart';
-import 'package:template/data/model/response/trang_thai_don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -91,35 +90,32 @@ class V2WorkInProgressController extends GetxController {
       donDichVuProvider.find(
         id: workFlowId!,
         onSuccess: (model) {
-          if (model != null) {
-            // set adress
-            address = "";
-            if (model.idQuanHuyen != null) {
-              address += model.idQuanHuyen!.ten!;
-            }
-            // set title
-            title = model.tieuDe!;
-
-            // set city
-            if (model.idTinhTp != null) {
-              city = model.idTinhTp!.ten!;
-            }
-
-            // set deadline
-            deadline = _getDeadline(model.ngayKetThuc!);
-
-            if (model.idTrangThaiDonHang != null) {
-              // set icon and color
-              isStatus = model.idTrangThaiDonHang!.tieuDe!.toLowerCase() ==
-                  dangTuyenKey;
-
-              // set status
-              result = model.idTrangThaiDonHang!.tieuDe!;
-            }
-
-            isLoading = false;
-            update();
+          address = "";
+          if (model.idQuanHuyen != null) {
+            address += model.idQuanHuyen!.ten!;
           }
+          // set title
+          title = model.tieuDe!;
+
+          // set city
+          if (model.idTinhTp != null) {
+            city = model.idTinhTp!.ten!;
+          }
+
+          // set deadline
+          deadline = _getDeadline(model.ngayKetThuc!);
+
+          if (model.idTrangThaiDonHang != null) {
+            // set icon and color
+            isStatus =
+                model.idTrangThaiDonHang!.tieuDe!.toLowerCase() == dangTuyenKey;
+
+            // set status
+            result = model.idTrangThaiDonHang!.tieuDe!;
+          }
+
+          isLoading = false;
+          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -139,7 +135,11 @@ class V2WorkInProgressController extends GetxController {
         filter: "&idDonDichVu=$workFlowId",
         onSuccess: (models) {
           if (models.isNotEmpty) {
-            rate = models[0].khachHangDanhGia!;
+            if (models[0].khachHangDanhGia.toString() != "null") {
+              rate = models[0].khachHangDanhGia!;
+            } else {
+              rate = "Không có";
+            }
           }
           update();
         },
@@ -163,7 +163,6 @@ class V2WorkInProgressController extends GetxController {
         onSuccess: (models) {
           if (models.isNotEmpty) {
             final String id = models[0].id!;
-            print(workFlowId);
             // update y kien tho thau
             phanHoiDonDichVuProvider.update(
               data: PhanHoiDonDichVuRequest(
@@ -171,8 +170,6 @@ class V2WorkInProgressController extends GetxController {
                 id: id,
               ),
               onSuccess: (value) {
-                print(workFlowId);
-                print(keyIndex);
                 // set trang thái
                 donDichVuProvider.update(
                   data: DonDichVuRequest(
@@ -196,9 +193,25 @@ class V2WorkInProgressController extends GetxController {
               },
             );
           } else {
-            EasyLoading.showError(
-              "Không thể cập nhật thông tin vào trường rỗng",
-            );
+            sl.get<SharedPreferenceHelper>().userId.then((userId) {
+              sl.get<SharedPreferenceHelper>().workFlowId.then((workFlowId) {
+                phanHoiDonDichVuProvider.add(
+                  data: PhanHoiDonDichVuRequest(
+                    yKienThoThau: rateBuilder.text,
+                    idDonDichVu: workFlowId,
+                    idTaiKhoan: userId,
+                  ),
+                  onSuccess: (success) {
+                    Get.back(result: true);
+                  },
+                  onError: (error) {
+                    print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error",
+                    );
+                  },
+                );
+              });
+            });
           }
         },
         onError: (error) {
@@ -245,7 +258,7 @@ class V2WorkInProgressController extends GetxController {
           ),
     );
 
-    return "${current.difference(dateEnd).inDays} ngày";
+    return "${dateEnd.difference(current).inDays} ngày";
   }
 
   bool _validate() {

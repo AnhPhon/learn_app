@@ -5,6 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_hang_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
@@ -36,7 +37,7 @@ class V1MyOrderController extends GetxController
     "Xác nhận": const Color(0xff007D3A),
     "Chuẩn bị hàng": const Color(0xff0D5BB5),
     "Đang giao": const Color(0xffCC8100),
-    "Đã giao": const Color(0xff39e3c9),
+    "Đã giao": const Color(0xff831e8a),
     "Huỷ đơn": const Color(0xffBF1D28),
     "Trả hàng": const Color(0xffA6A6B0),
   };
@@ -46,9 +47,9 @@ class V1MyOrderController extends GetxController
     "Xác nhận": const Color(0x1f007D3A),
     "Chuẩn bị hàng": const Color(0x1f0D5BB5),
     "Đang giao": const Color(0x1fCC8100),
-    "Đã giao": const Color(0x1f39e3c9),
+    "Đã giao": const Color(0x2f831e8a),
     "Huỷ đơn": const Color(0x1fBF1D28),
-    "Trả hàng": const Color(0x1fA6A6B0),
+    "Trả hàng": const Color(0x3fA6A6B0),
   };
 
   //title app bar
@@ -77,10 +78,9 @@ class V1MyOrderController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
-    //dispose controller
     tabController!.dispose();
     refreshController.clear();
+    super.onClose();
   }
 
   ///
@@ -190,5 +190,12 @@ class V1MyOrderController extends GetxController
   Future<void> onLoading() async {
     //get order isLoading
     pullOrder(isRefresh: false);
+  }
+
+  ///
+  ///go to order detail page
+  ///
+  void onOrderClick({required int index}) {
+    Get.toNamed(AppRoutes.V1_ORDER_DETAIL, arguments: donHangResponse[index]);
   }
 }

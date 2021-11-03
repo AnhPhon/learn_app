@@ -138,6 +138,42 @@ class SharedPreferenceHelper {
   Future<bool> removeUserId() async {
     return _sharedPreference.remove(Preferences.userId);
   }
+  // type Account: ----------------------------------------------------------
+  Future<String?> get typeAccount async {
+    return _sharedPreference.getString(Preferences.typeAccount);
+  }
+
+  Future<bool> saveTypeAccount(String typeAccount) async {
+    return _sharedPreference.setString(Preferences.typeAccount, typeAccount);
+  }
+
+  Future<bool> removeTypeAccount() async {
+    return _sharedPreference.remove(Preferences.typeAccount);
+  }
+  // Reset password token: ----------------------------------------------------------
+  Future<String?> get resetPasswordToken async {
+    return _sharedPreference.getString(Preferences.resetPasswordToken);
+  }
+
+  Future<bool> saveResetPasswordToken(String resetPasswordToken) async {
+    return _sharedPreference.setString(Preferences.resetPasswordToken, resetPasswordToken);
+  }
+
+  Future<bool> removeResetPasswordToken() async {
+    return _sharedPreference.remove(Preferences.resetPasswordToken);
+  }
+  // remember password : ----------------------------------------------------------
+  Future<bool?> get rememberAccount async {
+    return _sharedPreference.getBool(Preferences.remember);
+  }
+
+  Future<bool> saveRememberAccount(bool remember) async {
+    return _sharedPreference.setBool(Preferences.remember, remember);
+  }
+
+  Future<bool> removeRememberAccount() async {
+    return _sharedPreference.remove(Preferences.remember);
+  }
 
   // ProvinceId: ----------------------------------------------------------
   Future<String?> get provinceId async {
@@ -271,5 +307,44 @@ class SharedPreferenceHelper {
 
   Future<bool> removeProductId() async {
     return _sharedPreference.remove(Preferences.productId);
+  }
+
+  //  : ----------------------------------------------------------
+  Future<String?> get phanHoiDonDichVuId async {
+    return _sharedPreference.getString(Preferences.phanHoiDonDichVuId);
+  }
+
+  Future<bool> savePhanHoiDonDichVuId(String id) async {
+    return _sharedPreference.setString(Preferences.phanHoiDonDichVuId, id);
+  }
+
+  Future<bool> removePhanHoiDonDichVuId() async {
+    return _sharedPreference.remove(Preferences.phanHoiDonDichVuId);
+  }
+
+  // giaTriDonHang : -----------------------------------------------
+  Future<double?> get giaTriDonHang async {
+    return _sharedPreference.getDouble(Preferences.giaTriDonHang);
+  }
+
+  Future<bool> saveGiaTriDonHang(double tongTien) async {
+    return _sharedPreference.setDouble(Preferences.giaTriDonHang, tongTien);
+  }
+
+  Future<bool> removeGiaTriDonHang() async {
+    return _sharedPreference.remove(Preferences.giaTriDonHang);
+  }
+
+  // Tiến độ công việc: MỚI TẠO : -----------------------------------------------
+  Future<String?> get idNewWork async {
+    return _sharedPreference.getString(Preferences.idNewWork);
+  }
+
+  Future<bool> saveIdNewWork({required String id}) async {
+    return _sharedPreference.setString(Preferences.idNewWork, id);
+  }
+
+  Future<bool> removeIdNewWork() async {
+    return _sharedPreference.remove(Preferences.idNewWork);
   }
 }

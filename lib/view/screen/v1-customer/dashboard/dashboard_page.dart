@@ -19,48 +19,55 @@ class V1DashboardPage extends StatelessWidget {
     return GetBuilder<V1DashboardController>(
       init: V1DashboardController(),
       builder: (controller) {
-        return Scaffold(
-          body: IndexedStack(
-            index: controller.tabIndex,
-            children: [
-              V1HomePage(),
-              V1ProjectPage(),
-              V1EntertainmentPage(),
-              V1NewsPage(),
-              V1AccountPage(),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: ColorResources.PRIMARY,
-            backgroundColor: ColorResources.WHITE,
-            onTap: controller.changeTabIndex,
-            currentIndex: controller.tabIndex,
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            items: [
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.home,
-                label: 'Trang chủ',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.bag_fill,
-                label: 'Dự án',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.star_lefthalf_fill,
-                label: 'Giải trí',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.news,
-                label: 'Tin tức',
-              ),
-              _bottomNavigationBarItem(
-                icon: CupertinoIcons.person,
-                label: 'Tài khoản',
-              ),
-            ],
-          ),
+        return Builder(
+          builder: (context) {
+            return WillPopScope(
+              onWillPop: ()=> controller.onDoubleBack(),
+              child: Scaffold(
+                body: IndexedStack(
+                  index: controller.tabIndex,
+                  children: [
+                    V1HomePage(),
+                    V1ProjectPage(),
+                    V1EntertainmentPage(),
+                    V1NewsPage(),
+                    V1AccountPage(),
+                  ],
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                  selectedItemColor: ColorResources.PRIMARY,
+                  backgroundColor: ColorResources.WHITE,
+                  onTap: controller.changeTabIndex,
+                  currentIndex: controller.tabIndex,
+                  type: BottomNavigationBarType.fixed,
+                  showSelectedLabels: true,
+                  showUnselectedLabels: true,
+                  items: [
+                    _bottomNavigationBarItem(
+                      icon: CupertinoIcons.home,
+                      label: 'Trang chủ',
+                    ),
+                    _bottomNavigationBarItem(
+                      icon: CupertinoIcons.bag_fill,
+                      label: 'Dự án',
+                    ),
+                    _bottomNavigationBarItem(
+                      icon: CupertinoIcons.star_lefthalf_fill,
+                      label: 'Giải trí',
+                    ),
+                    _bottomNavigationBarItem(
+                      icon: CupertinoIcons.news,
+                      label: 'Tin tức',
+                    ),
+                    _bottomNavigationBarItem(
+                      icon: CupertinoIcons.person,
+                      label: 'Tài khoản',
+                    ),
+                  ],
+                ),
+              ), 
+            );
+          },
         );
       },
     );

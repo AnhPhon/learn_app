@@ -9,8 +9,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2FinishUpdateController extends GetxController {
-  String title = "Bạn cần hoàn thiện hồ sơ";
-
   // provider
   DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
   DangKyBaoHiemProvider dangKyBaoHiemProvider =
@@ -20,6 +18,8 @@ class V2FinishUpdateController extends GetxController {
   GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
 
+  String title = "Bạn cần hoàn thiện hồ sơ";
+
   bool thueValid = false;
   bool maSoThueValid = false;
   bool camKetValid = false;
@@ -28,6 +28,8 @@ class V2FinishUpdateController extends GetxController {
   bool chungNhanValid = false;
   bool sanPhamMauValid = false;
   bool bangGiaValid = false;
+
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -141,9 +143,10 @@ class V2FinishUpdateController extends GetxController {
         if (models.isNotEmpty) {
           if (models[0].trangThai == '1') {
             chungNhanValid = true;
-            update();
           }
         }
+        isLoading = false;
+        update();
       },
       onError: (error) {
         print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -155,32 +158,35 @@ class V2FinishUpdateController extends GetxController {
   /// on dang ky va cam ket click
   ///
   void onDangKyVaCamKetClick() {
-    Get.toNamed(AppRoutes.V2_REGISTER_AND_COMMIT);
+    Get.toNamed(AppRoutes.V1_TAX);
   }
 
   ///
   /// on dang ky hợp đồng click
   ///
   void onDangKyHopDongClick() {
-    print("1");
+    Get.toNamed(AppRoutes.V1_CONTRACT);
   }
 
   ///
   /// on Bao Hiem Tai Nan Click
   ///
   void onBaoHiemTaiNanClick() {
-    print("1");
+    Get.toNamed(AppRoutes.V1_ACCIDENT_INSURANCE);
   }
 
   ///
   /// on Giay Chung Nhan Kham Suc Khoe Click
   ///
-  void onGiayChungNhanKhamSucKhoeClick() {
-    print("1");
-  }
+  void onGiayChungNhanKhamSucKhoeClick() {}
 
   ///
   /// on Cap Nhat San Pham Click
   ///
   void onCapNhatSanPhamClick() {}
+
+  ///
+  /// on Cập nhập bảng báo giá dịch vụ Click
+  ///
+  void onCapNhatBangBaoGiaClick() {}
 }
