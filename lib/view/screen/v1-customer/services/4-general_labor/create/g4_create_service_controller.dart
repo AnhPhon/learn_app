@@ -123,8 +123,8 @@ class V1G4CreateServiceController extends GetxController{
     }else if(endTime.text.toString().isEmpty){
       Alert.info( message: "Thời gian kết thúc không được để trống");
       return;
-    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
-      Alert.info( message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+      Alert.info( message: "Ngày kết thúc phải lơn hơn ngày bắt đầu");
       return;
     }else{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);
