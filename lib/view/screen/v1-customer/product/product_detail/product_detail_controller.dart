@@ -78,21 +78,13 @@ class V1ProductDetailController extends GetxController {
     scrollController = ScrollController()..addListener(() {});
 
     //get arguments
-    sl.get<SharedPreferenceHelper>().idSanPham.then((idSanPham) {
-      sanPhamProvider.find(
-        id: idSanPham.toString(),
-        onSuccess: (data) {
-          sanPhamResponse = data;
-          //get load data
-          getStock();
-          getTaiKhoan().then((value) => getDonHang());
-          getMoreProduct(isRefresh: true);
-        },
-        onError: (error) {
-          print("V1ProductDetailController onInit onError $error");
-        },
-      );
-    });
+    if (Get.arguments != null) {
+      sanPhamResponse = Get.arguments as SanPhamResponse;
+    }
+    //get load data
+    getStock();
+    getTaiKhoan().then((value) => getDonHang());
+    getMoreProduct(isRefresh: true);
   }
 
   @override

@@ -185,7 +185,8 @@ class V3HomePage extends GetView<V3HomeController> {
               child: ItemListWidget(
                 onTap: () {
                   // call detail
-                  controller.onNewsDetailClick(index: index);
+                  controller.onClickHotNewsDetail(
+                      controller.tinTucList[index].id.toString());
                 },
                 title: controller.tinTucList[index].tieuDe!,
                 icon1: const Icon(Icons.remove_red_eye),
