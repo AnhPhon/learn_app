@@ -17,8 +17,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 
 class V2QuotationG1Controller extends GetxController {
-  File? image;
-  List<File> imageList = [];
 
   final unitPriceController = TextEditingController();
 
@@ -30,16 +28,12 @@ class V2QuotationG1Controller extends GetxController {
 
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   final ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
+  DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVuRequest = DanhSachBaoGiaDonDichVuRequest.fromJson({});
 
   List<VatTuResponse>? vatTuResponse;
 
   bool flagSeeMore = false;
 
-  String getDateOutput(String dateString) {
-    return DateConverter.isoStringToddMMYYYY(dateString.toString());
-  }
-
-  DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVuRequest = DanhSachBaoGiaDonDichVuRequest.fromJson({});
 
   @override
   void onInit() {
@@ -47,6 +41,9 @@ class V2QuotationG1Controller extends GetxController {
     unitPriceController.addListener(() => calculator());
   }
 
+  String getDateOutput(String dateString) {
+    return DateConverter.isoStringToddMMYYYY(dateString.toString());
+  }
 
   String getFileNameBaoGia(){
     if(danhSachBaoGiaDonDichVuRequest.file != null && danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty && danhSachBaoGiaDonDichVuRequest.file.toString() != 'null'){
@@ -55,8 +52,9 @@ class V2QuotationG1Controller extends GetxController {
     }
     return '';
   }
+
   ///
-  ///pick pickFile
+  /// Pick multi files
   ///
   Future pickFiles() async {
     try {
@@ -66,8 +64,8 @@ class V2QuotationG1Controller extends GetxController {
 
       final List<PlatformFile> files = result.files;
 
-      print('Count file select ${files.length}');
-      // load file
+      print('Count files select ${files.length}');
+      // load files
       imageUpdateProvider.addFiles(
         files: files,
         onSuccess: (value) {
@@ -92,7 +90,7 @@ class V2QuotationG1Controller extends GetxController {
   }
 
   ///
-  ///pick image
+  /// Pick multi images
   ///
   Future pickImages() async {
     try {
@@ -102,8 +100,8 @@ class V2QuotationG1Controller extends GetxController {
 
       final List<File> files = images.map((e) => File(e.path)).toList();
 
-      print('Count file select ${files.length}');
-      // load file
+      print('Count images select ${files.length}');
+      // load images
       imageUpdateProvider.addImages(
         files: files,
         onSuccess: (value) {
