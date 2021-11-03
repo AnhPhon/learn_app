@@ -119,8 +119,10 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: MultiSelectDialogField<String?>(
+                      searchable: true,
+                      buttonIcon: const Icon(Icons.arrow_drop_down),
                       initialValue: controller.matHangDacTrungResponse,
-                      listType: MultiSelectListType.CHIP,
+                      listType: MultiSelectListType.LIST,
                       items: controller.matHangDacTrungList
                           .map((e) => MultiSelectItem<String?>(
                               e!.id!.toString(), e.tieuDe!))
@@ -128,7 +130,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                       title: const Text("Chọn mặt hàng đặc trưng"),
                       selectedColor: Colors.blue,
                       selectedItemsTextStyle:
-                          const TextStyle(color: ColorResources.WHITE),
+                          const TextStyle(color: ColorResources.PRIMARY),
                       checkColor: ColorResources.WHITE,
                       buttonText: Text(
                         "Chọn mặt hàng đặc trưng",
@@ -863,7 +865,9 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///upload image
   ///
   Widget _uploadImage(
-      BuildContext context, {required V3StoreInfomationController controller,}) {
+    BuildContext context, {
+    required V3StoreInfomationController controller,
+  }) {
     return ImageListHorizontalAdd(
       label: "Hình ảnh cửa hàng",
       labelBold: true,

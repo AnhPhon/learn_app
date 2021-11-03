@@ -815,12 +815,8 @@ class V3StoreInfomationController extends GetxController {
         taiKhoanRequest.email = emailController.text;
       }
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
-      matHangDacTrungResponse.map(
-        (element) {
-          taiKhoanRequest.idMatHangDacTrungs = [];
-          taiKhoanRequest.idMatHangDacTrungs!.add(element.toString());
-        },
-      ).toList();
+      taiKhoanRequest.idMatHangDacTrungs =
+          matHangDacTrungResponse.map((e) => e.toString()).toList();
 
       taiKhoanRequest.diaDiemCuThe = addressController.text;
       taiKhoanRequest.thoiGianLamViec =
