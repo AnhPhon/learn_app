@@ -1,6 +1,7 @@
 import 'package:template/data/model/response/language_model.dart';
 
 const String BASE_URL = 'http://103.146.23.186:4009/v1/';
+// const String BASE_URL = 'http://192.168.1.11:4009/v1/';
 
 // api url
 const String region_uri = 'v1/regions';

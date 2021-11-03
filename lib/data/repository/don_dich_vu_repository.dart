@@ -71,6 +71,7 @@ class DonDichVuRepository {
         uri = '/don-dich-vus/paginate?page=$page&limit=$limit$filter';
       }
 
+      print('uri $uri');
       final response = await dioClient!.get(uri);
       return ApiResponse.withSuccess(response);
     } catch (e) {

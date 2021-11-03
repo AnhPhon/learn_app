@@ -24,8 +24,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                 children: [
                   //title
                   const ContentWidget(
-                    label:
-                        "Báo giá cạnh tranh và đi kèm chất lượng tốt cho khách",
+                    label: "Báo giá cạnh tranh và đi kèm chất lượng tốt cho khách",
                     center: true,
                     centerLabel: true,
                     colorLabel: ColorResources.RED,
@@ -80,10 +79,17 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                   ),
 
                   //quotation image
-                  ImageListHorizontalAdd(
-                    label: "Hình ảnh báo giá (nếu có)",
-                    pickImage: () => controller.pickImage(),
-                    imageFileList: controller.imageList,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
+                    child: ImageListHorizontalAdd(
+                      labelBold: true,
+                      label: "Hình ảnh báo giá (nếu có)",
+                      pickImage: () => controller.pickImages(),
+                      imageFileList: controller.danhSachBaoGiaDonDichVuRequest.hinhAnhBaoGias ?? [],
+                    ),
                   ),
 
                   const SizedBox(
@@ -97,11 +103,17 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                     colorRed: true,
                   ),
 
-                  BtnCustom(
-                    onTap: () {},
-                    color: ColorResources.PRIMARY,
-                    text: "Gửi báo giá và chờ nhận kết quả",
-                    width: double.infinity,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
+                    child: BtnCustom(
+                      onTap: () {},
+                      color: ColorResources.PRIMARY,
+                      text: "Gửi báo giá và chờ nhận kết quả",
+                      width: double.infinity,
+                    ),
                   ),
                 ],
               ),
@@ -113,10 +125,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
   ///
   ///row text
   ///
-  Widget _rowtext(
-      {required String text1,
-      String? text2,
-      TextEditingController? textController}) {
+  Widget _rowtext({required String text1, String? text2, TextEditingController? textController}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -128,7 +137,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
           color: ColorResources.BLACK,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 4,
@@ -144,7 +153,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                     )
                   : InputWidget(
                       textEditingController: textController!,
-                      hintText: "", 
+                      hintText: "",
                       width: double.infinity,
                     ),
             ),
@@ -192,7 +201,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
     return Column(
       children: [
         //show file
-        const RowText(text1: "File báo giá (nếu có)", text2: "baogia.pdf"),
+        RowText(text1: "File báo giá (nếu có)", text2: controller.getFileNameBaoGia()),
 
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_SMALL,
@@ -200,11 +209,9 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
 
         //add file
         GestureDetector(
-          onTap: () {},
+          onTap: controller.pickFiles,
           child: BoxShadowWidget(
-              padding: const EdgeInsets.symmetric(
-                  vertical: Dimensions.PADDING_SIZE_LARGE,
-                  horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+              padding: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_LARGE, horizontal: Dimensions.PADDING_SIZE_EXTRA_LARGE),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
