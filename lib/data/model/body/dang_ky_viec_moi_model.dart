@@ -3,7 +3,7 @@ import 'package:template/data/model/request/ngoai_ngu_request.dart';
 import 'package:template/data/model/request/tin_hoc_request.dart';
 
 class DangKyViecMoiModel {
-  String? tuyenDung;
+  bool? tuyenDung;
   String? tieuDe;
   String? tenUngVien;
   String? gioiTinh;

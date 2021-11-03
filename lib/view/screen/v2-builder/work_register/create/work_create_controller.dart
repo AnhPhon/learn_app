@@ -842,6 +842,7 @@ class V2WorkCreateController extends GetxController {
             tenUngVien: tenUngVien,
             tieuDe: titleController.text,
             tinHoc: tinHocRequest,
+            tuyenDung: false,
           ),
         ),
       );
