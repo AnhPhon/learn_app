@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
@@ -47,6 +48,32 @@ class V4NotificationPage extends GetView<V4NotificationController> {
   ///
   Widget _listViewNotification() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       enablePullUp: true,
       onLoading: controller.onLoading,
       onRefresh: controller.onRefresh,

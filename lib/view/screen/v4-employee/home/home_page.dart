@@ -86,7 +86,7 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   Widget _notificateLabel() {
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Text(
         // ignore: prefer_interpolation_to_compose_strings
         controller.thu +
@@ -100,9 +100,9 @@ class V4HomePage extends GetView<V4HomeController> {
             "\nBạn chưa chấm công, vui lòng nhấn nút nhé!",
         style: const TextStyle(
           color: Color(0xff2A3547),
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          fontWeight: FontWeight.bold,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -213,7 +213,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: DeviceUtils.getScaledHeight(context, .3),
+            height: DeviceUtils.getScaledHeight(context, .33),
             child: GridView.builder(
               padding: const EdgeInsets.symmetric(
                 vertical: Dimensions.MARGIN_SIZE_DEFAULT,

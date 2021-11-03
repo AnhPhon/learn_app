@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/nhan_vien_request.dart';
+import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/model/response/nhan_vien_response.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
@@ -230,7 +232,7 @@ class V4AccountController extends GetxController {
       final AuthRequest authRequest = AuthRequest();
       authRequest.email = email;
       authRequest.password = passwordController.text.toString();
-      authProvider.login(
+      authProvider.loginToSalaryInEmployee(
           request: authRequest,
           onSuccess: (account) {
             EasyLoading.dismiss();

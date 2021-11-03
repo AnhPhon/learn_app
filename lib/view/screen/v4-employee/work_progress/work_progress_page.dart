@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -111,6 +113,31 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewMoiTao() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       enablePullUp: true,
       controller: controller.refreshMoiTaoController,
       onLoading: controller.onMoiTaoLoading,
@@ -284,6 +311,31 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewDangLam() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       controller: controller.refreshDangLamController,
       enablePullUp: true,
       onRefresh: controller.onDangLamRefresh,
@@ -450,6 +502,32 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewHoanThanh() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       enablePullUp: true,
       controller: controller.refreshHoanThanhController,
       onRefresh: controller.onHoanThanhRefresh,
@@ -662,6 +740,32 @@ class V4WorkProgressPage extends GetView<V4WorkProgressController> {
   ///
   Widget _listViewChamTre() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       enablePullUp: true,
       onRefresh: controller.onChamTreRefresh,
       onLoading: controller.onChamTreLoading,
