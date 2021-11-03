@@ -68,6 +68,9 @@ class VatTuResponse {
     if (donGia != null) data['donGia'] = donGia;
 
     // check null donGia
+    if (khoiLuong != null) data['khoiLuong'] = khoiLuong;
+
+    // check null donGia
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
     // check null donGia
     if (khoiLuong != null) data['khoiLuong'] = khoiLuong;

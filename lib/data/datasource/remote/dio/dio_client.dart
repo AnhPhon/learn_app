@@ -165,17 +165,85 @@ class DioClient {
   }
 
   Future<Response> uploadFile(
-    String uri, {
-    required PlatformFile file,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-    CancelToken? cancelToken,
-  }) async {
+      String uri, {
+        required PlatformFile file,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+      }) async {
     try {
       final String fileName = file.path!.split('/').last;
       final FormData formData = FormData.fromMap({
         "image": await MultipartFile.fromFile(file.path.toString(),
             filename: fileName),
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadImages(
+      String uri, {
+        required List<File> files,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+      }) async {
+    try {
+
+      final arrayFiles = [];
+      for(var i = 0; i < files.length; i++){
+        arrayFiles.add(await MultipartFile.fromFile(files[i].path.toString()));
+      }
+
+      final FormData formData = FormData.fromMap({
+        'files': arrayFiles
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadFiles(
+    String uri, {
+    required List<PlatformFile> files,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+
+      final arrayFiles = [];
+      for(var i = 0; i < files.length; i++){
+        arrayFiles.add(await MultipartFile.fromFile(files[i].path.toString()));
+      }
+
+      final FormData formData = FormData.fromMap({
+        'files': arrayFiles
       });
 
       final response = await dio!.post(

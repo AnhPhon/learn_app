@@ -11,8 +11,8 @@ class PreviewServiceRequest {
   String? ngayBatDau;
   String? ngayKetThuc;
   List<VatTuResponse>? bangKhoiLuong;
-  List<File>? hinhAnhBanKhoiLuong;
-  List<File>? hinhAnhBanVe;
+  List<String>? hinhAnhBanKhoiLuongs;
+  List<String>? hinhAnhBanVes;
   String? hinhAnhChiTiet;
   String? idTrangThaiDonDichVu;
   String? idHinhThucThanhToan;
@@ -23,7 +23,7 @@ class PreviewServiceRequest {
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
   String? moTaChiTiet;
-  File? file;
+  List<String>? files;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -53,8 +53,8 @@ class PreviewServiceRequest {
       this.moTa,
       this.ngayBatDau,
       this.ngayKetThuc,
-      this.hinhAnhBanKhoiLuong,
-      this.hinhAnhBanVe,
+      this.hinhAnhBanKhoiLuongs,
+      this.hinhAnhBanVes,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
@@ -65,7 +65,7 @@ class PreviewServiceRequest {
       this.giaTriKhachDeXuat,
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
-      this.file,
+      this.files,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,
@@ -100,8 +100,8 @@ class PreviewServiceRequest {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuong = json['hinhAnhBanKhoiLuong'] as List<File>;
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString() as List<File>;
+    hinhAnhBanKhoiLuongs = json['hinhAnhBanKhoiLuongs'] as List<String>;
+    hinhAnhBanVes = json['hinhAnhBanVes'].toString() as List<String>;
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
     idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
@@ -112,7 +112,7 @@ class PreviewServiceRequest {
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'] as File;
+    files = json['file'] as List<String>;
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
@@ -162,11 +162,11 @@ class PreviewServiceRequest {
     // check null ngayKetThuc
     if (ngayKetThuc != null) data['ngayKetThuc'] = ngayKetThuc; 
 
-    // check null hinhAnhBanKhoiLuong
-    if (hinhAnhBanKhoiLuong != null) data['hinhAnhBanKhoiLuong'] = hinhAnhBanKhoiLuong; 
+    // check null hinhAnhBanKhoiLuongs
+    if (hinhAnhBanKhoiLuongs != null) data['hinhAnhBanKhoiLuongs'] = hinhAnhBanKhoiLuongs; 
 
-    // check null hinhAnhBanVe
-    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe; 
+    // check null hinhAnhBanVes
+    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes; 
 
     // check null idTrangThaiDonHang
     if (idTrangThaiDonDichVu != null) data['idTrangThaiDonHang'] = idTrangThaiDonDichVu; 
@@ -198,8 +198,8 @@ class PreviewServiceRequest {
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet; 
 
-    // check null file
-    if (file != null) data['file'] = file; 
+    // check null files
+    if (files != null) data['files'] = files; 
 
     // check null soLuongYeuCau
     if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau; 

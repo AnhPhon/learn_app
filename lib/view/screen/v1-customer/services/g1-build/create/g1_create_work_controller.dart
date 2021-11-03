@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
@@ -13,6 +18,8 @@ import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
 
 class V1G1CreateWorkController extends GetxController{
+  final ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
+
   final worKTitleController = TextEditingController();
   final descController = TextEditingController();
   final startTimeController = TextEditingController();
@@ -23,16 +30,16 @@ class V1G1CreateWorkController extends GetxController{
   final unitController = TextEditingController();
 
   // File
-  File? file;
+  List<String> donDichVuFiles = [];
   // File name
   String? fileName;
 
   // Dach sách bảng khối lượng công việc
   List<VatTuResponse> massList = [];
   // Danh sách hình ảnh bảng khối lượng
-  List<File> images = [];
+  List<String> anhKhoiLuong = [];
   // Danh sách hình ảnh bản vẽ
-  List<File> drawingImages = [];
+  List<String> drawingImages = [];
   // Đơn vi
   String? unit;
   // Dịch vụ resquest
@@ -84,12 +91,12 @@ class V1G1CreateWorkController extends GetxController{
     previewServiceRequest.idTaiKhoan = serviceApplication!.idTaiKhoan;
     previewServiceRequest.tieuDe = serviceApplication!.tieuDe;
     previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
-    previewServiceRequest.hinhAnhBanKhoiLuong = images;
+    previewServiceRequest.hinhAnhBanKhoiLuongs = anhKhoiLuong;
     previewServiceRequest.bangKhoiLuong = massList;
     previewServiceRequest.idTaiKhoanNhanDon = serviceApplication!.idTaiKhoanNhanDon;
-    previewServiceRequest.hinhAnhBanVe  = drawingImages;
-    if(file != null){
-      previewServiceRequest.file = file ;
+    previewServiceRequest.hinhAnhBanVes  = drawingImages;
+    if(files.isNotEmpty){
+      previewServiceRequest.files = files;
     }
     Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
   }
@@ -134,38 +141,110 @@ class V1G1CreateWorkController extends GetxController{
     massList.removeWhere((element) => element.hashCode == supplies.hashCode);
     update();
   }
+
   ///
-  /// Chon file
+  /// Pick multi files
   ///
-  Future<void> pickerFile() async{
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      file = File(result.files.single.path!);
-      fileName = result.files.first.name;
+  Future pickFiles() async {
+    try {
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+      if (result == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<PlatformFile> files = result.files;
+
+      print('Count files select ${files.length}');
+      // load files
+      imageUpdateProvider.addFiles(
+        files: files,
+        onSuccess: (value) {
+          print('V2QuotationG1Controller pickFiles addFiles ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            donDichVuFiles = value.files!;
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
-      // return fileName;
-    } else {
-      Alert.error(message: "Thêm file thất bại");
-      print("Thêm file thất bại pickerFile V1G1CreateWorkController");
+    } on PlatformException catch (e) {
+      print("Failed to pick file: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  /// Chọn nhiều file (Image)
+  /// Pick multi images
   ///
-  Future<void> pickerMuilFile({required List<File> files})async{
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
-    if (result != null) {
-      files.addAll(result.paths.map((path) => File(path!)).toList());
+  Future pickImages({required List<String> data}) async {
+    try {
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print('V2QuotationG1Controller pickImages addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            data = value.files!;
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
-    } else {
-      Alert.error(message: "Thêm file thất bại pickerMuilFile V1G1CreateWorkController");
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
+  // ///
+  // /// Chon file
+  // ///
+  // Future<void> pickerFile() async{
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //   if (result != null) {
+  //     file = File(result.files.single.path!);
+  //     fileName = result.files.first.name;
+  //     update();
+  //     // return fileName;
+  //   } else {
+  //     Alert.error(message: "Thêm file thất bại");
+  //     print("Thêm file thất bại pickerFile V1G1CreateWorkController");
+  //   }
+  // }
+
+  // ///
+  // /// Chọn nhiều file (Image)
+  // ///
+  // Future<void> pickerMuilFile({required List<File> files})async{
+  //   final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+  //   if (result != null) {
+  //     files.addAll(result.paths.map((path) => File(path!)).toList());
+  //     update();
+  //   } else {
+  //     Alert.error(message: "Thêm file thất bại pickerMuilFile V1G1CreateWorkController");
+  //   }
+  // }
   ///
   /// Xoá hình ảnh
   ///
-  void onDeleteImage({required File file, required List<File> files}){
+  void onDeleteImage({required String file, required List<String> files}){
     files.removeWhere((element) => element.hashCode == file.hashCode);
     //Alert.info(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();

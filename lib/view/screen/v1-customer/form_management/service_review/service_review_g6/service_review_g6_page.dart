@@ -206,7 +206,7 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_DEFAULT),
                 child: ImageListHorizontal(
-                  imageList: controller.hinhAnhBanVe,
+                  imageList: controller.donDichVuResponse.hinhAnhBanVes!,
                   padding: EdgeInsets.zero,
                 ),
               ),

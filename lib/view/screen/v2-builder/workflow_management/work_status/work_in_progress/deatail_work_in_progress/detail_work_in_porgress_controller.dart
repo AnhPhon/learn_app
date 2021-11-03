@@ -82,12 +82,11 @@ class V2DetailWorkInProgressController extends GetxController {
         }
 
         // lấy hình ảnh bảng vẽ
-        urlHinhAnhBangVeList = model.hinhAnhBanVes!;
-        // for (final banVe in model.hinhAnhBanVe!.split(",")) {
-        //   if (banVe.trim().isNotEmpty) {
-        //     urlHinhAnhBangVeList.add(banVe);
-        //   }
-        // }
+        for (final banVe in model.hinhAnhBanVes!) {
+          if (banVe.trim().isNotEmpty) {
+            urlHinhAnhBangVeList.add(banVe);
+          }
+        }
         update();
       },
       onError: (error) {
@@ -116,10 +115,9 @@ class V2DetailWorkInProgressController extends GetxController {
           urlHinhAnhKhoiLuongList.addAll(
             element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
           );
-          // urlHinhAnhBangVeList.add(
-          //   element.idDonDichVu!.hinhAnhBanVe!,
-          // );
-          urlHinhAnhBangVeList = element.idDonDichVu!.hinhAnhBanVes!;
+          urlHinhAnhBangVeList.addAll(
+            element.idDonDichVu!.hinhAnhBanVes!,
+          );
 
           // lấy các thông tin về vật tư
           vatTuProvider.paginate(

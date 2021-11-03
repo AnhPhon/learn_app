@@ -44,8 +44,8 @@ class V1NewsController extends GetxController
 
   @override
   void onClose() {
-    super.onClose();
     tabController!.dispose();
+    super.onClose();
   }
 
   ///

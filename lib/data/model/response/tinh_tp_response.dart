@@ -12,6 +12,7 @@ class TinhTpResponse {
   ///
   TinhTpResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+
     ten = json['ten'].toString();
 
     createdAt = json['created_at'].toString();

@@ -167,7 +167,7 @@ class V1G3CreateServiceController extends GetxController {
 
   @override
   void onClose() {
-    onClose();
+    super.onClose();
     workTitleController.dispose();
     startTime.dispose();
     endTime.dispose();

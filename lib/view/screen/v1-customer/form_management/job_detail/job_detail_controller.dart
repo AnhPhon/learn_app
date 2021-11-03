@@ -29,12 +29,11 @@ class V1JobDetailController extends GetxController {
     super.onInit();
     donDichVuResponse = Get.arguments as DonDichVuResponse;
     // lấy hình ảnh bảng vẽ
-    hinhAnhBanVe = donDichVuResponse.hinhAnhBanVes!;
-    // for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
-    //   if (banVe.trim().isNotEmpty) {
-    //     hinhAnhBanVe.add(banVe);
-    //   }
-    // }
+    for (final banVe in donDichVuResponse.hinhAnhBanVes!) {
+      if (banVe.trim().isNotEmpty) {
+        hinhAnhBanVe.add(banVe);
+      }
+    }
     getVatTu();
   }
 
