@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
@@ -14,6 +15,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/giay_chung_nhan_suc_khoe_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
+import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -31,6 +33,7 @@ class V2HomeController extends GetxController {
       GetIt.I.get<DangKyHopDongSBSProvider>();
   GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
+  ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   // refresh controller
   RefreshController? refreshController;
@@ -41,6 +44,7 @@ class V2HomeController extends GetxController {
   List<DonDichVuResponse> donDichVuList = [];
   List<SanPhamResponse> sanPhamList = [];
   List<TinTucResponse> tinTucList = [];
+  List<ThongBaoResponse> thongBaoList = [];
 
   // bool
   bool thueValid = false;
@@ -102,6 +106,8 @@ class V2HomeController extends GetxController {
           // chứng nhận sức khỏe
           chungNhanSucKhoe(id);
 
+          readThongBao(value.idLoaiTaiKhoan!.tieuDe!.toString().toLowerCase());
+
           // khoi tao three feature
           _initThreeFeatures();
         },
@@ -110,6 +116,44 @@ class V2HomeController extends GetxController {
         },
       );
     });
+  }
+
+  ///
+  /// load thông báo
+  ///
+  void readThongBao(String tieuDe) {
+    String type = "1";
+    if (tieuDe == 'khách hàng') {
+      type = "1";
+    }
+
+    if (tieuDe == 'thợ thầu') {
+      type = "2";
+    }
+
+    if (tieuDe == 'đại lý') {
+      type = "3";
+    }
+
+    if (tieuDe == 'nhân viên') {
+      type = "4";
+    }
+
+    thongBaoProvider.paginate(
+      page: 1,
+      limit: 30,
+      filter: "&doiTuong=$type",
+      onSuccess: (data) {
+        thongBaoList = data;
+
+        // set is loading
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+      },
+    );
   }
 
   ///
@@ -170,7 +214,6 @@ class V2HomeController extends GetxController {
       filter: "&sortBy=created_at:desc",
       onSuccess: (value) {
         tinTucList = value;
-        isLoading = false;
         update();
       },
       onError: (error) {
@@ -366,21 +409,39 @@ class V2HomeController extends GetxController {
   /// xem chi tiết 1 sản phẩm
   ///
   void onClickProductDetail(String id) {
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
+    _sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
   /// vào tin tức chi tiết
   ///
   void onClickHotNewsDetail(String idNews) {
-    Get.toNamed(AppRoutes.V2_NEWS_DETAIL);
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
+    _tinTucProvider.find(
+      id: idNews,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -408,7 +469,10 @@ class V2HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///

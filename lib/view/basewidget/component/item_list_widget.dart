@@ -3,6 +3,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 class ItemListWidget extends StatelessWidget {
   final VoidCallback onTap;
@@ -13,6 +14,7 @@ class ItemListWidget extends StatelessWidget {
   final String urlImage;
   final Color? colorRowText1;
   final Color? colorRowText2;
+  final Color? colorSubTitle;
   final Icon? icon1;
   final Icon? icon2;
   final bool? isSpaceBetween;
@@ -32,6 +34,7 @@ class ItemListWidget extends StatelessWidget {
     this.icon2,
     required this.urlImage,
     this.subTitle,
+    this.colorSubTitle,
   }) : super(key: key);
 
   @override
@@ -42,15 +45,15 @@ class ItemListWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
           vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
         ),
-        height: DeviceUtils.getScaledHeight(context, .13),
+        height: DeviceUtils.getScaledHeight(context, .15),
         decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
+                blurRadius: 2,
+                color: ColorResources.BLACK.withOpacity(.2),
                 offset: const Offset(0, 2)),
           ],
         ),
@@ -58,88 +61,77 @@ class ItemListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                ),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder,
-                  image: urlImage,
-                  height: double.infinity,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  imageErrorBuilder: (c, o, s) => Image.asset(
-                    Images.placeholder,
+                  borderRadius: BorderRadius.circular(
+                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+                  ),
+                  child: FadeInImageCustom(
+                    urlImage: urlImage,
                     height: double.infinity,
                     width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+                  )),
             ),
             const SizedBox(
               width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
             Expanded(
-              flex: 8,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(
-                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      child: Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              flex: 9,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Dimensions.PADDING_SIZE_SMALL,
+                  horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                          ),
                         ),
-                      ),
+                        if (subTitle != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            ),
+                            child: Text(
+                              subTitle.toString(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                color: colorSubTitle ?? ColorResources.GREY,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                  ),
-                  if (subTitle != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                      ),
-                      child: Text(
-                        subTitle.toString(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                          color: ColorResources.GREY,
-                        ),
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                    ),
-                    child: Container(
-                      // color: Colors.red,
-                      child: Row(
-                        mainAxisAlignment: isSpaceBetween == true
-                            ? MainAxisAlignment.spaceBetween
-                            : isStart == true
-                                ? MainAxisAlignment.start
-                                : MainAxisAlignment.end,
-                        children: [
+                    Row(
+                      mainAxisAlignment: isSpaceBetween == true
+                          ? MainAxisAlignment.spaceBetween
+                          : isStart == true
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.end,
+                      children: [
+                        if (icon1 != null || rowText1 != null)
                           Expanded(
-                            flex: 5,
                             child: Row(
                               children: [
                                 if (icon1 != null) icon1!,
                                 if (icon1 != null && rowText1 != null)
                                   const SizedBox(
-                                      width:
-                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                  ),
                                 if (rowText1 != null)
-                                  Expanded(
+                                  Flexible(
                                     child: Text(
                                       rowText1!,
                                       textAlign: TextAlign.left,
@@ -154,17 +146,20 @@ class ItemListWidget extends StatelessWidget {
                               ],
                             ),
                           ),
+                        if (icon2 != null || rowText2 != null)
                           Expanded(
-                            flex: 5,
                             child: Row(
+                              mainAxisAlignment: (isSpaceBetween == true)
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
                               children: [
                                 if (icon2 != null) icon2!,
                                 if (icon2 != null && rowText2 != null)
                                   const SizedBox(
-                                      width:
-                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+                                    width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                  ),
                                 if (rowText2 != null)
-                                  Expanded(
+                                  Flexible(
                                     child: Text(
                                       rowText2!,
                                       textAlign: TextAlign.left,
@@ -176,14 +171,16 @@ class ItemListWidget extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
+                                const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

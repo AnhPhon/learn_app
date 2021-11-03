@@ -25,7 +25,7 @@ class BaoHiemRequest {
   /// From JSON
   ///
   BaoHiemRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     ten = json['ten'].toString();
     hinhAnh = json['hinhAnh'].toString();
     phi = json['phi'].toString();

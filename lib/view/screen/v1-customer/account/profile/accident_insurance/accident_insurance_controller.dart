@@ -6,7 +6,7 @@ import 'package:template/routes/app_routes.dart';
 class V1AccidentInsuranceController extends GetxController {
   // baoHiem
   BaoHiemProvider baoHiemProvider = BaoHiemProvider();
-  List<BaoHiemResponse> baoHiemResponse = [];
+  BaoHiemResponse baoHiemResponse = BaoHiemResponse();
 
   //title appbar
   String title = "Bảo hiểm tai nạn";
@@ -41,7 +41,7 @@ class V1AccidentInsuranceController extends GetxController {
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
-          baoHiemResponse = value;
+          baoHiemResponse = value.first;
         }
 
         isLoading = false;
@@ -62,21 +62,13 @@ class V1AccidentInsuranceController extends GetxController {
   }
 
   ///
-  ///on register click
+  ///on btn click
   ///
-  void onRegisterClick() {
+  void onBtnClick({required int currentIndex}) {
     //check is not empty
-    if (baoHiemResponse.isNotEmpty) {
-      Get.toNamed("${AppRoutes.V1_INURANCE_REGISTER}?currentIndex=1",
+    if (baoHiemResponse.id != null) {
+      Get.toNamed("${AppRoutes.V1_INURANCE_REGISTER}?currentIndex=$currentIndex",
           arguments: baoHiemResponse);
     }
-  }
-
-  ///
-  ///on your insurance click
-  ///
-  void onYourInsurancePageClick() {
-    Get.toNamed("${AppRoutes.V1_INURANCE_REGISTER}?currentIndex=0",
-        arguments: baoHiemResponse);
   }
 }

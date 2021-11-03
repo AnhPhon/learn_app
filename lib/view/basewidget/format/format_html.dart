@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:template/helper/common_helper.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:html/parser.dart';
 
-class InsuranceSpecification extends StatelessWidget {
-  final String insuranceSpecification;
-  const InsuranceSpecification({Key? key, required this.insuranceSpecification})
+class Specification extends StatelessWidget {
+  final String specification;
+  final EdgeInsetsGeometry? padding;
+  const Specification({Key? key, required this.specification, this.padding})
       : super(key: key);
 
   @override
@@ -15,12 +16,14 @@ class InsuranceSpecification extends StatelessWidget {
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-        ),
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
         child: Html(
-          data: _parseHtmlString(insuranceSpecification),
+          data: CommonHelper().htmlUnescape(specification),
           style: {
+            "html": Style(textAlign: TextAlign.justify),
             "table": Style(
               backgroundColor: const Color.fromARGB(0x50, 0xee, 0xee, 0xee),
             ),
@@ -76,15 +79,5 @@ class InsuranceSpecification extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  ///
-  ///  parse Html String
-  ///
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString =
-        parse(document.body!.text).documentElement!.text;
-    return parsedString;
   }
 }

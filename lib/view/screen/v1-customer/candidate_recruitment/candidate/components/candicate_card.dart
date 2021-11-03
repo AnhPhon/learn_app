@@ -3,12 +3,13 @@ import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
 import 'package:template/helper/date_converter.dart';
 
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 
 class CandidateCard extends StatelessWidget {
   DangKyViecMoiResponse? dangKyViecMoiResponse;
+
   CandidateCard(
       {Key? key, this.dangKyViecMoiResponse, this.showEmailAndPass = true})
       : super(key: key);
@@ -22,9 +23,13 @@ class CandidateCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextHighlight(
-                title: "Tiêu đề: ",
-                content: dangKyViecMoiResponse!.tieuDe.toString()),
+            Padding(
+              padding: const EdgeInsets.only(
+                  bottom: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
+              child: TextHighlight(
+                  title: "Tiêu đề: ",
+                  content: dangKyViecMoiResponse!.tieuDe.toString()),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -36,19 +41,21 @@ class CandidateCard extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(
                             Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-                        child: Image.asset(
-                          Images.admin_background,
-                          height: Dimensions.AVATAR_SQUARE_SIZE_EXTRA_LARGE,
-                          fit: BoxFit.cover,
+                        child: FadeInImageCustom(
+                          height: 0.3,
+                          width: 1,
+                          urlImage: dangKyViecMoiResponse!
+                              .idTaiKhoan!.hinhDaiDien
+                              .toString(),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
                         child: Text(
-                          "MSHS: ${dangKyViecMoiResponse!.mSHS!.isEmpty ? '123456' : dangKyViecMoiResponse!.mSHS}",
+                          dangKyViecMoiResponse!.maSoHoSo.toString(),
                           style: const TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_LARGE,
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
                           ),
                         ),
                       )
@@ -70,8 +77,7 @@ class CandidateCard extends StatelessWidget {
                         TextHighlight(
                             title: "Ngày sinh: ",
                             content: DateConverter.readMongoToString(
-                                dangKyViecMoiResponse!.idTaiKhoan!.ngaySinh
-                                    .toString())),
+                                dangKyViecMoiResponse!.ngaySinh.toString())),
                         TextHighlight(
                             title: "Điện thoại: ",
                             content: showEmailAndPass!
@@ -95,7 +101,14 @@ class CandidateCard extends StatelessWidget {
                                 '${dangKyViecMoiResponse!.idTaiKhoan!.diaChi}, ${dangKyViecMoiResponse!.idTaiKhoan!.idPhuongXa}, ${dangKyViecMoiResponse!.idTaiKhoan!.idQuanHuyen}, ${dangKyViecMoiResponse!.idTaiKhoan!.idTinhTp}'),
                         TextHighlight(
                             title: "Hôn nhân: ",
-                            content: dangKyViecMoiResponse!.honNhan.toString()),
+                            content:
+                                dangKyViecMoiResponse!.honNhan.toString() == '1'
+                                    ? 'Độc thân'
+                                    : dangKyViecMoiResponse!.honNhan
+                                                .toString() ==
+                                            '2'
+                                        ? 'Đã lập gia đình'
+                                        : 'Khác'),
                       ],
                     ),
                   ),

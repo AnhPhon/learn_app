@@ -15,7 +15,6 @@ import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/screen/payment/payment%20account/patment_dialog_accept.dart';
@@ -63,6 +62,12 @@ class OrderInformationController extends GetxController {
   //isTuyenDung
   bool isTuyenDung = false;
 
+  //type
+  String type = '0';
+
+  //idDonDichVu
+  String? idDonDichVu;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -81,8 +86,9 @@ class OrderInformationController extends GetxController {
     if (Get.parameters['isTuyenDung'] != null &&
         Get.parameters['isTuyenDung'] == 'true') {
       isTuyenDung = true;
+    } else {
+      isTuyenDung = false;
     }
-
     //get data khuyến mãi
     getDataKhuyenMai();
   }
@@ -126,15 +132,21 @@ class OrderInformationController extends GetxController {
             phiDichVu = 0;
           }
           //tinh khuyến mãi
-          if (phanTramKhuyenMai != 0 && phiDichVu != 0) {
+          if (phanTramKhuyenMai != 0 && phiDichVu != 0 && !isTuyenDung) {
             khuyenMai = phiDichVu * phanTramKhuyenMai;
+          } else if (isTuyenDung) {
+            //tuyển dụng nhân với phí đăng tin
+            khuyenMai = soTien * phanTramKhuyenMai;
           } else {
             khuyenMai = 0;
           }
 
           //tổng tiền nếu tiền cọc = 0 là các dịch vụ ko cần cọc
-          if (tienCoc == 0) {
+          if (tienCoc == 0 && !isTuyenDung) {
             tongTien = soTien + phiDichVu - khuyenMai;
+          } else if (isTuyenDung) {
+            //tuyển dụng thì trừ thẳng vào phí đăng tin
+            tongTien = soTien - khuyenMai;
           } else {
             tongTien = tienCoc + phiDichVu - khuyenMai;
           }
@@ -177,14 +189,6 @@ class OrderInformationController extends GetxController {
   }
 
   ///
-  ///onBtnGoHome
-  ///
-  void onBtnGoHome() {
-    Get.offAllNamed(AppRoutes.V1_DASHBOARD,
-        predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
-  }
-
-  ///
   ///  Hiển thị xác nhận
   ///
   void showDialogAccept() {
@@ -192,7 +196,7 @@ class OrderInformationController extends GetxController {
         title: "Xác nhận thông tin",
         content: DialogContentPriceAccept(
           textContent:
-              'Bạn chắc chắn đồng ý đăng tin tuyển dụng với tổng số tiền',
+              'Bạn chắc chắn đồng ý ${isTuyenDung ? 'đăng tin tuyển dụng' : 'thanh toán đơn hàng'} với tổng số tiền',
           price: tongTien,
         ),
         confirm: ElevatedButton(

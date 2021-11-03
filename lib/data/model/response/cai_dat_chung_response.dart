@@ -12,7 +12,7 @@ class CaiDatChungResponse {
   /// From JSON
   ///
   CaiDatChungResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     if (json['khuyenMai'] != null) {
       khuyenMai = double.parse(json['khuyenMai'].toString());
     } else {

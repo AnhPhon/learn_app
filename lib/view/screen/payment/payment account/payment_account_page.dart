@@ -70,7 +70,7 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
                       text2: "${PriceConverter.convertPrice(
                         context,
                         controller.soDuTaiKhoan,
-                      )} đ",
+                      )} VNĐ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,
@@ -80,7 +80,7 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
                       text2: "${PriceConverter.convertPrice(
                         context,
                         controller.tongTienThanhToan,
-                      )} đ",
+                      )} VNĐ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,
@@ -92,7 +92,7 @@ class PaymentAccountPage extends GetView<PaymentAccountController> {
                           : "${PriceConverter.convertPrice(
                               context,
                               controller.soDuConLai,
-                            )} đ",
+                            )} VNĐ",
                       notFontWeight: true,
                       notFontSize: true,
                       colorRed: true,

@@ -117,6 +117,7 @@ class V1HomePage extends GetView<V1HomeController> {
               gradient: controller.threeFeatures![index]["gradient"]
                   as RadialGradient,
               icon: controller.threeFeatures![index]["icon"] as IconData,
+              iconColor: ColorResources.BLACK,
             ),
           );
         },
@@ -226,8 +227,7 @@ class V1HomePage extends GetView<V1HomeController> {
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () {
-                  controller
-                      .onMoreCategoryProduct(controller.danhMucList[index].id!);
+                  controller.onMoreCategoryProduct(index: index);
                 },
                 child: _imageWidget(
                   controller.danhMucList[index].ten!,
@@ -256,7 +256,7 @@ class V1HomePage extends GetView<V1HomeController> {
         controller.onClickHotNews();
       },
       widget: SizedBox(
-        height: 135 * size * 1.0 + 10,
+        height: 135 * size * 1.0 + 20,
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: controller.tinTucList.length <= 2

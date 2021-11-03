@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/muc_luong_du_kien_repository.dart';
 
 class MucLuongDuKienProvider {
-  MucLuongDuKienRepository? repository = GetIt.I.get<MucLuongDuKienRepository>();
+  MucLuongDuKienRepository? repository =
+      GetIt.I.get<MucLuongDuKienRepository>();
 
   MucLuongDuKienProvider();
 
@@ -22,7 +23,8 @@ class MucLuongDuKienProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +44,8 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +64,8 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +84,8 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          MucLuongDuKienRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -101,9 +106,12 @@ class MucLuongDuKienProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => MucLuongDuKienResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +131,8 @@ class MucLuongDuKienProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(MucLuongDuKienResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          MucLuongDuKienResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

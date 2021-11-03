@@ -15,7 +15,7 @@ class PhuongXaResponse {
   /// From JSON
   ///
   PhuongXaResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idQuanHuyen
     if (json['idQuanHuyen'] != null &&

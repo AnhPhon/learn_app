@@ -14,7 +14,7 @@ class DieuKhoanChinhSachRequest {
   /// From JSON
   ///
   DieuKhoanChinhSachRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     type = json['type'].toString();
     tieuDe = json['tieuDe'].toString();
     noiDung = json['noiDung'].toString();

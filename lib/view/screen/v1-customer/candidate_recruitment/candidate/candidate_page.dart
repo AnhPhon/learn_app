@@ -28,11 +28,9 @@ class V1CandidatePage extends GetView<V1CandidateController> {
                 children: [
                   tabBarWidget(context: context, controller: controller),
                   if (controller.currentIndex == 0)
-                    news(context,
-                        controller: controller, index: controller.currentIndex)
+                    news(context, controller: controller, index: 0)
                   else
-                    listOfCandidates(context,
-                        controller: controller, index: controller.currentIndex)
+                    listOfCandidates(context, controller: controller, index: 1)
                 ],
               ),
             );
@@ -43,12 +41,12 @@ class V1CandidatePage extends GetView<V1CandidateController> {
             return controller.currentIndex == 0
                 ? FloatingActionButton.extended(
                     onPressed: controller.onClickFloatButton,
-                    tooltip: "Tạo đơn dịch vụ",
+                    tooltip: "Tạo tin tuyển dụng",
                     backgroundColor: ColorResources.PRIMARYCOLOR,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     elevation: 5,
                     label: const Text(
-                      'Tạo đơn',
+                      'Tạo tin',
                       style: TextStyle(
                           color: ColorResources.WHITE,
                           fontWeight: FontWeight.bold),
@@ -70,34 +68,45 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![index],
+        controller: controller.refreshTinTuyenDungController,
+        scrollController: controller.scrollTinTuyenDungController,
         enablePullUp: true,
-        onLoading: controller.onLoading,
-        onRefresh: controller.onRefresh,
+        onRefresh: controller.onRefreshTinTuyenDung,
+        onLoading: controller.onLoadingTinTuyenDung,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",
           canLoadingText: 'Đang tải...',
         ),
-        child: controller.isLoadingTuyenDung
-            ? const Padding(
-                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Center(
-                  child: CircularProgressIndicator(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (controller.isLoadingTuyenDung)
+                const Padding(
+                  padding:
+                      EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.tuyenDungListModel.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => controller.onTapViewTuyenDung(
+                          tuyendungModel: controller.tuyenDungListModel[index]),
+                      child: RecruimentNewsCard(
+                          tuyenDungResponse:
+                              controller.tuyenDungListModel[index]),
+                    );
+                  },
                 ),
-              )
-            : ListView.builder(
-                itemCount: controller.tuyenDungListModel.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => controller.onTapViewTuyenDung(
-                        tuyendungModel: controller.tuyenDungListModel[index]),
-                    child: RecruimentNewsCard(
-                        tuyenDungResponse:
-                            controller.tuyenDungListModel[index]),
-                  );
-                },
-              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -109,60 +118,55 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       {required V1CandidateController controller, required int index}) {
     return Expanded(
       child: SmartRefresher(
-        controller: controller.refreshControllerList![index],
+        controller: controller.refreshTimUngVienController,
         enablePullUp: true,
-        onLoading: controller.onLoading,
-        onRefresh: controller.onRefresh,
+        scrollController: controller.scrollTimUngVienController,
+        onLoading: controller.onLoadingTimUngVien,
+        onRefresh: controller.onRefreshTimUngVien,
         footer: const ClassicFooter(
           loadingText: "Đang tải...",
           noDataText: "Không có dữ liệu",
           canLoadingText: 'Đang tải...',
         ),
-        child: Column(
-          children: [
-            // Tìm kiếm
-            search(context, controller: controller),
-            // Bộ lọc
-            filter(context, controller: controller),
-            // dánh sách ứng viên
-            if (controller.isLoadingCadidate)
-              const Padding(
-                padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            else if (!controller.isLoadingCadidate &&
-                controller.dangKyViecMoiListModel.isEmpty)
-              const Center(
-                child: Padding(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Tìm kiếm
+              search(context, controller: controller),
+              // Bộ lọc
+              filter(context, controller: controller),
+              // dánh sách ứng viên
+              if (controller.isLoadingCadidate)
+                const Padding(
                   padding:
                       EdgeInsets.only(top: Dimensions.PADDING_SIZE_DEFAULT),
-                  child: Text('Không có dữ liệu'),
-                ),
-              )
-            else
-              SizedBox(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.dangKyViecMoiListModel.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        onTap: () {
-                          controller.onClickProfile(
-                              dangKyViecMoiModel:
-                                  controller.dangKyViecMoiListModel[index]);
-                        },
-                        child: CandidateCard(
-                          dangKyViecMoiResponse:
-                              controller.dangKyViecMoiListModel[index],
-                          showEmailAndPass: false,
-                        ));
-                  },
-                ),
-              )
-          ],
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                SizedBox(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.dangKyViecMoiListModel.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            controller.onClickProfile(
+                                dangKyViecMoiModel:
+                                    controller.dangKyViecMoiListModel[index]);
+                          },
+                          child: CandidateCard(
+                            dangKyViecMoiResponse:
+                                controller.dangKyViecMoiListModel[index],
+                            showEmailAndPass: false,
+                          ));
+                    },
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );

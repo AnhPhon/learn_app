@@ -7,6 +7,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
+import 'package:template/utils/app_constants.dart' as app_constants;
 
 import '../candidate_controller.dart';
 
@@ -65,7 +66,7 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                    top: Dimensions.PADDING_SIZE_SMALL),
                                 child: Text(tuyenDungResponse.tieuDe.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -96,7 +97,8 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                                             if (tuyenDungResponse
                                                     .idTrangThaiTuyenDung
                                                     .toString() ==
-                                                '6162b79bd3d3e9825095fb20')
+                                                app_constants
+                                                    .TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET)
                                               const Text(
                                                 "Tin chưa duyệt",
                                                 overflow: TextOverflow.ellipsis,

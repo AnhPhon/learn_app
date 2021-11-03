@@ -4,23 +4,27 @@ class NhapKhoHangDaiLyRequest {
   String? idTaiKhoan;
   String? idSanPham;
   String? soLuong;
+  String? tinhTrangSanPham;
 
   NhapKhoHangDaiLyRequest(
       {this.id,
       this.idKhoHangDaiLy,
       this.idTaiKhoan,
       this.idSanPham,
-      this.soLuong});
+      this.soLuong,
+      this.tinhTrangSanPham,
+      });
 
   ///
   /// From JSON
   ///
   NhapKhoHangDaiLyRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idKhoHangDaiLy = json['idKhoHangDaiLy'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
     idSanPham = json['idSanPham'].toString();
     soLuong = json['soLuong'].toString();
+    tinhTrangSanPham = json['tinhTrangSanPham'].toString();
   }
 
   ///
@@ -42,6 +46,9 @@ class NhapKhoHangDaiLyRequest {
 
     // check null soLuong
     if (soLuong != null) data['soLuong'] = soLuong;
+
+    // check null tinhTrangSanPham
+    if (tinhTrangSanPham != null) data['tinhTrangSanPham'] = tinhTrangSanPham;
 
     return data;
   }

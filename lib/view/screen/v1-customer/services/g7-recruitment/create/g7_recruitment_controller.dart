@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
@@ -36,22 +37,16 @@ import 'package:template/utils/alert.dart';
 
 class V1G7RecruitmentController extends GetxController {
   //Providers
-  final HinhThucLamViecProvider hinhThucLamViecProvider =
-      GetIt.I.get<HinhThucLamViecProvider>();
-  final TrinhDoHocVanProvider trinhDoHocVanProvider =
-      GetIt.I.get<TrinhDoHocVanProvider>();
-  final ChuyenNganhChinhProvider chuyenNganhChinhProvider =
-      GetIt.I.get<ChuyenNganhChinhProvider>();
-  final SoNamKinhNghiemProvider soNamKinhNghiemProvider =
-      GetIt.I.get<SoNamKinhNghiemProvider>();
-  final MucLuongDuKienProvider mucLuongDuKienProvider =
-      GetIt.I.get<MucLuongDuKienProvider>();
-  final TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
-  final ThoiGianLamViecProvider thoiGianLamViecProvider =
-      GetIt.I.get<ThoiGianLamViecProvider>();
-  final TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
-  final QuanHuyenProvider quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
-  final PhuongXaProvider phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
+  final hinhThucLamViecProvider = GetIt.I.get<HinhThucLamViecProvider>();
+  final trinhDoHocVanProvider = GetIt.I.get<TrinhDoHocVanProvider>();
+  final chuyenNganhChinhProvider = GetIt.I.get<ChuyenNganhChinhProvider>();
+  final soNamKinhNghiemProvider = GetIt.I.get<SoNamKinhNghiemProvider>();
+  final mucLuongDuKienProvider = GetIt.I.get<MucLuongDuKienProvider>();
+  final tinhTpProvider = GetIt.I.get<TinhTpProvider>();
+  final thoiGianLamViecProvider = GetIt.I.get<ThoiGianLamViecProvider>();
+  final taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final quanHuyenProvider = GetIt.I.get<QuanHuyenProvider>();
+  final phuongXaProvider = GetIt.I.get<PhuongXaProvider>();
 
   final imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
 
@@ -182,7 +177,7 @@ class V1G7RecruitmentController extends GetxController {
             //load data frist
             getDataHinhThucLamViec();
             getDataTrinhDoHocVan();
-            getDataChuyenNangChinh();
+            getDataChuyenNganhChinh();
             getDataSoNamKinhNghiem();
             getDataMucLuongDuKien();
             getDataTinhTp(isLoadFrist: true);
@@ -272,7 +267,7 @@ class V1G7RecruitmentController extends GetxController {
   ///
   /// load data chuyên ngành chính
   ///
-  void getDataChuyenNangChinh() {
+  void getDataChuyenNganhChinh() {
     //list hinh thuc lam iec
     chuyenNganhChinhProvider.all(
         onSuccess: (value) {
@@ -282,7 +277,7 @@ class V1G7RecruitmentController extends GetxController {
           update();
         },
         onError: (error) =>
-            print('V1G7RecruitmentController getDataChuyenNangChinh $error'));
+            print('V1G7RecruitmentController getDataChuyenNganhChinh $error'));
   }
 
   ///
@@ -657,10 +652,12 @@ class V1G7RecruitmentController extends GetxController {
     } else if (image == null) {
       return Alert.error(message: "Vui lòng chọn ảnh đại diện");
     } else {
+      EasyLoading.show(status: 'loading....');
       //upload ảnh
       imageUpdateProvider.add(
           file: image!,
           onSuccess: (value) {
+            EasyLoading.dismiss();
             hinhAnhDaiDien = value.data;
 
             ///gán data tuyển dụng
@@ -713,6 +710,7 @@ class V1G7RecruitmentController extends GetxController {
                     });
           },
           onError: (error) {
+            EasyLoading.dismiss();
             print('V1G7RecruitmentController onClickContinueButton $error');
             Alert.error(message: "Vui lòng thực hiện lại");
           });

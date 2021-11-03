@@ -82,6 +82,7 @@ Widget _reportContent(
       Dimensions.PADDING_SIZE_DEFAULT,
       0,
     ),
+    isColorFieldWhite: true,
     maxLine: 8,
     hintText: "Vui lòng nhập nội dung báo cáo",
     fillColor: ColorResources.WHITE,

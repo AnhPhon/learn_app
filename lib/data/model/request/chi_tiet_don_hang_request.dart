@@ -14,7 +14,7 @@ class ChiTietDonHangRequest {
   /// From JSON
   ///
   ChiTietDonHangRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     idDonHang = json['idDonHang'].toString();
     idSanPham = json['idSanPham'].toString();
     soLuong = json['soLuong'].toString();

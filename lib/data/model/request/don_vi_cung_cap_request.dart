@@ -10,7 +10,7 @@ class DonViCungCapRequest {
   /// From JSON
   ///
   DonViCungCapRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
     tenDonVi = json['tenDonVi'].toString();
   }
 
