@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:template/data/datasource/remote/exception/api_error_in_employee_to_salary.dart';
 import 'package:template/data/model/request/account_request.dart';
 import 'package:template/data/model/request/auth_request.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
@@ -43,6 +44,20 @@ class AuthRepository {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  ///
+  /// Login to Employee with email
+  ///
+  Future<ApiResponse> loginSalaryInEmployee(AuthRequest request) async {
+    try {
+      final response =
+          await dioClient!.post('/auth/login', data: request.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandlerInEmployee.getMessage(e));
+    }
+  }
+
   ///
   /// register
   ///
@@ -68,6 +83,7 @@ class AuthRepository {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   ///
   /// Đăng ký bằng tài khoản số điện thoại
   ///
@@ -87,55 +103,59 @@ class AuthRepository {
   Future<ApiResponse> logoutAccount(dynamic request) async {
     try {
       final response =
-          await dioClient!.post('/auth/logout', data: json.encode(request) );
+          await dioClient!.post('/auth/logout', data: json.encode(request));
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   ///
   /// Forget password
   ///
   Future<ApiResponse> forgetPassword(dynamic phone) async {
     try {
-      final response =
-          await dioClient!.post('/tai-khoans/forgot-password', data: json.encode(phone));
+      final response = await dioClient!
+          .post('/tai-khoans/forgot-password', data: json.encode(phone));
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   ///
   /// Verify otp
   ///
   Future<ApiResponse> verifyOTP(VerifyOtpRequest request) async {
     try {
-      final response =
-          await dioClient!.post('/tai-khoans/verifier-otp', data: request.toJson());
+      final response = await dioClient!
+          .post('/tai-khoans/verifier-otp', data: request.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   ///
   /// reset pass
   ///
   Future<ApiResponse> resetPassword(VerifyOtpRequest request) async {
     try {
-      final response =
-          await dioClient!.post('/tai-khoans/reset-password', data: request.toJson());
+      final response = await dioClient!
+          .post('/tai-khoans/reset-password', data: request.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   ///
   /// send otp
   ///
   Future<ApiResponse> sendOTP(dynamic phone) async {
     try {
-      final response =
-          await dioClient!.post('/tai-khoans/sent-otp', data: json.encode(phone));
+      final response = await dioClient!
+          .post('/tai-khoans/sent-otp', data: json.encode(phone));
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

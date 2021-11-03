@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -18,7 +19,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
+
 import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
@@ -30,12 +31,13 @@ class V4InfoController extends GetxController {
 
   //Nhân viên
   NhanVienProvider nhanVienProvider = GetIt.I.get<NhanVienProvider>();
-  NhanVienResponse nhanVienResponse = NhanVienResponse();
+  NhanVienResponse? nhanVienResponse;
   NhanVienRequest nhanVienRequest = NhanVienRequest();
 
   //Tỉnh/Tp
   TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
   List<TinhTpResponse> tinhTpList = [];
+
   TinhTpResponse? tinhTp;
   String hintTextTinhTp = '';
 
@@ -61,15 +63,6 @@ class V4InfoController extends GetxController {
   //user id
   String idUser = "";
 
-  // Avatar file
-  File? avatarFile;
-
-  // Image Indentity Front File
-  File? imageIndentityFront;
-
-  // Image Indentity After File
-  File? imageIndentityAfter;
-
   // khai báo is loading
   bool isLoading = true;
 
@@ -90,8 +83,8 @@ class V4InfoController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     getAccountInformation();
-    getTinhTp();
   }
 
   ///
@@ -107,7 +100,7 @@ class V4InfoController extends GetxController {
         id: idUser,
         onSuccess: (value) {
           nhanVienResponse = value;
-
+          print("IDThongTIntaiKhoan $idUser");
           //set họ và tên
           nameController = TextEditingController(text: value.hoTen);
 
@@ -145,12 +138,8 @@ class V4InfoController extends GetxController {
           //Địa chỉ thường trú
           addressController = TextEditingController(text: value.diaChi);
 
-          //Tỉnh/Tp
-          hintTextTinhTp = value.idTinhTp!.ten.toString();
-          //Quận/huyện
-          hintTextQuanHuyen = value.idQuanHuyen!.ten.toString();
-          //Phường/Xã
-          hintTextPhuongXa = value.idPhuongXa!.ten.toString();
+          //mappingAddress
+          mappingAddress();
 
           isLoading = false;
           isLoadingImage = false;
@@ -164,6 +153,25 @@ class V4InfoController extends GetxController {
   }
 
   ///
+  ///mapping address
+  ///
+  Future<void> mappingAddress() async {
+    //get user id
+    idUser = (await sl.get<SharedPreferenceHelper>().userId)!;
+
+    if (nhanVienResponse != null) {
+      getTinhTp(isFisrt: true);
+      getQuanHuyen(
+          id: nhanVienResponse!.idTinhTp!.id.toString(), isFisrt: true);
+      getPhuongXa(
+          id: nhanVienResponse!.idQuanHuyen!.id.toString(), isFisrt: true);
+      print(quanHuyen.toString());
+    } else {
+      getTinhTp();
+    }
+  }
+
+  ///
   ///on changed sex
   ///
   void onChangedSex(String? value) {
@@ -174,39 +182,52 @@ class V4InfoController extends GetxController {
   ///
   ///Thay đổi tỉnh thành
   ///
-  void onChangedTinhThanh(TinhTpResponse tinhTp) {
-    this.tinhTp = tinhTp;
-    getQuanHuyen(id: tinhTp.id);
+  void onChangedTinhThanh(TinhTpResponse? value) {
+    tinhTp = value;
+
+    //clear list
+    quanHuyen = null;
+    phuongXa = null;
+    quanHuyenList.clear();
     phuongXaList.clear();
+
+    getQuanHuyen(id: tinhTp!.id.toString());
     update();
   }
 
   ///
   ///Thay đổi quận huyện
   ///
-  void onChangedQuanHuyen(QuanHuyenResponse quanHuyen) {
-    this.quanHuyen = quanHuyen;
-    getPhuongXa(id: quanHuyen.id);
+  void onChangedQuanHuyen(QuanHuyenResponse? value) {
+    quanHuyen = value;
+
+    //clear list
+    phuongXa = null;
+    phuongXaList.clear();
+    getPhuongXa(id: quanHuyen!.id.toString());
     update();
   }
 
   ///
   ///Thay đổi phường xã
   ///
-  void onChangedPhuongXa(PhuongXaResponse phuongXa) {
-    this.phuongXa = phuongXa;
+  void onChangedPhuongXa(PhuongXaResponse? value) {
+    phuongXa = value;
     update();
   }
 
   ///
   ///Get tỉnh/Tp
   ///
-  void getTinhTp() {
+  void getTinhTp({bool? isFisrt = false}) {
+    //get Tỉnh TP
     tinhTpProvider.all(
       onSuccess: (value) {
-        tinhTpList.clear();
-        if (value.isNotEmpty) {
-          tinhTpList.addAll(value);
+        tinhTpList = value;
+
+        if (nhanVienResponse != null && isFisrt == true) {
+          tinhTp = tinhTpList[tinhTpList.indexWhere(
+              (element) => element.id == nhanVienResponse!.idTinhTp!.id)];
         }
         isLoading = false;
         update();
@@ -220,17 +241,19 @@ class V4InfoController extends GetxController {
   ///
   /// Lấy tất cả quận huyện
   ///
-  void getQuanHuyen({String? id}) {
+  void getQuanHuyen({required String id, bool? isFisrt = false}) {
     quuanHuyenProvider.paginate(
         filter: '&idTinhTp=$id',
         limit: 100,
         page: 1,
         onSuccess: (data) {
-          quanHuyenList.clear();
-          if (data.isNotEmpty) {
-            quanHuyenList.addAll(data);
-            quanHuyen = quanHuyenList.first;
+          quanHuyenList = data;
+
+          if (nhanVienResponse != null && isFisrt == true) {
+            quanHuyen = quanHuyenList[quanHuyenList.indexWhere(
+                (element) => element.id == nhanVienResponse!.idQuanHuyen!.id)];
           }
+
           isLoading = false;
           update();
         },
@@ -242,17 +265,18 @@ class V4InfoController extends GetxController {
   ///
   /// Lấy tất cả phường xã
   ///
-  void getPhuongXa({String? id}) {
+  void getPhuongXa({required String id, bool? isFisrt = false}) {
     phuongXaProvider.paginate(
         filter: '&idQuanHuyen=$id',
         limit: 100,
         page: 1,
         onSuccess: (value) {
-          phuongXaList.clear();
-          if (value.isNotEmpty) {
-            phuongXaList.addAll(value);
-            phuongXa = phuongXaList.first;
+          phuongXaList = value;
+          if (nhanVienResponse != null && isFisrt == true) {
+            phuongXa = phuongXaList[phuongXaList.indexWhere(
+                (element) => element.id == nhanVienResponse!.idPhuongXa!.id)];
           }
+
           isLoading = false;
           update();
         },
@@ -262,106 +286,116 @@ class V4InfoController extends GetxController {
   }
 
   ///
-  ///Pick Image Avatar
+  /// Pick Avatar Image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      avatarFile = File(image.path);
-      uploadImage(image: avatarFile!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print('V4Infor pickImages Avatar addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.hinhDaiDien = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  ///Upload Image Avatar
+  /// Pick front of Identity card
   ///
-  void uploadImage({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.hinhDaiDien = value.data;
-        EasyLoading.dismiss();
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
-  ///Pick CMND mặt trước
-  ///
-  Future pickIndentiryFront() async {
+  Future pickIdentityFront() async {
     try {
-      final imageFront =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (imageFront == null) return;
-      imageIndentityFront = File(imageFront.path);
-      uploadIndentiryFront(image: imageIndentityFront!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print(
+              'V4Infor pickImages Front Identity Card addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.anhMTCMND = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  ///Upload CMND mặt trước
+  /// Pick After of Identity card
   ///
-  void uploadIndentiryFront({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.anhMTCMND = value.data;
-        EasyLoading.dismiss();
-        update();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
-  }
-
-  ///
-  ///Pick CMND mặt sau
-  ///
-  Future pickIndentiryAfter() async {
+  Future pickIdentityAfter() async {
     try {
-      final imageAfter =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (imageAfter == null) return;
-      imageIndentityAfter = File(imageAfter.path);
-      uploadIndentiryAfter(image: imageIndentityAfter!);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print(
+              'V4Infor pickImages After Identity Card addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            nhanVienRequest.anhMSCMND = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
-  }
-
-  ///
-  ///Upload CMND mặt sau
-  ///
-  void uploadIndentiryAfter({required File image}) {
-    // show loading
-    EasyLoading.show(status: 'Loading...');
-    imageUpdateProvider.add(
-      file: image,
-      onSuccess: (value) {
-        nhanVienRequest.anhMSCMND = value.data;
-        EasyLoading.dismiss();
-      },
-      onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
-      },
-    );
   }
 
   ///
@@ -392,21 +426,6 @@ class V4InfoController extends GetxController {
     if (addressController.text.isEmpty) {
       //show snackbar check địa chỉ
       Alert.error(message: 'Vui lòng nhập địa chỉ thường trú hiện tại!');
-      return false;
-    }
-    if (tinhTp == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
-      return false;
-    }
-    if (quanHuyen == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
-      return false;
-    }
-    if (phuongXa == null) {
-      //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
       return false;
     }
     return true;
@@ -440,7 +459,7 @@ class V4InfoController extends GetxController {
         data: nhanVienRequest,
         onSuccess: (value) {
           EasyLoading.dismiss();
-          Get.back(result: nhanVienResponse.hinhDaiDien);
+          Get.back(result: true);
 
           //show dialog
           showAnimatedDialog(
@@ -459,9 +478,5 @@ class V4InfoController extends GetxController {
         },
       );
     }
-  }
-
-  void backHome() {
-    Get.back(result: nhanVienResponse.hinhDaiDien);
   }
 }
