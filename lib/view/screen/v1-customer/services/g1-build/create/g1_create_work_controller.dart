@@ -60,8 +60,8 @@ class V1G1CreateWorkController extends GetxController{
       return;
     } 
     if(endTimeController.text.toString().isNotEmpty){
-      if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) < 0){
-        Alert.info(message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
+      if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
+        Alert.info(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return;
       }
     }

@@ -176,8 +176,8 @@ class V1G6CreateServiceController extends GetxController{
       Alert.info(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
     }else if(endTimeController.text.toString().isEmpty){
       Alert.info(message: "Ngày kết thức dự kiến không được để trống");
-    }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) < 0){
-      Alert.info(message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
+    }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
+      Alert.info(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
     }else if(workDescController.text.toString().isEmpty){
       Alert.info(message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{

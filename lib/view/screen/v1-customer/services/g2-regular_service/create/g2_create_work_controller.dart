@@ -176,8 +176,8 @@ class V1G2CreateWorkController extends GetxController {
       Alert.info(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     }else if(endTime.text.toString().isNotEmpty){
-      if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) < 0){
-        Alert.info(message: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
+      if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
+        Alert.info(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return false;
       }else if(workDesc.text.toString().isEmpty){
         Alert.info(message: "Mô tả công việc không được để trống");
