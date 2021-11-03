@@ -9,6 +9,7 @@ class GetXSmartRefreshPage extends StatefulWidget {
   final VoidFutureCallBack onRefresh;
   final bool? enablePullUp;
   final bool? enablePullDown;
+  final bool? primary;
   final Widget child;
 
   const GetXSmartRefreshPage({
@@ -17,6 +18,7 @@ class GetXSmartRefreshPage extends StatefulWidget {
     required this.onRefresh,
     this.enablePullUp,
     this.enablePullDown,
+    this.primary,
     required this.child,
   }) : super(key: key);
 
@@ -52,6 +54,7 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
     super.build(context);
     if (!mounted) return const SizedBox();
     return SmartRefresher(
+      primary: widget.primary ?? false,
       scrollController: scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       key: Key('SmartRefresher_' + widget.key.toString()),
