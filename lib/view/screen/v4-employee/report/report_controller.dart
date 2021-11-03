@@ -1,5 +1,3 @@
-// import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,28 +9,32 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
+import 'package:template/utils/alert.dart';
 
 class V4ReportController extends GetxController
     with SingleGetTickerProviderMixin {
   GetIt sl = GetIt.instance;
   BaoCaoNhanVienResponse? baoCaoNhanVienList;
 
-  BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
+  BaoCaoNhanVienProvider baoCaoNhanVienProvider =
+      GetIt.I.get<BaoCaoNhanVienProvider>();
 
   //Khai báo model báo cáo
   List<BaoCaoNhanVienResponse> baoCaoNhanVienModelList = [];
 
-
-  List<BaoCaoNhanVienModel> baoCaoNhanVienModel= [
-  BaoCaoNhanVienModel(id:"0",tieuDe: "Tất cả"),
-  BaoCaoNhanVienModel(id:"1",tieuDe: "Báo cáo yêu cầu"),
-  BaoCaoNhanVienModel(id:"2",tieuDe: "Báo cáo tuần"),
+  // Khai báo Danh sách lọc
+  List<BaoCaoNhanVienModel> baoCaoNhanVienModel = [
+    BaoCaoNhanVienModel(id: "0", tieuDe: "Tất cả"),
+    BaoCaoNhanVienModel(id: "1", tieuDe: "Báo cáo yêu cầu"),
+    BaoCaoNhanVienModel(id: "2", tieuDe: "Báo cáo tuần"),
   ];
+
   BaoCaoNhanVienModel? nhanVienModel;
 
-
+  // khai báo isUser
+  String idUser = '';
+  // khai báo idReport
+  String idReport = '';
   //khai báo isLoading
   bool isLoading = true;
 
@@ -54,120 +56,131 @@ class V4ReportController extends GetxController
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    nhanVienModel=baoCaoNhanVienModel.first;
+    getIdUser();
     getReport(isRefresh: true, value: "1");
+    getIdReport();
   }
 
+  ///
+  /// get id report
+  ///
+  void getIdReport() {
+    sl.get<SharedPreferenceHelper>().idReport.then((value) {
+      idReport = value!;
+    });
+  }
+
+  ///
+  /// đóng TextEditingController
+  ///
   @override
   void onClose() {
     // TODO: implement onClose
-    super.onClose();
     refreshController.dispose();
+    super.onClose();
   }
+
+  ///
+  /// get id user
+  ///
+  void getIdUser() {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      idUser = id!;
+    });
+  }
+
   ///
   /// lấy danh sách báo báo theo loai
   ///
-  void getReport({required bool isRefresh, required String value} ) {
-    //isRefresh
-    if (isRefresh) {
-      pageMax = 1;
-      baoCaoNhanVienModelList.clear();
-    } else {
-      //is load more
-      pageMax++;
-    }
-    String filter = "";
-    if(value == "0"){
-      filter = '&sortBy=created_at:desc';
-    }
-    else{
-      filter = '&loai=$value&sortBy=created_at:desc';
-    }
-    baoCaoNhanVienProvider.paginate(
-        page: pageMax,
-        limit: limitMax,
-        filter: filter,
-        onSuccess: (value) {
-          //check isEmpty
-          if (value.isEmpty) {
-            refreshController.loadNoData();
-          } else {
-            //is Refresh
-            if (isRefresh) {
-              baoCaoNhanVienModelList = value;
-              refreshController.refreshCompleted();
+  void getReport({required bool isRefresh, required String value}) {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      //isRefresh
+      if (isRefresh) {
+        pageMax = 1;
+        baoCaoNhanVienModelList.clear();
+      } else {
+        //is load more
+        pageMax++;
+      }
+      String filter = "";
+      if (value == "0") {
+        filter = '&sortBy=created_at:desc';
+      } else {
+        filter = '&loai=$value&idNhanVien=$id&sortBy=created_at:desc';
+      }
+      baoCaoNhanVienProvider.paginate(
+          page: pageMax,
+          limit: limitMax,
+          filter: filter,
+          onSuccess: (value) {
+            //check isEmpty
+            if (value.isEmpty) {
+              refreshController.loadNoData();
             } else {
-              //is load more
-              baoCaoNhanVienModelList = baoCaoNhanVienModelList.toList() + value;
-              refreshController.loadComplete();
+              //is Refresh
+              if (isRefresh) {
+                baoCaoNhanVienModelList = value;
+                refreshController.refreshCompleted();
+              } else {
+                //is load more
+                baoCaoNhanVienModelList =
+                    baoCaoNhanVienModelList.toList() + value;
+                refreshController.loadComplete();
+              }
             }
-          }
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-        });
+            isLoading = false;
+            update();
+          },
+          onError: (error) {
+            print("V4ReportController getReport onError $error");
+          });
+    });
   }
-  ///
-  ///Click to onchanged
-  ///
-  void onChanged ({required  BaoCaoNhanVienModel newValue}) {
-    nhanVienModel = newValue;
-    getReport(isRefresh: true, value: newValue.id.toString());
-    update();
 
-  }
+  // ///
+  // ///Click to onchanged filter
+  // ///
+  // void onChanged ({required  BaoCaoNhanVienModel newValue}) {
+  //   nhanVienModel = newValue;
+  //   getReport(isRefresh: true, value: "1");
+  //   update();
+  //
+  // }
   ///
   /// Set reload List
   ///
   Future<void> onRefresh() async {
     refreshController.resetNoData();
-    getReport(isRefresh: true,value: nhanVienModel!.id.toString());
+    getReport(isRefresh: true, value: "1");
   }
+
   ///
   /// Set load more List
   ///
   Future<void> onLoading() async {
-    getReport(isRefresh: false,value: nhanVienModel!.id.toString() );
-  }
-  ///
-  ///Click to daily report
-  ///
-  void onClickToDailyReport(BuildContext context) {
-    Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT)!.then((value) {
-      if (value == true) {
-        showAnimatedDialog(
-          context,
-          const MyDialog(
-            icon: Icons.check,
-            title: "Thành công",
-            description: "Báo cáo thành công!",
-          ),
-          dismissible: false,
-          isFlip: true,
-        );
-        update();
-      }
-    });
+    getReport(isRefresh: false, value: "1");
   }
 
+  // ///
+  // ///Click to daily report
+  // ///
+  // void onClickToDailyReport(BuildContext context) {
+  //   Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT)!.then((value) {
+  //     if (value == true) {
+  //       Alert.success(
+  //           message:
+  //           'Thành công');
+  //       update();
+  //     }
+  //   });
+  // }
   ///
   ///Click to report on request
   ///
   void onClickToReportOnRequest(BuildContext context) {
     Get.toNamed(AppRoutes.V4_ADD_REPORT_ON_REQUEST)!.then((value) {
       if (value == true) {
-        showAnimatedDialog(
-          context,
-          const MyDialog(
-            icon: Icons.check,
-            title: "Thành công",
-            description: "Báo cáo thành công!",
-          ),
-          dismissible: false,
-          isFlip: true,
-        );
+        Alert.success(message: 'Thành công');
         update();
         getReport(isRefresh: true, value: "1");
       }
@@ -179,16 +192,19 @@ class V4ReportController extends GetxController
   ///
   String formatDateTime({required String dateTime}) {
     return DateConverter.isoStringToLocalFullDateOnly(
-        dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
         .toString();
   }
+
   ///
-  ///go to  detail notifications page
+  ///go to  detail report page
   ///
-  void onClickDetailReport(String idUser) {
+  void onClickDetailReport(String idUser, String idReport) {
     sl.get<SharedPreferenceHelper>().saveUserId(idUser);
+    sl.get<SharedPreferenceHelper>().saveIdReport(id: idReport);
     Get.toNamed(AppRoutes.V4_DETAIL_REPORT)!.then((value) {
-      if (value == true){
+      if (value == true) {
+        update();
         getReport(isRefresh: true, value: "1");
       }
     });

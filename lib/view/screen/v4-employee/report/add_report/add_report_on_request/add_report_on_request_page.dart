@@ -8,10 +8,7 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
-import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_controller.dart';
-import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_controller.dart';
 
 class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
   @override
@@ -79,10 +76,10 @@ Widget _projectReportOnRequest(
     labelBold: true,
     hint: 'Vui lòng chọn dự án',
     label: 'Tên dự án',
-    data: controller.duAnNhanVienList1,
+    data: controller.duAnNhanVienListAdd,
     obligatory: true,
     onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
-    value: controller.duAnNhanVien1,
+    value: controller.duAnNhanVienAdd,
     fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
     padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),

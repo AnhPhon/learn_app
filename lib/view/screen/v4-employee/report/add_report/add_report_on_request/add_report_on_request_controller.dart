@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
@@ -9,23 +9,22 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/alert.dart';
 
-class V4AddReportOnRequestController extends GetxController{
+class V4AddReportOnRequestController extends GetxController {
   GetIt sl = GetIt.instance;
-  BaoCaoNhanVienProvider baoCaoNhanVienProvider = GetIt.I.get<BaoCaoNhanVienProvider>();
+  // Báo cáo nhân viên
+  BaoCaoNhanVienProvider baoCaoNhanVienProvider =
+      GetIt.I.get<BaoCaoNhanVienProvider>();
   List<BaoCaoNhanVienResponse> baoCaoNhanVienList = [];
-
-
-  DuAnNhanVienProvider duAnNhanVienProvider = GetIt.I.get<DuAnNhanVienProvider>();
-
   // Dự án của nhân viên
-  List<DuAnNhanVienResponse> duAnNhanVienList1 = [];
-  DuAnNhanVienResponse? duAnNhanVien1;
+  DuAnNhanVienProvider duAnNhanVienProvider =
+      GetIt.I.get<DuAnNhanVienProvider>();
+  List<DuAnNhanVienResponse> duAnNhanVienListAdd = [];
+  DuAnNhanVienResponse? duAnNhanVienAdd;
 
   //khai báo biến isLoading
   bool isLoading = true;
-
 
   //Khai báo Thời gian báo cáo phải trùng với thời gian hiện tại
   final timeReportOnRequest = TextEditingController(
@@ -33,29 +32,53 @@ class V4AddReportOnRequestController extends GetxController{
   final projectReportOnRequest = TextEditingController();
   final contentReportOnRequest = TextEditingController();
 
-  String idUser= '';
+  String idUser = '';
+  String idReport = '';
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getidUser();
+    getidReport();
     getDuAnNhanVien();
   }
+
+  ///
+  /// đóng các textEditingController
+  ///
+  @override
+  void onClose() {
+    // TODO: implement onInit
+    super.onClose();
+    contentReportOnRequest.dispose();
+    projectReportOnRequest.dispose();
+    timeReportOnRequest.dispose();
+  }
+
+  ///
+  /// get id report
+  ///
+  void getidReport() {
+    sl.get<SharedPreferenceHelper>().idReport.then((value) {
+      idReport = value!;
+    });
+  }
+
   ///
   /// get id user
   ///
   void getidUser() {
     sl.get<SharedPreferenceHelper>().userId.then((value) {
       idUser = value!;
-      print(value);
     });
   }
+
   ///
   ///Thay đổi dự án nhân viên
   ///
   void onChangedDuAnNhanVien(DuAnNhanVienResponse duAnNhanVien) {
-    this.duAnNhanVien1 = duAnNhanVien;
+    duAnNhanVienAdd = duAnNhanVien;
     update();
   }
 
@@ -65,15 +88,15 @@ class V4AddReportOnRequestController extends GetxController{
   void getDuAnNhanVien() {
     duAnNhanVienProvider.all(
       onSuccess: (value) {
-        duAnNhanVienList1.clear();
+        duAnNhanVienListAdd.clear();
         if (value.isNotEmpty) {
-          duAnNhanVienList1.addAll(value);
+          duAnNhanVienListAdd.addAll(value);
         }
         isLoading = false;
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V4AddReportOnRequestController getDuAnNhanVien onError $error");
         update();
       },
     );
@@ -84,49 +107,43 @@ class V4AddReportOnRequestController extends GetxController{
   ///
   bool validate() {
     if (contentReportOnRequest.text.toString().isEmpty) {
-      Get.snackbar(
-        "Nội dung báo cáo không hợp lệ!",
-        "Vui lòng nhập nội dung báo cáo hợp lệ!",
-        duration: const Duration(seconds: 2),
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(
-          Icons.error_outline,
-        ),
-      );
+      Alert.error(message: 'Vui lòng nhập nội dung báo cáo hợp lệ!');
       return false;
     }
-    if (duAnNhanVien1 == null) {
-      Get.snackbar(
-        "Dự án không hơp lệ!", // title
-        "Vui lòng chọn dự án hợp lệ!", // message
-        backgroundColor: ColorResources.ERROR_NOTICE_SNACKBAR,
-        icon: const Icon(Icons.error_outline),
-        shouldIconPulse: true,
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-      );
+    if (duAnNhanVienAdd == null) {
+      Alert.error(message: 'Vui lòng chọn dự án hợp lệ!');
       return false;
     }
     return true;
   }
+
   ///
   ///Báo cáo
   ///
   void onBaoCao() {
     if (validate()) {
+      EasyLoading.show(status: 'loading...');
       baoCaoNhanVienProvider.add(
         data: BaoCaoNhanVienRequest(
           idNhanVien: idUser,
-          idDuAnNhanVien: duAnNhanVien1!.id,
+          idDuAnNhanVien: duAnNhanVienAdd!.id,
           loai: "1",
           noiDung: contentReportOnRequest.text,
         ),
         onSuccess: (value) {
+          sl
+              .get<SharedPreferenceHelper>()
+              .saveIdReport(id: value.id.toString());
+          sl
+              .get<SharedPreferenceHelper>()
+              .saveUserId(value.idNhanVien.toString());
+          Alert.success(message: 'Báo cáo thành công');
+          EasyLoading.dismiss();
           Get.back(result: true);
         },
         onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
-          update();
+          print("V4AddReportOnRequestController onBaoCao onError $error");
+          EasyLoading.dismiss();
         },
       );
     }
