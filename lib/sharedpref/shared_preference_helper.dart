@@ -352,16 +352,29 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.idNewWork);
   }
 
-  // Báo cáo chi tiết : -----------------------------------------------
-  Future<String?> get idReport async {
-    return _sharedPreference.getString(Preferences.idReport);
+  // Chấm công: ----------------------------------------------------------
+  Future<bool?> get isSelected async {
+    return _sharedPreference.getBool(Preferences.idSelected);
   }
 
-  Future<bool> saveIdReport({required String id}) async {
-    return _sharedPreference.setString(Preferences.idReport, id);
+  Future<bool> saveIsSelected({required bool isSelected}) async {
+    return _sharedPreference.setBool(Preferences.idSelected, isSelected);
   }
 
-  Future<bool> removeIdReport() async {
+  Future<bool> removeIsSelected() async {
+    return _sharedPreference.remove(Preferences.idSelected);
+  }
+
+  // Báo cáo: ----------------------------------------------------------
+  Future<bool?> get isReport async {
+    return _sharedPreference.getBool(Preferences.idReport);
+  }
+
+  Future<bool> saveIsReport({required bool isReport}) async {
+    return _sharedPreference.setBool(Preferences.idReport, isReport);
+  }
+
+  Future<bool> removeIsReport() async {
     return _sharedPreference.remove(Preferences.idReport);
   }
 }

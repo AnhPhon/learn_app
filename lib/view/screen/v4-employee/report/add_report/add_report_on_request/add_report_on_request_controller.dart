@@ -33,14 +33,12 @@ class V4AddReportOnRequestController extends GetxController {
   final contentReportOnRequest = TextEditingController();
 
   String idUser = '';
-  String idReport = '';
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getidUser();
-    getidReport();
     getDuAnNhanVien();
   }
 
@@ -54,15 +52,6 @@ class V4AddReportOnRequestController extends GetxController {
     contentReportOnRequest.dispose();
     projectReportOnRequest.dispose();
     timeReportOnRequest.dispose();
-  }
-
-  ///
-  /// get id report
-  ///
-  void getidReport() {
-    sl.get<SharedPreferenceHelper>().idReport.then((value) {
-      idReport = value!;
-    });
   }
 
   ///
@@ -131,12 +120,6 @@ class V4AddReportOnRequestController extends GetxController {
           noiDung: contentReportOnRequest.text,
         ),
         onSuccess: (value) {
-          sl
-              .get<SharedPreferenceHelper>()
-              .saveIdReport(id: value.id.toString());
-          sl
-              .get<SharedPreferenceHelper>()
-              .saveUserId(value.idNhanVien.toString());
           Alert.success(message: 'Báo cáo thành công');
           EasyLoading.dismiss();
           Get.back(result: true);

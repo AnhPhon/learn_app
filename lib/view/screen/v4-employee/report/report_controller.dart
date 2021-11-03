@@ -33,8 +33,6 @@ class V4ReportController extends GetxController
 
   // khai báo isUser
   String idUser = '';
-  // khai báo idReport
-  String idReport = '';
   //khai báo isLoading
   bool isLoading = true;
 
@@ -58,16 +56,6 @@ class V4ReportController extends GetxController
     super.onInit();
     getIdUser();
     getReport(isRefresh: true, value: "1");
-    getIdReport();
-  }
-
-  ///
-  /// get id report
-  ///
-  void getIdReport() {
-    sl.get<SharedPreferenceHelper>().idReport.then((value) {
-      idReport = value!;
-    });
   }
 
   ///
@@ -199,10 +187,9 @@ class V4ReportController extends GetxController
   ///
   ///go to  detail report page
   ///
-  void onClickDetailReport(String idUser, String idReport) {
+  void onClickDetailReport(String idUser) {
     sl.get<SharedPreferenceHelper>().saveUserId(idUser);
-    sl.get<SharedPreferenceHelper>().saveIdReport(id: idReport);
-    Get.toNamed(AppRoutes.V4_DETAIL_REPORT)!.then((value) {
+    Get.arguments(AppRoutes.V4_DETAIL_REPORT)!.then((value) {
       if (value == true) {
         update();
         getReport(isRefresh: true, value: "1");

@@ -20,16 +20,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        leading: IconButton(
-          onPressed: () {
-            controller.backHome();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: ColorResources.WHITE,
-          ),
-        ),
+      appBar: const AppBarWidget(
         title: "Thông tin cá nhân",
       ),
       body: SingleChildScrollView(
@@ -197,6 +188,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _name(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -225,6 +217,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _birthday(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -273,7 +266,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         0,
       ),
       isBorder: false,
@@ -281,7 +274,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       allowEdit: false,
       label: 'Số CMND/Căn cước',
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.indentityCardController,
     );
   }
@@ -292,7 +285,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   Widget _dateIndentityCard(V4InfoController controller, BuildContext context) {
     return InputWidget(
       padding: const EdgeInsets.fromLTRB(
-        Dimensions.PADDING_SIZE_DEFAULT,
+        0,
         0,
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -303,7 +296,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       allowEdit: false,
       label: "Ngày cấp",
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.dateIndentityController,
     );
   }
@@ -341,6 +334,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _phoneNumber(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -374,16 +368,18 @@ class V4InfoPage extends GetView<V4InfoController> {
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
       ),
+      obligatory: true,
       textInputType: TextInputType.emailAddress,
       suffixIcon: const Icon(
         Icons.edit_outlined,
         size: Dimensions.ICON_SIZE_SMALL,
         color: ColorResources.PRIMARYCOLOR,
       ),
+      allowEdit: false,
       isShadow: true,
       isBorder: false,
       isColorFieldWhite: true,
-      label: 'Email(nếu có)',
+      label: 'Email',
       width: DeviceUtils.getScaledWidth(context, 0.5),
       textEditingController: controller.emailController,
     );
@@ -394,6 +390,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _addresss(V4InfoController controller, BuildContext context) {
     return InputWidget(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -421,6 +418,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _city(V4InfoController controller, BuildContext context) {
     return DropDownButton1<TinhTpResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -434,7 +432,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Tỉnh/Tp',
       data: controller.tinhTpList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedTinhThanh(value!),
+      onChanged: controller.onChangedTinhThanh,
       value: controller.tinhTp,
       width: 0.42,
       isBoldHintText: true,
@@ -446,6 +444,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _district(V4InfoController controller, BuildContext context) {
     return DropDownButton1<QuanHuyenResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         0,
         0,
@@ -459,7 +458,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Quận/Huyện',
       data: controller.quanHuyenList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedQuanHuyen(value!),
+      onChanged: controller.onChangedQuanHuyen,
       value: controller.quanHuyen,
       width: 0.42,
       isBoldHintText: true,
@@ -471,6 +470,7 @@ class V4InfoPage extends GetView<V4InfoController> {
   ///
   Widget _ward(V4InfoController controller, BuildContext context) {
     return DropDownButton1<PhuongXaResponse>(
+      fillColor: ColorResources.WHITE,
       padding: const EdgeInsets.fromLTRB(
         Dimensions.PADDING_SIZE_DEFAULT,
         0,
@@ -484,7 +484,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       label: 'Phường/Xã',
       data: controller.phuongXaList,
       obligatory: true,
-      onChanged: (value) => controller.onChangedPhuongXa(value!),
+      onChanged: controller.onChangedPhuongXa,
       value: controller.phuongXa,
       width: 0.42,
       isBoldHintText: true,
@@ -522,7 +522,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         GestureDetector(
           onTap: () {
-            controller.pickIndentiryFront();
+            controller.pickIdentityFront();
           },
           child: Container(
             height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -540,26 +540,21 @@ class V4InfoPage extends GetView<V4InfoController> {
                 ),
               ],
             ),
-            child: controller.imageIndentityFront != null
-                ? Image.file(
-                    controller.imageIndentityFront!,
+            child: FadeInImage.assetNetwork(
+              placeholder: Images.placeholder,
+              image: controller.nhanVienResponse!.anhMTCMND.toString(),
+              fit: BoxFit.cover,
+              imageErrorBuilder: (c, o, s) => Container(
+                height: DeviceUtils.getScaledHeight(context, 0.16),
+                width: DeviceUtils.getScaledWidth(context, 0.38),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Images.placeholder),
                     fit: BoxFit.cover,
-                  )
-                : FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse.anhMTCMND.toString(),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => Container(
-                      height: DeviceUtils.getScaledHeight(context, 0.16),
-                      width: DeviceUtils.getScaledWidth(context, 0.38),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Images.placeholder),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -590,7 +585,7 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         GestureDetector(
           onTap: () {
-            controller.pickIndentiryAfter();
+            controller.pickIdentityAfter();
           },
           child: Container(
             height: DeviceUtils.getScaledHeight(context, 0.16),
@@ -607,26 +602,21 @@ class V4InfoPage extends GetView<V4InfoController> {
                 ),
               ],
             ),
-            child: controller.imageIndentityAfter != null
-                ? Image.file(
-                    controller.imageIndentityAfter!,
+            child: FadeInImage.assetNetwork(
+              placeholder: Images.placeholder,
+              image: controller.nhanVienResponse!.anhMSCMND.toString(),
+              fit: BoxFit.cover,
+              imageErrorBuilder: (c, o, s) => Container(
+                height: DeviceUtils.getScaledHeight(context, 0.16),
+                width: DeviceUtils.getScaledWidth(context, 0.38),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(Images.placeholder),
                     fit: BoxFit.cover,
-                  )
-                : FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder,
-                    image: controller.nhanVienResponse.anhMSCMND.toString(),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (c, o, s) => Container(
-                      height: DeviceUtils.getScaledHeight(context, 0.16),
-                      width: DeviceUtils.getScaledWidth(context, 0.38),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Images.placeholder),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -656,22 +646,17 @@ class V4InfoPage extends GetView<V4InfoController> {
       children: [
         //image
         GestureDetector(
-          onTap: () => controller.pickImage(),
+          onTap: () => controller.pickImages(),
           child: Container(
             height: DeviceUtils.getScaledSize(context, .2),
             width: DeviceUtils.getScaledSize(context, .2),
             child: ClipOval(
-              child: controller.avatarFile != null
-                  ? Image.file(
-                      controller.avatarFile!,
-                      fit: BoxFit.cover,
-                    )
-                  : FadeInImage.assetNetwork(
-                      placeholder: Images.placeholder,
-                      image: controller.nhanVienResponse.hinhDaiDien.toString(),
-                      fit: BoxFit.cover,
-                      imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                          backgroundImage: AssetImage(Images.placeholder))),
+              child: FadeInImage.assetNetwork(
+                  placeholder: Images.placeholder,
+                  image: controller.nhanVienResponse!.hinhDaiDien.toString(),
+                  fit: BoxFit.cover,
+                  imageErrorBuilder: (c, o, s) => const CircleAvatar(
+                      backgroundImage: AssetImage(Images.placeholder))),
             ),
           ),
         ),
@@ -681,7 +666,7 @@ class V4InfoPage extends GetView<V4InfoController> {
           right: 0,
           top: Dimensions.PADDING_SIZE_EXTRA_LARGE * 2,
           child: GestureDetector(
-            onTap: () => controller.pickImage(),
+            onTap: () => controller.pickImages(),
             child: Container(
               padding:
                   const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),

@@ -36,8 +36,6 @@ class V4DetailReportController extends GetxController {
   bool isLoading = true;
   // idUser
   String idUser = '';
-  // idReport
-  String idReport = '';
 
   //khai báo TextEditingController
   TextEditingController contentDetailReport = TextEditingController();
@@ -50,18 +48,15 @@ class V4DetailReportController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    //get agument
+    if (Get.arguments != null) {
+      detailReportResponse = Get.arguments as BaoCaoNhanVienResponse;
+    }
+    // detailReportResponse = (Get.arguments != null)
+    //     ? Get.arguments as BaoCaoNhanVienResponse
+    //     : null;
     getidUser();
-    getIdReport();
     getThongTinBaoCao();
-  }
-
-  ///
-  /// get id report
-  ///
-  void getIdReport() {
-    sl.get<SharedPreferenceHelper>().idReport.then((value) {
-      idReport = value!;
-    });
   }
 
   ///
@@ -89,7 +84,6 @@ class V4DetailReportController extends GetxController {
   Future<void> mappingAddress() async {
     //get user id
     idUser = (await sl.get<SharedPreferenceHelper>().userId)!;
-    idReport = (await sl.get<SharedPreferenceHelper>().idReport)!;
     if (detailReportResponse != null) {
       getBaoCaoNhanVien(isFisrt: true);
     } else {
@@ -130,30 +124,26 @@ class V4DetailReportController extends GetxController {
   ///Get thông tin báo cáo
   ///
   void getThongTinBaoCao() {
-    sl.get<SharedPreferenceHelper>().idReport.then((id) {
-      //get IdReport
-      idReport = id!;
-      baoCaoNhanVienProvider.find(
-        id: idReport,
-        onSuccess: (value) {
-          detailReportResponse = value;
-          //ngày
-          timeDetailReport = TextEditingController(
-            text: DateConverter.formatDateTime(
-              value.createdAt.toString(),
-            ),
-          );
-          // nội dung
-          contentDetailReport = TextEditingController(text: value.noiDung);
-          mappingAddress();
-          isLoading = false;
-          update();
-        },
-        onError: (error) {
-          print("V4DetailReportController getThongTinBaoCao onError $error");
-        },
-      );
-    });
+    baoCaoNhanVienProvider.find(
+      id: detailReportResponse!.id!,
+      onSuccess: (value) {
+        detailReportResponse = value;
+        //ngày
+        timeDetailReport = TextEditingController(
+          text: DateConverter.formatDateTime(
+            value.createdAt.toString(),
+          ),
+        );
+        // nội dung
+        contentDetailReport = TextEditingController(text: value.noiDung);
+        mappingAddress();
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("V4DetailReportController getThongTinBaoCao onError $error");
+      },
+    );
   }
 
   ///
@@ -176,40 +166,32 @@ class V4DetailReportController extends GetxController {
   ///
   void onUpdate(BuildContext context) {
     if (validate()) {
-      sl.get<SharedPreferenceHelper>().idReport.then((idReport) {
-        EasyLoading.show(status: 'loading...');
-        // set data
-        detailReportResponse!.idDuAnNhanVien!.createdAt =
-            DateConverter.formatDate(
-          DateConverter.convertStringddMMyyyyToDate(
-            timeDetailReport.text.toString(),
-          ),
-        );
-        baoCaoNhanVienProvider.update(
-          data: BaoCaoNhanVienRequest(
-            id: idReport,
-            idNhanVien: idUser,
-            idDuAnNhanVien: duAnNhanVien!.id,
-            noiDung: contentDetailReport.text,
-          ),
-          onSuccess: (value) {
-            sl
-                .get<SharedPreferenceHelper>()
-                .saveIdReport(id: value.id.toString());
-            sl
-                .get<SharedPreferenceHelper>()
-                .saveUserId(value.idNhanVien.toString());
-            Alert.success(message: 'Cập nhật thành công');
-            EasyLoading.dismiss();
-            Get.back(result: true);
-            update();
-          },
-          onError: (error) {
-            print("V4DetailReportController onUpdate onError $error");
-            EasyLoading.dismiss();
-          },
-        );
-      });
+      EasyLoading.show(status: 'loading...');
+      // set data
+      detailReportResponse!.idDuAnNhanVien!.createdAt =
+          DateConverter.formatDate(
+        DateConverter.convertStringddMMyyyyToDate(
+          timeDetailReport.text.toString(),
+        ),
+      );
+      baoCaoNhanVienProvider.update(
+        data: BaoCaoNhanVienRequest(
+          id: detailReportResponse!.id,
+          idNhanVien: idUser,
+          idDuAnNhanVien: duAnNhanVien!.id,
+          noiDung: contentDetailReport.text,
+        ),
+        onSuccess: (value) {
+          Alert.success(message: 'Cập nhật thành công');
+          EasyLoading.dismiss();
+          Get.back(result: true);
+          update();
+        },
+        onError: (error) {
+          print("V4DetailReportController onUpdate onError $error");
+          EasyLoading.dismiss();
+        },
+      );
     }
   }
 

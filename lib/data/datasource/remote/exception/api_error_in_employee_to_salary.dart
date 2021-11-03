@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:template/data/model/response/base/error_response.dart';
-import 'package:template/utils/color_resources.dart';
 
-mixin ApiErrorHandler {
+import 'package:template/data/model/response/base/error_response.dart';
+import 'package:template/utils/alert.dart';
+
+mixin ApiErrorHandlerInEmployee {
   static dynamic getMessage(dynamic error) {
     dynamic errorDescription = '';
     if (error is Exception) {
@@ -29,10 +26,13 @@ mixin ApiErrorHandler {
               break;
             case DioErrorType.response:
               switch (error.response!.statusCode) {
+                case 401:
+                  errorDescription = 'Mật khẩu không hợp lệ!';
+                  break;
                 case 404:
                 case 500:
                 case 503:
-                  errorDescription = error.response!;
+                  errorDescription = error.response!.statusMessage;
                   break;
                 default:
                   final Errors errors = Errors.fromJson(error.response!.data);
@@ -59,15 +59,10 @@ mixin ApiErrorHandler {
     }
 
     // show errors
-    Get.snackbar(
-      "Hey i'm a Errors SnackBar!", // title
-      errorDescription.toString(), // message
-      icon: const Icon(Icons.error_outline),
-      backgroundColor: ColorResources.PINK,
-      shouldIconPulse: true,
-      isDismissible: true,
-      duration: const Duration(seconds: 3),
+    Alert.error(
+      message: errorDescription.toString(),
     );
+
     return errorDescription;
   }
 }
