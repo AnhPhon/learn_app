@@ -8,8 +8,6 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-// import 'package:template/provider/auth_provider.dart';
-// import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -132,13 +130,7 @@ class LoginController extends GetxController {
                 EasyLoading.dismiss();
                 Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
                 return;
-              }
-              // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-              //   EasyLoading.dismiss();
-              //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-              //   return;
-              // }
-              else {
+              } else {
                 //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                 EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");

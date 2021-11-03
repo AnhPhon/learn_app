@@ -11,8 +11,6 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
-import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
 
 import 'package:template/view/screen/v4-employee/export_import/export_import_controller.dart';
 
@@ -135,7 +133,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: "Ngày",
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.timeExportImport,
       suffixIcon: const Icon(
         Icons.date_range,
@@ -160,7 +158,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: 'Loại xuất',
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.exportController,
     );
   }
@@ -180,7 +178,7 @@ class V4ExportImportPage extends GetView<V4ExportImportControleer> {
       allowEdit: false,
       label: 'Loại nhập',
       obligatory: true,
-      width: 0.4,
+      width: 0.45,
       textEditingController: controller.importController,
     );
   }
@@ -377,8 +375,8 @@ Widget _customSoLuong(
               controller.tru();
             },
             child: Container(
-              height: 25,
-              width: 25,
+              height: 22,
+              width: 22,
               decoration: BoxDecoration(
                 color: ColorResources.PRIMARY,
                 shape: BoxShape.circle,
@@ -393,6 +391,7 @@ Widget _customSoLuong(
               child: const Icon(
                 Icons.remove,
                 color: ColorResources.WHITE,
+                size: Dimensions.ICON_SIZE_SMALL,
               ),
             ),
           ),
@@ -401,7 +400,7 @@ Widget _customSoLuong(
               left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
               right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
             ),
-            width: DeviceUtils.getScaledWidth(context, 0.18),
+            width: DeviceUtils.getScaledWidth(context, 0.24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -460,8 +459,8 @@ Widget _customSoLuong(
               controller.cong();
             },
             child: Container(
-              height: 25,
-              width: 25,
+              height: 22,
+              width: 22,
               decoration: BoxDecoration(
                 color: ColorResources.PRIMARY,
                 shape: BoxShape.circle,
@@ -476,6 +475,7 @@ Widget _customSoLuong(
               child: const Icon(
                 Icons.add,
                 color: ColorResources.WHITE,
+                size: Dimensions.ICON_SIZE_SMALL,
               ),
             ),
           ),
