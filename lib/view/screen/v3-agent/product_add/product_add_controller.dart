@@ -2,20 +2,16 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:template/data/model/request/kho_hang_dai_ly_request.dart';
 import 'package:template/data/model/request/nhap_kho_hang_dai_ly_request.dart';
 import 'package:template/data/model/request/san_pham_request.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
-import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
-import 'package:template/data/model/response/loai_van_chuyen_response.dart';
 import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
-import 'package:template/provider/kho_hang_dai_ly_provider.dart';
-import 'package:template/provider/loai_van_chuyen_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -49,18 +45,6 @@ class V3ProductAddController extends GetxController {
       NhapKhoHangDaiLyResponse();
   NhapKhoHangDaiLyRequest nhapKhoHangDaiLyRequest = NhapKhoHangDaiLyRequest();
 
-  //khoHangDaiLy
-  KhoHangDaiLyProvider khoHangDaiLyProvider = GetIt.I.get();
-  List<KhoHangDaiLyResponse> khoHangDaiLyList = [];
-  KhoHangDaiLyResponse? khoHangDaiLyResponse;
-  KhoHangDaiLyRequest khoHangDaiLyRequest = KhoHangDaiLyRequest();
-
-  //LoaiVanChuyen
-  LoaiVanChuyenProvider loaiVanChuyenProvider =
-      GetIt.I.get<LoaiVanChuyenProvider>();
-  List<LoaiVanChuyenResponse> loaiVanChuyenList = [];
-  LoaiVanChuyenResponse? loaiVanChuyenResponse;
-
   //TextEditingController
   TextEditingController name = TextEditingController();
   TextEditingController branch = TextEditingController();
@@ -68,7 +52,7 @@ class V3ProductAddController extends GetxController {
   TextEditingController code = TextEditingController();
   TextEditingController quyCach = TextEditingController();
   TextEditingController detail = TextEditingController();
-  TextEditingController stock = TextEditingController();
+  TextEditingController unit = TextEditingController();
 
   //userId
   String userId = "";
@@ -93,7 +77,7 @@ class V3ProductAddController extends GetxController {
     code.dispose();
     quyCach.dispose();
     detail.dispose();
-    stock.dispose();
+    unit.dispose();
     super.onClose();
   }
 
@@ -104,57 +88,18 @@ class V3ProductAddController extends GetxController {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //get khoHangDaiLy
-    khoHangDaiLyProvider.paginate(
-      page: 1,
-      limit: 100,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
-      onSuccess: (khoHangDaiLy) {
-        khoHangDaiLyList = khoHangDaiLy;
+    //getProductCategory
+    getProductCategory();
 
-        //getShippingMethod
-        getShippingMethod();
-
-        //getProductCategory
-        getProductCategory();
-
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("V3ProductAddController getKhoHangDaiLy onError $error");
-      },
-    );
-  }
-
-  ///
-  ///onchanged khoHangDaiLy
-  ///
-  void onchangedkhoHangDaiLy(KhoHangDaiLyResponse? value) {
-    khoHangDaiLyResponse = value;
+    isLoading = false;
     update();
-  }
-
-  ///
-  ///get shipping method
-  ///
-  void getShippingMethod() {
-    loaiVanChuyenProvider.all(
-      onSuccess: (value) {
-        loaiVanChuyenList = value;
-        update();
-      },
-      onError: (error) {
-        print("V3ProductAddController getShippingMethod onError $error");
-      },
-    );
   }
 
   ///
   ///onchanged ShippingMethod
   ///
-  void onchangedShippingMethod(LoaiVanChuyenResponse? value) {
-    loaiVanChuyenResponse = value;
+  void onchangedShippingMethod(String? value) {
+    sanPhamRequest.kieuVanChuyen = value;
     update();
   }
 
@@ -184,15 +129,16 @@ class V3ProductAddController extends GetxController {
   ///
   ///pick image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      imageList.add(imageTemporary);
-      uploadImage(image: imageTemporary);
-      update();
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+      uploadImage(images: files);
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -201,13 +147,18 @@ class V3ProductAddController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File image}) {
-    imageUpdateProvider.add(
-      file: image,
+  void uploadImage({required List<File> images}) {
+    imageUpdateProvider.addImages(
+      files: images,
       onSuccess: (value) {
-        urlImage.add(value.data.toString());
+        EasyLoading.dismiss();
+        if (value.files != null && value.files!.isNotEmpty) {
+          urlImage = value.files!;
+        }
+        update();
       },
       onError: (error) {
+        EasyLoading.dismiss();
         print("V3StoreInfomationController uploadImage onError $error");
       },
     );
@@ -234,10 +185,8 @@ class V3ProductAddController extends GetxController {
       Alert.error(message: 'Chi tiết sản phẩm không được để trống');
     } else if (danhMucSanPhamResponse == null) {
       Alert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
-    } else if (stock.text.isEmpty) {
+    } else if (unit.text.isEmpty) {
       Alert.error(message: 'Số lượng không được để trống');
-    } else if (khoHangDaiLyResponse == null) {
-      Alert.error(message: 'Bạn chưa chọn kho hàng');
     } else {
       //set data
       sanPhamRequest.hinhAnhDaiDien = urlImage[0];
@@ -249,85 +198,33 @@ class V3ProductAddController extends GetxController {
       sanPhamRequest.quyCach = quyCach.text;
       sanPhamRequest.moTa = detail.text;
       sanPhamRequest.idDanhMucSanPham = danhMucSanPhamResponse!.id;
+      sanPhamRequest.donVi = unit.text;
       sanPhamRequest.idTaiKhoan = userId;
 
-      nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
-      nhapKhoHangDaiLyRequest.idTaiKhoan = userId;
-      nhapKhoHangDaiLyRequest.soLuong = stock.text;
+      //add product
+      sanPhamProvider.add(
+        data: sanPhamRequest,
+        onSuccess: (sanPham) {
+          //set data
+          nhapKhoHangDaiLyRequest.idSanPham = sanPham.id;
 
-      //check product already exits
-      nhapKhoHangDaiLyProvider.paginate(
-        page: 1,
-        limit: 100,
-        filter:
-            "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
-        onSuccess: (nhapKhoHangDaiLy) {
-          final index = nhapKhoHangDaiLy.indexWhere((element) =>
-              element.idSanPham!.maSanPham!.trim() == code.text.trim());
-          //if product already exits
-          if (index == -1) {
-            //add product
-            sanPhamProvider.add(
-              data: sanPhamRequest,
-              onSuccess: (sanPham) {
-                //set data
-                nhapKhoHangDaiLyRequest.idSanPham = sanPham.id;
-
-                //nhapKho
-                nhapKhoHangDaiLyProvider.add(
-                  data: nhapKhoHangDaiLyRequest,
-                  onSuccess: (nhapKhoHangDaiLyAdd) {
-                    if (isUpdateAndAdd == false) {
-                      Get.offNamed(AppRoutes.V3_STORE);
-                    }
-                    Alert.success(message: 'Thêm sản phẩm thành công');
-                  },
-                  onError: (error) {
-                    print(
-                        "V3ProductAddController nhapKhoHangDaiLyAdd onError $error");
-                  },
-                );
-              },
-              onError: (error) {
-                print("V3ProductAddController sanPhamAdd onError $error");
-              },
-            );
-          } else {
-            //set data
-            sanPhamRequest.id = nhapKhoHangDaiLy[index].idSanPham!.id;
-            //else
-            sanPhamProvider.update(
-              data: sanPhamRequest,
-              onSuccess: (sanPhamUpdate) {
-                //set data
-                nhapKhoHangDaiLyRequest.idSanPham =
-                    nhapKhoHangDaiLy[index].idSanPham!.id;
-                nhapKhoHangDaiLyRequest.id = nhapKhoHangDaiLy[index].id;
-
-                //nhapKho update
-                nhapKhoHangDaiLyProvider.update(
-                  data: nhapKhoHangDaiLyRequest,
-                  onSuccess: (nhapKhoHangDaiLyUpdate) {
-                    if (isUpdateAndAdd == false) {
-                      Get.offNamed(AppRoutes.V3_STORE);
-                    }
-                    Alert.success(message: 'Thêm sản phẩm thành công');
-                  },
-                  onError: (error) {
-                    print(
-                        "V3ProductAddController nhapKhoHangDaiLyUpdate onError $error");
-                  },
-                );
-              },
-              onError: (error) {
-                print("V3ProductAddController sanPhamUpdate onError $error");
-              },
-            );
-          }
+          //nhapKho
+          nhapKhoHangDaiLyProvider.add(
+            data: nhapKhoHangDaiLyRequest,
+            onSuccess: (nhapKhoHangDaiLyAdd) {
+              if (isUpdateAndAdd == false) {
+                Get.offNamed(AppRoutes.V3_STORE);
+              }
+              Alert.success(message: 'Thêm sản phẩm thành công');
+            },
+            onError: (error) {
+              print(
+                  "V3ProductAddController nhapKhoHangDaiLyAdd onError $error");
+            },
+          );
         },
         onError: (error) {
-          print(
-              "V3ProductAddController nhapKhoHangDaiLyPaginate onError $error");
+          print("V3ProductAddController sanPhamAdd onError $error");
         },
       );
     }
@@ -346,10 +243,9 @@ class V3ProductAddController extends GetxController {
     code.clear();
     quyCach.clear();
     detail.clear();
-    stock.clear();
+    unit.clear();
     danhMucSanPhamResponse = null;
-    khoHangDaiLyResponse = null;
-    loaiVanChuyenResponse = null;
+    sanPhamRequest.kieuVanChuyen = null;
     update();
   }
 }

@@ -164,7 +164,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
     return Container(
       height: controller.isLoadingMore
           ? null
-          : DeviceUtils.getScaledHeight(context, .45),
+          : DeviceUtils.getScaledHeight(context, .5),
       color: ColorResources.WHITE,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,9 +222,11 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                 Dimensions().paddingDivider(context, height: 0),
                 RowText(
                   text1: "Tình trạng",
-                  text2: TINH_TRANG_SAN_PHAM[
-                          controller.nhapKhoHangDaiLyList[0].tinhTrangSanPham]
-                      .toString(),
+                  text2: controller.nhapKhoHangDaiLyList.isEmpty
+                      ? "Chưa có tình trạng SP"
+                      : TINH_TRANG_SAN_PHAM[controller
+                              .nhapKhoHangDaiLyList[0].tinhTrangSanPham]
+                          .toString(),
                   notFontSize: true,
                   notFontWeight: true,
                   colorRed: true,
@@ -232,7 +234,9 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                 Dimensions().paddingDivider(context, height: 0),
                 RowText(
                   text1: "Số lượng tồn",
-                  text2: controller.stock.toString(),
+                  text2: controller.stock == 0
+                      ? "Hết hàng"
+                      : controller.stock.toString(),
                   notFontSize: true,
                   notFontWeight: true,
                   colorRed: true,
@@ -322,25 +326,27 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
             )
           else
             GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: .7,
-                  crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
-                  crossAxisCount: 2,
-                ),
-                itemCount: controller.sanPhamList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () => controller.onGetProduct(index: index),
-                      child: ProductWidget(
-                        imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
-                            .toString(),
-                        name: controller.sanPhamList[index].ten.toString(),
-                        price:
-                            "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
-                      ));
-                }),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: .7,
+                crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
+                crossAxisCount: 2,
+              ),
+              itemCount: controller.sanPhamList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => controller.onGetProduct(index: index),
+                  child: ProductWidget(
+                    imgUrl:
+                        controller.sanPhamList[index].hinhAnhDaiDien.toString(),
+                    name: controller.sanPhamList[index].ten.toString(),
+                    price:
+                        "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );
@@ -380,8 +386,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   top: 0,
                   right: Dimensions.PADDING_SIZE_LARGE,
                   child: Container(
-                    height: DeviceUtils.getScaledHeight(context, .019),
-                    width: DeviceUtils.getScaledWidth(context, .038),
+                    height: DeviceUtils.getScaledHeight(context, .025),
+                    width: DeviceUtils.getScaledWidth(context, .04),
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
@@ -392,8 +398,9 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                           ? controller.chiTietDonHangList.length.toString()
                           : "0",
                       style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                          color: ColorResources.WHITE),
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                        color: ColorResources.WHITE,
+                      ),
                     ),
                   ),
                 ),
@@ -411,10 +418,11 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
   Widget _bottomCart(
       BuildContext context, V1ProductDetailController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, .08),
+      height: DeviceUtils.getScaledHeight(context, .1),
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_SMALL,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+      ),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: const BorderRadius.only(
@@ -423,7 +431,10 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
         ),
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.shade300, blurRadius: 15, spreadRadius: 1)
+            color: Colors.grey.shade300,
+            blurRadius: 15,
+            spreadRadius: 1,
+          ),
         ],
       ),
       child: Row(
@@ -433,20 +444,22 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
 
           // button add to cart
           Expanded(
-              flex: 9,
-              child: BtnCustom(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        controller.quantityProduct = 1;
-                        return _modalBottomSheet(context);
-                      },
-                    );
+            flex: 9,
+            child: BtnCustom(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    controller.quantityProduct = 1;
+                    return _modalBottomSheet(context);
                   },
-                  color: ColorResources.PRIMARY,
-                  text: "Thêm vào giỏ hàng",
-                  width: double.infinity))
+                );
+              },
+              color: ColorResources.PRIMARY,
+              text: "Thêm vào giỏ hàng",
+              width: double.infinity,
+            ),
+          ),
         ],
       ),
     );
@@ -528,9 +541,12 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   ),
                 ],
               ),
+
               const Divider(
                 color: Colors.grey,
               ),
+
+              //image
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -549,14 +565,18 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                       ),
                     ),
                   ),
+
                   const SizedBox(
                     width: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
+
+                  //infomation
                   Expanded(
                       flex: 7,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          //name
                           Text(
                             controller.sanPhamResponse.ten.toString(),
                             maxLines: 2,
@@ -564,6 +584,8 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                             ),
                           ),
+
+                          //price
                           Text(
                             "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamResponse.gia.toString()))} vnđ",
                             style:
@@ -577,23 +599,33 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                           //button quanlity
                           Row(
                             children: [
-                              _iconQuality(context, onTap: () {
-                                controller.decrementQuality();
-                              },
-                                  icon: Icon(Icons.remove,
-                                      color: controller.quantityProduct == 1
-                                          ? Colors.grey
-                                          : ColorResources.PRIMARY),
+                              _iconQuality(
+                                context,
+                                onTap: () {
+                                  controller.decrementQuality();
+                                },
+                                icon: Icon(
+                                  Icons.remove,
                                   color: controller.quantityProduct == 1
                                       ? Colors.grey
-                                      : null),
+                                      : ColorResources.PRIMARY,
+                                ),
+                                color: controller.quantityProduct == 1
+                                    ? Colors.grey
+                                    : null,
+                              ),
                               _iconQuality(context,
                                   text: controller.quantityProduct.toString()),
-                              _iconQuality(context, onTap: () {
-                                controller.incrementQuality();
-                              },
-                                  icon: const Icon(Icons.add_outlined,
-                                      color: Colors.grey)),
+                              _iconQuality(
+                                context,
+                                onTap: () {
+                                  controller.incrementQuality();
+                                },
+                                icon: const Icon(
+                                  Icons.add_outlined,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ],
                           ),
                         ],
