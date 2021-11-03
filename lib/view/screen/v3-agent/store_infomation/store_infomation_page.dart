@@ -770,7 +770,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   ),
                   children: [
                     TextSpan(
-                      text: "sản phẩm",
+                      text: " sản phẩm ",
                       style: TextStyle(
                         color: ColorResources.RED,
                         fontWeight: FontWeight.bold,

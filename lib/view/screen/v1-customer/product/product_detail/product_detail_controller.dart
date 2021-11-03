@@ -79,21 +79,12 @@ class V1ProductDetailController extends GetxController {
     scrollController = ScrollController()..addListener(() {});
 
     //get arguments
-    sl.get<SharedPreferenceHelper>().idSanPham.then((idSanPham) {
-      sanPhamProvider.find(
-        id: idSanPham.toString(),
-        onSuccess: (data) {
-          sanPhamResponse = data;
-          //get load data
-          getStock();
-          getTaiKhoan().then((value) => getDonHang());
-          getMoreProduct(isRefresh: true);
-        },
-        onError: (error) {
-          print("V1ProductDetailController onInit onError $error");
-        },
-      );
-    });
+    sanPhamResponse = Get.arguments as SanPhamResponse;
+
+    //get load data
+    getStock();
+    getTaiKhoan().then((value) => getDonHang());
+    getMoreProduct(isRefresh: true);
   }
 
   @override
@@ -174,9 +165,18 @@ class V1ProductDetailController extends GetxController {
       onSuccess: (data) {
         //check is not empty
         if (data.isNotEmpty) {
+          int nhap = 0;
+          int xuat = 0;
           nhapKhoHangDaiLyList = data;
           for (final item in data) {
-            stock += int.parse(item.soLuong.toString());
+            if (item.loai == "1") {
+              nhap += int.parse(item.soLuong.toString());
+            } else if (item.loai == "2") {
+              xuat += int.parse(item.soLuong.toString());
+            }
+            if (item.id == nhapKhoHangDaiLyList.last.id) {
+              stock = nhap - xuat;
+            }
           }
         }
 

@@ -142,7 +142,7 @@ class V3ToReceiveController extends GetxController {
       nhapKhoHangDaiLyRequest.idSanPham = sanPhamResponse!.id;
       nhapKhoHangDaiLyRequest.soLuong = stockController.text;
       nhapKhoHangDaiLyRequest.idTaiKhoan = userId;
-      // nhapKhoHangDaiLyRequest.loai = "1";
+      nhapKhoHangDaiLyRequest.loai = "1";
 
       //nhap kho
       nhapKhoHangDaiLyProvider.add(

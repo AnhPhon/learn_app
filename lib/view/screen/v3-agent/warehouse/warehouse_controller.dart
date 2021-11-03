@@ -106,6 +106,7 @@ class V3WarehouseController extends GetxController {
       //is load more
       pageMax++;
     }
+    print(khoHangDaiLyResponse!.id);
     //get product by idTaiKhoan
     nhapKhoHangDaiLyProvider.paginate(
       page: pageMax,
@@ -252,6 +253,7 @@ class V3WarehouseController extends GetxController {
     Get.toNamed(AppRoutes.V3_TO_RECEIVE)!.then((value) {
       if (value == true) {
         isLoadingProduct = true;
+        refreshController.resetNoData();
         update();
         getProductByIdKhoHang(isRefresh: true);
       }
