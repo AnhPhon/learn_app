@@ -100,7 +100,7 @@ class V3HomeController extends GetxController {
                   .toLowerCase());
         },
         onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          print("V3HomeController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -120,7 +120,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -139,7 +139,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -176,7 +176,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -242,7 +242,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyThue onError $error");
       },
     );
   }
@@ -264,7 +264,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyFSS onError $error");
       },
     );
   }
@@ -286,7 +286,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyBaoHiemTaiNan onError $error");
       },
     );
   }
@@ -308,7 +308,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController chungNhanSucKhoe onError $error");
       },
     );
   }
@@ -345,18 +345,32 @@ class V3HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNewsDetail(String id) {
-    // goto detail news
     sl.get<SharedPreferenceHelper>().saveTinTuc(id: id);
-    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
+    tinTucProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
   /// Nhấn nút sản phẩm
   ///
   void onClickHotProductDetail(String id) {
-    // goto detail news
     sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
