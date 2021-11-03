@@ -19,164 +19,165 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V3ProductAddController>(
-        init: V3ProductAddController(),
-        builder: (controller) {
-          if (controller.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //upload image
-                    _uploadImage(context, controller),
+      init: V3ProductAddController(),
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Scaffold(
+          appBar: AppBarWidget(title: controller.title),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //upload image
+                  _uploadImage(context, controller),
 
-                    //Tên sản phẩm
-                    InputWidget(
-                      label: "Tên sản phẩm",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.name,
-                      fillColor: ColorResources.WHITE,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Tên sản phẩm
+                  InputWidget(
+                    label: "Tên sản phẩm",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.name,
+                    fillColor: ColorResources.WHITE,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //Thương hiệu sản phẩm
-                    InputWidget(
-                      label: "Thương hiệu sản phẩm",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.branch,
-                      fillColor: ColorResources.WHITE,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Thương hiệu sản phẩm
+                  InputWidget(
+                    label: "Thương hiệu sản phẩm",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.branch,
+                    fillColor: ColorResources.WHITE,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //Giá sản phẩm
-                    InputWidget(
-                      label: "Giá sản phẩm",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.price,
-                      fillColor: ColorResources.WHITE,
-                      textInputType: TextInputType.number,
-                      thousandsSeparator: true,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Giá sản phẩm
+                  InputWidget(
+                    label: "Giá sản phẩm",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.price,
+                    fillColor: ColorResources.WHITE,
+                    textInputType: TextInputType.number,
+                    thousandsSeparator: true,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //Mã sản phẩm
-                    InputWidget(
-                      label: "Mã sản phẩm",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.code,
-                      fillColor: ColorResources.WHITE,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Mã sản phẩm
+                  InputWidget(
+                    label: "Mã sản phẩm",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.code,
+                    fillColor: ColorResources.WHITE,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //Quy cách
-                    InputWidget(
-                      label: "Quy cách",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.quyCach,
-                      fillColor: ColorResources.WHITE,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Quy cách
+                  InputWidget(
+                    label: "Quy cách",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.quyCach,
+                    fillColor: ColorResources.WHITE,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //Chi tiết sản phẩm
-                    InputWidget(
-                      label: "Chi tiết sản phẩm",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.detail,
-                      fillColor: ColorResources.WHITE,
-                      maxLine: 5,
-                      textInputAction: TextInputAction.next,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //Chi tiết sản phẩm
+                  InputWidget(
+                    label: "Chi tiết sản phẩm",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.detail,
+                    fillColor: ColorResources.WHITE,
+                    maxLine: 5,
+                    textInputAction: TextInputAction.next,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //product category
-                    DropDownButton1<DanhMucSanPhamResponse>(
-                      label: "Danh mục sản phẩm",
-                      labelBold: true,
-                      obligatory: true,
-                      hint: "",
-                      value: controller.danhMucSanPhamResponse,
-                      onChanged: controller.onchangedProductCategory,
-                      data: controller.danhMucSanPhamList,
-                      width: double.infinity,
-                      fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //product category
+                  DropDownButton1<DanhMucSanPhamResponse>(
+                    label: "Danh mục sản phẩm",
+                    labelBold: true,
+                    obligatory: true,
+                    hint: "",
+                    value: controller.danhMucSanPhamResponse,
+                    onChanged: controller.onchangedProductCategory,
+                    data: controller.danhMucSanPhamList,
+                    width: double.infinity,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //unit
-                    InputWidget(
-                      label: "Đơn vị",
-                      obligatory: true,
-                      width: double.infinity,
-                      textEditingController: controller.unit,
-                      fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //unit
+                  InputWidget(
+                    label: "Đơn vị",
+                    obligatory: true,
+                    width: double.infinity,
+                    textEditingController: controller.unit,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    //shipping method
-                    DropDownMapButton(
-                      label: "Hình thức vận chuyển",
-                      labelBold: true,
-                      hint: " ",
-                      value: controller.sanPhamRequest.kieuVanChuyen,
-                      onChanged: controller.onchangedShippingMethod,
-                      data: KIEU_VAN_CHUYEN,
-                      width: double.infinity,
-                      fillColor: ColorResources.WHITE,
-                      padding: const EdgeInsets.only(
-                        top: Dimensions.PADDING_SIZE_DEFAULT,
-                      ),
+                  //shipping method
+                  DropDownMapButton(
+                    label: "Hình thức vận chuyển",
+                    labelBold: true,
+                    hint: " ",
+                    value: controller.sanPhamRequest.kieuVanChuyen,
+                    onChanged: controller.onchangedShippingMethod,
+                    data: KIEU_VAN_CHUYEN,
+                    width: double.infinity,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
+                  ),
 
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
-                    ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+                  ),
 
-                    //btn
-                    _btnBottom(context, controller: controller),
+                  //btn
+                  _btnBottom(context, controller: controller),
 
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                    ),
-                  ],
-                ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   ///
@@ -187,43 +188,11 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
       label: "Thêm hình ảnh (hoặc video) sản phẩm",
       labelBold: true,
       obligatory: true,
-      pickImage: () => controller.pickImage(),
-      imageFileList: controller.imageList,
+      pickImage: () => controller.pickImages(),
+      imageFileList: controller.urlImage,
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
       ),
-    );
-  }
-
-  ///
-  ///title and textfield
-  ///
-  Widget titleDropDown(V3ProductAddController controller,
-      {required String title}) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(title,
-              style: Dimensions.fontSizeStyle16().copyWith(
-                color: ColorResources.BLACK,
-              )),
-        ),
-        const SizedBox(
-          height: Dimensions.MARGIN_SIZE_SMALL,
-        ),
-        DropDownButton1<String>(
-          hint: " ",
-          value: "dropdown",
-          onChanged: (val) {},
-          data: const ["dropdown"],
-          isColorFieldWhite: true,
-          width: double.infinity,
-        ),
-        const SizedBox(
-          height: Dimensions.MARGIN_SIZE_DEFAULT,
-        ),
-      ],
     );
   }
 

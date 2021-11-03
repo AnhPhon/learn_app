@@ -32,7 +32,6 @@ import 'package:template/utils/alert.dart';
 class V3StoreInfomationController extends GetxController {
   //image
   File? image;
-  List<File> fileImageList = [];
 
   //name of company
   final nameController = TextEditingController();
@@ -110,7 +109,6 @@ class V3StoreInfomationController extends GetxController {
 
   //ImageUpdate
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
-  List<String> urlImage = [];
 
   //accept
   Map<String, String> boolAccept = {
@@ -168,7 +166,7 @@ class V3StoreInfomationController extends GetxController {
 
         //mapping hinhAnhCuaHang
         if (data.hinhAnhCuaHangs!.isNotEmpty) {
-          urlImage = data.hinhAnhCuaHangs!;
+          taiKhoanRequest.hinhAnhCuaHangs = data.hinhAnhCuaHangs;
         }
 
         //mapping thoi gian lam viec
@@ -721,19 +719,17 @@ class V3StoreInfomationController extends GetxController {
   ///
   ///pick image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
 
-      //add file image to list
-      fileImageList.add(imageTemporary);
+      final List<File> files = images.map((e) => File(e.path)).toList();
 
+      print('Count images select ${files.length}');
       //uploadImage
-      uploadImage(image: imageTemporary);
-      update();
+      uploadImage(images: files);
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -742,14 +738,18 @@ class V3StoreInfomationController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File image}) {
-    imageUpdateProvider.add(
-      file: image,
+  void uploadImage({required List<File> images}) {
+    imageUpdateProvider.addImages(
+      files: images,
       onSuccess: (value) {
-        urlImage.add(value.data.toString());
+        EasyLoading.dismiss();
+        if (value.files != null && value.files!.isNotEmpty) {
+          taiKhoanRequest.hinhAnhCuaHangs = value.files;
+        }
         update();
       },
       onError: (error) {
+        EasyLoading.dismiss();
         print("V3StoreInfomationController uploadImage onError $error");
       },
     );
@@ -759,7 +759,6 @@ class V3StoreInfomationController extends GetxController {
   ///btn update
   ///
   void btnUpdate(BuildContext context) {
-    print(double.parse(timeDiff(startController.text, endController.text)));
     //validate
     if (nameController.text.isEmpty) {
       Alert.error(message: 'Trường tên không được để trống');
@@ -829,7 +828,6 @@ class V3StoreInfomationController extends GetxController {
 
       taiKhoanRequest.lamChieuThuBay = taiKhoanResponse.lamChieuThuBay;
       taiKhoanRequest.lamNgayChuNhat = taiKhoanResponse.lamNgayChuNhat;
-      taiKhoanRequest.hinhAnhCuaHangs = urlImage;
 
       //set data store address
       if (groupTinhTpValue == 3) {
@@ -847,7 +845,6 @@ class V3StoreInfomationController extends GetxController {
       }
 
       if (khoHangModelList.isNotEmpty) {
-        print("object");
         //show loading
         EasyLoading.show(status: 'loading...');
 
@@ -936,7 +933,6 @@ class V3StoreInfomationController extends GetxController {
           }
         }
       } else {
-        print("okokok");
         //show loading
         EasyLoading.show(status: 'loading...');
         //update taiKhoan

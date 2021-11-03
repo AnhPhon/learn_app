@@ -228,7 +228,7 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
                   _warehouseAddressAdd(context, controller: controller),
 
                   //uploadImage
-                  _uploadImage(context, controller),
+                  _uploadImage(context, controller: controller),
 
                   const SizedBox(
                     height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
@@ -863,12 +863,12 @@ class V3StoreInfomationPage extends GetView<V3StoreInfomationController> {
   ///upload image
   ///
   Widget _uploadImage(
-      BuildContext context, V3StoreInfomationController controller) {
+      BuildContext context, {required V3StoreInfomationController controller,}) {
     return ImageListHorizontalAdd(
       label: "Hình ảnh cửa hàng",
       labelBold: true,
-      pickImage: () => controller.pickImage(),
-      imageFileList: controller.urlImage,
+      pickImage: () => controller.pickImages(),
+      imageFileList: controller.taiKhoanRequest.hinhAnhCuaHangs ?? [],
       padding: const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_DEFAULT,
         horizontal: Dimensions.PADDING_SIZE_SMALL,

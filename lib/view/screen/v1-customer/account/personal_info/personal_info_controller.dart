@@ -131,9 +131,11 @@ class V1PersonalInfoController extends GetxController {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+      EasyLoading.show(status: 'Loading...');
+
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
-      uploadImage(image: imageTemporary);
+      uploadImage(image: [imageTemporary]);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -143,11 +145,12 @@ class V1PersonalInfoController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File image}) {
-    imageUpdateProvider.add(
-      file: image,
+  void uploadImage({required List<File> image}) {
+    imageUpdateProvider.addImages(
+      files: image,
       onSuccess: (value) {
-        taiKhoanRequest.hinhDaiDien = value.data;
+        EasyLoading.dismiss();
+        taiKhoanRequest.hinhDaiDien = value.files!.first;
       },
       onError: (error) {
         print("V1PersonalInfoController uploadImage onError $error");

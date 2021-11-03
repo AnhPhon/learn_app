@@ -2,17 +2,16 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/nhap_kho_hang_dai_ly_request.dart';
 import 'package:template/data/model/request/san_pham_request.dart';
 import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
-import 'package:template/data/model/response/loai_van_chuyen_response.dart';
 import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
-import 'package:template/provider/loai_van_chuyen_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -130,15 +129,16 @@ class V3ProductAddController extends GetxController {
   ///
   ///pick image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      imageList.add(imageTemporary);
-      uploadImage(image: imageTemporary);
-      update();
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+      uploadImage(images: files);
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -147,13 +147,18 @@ class V3ProductAddController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File image}) {
-    imageUpdateProvider.add(
-      file: image,
+  void uploadImage({required List<File> images}) {
+    imageUpdateProvider.addImages(
+      files: images,
       onSuccess: (value) {
-        urlImage.add(value.data.toString());
+        EasyLoading.dismiss();
+        if (value.files != null && value.files!.isNotEmpty) {
+          urlImage = value.files!;
+        }
+        update();
       },
       onError: (error) {
+        EasyLoading.dismiss();
         print("V3StoreInfomationController uploadImage onError $error");
       },
     );
