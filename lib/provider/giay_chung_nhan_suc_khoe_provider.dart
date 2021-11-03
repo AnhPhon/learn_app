@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/giay_chung_nhan_suc_khoe_repository.dart';
 
 class GiayChungNhanSucKhoeProvider {
-  GiayChungNhanSucKhoeRepository? repository = GetIt.I.get<GiayChungNhanSucKhoeRepository>();
+  GiayChungNhanSucKhoeRepository? repository =
+      GetIt.I.get<GiayChungNhanSucKhoeRepository>();
 
   GiayChungNhanSucKhoeProvider();
 
@@ -13,7 +14,8 @@ class GiayChungNhanSucKhoeProvider {
   /// Get all giayChungNhanSucKhoes
   ///
   Future<void> all({
-    required Function(List<GiayChungNhanSucKhoeResponse> giayChungNhanSucKhoes) onSuccess,
+    required Function(List<GiayChungNhanSucKhoeResponse> giayChungNhanSucKhoes)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class GiayChungNhanSucKhoeProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => GiayChungNhanSucKhoeResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              GiayChungNhanSucKhoeResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -34,7 +37,8 @@ class GiayChungNhanSucKhoeProvider {
   ///
   Future<void> add({
     required GiayChungNhanSucKhoeRequest data,
-    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe) onSuccess,
+    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -42,7 +46,8 @@ class GiayChungNhanSucKhoeProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -53,7 +58,8 @@ class GiayChungNhanSucKhoeProvider {
   ///
   Future<void> update({
     required GiayChungNhanSucKhoeRequest data,
-    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe) onSuccess,
+    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -61,7 +67,8 @@ class GiayChungNhanSucKhoeProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -72,7 +79,8 @@ class GiayChungNhanSucKhoeProvider {
   ///
   Future<void> delete({
     required String id,
-    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe) onSuccess,
+    required Function(GiayChungNhanSucKhoeRequest giayChungNhanSucKhoe)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.delete(id);
@@ -80,7 +88,8 @@ class GiayChungNhanSucKhoeProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(GiayChungNhanSucKhoeRequest.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +102,8 @@ class GiayChungNhanSucKhoeProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<GiayChungNhanSucKhoeResponse> giayChungNhanSucKhoes) onSuccess,
+    required Function(List<GiayChungNhanSucKhoeResponse> giayChungNhanSucKhoes)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +111,12 @@ class GiayChungNhanSucKhoeProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => GiayChungNhanSucKhoeResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              GiayChungNhanSucKhoeResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -115,7 +128,8 @@ class GiayChungNhanSucKhoeProvider {
   ///
   Future<void> find({
     required String id,
-    required Function(GiayChungNhanSucKhoeResponse giayChungNhanSucKhoe) onSuccess,
+    required Function(GiayChungNhanSucKhoeResponse giayChungNhanSucKhoe)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -123,7 +137,8 @@ class GiayChungNhanSucKhoeProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(GiayChungNhanSucKhoeResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(GiayChungNhanSucKhoeResponse.fromJson(
+          results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

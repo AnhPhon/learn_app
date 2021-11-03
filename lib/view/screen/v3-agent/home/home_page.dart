@@ -46,6 +46,7 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // news widget
                   _newsWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
                   _productWidget()
@@ -184,7 +185,8 @@ class V3HomePage extends GetView<V3HomeController> {
               child: ItemListWidget(
                 onTap: () {
                   // call detail
-                  controller.onNewsDetailClick(index: index);
+                  controller.onClickHotNewsDetail(
+                      controller.tinTucList[index].id.toString());
                 },
                 title: controller.tinTucList[index].tieuDe!,
                 icon1: const Icon(Icons.remove_red_eye),

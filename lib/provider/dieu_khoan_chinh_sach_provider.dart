@@ -5,7 +5,8 @@ import 'package:template/data/model/response/base/api_response.dart';
 import 'package:template/data/repository/dieu_khoan_chinh_sach_repository.dart';
 
 class DieuKhoanChinhSachProvider {
-  DieuKhoanChinhSachRepository? repository = GetIt.I.get<DieuKhoanChinhSachRepository>();
+  DieuKhoanChinhSachRepository? repository =
+      GetIt.I.get<DieuKhoanChinhSachRepository>();
 
   DieuKhoanChinhSachProvider();
 
@@ -13,7 +14,8 @@ class DieuKhoanChinhSachProvider {
   /// Get all dieuKhoanChinhSachs
   ///
   Future<void> all({
-    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs) onSuccess,
+    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -22,7 +24,8 @@ class DieuKhoanChinhSachProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -42,7 +45,8 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -61,7 +65,8 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -80,7 +85,8 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DieuKhoanChinhSachRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
@@ -93,7 +99,8 @@ class DieuKhoanChinhSachProvider {
     required int page,
     required int limit,
     required String filter,
-    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs) onSuccess,
+    required Function(List<DieuKhoanChinhSachResponse> dieuKhoanChinhSachs)
+        onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -101,9 +108,12 @@ class DieuKhoanChinhSachProvider {
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
-      final results = apiResponse.response.data['results'] as List<dynamic>;
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
       onSuccess(results
-          .map((e) => DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              DieuKhoanChinhSachResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -123,7 +133,8 @@ class DieuKhoanChinhSachProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DieuKhoanChinhSachResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          DieuKhoanChinhSachResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

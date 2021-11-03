@@ -5,22 +5,21 @@ import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 
 class V1NewsDetailController extends GetxController {
+  //TinTuc
   TinTucProvider tinTucProvider = GetIt.I.get<TinTucProvider>();
   TinTucResponse tinTucResponse = TinTucResponse();
   TinTucRequest tinTucRequest = TinTucRequest();
-
-  //
+  //title appbar
   String title = "Chi tiết tin tức";
-
   bool isLoading = true;
-
   @override
   void onInit() {
     super.onInit();
+    //get arguments
     if (Get.arguments != null) {
       tinTucResponse = Get.arguments as TinTucResponse;
     }
-
+    //count view
     countView();
   }
 
@@ -32,7 +31,6 @@ class V1NewsDetailController extends GetxController {
     tinTucRequest.id = tinTucResponse.id;
     tinTucRequest.luotXem =
         (int.parse(tinTucResponse.luotXem.toString()) + 1).toString();
-
     //update view
     tinTucProvider.update(
       data: tinTucRequest,

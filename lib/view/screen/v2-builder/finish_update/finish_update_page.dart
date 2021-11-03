@@ -66,7 +66,7 @@ class V2FinishUpdatePage extends GetView<V2FinishUpdateController> {
                   // bổ sung mã số thuế
                   _textOnClick(
                     "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                    controller.onDangKyHopDongClick,
+                    controller.onDangKyVaCamKetClick,
                     controller.maSoThueValid,
                   ),
 

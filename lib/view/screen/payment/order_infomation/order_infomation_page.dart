@@ -58,11 +58,14 @@ class OrderInformationPage extends GetView<OrderInformationController> {
                           value: controller.khuyenMai,
                           boldValue: true,
                         ),
-                        OrderContent(
-                          title: "Phí dịch vụ App",
-                          value: controller.phiDichVu,
-                          boldValue: true,
-                        ),
+                        if (controller.isTuyenDung)
+                          Container()
+                        else
+                          OrderContent(
+                            title: "Phí dịch vụ App",
+                            value: controller.phiDichVu,
+                            boldValue: true,
+                          ),
                         OrderContent(
                           title: "Tổng tiền đơn hàng",
                           value: controller.tongTien,

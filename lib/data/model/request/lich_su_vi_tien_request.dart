@@ -7,9 +7,10 @@ class LichSuViTienRequest {
   String? noiDung;
   String? trangThai;
   String? hinhAnhHoaDon;
+  String? type;
 
-  LichSuViTienRequest({
-      this.id,
+  LichSuViTienRequest(
+      {this.id,
       this.idTaiKhoan,
       this.idViTien,
       this.loaiGiaoDich,
@@ -17,8 +18,8 @@ class LichSuViTienRequest {
       this.noiDung,
       this.trangThai,
       this.hinhAnhHoaDon,
-      });
-  
+      this.type});
+
   ///
   /// From JSON
   ///
@@ -31,6 +32,7 @@ class LichSuViTienRequest {
     noiDung = json['noiDung'].toString();
     trangThai = json['trangThai'].toString();
     hinhAnhHoaDon = json['hinhAnhHoaDon'].toString();
+    type = json['type'].toString();
   }
 
   ///
@@ -39,29 +41,29 @@ class LichSuViTienRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null idViTien
-    if (idViTien != null) data['idViTien'] = idViTien; 
+    if (idViTien != null) data['idViTien'] = idViTien;
 
     // check null loaiGiaoDich
-    if (loaiGiaoDich != null) data['loaiGiaoDich'] = loaiGiaoDich; 
+    if (loaiGiaoDich != null) data['loaiGiaoDich'] = loaiGiaoDich;
 
     // check null soTien
-    if (soTien != null) data['soTien'] = soTien; 
+    if (soTien != null) data['soTien'] = soTien;
 
     // check null noiDung
-    if (noiDung != null) data['noiDung'] = noiDung; 
+    if (noiDung != null) data['noiDung'] = noiDung;
 
     // check null trangThai
-    if (trangThai != null) data['trangThai'] = trangThai; 
+    if (trangThai != null) data['trangThai'] = trangThai;
 
     // check null hinhAnhHoaDon
-    if (hinhAnhHoaDon != null) data['hinhAnhHoaDon'] = hinhAnhHoaDon; 
-
+    if (hinhAnhHoaDon != null) data['hinhAnhHoaDon'] = hinhAnhHoaDon;
+    if (type != null) data['type'] = type;
 
     return data;
   }
