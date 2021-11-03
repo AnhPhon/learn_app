@@ -33,7 +33,6 @@ class V2HomeController extends GetxController {
       GetIt.I.get<DangKyHopDongSBSProvider>();
   GiayChungNhanSucKhoeProvider giayChungNhanSucKhoeProvider =
       GetIt.I.get<GiayChungNhanSucKhoeProvider>();
-
   ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   // refresh controller
@@ -410,21 +409,39 @@ class V2HomeController extends GetxController {
   /// xem chi tiết 1 sản phẩm
   ///
   void onClickProductDetail(String id) {
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
+    _sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
   /// vào tin tức chi tiết
   ///
   void onClickHotNewsDetail(String idNews) {
-    Get.toNamed(AppRoutes.V2_NEWS_DETAIL);
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
+    _tinTucProvider.find(
+      id: idNews,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -452,7 +469,10 @@ class V2HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///

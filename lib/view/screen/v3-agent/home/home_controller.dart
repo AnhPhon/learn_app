@@ -94,10 +94,13 @@ class V3HomeController extends GetxController {
           chungNhanSucKhoe(id);
 
           // load notification
-          readThongBao((taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse).tieuDe!.toLowerCase());
+          readThongBao(
+              (taiKhoanResponse.idLoaiTaiKhoan! as LoaiTaiKhoanResponse)
+                  .tieuDe!
+                  .toLowerCase());
         },
         onError: (error) {
-          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+          print("V3HomeController getTermsAndPolicy onError $error");
         },
       );
     });
@@ -117,7 +120,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -136,7 +139,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -173,7 +176,7 @@ class V3HomeController extends GetxController {
         update();
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController getTermsAndPolicy onError $error");
       },
     );
   }
@@ -239,7 +242,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyThue onError $error");
       },
     );
   }
@@ -261,7 +264,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyFSS onError $error");
       },
     );
   }
@@ -283,7 +286,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController dangKyBaoHiemTaiNan onError $error");
       },
     );
   }
@@ -305,7 +308,7 @@ class V3HomeController extends GetxController {
         }
       },
       onError: (error) {
-        print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        print("V3HomeController chungNhanSucKhoe onError $error");
       },
     );
   }
@@ -314,7 +317,7 @@ class V3HomeController extends GetxController {
   /// on Click News
   ///
   void onClickNews() {
-    Get.toNamed(AppRoutes.V3_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
@@ -335,15 +338,23 @@ class V3HomeController extends GetxController {
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNews() {
-    Get.toNamed(AppRoutes.V2_NEWS);
+    Get.toNamed(AppRoutes.V1_NEWS);
   }
 
   ///
   /// Nhấn nút xem thêm tin nóng
   ///
   void onClickHotNewsDetail(String id) {
-    // goto detail news
-    Get.toNamed("${AppRoutes.V2_NEWS_DETAIL}?id=$id");
+    sl.get<SharedPreferenceHelper>().saveTinTuc(id: id);
+    tinTucProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -351,8 +362,15 @@ class V3HomeController extends GetxController {
   ///
   void onClickHotProductDetail(String id) {
     sl.get<SharedPreferenceHelper>().saveSanPham(id: id);
-    // goto detail news
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
+    sanPhamProvider.find(
+      id: id,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V3HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -380,7 +398,10 @@ class V3HomeController extends GetxController {
   ///go to news detail page
   ///
   void onNewsDetailClick({required int index}) {
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=${tinTucList[index].id}");
+    sl
+        .get<SharedPreferenceHelper>()
+        .saveTinTuc(id: tinTucList[index].id.toString());
+    Get.toNamed(AppRoutes.V1_NEWS_DETAIL);
   }
 
   ///

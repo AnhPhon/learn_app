@@ -6,14 +6,12 @@ import 'package:template/data/model/request/chi_tiet_don_hang_request.dart';
 import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/chi_tiet_don_hang_response.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
-import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
-import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
@@ -80,8 +78,9 @@ class V1ProductDetailController extends GetxController {
     scrollController = ScrollController()..addListener(() {});
 
     //get arguments
-    sanPhamResponse = Get.arguments as SanPhamResponse;
-
+    if (Get.arguments != null) {
+      sanPhamResponse = Get.arguments as SanPhamResponse;
+    }
     //get load data
     getStock();
     getTaiKhoan().then((value) => getDonHang());
