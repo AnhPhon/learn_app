@@ -21,37 +21,62 @@ class V3FinishUpdatePage extends GetView<V3FinishUpdateController> {
                   _textOnClick(
                     "Đăng ký thuế và cam kết thuế (đối với tổ đội/thợ/lao động phổ thông)",
                     controller.onDangKyVaCamKetClick,
-                    true,
+                    controller.thueValid == true &&
+                        controller.camKetValid == true,
                   ),
+
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // Đăng ký ký hợp đồng nguyên tăc hợp tác với FSS
                   _textOnClick(
                     "Đăng ký ký hợp đồng nguyên tăc hợp tác với FSS",
                     controller.onDangKyHopDongClick,
-                    true,
+                    controller.hopDongValid,
                   ),
+
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // bổ sung hoặc đăng ký mua bảo hiểm tai nạn chưa có trước khi làm việc
                   _textOnClick(
-                    "Bổ sung hoặc đăng ký mua bảo tai nạn chưa có trước khi làm việc",
+                    "Bổ sung hoặc đăng ký mua bảo hiểm tai nạn chưa có trước khi làm việc",
                     controller.onBaoHiemTaiNanClick,
-                    true,
+                    controller.baoHiemValid,
                   ),
+
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // bổ sung giấy chứng nhận khám sức khỏe đạt đủ điều kiện làm việc
                   _textOnClick(
                     "Bổ sung Giấy chứng nhận khám sức khỏe đạt đủ điều kiện làm việc",
                     controller.onGiayChungNhanKhamSucKhoeClick,
-                    true,
+                    controller.chungNhanValid,
                   ),
+
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // bổ sung mã số thuế
                   _textOnClick(
                     "Bổ sung Mã số thuế (áp dụng tổ đội/ cá nhân)",
-                    controller.onMaSoThueClick,
-                    true,
+                    controller.onDangKyVaCamKetClick,
+                    controller.maSoThueValid,
                   ),
+
                   const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // cập nhật sản phẩm mẫu
                   _textOnClick(
                     "Cập nhập sản phẩm mẫu",
                     controller.onCapNhatSanPhamClick,
-                    true,
+                    controller.sanPhamMauValid,
+                  ),
+
+                  const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+                  // cập nhật sản phẩm mẫu
+                  _textOnClick(
+                    "Cập nhập bảng giá",
+                    controller.onCapNhatSanPhamClick,
+                    controller.bangGiaValid,
                   ),
                 ],
               ),
