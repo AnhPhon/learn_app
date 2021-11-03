@@ -58,9 +58,9 @@ class V2QuotationG1Controller extends GetxController {
   ///
   Future pickFiles() async {
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
-      EasyLoading.show(status: 'Loading...');
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
       if (result == null) return;
+      EasyLoading.show(status: 'Loading...');
 
       final List<PlatformFile> files = result.files;
 
@@ -95,8 +95,8 @@ class V2QuotationG1Controller extends GetxController {
   Future pickImages() async {
     try {
       final images = await ImagePicker().pickMultiImage();
-      EasyLoading.show(status: 'Loading...');
       if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
 
       final List<File> files = images.map((e) => File(e.path)).toList();
 
