@@ -430,8 +430,8 @@ class RegisterController extends GetxController {
         auth.diaChi = addressController.text.toString();
       }
       auth.idTinhTp = province!.id;
-      auth.idPhuongXa = ward!.ten;
-      auth.idQuanHuyen = province!.id;
+      auth.idPhuongXa = ward!.id;
+      auth.idQuanHuyen = district!.id;
       multipSelectedProvinces.forEach((province) { 
         auth.tinhTpHoatDong = '${auth.tinhTpHoatDong},${province!.ten}';
       });
@@ -439,6 +439,7 @@ class RegisterController extends GetxController {
       if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('thợ thầu') || loaiTaiKhoan!.id == THO_THAU){
         auth.chuyenMon = jobExpertsController.text.toString();
         // THiếu trường kinh nghiệm experienceController
+        auth.gioiThieu = experienceController.text.toString();
         auth.noiLamViec = readyWorkController.text.toString();
         auth.soLuongNguoi = amountController.text.toString();
       }
