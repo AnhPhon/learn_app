@@ -215,6 +215,7 @@ import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
+import 'package:template/view/screen/v3-agent/quote/request/quote_request_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
 import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
@@ -932,6 +933,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_QUOTE_REQUEST,
       page: () => V3QuoteRequestPage(),
+      binding: V3QuoteRequestBinding(),
     ),
     // v3 - quote response
     GetPage(

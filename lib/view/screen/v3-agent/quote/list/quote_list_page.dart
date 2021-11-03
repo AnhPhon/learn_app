@@ -32,7 +32,6 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
               ) {
                 final DonDichVuResponse donDichVuResponse =
                     controller.donDichVus[index];
-                print(controller.donDichVus);
                 return BaoGiaCard(
                   donHangName: donDichVuResponse.tieuDe.toString(),
                   donHangId: "BH${donDichVuResponse.id!.substring(0, 6)}",
@@ -46,7 +45,10 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
                   image: donDichVuResponse.hinhAnhBaoGia == null
                       ? Images.location_example
                       : donDichVuResponse.hinhAnhBaoGia!,
-                  onTap: () {},
+                  onTap: () {
+                    controller.onYeuCauBaoGiaPageClick(
+                        donDichVuResponse.id.toString());
+                  },
                 );
               },
             ),

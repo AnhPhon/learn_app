@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3QuoteListController extends GetxController {
   final DanhSachBaoGiaDonDichVuProvider _danhSachBaoGiaDonDichVuProvider =
@@ -26,40 +28,34 @@ class V3QuoteListController extends GetxController {
   ///
   /// go to reponse page
   ///
-  void toReponse() {
-    Get.toNamed(AppRoutes.V3_QUOTE_RESPONSE);
+  void onYeuCauBaoGiaPageClick(String idDonDichVu) {
+    sl.get<SharedPreferenceHelper>().saveIdDonDichVu(id: idDonDichVu);
+    Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
   }
 
   ///
   /// load danh sach don gia dich vu
   ///
   void _loadDanhSachDonGiaDichVu() {
-    _danhSachBaoGiaDonDichVuProvider.paginate(
-      page: 1,
-      limit: 10,
-      filter: "",
-      onSuccess: (models) {
-        danhSachBaoGiaDonDichVuResponse = models;
+    sl.get<SharedPreferenceHelper>().userId.then((userId) {
+      _danhSachBaoGiaDonDichVuProvider.paginate(
+        page: 1,
+        limit: 10,
+        // filter: "&idTaiKhoanBaoGia=$userId",
+        filter: "",
+        onSuccess: (models) {
+          danhSachBaoGiaDonDichVuResponse = models;
 
-        for (final model in models) {
-          donDichVuProvider.find(
-            id: model.idDonDichVu.toString(),
-            onSuccess: (data) {
-              donDichVus.add(data);
-              isLoading = false;
-              update();
-            },
-            onError: (error) {
-              print(
-                  "V3QuotePhanHoiBaoGiaController _loadDanhSachDonGiaDichVu onError $error");
-            },
-          );
-        }
-        // update();
-      },
-      onError: (error) {
-        print(error);
-      },
-    );
+          for (final model in models) {
+            donDichVus.add(model.idDonDichVu!);
+          }
+          isLoading = false;
+          update();
+        },
+        onError: (error) {
+          print(error);
+        },
+      );
+    });
   }
 }

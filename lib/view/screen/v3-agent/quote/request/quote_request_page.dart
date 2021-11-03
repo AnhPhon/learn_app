@@ -20,6 +20,11 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
       body: GetBuilder<V3QuoteRequestController>(
         init: V3QuoteRequestController(),
         builder: (V3QuoteRequestController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -55,7 +60,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // thời gian dự kiến
-                  _thoiGianDuKien(context, controller.infoCard!),
+                  _thoiGianDuKien(context, controller.infoCard),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -137,26 +142,28 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
               children: [
                 // Tinh / Thanh pho
                 const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(controller.tinhThanh,
-                      style: Dimensions.textNormalStyle()),
-                ),
+                if (controller.tinhThanh.isNotEmpty)
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(controller.tinhThanh,
+                        style: Dimensions.textNormalStyle()),
+                  ),
 
                 // quan, phuong
                 const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      Text(controller.quan,
-                          style: Dimensions.textNormalStyle()),
-                      const Spacer(),
-                      Text(controller.phuong,
-                          style: Dimensions.textNormalStyle()),
-                    ],
-                  ),
-                )
+                if (controller.quan.isNotEmpty || controller.phuong.isNotEmpty)
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text(controller.quan,
+                            style: Dimensions.textNormalStyle()),
+                        const Spacer(),
+                        Text(controller.phuong,
+                            style: Dimensions.textNormalStyle()),
+                      ],
+                    ),
+                  )
               ],
             ),
           ),
@@ -187,16 +194,13 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   ///
   Widget _thoiGianDuKien(
     BuildContext context,
-    List<Map<String, dynamic>> infoCard,
+    List<List<Map<String, dynamic>>> infoCard,
   ) {
     return LabelContent(
       title: "Thời gian nhận dự kiến",
       isRequired: false,
       content: Column(
         children: [
-          SizedBox(
-              height: DeviceUtils.getScaledHeight(
-                  context, Dimensions.SCALE_DEFAULT)),
           Row(
             children: [
               Text("Từ ${controller.from}"),
@@ -204,10 +208,18 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
               Text("Đến ${controller.to}"),
             ],
           ),
-          SizedBox(
-              height: DeviceUtils.getScaledHeight(
-                  context, Dimensions.SCALE_DEFAULT)),
-          ContentWhiteBox(infoCard: infoCard)
+          const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+          Column(
+            children: List.generate(
+              infoCard.length,
+              (index) => Column(
+                children: [
+                  ContentWhiteBox(infoCard: infoCard[index]),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -221,13 +233,12 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
     List<String> noiDungYeuCau,
   ) {
     return LabelContent(
-      title: "Thời gian nhận dự kiến",
+      title: "Nội dung yêu cầu",
       isRequired: false,
       content: Container(
         alignment: Alignment.centerLeft,
         child: Container(
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           child: Column(
             children: List.generate(
               noiDungYeuCau.length,
@@ -268,7 +279,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
             crossAxisSpacing: 10,
           ),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
+          itemCount: controller.images.length,
           itemBuilder: (BuildContext ctx, index) {
             return GestureDetector(
               onTap: () {},
@@ -277,7 +288,7 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
                     Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.example,
-                  image: Images.location_example,
+                  image: controller.images[index],
                   height: 90,
                   fit: BoxFit.fill,
                 ),

@@ -2,7 +2,7 @@ import 'don_dich_vu_response.dart';
 
 class DanhSachBaoGiaDonDichVuResponse {
   String? id;
-  String? idDonDichVu;
+  DonDichVuResponse? idDonDichVu;
   String? taiKhoanBaoGia;
   String? giaBao;
   String? ghiChu;
@@ -29,7 +29,14 @@ class DanhSachBaoGiaDonDichVuResponse {
   DanhSachBaoGiaDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
 
-    idDonDichVu = json['idDonDichVu'].toString();
+    // mapping idDonDichVu
+    if (json['idDonDichVu'] != null &&
+        json['idDonDichVu'].toString().length != 24) {
+      idDonDichVu = DonDichVuResponse.fromJson(
+          json['idDonDichVu'] as Map<String, dynamic>);
+    } else {
+      idDonDichVu = null;
+    }
     taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
     giaBao = json['giaBao'].toString();
     ghiChu = json['ghiChu'].toString();

@@ -347,4 +347,17 @@ class SharedPreferenceHelper {
   Future<bool> removeIdNewWork() async {
     return _sharedPreference.remove(Preferences.idNewWork);
   }
+
+  // Đơn dịch vụ : -----------------------------------------------
+  Future<String?> get idDonDichVu async {
+    return _sharedPreference.getString(Preferences.idDonDichVu);
+  }
+
+  Future<bool> saveIdDonDichVu({required String id}) async {
+    return _sharedPreference.setString(Preferences.idDonDichVu, id);
+  }
+
+  Future<bool> removeIdDonDichVu() async {
+    return _sharedPreference.remove(Preferences.idDonDichVu);
+  }
 }
