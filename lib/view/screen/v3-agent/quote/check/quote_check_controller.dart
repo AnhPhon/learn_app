@@ -143,10 +143,6 @@ class V3QuoteCheckController extends GetxController {
               },
             );
           }
-          EasyLoading.showSuccess("Xác nhận báo giá thành công");
-          Get.back();
-          Get.back();
-          Get.back();
         },
         onError: (error) {
           print("V3QuoteCheckController updateYeuCauBaoGia onError $error");
