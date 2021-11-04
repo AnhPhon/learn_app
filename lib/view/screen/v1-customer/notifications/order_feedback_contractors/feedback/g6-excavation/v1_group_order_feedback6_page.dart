@@ -59,12 +59,12 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
       bottomSheet: OrderBottomSheet(
         itemValue: controller.tongTien,
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        [
+          const Flexible(
+            child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+          )
+        ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
         [
           const Flexible(

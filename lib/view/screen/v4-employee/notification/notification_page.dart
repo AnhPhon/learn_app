@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,6 +8,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 import 'package:template/view/screen/v4-employee/notification/notification_controller.dart';
 
@@ -46,6 +48,32 @@ class V4NotificationPage extends GetView<V4NotificationController> {
   ///
   Widget _listViewNotification() {
     return SmartRefresher(
+      header: const WaterDropHeader(
+        complete: Text("Tải thành công!"),
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+
+          if (mode == LoadStatus.idle) {
+            body = const Text("Kéo xuống để tải lại nhé!");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = const Text("Tải không thành công! Nhấp vào thử lại!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("Kéo lên để xem thêm!");
+          } else {
+            body = const Text("Không có dữ liệu!");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(
+              child: body,
+            ),
+          );
+        },
+      ),
       enablePullUp: true,
       onLoading: controller.onLoading,
       onRefresh: controller.onRefresh,
@@ -68,7 +96,7 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                 decoration: BoxDecoration(
                   color: ColorResources.WHITE,
                   borderRadius: BorderRadius.circular(
-                    Dimensions.BORDER_RADIUS_DEFAULT,
+                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -120,8 +148,9 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Icon(
-                            Icons.notifications_active_outlined,
+                          Icon(
+                            Icons.date_range,
+                            color: ColorResources.BLACK.withOpacity(0.6),
                           ),
                           const SizedBox(
                             width: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -131,6 +160,9 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                             controller.formatDateTime(
                               dateTime: controller
                                   .thongbaoModelList[index].createdAt!,
+                            ),
+                            style: TextStyle(
+                              color: ColorResources.BLACK.withOpacity(0.6),
                             ),
                           )
                         ],
@@ -143,22 +175,22 @@ class V4NotificationPage extends GetView<V4NotificationController> {
                       child: Container(
                         height: DeviceUtils.getScaledHeight(context, 0.15),
                         width: DeviceUtils.getScaledWidth(context, 0.28),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(
-                              Dimensions.BORDER_RADIUS_DEFAULT,
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
                             bottomLeft: Radius.circular(
-                              Dimensions.BORDER_RADIUS_DEFAULT,
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL,
                             ),
                           ),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              controller.thongbaoModelList[index].hinhDaiDien
-                                  .toString(),
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                        ),
+                        child: FadeInImageCustom(
+                          height: DeviceUtils.getScaledHeight(context, 0.15),
+                          urlImage: controller
+                              .thongbaoModelList[index].hinhDaiDien
+                              .toString(),
+                          width: DeviceUtils.getScaledWidth(context, 0.28),
                         ),
                       ),
                     ),

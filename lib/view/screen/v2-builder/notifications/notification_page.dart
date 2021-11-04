@@ -34,6 +34,11 @@ class V2NotificationPage extends GetView<V2NotificationController> {
             enablePullUp: true,
             onLoading: controller.moreData,
             onRefresh: controller.onRefresh,
+            footer: const ClassicFooter(
+              loadingText: "Đang tải...",
+              noDataText: "Không có dữ liệu",
+              canLoadingText: 'Đang tải...',
+            ),
             child: ListView.builder(
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: controller.notifications.length ,
@@ -59,7 +64,6 @@ class V2NotificationPage extends GetView<V2NotificationController> {
             borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL)
           ),
           child: Container(
-            //padding: const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
             height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
@@ -109,14 +113,13 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("Dự án: ${controller.notifications[index].id!.substring(0,10)}"),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Icon(Icons.warning),
-                                Text("Thất bại")
-                              ],
-                            )
+                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.end,
+                            //   children: [
+                                
+                            //   ],
+                            // )
                           ],
                         ),
                       )
@@ -125,40 +128,38 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                 )
               ],
             )
-            // Column(
-            //   children: [
-            //     RichText(
-            //     text: TextSpan(
-            //         text: '${StringCut.stringCut120(controller.notifications[index].tieuDe.toString())} ',
-            //         style: TextStyle(
-            //           fontSize: Dimensions.FONT_SIZE_LARGE,
-            //           color: ColorResources.BLACK.withOpacity(0.8),
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //         children: [
-            //           TextSpan(
-            //             text: StringCut.stringCut90(CommonHelper().htmlUnescape(controller.notifications[index].noiDung.toString())),
-            //             style: const TextStyle(
-            //               fontWeight: FontWeight.normal,
-            //             )
-            //           ),
-            //         ]
-            //       ),
-            //     ),
-            //     Expanded(
-            //       child: Align(
-            //         alignment: Alignment.bottomLeft,
-            //         child: Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!)), style: TextStyle(
-            //           fontSize: Dimensions.FONT_SIZE_SMALL,
-            //           color: ColorResources.BLACK.withOpacity(0.5)
-            //         ),)
-            //       ),
-            //     )
-            //   ],
-            // )
           ),
         ),
       ),
+    );
+  }
+
+  Widget needPerson(){
+    return Row(
+      children: const [
+        Icon(Icons.work),
+        Text("Đang cần người")
+      ],
+    );
+  }
+
+  Widget chuaPhanHoi(){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: const [
+        Icon(Icons.warning),
+        Text("Chưa phản hồi")
+      ],
+    );
+  }
+
+  Widget daPhanHoi(){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: const [
+        Icon(Icons.check_circle),
+        Text("Đã phản hồi")
+      ],
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 import 'package:template/view/screen/v4-employee/notification/detail_notification/detail_notification_controller.dart';
 
@@ -31,13 +32,10 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                   Container(
                     width: DeviceUtils.getScaledWidth(context, 1),
                     height: DeviceUtils.getScaledHeight(context, 0.3),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          controller.thongBaoModel.hinhDaiDien.toString(),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+                    child: FadeInImageCustom(
+                      height: DeviceUtils.getScaledHeight(context, 0.3),
+                      urlImage: controller.thongBaoModel.hinhDaiDien.toString(),
+                      width: DeviceUtils.getScaledWidth(context, 1),
                     ),
                   ),
                   Padding(
@@ -50,7 +48,7 @@ class V4DetailNotificationPage extends GetView<V4DetailNotificationController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Icon(
-                          Icons.watch_later_outlined,
+                          Icons.date_range,
                         ),
                         const SizedBox(
                           width: Dimensions.PADDING_SIZE_EXTRA_SMALL,

@@ -400,6 +400,18 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
             height: Dimensions.MARGIN_SIZE_SMALL,
           ),
 
+          //Khuyến mãi
+          if (controller.donHangResponse.khuyenMai != null)
+            rowText(
+              text1: "Khuyến mãi",
+              text2:
+                  "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.khuyenMai.toString()))} vnđ",
+            ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
           //Tổng tiền
           rowText(
             text1: "Tổng tiền",

@@ -5,19 +5,19 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/notifications/detail_notification/detail_notification_controller.dart';
+import 'package:template/view/screen/v2-builder/notifications/detail_notification/detail_notification_controller.dart';
 
 
-class V1DetailNotificationPage extends GetView<V1DetailNotificationController> {
+class V2DetailNotificationPage extends GetView<V2DetailNotificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(
         title: "Chi tiết thông báo",
       ),
-      body: GetBuilder<V1DetailNotificationController>(
-          init: V1DetailNotificationController(),
-          builder: (V1DetailNotificationController controller) {
+      body: GetBuilder<V2DetailNotificationController>(
+          init: V2DetailNotificationController(),
+          builder: (V2DetailNotificationController controller) {
             if (controller.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),

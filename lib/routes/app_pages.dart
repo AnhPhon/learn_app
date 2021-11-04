@@ -76,7 +76,6 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
-import 'package:template/view/screen/v1-customer/product/product_binding.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
@@ -161,6 +160,8 @@ import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
+import 'package:template/view/screen/v2-builder/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v2-builder/notifications/detail_notification/detail_notification_page.dart';
 import 'package:template/view/screen/v2-builder/notifications/notification_binding.dart';
 import 'package:template/view/screen/v2-builder/notifications/notification_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
@@ -219,6 +220,7 @@ import 'package:template/view/screen/v3-agent/quote/response/quote_response_page
 import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
 import 'package:template/view/screen/v3-agent/store/store_page.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
+import 'package:template/view/screen/v3-agent/warehouse/to_receive/to_receive_page.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
@@ -332,7 +334,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PRODUCT,
       page: () => V1ProductPage(),
-      binding: V1ProductBinding(),
     ),
     GetPage(
       name: AppRoutes.V1_NEWS,
@@ -605,6 +606,14 @@ class AppPages {
       name: AppRoutes.V1_DETAIL_NOTIFICATION,
       page: () => V1DetailNotificationPage(),
       binding: V1DetailNotificationBinding(),
+    ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V2_DETAIL_NOTIFICATION,
+      page: () => V2DetailNotificationPage(),
+      binding: V2DetailNotificationBinding(),
     ),
 
     ///
@@ -996,6 +1005,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_DETAIL,
       page: () => V3ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TO_RECEIVE,
+      page: () => V3ToReceivePage(),
     ),
     // Xem trươc đánh văn bản
     GetPage(

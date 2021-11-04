@@ -154,7 +154,7 @@ class ColorResources {
   static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
   static const Color UNSELECT_TABBAR = Color(0xff848485);
   static const Color ERROR_NOTICE_SNACKBAR = Color(0xffFFEBEE);
-  static const Color NOT_ALLOW_EDIT = Color(0xffadb5bd);
+  static const Color NOT_ALLOW_EDIT = Color(0xffced4da);
 
   static const Color REVENUE_COLOR = Color(0xff12DD94);
   static const Color EXPENDITURE_COLOR = Color(0xffFFCF53);

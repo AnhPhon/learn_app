@@ -93,6 +93,7 @@ class V1MyOrderController extends GetxController
 
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
+    print(userId);
 
     //get order by idTaiKhoanMuaHang & idTrangThaiDonHang
     donHangProvider.paginate(

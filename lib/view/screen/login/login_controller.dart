@@ -8,8 +8,6 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-// import 'package:template/provider/auth_provider.dart';
-// import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -19,7 +17,8 @@ import 'package:template/utils/validate.dart';
 class LoginController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
   final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
-  final LoaiTaiKhoanProvider typeAccountProvider = GetIt.I.get<LoaiTaiKhoanProvider>();
+  final LoaiTaiKhoanProvider typeAccountProvider =
+      GetIt.I.get<LoaiTaiKhoanProvider>();
 
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
@@ -74,16 +73,15 @@ class LoginController extends GetxController {
     onLogin();
   }
 
-
   ///
   /// Validate login
   ///
-  bool onValidateLogin(){
+  bool onValidateLogin() {
     //validate infomation username password
     if (phoneController.text == '' || passwordController.text == '') {
       Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
-    } else if(!Validate.phone(phoneController.text.toString())){
+    } else if (!Validate.phone(phoneController.text.toString())) {
       Alert.info(message: "Số điện thoại không hợp lệ");
       return false;
     }
@@ -93,68 +91,62 @@ class LoginController extends GetxController {
   ///
   /// Login
   ///
-  void onLogin(){
-    if(onValidateLogin()){
+  void onLogin() {
+    if (onValidateLogin()) {
       EasyLoading.show(status: "Đăng nhập");
       final AccountRequest accountRequest = AccountRequest();
       accountRequest.soDienThoai = phoneController.text.toString();
       accountRequest.matKhau = passwordController.text.toString();
       authProvider.loginAccount(
-        request: accountRequest,
-        onSuccess: (account) {
+          request: accountRequest,
+          onSuccess: (account) {
+            // save info token and info user
+            sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
+            sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
+            sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
-              // save info token and info user
-              sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
-              sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
-              sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
-              
-              // sl.get<SharedPreferenceHelper>().savePassword(password)
-              // sl.get<SharedPreferenceHelper>().saveUsername(username)
-              // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
-              if(isRemember){
-                sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
-                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
-                sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
-              }
+              sl
+                  .get<SharedPreferenceHelper>()
+                  .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
+            // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
+            if (isRemember) {
+              sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);
+              sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
+            }
 
-              // Kiểm tra loại tài khoản người dùng
-              if(account.idLoaiTaiKhoan != null){
-                if (account.idLoaiTaiKhoan == KHACH_HANG) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
-                  return;
-                } else if (account.idLoaiTaiKhoan == THO_THAU) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
-                  return;   
-                } else if (account.idLoaiTaiKhoan == DAI_LY) {
-                  EasyLoading.dismiss();
-                  Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
-                  return;
-                }
-                // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-                //   EasyLoading.dismiss();
-                //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-                //   return;
-                // }
-                else{
-                  //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
-                  EasyLoading.dismiss();
-                  Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
-                }
-              }else{
-                // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
+            // Kiểm tra loại tài khoản người dùng
+            if (account.idLoaiTaiKhoan != null) {
+              if (account.idLoaiTaiKhoan == KHACH_HANG) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                return;
+              } else if (account.idLoaiTaiKhoan == THO_THAU) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+                return;
+              } else if (account.idLoaiTaiKhoan == DAI_LY) {
+                EasyLoading.dismiss();
+                Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+                return;
+              } else {
+                //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                 EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
-        },
-        onError: (error) {
-          Alert.error(message: "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
-          EasyLoading.dismiss();
-          print("Lỗi đăng nhập onError $error");
-          update();
-        }
-      );
+            } else {
+              // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
+              EasyLoading.dismiss();
+              Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+            }
+          },
+          onError: (error) {
+            Alert.error(
+                message:
+                    "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
+            EasyLoading.dismiss();
+            print("Lỗi đăng nhập onError $error");
+            update();
+          });
     }
   }
 }

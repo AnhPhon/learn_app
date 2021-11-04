@@ -39,7 +39,7 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
                 _tabBarWidget(context: context, controller: controller),
 
                 const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  height: Dimensions.MARGIN_SIZE_SMALL,
                 ),
 
                 if (controller.currentIndex == 0)
@@ -151,10 +151,12 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
   Widget _textTitle(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
         title,
+        textAlign: TextAlign.center,
         style: Dimensions.fontSizeStyle20w600(),
       ),
     );

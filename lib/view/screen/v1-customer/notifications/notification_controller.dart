@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -11,6 +12,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V1NotificationController extends GetxController {
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
@@ -113,6 +115,7 @@ class V1NotificationController extends GetxController {
           update();
         });
   }
+
 
   void onClickItem(ThongBaoResponse notification) {
     if(notification.idDonDichVu != null){

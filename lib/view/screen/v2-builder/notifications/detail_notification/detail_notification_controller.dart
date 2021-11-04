@@ -4,7 +4,7 @@ import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 
-class V1DetailNotificationController extends GetxController {
+class V2DetailNotificationController extends GetxController {
   ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
 
   ThongBaoResponse thongBaoModel = ThongBaoResponse();

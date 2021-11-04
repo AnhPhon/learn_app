@@ -126,6 +126,7 @@ class HomeWidget extends StatelessWidget {
                               onTap: () {
                                 if (notificationURL == null) {
                                   sl.get<SharedPreferenceHelper>().typeAccount.then((value){
+                                    print(value);
                                     if(value == KHACH_HANG){
                                       Get.toNamed(AppRoutes.V1_NOTIFICATION);
                                     }else if(value == THO_THAU){

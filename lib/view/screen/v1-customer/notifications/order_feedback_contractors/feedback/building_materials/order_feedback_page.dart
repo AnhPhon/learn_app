@@ -57,14 +57,14 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: _controller
-            .tongTien, //double.parse(_controller.donDichVu!.tongDon!, (e)=> 1000000000),
+            .tongTien, 
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        [
+          const Flexible(
+            child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+          )
+        ] :
         _controller.donDichVu!.idTrangThaiThanhToan!.id == DA_THANH_TOAN ? 
         [
           const Flexible(

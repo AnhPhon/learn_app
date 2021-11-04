@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -13,6 +14,8 @@ class V2NotificationController extends GetxController {
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
   List<ThongBaoResponse> notifications = [];
+  List<DonDichVuResponse> donDichVuResponses = [];
+  
   int pageMax = 1;
   int limit = 10;
   bool isLoading = true;
@@ -41,7 +44,7 @@ class V2NotificationController extends GetxController {
         filter: '&doiTuong=2&idTaiKhoan=$userId&sortBy=created_at:desc',
         onSuccess: (data) {
           notifications.clear();
-          notifications = data;
+          notifications.addAll(data);
           isLoading = false;
           update();
         },
@@ -119,25 +122,32 @@ class V2NotificationController extends GetxController {
       donDichVuProvider.find(
         id: notification.idDonDichVu!.id!,
         onSuccess: (data) {
-          // print("Data: $data");
           final String id = data.idNhomDichVu!.nhomDichVu!;
-          // print("Nhóm dịch vụ : $id");
           if (id.contains('1')) {
-            // phản hồi nhóm 1
-            Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data);
+            // link to page kết quả báo giá
+            Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data.idNhomDichVu!.id);
           } else if (id.contains('2')) {
-            // Đây là nhóm 2 Công việc DVTX khảo sát báo giá
+            // link to page kết quả báo giá
             Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,
                 arguments: data);
-          } else if (id.contains('5')) {
-            // Đây là nhóm 5 phản hồi dịch vụ xe tải, xe ben, cầu thùng
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5, arguments: data);
+          } else if (id.contains('3')){
+            // Nhóm 3
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.idNhomDichVu!.id);
+          }else if (id.contains('4')){
+            // Nhóm 4
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.idNhomDichVu!.id);
+          }else if (id.contains('5')) {
+            // link to page kết quả báo giá
+            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5, arguments: data.idNhomDichVu!.id);
           } else if (id.contains('6')) {
-            // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
+            // Link to page kết quả báo giá
+            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data.idNhomDichVu!.id);
+          }else if (id.contains('7')) {
+            // Nhóm 7 tuyển dụng ứng viên
+            Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
           } else {
             // Xem thông báo chi tiết admin
-            Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
+            Get.toNamed(AppRoutes.V2_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
           }
         },
         onError: (onError) {
@@ -145,14 +155,14 @@ class V2NotificationController extends GetxController {
         }
       );
     }else{
-      Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
+      Get.toNamed(AppRoutes.V2_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
     }
     
   }
 
   @override
   void onClose() {
-    super.onClose();
     refreshController.dispose();
+    super.onClose();
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/di_container.dart';
+
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
@@ -13,6 +14,7 @@ import 'package:template/view/basewidget/animated_custom_dialog.dart';
 import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4HomeController extends GetxController {
+  GetIt sl = GetIt.instance;
   // providers
   ThuChiNhanVienProvider thuChiNhanVienProvider =
       GetIt.I.get<ThuChiNhanVienProvider>();
@@ -26,14 +28,32 @@ class V4HomeController extends GetxController {
   RefreshController? refreshController;
 
   //khai báo thời gian báo cáo
-  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 17, minute: 0);
+  TimeOfDay reportTimekeeping = const TimeOfDay(hour: 16, minute: 0);
 
   //khai báo thời gian chấm công
   TimeOfDay timekeeping = const TimeOfDay(hour: 7, minute: 0);
 
   //khai báo thay đổi text chấm công và báo cáo
-  bool isvalid = 7 <= TimeOfDay.now().hour && TimeOfDay.now().hour <= 17;
+  bool isvalid = 7 <=
+          TimeOfDay.now().hour.toDouble() +
+              (TimeOfDay.now().minute.toDouble() / 60) &&
+      TimeOfDay.now().hour.toDouble() +
+              (TimeOfDay.now().minute.toDouble() / 60) <=
+          16;
 
+  // Lấy Ngày tháng năm
+  String thu = DateFormat('EEEE', 'vi-VN').format(DateTime.now());
+  String ngay = DateTime.now().day.toString();
+  String thang = DateTime.now().month.toString();
+  String nam = DateTime.now().year.toString();
+
+  // isSelected
+  bool? isSelected;
+
+  // isReport
+  bool? isReport;
+
+  //
   List<Map<String, dynamic>>? contentGrid;
 
   String fullname = "Phạm Dương";
@@ -61,6 +81,71 @@ class V4HomeController extends GetxController {
 
     // init program run
     initProgramRun();
+
+    //Reset isSelected
+    resetIsSelected();
+
+    //Check isSelected
+    getIsSelected();
+
+    //Reset isReport
+    resetIsReport();
+
+    //Check isReport
+    getIsReport();
+  }
+
+  ///
+  ///Reset isSelected
+  ///
+  void resetIsSelected() {
+    if (TimeOfDay.now().hour.toDouble() +
+            (TimeOfDay.now().minute.toDouble() / 60) >
+        16) {
+      sl.get<SharedPreferenceHelper>().saveIsSelected(isSelected: false);
+      sl.get<SharedPreferenceHelper>().isSelected.then((value) {
+        isSelected = value;
+        print("Phone1: $isSelected");
+      });
+    }
+  }
+
+  ///
+  /// Get isSelected
+  ///
+  void getIsSelected() {
+    sl.get<SharedPreferenceHelper>().isSelected.then((value) {
+      isSelected = value;
+      print("Phone 2 : $isSelected");
+    });
+  }
+
+  ///
+  ///Reset IsReprot
+  ///
+  void resetIsReport() {
+    if (7 <
+            TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) &&
+        TimeOfDay.now().hour.toDouble() +
+                (TimeOfDay.now().minute.toDouble() / 60) <
+            16) {
+      sl.get<SharedPreferenceHelper>().saveIsReport(isReport: false);
+      sl.get<SharedPreferenceHelper>().isReport.then((value) {
+        isReport = value;
+        print("Phone3: $isReport");
+      });
+    }
+  }
+
+  ///
+  /// Get isReport
+  ///
+  void getIsReport() {
+    sl.get<SharedPreferenceHelper>().isReport.then((value) {
+      isReport = value;
+      print("Phone4: $isReport");
+    });
   }
 
   ///
@@ -82,6 +167,7 @@ class V4HomeController extends GetxController {
         onSuccess: (taiKhoanResponse) {
           fullname = taiKhoanResponse.hoTen!;
           avatar = taiKhoanResponse.hinhDaiDien!;
+          print("phoneId: $id");
           // load thu chi
           _readRevenueAndExpenditure(id);
 
@@ -134,21 +220,28 @@ class V4HomeController extends GetxController {
         limit: 100,
         filter: "&idNhanVien=$id",
         onSuccess: (models) {
-          for (final model in models) {
-            final String status = model.trangThai!.toLowerCase();
-            if (status == "1") {
-              moiTaoQuality = moiTaoQuality! + 1;
-            } else if (status == "2") {
-              dangLamQuality = dangLamQuality! + 1;
-            } else if (status == "3") {
-              hoanThanhQuality = hoanThanhQuality! + 1;
-            } else {
-              chamTreQuality = chamTreQuality! + 1;
+          if (models.isNotEmpty) {
+            for (final model in models) {
+              final String status = model.trangThai!.toLowerCase();
+              if (status == "1") {
+                moiTaoQuality = moiTaoQuality! + 1;
+              } else if (status == "2") {
+                dangLamQuality = dangLamQuality! + 1;
+              } else if (status == "3") {
+                hoanThanhQuality = hoanThanhQuality! + 1;
+              } else {
+                chamTreQuality = chamTreQuality! + 1;
+              }
             }
-            _resetContenGrid();
-            isLoading = false;
-            update();
+          } else {
+            moiTaoQuality = 0;
+            dangLamQuality = 0;
+            hoanThanhQuality = 0;
+            chamTreQuality = 0;
           }
+          _resetContenGrid();
+          isLoading = false;
+          update();
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -201,7 +294,11 @@ class V4HomeController extends GetxController {
   /// click to work progress page
   ///
   void onClickToWorkProgress(int index) {
-    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index");
+    Get.toNamed("${AppRoutes.V4_WORKPROGRESS}?tabIndex=$index")!.then((value) {
+      // init program run
+      initProgramRun();
+      print("Reset Home");
+    });
   }
 
   /// click to timekeeping
@@ -219,6 +316,7 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        getIsSelected();
         update();
       }
     });
@@ -240,6 +338,7 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        getIsReport();
         update();
       }
     });
@@ -257,11 +356,17 @@ class V4HomeController extends GetxController {
         (TimeOfDay.now().minute.toDouble() / 60);
 
     if (_reportTimekeeping < _timeNow) {
-      onClickToReportTimeKeeping(context);
+      if (isReport == false || isReport == null) {
+        onClickToReportTimeKeeping(context);
+      }
     } else if (_timeNow < _timekeeping) {
-      onClickToReportTimeKeeping(context);
+      if (isReport == false || isReport == null) {
+        onClickToReportTimeKeeping(context);
+      }
     } else {
-      onClickToTimeKeeping(context);
+      if (isSelected == false || isSelected == null) {
+        onClickToTimeKeeping(context);
+      }
     }
   }
 
@@ -323,6 +428,8 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+        //refresh lại home pape
+        initProgramRun();
         update();
       }
     });
@@ -345,6 +452,9 @@ class V4HomeController extends GetxController {
           dismissible: false,
           isFlip: true,
         );
+
+        //refresh lại home pape
+        initProgramRun();
         update();
       }
     });

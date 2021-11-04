@@ -59,12 +59,12 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         itemValue: controller
             .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        [
+          const Flexible(
+            child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+          )
+        ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
         [
           const Flexible(

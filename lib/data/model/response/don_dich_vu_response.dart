@@ -41,6 +41,7 @@ class DonDichVuResponse {
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
   List<String>? files;
+  String? file;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -89,6 +90,7 @@ class DonDichVuResponse {
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
       this.files,
+      this.file,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,
@@ -279,6 +281,7 @@ class DonDichVuResponse {
     tongDon = json['tongDon'].toString();
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
+    file = json['file'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -382,6 +385,8 @@ class DonDichVuResponse {
 
     // check null soNgay
     if (soNgay != null) data['soNgay'] = soNgay;
+    // check null soNgay
+    if (file != null) data['file'] = file;
 
     // check null diaDiemLamViec
     if (diaDiemLamViec != null) data['diaDiemLamViec'] = diaDiemLamViec;
