@@ -1,11 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/body/yeu_cau_bao_gia_model.dart';
+import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_request.dart';
+import 'package:template/data/model/request/vat_tu_request.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
+import 'package:template/provider/vat_tu_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V3QuoteCheckController extends GetxController {
+  DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider =
+      GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
+
+  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
+
   TextEditingController datetimeController = TextEditingController();
   TextEditingController costController = TextEditingController(text: "0");
 
@@ -21,6 +34,7 @@ class V3QuoteCheckController extends GetxController {
   String to = "20/09/2021";
   List<String> noiDungYeuCau = [];
   List<String> images = [];
+  List<String> vatTuIds = [];
   double giaTriDonHang = 0;
   double phiGiaoHang = 0;
   String loaiHinh = "Giao gấp";
@@ -37,15 +51,16 @@ class V3QuoteCheckController extends GetxController {
     features = [
       {
         "title": "Chỉnh sửa",
-        "onTap": () {},
+        "onTap": () {
+          Get.back();
+          Get.back();
+        },
         "color": ColorResources.LIGHT_GREY
       },
       {
         "title": "Xác nhận báo giá",
         "onTap": () {
-          Get.back();
-          Get.back();
-          Get.back();
+          updateYeuCauBaoGia();
         },
         "color": ColorResources.THEME_DEFAULT
       },
@@ -55,7 +70,7 @@ class V3QuoteCheckController extends GetxController {
     final YeuCauBaoGiaModel yeuCauBaoGiaModel =
         Get.arguments as YeuCauBaoGiaModel;
 
-    infoCard = yeuCauBaoGiaModel.infoCard ?? [];
+    infoCard = List.from(yeuCauBaoGiaModel.infoCard ?? []);
     loaiCongTrinh = yeuCauBaoGiaModel.loaiCongTrinh ?? "";
     tinhThanh = yeuCauBaoGiaModel.tinhThanh ?? "";
     quan = yeuCauBaoGiaModel.quan ?? "";
@@ -67,18 +82,12 @@ class V3QuoteCheckController extends GetxController {
     images = yeuCauBaoGiaModel.images ?? [];
     giaTriDonHang = yeuCauBaoGiaModel.giaTriDonHang ?? 0;
     tieuDeBaoGia = yeuCauBaoGiaModel.tieuDeBaoGia ?? "";
+    vatTuIds = yeuCauBaoGiaModel.vatTuIds ?? [];
 
     // additional
     filepath = yeuCauBaoGiaModel.filepath.toString();
     phiGiaoHang = yeuCauBaoGiaModel.phiGiaoHang!;
     loaiHinh = yeuCauBaoGiaModel.loaiHinh.toString();
-
-    for (int i = 0; i < infoCard.length; i++) {
-      for (int j = 0; j < infoCard[i].length; j++) {
-        infoCard[i][j]["input"] = false;
-      }
-    }
-
     isLoading = false;
 
     update();
@@ -100,5 +109,49 @@ class V3QuoteCheckController extends GetxController {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  ///
+  /// update dữ liệu
+  ///
+  void updateYeuCauBaoGia() {
+    sl.get<SharedPreferenceHelper>().idYeuCau.then((value) {
+      danhSachBaoGiaDonDichVuProvider.update(
+        data: DanhSachBaoGiaDonDichVuRequest(
+          id: value,
+          giaBao: giaTriDonHang.toString(),
+          file: filepath,
+          trangThaiBaoGia: "2",
+        ),
+        onSuccess: (data) {
+          for (final id in vatTuIds) {
+            int index = vatTuIds.indexOf(id);
+            vatTuProvider.update(
+              data: VatTuRequest(
+                  id: id,
+                  donGia:
+                      (infoCard[index].last["controller"] as TextEditingValue)
+                          .text),
+              onSuccess: (data) {
+                EasyLoading.showSuccess("Xác nhận báo giá thành công");
+                Get.back();
+                Get.back();
+                Get.back();
+              },
+              onError: (error) {
+                print("");
+              },
+            );
+          }
+          EasyLoading.showSuccess("Xác nhận báo giá thành công");
+          Get.back();
+          Get.back();
+          Get.back();
+        },
+        onError: (error) {
+          print("V3QuoteCheckController updateYeuCauBaoGia onError $error");
+        },
+      );
+    });
   }
 }

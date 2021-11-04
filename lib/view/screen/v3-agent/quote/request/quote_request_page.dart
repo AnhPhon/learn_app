@@ -214,7 +214,10 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
               infoCard.length,
               (index) => Column(
                 children: [
-                  ContentWhiteBox(infoCard: infoCard[index]),
+                  ContentWhiteBox(
+                    infoCard: infoCard[index],
+                    onChanged: (val) {},
+                  ),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
                 ],
               ),

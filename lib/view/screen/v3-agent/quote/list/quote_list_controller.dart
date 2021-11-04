@@ -48,7 +48,11 @@ class V3QuoteListController extends GetxController {
           danhSachBaoGiaDonDichVuResponse = models;
 
           for (final model in models) {
-            donDichVus.add(model.idDonDichVu!);
+            if (model.trangThaiBaoGia != '1' &&
+                model.trangThaiBaoGia != '2' &&
+                model.trangThaiBaoGia != '0') {
+              donDichVus.add(model.idDonDichVu!);
+            }
           }
           isLoading = false;
           update();

@@ -36,6 +36,7 @@ class V3QuoteResponseController extends GetxController {
   String title = "Yêu cầu báo giá";
   List<String>? noiDungYeuCau;
   List<Map<String, dynamic>>? features;
+  List<String> vatTuIds = [];
   List<String> images = [];
   double giaTriDonHang = 0;
 
@@ -67,6 +68,8 @@ class V3QuoteResponseController extends GetxController {
       filter: '&idDonDichVu=$idDonDichVu',
       onSuccess: (models) {
         final Map<String, int> local = {};
+
+        vatTuIds = models.map((e) => e.id.toString()).toList();
 
         for (final model in models) {
           if (local.containsKey(model.id) == false) {
@@ -101,9 +104,9 @@ class V3QuoteResponseController extends GetxController {
             },
             {
               "input": true,
-              "value": (local[model.id.toString()]! *
-                      int.parse(model.donGia.toString()))
-                  .toString(),
+              "controller":
+                  TextEditingController(text: model.donGia.toString()),
+              "value": int.parse(model.donGia.toString()).toString(),
               "label": "Đơn giá",
             }
           ]);
@@ -170,6 +173,23 @@ class V3QuoteResponseController extends GetxController {
   }
 
   ///
+  /// onMoneyChange
+  ///
+  void onMoneyChange() {
+    giaTriDonHang = 0;
+    for (int i = 0; i < infoCard.length; i++) {
+      for (int j = 0; j < infoCard[i].length; j++) {
+        if (infoCard[i][j]['controller'] != null) {
+          giaTriDonHang += double.parse(
+              (infoCard[i][j]['controller'] as TextEditingController).text);
+        }
+      }
+    }
+    giaTriDonHang += double.parse(costController.text);
+    update();
+  }
+
+  ///
   /// datePicker
   ///
   void datePicker(BuildContext context, DateTime firstDate, DateTime lastDate) {
@@ -212,6 +232,14 @@ class V3QuoteResponseController extends GetxController {
   }
 
   ///
+  /// loai hinh change
+  ///
+  void onLoaiHinhChange(String? val) {
+    loaiHinh = val!;
+    update();
+  }
+
+  ///
   /// on Continue Click
   ///
   void onContinueClick() {
@@ -236,6 +264,7 @@ class V3QuoteResponseController extends GetxController {
         phiGiaoHang: double.parse(costController.text),
         filepath: filepath,
         loaiHinh: loaiHinh,
+        vatTuIds: vatTuIds,
       ),
     );
   }

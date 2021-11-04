@@ -7,6 +7,7 @@ class DanhSachBaoGiaDonDichVuResponse {
   String? giaBao;
   String? ghiChu;
   String? file;
+  String? trangThaiBaoGia;
   String? daXem;
   List<dynamic>? hinhAnhBaoGias;
 
@@ -21,6 +22,7 @@ class DanhSachBaoGiaDonDichVuResponse {
       this.ghiChu,
       this.file,
       this.daXem,
+      this.trangThaiBaoGia,
       this.createdAt,
       this.updatedAt});
 
@@ -42,6 +44,7 @@ class DanhSachBaoGiaDonDichVuResponse {
     giaBao = json['giaBao'].toString();
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
+    trangThaiBaoGia = json['trangThaiBaoGia'].toString();
     daXem = json['daXem'].toString();
     if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<dynamic>;
@@ -64,6 +67,9 @@ class DanhSachBaoGiaDonDichVuResponse {
 
     // check null taiKhoanBaoGia
     if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia;
+
+    // check null trangThaiBaoGia
+    if (trangThaiBaoGia != null) data['trangThaiBaoGia'] = trangThaiBaoGia;
 
     // check null giaBao
     if (giaBao != null) data['giaBao'] = giaBao;

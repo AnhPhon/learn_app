@@ -12,6 +12,7 @@ class YeuCauBaoGiaModel {
   String? filepath;
   double? phiGiaoHang;
   List<String>? noiDungYeuCau;
+  List<String>? vatTuIds;
   List<Map<String, dynamic>>? features;
   List<String>? images;
   double? giaTriDonHang;
@@ -35,6 +36,7 @@ class YeuCauBaoGiaModel {
     this.isCheck,
     this.tieuDeBaoGia,
     this.loaiHinh,
+    this.vatTuIds,
     this.phiGiaoHang = 0,
     this.filepath,
   });
@@ -97,6 +99,9 @@ class YeuCauBaoGiaModel {
 
     // check null filepath
     if (filepath != null) data['filepath'] = filepath;
+
+    // check null vatTuIds
+    if (vatTuIds != null) data['vatTuIds'] = vatTuIds;
 
     return data;
   }

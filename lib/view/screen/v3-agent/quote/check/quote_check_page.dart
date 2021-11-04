@@ -115,7 +115,64 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
           infoCard.length,
           (index) => Column(
             children: [
-              ContentWhiteBox(infoCard: infoCard[index]),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(Dimensions.BORDER_RADIUS_SMALL),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.grey.withOpacity(.4),
+                    )
+                  ],
+                ),
+                child: Column(
+                  children: infoCard.isEmpty
+                      ? []
+                      : List.generate(
+                          infoCard.length,
+                          (jndex) {
+                            return SizedBox(
+                              height: 30,
+                              width: DeviceUtils.getScaledWidth(context, 1),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 0,
+                                    top: 7,
+                                    child: SizedBox(
+                                      width: DeviceUtils.getScaledWidth(
+                                          context, .3),
+                                      child: Text(
+                                          "${infoCard[index][jndex]['label']}:",
+                                          style: Dimensions.textNormalStyle()),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    left:
+                                        DeviceUtils.getScaledWidth(context, .3),
+                                    child: SizedBox(
+                                      width: DeviceUtils.getScaledWidth(
+                                          context, .7),
+                                      child: Text(
+                                        "${(infoCard[index][jndex]['controller'] != null) ? (infoCard[index][jndex]['controller'] as TextEditingController).text : infoCard[index][jndex]['value']}",
+                                        style: Dimensions.textNormalStyle(),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                ),
+              ),
               const SizedBox(
                 height: Dimensions.MARGIN_SIZE_SMALL,
               ),

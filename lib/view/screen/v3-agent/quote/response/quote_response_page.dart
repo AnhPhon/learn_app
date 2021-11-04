@@ -8,6 +8,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
 import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
@@ -118,13 +119,19 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
       isRequired: false,
       content: Column(
         children: List.generate(
-            infoCard.length,
-            (index) => Column(
-                  children: [
-                    ContentWhiteBox(infoCard: infoCard[index]),
-                    const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                  ],
-                )),
+          infoCard.length,
+          (index) => Column(
+            children: [
+              ContentWhiteBox(
+                infoCard: infoCard[index],
+                onChanged: (val) {
+                  controller.onMoneyChange();
+                },
+              ),
+              const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -327,15 +334,34 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
           ),
           Column(children: [
             SizedBox(
-              height: 50,
-              child: Row(
+              height: 70,
+              width: DeviceUtils.getScaledWidth(context, 1),
+              child: Stack(
                 children: [
-                  Text("Loại hình", style: Dimensions.textNormalStyle()),
-                  const Spacer(),
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, .35),
-                    alignment: Alignment.centerLeft,
-                    child: Text(status, style: Dimensions.textNormalStyle()),
+                  Positioned(
+                    left: 0,
+                    top: 30,
+                    child: SizedBox(
+                      width: DeviceUtils.getScaledWidth(context, .5),
+                      child: Text("Loại hình",
+                          style: Dimensions.textNormalStyle()),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    left: DeviceUtils.getScaledWidth(context, .5),
+                    child: SizedBox(
+                      width: DeviceUtils.getScaledWidth(context, .5),
+                      child: DropDownButton<String>(
+                        data: const ["Giao gấp", "Chưa gấp"],
+                        obligatory: true,
+                        onChanged: controller.onLoaiHinhChange,
+                        value: controller.loaiHinh,
+                        width: DeviceUtils.getScaledSize(context, 1),
+                        hint: "Loại hình",
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -360,6 +386,9 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
                     child: SizedBox(
                       width: DeviceUtils.getScaledWidth(context, .5),
                       child: TextField(
+                          onChanged: (val) {
+                            controller.onMoneyChange();
+                          },
                           controller: controller.costController,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
