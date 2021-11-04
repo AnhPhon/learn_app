@@ -8,8 +8,6 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-// import 'package:template/provider/auth_provider.dart';
-// import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -107,8 +105,6 @@ class LoginController extends GetxController {
             sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
             sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
-            // sl.get<SharedPreferenceHelper>().savePassword(password)
-            // sl.get<SharedPreferenceHelper>().saveUsername(username)
             // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
             if (isRemember) {
               sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);
@@ -132,13 +128,7 @@ class LoginController extends GetxController {
                 EasyLoading.dismiss();
                 Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
                 return;
-              }
-              // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-              //   EasyLoading.dismiss();
-              //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-              //   return;
-              // }
-              else {
+              } else {
                 //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                 EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");

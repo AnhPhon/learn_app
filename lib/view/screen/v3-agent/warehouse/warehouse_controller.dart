@@ -7,6 +7,7 @@ import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart'
 import 'package:template/di_container.dart';
 import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
+import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3WarehouseController extends GetxController {
@@ -37,9 +38,17 @@ class V3WarehouseController extends GetxController {
   int pageMax = 1;
   int limitMax = 5;
 
+  //onchange icon (search or close)
+  bool isSearched = false;
+
+  //page for for load more refresh
+  int pageSearchMax = 1;
+  int limiSearchtMax = 8;
+
   //CircularProgressIndicator
   bool isLoading = true;
   bool isLoadingProduct = true;
+  bool isLoadingSearch = false;
 
   @override
   void onInit() {
@@ -97,13 +106,13 @@ class V3WarehouseController extends GetxController {
       //is load more
       pageMax++;
     }
-
+    print(khoHangDaiLyResponse!.id);
     //get product by idTaiKhoan
     nhapKhoHangDaiLyProvider.paginate(
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoan=$userId&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
+          "&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is empty
         if (value.isEmpty) {
@@ -119,6 +128,7 @@ class V3WarehouseController extends GetxController {
             refreshController.loadComplete();
           }
         }
+        isLoadingSearch = false;
         isLoadingProduct = false;
         update();
       },
@@ -126,6 +136,83 @@ class V3WarehouseController extends GetxController {
         print("V3WarehouseController getProduct onError $error");
       },
     );
+  }
+
+  ///
+  ///search product
+  ///
+  void searchProduct(
+    BuildContext context, {
+    required bool isRefresh,
+  }) {
+    //isRefresh
+    if (isRefresh) {
+      pageSearchMax = 1;
+      nhapKhoHangDaiLyList.clear();
+    } else {
+      pageSearchMax++;
+    }
+
+    //get data search
+    if (searchController.text.isNotEmpty) {
+      nhapKhoHangDaiLyProvider.paginate(
+        page: pageSearchMax,
+        limit: limiSearchtMax,
+        filter:
+            "&idKhoHangDaiLy=${khoHangDaiLyResponse!.id}&tenSearch=${searchController.text}&sortBy=created_at:desc",
+        onSuccess: (data) {
+          //check is empty
+          if (data.isEmpty) {
+            refreshController.loadNoData();
+          } else {
+            //isRefresh
+            if (isRefresh) {
+              nhapKhoHangDaiLyList = data;
+              refreshController.refreshCompleted();
+            } else {
+              //is load more
+              nhapKhoHangDaiLyList = nhapKhoHangDaiLyList.toList() + data;
+              refreshController.loadComplete();
+            }
+          }
+
+          FocusScope.of(context).requestFocus(FocusNode());
+          isSearched = true;
+          isLoadingSearch = false;
+          update();
+        },
+        onError: (error) {
+          print("V1ProductController searchProduct onError $error");
+        },
+      );
+    }
+  }
+
+  ///
+  ///btn search
+  ///
+  void btnSearch(BuildContext context) {
+    isLoadingSearch = true;
+    update();
+    searchProduct(context, isRefresh: true);
+  }
+
+  ///
+  ///clear search
+  ///
+  void clearSearch(BuildContext context) {
+    isLoadingSearch = true;
+    //clear text
+    searchController.text = "";
+    isSearched = false;
+
+    //reset noData
+    refreshController.resetNoData();
+
+    //reload
+    getProductByIdKhoHang(isRefresh: true);
+    FocusScope.of(context).requestFocus(FocusNode());
+    update();
   }
 
   ///
@@ -157,5 +244,19 @@ class V3WarehouseController extends GetxController {
   Future<void> onLoading() async {
     //get product more
     getProductByIdKhoHang(isRefresh: false);
+  }
+
+  ///
+  ///go to to receive page
+  ///
+  void onToReceiveClick() {
+    Get.toNamed(AppRoutes.V3_TO_RECEIVE)!.then((value) {
+      if (value == true) {
+        isLoadingProduct = true;
+        refreshController.resetNoData();
+        update();
+        getProductByIdKhoHang(isRefresh: true);
+      }
+    });
   }
 }

@@ -67,7 +67,7 @@ class V2PreviewController extends GetxController {
     dangKyViecMoiProvider.paginate(
         page: 1,
         limit: 1,
-        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_7}',
+        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_DICH_VU_7}',
         onSuccess: (value) {
           dangKyViecMoiResponse = value.first;
           //set tên file
