@@ -18,8 +18,8 @@ class V4DetailReportController extends GetxController {
       GetIt.I.get<BaoCaoNhanVienProvider>();
   List<BaoCaoNhanVienResponse> detailReportModel = [];
   BaoCaoNhanVienRequest detailReportRequest = BaoCaoNhanVienRequest();
-  BaoCaoNhanVienResponse? detailReportResponse;
-
+  BaoCaoNhanVienResponse detailReportResponse = BaoCaoNhanVienResponse();
+  BaoCaoNhanVienResponse baoCaoNhanVienResponse = BaoCaoNhanVienResponse();
   // Dự án của nhân viên
   DuAnNhanVienProvider duAnNhanVienProvider =
       GetIt.I.get<DuAnNhanVienProvider>();
@@ -32,12 +32,15 @@ class V4DetailReportController extends GetxController {
   int pageMax = 1;
   int limitMax = 5;
 
+  //value request
+  dynamic request;
+
   // khai báo is loading
   bool isLoading = true;
   // idUser
   String idUser = '';
   // idReport
-  String? idReport;
+  String? idReports;
 
   //khai báo TextEditingController
   TextEditingController contentDetailReport = TextEditingController();
@@ -51,24 +54,10 @@ class V4DetailReportController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     //get agument
-    // if (Get.arguments != null) {
-    //   detailReportResponse = Get.arguments as BaoCaoNhanVienResponse;
-    // }
     final dynamic arguments = Get.arguments;
-    if (arguments != null && arguments['idReport'] != null) {
-      idReport = arguments!['idReport'].toString();
-      print('V4DetailReportController onInit $idReport');
-
-      // baoCaoNhanVienProvider.find(
-      //   id: idReport.toString(),
-      //   onSuccess: (data) {
-      //     detailReportResponse = data;
-      //     update();
-      //   },
-      //   onError: (error) {
-      //     print('V4DetailReportController onInit onError $error');
-      //   },
-      // );
+    if (arguments != null && arguments['idReports'] != null) {
+      idReports = arguments!['idReports'].toString();
+      print('V4DetailReportController onInit $idReports');
     }
     getidUser();
     getThongTinBaoCao();
@@ -91,6 +80,34 @@ class V4DetailReportController extends GetxController {
     timeDetailReport.dispose();
     contentDetailReport.dispose();
     super.onClose();
+  }
+
+  ///
+  ///Get thông tin báo cáo
+  ///
+  void getThongTinBaoCao() {
+    print('V4DetailReportController getThongTinBaoCao $idReports');
+    baoCaoNhanVienProvider.find(
+      id: idReports.toString(),
+      onSuccess: (value) {
+        detailReportResponse = value;
+        //ngày
+        timeDetailReport = TextEditingController(
+          text: DateConverter.formatDateTime(
+            value.createdAt.toString(),
+          ),
+        );
+        // nội dung
+        contentDetailReport = TextEditingController(text: value.noiDung);
+        // lấy list dự án nhân viên
+        mappingAddress();
+        isLoading = false;
+        update();
+      },
+      onError: (error) {
+        print("V4DetailReportController getThongTinBaoCao onError $error");
+      },
+    );
   }
 
   ///
@@ -125,38 +142,12 @@ class V4DetailReportController extends GetxController {
         if (detailReportResponse != null && isFisrt == true) {
           duAnNhanVien = duAnNhanVienList[duAnNhanVienList.indexWhere(
               (element) =>
-                  element.id == detailReportResponse!.idDuAnNhanVien!.id)];
+                  element.id == detailReportResponse.idDuAnNhanVien!.id)];
         }
         update();
       },
       onError: (error) {
         print("V4DetailReportController getDuAnNhanVien onError $error");
-      },
-    );
-  }
-
-  ///
-  ///Get thông tin báo cáo
-  ///
-  void getThongTinBaoCao() {
-    baoCaoNhanVienProvider.find(
-      id: idReport.toString(),
-      onSuccess: (value) {
-        detailReportResponse = value;
-        //ngày
-        timeDetailReport = TextEditingController(
-          text: DateConverter.formatDateTime(
-            value.createdAt.toString(),
-          ),
-        );
-        // nội dung
-        contentDetailReport = TextEditingController(text: value.noiDung);
-        mappingAddress();
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("V4DetailReportController getThongTinBaoCao onError $error");
       },
     );
   }
@@ -183,15 +174,14 @@ class V4DetailReportController extends GetxController {
     if (validate()) {
       EasyLoading.show(status: 'loading...');
       // set data
-      detailReportResponse!.idDuAnNhanVien!.createdAt =
-          DateConverter.formatDate(
+      detailReportResponse.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
           timeDetailReport.text.toString(),
         ),
       );
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
-          id: detailReportResponse!.id,
+          id: idReports.toString(),
           idNhanVien: idUser,
           idDuAnNhanVien: duAnNhanVien!.id,
           noiDung: contentDetailReport.text,

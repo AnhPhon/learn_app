@@ -14,7 +14,7 @@ import 'package:template/utils/alert.dart';
 class V4ReportController extends GetxController
     with SingleGetTickerProviderMixin {
   GetIt sl = GetIt.instance;
-  BaoCaoNhanVienResponse? baoCaoNhanVienResponse;
+  BaoCaoNhanVienResponse baoCaoNhanVienResponse = BaoCaoNhanVienResponse();
 
   BaoCaoNhanVienProvider baoCaoNhanVienProvider =
       GetIt.I.get<BaoCaoNhanVienProvider>();
@@ -54,6 +54,8 @@ class V4ReportController extends GetxController
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    //set arguments báo cáo
+    // baoCaoNhanVienResponse = Get.arguments as BaoCaoNhanVienResponse;
     getIdUser();
     getReport(isRefresh: true, value: "1");
   }
@@ -190,7 +192,7 @@ class V4ReportController extends GetxController
   void onClickDetailReport(dynamic report) {
     BaoCaoNhanVienResponse _report = report as BaoCaoNhanVienResponse;
     Get.toNamed(AppRoutes.V4_DETAIL_REPORT,
-            arguments: {'idReport': baoCaoNhanVienResponse!.id.toString()})!
+            arguments: {'idReports': _report.id.toString()})!
         .then((value) {
       if (value == true) {
         update();

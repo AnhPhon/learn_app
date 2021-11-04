@@ -16,6 +16,7 @@ class V4AddReportOnRequestController extends GetxController {
   // Báo cáo nhân viên
   BaoCaoNhanVienProvider baoCaoNhanVienProvider =
       GetIt.I.get<BaoCaoNhanVienProvider>();
+  BaoCaoNhanVienResponse baoCaoNhanVienResponse = BaoCaoNhanVienResponse();
   List<BaoCaoNhanVienResponse> baoCaoNhanVienList = [];
   // Dự án của nhân viên
   DuAnNhanVienProvider duAnNhanVienProvider =
