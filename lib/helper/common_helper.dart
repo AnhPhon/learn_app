@@ -1,4 +1,5 @@
 import 'package:html_unescape/html_unescape.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommonHelper {
   ///
@@ -9,4 +10,9 @@ class CommonHelper {
     return unescape.convert(htmlString);
   }
 
+  static Future openLink({required String url})async{
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+  }
 }

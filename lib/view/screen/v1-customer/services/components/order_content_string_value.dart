@@ -24,17 +24,23 @@ class OrderContentStringValue extends StatelessWidget {
     return Padding(
       padding: padding ?? const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,style: TextStyle(
             fontSize: Dimensions.FONT_SIZE_LARGE,
             fontWeight: boldTitle! ? FontWeight.bold : FontWeight.normal
           )),
-          Text(value , style: TextStyle(
-            color: ColorResources.BLACK,
-            fontWeight: boldValue! ? FontWeight.bold : FontWeight.normal,
-            fontSize: Dimensions.FONT_SIZE_LARGE,
-          )),
+          Flexible(
+            child: Text(value , 
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: ColorResources.BLACK,
+              fontWeight: boldValue! ? FontWeight.bold : FontWeight.normal,
+              fontSize: Dimensions.FONT_SIZE_LARGE,
+            )),
+          ),
         ],
       ),
     );

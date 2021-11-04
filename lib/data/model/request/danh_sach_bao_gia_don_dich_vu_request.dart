@@ -6,6 +6,7 @@ class DanhSachBaoGiaDonDichVuRequest {
   String? ghiChu;
   String? file;
   String? daXem;
+  List<String>? hinhAnhBaoGias;
 
   DanhSachBaoGiaDonDichVuRequest({
       this.id,
@@ -14,7 +15,9 @@ class DanhSachBaoGiaDonDichVuRequest {
       this.giaBao,
       this.ghiChu,
       this.file,
-      this.daXem});
+      this.daXem,
+      this.hinhAnhBaoGias,
+  });
   
   ///
   /// From JSON
@@ -27,6 +30,10 @@ class DanhSachBaoGiaDonDichVuRequest {
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
     daXem = json['daXem'].toString();
+
+    if(json['hinhAnhBaoGias'] != null){
+      hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<String>;
+    }
   }
 
   ///
@@ -53,7 +60,10 @@ class DanhSachBaoGiaDonDichVuRequest {
     if (file != null) data['file'] = file; 
 
     // check null daXem
-    if (daXem != null) data['daXem'] = daXem; 
+    if (daXem != null) data['daXem'] = daXem;
+
+    // check null daXem
+    if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;
 
 
     return data;
