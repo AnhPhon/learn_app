@@ -17,7 +17,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/snack_bar.dart';
 import '../../../../di_container.dart';
 
 class CreateWorkController extends GetxController {
