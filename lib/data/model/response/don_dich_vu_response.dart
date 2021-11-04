@@ -41,6 +41,7 @@ class DonDichVuResponse {
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
   List<String>? files;
+  String? file;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -83,6 +84,7 @@ class DonDichVuResponse {
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViecs,
       this.idTinhTp,
+      this.file,
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
@@ -282,6 +284,8 @@ class DonDichVuResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    file = json['file'].toString();
+    
   }
 
   ///
@@ -431,6 +435,8 @@ class DonDichVuResponse {
 
     // check null tienCoc
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null file
+    if (file != null) data['file'] = file;
 
     return data;
   }
