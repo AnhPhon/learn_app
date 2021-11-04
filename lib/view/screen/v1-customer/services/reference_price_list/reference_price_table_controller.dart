@@ -16,7 +16,6 @@ class ReferencePriceTableController extends GetxController{
     super.onInit();
     if(Get.arguments != null){
       request = Get.arguments as DonDichVuRequest;
-      print(request!.toJson());
       id = Get.parameters['id'].toString();
       title = Get.parameters['title'].toString();
       appBarTitle = Get.parameters['appbar'].toString();
@@ -24,6 +23,12 @@ class ReferencePriceTableController extends GetxController{
   }
 
 
+  ///
+  /// on back
+  ///
+  void onBack() {
+    Get.back(result: request);
+  }
 
   ////////////////////////////////
   /// Click continue button
@@ -34,10 +39,20 @@ class ReferencePriceTableController extends GetxController{
       Get.toNamed(AppRoutes.V1_G2_CREATE_WORK, arguments: request,);
     }else if(id.contains('3')){
       // Tạo đơn dịch vụ có gía nhóm 3
-      Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: request);
+      Get.toNamed(AppRoutes.V1_G3_CREATE_SERVICE, arguments: request)!.then((value){
+        if(value != null){
+          request = (value as DonDichVuRequest);
+          update();
+        }
+      });
     }else if(id.contains('4') ){
       // Tạo đơn dich vụ có giá nhóm 4
-      Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE,arguments: request);
+      Get.toNamed(AppRoutes.V1_G4_CREATE_SERVICE,arguments: request)!.then((value){
+        if(value != null){
+          request = (value as DonDichVuRequest);
+          update();
+        }
+      });
     }else if(id.contains('5')){
       // Tạo đơn công viẹc và dịch nhóm 5
       Get.toNamed("${AppRoutes.V1_G5_CREATE_SERVICE}?appbar=$appBarTitle", arguments: request);

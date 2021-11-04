@@ -365,7 +365,12 @@ class CreateWorkController extends GetxController {
          // Nhóm 7
           Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: await request());
         }else {
-          Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),);
+            Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),)!.then   ( (value){
+              if(value != null){
+                loaiCongViec = loaiCongViecResponseList.firstWhere((element) => element.tenCongViec == (value as DonDichVuRequest).tieuDe);
+              }
+            }
+          );
         }
       }
   }

@@ -126,10 +126,18 @@ class V1G4CreateServiceController extends GetxController{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);
        Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE, arguments: request())!.then((value){
          if(value != null){
-           workTitleController.text = (value as DonDichVuRequest).tieuDe ?? '';
+           serviceApplication = (value as DonDichVuRequest);
+           workTitleController.text = value.tieuDe ?? '';
          }
        });
     }
+  }
+
+  ///
+  /// on Back
+  ///
+  void onBack(){
+    Get.back(result: serviceApplication);
   }
 
   ///

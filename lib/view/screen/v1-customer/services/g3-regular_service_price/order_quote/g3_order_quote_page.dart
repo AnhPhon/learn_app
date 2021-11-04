@@ -24,7 +24,8 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
       leading: IconButton(onPressed: (){
         _controller.onBack();
       }, icon: const Icon(
-        Icons.arrow_back_ios
+          Icons.arrow_back_ios,
+          color: ColorResources.WHITE,
         )),
       ),
       body: GetBuilder(

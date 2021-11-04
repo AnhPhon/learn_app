@@ -16,7 +16,16 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: _controller.appBarTitle,),
+      appBar: AppBarWidget(
+        title: _controller.appBarTitle,
+        leading: IconButton(onPressed: (){
+          _controller.onBack();
+        }, icon: const Icon(
+            Icons.arrow_back_ios,
+            color: ColorResources.WHITE,
+          )
+        ),
+      ),
       body: GetBuilder(
         builder: (ReferencePriceTableController controller) {
           return SingleChildScrollView(

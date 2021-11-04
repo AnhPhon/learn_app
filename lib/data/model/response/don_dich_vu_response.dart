@@ -73,6 +73,7 @@ class DonDichVuResponse {
       this.ngayBatDau,
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuongs,
+      this.hinhAnhChiTiets,
       this.hinhAnhBanVes,
       this.hinhAnhBaoGias,
       this.hinhAnhThucTes,
@@ -88,6 +89,7 @@ class DonDichVuResponse {
       this.giaTriKhachDeXuat,
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
+      this.files,
       this.file,
       this.soLuongYeuCau,
       this.soNgay,
@@ -151,6 +153,8 @@ class DonDichVuResponse {
     hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).map((e) => e.toString()).toList();
     hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>).map((e) => e.toString()).toList();
     hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>).map((e) => e.toString()).toList();
+    files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
     if(json['hinhAnhBanKhoiLuongs'] != null){
       hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
     }
@@ -327,6 +331,11 @@ class DonDichVuResponse {
     //hinhAnhBaoHanhs
     if(hinhAnhBaoHanhs != null){
       data['hinhAnhBaoHanhs'] = hinhAnhBaoHanhs!.map((e) => e.toString()).toList();
+    }
+    
+    // Hình ảnh chi tiết
+    if(hinhAnhChiTiets != null){
+      data['hinhAnhChiTiets'] = hinhAnhChiTiets!.map((e) => e.toString()).toList();
     }
 
     // check null hinhAnhBanVe

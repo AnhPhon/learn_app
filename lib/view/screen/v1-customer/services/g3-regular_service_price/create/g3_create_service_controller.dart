@@ -126,10 +126,18 @@ class V1G3CreateServiceController extends GetxController {
     }else{
        Get.toNamed(AppRoutes.V1_G3_ORDER_QUOTE, arguments: request())!.then((value){
          if(value != null){
-           workTitleController.text = (value as DonDichVuRequest).tieuDe ?? '';
+           serviceApplication!.tieuDe = (value as DonDichVuRequest).tieuDe ?? '';
+           workTitleController.text = value.tieuDe ?? '';
          }
        });
     }
+  }
+
+  ///
+  /// on Back
+  ///
+  void onBack(){
+    Get.back(result: serviceApplication);
   }
 
   ///
