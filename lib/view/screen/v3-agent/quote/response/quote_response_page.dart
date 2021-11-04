@@ -9,6 +9,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/widgets/content_whitebox.dart';
+import 'package:template/view/basewidget/widgets/file_upload.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_controller.dart';
 
@@ -56,8 +57,13 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // tien do giao hang
-                  _tienDoGiaoHang(context, "Giao cấp",
-                      "${PriceConverter.convertPrice(context, 50000)} VNĐ"),
+                  _tienDoGiaoHang(context, controller.loaiHinh),
+                  SizedBox(
+                      height: DeviceUtils.getScaledHeight(
+                          context, Dimensions.SCALE_DEFAULT)),
+
+                  // file widget
+                  fileWidget(controller.filepath),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -170,42 +176,16 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   ///
   /// fileWidget
   ///
-  Widget fileWidget() {
+  Widget fileWidget(String filepath) {
     return LabelContent(
-      title: "File excel hoặc khác",
+      title: "File báo giá",
       isRequired: false,
-      content: Container(
-        height: 115,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: ColorResources.THEME_DEFAULT),
-          borderRadius: const BorderRadius.all(
-              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-        ),
-        child: GridView.builder(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisExtent: 90,
-            crossAxisSpacing: 10,
-          ),
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (BuildContext ctx, index) {
-            return GestureDetector(
-              onTap: () {},
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.example,
-                  image: Images.location_example,
-                  height: 90,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            );
-          },
+      content: GestureDetector(
+        onTap: () {
+          controller.onBtnDownload();
+        },
+        child: FileUploadWidget(
+          label: controller.filepath.split("/").last.toString(),
         ),
       ),
     );
@@ -324,7 +304,7 @@ class V3QuoteResponsePage extends GetView<V3QuoteResponseController> {
   ///
   /// conHieuLuc
   ///
-  Widget _tienDoGiaoHang(BuildContext context, String status, String cost) {
+  Widget _tienDoGiaoHang(BuildContext context, String status) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

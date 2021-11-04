@@ -7,6 +7,7 @@ import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V3QuoteRequestController extends GetxController {
   final DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider =
@@ -23,6 +24,7 @@ class V3QuoteRequestController extends GetxController {
 
   String from = "25/08/2021";
   String to = "20/09/2021";
+  String filepath = "";
 
   String title = "Yêu cầu báo giá";
 
@@ -79,6 +81,7 @@ class V3QuoteRequestController extends GetxController {
         id: idYeuCau.toString(),
         onSuccess: (data) {
           images = data.hinhAnhBaoGias!.map((e) => e.toString()).toList();
+          filepath = data.file.toString();
 
           donDichVuProvider.find(
             id: data.idDonDichVu!.id.toString(),
@@ -174,6 +177,17 @@ class V3QuoteRequestController extends GetxController {
         print("V3QuoteRequestController loadVatTu onError $error");
       },
     );
+  }
+
+  ///
+  ///onBtnDownCv
+  ///
+  Future<void> onBtnDownload() async {
+    if (await canLaunch(filepath)) {
+      await launch(filepath);
+    } else {
+      throw 'Could not launch $filepath';
+    }
   }
 
   ///

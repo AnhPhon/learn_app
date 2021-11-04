@@ -11,7 +11,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class V3QuoteResponseController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -39,6 +39,9 @@ class V3QuoteResponseController extends GetxController {
   List<String> images = [];
   double giaTriDonHang = 0;
 
+  String loaiHinh = "Giao gấp";
+  String filepath = "";
+
   bool isLoading = true;
 
   @override
@@ -49,7 +52,6 @@ class V3QuoteResponseController extends GetxController {
     // load thông tin
     sl.get<SharedPreferenceHelper>().idDonDichVu.then((idDonDichVu) {
       loadInfo(idDonDichVu.toString());
-      print(idDonDichVu);
       loadVatTu(idDonDichVu.toString());
     });
   }
@@ -118,12 +120,13 @@ class V3QuoteResponseController extends GetxController {
   /// load thongo tin don gia dich vu bằng id
   ///
   void loadInfo(String donGiaDichVuId) {
+    // load file
     sl.get<SharedPreferenceHelper>().idYeuCau.then((idYeuCau) {
       danhSachBaoGiaDonDichVuProvider.find(
         id: idYeuCau.toString(),
         onSuccess: (data) {
           images = data.hinhAnhBaoGias!.map((e) => e.toString()).toList();
-          print(images);
+          filepath = data.file.toString();
           update();
         },
         onError: (error) {
@@ -186,6 +189,17 @@ class V3QuoteResponseController extends GetxController {
   }
 
   ///
+  ///onBtnDownCv
+  ///
+  Future<void> onBtnDownload() async {
+    if (await canLaunch(filepath)) {
+      await launch(filepath);
+    } else {
+      throw 'Could not launch $filepath';
+    }
+  }
+
+  ///
   /// on Cost Change
   ///
   void onCostChange(BuildContext context, String value) {
@@ -201,27 +215,6 @@ class V3QuoteResponseController extends GetxController {
   /// on Continue Click
   ///
   void onContinueClick() {
-    // Get.to(
-    //   () => V3QuoteCheckPage(
-    //     yeuCauBaoGiaModel: YeuCauBaoGiaModel(
-    //       diaChiCuThe: diaChiCuThe,
-    //       features: features,
-    //       from: from,
-    //       giaTriDonHang: giaTriDonHang,
-    //       images: images,
-    //       loaiCongTrinh: loaiCongTrinh,
-    //       noiDungYeuCau: noiDungYeuCau,
-    //       phuong: phuong,
-    //       quan: quan,
-    //       tinhThanh: tinhThanh,
-    //       title: title,
-    //       to: to,
-    //       infoCard: infoCard,
-    //       isCheck: isCheck,
-    //       tieuDeBaoGia: tieuDeBaoGia,
-    //     ),
-    //   ),
-    // );
     Get.toNamed(
       AppRoutes.V3_QUOTE_CHECK,
       arguments: YeuCauBaoGiaModel(
@@ -240,6 +233,9 @@ class V3QuoteResponseController extends GetxController {
         infoCard: infoCard,
         isCheck: isCheck,
         tieuDeBaoGia: tieuDeBaoGia,
+        phiGiaoHang: double.parse(costController.text),
+        filepath: filepath,
+        loaiHinh: loaiHinh,
       ),
     );
   }

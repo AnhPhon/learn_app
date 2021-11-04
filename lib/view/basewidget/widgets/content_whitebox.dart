@@ -54,10 +54,7 @@ class _ContentWhiteBoxState extends State<ContentWhiteBox> {
                         ),
                         Text(
                           "${widget.infoCard[index]['value']}",
-                          style: (widget.infoCard[index]['label']
-                                      .toString()
-                                      .toLowerCase() ==
-                                  "đơn giá")
+                          style: (widget.infoCard[index]['input'] == true)
                               ? Dimensions.textInputNormalStyle()
                               : Dimensions.textNormalStyle(),
                         )

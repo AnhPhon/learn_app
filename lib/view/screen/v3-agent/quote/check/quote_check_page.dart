@@ -16,7 +16,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: controller.title),
+      appBar: const AppBarWidget(title: "Kiểm tra báo giá"),
       body: GetBuilder<V3QuoteCheckController>(
         init: V3QuoteCheckController(),
         builder: (V3QuoteCheckController controller) {
@@ -50,14 +50,14 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // tien do giao hang
-                  _tienDoGiaoHang(context, "Giao cấp",
-                      "${PriceConverter.convertPrice(context, 50000)} VNĐ"),
+                  _tienDoGiaoHang(context, controller.loaiHinh,
+                      "${PriceConverter.convertPrice(context, controller.phiGiaoHang)} VNĐ"),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
 
                   // file upload
-                  _fileUpload(context),
+                  _fileUpload(context, controller.filepath),
                   SizedBox(
                       height: DeviceUtils.getScaledHeight(
                           context, Dimensions.SCALE_DEFAULT)),
@@ -112,13 +112,16 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
       isRequired: false,
       content: Column(
         children: List.generate(
-            infoCard.length,
-            (index) => Column(
-                  children: [
-                    ContentWhiteBox(infoCard: infoCard[index]),
-                    const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                  ],
-                )),
+          infoCard.length,
+          (index) => Column(
+            children: [
+              ContentWhiteBox(infoCard: infoCard[index]),
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_SMALL,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -146,7 +149,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
             crossAxisSpacing: 10,
           ),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
+          itemCount: controller.images.length,
           itemBuilder: (BuildContext ctx, index) {
             return GestureDetector(
               onTap: () {},
@@ -155,7 +158,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                     Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.example,
-                  image: Images.location_example,
+                  image: controller.images[index],
                   height: 90,
                   fit: BoxFit.fill,
                 ),
@@ -367,7 +370,7 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                     width: DeviceUtils.getScaledWidth(context, .35),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      PriceConverter.convertPrice(context, 0),
+                      cost,
                       style: Dimensions.textNormalStyle(),
                     ),
                   ),
@@ -402,9 +405,9 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
             children: [
               Text("Giá trị đơn hàng", style: Dimensions.textTitleStyleCard()),
               const Spacer(),
-              const Text(
-                "350.000vnđ",
-                style: TextStyle(
+              Text(
+                "${PriceConverter.convertPrice(context, controller.giaTriDonHang)} VND",
+                style: const TextStyle(
                   color: ColorResources.RED,
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                 ),
@@ -422,21 +425,21 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
                 crossAxisSpacing: 30,
               ),
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.features!.length,
+              itemCount: controller.features.length,
               itemBuilder: (BuildContext ctx, index) {
                 return GestureDetector(
-                  onTap: controller.features![index]["onTap"] as Function(),
+                  onTap: controller.features[index]["onTap"] as Function(),
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: controller.features![index]['color'] as Color,
+                        color: controller.features[index]['color'] as Color,
                         borderRadius: const BorderRadius.all(
                             Radius.circular(Dimensions.BORDER_RADIUS_SMALL)),
                         boxShadow: const [
                           BoxShadow(blurRadius: 3, offset: Offset(0, 2))
                         ]),
                     child: Text(
-                      controller.features![index]['title'] as String,
+                      controller.features[index]['title'] as String,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -455,13 +458,15 @@ class V3QuoteCheckPage extends GetView<V3QuoteCheckController> {
   ///
   /// file upload
   ///
-  Widget _fileUpload(BuildContext context) {
+  Widget _fileUpload(BuildContext context, String filepath) {
     return GestureDetector(
-      onTap: () {},
-      child: const LabelContent(
+      onTap: () {
+        controller.onBtnDownload(url: filepath.toString());
+      },
+      child: LabelContent(
         title: "File báo giá:",
         isRequired: false,
-        content: FileUploadWidget(label: "bao_gia.doc"),
+        content: FileUploadWidget(label: controller.getFilename(filepath)),
       ),
     );
   }

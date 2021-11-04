@@ -8,6 +8,9 @@ class YeuCauBaoGiaModel {
   String? to;
   String? title;
   String? tieuDeBaoGia;
+  String? loaiHinh;
+  String? filepath;
+  double? phiGiaoHang;
   List<String>? noiDungYeuCau;
   List<Map<String, dynamic>>? features;
   List<String>? images;
@@ -31,6 +34,9 @@ class YeuCauBaoGiaModel {
     this.infoCard,
     this.isCheck,
     this.tieuDeBaoGia,
+    this.loaiHinh,
+    this.phiGiaoHang = 0,
+    this.filepath,
   });
 
   ///
@@ -82,6 +88,15 @@ class YeuCauBaoGiaModel {
 
     // check null tieuDeBaoGia
     if (tieuDeBaoGia != null) data['tieuDeBaoGia'] = tieuDeBaoGia;
+
+    // check null loaihinh
+    if (loaiHinh != null) data['loaiHinh'] = loaiHinh;
+
+    // check null phiGiaoHang
+    if (phiGiaoHang != null) data['phiGiaoHang'] = phiGiaoHang;
+
+    // check null filepath
+    if (filepath != null) data['filepath'] = filepath;
 
     return data;
   }

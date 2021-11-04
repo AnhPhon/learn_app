@@ -301,59 +301,19 @@ class V3QuoteRequestPage extends GetView<V3QuoteRequestController> {
   }
 
   ///
-  /// fileWidget
-  ///
-  Widget fileWidget() {
-    return LabelContent(
-      title: "File excel hoặc khác",
-      isRequired: false,
-      content: Container(
-        height: 115,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: ColorResources.THEME_DEFAULT),
-          borderRadius: const BorderRadius.all(
-              Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-        ),
-        child: GridView.builder(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisExtent: 90,
-            crossAxisSpacing: 10,
-          ),
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (BuildContext ctx, index) {
-            return GestureDetector(
-              onTap: () {},
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT)),
-                child: FadeInImage.assetNetwork(
-                  placeholder: Images.example,
-                  image: Images.location_example,
-                  height: 90,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  ///
   /// file upload
   ///
   Widget _fileUpload(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      child: const LabelContent(
+      onTap: () {
+        controller.onBtnDownload();
+      },
+      child: LabelContent(
         title: "Đính kèm file excel hoặc khác:",
         isRequired: false,
-        content: FileUploadWidget(label: "Thêm file"),
+        content: FileUploadWidget(
+          label: controller.filepath.split("/").last.toString(),
+        ),
       ),
     );
   }
