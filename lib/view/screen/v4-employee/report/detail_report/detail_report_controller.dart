@@ -57,7 +57,6 @@ class V4DetailReportController extends GetxController {
     final dynamic arguments = Get.arguments;
     if (arguments != null && arguments['idReports'] != null) {
       idReports = arguments!['idReports'].toString();
-      print('V4DetailReportController onInit $idReports');
     }
     getidUser();
     getThongTinBaoCao();
@@ -86,7 +85,6 @@ class V4DetailReportController extends GetxController {
   ///Get thông tin báo cáo
   ///
   void getThongTinBaoCao() {
-    print('V4DetailReportController getThongTinBaoCao $idReports');
     baoCaoNhanVienProvider.find(
       id: idReports.toString(),
       onSuccess: (value) {
