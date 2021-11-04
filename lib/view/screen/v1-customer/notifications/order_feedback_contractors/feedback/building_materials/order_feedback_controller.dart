@@ -66,7 +66,7 @@ class V1OrderFeedBackController extends GetxController{
     EasyLoading.show(status: "Phản hồi đơn dich vụ ...");
     final DonDichVuRequest dichVuRequest = DonDichVuRequest();
     dichVuRequest.id = donDichVu!.id;
-    dichVuRequest.idTrangThaiDonDichVu = DA_PHAN_HOI;
+    dichVuRequest.idTrangThaiDonDichVu = THAT_BAI;
     dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
     donDichVuProvider.update(data: dichVuRequest, onSuccess: (onSuccess){
       EasyLoading.dismiss();

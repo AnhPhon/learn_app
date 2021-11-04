@@ -10,6 +10,7 @@ import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/string_cut.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/image_url.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/screen/v2-builder/notifications/notification_controller.dart';
@@ -43,7 +44,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
               physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: controller.notifications.length ,
               itemBuilder: (context, index) {
-                return itemNotification(index: index);
+                return itemNotification(context,index: index);
               },
             ),
           );
@@ -52,7 +53,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
     );
   }
 
-  Widget itemNotification({required int index}){
+  Widget itemNotification(BuildContext context,{required int index}){
     return GestureDetector(
       onTap: (){
         controller.onClickItem(controller.notifications[index]);
@@ -77,9 +78,10 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                     borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder, 
+                      height: DeviceUtils.getScaledHeight(context,1),
                       image: controller.notifications[index].hinhDaiDien != 'null' ? controller.notifications[index].hinhDaiDien! : ImageURL.V2_IMAGE_WORK_IN_PROGRESS,
                       fit: BoxFit.cover,
-                      placeholderErrorBuilder: (context, error, stackTrace) {
+                      imageErrorBuilder: (context, error, stackTrace) {
                         return Image.asset(Images.placeholder);
                       },
                     ),
@@ -114,12 +116,24 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            //   children: [
-                                
-                            //   ],
-                            // )
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                if(controller.notifications[index].idDonDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idNhomDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '3' || 
+                                  controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '4')
+                                needPerson(),
+                                if(controller.notifications[index].idDonDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == THAT_BAI)
+                                thatBai(),
+                                if(controller.notifications[index].idDonDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == CHOT_GIA)
+                                thanhCong()
+                              ],
+                            )
                           ],
                         ),
                       )
@@ -137,28 +151,35 @@ class V2NotificationPage extends GetView<V2NotificationController> {
   Widget needPerson(){
     return Row(
       children: const [
-        Icon(Icons.work),
+        Icon(
+          Icons.work,
+          color: ColorResources.YELLOW,
+        ),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
         Text("Đang cần người")
       ],
     );
   }
-
-  Widget chuaPhanHoi(){
+  //Thành công
+  Widget thanhCong(){
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: const [
-        Icon(Icons.warning),
-        Text("Chưa phản hồi")
+        Icon(
+          Icons.check_circle,
+          color: ColorResources.GREEN,
+        ),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        Text("Thành công")
       ],
     );
   }
-
-  Widget daPhanHoi(){
+  // Thất bại
+  Widget thatBai(){
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: const [
-        Icon(Icons.check_circle),
-        Text("Đã phản hồi")
+        Icon(Icons.feedback, size: 20),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        Text("Thất bại")
       ],
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
@@ -9,8 +8,6 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
 class V1FormalPaymentFeedbackController extends GetxController{
   DonDichVuRepository donDichVuRepository = GetIt.I.get<DonDichVuRepository>();
@@ -62,7 +59,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
                 {
                   //set trạng thái đã thanh toán
                   dichVuRequest.idTrangThaiThanhToan = DA_THANH_TOAN,
-                  dichVuRequest.idTrangThaiDonDichVu = DA_PHAN_HOI,
+                  dichVuRequest.idTrangThaiDonDichVu = CHOT_GIA,
                   dichVuRequest.phiDichVu = value['phiDichVu'].toString(),
                   dichVuRequest.khuyenMai = value['khuyenMai'].toString(),
                   dichVuRequest.tongDon = value['tongTien'].toString(),
@@ -85,7 +82,7 @@ class V1FormalPaymentFeedbackController extends GetxController{
                 {
                   //set trạng thái chưa thanh toán
                   dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN,
-                  dichVuRequest.idTrangThaiDonDichVu = DA_PHAN_HOI,
+                  dichVuRequest.idTrangThaiDonDichVu = CHOT_GIA,
                   dichVuRequest.phiDichVu = value['phiDichVu'].toString(),
                   dichVuRequest.khuyenMai = value['khuyenMai'].toString(),
                   dichVuRequest.tongDon = value['tongTien'].toString(),

@@ -131,6 +131,8 @@ class HomeWidget extends StatelessWidget {
                                       Get.toNamed(AppRoutes.V1_NOTIFICATION);
                                     }else if(value == THO_THAU){
                                       Get.toNamed(AppRoutes.V2_NOTIFICATION);
+                                    }else if(value == DAI_LY){
+                                      Get.toNamed(AppRoutes.V3_NOTIFICATION);
                                     }
                                   });
                                 } else {

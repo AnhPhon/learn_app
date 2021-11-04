@@ -31,7 +31,7 @@ class VatTuResponse {
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
     donGia = json['donGia'].toString();
-    khoiLuong = json['khoiLuong'] as String;
+    khoiLuong = (json['khoiLuong'] == null) ?  null : json['khoiLuong'].toString();
     // mapping idDonDichVu
     // if (json['idDonDichVu'] != null &&
     //     json['idDonDichVu'].toString().length != 24) {

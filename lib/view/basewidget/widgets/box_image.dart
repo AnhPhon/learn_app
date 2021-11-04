@@ -13,13 +13,13 @@ class BoxImage extends StatelessWidget {
     this.isAddImage = false,
     this.onPress,
      this.images,
-    this.imagesUrl,
+    // this.imagesUrl,
     this.onDelete,
   }) : super(key: key);
   final bool? isAddImage;
   final Function()? onPress;
   final List<String>? images;
-  final List<String>? imagesUrl;
+  // final List<String>? imagesUrl;
   final Function(String file, List<String> files)? onDelete;
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class BoxImage extends StatelessWidget {
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount:imagesUrl != null ? imagesUrl!.length : isAddImage! ?  images!.length + 1 : images!.length,
+            itemCount: isAddImage! ?  images!.length + 1 : images!.length,
             itemBuilder: (context, index) {
               if(isAddImage!){
                 if(index == images!.length){ // == images.length
@@ -66,7 +66,7 @@ class BoxImage extends StatelessWidget {
                 }
                 return ImageCard(image: images![index], isAddImage: isAddImage!,onDelete:()=> onDelete!(images![index],images!),);
               }else{
-                return imagesUrl != null ? imagesUrl![index].isNotEmpty && !imagesUrl![index].contains('null') ? ImageCard(image:imagesUrl![index], isAddImage: isAddImage!) : const SizedBox() : ImageCard(image:images![index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images![index],images!),);
+                return  ImageCard(image:images![index], isAddImage: isAddImage!, onDelete: ()=> onDelete!(images![index],images!),);
               }
             },
           ),

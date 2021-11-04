@@ -57,12 +57,18 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller
-            .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
+            .tongTien, 
         children: 
-        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == THAT_BAI ? 
         [
           const Flexible(
-            child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
+            child: Text(
+              "Bạn đã không đồng ý giá đơn dich vụ. Rất vui hợp tác với bạn lần sau !",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            )
           )
         ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
@@ -136,7 +142,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(images: controller.donDichVu!.hinhAnhBanKhoiLuongs),
         ],
       ),
     );
@@ -206,21 +212,21 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                     TextHighlight(
                                       title: "Tên công việc:",
                                       content:
-                                          controller.workMass[index].tenVatTu!,
+                                          controller.workMass[index].tenVatTu ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
                                         content:
-                                            controller.workMass[index].quyCach!),
+                                            controller.workMass[index].quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
                                         content:
-                                            controller.workMass[index].khoiLuong!),
+                                            controller.workMass[index].khoiLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
                                         content:
-                                            controller.workMass[index].donVi!),
-                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia} VNĐ' , style: const TextStyle(
+                                            controller.workMass[index].donVi ?? ''),
+                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia ?? ''} VNĐ' , style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE
                                     ),),

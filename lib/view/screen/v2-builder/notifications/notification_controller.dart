@@ -8,6 +8,7 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V2NotificationController extends GetxController {
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
@@ -45,6 +46,24 @@ class V2NotificationController extends GetxController {
         onSuccess: (data) {
           notifications.clear();
           notifications.addAll(data);
+
+          for(final notification in notifications){
+            if(notification.idDonDichVu != null){
+
+              donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
+                notification.idDonDichVu = data;
+                isLoading = false;
+                update();
+              }, onError: (onError){
+                print("Lỗi v2 thông báo tiềm kiếm đơn dich vụ");
+              });
+
+            }else{
+              notification.idDonDichVu = null;
+              update();
+            }
+          }
+
           isLoading = false;
           update();
         },
@@ -77,6 +96,22 @@ class V2NotificationController extends GetxController {
         onSuccess: (data) {
           notifications.clear();
           notifications = data;
+          for(final notification in notifications){
+            if(notification.idDonDichVu != null){
+
+              donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
+                notification.idDonDichVu = data;
+                isLoading = false;
+                update();
+              }, onError: (onError){
+                print("Lỗi v2 thông báo tiềm kiếm đơn dich vụ");
+              });
+
+            }else{
+              notification.idDonDichVu = null;
+              update();
+            }
+          }
           refreshController.resetNoData();
           refreshController.refreshCompleted();
           isLoading = false;
@@ -100,11 +135,29 @@ class V2NotificationController extends GetxController {
         limit: limit,
         filter: '&doiTuong=2&idTaiKhoan=$userId&sortBy=created_at:desc',
         onSuccess: (data) {
-          print("Dài: ${data.length}");
           if (data.isEmpty) {
             refreshController.loadNoData();
           } else {
-            notifications.addAll(data);
+
+            notifications.addAll(data.map((notification){
+                if(notification.idDonDichVu != null){
+
+                  donDichVuProvider.find(id: notification.idDonDichVu!.id!, onSuccess: (data){
+                    notification.idDonDichVu = data;
+                    refreshController.loadComplete();
+                    update();
+                  }, onError: (onError){
+                    print("Lỗi v2 thông báo tiềm kiếm đơn dich vụ");
+                  });
+
+                }else{
+                  notification.idDonDichVu = null;
+                  update();
+                }
+                update();
+                return notification;
+            }));
+            
             refreshController.loadComplete();
           }
           isLoading = false;
@@ -123,31 +176,26 @@ class V2NotificationController extends GetxController {
         id: notification.idDonDichVu!.id!,
         onSuccess: (data) {
           final String id = data.idNhomDichVu!.nhomDichVu!;
-          if (id.contains('1')) {
-            // link to page kết quả báo giá
-            Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data.idNhomDichVu!.id);
-          } else if (id.contains('2')) {
-            // link to page kết quả báo giá
-            Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,
-                arguments: data);
-          } else if (id.contains('3')){
+          if (id.contains('1') || id.contains('2') || id.contains('5') || id.contains('6')) {
+
+            onQuote(idDonDichVu: data.id!, idTrangThaiDonDichVu: data.idTrangThaiDonDichVu!.id!);
+
+          }else if (id.contains('3')){
             // Nhóm 3
-            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.idNhomDichVu!.id);
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+
           }else if (id.contains('4')){
             // Nhóm 4
-            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.idNhomDichVu!.id);
-          }else if (id.contains('5')) {
-            // link to page kết quả báo giá
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5, arguments: data.idNhomDichVu!.id);
-          } else if (id.contains('6')) {
-            // Link to page kết quả báo giá
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data.idNhomDichVu!.id);
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+
           }else if (id.contains('7')) {
             // Nhóm 7 tuyển dụng ứng viên
             Get.toNamed(AppRoutes.V2_CANDIDATE_RECRUITMENT);
+
           } else {
             // Xem thông báo chi tiết admin
             Get.toNamed(AppRoutes.V2_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
+
           }
         },
         onError: (onError) {
@@ -156,10 +204,22 @@ class V2NotificationController extends GetxController {
       );
     }else{
       Get.toNamed(AppRoutes.V2_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
-    }
-    
+    } 
   }
 
+  ///
+  /// Kết qủa báo giá
+  ///
+  void onQuote({required String idDonDichVu, required String idTrangThaiDonDichVu}){
+    if(idTrangThaiDonDichVu == THAT_BAI){
+      // Link to page trạng thất bại
+      Get.toNamed(AppRoutes.V2_FAIL);
+    }else{
+      // Link to page kết quả báo giá
+      //Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: idDonDichVu);
+    }
+  }
+  
   @override
   void onClose() {
     refreshController.dispose();
