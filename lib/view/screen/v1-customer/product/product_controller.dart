@@ -200,8 +200,8 @@ class V1ProductController extends GetxController {
         page: pageSearchMax,
         limit: limiSearchtMax,
         filter: (danhMucSanPhamResponse == null)
-            ? "&maSanPham=${searchController.text}&sortBy=created_at:desc"
-            : "&idDanhMucSanPham=${danhMucSanPhamResponse!.id}&maSanPham=${searchController.text}&sortBy=created_at:desc",
+            ? "&tenSearch=${searchController.text}&sortBy=created_at:desc"
+            : "&idDanhMucSanPham=${danhMucSanPhamResponse!.id}&tenSearch=${searchController.text}&sortBy=created_at:desc",
         onSuccess: (data) {
           //check is empty
           if (data.isEmpty) {
