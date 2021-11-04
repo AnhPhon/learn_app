@@ -46,6 +46,10 @@ class V4DetailReportController extends GetxController {
   TextEditingController contentDetailReport = TextEditingController();
   TextEditingController timeDetailReport = TextEditingController();
 
+  //get agument
+  final BaoCaoNhanVienResponse arguments =
+      Get.arguments as BaoCaoNhanVienResponse;
+
   ///
   /// lấy thông tin ban đầu
   ///
@@ -53,13 +57,8 @@ class V4DetailReportController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //get agument
-    final dynamic arguments = Get.arguments;
-    if (arguments != null && arguments['idReports'] != null) {
-      idReports = arguments!['idReports'].toString();
-    }
     getidUser();
-    getThongTinBaoCao();
+    getDetailReport(isFisrt: true);
   }
 
   ///
@@ -82,46 +81,6 @@ class V4DetailReportController extends GetxController {
   }
 
   ///
-  ///Get thông tin báo cáo
-  ///
-  void getThongTinBaoCao() {
-    baoCaoNhanVienProvider.find(
-      id: idReports.toString(),
-      onSuccess: (value) {
-        detailReportResponse = value;
-        //ngày
-        timeDetailReport = TextEditingController(
-          text: DateConverter.formatDateTime(
-            value.createdAt.toString(),
-          ),
-        );
-        // nội dung
-        contentDetailReport = TextEditingController(text: value.noiDung);
-        // lấy list dự án nhân viên
-        mappingAddress();
-        isLoading = false;
-        update();
-      },
-      onError: (error) {
-        print("V4DetailReportController getThongTinBaoCao onError $error");
-      },
-    );
-  }
-
-  ///
-  ///mapping address
-  ///
-  Future<void> mappingAddress() async {
-    //get user id
-    idUser = (await sl.get<SharedPreferenceHelper>().userId)!;
-    if (detailReportResponse != null) {
-      getBaoCaoNhanVien(isFisrt: true);
-    } else {
-      getBaoCaoNhanVien();
-    }
-  }
-
-  ///
   ///Thay đổi dự án nhân viên
   ///
   void onChangedDuAnNhanVien(DuAnNhanVienResponse? value) {
@@ -130,18 +89,26 @@ class V4DetailReportController extends GetxController {
   }
 
   ///
-  ///Lấy dự án của nhân viên
+  ///Get chi tiết từng báo cáo
   ///
   ///
-  void getBaoCaoNhanVien({bool? isFisrt = false}) {
+  void getDetailReport({bool? isFisrt = false}) {
+    //ngày
+    timeDetailReport = TextEditingController(
+      text: DateConverter.formatDateTime(
+        arguments.createdAt.toString(),
+      ),
+    );
+    // nội dung
+    contentDetailReport = TextEditingController(text: arguments.noiDung);
     duAnNhanVienProvider.all(
       onSuccess: (data) {
         duAnNhanVienList = data;
-        if (detailReportResponse != null && isFisrt == true) {
+        if (isFisrt == true) {
           duAnNhanVien = duAnNhanVienList[duAnNhanVienList.indexWhere(
-              (element) =>
-                  element.id == detailReportResponse.idDuAnNhanVien!.id)];
+              (element) => element.id == arguments.idDuAnNhanVien!.id)];
         }
+        isLoading = false;
         update();
       },
       onError: (error) {
@@ -172,15 +139,15 @@ class V4DetailReportController extends GetxController {
     if (validate()) {
       EasyLoading.show(status: 'loading...');
       // set data
-      detailReportResponse.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
+      arguments.idDuAnNhanVien!.createdAt = DateConverter.formatDate(
         DateConverter.convertStringddMMyyyyToDate(
           timeDetailReport.text.toString(),
         ),
       );
       baoCaoNhanVienProvider.update(
         data: BaoCaoNhanVienRequest(
-          id: idReports.toString(),
-          idNhanVien: idUser,
+          id: arguments.id,
+          idNhanVien: arguments.idNhanVien!.id,
           idDuAnNhanVien: duAnNhanVien!.id,
           noiDung: contentDetailReport.text,
         ),

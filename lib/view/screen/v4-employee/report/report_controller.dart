@@ -54,8 +54,6 @@ class V4ReportController extends GetxController
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //set arguments báo cáo
-    // baoCaoNhanVienResponse = Get.arguments as BaoCaoNhanVienResponse;
     getIdUser();
     getReport(isRefresh: true, value: "1");
   }
@@ -189,11 +187,8 @@ class V4ReportController extends GetxController
   ///
   ///go to  detail report page
   ///
-  void onClickDetailReport(dynamic report) {
-    BaoCaoNhanVienResponse _report = report as BaoCaoNhanVienResponse;
-    Get.toNamed(AppRoutes.V4_DETAIL_REPORT,
-            arguments: {'idReports': _report.id.toString()})!
-        .then((value) {
+  void onClickDetailReport(BaoCaoNhanVienResponse report) {
+    Get.toNamed(AppRoutes.V4_DETAIL_REPORT, arguments: report)!.then((value) {
       if (value == true) {
         update();
         getReport(isRefresh: true, value: "1");
