@@ -367,7 +367,7 @@ class CreateWorkController extends GetxController {
         }else {
             Get.toNamed("${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar", arguments: await request(),)!.then   ( (value){
               if(value != null){
-                loaiCongViec = loaiCongViecResponseList.firstWhere((element) => element.tenCongViec == (value as DonDichVuRequest).tieuDe);
+                loaiCongViec = loaiCongViecResponseList.firstWhereOrNull((element) => element.tenCongViec == (value as DonDichVuRequest).tieuDe) ?? loaiCongViecResponseList.first;
               }
             }
           );
@@ -410,4 +410,13 @@ class CreateWorkController extends GetxController {
     addressController.dispose();
   }
   
+}
+
+extension IterableExtension<T> on Iterable<T> {
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
 }
