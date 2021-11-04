@@ -17,7 +17,6 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 
 class V2QuotationG1Controller extends GetxController {
-
   final unitPriceController = TextEditingController();
 
   String weight = "20";
@@ -27,13 +26,14 @@ class V2QuotationG1Controller extends GetxController {
   String title = "Báo giá";
 
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
-  final ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
-  DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVuRequest = DanhSachBaoGiaDonDichVuRequest.fromJson({});
+  final ImageUpdateProvider imageUpdateProvider =
+      GetIt.I.get<ImageUpdateProvider>();
+  DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVuRequest =
+      DanhSachBaoGiaDonDichVuRequest.fromJson({});
 
   List<VatTuResponse>? vatTuResponse;
 
   bool flagSeeMore = false;
-
 
   @override
   void onInit() {
@@ -45,9 +45,12 @@ class V2QuotationG1Controller extends GetxController {
     return DateConverter.isoStringToddMMYYYY(dateString.toString());
   }
 
-  String getFileNameBaoGia(){
-    if(danhSachBaoGiaDonDichVuRequest.file != null && danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty && danhSachBaoGiaDonDichVuRequest.file.toString() != 'null'){
-      final arrayNameSplit = danhSachBaoGiaDonDichVuRequest.file.toString().split('/');
+  String getFileNameBaoGia() {
+    if (danhSachBaoGiaDonDichVuRequest.file != null &&
+        danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty &&
+        danhSachBaoGiaDonDichVuRequest.file.toString() != 'null') {
+      final arrayNameSplit =
+          danhSachBaoGiaDonDichVuRequest.file.toString().split('/');
       return arrayNameSplit[arrayNameSplit.length - 1];
     }
     return '';
@@ -58,7 +61,8 @@ class V2QuotationG1Controller extends GetxController {
   ///
   Future pickFiles() async {
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+      final FilePickerResult? result =
+          await FilePicker.platform.pickFiles(allowMultiple: false);
       if (result == null) return;
       EasyLoading.show(status: 'Loading...');
 
@@ -130,7 +134,8 @@ class V2QuotationG1Controller extends GetxController {
   ///
   void calculator() {
     if (unitPriceController.text.isNotEmpty) {
-      orderValue = (int.parse(unitPriceController.text) * int.parse(weight)).toString();
+      orderValue =
+          (int.parse(unitPriceController.text) * int.parse(weight)).toString();
     }
     update();
   }

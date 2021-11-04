@@ -22,7 +22,7 @@ class DangKyViecMoiRequest {
   String? noiLamViec;
   String? mucLuongDeXuat;
   String? idKeKhaiKinhNghiem;
-  String? anhHoSoXinViec;
+
   String? fileHoSoXinViec;
   String? kyNangSoTruong;
   String? idNgoaiNgu;
@@ -35,6 +35,8 @@ class DangKyViecMoiRequest {
   String? soLuong;
   String? tieuDeSearch;
   List<dynamic>? idDiaDiemDangKyLamViecs;
+  List<String>? anhHoSoXinViecs;
+  List<String>? anhBangCaps;
 
   DangKyViecMoiRequest({
     this.id,
@@ -58,7 +60,6 @@ class DangKyViecMoiRequest {
     this.noiLamViec,
     this.mucLuongDeXuat,
     this.idKeKhaiKinhNghiem,
-    this.anhHoSoXinViec,
     this.fileHoSoXinViec,
     this.kyNangSoTruong,
     this.idNgoaiNgu,
@@ -71,6 +72,8 @@ class DangKyViecMoiRequest {
     this.soLuong,
     this.idDiaDiemDangKyLamViecs,
     this.tieuDeSearch,
+    this.anhHoSoXinViecs,
+    this.anhBangCaps,
   });
 
   ///
@@ -98,7 +101,7 @@ class DangKyViecMoiRequest {
     noiLamViec = json['noiLamViec'].toString();
     mucLuongDeXuat = json['mucLuongDeXuat'].toString();
     idKeKhaiKinhNghiem = json['idKeKhaiKinhNghiem'].toString();
-    anhHoSoXinViec = json['anhHoSoXinViec'].toString();
+
     fileHoSoXinViec = json['fileHoSoXinViec'].toString();
     kyNangSoTruong = json['kyNangSoTruong'].toString();
     idNgoaiNgu = json['idNgoaiNgu'].toString();
@@ -126,6 +129,14 @@ class DangKyViecMoiRequest {
     if (json['idDiaDiemDangKyLamViecs'] != null) {
       idDiaDiemDangKyLamViecs =
           json['idDiaDiemDangKyLamViecs'] as List<dynamic>;
+    }
+
+    if (json['anhHoSoXinViecs'] != null) {
+      anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<String>;
+    }
+
+    if (json['anhBangCaps'] != null) {
+      anhBangCaps = json['anhBangCaps'] as List<String>;
     }
   }
 
@@ -203,9 +214,6 @@ class DangKyViecMoiRequest {
       data['idKeKhaiKinhNghiem'] = idKeKhaiKinhNghiem;
     }
 
-    // check null anhHoSoXinViec
-    if (anhHoSoXinViec != null) data['anhHoSoXinViec'] = anhHoSoXinViec;
-
     // check null fileHoSoXinViec
     if (fileHoSoXinViec != null) data['fileHoSoXinViec'] = fileHoSoXinViec;
 
@@ -256,6 +264,16 @@ class DangKyViecMoiRequest {
     // check null tieuDeSearch
     if (tieuDeSearch != null) {
       data['tieuDeSearch'] = tieuDeSearch;
+    }
+
+    // check null anhHoSo
+    if (anhHoSoXinViecs != null) {
+      data['anhHoSoXinViecs'] = anhHoSoXinViecs;
+    }
+
+    // check null anhbangCap
+    if (anhBangCaps != null) {
+      data['anhBangCaps'] = anhBangCaps;
     }
 
     // tieuDeSearch

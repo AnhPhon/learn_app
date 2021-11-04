@@ -140,6 +140,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // hôn nhân
         DropDownButton<String>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.honNhanChange(val.toString());
           },
@@ -153,6 +157,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Hình thức làm việc
         DropDownButton<HinhThucLamViecResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.hinhThucLamViecChange(val!);
           },
@@ -206,6 +214,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             label: "Chọn chức vụ, kinh nghiệm, mức lương", obligatory: false),
         // Chức vụ hiện tại *
         DropDownButton<ChucVuResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           paddingTop: 0,
           onChanged: (val) {
             controller.onChucVuHienTaiChange(val!);
@@ -220,6 +232,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Chức vụ mong muốn *
         DropDownButton<ChucVuResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.onChucVuMongMuonChange(val!);
           },
@@ -233,6 +249,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Năm kinh nghiệm *
         DropDownButton<SoNamKinhNghiemResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.onNamKinhNghiemChange(val!);
           },
@@ -246,6 +266,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Mức lương đề xuất *
         DropDownButton<MucLuongDuKienResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.onMucLuongDeXuatChange(val!);
           },
@@ -259,6 +283,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Nơi làm việc *
         DropDownButton<DiaDiemDangKyLamViecResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.onNoiLamViecChange(val!);
           },
@@ -272,6 +300,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Ngành nghề mong muốn ứng tuyển *
         DropDownButton<ChuyenNganhChinhResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {
             controller.onNgheNghiepMongMuonUngTuyenChange(val!);
           },
@@ -296,6 +328,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Trình độ
         DropDownButton<TrinhDoHocVanResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           paddingTop: 0,
           onChanged: (val) {
             controller.trinhDoChange(val!);
@@ -310,6 +346,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Chuyên môn *
         DropDownButton<ChuyenMonResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           paddingTop: 0,
           onChanged: (val) {
             controller.chuyenMonChange(val!);
@@ -324,6 +364,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Tốt nghiệp lọai *
         DropDownButton<LoaiTotNghiepResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           paddingTop: 0,
           onChanged: (val) {
             controller.loaiTotNghiepChange(val!);
@@ -338,6 +382,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Năm tốt nghiệp *
         TextFieldDate(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           allowEdit: true,
           controller: controller.namTotNghiepController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -443,6 +490,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             obligatory: false),
         // từ
         TextFieldDate(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           paddingTop: 0,
           allowEdit: true,
           controller: controller.startTimeController,
@@ -457,6 +507,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // đến
         TextFieldDate(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           allowEdit: true,
           controller: controller.endTimeController,
           fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -691,6 +744,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         const Label(label: "Ngoại ngữ", obligatory: true),
         // Chọn ngoại ngữ
         DropDownButton<NgoaiNguResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           paddingTop: 0,
           onChanged: (val) {},
           data: controller.ngoaiNguResponseList,
@@ -703,6 +760,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
 
         // Trình độ
         DropDownButton<TrinhDoResponse>(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+          ),
+          isColorFieldWhite: true,
           onChanged: (val) {},
           data: controller.trinhDoList,
           width: DeviceUtils.getScaledWidth(context, 1),
@@ -820,47 +881,50 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         ),
         // List thêm
         Column(
-            children: List.generate(
-          controller.ngoaiNguList.length,
-          (index) => Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                vertical: Dimensions.PADDING_SIZE_SMALL),
-            child: BoxShadowWidget(
-              padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-              child: SizedBox(
-                width: DeviceUtils.getScaledWidth(context, 1),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TextHighlight(
-                      title: "Ngôn ngữ: ",
-                      content: "Tiếng anh",
-                    ),
-                    contentPrivew(
-                        title: "Trình độ: ",
-                        content:
-                            controller.ngoaiNguList[index].trinhDo.toString()),
-                    contentPrivew(
-                        title: "Nghe: ",
-                        content:
-                            controller.ngoaiNguList[index].nghe.toString()),
-                    contentPrivew(
-                        title: "Nói: ",
-                        content: controller.ngoaiNguList[index].noi.toString()),
-                    contentPrivew(
-                        title: "Đọc: ",
-                        content: controller.ngoaiNguList[index].doc.toString()),
-                    contentPrivew(
-                        title: "Viết: ",
-                        content:
-                            controller.ngoaiNguList[index].viet.toString()),
-                  ],
+          children: List.generate(
+            controller.ngoaiNguList.length,
+            (index) => Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                  vertical: Dimensions.PADDING_SIZE_SMALL),
+              child: BoxShadowWidget(
+                padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                child: SizedBox(
+                  width: DeviceUtils.getScaledWidth(context, 1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TextHighlight(
+                        title: "Ngôn ngữ: ",
+                        content: "Tiếng anh",
+                      ),
+                      contentPrivew(
+                          title: "Trình độ: ",
+                          content: controller.ngoaiNguList[index].trinhDo
+                              .toString()),
+                      contentPrivew(
+                          title: "Nghe: ",
+                          content:
+                              controller.ngoaiNguList[index].nghe.toString()),
+                      contentPrivew(
+                          title: "Nói: ",
+                          content:
+                              controller.ngoaiNguList[index].noi.toString()),
+                      contentPrivew(
+                          title: "Đọc: ",
+                          content:
+                              controller.ngoaiNguList[index].doc.toString()),
+                      contentPrivew(
+                          title: "Viết: ",
+                          content:
+                              controller.ngoaiNguList[index].viet.toString()),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        )),
+        ),
       ],
     );
   }
@@ -947,6 +1011,51 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             ]),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+          child: LongButton(
+            title: "Thêm bằng tin học",
+            color: ColorResources.THEME_DEFAULT,
+            onPressed: () {
+              controller.tinHocThem();
+            },
+          ),
+        ),
+        if (controller.tinHocRequest == null)
+          const SizedBox()
+        else
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                    vertical: Dimensions.PADDING_SIZE_SMALL),
+                child: BoxShadowWidget(
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  child: SizedBox(
+                    width: DeviceUtils.getScaledWidth(context, 1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TextHighlight(title: "Bằng tin học", content: ''),
+                        contentPrivew(
+                            title: "Word: ",
+                            content: controller.tinHocRequest!.word.toString()),
+                        contentPrivew(
+                            title: "Excel: ",
+                            content:
+                                controller.tinHocRequest!.excel.toString()),
+                        contentPrivew(
+                            title: "Internet: ",
+                            content:
+                                controller.tinHocRequest!.internet.toString()),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
       ],
     );
   }

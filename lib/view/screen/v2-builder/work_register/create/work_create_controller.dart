@@ -165,6 +165,7 @@ class V2WorkCreateController extends GetxController {
   List<TinHocRequest> tinHocList = [];
   List<TinHocResponse> tinHocResponseList = [];
   TinHocRequest? tinHocRequest;
+  TinHocResponse? tinHocResponse;
 
   String tenUngVien = "";
   String gioiTinh = "";
@@ -829,6 +830,7 @@ class V2WorkCreateController extends GetxController {
       Get.to(
         V2WorkPreviewPage(
           dangKyModel: DangKyViecMoiModel(
+            kyNangSoTruong: kyNangSotruong,
             bangBangCaps: bangBangCap,
             choOHienTai: noiOHienTai,
             dienThoai: dienThoai,
@@ -849,6 +851,7 @@ class V2WorkCreateController extends GetxController {
             tinHoc: tinHocRequest,
             tuyenDung: false,
           ),
+          bangBangCapDisplay: bangBangCapDisplay,
         ),
       );
     }

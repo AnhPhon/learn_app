@@ -22,6 +22,8 @@ class DangKyViecMoiModel {
   List<Map<String, String>>? keKhaiKinhNghiems;
   List<NgoaiNguRequest>? ngoaiNguList;
   TinHocRequest? tinHoc;
+  String? kyNangSoTruong;
+  List<String>? anhHoSoXinViecs;
 
   DangKyViecMoiModel({
     this.tieuDe,
@@ -43,5 +45,7 @@ class DangKyViecMoiModel {
     this.ngoaiNguList,
     this.tinHoc,
     this.tuyenDung,
+    this.kyNangSoTruong,
+    this.anhHoSoXinViecs,
   });
 }

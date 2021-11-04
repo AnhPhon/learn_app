@@ -69,4 +69,6 @@ class TinHocRequest {
 
     return data;
   }
+
+  void add(String? value) {}
 }

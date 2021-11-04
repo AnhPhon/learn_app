@@ -7,8 +7,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/image_card.dart';
 
-class BoxImage extends StatelessWidget {
-  const BoxImage({
+class V2BoxImage extends StatelessWidget {
+  const V2BoxImage({
     Key? key,
     this.isAddImage = false,
     this.onPress,
@@ -18,9 +18,9 @@ class BoxImage extends StatelessWidget {
   }) : super(key: key);
   final bool? isAddImage;
   final Function()? onPress;
-  final List<File>? images;
+  final List<String>? images;
   final List<String>? imagesUrl;
-  final Function(File file, List<File> files)? onDelete;
+  final Function(String file, List<String> files)? onDelete;
   @override
   Widget build(BuildContext context) {
     return Column(
