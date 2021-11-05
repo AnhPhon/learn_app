@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:template/data/model/body/dang_ky_viec_moi_model.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
@@ -14,6 +15,7 @@ import 'package:template/data/repository/dang_ky_viec_moi_repository.dart';
 import 'package:template/data/repository/danh_sach_ung_tuyen_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -22,7 +24,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 
 class V2WorkPreviewController extends GetxController {
-  final TaiKhoanProvider _taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
+  final TaiKhoanProvider taiKhoanProvider = GetIt.I.get<TaiKhoanProvider>();
   TaiKhoanResponse? taiKhoanResponse;
   DangKyViecMoiRequest dangKyViecMoiRequest = DangKyViecMoiRequest();
   final ImageUpdateProvider imageUpdateProvider =
@@ -34,7 +36,8 @@ class V2WorkPreviewController extends GetxController {
   DanhSachUngTuyenProvider danhSachUngTuyenProvider =
       GetIt.I.get<DanhSachUngTuyenProvider>();
   DanhSachUngTuyenRequest danhSachUngTuyenRequest = DanhSachUngTuyenRequest();
-
+  DangKyViecMoiProvider dangKyViecMoiProvider =
+      GetIt.I.get<DangKyViecMoiProvider>();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -48,7 +51,7 @@ class V2WorkPreviewController extends GetxController {
   void loadInit() {
     sl.get<SharedPreferenceHelper>().userId.then((id) {
       print("kiem tra tra id $id");
-      _taiKhoanProvider.find(
+      taiKhoanProvider.find(
           id: id!,
           onSuccess: (value) {
             taiKhoanResponse = value;
@@ -218,7 +221,12 @@ class V2WorkPreviewController extends GetxController {
   ///
   /// go to done page
   ///
-  void toDonePage() {
+  void toDonePage(DangKyViecMoiModel dangKiModel) {
+    // dangKyViecMoiProvider.update(
+    //   data: data,
+    //   onSuccess: onSuccess,
+    //   onError: onError,
+    // );
     Get.toNamed(AppRoutes.V2_REGISTER_DONE);
   }
 

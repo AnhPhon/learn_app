@@ -131,13 +131,13 @@ class DangKyViecMoiRequest {
           json['idDiaDiemDangKyLamViecs'] as List<dynamic>;
     }
 
-    if (json['anhHoSoXinViecs'] != null) {
-      anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<String>;
-    }
+    // if (json['anhHoSoXinViecs'] != null) {
+    //   anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<String>;
+    // }
 
-    if (json['anhBangCaps'] != null) {
-      anhBangCaps = json['anhBangCaps'] as List<String>;
-    }
+    // if (json['anhBangCaps'] != null) {
+    //   anhBangCaps = json['anhBangCaps'] as List<String>;
+    // }
   }
 
   ///
@@ -267,14 +267,14 @@ class DangKyViecMoiRequest {
     }
 
     // check null anhHoSo
-    if (anhHoSoXinViecs != null) {
-      data['anhHoSoXinViecs'] = anhHoSoXinViecs;
-    }
+    // if (anhHoSoXinViecs != null) {
+    //   data['anhHoSoXinViecs'] = anhHoSoXinViecs;
+    // }
 
     // check null anhbangCap
-    if (anhBangCaps != null) {
-      data['anhBangCaps'] = anhBangCaps;
-    }
+    // if (anhBangCaps != null) {
+    //   data['anhBangCaps'] = anhBangCaps;
+    // }
 
     // tieuDeSearch
     return data;

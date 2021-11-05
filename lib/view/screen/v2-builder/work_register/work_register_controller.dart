@@ -698,6 +698,7 @@ class V2WorkRegisterController extends GetxController {
                   ngaySinh: taiKhoan.ngaySinh ?? "",
                   email: taiKhoan.email ?? "",
                   diaChi: taiKhoan.diaChi ?? "",
+                  idDiaDiemDangKyLamViecs: [],
                 ),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
@@ -720,12 +721,14 @@ class V2WorkRegisterController extends GetxController {
                       }
                     });
                   });
+                  update();
                 },
                 onError: (error) {
                   print(
                       "TermsAndPolicyController getTermsAndPolicy onError $error");
                 },
               );
+              update();
             },
             onError: (error) {
               print(
@@ -764,6 +767,7 @@ class V2WorkRegisterController extends GetxController {
               vals += "${data.id!},";
               sl.get<SharedPreferenceHelper>().saveIds(id: vals);
             });
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -788,6 +792,7 @@ class V2WorkRegisterController extends GetxController {
               vals += "${data.id!},";
               sl.get<SharedPreferenceHelper>().saveIds(id: vals);
             });
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -812,6 +817,7 @@ class V2WorkRegisterController extends GetxController {
               vals += "${data.id!},";
               sl.get<SharedPreferenceHelper>().saveIds(id: vals);
             });
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -838,6 +844,7 @@ class V2WorkRegisterController extends GetxController {
               vals += "${data.id!},";
               sl.get<SharedPreferenceHelper>().saveIds(id: vals);
             });
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -867,7 +874,9 @@ class V2WorkRegisterController extends GetxController {
               id: viecMoiId,
               idDiaDiemDangKyLamViecs: ids,
             ),
-            onSuccess: (data) {},
+            onSuccess: (data) {
+              update();
+            },
             onError: (error) {
               print(
                   "TermsAndPolicyController getTermsAndPolicy onError $error");

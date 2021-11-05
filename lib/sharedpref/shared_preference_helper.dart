@@ -391,6 +391,32 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.viecMoi);
   }
 
+  // Đơn dịch vụ : -----------------------------------------------
+  Future<String?> get idDonDichVu async {
+    return _sharedPreference.getString(Preferences.idDonDichVu);
+  }
+
+  Future<bool> saveIdDonDichVu({required String id}) async {
+    return _sharedPreference.setString(Preferences.idDonDichVu, id);
+  }
+
+  Future<bool> removeIdDonDichVu() async {
+    return _sharedPreference.remove(Preferences.idDonDichVu);
+  }
+
+  // Yêu cầu báo giá : -----------------------------------------------
+  Future<String?> get idYeuCau async {
+    return _sharedPreference.getString(Preferences.idYeuCau);
+  }
+
+  Future<bool> saveIdYeuCau({required String id}) async {
+    return _sharedPreference.setString(Preferences.idYeuCau, id);
+  }
+
+  Future<bool> removeIdYeuCau() async {
+    return _sharedPreference.remove(Preferences.idYeuCau);
+  }
+
   // Chấm công: ----------------------------------------------------------
   Future<bool?> get isSelected async {
     return _sharedPreference.getBool(Preferences.idSelected);

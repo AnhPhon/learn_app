@@ -1049,7 +1049,7 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
         title: "Hoàn thiện và lưu trữ ứng tuyển",
         color: ColorResources.PRIMARYCOLOR,
         onPressed: () {
-          controller.toDonePage();
+          controller.toDonePage(dangKyModel!);
         });
   }
 }
