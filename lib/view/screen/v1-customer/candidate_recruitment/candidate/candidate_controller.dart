@@ -211,6 +211,7 @@ class V1CandidateController extends GetxController {
           //check data empty
           if (value.isEmpty) {
             refreshTinTuyenDungController.loadNoData();
+            refreshTinTuyenDungController.refreshCompleted();
           } else if (isRefresh) {
             //check refresh
             tuyenDungListModel = value;
@@ -275,7 +276,7 @@ class V1CandidateController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
-    return tinhTpListModel.firstWhere((element) => element.id == id).ten;
+    return tinhTpListModel.firstWhere((element) => element.id == id).ten!;
   }
 
   ///
@@ -309,7 +310,7 @@ class V1CandidateController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendungModel.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendungModel.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendungModel.noiLamViec.toString()),
+      "TenNoiLamViec": tuyendungModel.idNoiLamViec!.ten,
       "TenThoiGianLamViec": tuyendungModel.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendungModel.thoiGianThuViec,
       "MoTaCongViec": tuyendungModel.moTaCongViec,
@@ -697,6 +698,7 @@ class V1CandidateController extends GetxController {
           //check data empty
           if (value.isEmpty) {
             refreshTimUngVienController.loadNoData();
+            refreshTimUngVienController.refreshCompleted();
           } else {
             if (isRefresh || isOnChangeSearch) {
               //check refresh
@@ -719,10 +721,12 @@ class V1CandidateController extends GetxController {
   /// Onlick đến đơn tạo tuyển ứng viên
   ///
   void onClickFloatButton() {
-    Get.toNamed(AppRoutes.V1_G7_RECRUITMENT)!.then((value) => {
-          if (value != null && value == true)
-            {onLoadDataTuyenDung(isRefresh: true)}
-        });
+    Get.toNamed(AppRoutes.V1_G7_RECRUITMENT)!.then((value) {
+      if (value != null && value == true) {
+        refreshTinTuyenDungController.resetNoData();
+        onLoadDataTuyenDung(isRefresh: true);
+      }
+    });
   }
 
   ///

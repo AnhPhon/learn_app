@@ -468,7 +468,7 @@ class V2SearchRecruitmentController extends GetxController {
       condition = '$condition&idMucLuongDuKien=$idMucLuongDuKien';
     }
     if (idNoiLamViec.isNotEmpty && idNoiLamViec != '0') {
-      condition = '$condition&noiLamViec=$idNoiLamViec';
+      condition = '$condition&idNoiLamViec=$idNoiLamViec';
     }
     if (idGioiTinh.isNotEmpty && idGioiTinh != '0') {
       condition = '$condition&gioiTinh=$idGioiTinh';
@@ -608,7 +608,7 @@ class V2SearchRecruitmentController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.noiLamViec.toString()),
+      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.idNoiLamViec.toString()),
       "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendung.thoiGianThuViec,
       "MoTaCongViec": tuyendung.moTaCongViec,

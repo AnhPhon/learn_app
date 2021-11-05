@@ -621,11 +621,11 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
   Widget _uploadImage(
       BuildContext context, V1G7RecruitmentController controller) {
     return GestureDetector(
-      onTap: () => controller.pickImage(),
+      onTap: () => controller.pickHinhDaiDien(),
       child: Container(
-        child: controller.image != null
-            ? Image.file(
-                controller.image!,
+        child: controller.hinhAnhDaiDien != null
+            ? Image.network(
+                controller.hinhAnhDaiDien!,
                 fit: BoxFit.cover,
               )
             : Image.asset(

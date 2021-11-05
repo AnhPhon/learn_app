@@ -45,7 +45,7 @@ class V2RecruimentNewsCard extends GetView<V2RecruitmentController> {
                                       .toString(),
                                 )),
                             Text(
-                              '${controller.onChangeNameTinhTp(tuyenDungResponse.noiLamViec.toString())}',
+                              '${controller.onChangeNameTinhTp(tuyenDungResponse.idNoiLamViec.toString())}',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
