@@ -93,6 +93,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                 Expanded(
                   flex: 7,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),

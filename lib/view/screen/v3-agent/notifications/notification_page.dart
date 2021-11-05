@@ -1,6 +1,4 @@
 
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,6 +89,7 @@ class V3NotificationPage extends GetView<V3NotificationController> {
                 Expanded(
                   flex: 7,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -113,28 +112,28 @@ class V3NotificationPage extends GetView<V3NotificationController> {
                       Padding(
                         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                if(controller.notifications[index].idDonDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idNhomDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '3' || 
-                                  controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '4')
-                                needPerson(),
-                                if(controller.notifications[index].idDonDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == THAT_BAI)
-                                thatBai(),
-                                if(controller.notifications[index].idDonDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
-                                if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == CHOT_GIA)
-                                thanhCong()
-                              ],
-                            )
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.end,
+                            //   children: [
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idNhomDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '3' || 
+                            //       controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '4')
+                            //     needPerson(),
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == THAT_BAI)
+                            //     thatBai(),
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == CHOT_GIA)
+                            //     thanhCong()
+                            //   ],
+                            // )
                           ],
                         ),
                       )

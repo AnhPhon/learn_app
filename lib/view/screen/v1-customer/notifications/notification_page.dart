@@ -117,7 +117,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                       Padding(
                         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
