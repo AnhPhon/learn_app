@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/request/thong_bao_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/di_container.dart';
@@ -171,6 +172,7 @@ class V2NotificationController extends GetxController {
   }
 
   void onClickItem(ThongBaoResponse notification) {
+    updateNotification(notification);
     if(notification.idDonDichVu != null){
       donDichVuProvider.find(
         id: notification.idDonDichVu!.id!,
@@ -217,6 +219,21 @@ class V2NotificationController extends GetxController {
     }else{
       // Link to page kết quả báo giá
       //Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: idDonDichVu);
+    }
+  }
+
+  ///
+  /// Update status notificaiton
+  ///
+  void updateNotification(ThongBaoResponse response){
+    // 0 chua xem
+    if(response.status!.contains('0')){
+      final ThongBaoRequest thongBaoRequest = ThongBaoRequest();
+      thongBaoRequest.id = response.id;
+      thongBaoRequest.status = '1';
+      thongBaoProvider.update(data: thongBaoRequest, onSuccess: (data){
+        refreshNotification();
+      }, onError: (onError)=> print("Lỗi thay đổi trạng thái thông báo"));
     }
   }
   

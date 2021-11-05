@@ -1,5 +1,6 @@
 class ThongBaoRequest {
   String? id;
+  String? status;
   String? doiTuong;
   String? idDonDichVu;
   String? idDuAnKhachHang;
@@ -27,6 +28,7 @@ class ThongBaoRequest {
   ///
   ThongBaoRequest.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    status = (json['status'] == null) ? null : json['status'].toString();
     doiTuong = json['doiTuong'].toString();
     idDonDichVu = json['idDonDichVu'].toString();
     idDuAnKhachHang = json['idDuAnKhachHang'].toString();
@@ -48,6 +50,9 @@ class ThongBaoRequest {
 
     // check null doiTuong
     if (doiTuong != null) data['doiTuong'] = doiTuong; 
+    
+    // Check status
+    if (status != null) data['status'] = status; 
 
     // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 

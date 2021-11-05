@@ -66,7 +66,10 @@ class V3NotificationPage extends GetView<V3NotificationController> {
             height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
-              color: index % 2 == 0 ?  ColorResources.PRIMARYCOLOR.withOpacity(0.3) : ColorResources.WHITE,
+              color: controller.notifications[index].status == null ? ColorResources.WHITE :
+              controller.notifications[index].status! != '0' ? 
+              ColorResources.WHITE :
+              ColorResources.PRIMARYCOLOR.withOpacity(0.3),
             ),
             child: Row(
               children: [
