@@ -28,8 +28,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    phoneController.text = '0222222222';
-    passwordController.text = 'ThoThau1';
+    phoneController.text = '0333333333';
+    passwordController.text = 'DaiLy123';
     super.onInit();
   }
 
