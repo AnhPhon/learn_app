@@ -62,12 +62,10 @@ class DrawerController extends GetxController {
           sl.get<SharedPreferenceHelper>().removeTypeAccount();
           sl.get<SharedPreferenceHelper>().removeRefreshToken();
           sl.get<SharedPreferenceHelper>().removeRememberAccount();
-          // sl.get<SharedPreferenceHelper>().removePassword();
-          // sl.get<SharedPreferenceHelper>().removeUsername();
           sl.get<SharedPreferenceHelper>().removeResetPasswordToken();
 
 
-          Alert.info(message: "Đăng xuất tài khoản thành công!");
+          Alert.success(message: "Đăng xuất tài khoản thành công!");
           Get.offAllNamed(AppRoutes.LOGIN,predicate: ModalRoute.withName(AppRoutes.LOGIN));
           
         }else{
