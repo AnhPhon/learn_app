@@ -70,6 +70,12 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
               ),
             )
           )
+        ] : 
+        controller.donDichVu!.idTrangThaiThanhToan == null ? const [
+          Text('Đơn dich vụ đã bị huỷ hoặc vi phạm quy chế của công ty',
+          style: TextStyle(
+              color: ColorResources.RED
+          ),)
         ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
         [
@@ -86,7 +92,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         [
           SmallButton(
             title: "Huỷ ", color: ColorResources.GREY, onPressed: (){
-              controller.onFeebacked();
+              controller.showDialog();
             }
           ),
           SmallButton(
@@ -211,22 +217,25 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:
-                                          controller.workMass[index].tenVatTu ?? '',
+                                      content: controller.workMass[index].idVatTu == null ? '': 
+                                          controller.workMass[index].idVatTu!.tenVatTu ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:
-                                            controller.workMass[index].quyCach ?? ''),
+                                        content: controller.workMass[index].idVatTu == null ? '': 
+                                            controller.workMass[index].idVatTu!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:
-                                            controller.workMass[index].khoiLuong ?? ''),
+                                        content: controller.workMass[index].idVatTu == null ? '': 
+                                            controller.workMass[index].idVatTu!.khoiLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:
-                                            controller.workMass[index].donVi ?? ''),
-                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia ?? ''} VNĐ' , style: const TextStyle(
+                                        content: controller.workMass[index].idVatTu == null ? '': 
+                                            controller.workMass[index].idVatTu!.donVi ?? ''),
+                                    TextHighlight(title:"Đơn giá:" ,
+                                      content: controller.workMass[index].idVatTu == null ? '': 
+                                      '${controller.workMass[index].idVatTu!.donGia ?? ''} VNĐ' , 
+                                      style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE
                                     ),),

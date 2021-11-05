@@ -85,7 +85,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
         : 
         [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){
-            _controller.onFeebacked();
+            _controller.showDialog();
           }),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){
             _controller.onClickAgreeButton();

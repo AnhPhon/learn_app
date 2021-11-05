@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -85,7 +84,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         [
           SmallButton(
             title: "Huỷ ", color: ColorResources.GREY, onPressed: () {
-              _controller.onFeebacked();
+              _controller.showDialog();
             }
           ),
           SmallButton(
@@ -214,22 +213,26 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:
-                                          controller.workMass[index].tenVatTu ?? '',
+                                      content:controller.workMass[index].idVatTu == null ? '':
+                                          controller.workMass[index].idVatTu!.tenVatTu ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:
-                                            controller.workMass[index].quyCach ?? ''),
+                                        content:controller.workMass[index].idVatTu == null ? '':
+                                            controller.workMass[index].idVatTu!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:
-                                            controller.workMass[index].khoiLuong ?? ''),
+                                        content:controller.workMass[index].idVatTu == null ? '':
+                                            controller.workMass[index].idVatTu!.khoiLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:
-                                            controller.workMass[index].donVi ?? ''),
-                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia ?? ''}VNĐ' , style: const TextStyle(
+                                        content:controller.workMass[index].idVatTu == null ? '':
+                                            controller.workMass[index].idVatTu!.donVi ?? ''),
+                                    TextHighlight(
+                                      title:"Đơn giá:" ,
+                                      content: controller.workMass[index].idVatTu == null ? '':
+                                      '${controller.workMass[index].idVatTu!.donGia ?? ''}VNĐ' , 
+                                      style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE
                                     ),),
