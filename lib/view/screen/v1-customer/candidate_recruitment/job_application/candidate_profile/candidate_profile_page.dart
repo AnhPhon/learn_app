@@ -154,7 +154,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
             padding:
                 const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
             child: Text(
-                'Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai.toString()} \nChức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString()} \nSố năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()} \nMức lương đề xuất tối thiểu: ${PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.mucLuongDeXuat.toString()))} vnđ/tháng \nNơi làm việc mong muốn nhất: ${controller.dangKyViecMoiResponse.noiLamViec.toString()}\nNgành nghề mong muốn ứng tuyển: ${controller.tenNganhNgheMongMuon}'),
+                'Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai.toString()} \nChức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString()} \nSố năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()} \nMức lương đề xuất tối thiểu: ${PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.mucLuongDeXuat.toString(), (error)=> 0))} vnđ/tháng \nNơi làm việc mong muốn nhất: ${controller.dangKyViecMoiResponse.noiLamViec.toString()}\nNgành nghề mong muốn ứng tuyển: ${controller.tenNganhNgheMongMuon}'),
           ),
 
           const Text(
@@ -217,7 +217,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  '\n- Word : ${controller.dangKyViecMoiResponse.idTinHoc!.word.toString()}\n- Excel: ${controller.dangKyViecMoiResponse.idTinHoc!.excel.toString()}\n- Internet: ${controller.dangKyViecMoiResponse.idTinHoc!.internet.toString()}',
+                  '\n- Word : ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc == null ? '': controller.dangKyViecMoiResponse.idTinHoc!.word.toString()}\n- Excel: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.excel.toString()}\n- Internet: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.internet.toString()}',
             ),
           ),
 
@@ -231,7 +231,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  "\n - ${controller.dangKyViecMoiResponse.idTinHoc!.phanMemHoTro.toString()}",
+                  "\n - ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' :controller.dangKyViecMoiResponse.idTinHoc!.phanMemHoTro.toString()}",
             ),
           ),
           Padding(
@@ -244,7 +244,9 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  "\n- ${controller.dangKyViecMoiResponse.idTinHoc!.soThichTrinhDo.toString()} \n- ${controller.dangKyViecMoiResponse.idTinHoc!.soThichKyNang.toString()}\n- ${controller.dangKyViecMoiResponse.idTinHoc!.soTichTinhCach.toString()}",
+                  "\n- ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soThichTrinhDo.toString()} \n- ${ 
+                    controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soThichKyNang.toString()}\n- ${
+                      controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soTichTinhCach.toString()}",
             ),
           ),
 
