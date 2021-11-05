@@ -49,6 +49,7 @@ class LoginController extends GetxController {
   ///
   void onBtnForgotPasswordTap() {
     Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+    resetForm();
   }
 
   ///
@@ -79,10 +80,10 @@ class LoginController extends GetxController {
   bool onValidateLogin(){
     //validate infomation username password
     if (phoneController.text == '' || passwordController.text == '') {
-      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
     } else if(!Validate.phone(phoneController.text.toString())){
-      Alert.info(message: "Số điện thoại không hợp lệ");
+      Alert.error(message: "Số điện thoại không hợp lệ");
       return false;
     }
     return true;
@@ -106,12 +107,10 @@ class LoginController extends GetxController {
               sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
               sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
               
-              // sl.get<SharedPreferenceHelper>().savePassword(password)
-              // sl.get<SharedPreferenceHelper>().saveUsername(username)
               // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
+              sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
               if(isRemember){
                 sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
-                sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
                 sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
               }
 
@@ -130,11 +129,6 @@ class LoginController extends GetxController {
                   Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
                   return;
                 }
-                // else if (account.idLoaiTaiKhoan == NHAN_VIEN) {
-                //   EasyLoading.dismiss();
-                //   Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
-                //   return;
-                // }
                 else{
                   //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                   EasyLoading.dismiss();
@@ -154,5 +148,20 @@ class LoginController extends GetxController {
         }
       );
     }
+  }
+
+  ///
+  /// Reset form
+  ///
+  void resetForm(){
+    phoneController.text = '' ;
+    passwordController.text = '';
+  }
+
+  @override
+  void onClose() {
+    phoneController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

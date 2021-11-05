@@ -1,7 +1,16 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/tai_khoan_request.dart';
+import 'package:template/di_container.dart';
+import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V3AccountController extends GetxController {
+  final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
+  
   String title = "Tài khoản";
 
   String urlImage =
@@ -58,5 +67,40 @@ class V3AccountController extends GetxController {
   ///
   void onJobManagementClick() {
     Get.toNamed(AppRoutes.V3_JOB_MANAGEMENT);
+  }
+
+  ///
+  ///Switch role customer
+  ///
+  void onSwitchCustomer() {
+    sl.get<SharedPreferenceHelper>().userId.then((value){
+      final TaiKhoanRequest taiKhoanRequest = TaiKhoanRequest();
+       
+        taiKhoanRequest.id = value;
+        taiKhoanRequest.idLoaiTaiKhoan = KHACH_HANG;
+        accountProvider.update(data: taiKhoanRequest, onSuccess: (onSuccess){
+          sl.get<SharedPreferenceHelper>().saveTypeAccount(KHACH_HANG);
+          Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+        }, onError: (onError){
+           Alert.error(message:"Chuyển vai trò thất bại");
+        });
+    });
+  }
+
+  ///
+  ///Switch role build
+  ///
+  void onSwitchBuild() {
+    sl.get<SharedPreferenceHelper>().userId.then((value){
+      final TaiKhoanRequest taiKhoanRequest = TaiKhoanRequest();
+        taiKhoanRequest.id = value;
+        taiKhoanRequest.idLoaiTaiKhoan = THO_THAU;
+        accountProvider.update(data: taiKhoanRequest, onSuccess: (onSuccess){
+          sl.get<SharedPreferenceHelper>().saveTypeAccount(THO_THAU);
+          Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+        }, onError: (onError){
+           Alert.error(message:"Chuyển vai trò thất bại");
+        });
+    });
   }
 }

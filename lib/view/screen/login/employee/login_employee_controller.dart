@@ -32,6 +32,8 @@ class LoginEmployeeController extends GetxController {
   ///
   void onBtnForgotPasswordTap() {
     Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+    emailController.text = '';
+    passwordController.text = '';
   }
 
   ///
@@ -67,10 +69,10 @@ class LoginEmployeeController extends GetxController {
   bool onValidateLogin(){
     //validate infomation username password
     if (emailController.text == '' || passwordController.text == '') {
-      Alert.info(message: "Vui lòng điền đầy đủ email và mật khẩu");
+      Alert.error(message: "Vui lòng điền đầy đủ email và mật khẩu");
       return false;
     } else if(!Validate.email(emailController.text.toString())){
-      Alert.info(message: "Địa chỉ email không hợp lệ !");
+      Alert.error(message: "Địa chỉ email không hợp lệ !");
       return false;
     }
     return true;
@@ -115,5 +117,12 @@ class LoginEmployeeController extends GetxController {
         }
       );
     }
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

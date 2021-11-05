@@ -139,6 +139,20 @@ class V1AccountPage extends GetView<V1AccountController> {
                           onTap: () => controller.onMyOrderClick(),
                         ),
 
+                        // switch role
+                        _items(
+                          icon: const Icon(Icons.business_center),
+                          text: "Thợ thầu",
+                          onTap: () => controller.onSwitchBuild(),
+                        ),
+
+                        // switch role
+                        _items(
+                          icon: const Icon(Icons.shopping_basket),
+                          text: "Đại lý",
+                          onTap: () => controller.onSwitchAgent(),
+                        ),
+
                         const SizedBox(
                           height: Dimensions.SIZE_BOX_BOTTOM_NAV,
                         ),

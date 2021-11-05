@@ -127,6 +127,20 @@ class V3AccountPage extends GetView<V3AccountController> {
                           onTap: () {},
                         ),
 
+                        // switch customer
+                        _items(
+                          icon: const Icon(Icons.person),
+                          text: "Khách hàng",
+                          onTap: () => controller.onSwitchCustomer(),
+                        ),
+
+                        // switch build
+                        _items(
+                          icon: const Icon(Icons.business_center),
+                          text: "Thợ thầu",
+                          onTap: () => controller.onSwitchBuild(),
+                        ),
+
                         // image update
                         // _items(
                         //   icon: const Icon(Icons.image),
