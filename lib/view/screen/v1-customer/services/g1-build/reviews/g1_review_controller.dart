@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/chi_tiet_vat_tu_request.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/request/vat_tu_request.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
@@ -20,6 +22,7 @@ class V1G1ReviewController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
+  ChiTietVatTuProvider chiTietVatTuProvider = GetIt.I.get<ChiTietVatTuProvider>();
 
   PreviewServiceRequest? previewServiceRequest;
   
@@ -88,9 +91,17 @@ class V1G1ReviewController extends GetxController{
       vatTuRequest.donVi = item.donVi;
       vatTuRequest.tenVatTu = item.tenVatTu;
       vatTuRequest.quyCach = item.quyCach;
-      vatTuRequest.idDonDichVu = idDon;
+      // vatTuRequest.idDonDichVu = idDon;
       vatTuProvider.add(data: vatTuRequest, onSuccess: (data){
-          print("Thêm vật tư thành công $data");
+          ChiTietVatTuRequest chiTietVatTu = ChiTietVatTuRequest();
+          chiTietVatTu.idVatTu = data.id;
+          chiTietVatTu.idDonDichVu = idDon;
+          chiTietVatTuProvider.add(data: chiTietVatTu, onSuccess: (onSuccess){
+            print("Thêm vật tư thành công $data");
+          }, onError: (onError){
+            print("Thêm vật tư thất bại !");
+          });
+          
       }, onError: (onError){
         print("ReviewController addMass error $onError");
       });

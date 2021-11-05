@@ -243,7 +243,7 @@ class V1G6CreateServiceController extends GetxController{
       dichVuRequest.idThoiGianLamViecs = workTime;
       if(workWidthController.text.toString().isNotEmpty){
         // Thiếu bề rộng mặt đường làm việc
-        dichVuRequest.beRongDiemNhan = workWidthController.text.toString();
+        dichVuRequest.beRongMatDuong = workWidthController.text.toString();
       }
       if(thongSo.isNotEmpty){
         dichVuRequest.idThongSoKyThuats = thongSo.map((e) => e!.id!).toList();

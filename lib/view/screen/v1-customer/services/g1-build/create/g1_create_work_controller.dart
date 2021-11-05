@@ -127,6 +127,10 @@ class V1G1CreateWorkController extends GetxController{
         tenVatTu: nameTitleController.text.toString(),
       );
       massList.add(supplies);
+      nameTitleController.text = '';
+      specificationController.text = '';
+      massController.text = '';
+      unit = null;
       update();
     }
   }
