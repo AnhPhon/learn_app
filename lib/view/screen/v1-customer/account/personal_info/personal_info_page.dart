@@ -128,6 +128,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                         DropDownMapButton<String>(
                           hint: "Giới tính",
                           label: "Giới tính",
+                          obligatory: true,
                           labelBold: true,
                           value: controller.sex,
                           onChanged: controller.onChangedSex,
@@ -198,6 +199,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.number,
                   ),
 
                   //company name

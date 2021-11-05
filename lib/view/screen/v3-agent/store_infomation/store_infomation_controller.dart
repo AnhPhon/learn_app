@@ -12,6 +12,7 @@ import 'package:template/data/model/request/tai_khoan_request.dart';
 import 'package:template/data/model/response/kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/kho_hang_model.dart';
 import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
+import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/nhom_cua_hang_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
@@ -20,6 +21,7 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/mat_hang_dac_trung_provider.dart';
+import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhom_cua_hang_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
@@ -103,6 +105,10 @@ class V3StoreInfomationController extends GetxController {
   List<KhoHangDaiLyResponse> khoHangDaiLyList = [];
   KhoHangDaiLyResponse? khoHangDaiLyResponse;
   KhoHangDaiLyRequest khoHangDaiLyRequest = KhoHangDaiLyRequest();
+
+  //nhapkho
+  NhapKhoHangDaiLyProvider nhapKhoHangDaiLyProvider =
+      GetIt.I.get<NhapKhoHangDaiLyProvider>();
 
   //list khohang model
   List<KhoHangModel> khoHangModelList = [];
@@ -702,18 +708,74 @@ class V3StoreInfomationController extends GetxController {
   void onDeleteWarehouse({required int index}) {
     //check is not empty
     if (khoHangModelList[index].idKhoHang != null) {
-      khoHangDaiLyProvider.delete(
-        id: khoHangModelList[index].idKhoHang.toString(),
-        onSuccess: (data) {
-          print("Xoá kho hàng thành công");
+      //loading
+      EasyLoading.show(status: 'Loading...');
+
+      //find product in warehouse
+      nhapKhoHangDaiLyProvider.paginate(
+        page: 1,
+        limit: 100,
+        filter: "&idKhoHangDaiLy=${khoHangModelList[index].idKhoHang}",
+        onSuccess: (nhapKho) {
+          //check is not empty
+          if (nhapKho.isNotEmpty) {
+            //delete product in warehouse
+            for (final item in nhapKho) {
+              nhapKhoHangDaiLyProvider.delete(
+                id: item.id.toString(),
+                onSuccess: (deleted) {
+                  //success
+                  if (item.id == nhapKho.last.id) {
+                    print("xoá sản phẩm trong kho thành công");
+                    //delete kho hang
+                    khoHangDaiLyProvider.delete(
+                      id: khoHangModelList[index].idKhoHang.toString(),
+                      onSuccess: (data) {
+                        khoHangModelList.removeAt(index);
+                        EasyLoading.dismiss();
+                        print("Xoá kho hàng thành công");
+                        update();
+                      },
+                      onError: (error) {
+                        print(
+                            "V3StoreInfomationController onDeleteWarehouse onError $error");
+                      },
+                    );
+                  }
+                },
+                onError: (error) {
+                  EasyLoading.dismiss();
+                  print(
+                      "V3StoreInfomationController delete kho onError $error");
+                },
+              );
+            }
+          } else {
+            //delete kho hang
+            khoHangDaiLyProvider.delete(
+              id: khoHangModelList[index].idKhoHang.toString(),
+              onSuccess: (data) {
+                khoHangModelList.removeAt(index);
+                EasyLoading.dismiss();
+                print("Xoá kho hàng thành công");
+                update();
+              },
+              onError: (error) {
+                print(
+                    "V3StoreInfomationController onDeleteWarehouse onError $error");
+              },
+            );
+          }
         },
         onError: (error) {
           print("V3StoreInfomationController onDeleteWarehouse onError $error");
         },
       );
+    } else {
+      //remove from list
+      khoHangModelList.removeAt(index);
+      update();
     }
-    khoHangModelList.removeAt(index);
-    update();
   }
 
   ///
@@ -811,9 +873,8 @@ class V3StoreInfomationController extends GetxController {
       taiKhoanRequest.hoTen = nameController.text;
       taiKhoanRequest.tenPhapLy = legalRepresentativeController.text;
       taiKhoanRequest.soDienThoai = phoneController.text;
-      if (emailController.text.isNotEmpty) {
-        taiKhoanRequest.email = emailController.text;
-      }
+      taiKhoanRequest.email =
+          (emailController.text.isNotEmpty) ? emailController.text : "";
       taiKhoanRequest.idNhomCuaHang = nhomCuaHangResponse!.id;
       taiKhoanRequest.idMatHangDacTrungs =
           matHangDacTrungResponse.map((e) => e.toString()).toList();

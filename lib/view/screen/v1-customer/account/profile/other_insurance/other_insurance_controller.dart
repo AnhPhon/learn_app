@@ -109,6 +109,7 @@ class V1OtherInsuranceController extends GetxController {
         }
         if (i == isChecked!.length - 1) {
           Get.back();
+          Get.back();
 
           //show dialog
           Alert.success(message: 'Đăng ký mua bảo hiểm thành công');
@@ -131,6 +132,7 @@ class V1OtherInsuranceController extends GetxController {
       data: tuVanRequest,
       onSuccess: (value) {
         //go to checkout page
+        Get.back();
         Get.back();
 
         //show dialog

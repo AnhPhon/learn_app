@@ -163,6 +163,10 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
             fillColor: controller.statusBackgroundColor[status],
             colorText: controller.statusColor[status],
             height: .06,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceUtils.getScaledSize(context, 0.025),
+              vertical: DeviceUtils.getScaledSize(context, 0.025),
+            ),
           ),
 
           const SizedBox(

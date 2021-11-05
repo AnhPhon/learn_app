@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
-import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/account/profile/tax/tax_controller.dart';
 
 class V1TaxPage extends GetView<V1TaxController> {
@@ -38,7 +36,7 @@ class V1TaxPage extends GetView<V1TaxController> {
                 width: .9,
                 textEditingController: controller.taxController,
                 hintText: "Nhập mã số thuế",
-                allowEdit: controller.dangKyThueResponse == null,
+                allowEdit: controller.isUpdate == true,
                 fillColor: ColorResources.WHITE,
                 padding: const EdgeInsets.only(
                   bottom: Dimensions.PADDING_SIZE_DEFAULT,
@@ -51,11 +49,18 @@ class V1TaxPage extends GetView<V1TaxController> {
               const Spacer(),
 
               //btn
-              if (controller.dangKyThueResponse == null)
+              if (controller.isUpdate == true)
                 BtnCustom(
-                  onTap: () => controller.onBtnDoneClick(context),
+                  onTap: () => controller.onBtnDoneClick(),
                   color: ColorResources.PRIMARY,
                   text: "Hoàn thành",
+                  width: DeviceUtils.getScaledWidth(context, .9),
+                )
+              else
+                BtnCustom(
+                  onTap: () => controller.onBtnUpdate(),
+                  color: ColorResources.PRIMARY,
+                  text: "Chỉnh sửa",
                   width: DeviceUtils.getScaledWidth(context, .9),
                 ),
 
@@ -74,7 +79,8 @@ class V1TaxPage extends GetView<V1TaxController> {
   ///
   Widget _uploadImage(BuildContext context, V1TaxController controller) {
     return ImageListHorizontalAdd(
-      pickImage: () => controller.pickImages(),
+      pickImage:
+          controller.isUpdate == true ? () => controller.pickImages() : () {},
       label: "Tải hình ảnh bản cứng",
       labelBold: true,
       obligatory: true,

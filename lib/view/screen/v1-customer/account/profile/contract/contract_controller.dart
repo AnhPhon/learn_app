@@ -70,6 +70,7 @@ class V1ContractController extends GetxController {
             //check is not empty
             if (value.isNotEmpty) {
               dangKyHopDongSBSResponse = value.first;
+              Alert.success(message: "Bạn đã đăng ký hợp đồng với FSS");
             }
 
             isLoading = false;

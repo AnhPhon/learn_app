@@ -1,14 +1,21 @@
 import 'package:get/get.dart';
+import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
+import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/routes/app_routes.dart';
 
 class V2ProfileController extends GetxController {
+  //DangKyBaoHiem
+  DangKyBaoHiemProvider dangKyBaoHiemProvider = DangKyBaoHiemProvider();
+  DangKyBaoHiemResponse dangKyBaoHiemResponse = DangKyBaoHiemResponse();
+
+  //tile appbar
   String title = "Hồ sơ cá nhân";
 
   ///
-  ///go to contract page
+  ///go to tax register page
   ///
-  void onRegisterAndCommitPageClick() {
-    Get.toNamed(AppRoutes.V2_REGISTER_AND_COMMIT);
+  void onTaxRegisterPageClick() {
+    Get.toNamed(AppRoutes.V2_TAX_REGISTER);
   }
 
   ///
@@ -22,6 +29,7 @@ class V2ProfileController extends GetxController {
   ///go to accident insurance page
   ///
   void onAccidentInsurancePageClick() {
+    Get.toNamed(AppRoutes.V2_ACCIDENT_INSURANCE);
   }
 
   ///
@@ -29,6 +37,13 @@ class V2ProfileController extends GetxController {
   ///
   void onOtherInsurancePageClick() {
     Get.toNamed(AppRoutes.V2_OTHER_INSURANCE);
+  }
+
+  ///
+  ///go to safey paper page
+  ///
+  void onSafetyPaperPageClick() {
+    Get.toNamed(AppRoutes.V2_SAFETY_PAPER);
   }
 
   ///
