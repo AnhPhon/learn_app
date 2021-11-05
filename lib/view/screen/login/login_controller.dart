@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/model/request/account_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
