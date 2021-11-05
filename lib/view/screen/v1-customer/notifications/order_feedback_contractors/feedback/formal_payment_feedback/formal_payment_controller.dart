@@ -82,10 +82,10 @@ class V1FormalPaymentFeedbackController extends GetxController{
                 {
                   //set trạng thái chưa thanh toán
                   dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN,
-                  dichVuRequest.idTrangThaiDonDichVu = CHOT_GIA,
-                  dichVuRequest.phiDichVu = value['phiDichVu'].toString(),
-                  dichVuRequest.khuyenMai = value['khuyenMai'].toString(),
-                  dichVuRequest.tongDon = value['tongTien'].toString(),
+                  // dichVuRequest.idTrangThaiDonDichVu = CHOT_GIA,
+                  // dichVuRequest.phiDichVu = value['phiDichVu'].toString(),
+                  // dichVuRequest.khuyenMai = value['khuyenMai'].toString(),
+                  // dichVuRequest.tongDon = value['tongTien'].toString(),
                   //insert db
                   donDichVuRepository.add(dichVuRequest).then((value) => {
                         if (value.response.data != null)
