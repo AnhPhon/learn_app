@@ -255,7 +255,7 @@ class V1G6CreateServiceController extends GetxController{
       dichVuRequest.soLuongYeuCau = amountController.text.toString();
       // trạng thái đơn
       dichVuRequest.idTrangThaiThanhToan= CHUA_THANH_TOAN;
-      dichVuRequest.idTrangThaiDonDichVu = CHUA_DUYET;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
       // Updalod image ảnh sản phẩm mẫu nếu có
       dichVuRequest.hinhAnhBanVes = productImages;
 
