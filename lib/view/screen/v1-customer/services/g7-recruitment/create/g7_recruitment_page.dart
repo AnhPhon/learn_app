@@ -98,6 +98,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
 
         // Địa chỉ chọn tỉnh
         DropDownButton<TinhTpResponse>(
+            isEnable: controller.isEdit,
             onChanged: (item) => controller.onChangedTinhThanh(item!),
             data: controller.tinhTpModel,
             width: DeviceUtils.getScaledWidth(context, 1),
@@ -112,6 +113,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
 
         // Địa chỉ chọn huyện
         DropDownButton<QuanHuyenResponse>(
+            isEnable: controller.isEdit,
             onChanged: (item) => controller.onChangedQuanHuyen(item!),
             data: controller.quanHuyenModel,
             width: DeviceUtils.getScaledWidth(context, 1),
@@ -125,6 +127,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
                 top: Dimensions.PADDING_SIZE_LARGE)),
         // Địa chỉ chọn xã
         DropDownButton<PhuongXaResponse>(
+            isEnable: controller.isEdit,
             onChanged: (item) => controller.onChangedPhuongXa(item!),
             data: controller.phuongXaModel,
             width: DeviceUtils.getScaledWidth(context, 1),

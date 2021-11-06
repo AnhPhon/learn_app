@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
@@ -146,10 +147,18 @@ class V1G7RecruitmentController extends GetxController {
   //hình ảnh
   String? hinhAnhDaiDien;
 
+  // Check từ tạo đơn sang hay từ tin tuyển dụng sang
+  bool isEdit = true;
+  DonDichVuRequest? idTinhTp;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    if(Get.arguments != null){
+      isEdit = Get.arguments['status']  as bool;
+      idTinhTp = Get.arguments['id'] as DonDichVuRequest;
+    }
 
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
@@ -350,11 +359,17 @@ class V1G7RecruitmentController extends GetxController {
 
           if (isLoadFrist) {
             //set idTinh
-            tinhTpDiaChi = value.firstWhere((element) =>
-                element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
+            if(idTinhTp != null){
+              tinhTpDiaChi = value.firstWhere((element) =>
+                  element.id!.contains(idTinhTp!.idTinhTp.toString()));
+            }else{
+              tinhTpDiaChi = value.firstWhere((element) =>
+                  element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
+            }
 
             getDataQuanHuyen(
                 idTinh: tinhTpDiaChi!.id.toString(), isLoadFrist: true);
+            
           }
 
           update();
@@ -382,9 +397,15 @@ class V1G7RecruitmentController extends GetxController {
 
             //mapping quận huyện lần đầu
             if (isLoadFrist) {
+              if(idTinhTp != null){
+                quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
+                  .id!
+                  .contains(idTinhTp!.idQuanHuyen!.toString()));
+              }else{
               quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
                   .ten!
                   .contains(taiKhoanResponse.idQuanHuyen.toString()));
+              }
               // xã khi chon huỵen
               getDataPhuongXa(
                   idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: true);
@@ -417,9 +438,15 @@ class V1G7RecruitmentController extends GetxController {
 
             //mapping xã phường lần đầu
             if (isLoadFrist) {
+              if(idTinhTp != null){
+                phuongXaResponse = phuongXaModel.firstWhere((element) => element
+                  .id!
+                  .contains(idTinhTp!.idPhuongXa!.toString()));
+              }else{
               phuongXaResponse = phuongXaModel.firstWhere((element) => element
                   .ten!
                   .contains(taiKhoanResponse.idPhuongXa.toString()));
+              }
             }
           }
 

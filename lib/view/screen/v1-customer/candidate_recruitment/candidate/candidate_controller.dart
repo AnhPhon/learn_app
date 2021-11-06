@@ -69,26 +69,26 @@ class V1CandidateController extends GetxController {
   List<TuyenDungResponse> tuyenDungListModel = [];
   //set default giới tính
   List<GioiTinhModel> gioiTinhModel = [
-    GioiTinhModel(key: 'gioiTinh', value: 'Giới tính'),
+    GioiTinhModel(key: 'gioiTinh', value: 'Tất cả'),
     GioiTinhModel(key: 'gioiTinh', value: 'Nam'),
     GioiTinhModel(key: 'gioiTinh', value: 'Nữ'),
   ];
 
   //model choose
-  NgoaiNguResponse ngoaiNguResponse = NgoaiNguResponse();
-  HinhThucLamViecResponse hinhThucLamViecResponse = HinhThucLamViecResponse();
-  TinhTpResponse tinhTpResponse = TinhTpResponse();
-  ChuyenMonResponse chuyenMonResponse = ChuyenMonResponse();
-  SoNamKinhNghiemResponse soNamKinhNghiemResponse = SoNamKinhNghiemResponse();
-  TrinhDoResponse trinhDoResponse = TrinhDoResponse();
-  TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
+  NgoaiNguResponse? ngoaiNguResponse; //= NgoaiNguResponse();
+  HinhThucLamViecResponse? hinhThucLamViecResponse; //= HinhThucLamViecResponse();
+  TinhTpResponse? tinhTpResponse; //= TinhTpResponse();
+  ChuyenMonResponse? chuyenMonResponse; //= ChuyenMonResponse();
+  SoNamKinhNghiemResponse? soNamKinhNghiemResponse; //= SoNamKinhNghiemResponse();
+  TrinhDoResponse? trinhDoResponse; //= TrinhDoResponse();
+  TaiKhoanResponse? taiKhoanResponse; //= TaiKhoanResponse();
 
   //sreach
   final searchController = TextEditingController();
   final searchFocusNode = FocusNode();
 
   //giới tính
-  GioiTinhModel gioiTinh = GioiTinhModel();
+  GioiTinhModel? gioiTinh; //GioiTinhModel();
 
   // Value slider
   double salary = 0;
@@ -123,7 +123,7 @@ class V1CandidateController extends GetxController {
     super.onInit();
 
     //set value frist giới tính
-    gioiTinh = gioiTinhModel.first;
+    //gioiTinh = gioiTinhModel.first;
     getDataNgoaiNgu();
     getDataHinhThucLamViec();
     getDataChuyenMon();
@@ -339,7 +339,7 @@ class V1CandidateController extends GetxController {
 
           //set value tất cả
           ngoaiNguListModel.insert(
-              0, NgoaiNguResponse(id: "-1", loaiNgoaiNgu: "Ngoại ngữ"));
+              0, NgoaiNguResponse(id: "-1", loaiNgoaiNgu: "Tất cả"));
 
           ngoaiNguResponse = value.first;
           // isLoadingCadidate = false;
@@ -361,8 +361,8 @@ class V1CandidateController extends GetxController {
 
           //set value tất cả
           hinhThucLamViecListModel.insert(0,
-              HinhThucLamViecResponse(id: "-1", tieuDe: "Hình thức việc làm"));
-          hinhThucLamViecResponse = value.first;
+              HinhThucLamViecResponse(id: "-1", tieuDe: "Tất cả"));
+          //hinhThucLamViecResponse = value.first;
           // isLoadingCadidate = false;
           update();
         },
@@ -379,8 +379,8 @@ class V1CandidateController extends GetxController {
           //add list
           tinhTpListModel = value;
           //set value tất cả
-          tinhTpListModel.insert(0, TinhTpResponse(id: "-1", ten: "Tỉnh/Tp"));
-          tinhTpResponse = value.first;
+          tinhTpListModel.insert(0, TinhTpResponse(id: "-1", ten: "Toàn quốc"));
+          //tinhTpResponse = value.first;
           // isLoadingCadidate = false;
           update();
         },
@@ -398,8 +398,8 @@ class V1CandidateController extends GetxController {
           chuyenMonListModel = value;
           //set value tất cả
           chuyenMonListModel.insert(
-              0, ChuyenMonResponse(id: "-1", tieuDe: "Ngành nghề"));
-          chuyenMonResponse = value.first;
+              0, ChuyenMonResponse(id: "-1", tieuDe: "Tất cả"));
+          //chuyenMonResponse = value.first;
           // isLoadingCadidate = false;
           update();
         },
@@ -417,8 +417,8 @@ class V1CandidateController extends GetxController {
           soNamKinhNghiemListModel = value;
           //set value tất cả
           soNamKinhNghiemListModel.insert(
-              0, SoNamKinhNghiemResponse(id: "-1", tieuDe: "Kinh Nghiệm"));
-          soNamKinhNghiemResponse = value.first;
+              0, SoNamKinhNghiemResponse(id: "-1", tieuDe: "Tất cả"));
+          //soNamKinhNghiemResponse = value.first;
           // isLoadingCadidate = false;
           update();
         },
@@ -436,8 +436,8 @@ class V1CandidateController extends GetxController {
           trinhDoListModel = value;
           //set value tất cả
           trinhDoListModel.insert(
-              0, TrinhDoResponse(id: "-1", tieuDe: "Trình độ"));
-          trinhDoResponse = value.first;
+              0, TrinhDoResponse(id: "-1", tieuDe: "Tất cả"));
+          //trinhDoResponse = value.first;
           // isLoadingCadidate = false;
           update();
         },
@@ -594,7 +594,7 @@ class V1CandidateController extends GetxController {
     gioiTinh = text;
     //check value giới tính
     String temp = '';
-    if (text.toString() == 'Giới tính') {
+    if (text.toString() == 'Tất cả') {
       temp = '-1';
     } else if (text.toString() == 'Nam') {
       temp = '1';
