@@ -174,6 +174,7 @@ import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
@@ -264,6 +265,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_daily_rep
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_binding.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_page.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
@@ -1322,6 +1325,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.ORDER_INFORMATION,
       page: () => OrderInformationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_DETAIL_REPORT,
+      page: () => V4DetailReportPage(),
+      binding: V4DetailReportBinding(),
     ),
   ];
 }
