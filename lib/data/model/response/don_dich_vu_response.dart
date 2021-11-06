@@ -35,6 +35,7 @@ class DonDichVuResponse {
   QuanHuyenResponse? idQuanHuyen;
   PhuongXaResponse? idPhuongXa;
   String? giaTriKhachDeXuat;
+  List<String>? hinhAnhChiTiets;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
   List<String>? files;
@@ -81,8 +82,10 @@ class DonDichVuResponse {
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
+      this.hinhAnhChiTiets,
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
+      this.files,
       this.file,
       this.soLuongYeuCau,
       this.soNgay,
@@ -158,7 +161,7 @@ class DonDichVuResponse {
           .toList();
     }
     if (json['hinhAnhBanVes'] != null) {
-      hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
+      hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
@@ -246,8 +249,17 @@ class DonDichVuResponse {
     }
     loai = json['loai'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
+    if (json['files'] != null) {
+      files =
+          (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
+    }
     file = json['file'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
@@ -328,8 +340,11 @@ class DonDichVuResponse {
           hinhAnhBanKhoiLuongs!.map((e) => e.toString()).toList();
     }
 
-    // check null hinhAnhBanVe
-    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes;
+    // check null hinhAnhBanVes
+    if (hinhAnhBanVes != null) {
+      data['hinhAnhBanVes'] =
+          hinhAnhBanVes!.map((e) => e.toString()).toList();
+    }
 
     // check null idTrangThaiDonDichVu
     if (idTrangThaiDonDichVu != null)
@@ -364,11 +379,22 @@ class DonDichVuResponse {
     if (giaTriKhachDeXuat != null)
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
 
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
+    }
+
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
 
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
+
+    // check null files
+    if (files != null) {
+      data['files'] = files!.map((e) => e.toString()).toList();
+    }
 
     // check null file
     if (file != null) data['file'] = file;

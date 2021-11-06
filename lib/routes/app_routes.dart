@@ -269,6 +269,7 @@ class AppRoutes {
   static const String V3_MAIL = '/v3_mail';
   static const String V3_CUSTOMER_MANAGEMENT = '/v3_customer_management';
   static const String V3_TAX_REGISTER = '/v3_tax_register';
+  static const String V3_CUSTOMER_DETAIL = '/v3_customer_detail';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';

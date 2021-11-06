@@ -25,8 +25,10 @@ class DonDichVuRequest {
   String? idQuanHuyen;
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
+  List<String>? hinhAnhChiTiets;
   String? hinhAnhChiTiet;
   String? moTaChiTiet;
+  List<String>? files;
   String? file;
   String? soLuongYeuCau;
   String? soNgay;
@@ -66,8 +68,10 @@ class DonDichVuRequest {
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
+      this.hinhAnhChiTiets,
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
+      this.files,
       this.file,
       this.soLuongYeuCau,
       this.soNgay,
@@ -100,7 +104,9 @@ class DonDichVuRequest {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
+        .map((e) => e.toString())
+        .toList();
     hinhAnhBanVe = json['hinhAnhBanVe'].toString();
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
@@ -117,8 +123,16 @@ class DonDichVuRequest {
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+
+    hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+        .map((e) => e.toString())
+        .toList();
+
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
+
+    files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
+
     file = json['file'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
@@ -215,11 +229,21 @@ class DonDichVuRequest {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
     }
 
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] = hinhAnhChiTiets;
+    }
+
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
 
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
+
+    // check null files
+    if (files != null) {
+      data['files'] = files;
+    }
 
     // check null file
     if (file != null) data['file'] = file;
@@ -283,4 +307,3 @@ class DonDichVuRequest {
     return data;
   }
 }
-

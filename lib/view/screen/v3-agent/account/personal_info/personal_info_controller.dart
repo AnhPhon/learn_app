@@ -183,9 +183,8 @@ class V3PersonalInfoController extends GetxController {
         bornController.text.toString(),
       ).toString();
       taiKhoanRequest.soDienThoai = phoneController.text;
-      if (emailController.text.isNotEmpty) {
-        taiKhoanRequest.email = emailController.text;
-      }
+      taiKhoanRequest.email =
+          (emailController.text.isNotEmpty) ? emailController.text : "";
 
       //update
       taiKhoanProvider.update(

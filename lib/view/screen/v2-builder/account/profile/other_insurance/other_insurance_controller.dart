@@ -50,22 +50,50 @@ class V2OtherInsuranceController extends GetxController {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
 
-    //get insurance
-    baoHiemProvider.paginate(
+    dangKyBaoHiemProvider.paginate(
       page: 1,
-      limit: 5,
-      filter: "&loai=2&sortBy=created_at:desc",
-      onSuccess: (value) {
-        baoHiemResponse = value;
+      limit: 100,
+      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      onSuccess: (data) {
+        //get insurance
+        baoHiemProvider.paginate(
+          page: 1,
+          limit: 5,
+          filter: "&loai=2&sortBy=created_at:desc",
+          onSuccess: (value) {
+            baoHiemResponse = value;
+            if (data.isNotEmpty) {
+              for (var i = 0; i < data.length; i++) {
+                final index = baoHiemResponse.indexWhere(
+                    (element) => element.id == data[i].idBaoHiem!.id);
+                if (index != -1) {
+                  baoHiemResponse.removeAt(index);
+                }
+                if (i == data.length - 1) {
+                  //generate list
+                  isChecked =
+                      List<bool>.generate(baoHiemResponse.length, (_) => false);
 
-        //generate list
-        isChecked = List<bool>.generate(value.length, (_) => false);
+                  isLoading = false;
+                  update();
+                }
+              }
+            } else {
+              //generate list
+              isChecked =
+                  List<bool>.generate(baoHiemResponse.length, (_) => false);
 
-        isLoading = false;
-        update();
+              isLoading = false;
+              update();
+            }
+          },
+          onError: (error) {
+            print("V2OtherInsuranceController getInsurance onError $error");
+          },
+        );
       },
       onError: (error) {
-        print("V2OtherInsuranceController getInsurance onError $error");
+        print("V2OtherInsuranceController dangKyBaoHiem onError $error");
       },
     );
   }

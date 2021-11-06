@@ -187,7 +187,7 @@ class V2HomeController extends GetxController {
           }
 
           // check hình ảnh
-          if (value.hinhAnhChiTiet == null) {
+          if (value.hinhAnhChiTiets == null) {
             isLoadValid = false;
           }
 

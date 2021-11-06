@@ -582,6 +582,14 @@ class V3StoreInfomationController extends GetxController {
   /// Thay đổi radio button
   ///
   void onChangedGroup(int val) {
+    khacHuyen = null;
+    khacPhuong = null;
+    haNoiHuyen = null;
+    haNoiPhuong = null;
+    daNangHuyen = null;
+    daNangPhuong = null;
+    hcmHuyen = null;
+    hcmPhuong = null;
     groupTinhTpValue = val;
     getTinhTp();
     update();
@@ -733,6 +741,7 @@ class V3StoreInfomationController extends GetxController {
                       onSuccess: (data) {
                         khoHangModelList.removeAt(index);
                         EasyLoading.dismiss();
+                        Alert.success(message: "Xoá kho hàng thành công");
                         print("Xoá kho hàng thành công");
                         update();
                       },

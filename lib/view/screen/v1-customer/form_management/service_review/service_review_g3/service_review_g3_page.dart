@@ -7,7 +7,6 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/component/row_text.dart';
 import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
@@ -194,9 +193,11 @@ class V1ServiceReviewG3Page extends GetView<V1ServiceReviewG3Controller> {
             ),
             child: TextHighlight(
               title: "Ngày bắt đầu: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayBatDau.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayBatDau == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayBatDau.toString(),
+                    ),
             ),
           ),
           Padding(
@@ -205,9 +206,11 @@ class V1ServiceReviewG3Page extends GetView<V1ServiceReviewG3Controller> {
             ),
             child: TextHighlight(
               title: "Ngày kết thúc: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayKetThuc.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayKetThuc == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayKetThuc.toString(),
+                    ),
             ),
           ),
           Padding(
@@ -216,8 +219,10 @@ class V1ServiceReviewG3Page extends GetView<V1ServiceReviewG3Controller> {
             ),
             child: TextHighlight(
               title: "Loại dịch vụ: ",
-              content: controller.donDichVuResponse.idLoaiCongViec!.tenCongViec
-                  .toString(),
+              content: controller.donDichVuResponse.idLoaiCongViec == null
+                  ? ""
+                  : controller.donDichVuResponse.idLoaiCongViec!.tenCongViec
+                      .toString(),
             ),
           ),
           Padding(
@@ -226,8 +231,10 @@ class V1ServiceReviewG3Page extends GetView<V1ServiceReviewG3Controller> {
             ),
             child: TextHighlight(
               title: "Chi tiết dịch vụ theo bảng giá: ",
-              content: controller.donDichVuResponse.idBangGiaDonHang!.tieuDe
-                  .toString(),
+              content: controller.donDichVuResponse.idBangGiaDonHang == null
+                  ? ""
+                  : controller.donDichVuResponse.idBangGiaDonHang!.tieuDe
+                      .toString(),
             ),
           ),
           Padding(
@@ -236,8 +243,11 @@ class V1ServiceReviewG3Page extends GetView<V1ServiceReviewG3Controller> {
             ),
             child: TextHighlight(
               title: "Giá tiền dịch vụ tương ứng: ",
-              content:
-                  "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuResponse.idBangGiaDonHang!.giaTien.toString()))} vnđ",
+              content: controller.donDichVuResponse.idBangGiaDonHang == null ||
+                      controller.donDichVuResponse.idBangGiaDonHang!.giaTien ==
+                          null
+                  ? ""
+                  : "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuResponse.idBangGiaDonHang!.giaTien.toString()))} vnđ",
             ),
           ),
           Padding(

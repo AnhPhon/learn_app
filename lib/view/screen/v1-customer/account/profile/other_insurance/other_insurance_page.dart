@@ -15,6 +15,11 @@ class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
     return GetBuilder<V1OtherInsuranceController>(
         init: V1OtherInsuranceController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(

@@ -84,7 +84,7 @@ class V1WalletPage extends GetView<V1WalletController> {
         margin: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_DEFAULT),
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        height: DeviceUtils.getScaledHeight(context, .13),
+        height: DeviceUtils.getScaledHeight(context, .14),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(

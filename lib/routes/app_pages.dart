@@ -129,6 +129,7 @@ import 'package:template/view/screen/v2-builder/account/help/help_page.dart';
 import 'package:template/view/screen/v2-builder/account/mail/mail_page.dart';
 import 'package:template/view/screen/v2-builder/account/personal_info/personal_info_page.dart';
 import 'package:template/view/screen/v2-builder/account/product_update/product_update_page.dart';
+import 'package:template/view/screen/v2-builder/account/profile/accident_insurance/accident_insurance_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/contract/contract_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/insurance_detail/insurance_detail_page.dart';
 import 'package:template/view/screen/v2-builder/account/profile/insurance_register/insurance_register_page.dart';
@@ -200,11 +201,22 @@ import 'package:template/view/screen/v2-builder/workflow_management/work_status/
 import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_binding.dart';
 import 'package:template/view/screen/v2-builder/workflow_management/workflow_management_page.dart';
 import 'package:template/view/screen/v3-agent/account/account_page.dart';
+import 'package:template/view/screen/v3-agent/account/customer_management/customer_detail/customer_detail_page.dart';
 import 'package:template/view/screen/v3-agent/account/customer_management/customer_management_page.dart';
+import 'package:template/view/screen/v3-agent/account/help/help_page.dart';
 import 'package:template/view/screen/v3-agent/account/mail/mail_page.dart';
 import 'package:template/view/screen/v3-agent/account/personal_info/personal_info_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/accident_insurance/accident_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/contract/contract_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_detail/insurance_detail_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/insurance_register/insurance_register_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/other_insurance/other_insurance_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/profile_page.dart';
+import 'package:template/view/screen/v3-agent/account/profile/tax/tax_page.dart';
 import 'package:template/view/screen/v3-agent/account/profile/tax_register/tax_register_page.dart';
+import 'package:template/view/screen/v3-agent/account/rules/rules_page.dart';
 import 'package:template/view/screen/v3-agent/account/wallet/before_recharge/before_recharge_page.dart';
+import 'package:template/view/screen/v3-agent/account/wallet/wallet_page.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_binding.dart';
 import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
@@ -1024,7 +1036,50 @@ class AppPages {
       name: AppRoutes.V3_TAX_REGISTER,
       page: () => V3TaxRegisterPage(),
     ),
-
+    GetPage(
+      name: AppRoutes.V3_PROFILE,
+      page: () => V3ProfilePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_CONTRACT,
+      page: () => V3ContractPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_ACCIDENT_INSURANCE,
+      page: () => V3AccidentInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_OTHER_INSURANCE,
+      page: () => V3OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TAX,
+      page: () => V3TaxPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_WALLET,
+      page: () => V3WalletPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_RULES,
+      page: () => V3RulesPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_HELP,
+      page: () => V3HelpPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INURANCE_REGISTER,
+      page: () => V3InsuranceRegisterPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_INSURANCE_DETAIL,
+      page: () => V3InsuranceDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_CUSTOMER_DETAIL,
+      page: () => V3CustomerDetailPage(),
+    ),
 
     // Xem trươc đánh văn bản
     GetPage(
@@ -1050,11 +1105,15 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.V2_ACCIDENT_INSURANCE,
-      page: () => V3AccountPage(),
+      page: () => V2AccidentInsurancePage(),
     ),
     GetPage(
       name: AppRoutes.V2_OTHER_INSURANCE,
       page: () => V2OtherInsurancePage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_INURANCE_REGISTER,
+      page: () => V2InsuranceRegisterPage(),
     ),
     GetPage(
       name: AppRoutes.V2_TAX,

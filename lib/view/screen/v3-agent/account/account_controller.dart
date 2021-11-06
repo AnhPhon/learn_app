@@ -5,8 +5,6 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/screen/v1-customer/account/account_rating_dialog.dart';
-import 'package:template/view/screen/v2-builder/account/account_rating_dialog.dart';
 import 'package:template/view/screen/v3-agent/account/account_rating_dialog.dart';
 
 class V3AccountController extends GetxController {
@@ -103,7 +101,8 @@ class V3AccountController extends GetxController {
   ///go to customer management page
   ///
   void onCustomerManagementPageClick() {
-    Get.toNamed(AppRoutes.V3_CUSTOMER_MANAGEMENT);
+    Get.toNamed(AppRoutes.V3_CUSTOMER_DETAIL);
+    // Get.toNamed(AppRoutes.V3_CUSTOMER_MANAGEMENT);
   }
 
   ///

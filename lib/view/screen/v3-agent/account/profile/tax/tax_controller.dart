@@ -62,7 +62,7 @@ class V3TaxController extends GetxController {
     dangKyThueProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      filter: "&idTaiKhoan=$userId&loai=1&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
@@ -138,7 +138,7 @@ class V3TaxController extends GetxController {
       dangKyThueRequest.idTaiKhoan = userId;
       dangKyThueRequest.trangThai = "0";
       dangKyThueRequest.file = taxController.text;
-      dangKyThueRequest.loai = "2";
+      dangKyThueRequest.loai = "1";
       // dangKyThueRequest.
 
       //tax register

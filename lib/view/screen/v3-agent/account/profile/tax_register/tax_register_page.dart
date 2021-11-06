@@ -24,6 +24,7 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
           );
         }
         return Scaffold(
+          resizeToAvoidBottomInset: true,
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
             padding: const EdgeInsets.only(
@@ -34,7 +35,6 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
                 //tab bar
                 _tabBarWidget(context: context, controller: controller),
 
-                //tab view
                 _tabView(),
               ],
             ),
@@ -137,11 +137,10 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
   Widget bottom(BuildContext context) {
     return GetBuilder<V3TaxRegisterController>(
       builder: (controller) {
-        return (controller.currentIndex == 0)
-            ? const SizedBox.shrink()
-            : Container(
-                height: DeviceUtils.getScaledHeight(
-                    context, (controller.currentIndex == 2) ? .3 : .4),
+        return (controller.currentIndex == 2)
+            ? Container(
+                height: DeviceUtils.getScaledHeight(context,
+                    (controller.dangKyThueResponse == null) ? .3 : .25),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
@@ -150,76 +149,47 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
                   color: ColorResources.WHITE,
                   boxShadow: boxShadowMedium,
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: Dimensions.MARGIN_SIZE_SMALL,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    Label(
+                      label: "Tải hình ảnh bản cứng (nếu có)",
+                      obligatory: false,
+                      horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
+                      topPadding: (controller.currentIndex == 2)
+                          ? 0
+                          : Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+
+                    //upload image
+                    ImageListHorizontalAdd(
+                      pickImage: () => controller.pickImages(),
+                      labelBold: true,
+                      imageFileList:
+                          controller.dangKyThueRequest.hinhAnhs ?? [],
+                      height: .15,
+                      isAddImage: controller.dangKyThueResponse == null,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_LARGE,
                       ),
+                    ),
 
-                      //input
-                      if (controller.currentIndex == 2)
-                        const SizedBox.shrink()
-                      else
-                        InputWidget(
-                          label: "Cập nhập mã số thuế (nếu đã đăng ký)",
-                          labelBold: true,
-                          width: .9,
-                          height: .06,
-                          isShadow: true,
-                          textEditingController: controller.taxController,
-                          hintText: "Nhập mã số thuế",
-                          allowEdit: controller
-                                  .dangKyThueResponse[
-                                      controller.currentIndex - 1]
-                                  .id ==
-                              null,
-                          fillColor: ColorResources.WHITE,
-                        ),
+                    const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
-                      Label(
-                        label: "Tải hình ảnh bản cứng (nếu có)",
-                        obligatory: false,
-                        horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
-                        topPadding: (controller.currentIndex == 2)
-                            ? 0
-                            : Dimensions.PADDING_SIZE_SMALL,
+                    if (controller.dangKyThueResponse == null)
+                      BtnCustom(
+                        onTap: () => controller.onBtnDoneClick(),
+                        color: ColorResources.PRIMARY,
+                        text: "Hoàn thành",
+                        width: DeviceUtils.getScaledWidth(context, .9),
                       ),
-
-                      //upload image
-                      ImageListHorizontalAdd(
-                        pickImage: () => controller.pickImages(),
-                        labelBold: true,
-                        imageFileList:
-                            controller.hinhAnhs[controller.currentIndex - 1],
-                        height: .15,
-                        isAddImage: controller
-                                .dangKyThueResponse[controller.currentIndex - 1]
-                                .id ==
-                            null,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_LARGE * 3,
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-
-                      if (controller
-                              .dangKyThueResponse[controller.currentIndex - 1]
-                              .id ==
-                          null)
-                        BtnCustom(
-                          onTap: () => controller.onBtnDoneClick(),
-                          color: ColorResources.PRIMARY,
-                          text: "Hoàn thành",
-                          width: DeviceUtils.getScaledWidth(context, .9),
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
-              );
+              )
+            : const SizedBox.shrink();
       },
     );
   }

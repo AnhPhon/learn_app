@@ -97,14 +97,15 @@ class V3RevenueController extends GetxController {
     donHangProvider.paginate(
       page: 1,
       limit: 100,
-      filter: "&idTaiKhoan=$userId&idTrangThaiDonHang=$TRANG_THAI_DON_HANG_HOAN_THANH&dateStart=$startStamp&dateEnd=$endStamp",
+      filter:
+          "&idTaiKhoan=$userId&idTrangThaiDonHang=${trangThaiDonHangMap['Đã giao']}&dateStart=$startStamp&dateEnd=$endStamp",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
           for (final item in value) {
             revenueDataList[0].money = revenueDataList[0].money! +
                 double.parse(item.tongTien.toString());
-            revenueDataList[1].money = revenueDataList[0].money! +
+            revenueDataList[1].money = revenueDataList[1].money! +
                 double.parse(item.phiDichVu.toString());
           }
         }
@@ -123,46 +124,52 @@ class V3RevenueController extends GetxController {
   ///
   void listenertextEditingController() {
     //startController Listener
-    startController.addListener(() {
-      if (startStamp != convertToTimeStamp(dateTime: startController.text) ||
-          endStamp != convertToTimeStamp(dateTime: endController.text)) {
-        //set data
-        startStamp = convertToTimeStamp(dateTime: startController.text);
-        endStamp = convertToTimeStamp(dateTime: endController.text);
-        //check time diff
-        if (DateConverter.differenceDate(
-                startDate: startController.text, endDate: endController.text) <
-            0) {
-          SnackBarUtils.showSnackBar(
-            title: "Vui lòng kiểm tra lại",
-            message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
-          );
-        } else {
-          //reset chart
-          getAllOrderInRange();
+    startController.addListener(
+      () {
+        if (startStamp != convertToTimeStamp(dateTime: startController.text) ||
+            endStamp != convertToTimeStamp(dateTime: endController.text)) {
+          //set data
+          startStamp = convertToTimeStamp(dateTime: startController.text);
+          endStamp = convertToTimeStamp(dateTime: endController.text);
+          //check time diff
+          if (DateConverter.differenceDate(
+                  startDate: startController.text,
+                  endDate: endController.text) <
+              0) {
+            SnackBarUtils.showSnackBar(
+              title: "Vui lòng kiểm tra lại",
+              message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+            );
+          } else {
+            //reset chart
+            getAllOrderInRange();
+          }
         }
-      }
-    });
+      },
+    );
 
     //endController Listener
-    endController.addListener(() {
-      if (startStamp != convertToTimeStamp(dateTime: startController.text) ||
-          endStamp != convertToTimeStamp(dateTime: endController.text)) {
-        //set data
-        startStamp = convertToTimeStamp(dateTime: startController.text);
-        endStamp = convertToTimeStamp(dateTime: endController.text);
-        //check time diff
-        if (DateConverter.differenceDate(
-                startDate: startController.text, endDate: endController.text) <
-            0) {
-          Alert.error(
-              message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
-        } else {
-          //reset chart
-          getAllOrderInRange();
+    endController.addListener(
+      () {
+        if (startStamp != convertToTimeStamp(dateTime: startController.text) ||
+            endStamp != convertToTimeStamp(dateTime: endController.text)) {
+          //set data
+          startStamp = convertToTimeStamp(dateTime: startController.text);
+          endStamp = convertToTimeStamp(dateTime: endController.text);
+          //check time diff
+          if (DateConverter.differenceDate(
+                  startDate: startController.text,
+                  endDate: endController.text) <
+              0) {
+            Alert.error(
+                message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+          } else {
+            //reset chart
+            getAllOrderInRange();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   ///

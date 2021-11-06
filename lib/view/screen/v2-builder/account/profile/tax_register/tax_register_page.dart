@@ -6,7 +6,6 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
-import 'package:template/view/basewidget/component/btn_component_border.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/format/format_html.dart';
@@ -25,6 +24,7 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
           );
         }
         return Scaffold(
+          resizeToAvoidBottomInset: true,
           appBar: AppBarWidget(title: controller.title),
           body: Padding(
             padding: const EdgeInsets.only(
@@ -35,12 +35,21 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
                 //tab bar
                 _tabBarWidget(context: context, controller: controller),
 
-                //tab view
-                _tabView(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //tab view
+                        _tabView(),
+
+                        bottom(context),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          bottomNavigationBar: bottom(context),
         );
       },
     );
@@ -119,16 +128,12 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
   ///tab view
   ///
   Widget _tabView() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Specification(
-          specification: (controller.currentIndex == 0)
-              ? controller.thongTinThueResponse.gioiThieu.toString()
-              : (controller.currentIndex == 1)
-                  ? controller.thongTinThueResponse.dangKyThue.toString()
-                  : controller.thongTinThueResponse.camKetThue.toString(),
-        ),
-      ),
+    return Specification(
+      specification: (controller.currentIndex == 0)
+          ? controller.thongTinThueResponse.gioiThieu.toString()
+          : (controller.currentIndex == 1)
+              ? controller.thongTinThueResponse.dangKyThue.toString()
+              : controller.thongTinThueResponse.camKetThue.toString(),
     );
   }
 
@@ -140,86 +145,70 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
       builder: (controller) {
         return (controller.currentIndex == 0)
             ? const SizedBox.shrink()
-            : Container(
-                height: DeviceUtils.getScaledHeight(
-                    context, (controller.currentIndex == 2) ? .3 : .4),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                    topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+            : Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
-                  color: ColorResources.WHITE,
-                  boxShadow: boxShadowMedium,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
 
-                      //input
-                      if (controller.currentIndex == 2)
-                        const SizedBox.shrink()
-                      else
-                        InputWidget(
-                          label: "Cập nhập mã số thuế (nếu đã đăng ký)",
-                          labelBold: true,
-                          width: .9,
-                          height: .06,
-                          isShadow: true,
-                          textEditingController: controller.taxController,
-                          hintText: "Nhập mã số thuế",
-                          allowEdit: controller
-                                  .dangKyThueResponse[
-                                      controller.currentIndex - 1]
-                                  .id ==
-                              null,
-                          fillColor: ColorResources.WHITE,
-                        ),
-
-                      Label(
-                        label: "Tải hình ảnh bản cứng (nếu có)",
-                        obligatory: false,
-                        horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
-                        topPadding: (controller.currentIndex == 2)
-                            ? 0
-                            : Dimensions.PADDING_SIZE_SMALL,
-                      ),
-
-                      //upload image
-                      ImageListHorizontalAdd(
-                        pickImage: () => controller.pickImages(),
-                        labelBold: true,
-                        imageFileList:
-                            controller.hinhAnhs[controller.currentIndex - 1],
-                        height: .15,
-                        isAddImage: controller
-                                .dangKyThueResponse[controller.currentIndex - 1]
-                                .id ==
-                            null,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_LARGE * 3,
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-
-                      if (controller
+                  //input
+                  if (controller.currentIndex == 2)
+                    const SizedBox.shrink()
+                  else
+                    InputWidget(
+                      label: "Cập nhập mã số thuế (nếu đã đăng ký)",
+                      labelBold: true,
+                      width: .9,
+                      height: .06,
+                      isShadow: true,
+                      textEditingController: controller.taxController,
+                      hintText: "Nhập mã số thuế",
+                      allowEdit: controller
                               .dangKyThueResponse[controller.currentIndex - 1]
                               .id ==
-                          null)
-                        BtnCustom(
-                          onTap: () => controller.onBtnDoneClick(),
-                          color: ColorResources.PRIMARY,
-                          text: "Hoàn thành",
-                          width: DeviceUtils.getScaledWidth(context, .9),
-                        ),
-                    ],
+                          null,
+                      fillColor: ColorResources.WHITE,
+                    ),
+
+                  Label(
+                    label: "Tải hình ảnh bản cứng (nếu có)",
+                    obligatory: false,
+                    horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
+                    topPadding: (controller.currentIndex == 2)
+                        ? 0
+                        : Dimensions.PADDING_SIZE_DEFAULT,
                   ),
-                ),
+
+                  //upload image
+                  ImageListHorizontalAdd(
+                    pickImage: () => controller.pickImages(),
+                    labelBold: true,
+                    imageFileList:
+                        controller.hinhAnhs[controller.currentIndex - 1],
+                    height: .15,
+                    isAddImage: controller
+                            .dangKyThueResponse[controller.currentIndex - 1]
+                            .id ==
+                        null,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
+
+                  if (controller
+                          .dangKyThueResponse[controller.currentIndex - 1].id ==
+                      null)
+                    BtnCustom(
+                      onTap: () => controller.onBtnDoneClick(),
+                      color: ColorResources.PRIMARY,
+                      text: "Hoàn thành",
+                      width: DeviceUtils.getScaledWidth(context, .9),
+                    ),
+                ],
               );
       },
     );

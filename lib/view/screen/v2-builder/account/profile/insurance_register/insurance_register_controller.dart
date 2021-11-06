@@ -96,6 +96,13 @@ class V2InsuranceRegisterController extends GetxController {
             dangKyBaoHiemResponse = dangKyBaoHiemResponse.toList() + value;
             refreshController.loadComplete();
           }
+          dangKyBaoHiemResponse.map(
+            (e) {
+              if (e.idBaoHiem!.loai != "1") {
+                dangKyBaoHiemResponse.remove(e);
+              }
+            },
+          );
         }
 
         isLoading = false;
@@ -150,28 +157,27 @@ class V2InsuranceRegisterController extends GetxController {
             "${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${baoHiemResponse!.phis![indexFee]}&tienCoc=0")!
         .then(
       (value) {
-        if (value !=null) {
+        if (value != null) {
           //set data
-        dangKyBaoHiemRequest.idTaiKhoan = userId;
-        dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse!.id;
-        dangKyBaoHiemRequest.trangThai = "0";
-        dangKyBaoHiemRequest.phi = baoHiemResponse!.phis![indexFee];
-        //insert
-        dangKyBaoHiemProvider.add(
-          data: dangKyBaoHiemRequest,
-          onSuccess: (data) {
-            Get.offAllNamed(
-              AppRoutes.V2_PROFILE,
-              predicate: ModalRoute.withName(AppRoutes.V2_PROFILE),
-            );
-          },
-          onError: (error) {
-            print(
-                "V2InsuranceRegisterController onCheckoutClick onError $error");
-          },
-        );
+          dangKyBaoHiemRequest.idTaiKhoan = userId;
+          dangKyBaoHiemRequest.idBaoHiem = baoHiemResponse!.id;
+          dangKyBaoHiemRequest.trangThai = "0";
+          dangKyBaoHiemRequest.phi = baoHiemResponse!.phis![indexFee];
+          //insert
+          dangKyBaoHiemProvider.add(
+            data: dangKyBaoHiemRequest,
+            onSuccess: (data) {
+              Get.offAllNamed(
+                AppRoutes.V2_PROFILE,
+                predicate: ModalRoute.withName(AppRoutes.V2_PROFILE),
+              );
+            },
+            onError: (error) {
+              print(
+                  "V2InsuranceRegisterController onCheckoutClick onError $error");
+            },
+          );
         }
-        
       },
     );
   }

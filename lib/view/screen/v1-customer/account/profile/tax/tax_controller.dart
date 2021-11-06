@@ -67,7 +67,7 @@ class V1TaxController extends GetxController {
     dangKyThueProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      filter: "&idTaiKhoan=$userId&loai=1&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {

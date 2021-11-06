@@ -32,8 +32,11 @@ const String DAI_LY = '6168fb1362f385255f293af2';
 const String KHACH_HANG = '6168fb1e62f385255f293afb';
 const String THO_THAU = '6168fb3062f385255f293b0b';
 const String NHAN_VIEN = '616e71de3535150e7a4d4755';
+
+//trang thai don dich vu
 const String DA_PHAN_HOI = '616ce813cbb2cf21dad90cdf';
 const String CHUA_PHAN_HOI = '6170c4bbb3b6a47374f4e677';
+const String TRUNG_THAU = '6170c6b6b3b6a47374f4e67a';
 
 // sharePreference
 const String TOKEN = 'token';
@@ -108,6 +111,7 @@ const String NHOM_DICH_VU_4 = '616049b2c8e6fa122227e283';
 const String NHOM_DICH_VU_5 = '616049b6c8e6fa122227e286';
 const String NHOM_DICH_VU_6 = '616049bac8e6fa122227e289';
 const String NHOM_DICH_VU_7 = '6168f03c7cb8ed05dbf3bcc7';
+const String NHOM_DICH_VU_8 = '61853b8ce10f2b16dcdff808';
 const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
 
 //trang thai don hang moi tao
