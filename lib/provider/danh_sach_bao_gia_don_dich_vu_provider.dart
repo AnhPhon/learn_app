@@ -43,6 +43,8 @@ class DanhSachBaoGiaDonDichVuProvider {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
+    print('apiResponse $apiResponse');
+    print('apiResponse ${apiResponse.response}');
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success

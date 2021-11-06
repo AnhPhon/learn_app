@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -31,45 +32,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                   ),
 
                   //infomation
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-                    child: BoxShadowWidget(
-                        child: Column(
-                      children: [
-                        const SizedBox(
-                          height: Dimensions.MARGIN_SIZE_DEFAULT,
-                        ),
-                        _rowtext(
-                          text1: "Tên công việc",
-                          text2: "Lát gạch phòng ngủ 600*600",
-                        ),
-                        _rowtext(
-                          text1: "Quy cách",
-                          text2: "Dùng keo, gạch thạch bàn mã TB123",
-                        ),
-                        _rowtext(
-                          text1: "Khối lượng",
-                          text2: controller.weight,
-                        ),
-                        _rowtext(
-                          text1: "Đơn vị",
-                          text2: "m2",
-                        ),
-                        _rowtext(
-                          text1: "Đơn giá",
-                          textController: controller.unitPriceController,
-                        ),
-                        const SizedBox(
-                          height: Dimensions.MARGIN_SIZE_DEFAULT,
-                        ),
-                      ],
-                    )),
-                  ),
-
-                  //show more
-                  _showMore(),
+                  buildListViewVatTu(controller),
 
                   //file
                   _file(),
@@ -99,7 +62,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                   //order value
                   RowText(
                     text1: "Giá trị đơn hàng",
-                    text2: controller.orderValue,
+                    text2: "${CurrencyConverter.currencyConverterVND(controller.orderValue * 1.0)} VNĐ",
                     colorRed: true,
                   ),
 
@@ -109,7 +72,7 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
                       vertical: Dimensions.PADDING_SIZE_SMALL,
                     ),
                     child: BtnCustom(
-                      onTap: () {},
+                      onTap: controller.onDoneClick,
                       color: ColorResources.PRIMARY,
                       text: "Gửi báo giá và chờ nhận kết quả",
                       width: double.infinity,
@@ -223,4 +186,69 @@ class V2QuotationG1Page extends GetView<V2QuotationG1Controller> {
       ],
     );
   }
+
+
+  ListView buildListViewVatTu(V2QuotationG1Controller controller) {
+    return ListView.builder(
+        padding: const EdgeInsets.only(
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: (controller.chiTietVatTuResponse == null ||
+            controller.chiTietVatTuResponse!.isEmpty)
+            ? 0
+            : controller.chiTietVatTuResponse!.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          return Container(
+            margin: const EdgeInsets.only(
+              top: Dimensions.PADDING_SIZE_DEFAULT,
+              // right: Dimensions.PADDING_SIZE_SMALL,
+            ),
+            child: BoxShadowWidget(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                  _rowtext(
+                    text1: "Tên công việc:",
+                    text2: controller
+                        .chiTietVatTuResponse![index].idVatTu!.tenVatTu
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Quy cách:",
+                    text2: controller
+                        .chiTietVatTuResponse![index].idVatTu!.quyCach
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Khối lượng:",
+                    text2: controller
+                        .chiTietVatTuResponse![index].idVatTu!.khoiLuong
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Đơn vị",
+                    text2: controller
+                        .chiTietVatTuResponse![index].idVatTu!.donVi
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Đơn giá",
+                    textController: controller.unitPriceControllers[index],
+                  ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
 }

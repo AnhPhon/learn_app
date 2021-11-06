@@ -1,23 +1,25 @@
 class DanhSachBaoGiaDonDichVuRequest {
   String? id;
   String? idDonDichVu;
-  String? taiKhoanBaoGia;
-  String? giaBao;
+  String? idTaiKhoanBaoGia;
+  String? tongTien;
   String? ghiChu;
   String? file;
   String? daXem;
-  String? trangThaiBaoGia;
+  // String? trangThaiBaoGia;
   List<String>? hinhAnhBaoGias;
+  List<GiaVatTuRequest>? giaVatTus;
+  List<GiaCongViecRequest>? giaCongViecs;
 
   DanhSachBaoGiaDonDichVuRequest({
     this.id,
     this.idDonDichVu,
-    this.taiKhoanBaoGia,
-    this.giaBao,
+    this.idTaiKhoanBaoGia,
+    this.tongTien,
     this.ghiChu,
     this.file,
     this.daXem,
-    this.trangThaiBaoGia,
+    // this.trangThaiBaoGia,
     this.hinhAnhBaoGias,
   });
 
@@ -25,17 +27,18 @@ class DanhSachBaoGiaDonDichVuRequest {
   /// From JSON
   ///
   DanhSachBaoGiaDonDichVuRequest.fromJson(Map<String, dynamic> json) {
+    print('Vao parse DanhSachBaoGiaDonDichVuRequest');
     id = (json['id'] == null) ? null : json['id'].toString();
     idDonDichVu = json['idDonDichVu'].toString();
-    taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
-    giaBao = json['giaBao'].toString();
-    ghiChu = json['ghiChu'].toString();
-    file = json['file'].toString();
-    daXem = json['daXem'].toString();
-    trangThaiBaoGia = json['trangThaiBaoGia'].toString();
+    idTaiKhoanBaoGia = json['idTaiKhoanBaoGia'].toString();
+    if(json['tongTien'] != null && json['tongTien'] != 'null') tongTien = json['tongTien'].toString();
+    if(json['ghiChu'] != null && json['ghiChu'] != 'null') ghiChu = json['ghiChu'].toString();
+    if(json['file'] != null && json['file'] != 'null') file = json['file'].toString();
+    if(json['daXem'] != null && json['daXem'] != 'null') daXem = json['daXem'].toString();
+    // trangThaiBaoGia = json['trangThaiBaoGia'].toString();
 
     if (json['hinhAnhBaoGias'] != null) {
-      hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<String>;
+      hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).cast<String>().toList();
     }
   }
 
@@ -50,11 +53,11 @@ class DanhSachBaoGiaDonDichVuRequest {
     // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
-    // check null taiKhoanBaoGia
-    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia;
+    // check null idTaiKhoanBaoGia
+    if (idTaiKhoanBaoGia != null) data['idTaiKhoanBaoGia'] = idTaiKhoanBaoGia;
 
     // check null giaBao
-    if (giaBao != null) data['giaBao'] = giaBao;
+    if (tongTien != null) data['tongTien'] = tongTien;
 
     // check null ghiChu
     if (ghiChu != null) data['ghiChu'] = ghiChu;
@@ -66,10 +69,92 @@ class DanhSachBaoGiaDonDichVuRequest {
     if (daXem != null) data['daXem'] = daXem;
 
     // check null trangThaiBaoGia
-    if (trangThaiBaoGia != null) data['trangThaiBaoGia'] = trangThaiBaoGia;
+    // if (trangThaiBaoGia != null) data['trangThaiBaoGia'] = trangThaiBaoGia;
 
     // check null daXem
     if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;
+
+    // check null daXem
+    if (giaVatTus != null) data['giaVatTus'] = giaVatTus;
+
+    // check null daXem
+    if (giaCongViecs != null) data['giaCongViecs'] = giaCongViecs;
+
+    return data;
+  }
+}
+
+class GiaVatTuRequest {
+  String? id;
+  String? idChiTietVatTu;
+  String? donGia;
+
+  GiaVatTuRequest({
+    this.id,
+    this.idChiTietVatTu,
+    this.donGia,
+  });
+
+  ///
+  /// From JSON
+  ///
+  GiaVatTuRequest.fromJson(Map<String, dynamic> json) {
+    id = (json['id'] == null) ? null : json['id'].toString();
+    idChiTietVatTu = json['idChiTietVatTu'].toString();
+    donGia = json['donGia'].toString();
+  }
+
+  ///
+  /// To JSON
+  ///
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    // check null id
+    if (id != null) data['id'] = id;
+
+    // check null idDonDichVu
+    if (idChiTietVatTu != null) data['idChiTietVatTu'] = idChiTietVatTu;
+
+    // check null idTaiKhoanBaoGia
+    if (donGia != null) data['donGia'] = donGia;
+
+    return data;
+  }
+}
+
+class GiaCongViecRequest {
+  String? id;
+  String? idChiTietCongViec;
+  String? donGia;
+
+  GiaCongViecRequest({
+    this.id,
+    this.idChiTietCongViec,
+    this.donGia,
+  });
+
+  ///
+  /// From JSON
+  ///
+  GiaCongViecRequest.fromJson(Map<String, dynamic> json) {
+    id = (json['id'] == null) ? null : json['id'].toString();
+    idChiTietCongViec = json['idChiTietCongViec'].toString();
+    donGia = json['idTaiKhoanBaoGia'].toString();
+  }
+
+  ///
+  /// To JSON
+  ///
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    // check null id
+    if (id != null) data['id'] = id;
+
+    // check null idDonDichVu
+    if (idChiTietCongViec != null) data['idChiTietCongViec'] = idChiTietCongViec;
+
+    // check null idTaiKhoanBaoGia
+    if (donGia != null) data['donGia'] = donGia;
 
     return data;
   }

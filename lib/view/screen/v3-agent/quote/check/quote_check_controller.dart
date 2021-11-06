@@ -119,9 +119,9 @@ class V3QuoteCheckController extends GetxController {
       danhSachBaoGiaDonDichVuProvider.update(
         data: DanhSachBaoGiaDonDichVuRequest(
           id: value,
-          giaBao: giaTriDonHang.toString(),
+          tongTien: giaTriDonHang.toString(),
           file: filepath,
-          trangThaiBaoGia: "2",
+          // trangThaiBaoGia: "2",
         ),
         onSuccess: (data) {
           for (final id in vatTuIds) {
