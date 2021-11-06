@@ -106,7 +106,7 @@ class V2ShorthandedController extends GetxController {
         if (data.isNotEmpty) {
           /// Selectbox khong cho phep init null gia tri, nen chon 1 gia tri dau tien de init
           for(var i = 0; i < data.length; i++){
-            if(data[i].nhomDichVu != '3' && data[i].nhomDichVu != '4' && data[i].nhomDichVu != '7'){
+            if(data[i].nhomDichVu != '3' && data[i].nhomDichVu != '4' && data[i].nhomDichVu != '7' && data[i].nhomDichVu != '8'){
               nhomDichVuResponse!.add(data[i]);
             }
           }
