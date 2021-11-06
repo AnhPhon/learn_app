@@ -65,11 +65,10 @@ class V1ContractController extends GetxController {
         dangKyHopDongSBSProvider.paginate(
           page: 1,
           limit: 5,
-          filter: "&idTaiKhoan=$userId",
+          filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
           onSuccess: (value) {
             //check is not empty
             if (value.isNotEmpty) {
-              print(value);
               dangKyHopDongSBSResponse = value.first;
             }
 

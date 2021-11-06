@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +32,7 @@ mixin ApiErrorHandler {
                 case 404:
                 case 500:
                 case 503:
-                  errorDescription = error.response!.statusMessage;
+                  errorDescription = error.response!;
                   break;
                 default:
                   final Errors errors = Errors.fromJson(error.response!.data);

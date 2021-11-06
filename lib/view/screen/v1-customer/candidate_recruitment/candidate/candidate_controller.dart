@@ -692,7 +692,7 @@ class V1CandidateController extends GetxController {
         page: pageMaxSearch,
         limit: limit,
         filter:
-            '$textFilter&idNhomDichVu=${app_constants.NHOM_7}&sortBy=created_at:desc',
+            '$textFilter&idNhomDichVu=${app_constants.NHOM_DICH_VU_7}&sortBy=created_at:desc',
         onSuccess: (value) {
           //check data empty
           if (value.isEmpty) {

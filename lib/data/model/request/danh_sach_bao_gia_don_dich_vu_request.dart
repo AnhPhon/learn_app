@@ -6,19 +6,21 @@ class DanhSachBaoGiaDonDichVuRequest {
   String? ghiChu;
   String? file;
   String? daXem;
+  String? trangThaiBaoGia;
   List<String>? hinhAnhBaoGias;
 
   DanhSachBaoGiaDonDichVuRequest({
-      this.id,
-      this.idDonDichVu,
-      this.taiKhoanBaoGia,
-      this.giaBao,
-      this.ghiChu,
-      this.file,
-      this.daXem,
-      this.hinhAnhBaoGias,
+    this.id,
+    this.idDonDichVu,
+    this.taiKhoanBaoGia,
+    this.giaBao,
+    this.ghiChu,
+    this.file,
+    this.daXem,
+    this.trangThaiBaoGia,
+    this.hinhAnhBaoGias,
   });
-  
+
   ///
   /// From JSON
   ///
@@ -30,8 +32,9 @@ class DanhSachBaoGiaDonDichVuRequest {
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
     daXem = json['daXem'].toString();
+    trangThaiBaoGia = json['trangThaiBaoGia'].toString();
 
-    if(json['hinhAnhBaoGias'] != null){
+    if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<String>;
     }
   }
@@ -42,29 +45,31 @@ class DanhSachBaoGiaDonDichVuRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idDonDichVu
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
     // check null taiKhoanBaoGia
-    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia; 
+    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia;
 
     // check null giaBao
-    if (giaBao != null) data['giaBao'] = giaBao; 
+    if (giaBao != null) data['giaBao'] = giaBao;
 
     // check null ghiChu
-    if (ghiChu != null) data['ghiChu'] = ghiChu; 
+    if (ghiChu != null) data['ghiChu'] = ghiChu;
 
     // check null file
-    if (file != null) data['file'] = file; 
+    if (file != null) data['file'] = file;
 
     // check null daXem
     if (daXem != null) data['daXem'] = daXem;
 
+    // check null trangThaiBaoGia
+    if (trangThaiBaoGia != null) data['trangThaiBaoGia'] = trangThaiBaoGia;
+
     // check null daXem
     if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;
-
 
     return data;
   }

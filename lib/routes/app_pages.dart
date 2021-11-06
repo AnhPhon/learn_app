@@ -76,7 +76,6 @@ import 'package:template/view/screen/v1-customer/notifications/order_feedback_co
 import 'package:template/view/screen/v1-customer/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v1-customer/payment_success/payment_success_page.dart';
 import 'package:template/view/screen/v1-customer/product/cart/cart_page.dart';
-import 'package:template/view/screen/v1-customer/product/product_binding.dart';
 import 'package:template/view/screen/v1-customer/product/product_detail/product_detail_page.dart';
 import 'package:template/view/screen/v1-customer/product/product_page.dart';
 import 'package:template/view/screen/v1-customer/product/shipping_address/shipping_address_page.dart';
@@ -171,6 +170,7 @@ import 'package:template/view/screen/v2-builder/product/product_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_address/shipping_address_page.dart';
 import 'package:template/view/screen/v2-builder/product/shipping_method/shipping_method_page.dart';
 import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
+
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
@@ -210,13 +210,20 @@ import 'package:template/view/screen/v3-agent/product_management/product_detail/
 import 'package:template/view/screen/v3-agent/product_management/product_management_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_dang_ky_trien_khai/project_dang_ky_trien_khai_page.dart';
 import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_binding.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_page.dart';
+import 'package:template/view/screen/v3-agent/quote/check/quote_check_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/check/quote_check_page.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/list/quote_list_page.dart';
+import 'package:template/view/screen/v3-agent/quote/request/quote_request_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/request/quote_request_page.dart';
+import 'package:template/view/screen/v3-agent/quote/response/quote_response_binding.dart';
 import 'package:template/view/screen/v3-agent/quote/response/quote_response_page.dart';
 import 'package:template/view/screen/v3-agent/revenue/revenue_page.dart';
 import 'package:template/view/screen/v3-agent/store/store_page.dart';
 import 'package:template/view/screen/v3-agent/store_infomation/store_infomation_page.dart';
+import 'package:template/view/screen/v3-agent/warehouse/to_receive/to_receive_page.dart';
 import 'package:template/view/screen/v3-agent/warehouse/warehouse_page.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_binding.dart';
 import 'package:template/view/screen/v4-employee/account/info/info_page.dart';
@@ -238,6 +245,8 @@ import 'package:template/view/screen/v4-employee/report/add_report/add_daily_rep
 import 'package:template/view/screen/v4-employee/report/add_report/add_daily_report/add_daily_report_page.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_binding.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_page.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_binding.dart';
+import 'package:template/view/screen/v4-employee/report/detail_report/detail_report_page.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_binding.dart';
 import 'package:template/view/screen/v4-employee/report_timekeeping/report_timekeeping_page.dart';
 import 'package:template/view/screen/v4-employee/revenue_expenditure/revenue_expenditure_binding.dart';
@@ -330,7 +339,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.V1_PRODUCT,
       page: () => V1ProductPage(),
-      binding: V1ProductBinding(),
     ),
     GetPage(
       name: AppRoutes.V1_NEWS,
@@ -911,6 +919,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_QUOTE_LIST,
       page: () => V3QuoteListPage(),
+      binding: V3QuoteListBinding(),
     ),
     // v3 - quote check
     // Xem lichj tin tuyển dụng ứng viên đã lưu và đã ứng tuyển
@@ -923,16 +932,19 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_QUOTE_CHECK,
       page: () => V3QuoteCheckPage(),
+      binding: V3QuoteCheckBinding(),
     ),
     // v3 - quote request
     GetPage(
       name: AppRoutes.V3_QUOTE_REQUEST,
       page: () => V3QuoteRequestPage(),
+      binding: V3QuoteRequestBinding(),
     ),
     // v3 - quote response
     GetPage(
       name: AppRoutes.V3_QUOTE_RESPONSE,
       page: () => V3QuoteResponsePage(),
+      binding: V3QuoteResponseBinding(),
     ),
     GetPage(
       name: AppRoutes.V3_STORE,
@@ -964,7 +976,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.V3_PHAN_HOI_BAO_GIA,
-      page: () => V3QuoteResponsePage(),
+      page: () => V3QuotePhanHoiBaoGiaPage(),
+      binding: V3QuotePhanHoiBaoGiaBinding(),
     ),
     GetPage(
       name: AppRoutes.V3_FINISH_UPDATE,
@@ -985,6 +998,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V3_PRODUCT_DETAIL,
       page: () => V3ProductDetailPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V3_TO_RECEIVE,
+      page: () => V3ToReceivePage(),
     ),
     // Xem trươc đánh văn bản
     GetPage(
@@ -1215,6 +1232,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.ORDER_INFORMATION,
       page: () => OrderInformationPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V4_DETAIL_REPORT,
+      page: () => V4DetailReportPage(),
+      binding: V4DetailReportBinding(),
     ),
   ];
 }

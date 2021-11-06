@@ -7,6 +7,7 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/large_size_app_bar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/account/account_controller.dart';
 
 class V1AccountPage extends GetView<V1AccountController> {
@@ -165,12 +166,11 @@ class V1AccountPage extends GetView<V1AccountController> {
           height: DeviceUtils.getScaledSize(context, .2),
           width: DeviceUtils.getScaledSize(context, .2),
           child: ClipOval(
-            child: FadeInImage.assetNetwork(
-                placeholder: Images.placeholder,
-                image: controller.taiKhoanResponse.hinhDaiDien.toString(),
-                fit: BoxFit.cover,
-                imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                    backgroundImage: AssetImage(Images.placeholder))),
+            child: FadeInImageCustom(
+              urlImage: controller.taiKhoanResponse.hinhDaiDien.toString(),
+              height: double.infinity,
+              width: double.infinity,
+            ),
           ),
         ),
 
@@ -185,10 +185,11 @@ class V1AccountPage extends GetView<V1AccountController> {
         ),
 
         //email
-        Text(
-          controller.taiKhoanResponse.email.toString(),
-          style: Dimensions.fontSizeStyle16w600(),
-        ),
+        if (controller.taiKhoanResponse.email != "null")
+          Text(
+            controller.taiKhoanResponse.email.toString(),
+            style: Dimensions.fontSizeStyle16w600(),
+          ),
 
         SizedBox(
           height: DeviceUtils.getScaledHeight(context, .01),

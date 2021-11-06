@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
-import 'package:template/view/basewidget/textfield/input_field.dart';
-import 'package:template/view/basewidget/textfield/text_field_date.dart';
+import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/screen/v4-employee/report/add_report/add_report_on_request/add_report_on_request_controller.dart';
 
 class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
@@ -17,11 +18,11 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
       body: GetBuilder(
           init: V4AddReportOnRequestController(),
           builder: (V4AddReportOnRequestController controller) {
-            // if (controller.isLoading) {
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -35,10 +36,10 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
                   _contentReportOnRequest(controller, context),
 
                   Container(
-                    height: DeviceUtils.getScaledWidth(context, 0.6),
+                    height: DeviceUtils.getScaledWidth(context, 0.55),
                   ),
                   //button báo cáo theo yêu cầu
-                  _btnReport(),
+                  _btnReport(controller),
                 ],
               ),
             );
@@ -52,16 +53,15 @@ class V4AddReportOnRequestPage extends GetView<V4AddReportOnRequestController> {
 ///
 Widget _timeReportOnRequest(
     V4AddReportOnRequestController controller, BuildContext context) {
-  return TextFieldDate(
-    paddingTop: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-    isDate: true,
-    allowEdit: true,
-    controller: controller.timeReportOnRequest,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    holdplacer: "12-11-2021",
-    label: "Ngày",
+  return InputWidget(
+    label: 'Ngày',
+    textEditingController: controller.timeReportOnRequest,
     obligatory: true,
-    typeInput: TextInputType.text,
+    suffixIcon: const Icon(Icons.date_range,color: ColorResources.PRIMARY),
+    isDate: false,
+    fillColor: ColorResources.LIGHT_GREY.withOpacity(0.4),
+    allowEdit: false,
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
     width: DeviceUtils.getScaledWidth(context, 1),
   );
 }
@@ -71,38 +71,35 @@ Widget _timeReportOnRequest(
 ///
 Widget _projectReportOnRequest(
     V4AddReportOnRequestController controller, BuildContext context) {
-  return InputField(
-    allowEdit: true,
-    allowMultiline: false,
-    controller: controller.projectReportOnRequest,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: 'Dự án A',
-    label: 'Tên dự án/văn phòng',
+  return DropDownButton1<DuAnNhanVienResponse>(
+    isColorFieldWhite: true,
+    labelBold: true,
+    hint: 'Vui lòng chọn dự án',
+    label: 'Tên dự án',
+    data: controller.duAnNhanVienListAdd,
     obligatory: true,
-    typeInput: TextInputType.text,
+    onChanged: (value) => controller.onChangedDuAnNhanVien(value!),
+    value: controller.duAnNhanVienAdd,
+    fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );
 }
 
 ///
 /// Nhập nội dung báo cáo
 ///
-InputField _contentReportOnRequest(
+Widget _contentReportOnRequest(
     V4AddReportOnRequestController controller, BuildContext context) {
-  return InputField(
-    // ignore: avoid_redundant_argument_values
-    line: 5,
-    allowEdit: true,
-    allowMultiline: true,
-    controller: controller.contentReportOnRequest,
-    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-    hidden: false,
-    holdplacer: 'Nhập nội dung báo cáo',
-    label: 'Nội dung',
+  return InputWidget(
+    textEditingController: controller.contentReportOnRequest,
+    label: 'Nội dung báo cáo',
+    hintText: 'Nội dung báo cáo',
     obligatory: true,
-    typeInput: TextInputType.text,
+    maxLine: 7,
+    fillColor: ColorResources.WHITE,
     width: DeviceUtils.getScaledWidth(context, 1),
+    padding: const EdgeInsets.symmetric(horizontal: Dimensions.FONT_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
   );
 }
 
@@ -110,10 +107,12 @@ InputField _contentReportOnRequest(
 /// Button báo cáo
 ///
 
-Widget _btnReport() {
+Widget _btnReport(V4AddReportOnRequestController controller) {
   return LongButton(
     color: ColorResources.APPBARCOLOR,
-    onPressed: () {},
+    onPressed: () {
+      controller.onBaoCao();
+    },
     title: 'Báo cáo',
     horizontal: Dimensions.PADDING_SIZE_DEFAULT,
   );

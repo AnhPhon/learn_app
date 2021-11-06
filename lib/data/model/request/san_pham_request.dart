@@ -10,11 +10,12 @@ class SanPhamRequest {
   String? quyCach;
   String? gia;
   String? maSanPham;
+  String? donVi;
   String? kieuVanChuyen;
   String? idBangGiaPhiVanChuyen;
 
-  SanPhamRequest({
-      this.id,
+  SanPhamRequest(
+      {this.id,
       this.idTaiKhoan,
       this.idDanhMucSanPham,
       this.ten,
@@ -25,9 +26,10 @@ class SanPhamRequest {
       this.quyCach,
       this.gia,
       this.maSanPham,
+      this.donVi,
       this.kieuVanChuyen,
       this.idBangGiaPhiVanChuyen});
-  
+
   ///
   /// From JSON
   ///
@@ -45,6 +47,7 @@ class SanPhamRequest {
     quyCach = json['quyCach'].toString();
     gia = json['gia'].toString();
     maSanPham = json['maSanPham'].toString();
+    maSanPham = json['donVi'].toString();
     kieuVanChuyen = json['kieuVanChuyen'].toString();
     idBangGiaPhiVanChuyen = json['idBangGiaPhiVanChuyen'].toString();
   }
@@ -55,44 +58,47 @@ class SanPhamRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null idDanhMucSanPham
-    if (idDanhMucSanPham != null) data['idDanhMucSanPham'] = idDanhMucSanPham; 
+    if (idDanhMucSanPham != null) data['idDanhMucSanPham'] = idDanhMucSanPham;
 
     // check null ten
-    if (ten != null) data['ten'] = ten; 
+    if (ten != null) data['ten'] = ten;
 
     // check null thuongHieu
-    if (thuongHieu != null) data['thuongHieu'] = thuongHieu; 
+    if (thuongHieu != null) data['thuongHieu'] = thuongHieu;
 
     // check null moTa
-    if (moTa != null) data['moTa'] = moTa; 
+    if (moTa != null) data['moTa'] = moTa;
 
     // check null hinhAnhDaiDien
-    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien; 
+    if (hinhAnhDaiDien != null) data['hinhAnhDaiDien'] = hinhAnhDaiDien;
 
     // check null hinhAnhSanPhams
-    if (hinhAnhSanPhams != null) data['hinhAnhSanPhams'] = hinhAnhSanPhams; 
+    if (hinhAnhSanPhams != null) data['hinhAnhSanPhams'] = hinhAnhSanPhams;
 
     // check null quyCach
-    if (quyCach != null) data['quyCach'] = quyCach; 
+    if (quyCach != null) data['quyCach'] = quyCach;
 
     // check null gia
-    if (gia != null) data['gia'] = gia; 
+    if (gia != null) data['gia'] = gia;
 
     // check null maSanPham
-    if (maSanPham != null) data['maSanPham'] = maSanPham; 
+    if (maSanPham != null) data['maSanPham'] = maSanPham;
+
+    // check null donVi
+    if (donVi != null) data['donVi'] = donVi;
 
     // check null kieuVanChuyen
-    if (kieuVanChuyen != null) data['kieuVanChuyen'] = kieuVanChuyen; 
+    if (kieuVanChuyen != null) data['kieuVanChuyen'] = kieuVanChuyen;
 
     // check null idBangGiaPhiVanChuyen
-    if (idBangGiaPhiVanChuyen != null) data['idBangGiaPhiVanChuyen'] = idBangGiaPhiVanChuyen; 
-
+    if (idBangGiaPhiVanChuyen != null)
+      data['idBangGiaPhiVanChuyen'] = idBangGiaPhiVanChuyen;
 
     return data;
   }

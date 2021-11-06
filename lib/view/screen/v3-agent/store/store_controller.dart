@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+import 'package:template/data/model/response/category_store_model.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/images.dart';
 
 class V3StoreController extends GetxController {
+  //title
   String title = "DL,Danahome";
 
+  //categoriesStore list
   List<V3CategoriesStore> categoriesStore = [
     V3CategoriesStore(
       title: "Quản lý sản phẩm",
@@ -44,12 +47,4 @@ class V3StoreController extends GetxController {
   void onBtnClick(int index) {
     Get.toNamed(categoriesStore[index].routes);
   }
-}
-
-class V3CategoriesStore {
-  String title;
-  String urlImg;
-  String routes;
-  V3CategoriesStore(
-      {required this.title, required this.urlImg, required this.routes});
 }
