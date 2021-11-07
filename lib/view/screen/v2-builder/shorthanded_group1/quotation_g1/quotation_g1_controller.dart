@@ -97,12 +97,12 @@ class V2QuotationG1Controller extends GetxController {
           }
         }
         print(
-            'V2ShorthandedGroup1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
+            'V2QuotationG1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
         update();
       },
       onError: (error) {
         print(
-            'V2ShorthandedGroup1Controller getListChiTietCongViec onError $error');
+            'V2QuotationG1Controller getListChiTietCongViec onError $error');
       },
     );
   }

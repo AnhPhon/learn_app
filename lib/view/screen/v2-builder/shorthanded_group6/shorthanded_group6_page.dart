@@ -99,9 +99,9 @@ class V2ShorthandedGroup6Page extends GetView<V2ShorthandedGroup6Controller> {
 
                   //image
                   ImageListHorizontal(
-                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhChiTiet == null || controller.donDichVuResponse!.hinhAnhChiTiet!.isEmpty
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhThucTes == null || controller.donDichVuResponse!.hinhAnhThucTes!.isEmpty
                         ? []
-                        : [controller.donDichVuResponse!.hinhAnhChiTiet!],
+                        : controller.donDichVuResponse!.hinhAnhThucTes!,
                     label: "Hình ảnh chi tiết nếu có (hình ảnh thực tế)",
                     labelBold: true,
                   ),

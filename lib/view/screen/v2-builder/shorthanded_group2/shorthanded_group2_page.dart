@@ -93,9 +93,9 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
 
                   //image
                   ImageListHorizontal(
-                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhChiTiet == null || controller.donDichVuResponse!.hinhAnhChiTiet!.isEmpty
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhThucTes == null || controller.donDichVuResponse!.hinhAnhThucTes!.isEmpty
                         ? []
-                        : [controller.donDichVuResponse!.hinhAnhChiTiet!],
+                        : controller.donDichVuResponse!.hinhAnhThucTes!,
                     label: "Hình ảnh chi tiết nếu có (hình ảnh thực tế)",
                     labelBold: true,
                   ),
@@ -106,9 +106,9 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
 
                   //image
                   ImageListHorizontal(
-                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhBaoGia == null || controller.donDichVuResponse!.hinhAnhBaoGia!.isEmpty
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhChiTiets == null || controller.donDichVuResponse!.hinhAnhChiTiets!.isEmpty
                         ? []
-                        : [controller.donDichVuResponse!.hinhAnhBaoGia!],
+                        : controller.donDichVuResponse!.hinhAnhChiTiets!,
                     label: "Hình ảnh sản phẩm mẫu (nếu có)",
                     labelBold: true,
                   ),
