@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
@@ -82,7 +83,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///
   ///
   ///
-  Widget item({required ChiTietVatTuResponse mass}) {
+  Widget item({required ChiTietCongViecResponse mass}) {
     return Padding(
       padding: const EdgeInsets.only(
         left: Dimensions.PADDING_SIZE_DEFAULT,
@@ -99,7 +100,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
             children: [
               OrderContentStringValue(
                 title: "Tên công việc: ",
-                value: mass.idVatTu!.tenVatTu.toString(),
+                value: mass.tenCongViec.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
                   left: Dimensions.PADDING_SIZE_SMALL,
@@ -109,7 +110,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
               ),
               OrderContentStringValue(
                 title: "Quy cách: ",
-                value: mass.idVatTu!.quyCach.toString(),
+                value: mass.quyCach.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
                   left: Dimensions.PADDING_SIZE_SMALL,
@@ -119,7 +120,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
               ),
               OrderContentStringValue(
                 title: "Khối lượng: ",
-                value: mass.idVatTu!.khoiLuong.toString(),
+                value: mass.soLuong.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
                   left: Dimensions.PADDING_SIZE_SMALL,
@@ -129,7 +130,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
               ),
               OrderContentStringValue(
                 title: "Đơn vị: ",
-                value: mass.idVatTu!.donVi.toString(),
+                value: mass.donVi.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
                   left: Dimensions.PADDING_SIZE_SMALL,
@@ -149,7 +150,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///
   Widget materialList(BuildContext context,
       {required V1ServiceReviewG1Controller controller}) {
-    return controller.chiTietVatTuList.isEmpty
+    return controller.chiTietCongViecList.isEmpty
         ? Container()
         : Column(
             children: [
@@ -158,7 +159,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
                 obligatory: false,
                 topPadding: 0,
               ),
-              ...controller.chiTietVatTuList
+              ...controller.chiTietCongViecList
                   .map((e) => SizedBox(
                       width: DeviceUtils.getScaledWidth(context, 1),
                       child: Column(

@@ -1,7 +1,7 @@
 import 'package:template/data/model/response/language_model.dart';
 
 const String BASE_URL = 'http://103.146.23.186:4009/v1/';
-// const String BASE_URL = 'http://192.168.1.11:4009/v1/';
+//const String BASE_URL = 'http://192.168.1.11:4009/v1/';
 
 // api url
 const String region_uri = 'v1/regions';
@@ -25,18 +25,22 @@ enum TYPEFORMAL { CREATE, FEEDBACK }
 
 const String DA_THANH_TOAN = '61604f4cc8e6fa122227e29f';
 const String CHUA_THANH_TOAN = '61615180e87a9124404abe82';
-// const String DA_PHAN_HOI = '617286ebf5c09a07f815e825';
-// const String CHUA_PHAN_HOI = '617286fdf5c09a07f815e826';
 // Id loại tài khoản
 const String DAI_LY = '6168fb1362f385255f293af2';
 const String KHACH_HANG = '6168fb1e62f385255f293afb';
 const String THO_THAU = '6168fb3062f385255f293b0b';
 const String NHAN_VIEN = '616e71de3535150e7a4d4755';
 
-//trang thai don dich vu
+// Trạng thái đơn dich vụ
 const String DA_PHAN_HOI = '616ce813cbb2cf21dad90cdf';
-const String CHUA_PHAN_HOI = '6170c4bbb3b6a47374f4e677';
-const String TRUNG_THAU = '6170c6b6b3b6a47374f4e67a';
+const String DA_DUYET = '6170c4bbb3b6a47374f4e677';
+const String CHOT_GIA = '6170c682b3b6a47374f4e679';
+const String THAT_BAI = '617286fdf5c09a07f815e826';
+const String CHUA_PHAN_HOI = '616ce813cbb2cf21dad90cdf';
+
+// LINK
+const String URL_TO_LINK_PDF = '';
+const String URL_TO_LINK_EXELS = '';
 
 // sharePreference
 const String TOKEN = 'token';

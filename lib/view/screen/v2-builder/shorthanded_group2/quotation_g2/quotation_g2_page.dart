@@ -28,16 +28,14 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
               child: Column(
                 children: [
                   //quotation ifo
-                  Container(
-                    child: SelectBoxSupreme<String?>(
-                      obligatory: true,
-                      label: "Thông tin báo giá:",
-                      items: controller.quotationInfo,
-                      onChanged: (val) {
-                        controller.quotationInfoSelected = val.toString();
-                      },
-                      hint: "Chọn thông tin báo giá",
-                    ),
+                  SelectBoxSupreme<String?>(
+                    obligatory: true,
+                    label: "Thông tin báo giá:",
+                    items: controller.quotationInfo,
+                    onChanged: (val) {
+                      controller.quotationInfoSelected = val.toString();
+                    },
+                    hint: "Chọn thông tin báo giá",
                   ),
 
                   //title

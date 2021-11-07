@@ -1,22 +1,23 @@
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/bang_gia_don_hang_request.dart';
 import 'package:template/data/model/request/chi_tiet_cong_viec_request.dart';
-import 'package:template/data/model/request/chi_tiet_vat_tu_request.dart';
-import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
-import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
+import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
 import 'package:template/data/repository/chi_tiet_cong_viec_repository.dart';
-import 'package:template/data/repository/chi_tiet_vat_tu_repository.dart';
 
 class ChiTietCongViecProvider {
-  ChiTietCongViecRepository? repository = GetIt.I.get<ChiTietCongViecRepository>();
+  ChiTietCongViecRepository? repository =
+      GetIt.I.get<ChiTietCongViecRepository>();
 
   ChiTietCongViecProvider();
 
   ///
-  /// Get all chiTietCongViecs
+  /// Get all ChiTietCongViecs
   ///
   Future<void> all({
-    required Function(List<ChiTietCongViecResponse> chiTietCongViecs) onSuccess,
+    required Function(List<ChiTietCongViecResponse> ChiTietCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -25,7 +26,8 @@ class ChiTietCongViecProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -33,11 +35,11 @@ class ChiTietCongViecProvider {
   }
 
   ///
-  /// Insert chiTietCongViec to database
+  /// Insert ChiTietCongViec to database
   ///
   Future<void> add({
     required ChiTietCongViecRequest data,
-    required Function(ChiTietCongViecRequest chiTietCongViec) onSuccess,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
@@ -45,18 +47,19 @@ class ChiTietCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Update chiTietCongViec to database
+  /// Update ChiTietCongViec to database
   ///
   Future<void> update({
     required ChiTietCongViecRequest data,
-    required Function(ChiTietCongViecRequest chiTietCongViec) onSuccess,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -64,18 +67,19 @@ class ChiTietCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Delete chiTietCongViec to database
+  /// Delete ChiTietCongViec to database
   ///
   Future<void> delete({
     required String id,
-    required Function(ChiTietCongViecRequest chiTietCongViec) onSuccess,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.delete(id);
@@ -83,20 +87,21 @@ class ChiTietCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Get paginate chiTietCongViecs "page": 1, "limit": 10
+  /// Get paginate ChiTietCongViecs "page": 1, "limit": 10
   ///
   Future<void> paginate({
     required int page,
     required int limit,
     required String filter,
-    required Function(List<ChiTietCongViecResponse> chiTietCongViecs) onSuccess,
+    required Function(List<ChiTietCongViecResponse> ChiTietCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -108,7 +113,8 @@ class ChiTietCongViecProvider {
           ? apiResponse.response.data['results'] as List<dynamic>
           : [];
       onSuccess(results
-          .map((e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -116,11 +122,11 @@ class ChiTietCongViecProvider {
   }
 
   ///
-  /// Delete chiTietCongViec to database
+  /// Delete ChiTietCongViec to database
   ///
   Future<void> find({
     required String id,
-    required Function(ChiTietCongViecResponse chiTietCongViec) onSuccess,
+    required Function(ChiTietCongViecResponse ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -128,7 +134,8 @@ class ChiTietCongViecProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(ChiTietCongViecResponse.fromJson(results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

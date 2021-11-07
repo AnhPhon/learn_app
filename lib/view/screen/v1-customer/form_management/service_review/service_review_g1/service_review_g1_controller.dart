@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,10 +17,10 @@ class V1ServiceReviewG1Controller extends GetxController {
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   List<VatTuResponse> vatTuList = [];
 
-  //
-  ChiTietVatTuProvider chiTietVatTuProvider =
-      GetIt.I.get<ChiTietVatTuProvider>();
-  List<ChiTietVatTuResponse> chiTietVatTuList = [];
+  //ChiTietCongViec
+  ChiTietCongViecProvider chiTietCongViecProvider =
+      GetIt.I.get<ChiTietCongViecProvider>();
+  List<ChiTietCongViecResponse> chiTietCongViecList = [];
 
   //loading
   bool isLoading = true;
@@ -36,13 +38,13 @@ class V1ServiceReviewG1Controller extends GetxController {
   ///vatTu
   ///
   void getListChiTietVatTu() {
-    chiTietVatTuProvider.paginate(
+    chiTietCongViecProvider.paginate(
       page: 1,
       limit: 100,
       filter: "&idDonDichVu=${donDichVuResponse.id}",
       onSuccess: (data) {
         print(data.length);
-        chiTietVatTuList = data;
+        chiTietCongViecList = data;
         isLoading = false;
         update();
       },

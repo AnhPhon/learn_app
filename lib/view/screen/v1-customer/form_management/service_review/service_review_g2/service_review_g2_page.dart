@@ -147,8 +147,8 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///hinhAnhHienTrang
   ///
   Widget hinhAnhHienTrang({required V1ServiceReviewG2Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhChiTiets == null ||
-            controller.donDichVuResponse.hinhAnhChiTiets!.isEmpty
+    return controller.donDichVuResponse.hinhAnhThucTes == null ||
+            controller.donDichVuResponse.hinhAnhThucTes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +171,7 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
                   horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                 ),
                 child: ImageListHorizontal(
-                  imageList: controller.donDichVuResponse.hinhAnhChiTiets!,
+                  imageList: controller.donDichVuResponse.hinhAnhThucTes!,
                   padding: EdgeInsets.zero,
                 ),
               ),

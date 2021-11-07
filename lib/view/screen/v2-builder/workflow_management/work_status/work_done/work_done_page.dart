@@ -483,13 +483,13 @@ class V2WorkDonePage extends GetView<V2WorkDoneController> {
         Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(
-            images: controller.images,
-            isAddImage: controller.isBaoHanhDisable == false,
-            onPress: () => controller.pickerMuilFile(files: controller.images),
-            onDelete: (File? file, List<File> files) =>
-                controller.onDeleteImage(file: file!, files: files),
-          ),
+          // child: BoxImage(
+          //   images: controller.images,
+          //   isAddImage: controller.isBaoHanhDisable == false,
+          //   onPress: () => controller.pickerMuilFile(files: controller.images),
+          //   onDelete: (File? file, List<File> files) =>
+          //       controller.onDeleteImage(file: file!, files: files),
+          // ),
         )
       ],
     );
