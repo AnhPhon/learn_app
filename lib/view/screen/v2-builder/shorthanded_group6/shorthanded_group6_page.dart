@@ -27,58 +27,81 @@ class V2ShorthandedGroup6Page extends GetView<V2ShorthandedGroup6Controller> {
                   ),
 
                   //job title
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Tiêu đề công việc",
-                    content: "Sinh viên làm việc",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.tieuDe.toString(),
                   ),
 
                   //Specification
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thông số kỹ thuật: ",
-                    content: "Thông số 1\nThông số 2",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.idThongSoKyThuats!
+                        .map((e) => e.tieuDe.toString())
+                        .join('\n'),
                   ),
 
                   //The amount of people
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Số lượng người yêu cầu: ",
-                    content: "50 người",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.soLuongYeuCau
+                        .toString(),
                   ),
 
                   //working time in day
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thời gian làm trong ngày ",
-                    content:
-                        "Sáng: Từ  ??h?? đến ??h??\nChiều: Từ ??h?? đến ??h??\nTối: Từ ??h?? đến ??h??",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.idThoiGianLamViecs!
+                        .map((e) => e.toString())
+                        .join('\n'),
                   ),
 
                   //start
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Ngày làm việc: ",
-                    content: "12/09/2021",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.soNgay.toString(),
                   ),
 
                   //end
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Ngày kết thúc: ",
-                    content: "12/09/2021",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.getDateOutput(controller
+                        .donDichVuResponse!.ngayKetThuc
+                        .toString()),
                   ),
 
                   //road bed width
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Bề rộng mặt đường làm việc (m): ",
-                    content: "xxx",
+                    // content: controller.donDichVuResponse == null
+                    //     ? ''
+                    //     : controller.donDichVuResponse!.beRongDiemTra.toString(),
                   ),
 
                   //job description
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Mô tả, yêu cầu công việc ",
-                    content:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.moTaChiTiet.toString(),
                   ),
 
                   //image
-                  const ImageListHorizontal(
-                    imageList: [],
+                  ImageListHorizontal(
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhChiTiet == null || controller.donDichVuResponse!.hinhAnhChiTiet!.isEmpty
+                        ? []
+                        : [controller.donDichVuResponse!.hinhAnhChiTiet!],
                     label: "Hình ảnh chi tiết nếu có (hình ảnh thực tế)",
                     labelBold: true,
                   ),
