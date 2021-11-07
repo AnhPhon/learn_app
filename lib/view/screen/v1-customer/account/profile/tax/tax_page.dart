@@ -36,7 +36,8 @@ class V1TaxPage extends GetView<V1TaxController> {
                 width: .9,
                 textEditingController: controller.taxController,
                 hintText: "Nhập mã số thuế",
-                allowEdit: controller.isUpdate == true,
+                allowEdit: controller.isUpdate == true ||
+                    controller.dangKyThueResponse == null,
                 fillColor: ColorResources.WHITE,
                 padding: const EdgeInsets.only(
                   bottom: Dimensions.PADDING_SIZE_DEFAULT,
@@ -49,7 +50,7 @@ class V1TaxPage extends GetView<V1TaxController> {
               const Spacer(),
 
               //btn
-              if (controller.isUpdate == true)
+              if (controller.dangKyThueResponse == null)
                 BtnCustom(
                   onTap: () => controller.onBtnDoneClick(),
                   color: ColorResources.PRIMARY,
@@ -60,7 +61,8 @@ class V1TaxPage extends GetView<V1TaxController> {
                 BtnCustom(
                   onTap: () => controller.onBtnUpdate(),
                   color: ColorResources.PRIMARY,
-                  text: "Chỉnh sửa",
+                  text:
+                      controller.isUpdate == true ? "Hoàn thành" : "Chỉnh sửa",
                   width: DeviceUtils.getScaledWidth(context, .9),
                 ),
 
@@ -80,7 +82,9 @@ class V1TaxPage extends GetView<V1TaxController> {
   Widget _uploadImage(BuildContext context, V1TaxController controller) {
     return ImageListHorizontalAdd(
       pickImage:
-          controller.isUpdate == true ? () => controller.pickImages() : () {},
+          controller.isUpdate == true || controller.dangKyThueResponse == null
+              ? () => controller.pickImages()
+              : () {},
       label: "Tải hình ảnh bản cứng",
       labelBold: true,
       obligatory: true,

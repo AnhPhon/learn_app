@@ -11,7 +11,6 @@ import 'package:template/data/model/response/dang_ky_thue_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 
@@ -74,8 +73,6 @@ class V2TaxController extends GetxController {
             taxController.text = dangKyThueResponse!.file!;
             dangKyThueRequest.hinhAnhs = dangKyThueResponse!.hinhAnhs;
           }
-        } else {
-          isUpdate = true;
         }
 
         isLoading = false;
@@ -168,7 +165,6 @@ class V2TaxController extends GetxController {
   ///on btn update
   ///
   void onBtnUpdate() {
-    print(isUpdate);
     //show loading
     EasyLoading.show(status: 'loading...');
     if (isUpdate == true) {

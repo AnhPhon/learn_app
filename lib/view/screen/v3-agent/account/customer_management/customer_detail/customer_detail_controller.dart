@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/utils/alert.dart';
@@ -20,10 +23,12 @@ class V3CustomerDetailController extends GetxController {
 
   //donDichVu
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+  List<DonDichVuResponse> donDichVuList = [];
 
-  //VatTu
-  VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
-  List<VatTuResponse> vatTuList = [];
+  //ChiTietVatTu
+  // ChiTietVatTuProvider chiTietVatTuProvider =
+  //     GetIt.I.get<ChiTietVatTuProvider>();
+  // List<ChiTietVatTuResponse> chiTietVatTuList = [];
 
   //tab
   List titleTabBar = [
@@ -66,30 +71,39 @@ class V3CustomerDetailController extends GetxController {
       page: 1,
       limit: 100,
       filter:
-          "&idTaiKhoanNhanDon=${taiKhoanResponse.id}&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
+          "&idTaiKhoanNhanDon=${taiKhoanResponse.id}&idNhomDichVu=$NHOM_DICH_VU_8&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
       onSuccess: (data) {
         //check is not empty
         if (data.isNotEmpty) {
+          donDichVuList = data;
           for (final item in data) {
-            vatTuProvider.paginate(
-              page: 1,
-              limit: 100,
-              filter: "&idDonDichVu=${item.id}&sortBy=created_at:desc",
-              onSuccess: (value) {
-                vatTuList.addAll(value);
-                if (item.id == data.last.id) {
-                  vatTuList
-                      .map((e) => totalQuaApp += int.parse(e.donGia.toString()))
-                      .toList();
-                  isLoading = false;
-                  update();
-                }
-              },
-              onError: (error) {
-                print("V3CustomerDetailController getVatTu onError $error");
-              },
-            );
+            totalQuaApp += int.parse(item.tongDon.toString());
+            if (item.id == data.last.id) {
+              isLoading = false;
+              update();
+            }
           }
+          // for (final item in data) {
+          //   chiTietVatTuProvider.paginate(
+          //     page: 1,
+          //     limit: 100,
+          //     filter: "&idDonDichVu=${item.id}&sortBy=created_at:desc",
+          //     onSuccess: (value) {
+          //       chiTietVatTuList.addAll(value);
+          //       if (item.id == data.last.id) {
+          //         chiTietVatTuList
+          //             .map((e) => totalQuaApp +=
+          //                 int.parse(e.idVatTu!.donGia.toString()))
+          //             .toList();
+          //         isLoading = false;
+          //         update();
+          //       }
+          //     },
+          //     onError: (error) {
+          //       print("V3CustomerDetailController getVatTu onError $error");
+          //     },
+          //   );
+          // }
         } else {
           isLoading = false;
           update();

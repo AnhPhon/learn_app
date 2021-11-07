@@ -187,9 +187,10 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
                         controller.hinhAnhs[controller.currentIndex - 1],
                     height: .15,
                     isAddImage: controller
-                            .dangKyThueResponse[controller.currentIndex - 1]
-                            .id ==
-                        null,
+                                .dangKyThueResponse[controller.currentIndex - 1]
+                                .id ==
+                            null ||
+                        (controller.currentIndex == 2 && controller.isUpdate),
                     padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.PADDING_SIZE_LARGE,
                     ),
@@ -206,6 +207,14 @@ class V2TaxRegisterPage extends GetView<V2TaxRegisterController> {
                       onTap: () => controller.onBtnDoneClick(),
                       color: ColorResources.PRIMARY,
                       text: "Hoàn thành",
+                      width: DeviceUtils.getScaledWidth(context, .9),
+                    ),
+                  if (controller.currentIndex == 2 &&
+                      controller.dangKyThueResponse[1].id != null)
+                    BtnCustom(
+                      onTap: () => controller.onBtnUpdate(),
+                      color: ColorResources.PRIMARY,
+                      text: controller.isUpdate ? "Hoàn thành" : "Chỉnh sửa",
                       width: DeviceUtils.getScaledWidth(context, .9),
                     ),
                 ],

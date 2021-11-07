@@ -48,6 +48,9 @@ class V2TaxRegisterController extends GetxController {
   //loading
   bool isLoading = true;
 
+  //update
+  bool isUpdate = false;
+
   //userid
   String userId = '';
 
@@ -247,6 +250,39 @@ class V2TaxRegisterController extends GetxController {
           },
         );
       }
+    }
+  }
+
+  ///
+  ///on btn update
+  ///
+  void onBtnUpdate() {
+    //show loading
+    EasyLoading.show(status: 'loading...');
+    if (isUpdate == true) {
+      //set data
+      dangKyThueRequest.id = dangKyThueResponse[1].id;
+      dangKyThueRequest.hinhAnhs = hinhAnhs[1];
+
+      //update
+      dangKyThueProvider.update(
+        data: dangKyThueRequest,
+        onSuccess: (data) {
+          EasyLoading.dismiss();
+          Get.back();
+          Alert.success(message: "Chỉnh sửa thông tin thuế thành công");
+        },
+        onError: (error) {
+          EasyLoading.dismiss();
+          print("V2TaxController onBtnUpdate onError $error");
+        },
+      );
+    } else {
+      isUpdate = true;
+      EasyLoading.dismiss();
+      Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+      update();
+      return;
     }
   }
 }

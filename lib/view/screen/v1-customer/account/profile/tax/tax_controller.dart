@@ -78,8 +78,6 @@ class V1TaxController extends GetxController {
             taxController.text = dangKyThueResponse!.file!;
             dangKyThueRequest.hinhAnhs = dangKyThueResponse!.hinhAnhs;
           }
-        } else {
-          isUpdate = true;
         }
 
         isLoading = false;

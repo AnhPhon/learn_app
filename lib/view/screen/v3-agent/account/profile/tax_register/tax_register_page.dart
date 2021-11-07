@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -35,11 +34,21 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
                 //tab bar
                 _tabBarWidget(context: context, controller: controller),
 
-                _tabView(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //tab view
+                        _tabView(),
+
+                        bottom(context),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          bottomNavigationBar: bottom(context),
         );
       },
     );
@@ -118,16 +127,12 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
   ///tab view
   ///
   Widget _tabView() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Specification(
-          specification: (controller.currentIndex == 0)
-              ? controller.thongTinThueResponse.gioiThieu.toString()
-              : (controller.currentIndex == 1)
-                  ? controller.thongTinThueResponse.dangKyThue.toString()
-                  : controller.thongTinThueResponse.camKetThue.toString(),
-        ),
-      ),
+    return Specification(
+      specification: (controller.currentIndex == 0)
+          ? controller.thongTinThueResponse.gioiThieu.toString()
+          : (controller.currentIndex == 1)
+              ? controller.thongTinThueResponse.dangKyThue.toString()
+              : controller.thongTinThueResponse.camKetThue.toString(),
     );
   }
 
@@ -137,59 +142,82 @@ class V3TaxRegisterPage extends GetView<V3TaxRegisterController> {
   Widget bottom(BuildContext context) {
     return GetBuilder<V3TaxRegisterController>(
       builder: (controller) {
-        return (controller.currentIndex == 2)
-            ? Container(
-                height: DeviceUtils.getScaledHeight(context,
-                    (controller.dangKyThueResponse == null) ? .3 : .25),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                    topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
+        return (controller.currentIndex == 0)
+            ? const SizedBox.shrink()
+            : Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
-                  color: ColorResources.WHITE,
-                  boxShadow: boxShadowMedium,
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: Dimensions.MARGIN_SIZE_SMALL,
-                    ),
 
-                    Label(
-                      label: "Tải hình ảnh bản cứng (nếu có)",
-                      obligatory: false,
-                      horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
-                      topPadding: (controller.currentIndex == 2)
-                          ? 0
-                          : Dimensions.PADDING_SIZE_DEFAULT,
-                    ),
-
-                    //upload image
-                    ImageListHorizontalAdd(
-                      pickImage: () => controller.pickImages(),
+                  //input
+                  if (controller.currentIndex == 2)
+                    const SizedBox.shrink()
+                  else
+                    InputWidget(
+                      label: "Cập nhập mã số thuế (nếu đã đăng ký)",
                       labelBold: true,
-                      imageFileList:
-                          controller.dangKyThueRequest.hinhAnhs ?? [],
-                      height: .15,
-                      isAddImage: controller.dangKyThueResponse == null,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_LARGE,
-                      ),
+                      width: .9,
+                      height: .06,
+                      isShadow: true,
+                      textEditingController: controller.taxController,
+                      hintText: "Nhập mã số thuế",
+                      allowEdit: controller
+                              .dangKyThueResponse[controller.currentIndex - 1]
+                              .id ==
+                          null,
+                      fillColor: ColorResources.WHITE,
                     ),
 
-                    const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
+                  Label(
+                    label: "Tải hình ảnh bản cứng (nếu có)",
+                    obligatory: false,
+                    horizontalPadding: Dimensions.PADDING_SIZE_LARGE,
+                    topPadding: (controller.currentIndex == 2)
+                        ? 0
+                        : Dimensions.PADDING_SIZE_DEFAULT,
+                  ),
 
-                    if (controller.dangKyThueResponse == null)
-                      BtnCustom(
-                        onTap: () => controller.onBtnDoneClick(),
-                        color: ColorResources.PRIMARY,
-                        text: "Hoàn thành",
-                        width: DeviceUtils.getScaledWidth(context, .9),
-                      ),
-                  ],
-                ),
-              )
-            : const SizedBox.shrink();
+                  //upload image
+                  ImageListHorizontalAdd(
+                    pickImage: () => controller.pickImages(),
+                    labelBold: true,
+                    imageFileList:
+                        controller.hinhAnhs[controller.currentIndex - 1],
+                    height: .15,
+                    isAddImage: controller
+                                .dangKyThueResponse[controller.currentIndex - 1]
+                                .id ==
+                            null ||
+                        (controller.currentIndex == 2 && controller.isUpdate),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_LARGE,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
+
+                  if (controller
+                          .dangKyThueResponse[controller.currentIndex - 1].id ==
+                      null)
+                    BtnCustom(
+                      onTap: () => controller.onBtnDoneClick(),
+                      color: ColorResources.PRIMARY,
+                      text: "Hoàn thành",
+                      width: DeviceUtils.getScaledWidth(context, .9),
+                    ),
+                  if (controller.currentIndex == 2 &&
+                      controller.dangKyThueResponse[1].id != null)
+                    BtnCustom(
+                      onTap: () => controller.onBtnUpdate(),
+                      color: ColorResources.PRIMARY,
+                      text: controller.isUpdate ? "Hoàn thành" : "Chỉnh sửa",
+                      width: DeviceUtils.getScaledWidth(context, .9),
+                    ),
+                ],
+              );
       },
     );
   }

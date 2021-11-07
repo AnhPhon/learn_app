@@ -353,6 +353,7 @@ class V3StoreInfomationController extends GetxController {
         if (groupTinhTpValue == 0) {
           hcmProvince = tinhTpsList
               .firstWhere((element) => element.ten!.contains("TP Hồ Chí Minh"));
+          print(hcmProvince!.ten);
           getQuanHuyen(idTinhTp: hcmProvince!.id!);
         } else if (groupTinhTpValue == 1) {
           haNoiProvince = tinhTpsList
@@ -388,6 +389,7 @@ class V3StoreInfomationController extends GetxController {
     bool? isWarehouse = false,
     int? index = -1,
     int? indexWarehouse = -1,
+    bool? isFirst = false,
   }) {
     quanHuyenProvider.paginate(
       page: 1,
@@ -397,8 +399,6 @@ class V3StoreInfomationController extends GetxController {
         //is not Warehouse
         if (isWarehouse == false) {
           if (groupTinhTpValue != 3) {
-            hcmHuyen = null;
-            hcmPhuong = null;
             quanHuyensList.clear();
             phuongXasList.clear();
             if (value.isNotEmpty) {
@@ -480,7 +480,6 @@ class V3StoreInfomationController extends GetxController {
         //is not Warehouse
         if (isWarehouse == false) {
           if (groupTinhTpValue != 3) {
-            hcmPhuong = null;
             phuongXasList.clear();
             if (value.isNotEmpty) {
               phuongXasList.addAll(value);
@@ -582,6 +581,8 @@ class V3StoreInfomationController extends GetxController {
   /// Thay đổi radio button
   ///
   void onChangedGroup(int val) {
+    taiKhoanResponse.diaDiemCuaHangChinh = "null";
+    otherProvince = null;
     khacHuyen = null;
     khacPhuong = null;
     haNoiHuyen = null;

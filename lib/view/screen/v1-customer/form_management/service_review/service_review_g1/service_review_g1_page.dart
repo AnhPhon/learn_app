@@ -91,7 +91,9 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
       ),
       child: BoxShadowWidget(
         child: Container(
-          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          padding: const EdgeInsets.all(
+            Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -100,36 +102,40 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
                 value: mass.idVatTu!.tenVatTu.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    right: Dimensions.PADDING_SIZE_SMALL,
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
               ),
               OrderContentStringValue(
                 title: "Quy cách: ",
                 value: mass.idVatTu!.quyCach.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    right: Dimensions.PADDING_SIZE_SMALL,
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
               ),
               OrderContentStringValue(
                 title: "Khối lượng: ",
-                value: mass.idVatTu!.donGia.toString(),
+                value: mass.idVatTu!.khoiLuong.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    right: Dimensions.PADDING_SIZE_SMALL,
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
               ),
               OrderContentStringValue(
                 title: "Đơn vị: ",
                 value: mass.idVatTu!.donVi.toString(),
                 boldTitle: true,
                 padding: const EdgeInsets.only(
-                    left: Dimensions.PADDING_SIZE_SMALL,
-                    right: Dimensions.PADDING_SIZE_SMALL,
-                    top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
               ),
             ],
           ),
@@ -155,7 +161,14 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
               ...controller.chiTietVatTuList
                   .map((e) => SizedBox(
                       width: DeviceUtils.getScaledWidth(context, 1),
-                      child: item(mass: e)))
+                      child: Column(
+                        children: [
+                          item(mass: e),
+                          const SizedBox(
+                            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                          ),
+                        ],
+                      )))
                   .toList()
             ],
           );

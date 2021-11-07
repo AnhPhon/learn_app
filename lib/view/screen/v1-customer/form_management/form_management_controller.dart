@@ -81,8 +81,9 @@ class V1FormManagementController extends GetxController {
             if (currentIndex == 0) {
               donDichVuList.removeWhere(
                 (element) =>
-                    element.idTrangThaiDonDichVu!.id == NHOM_DICH_VU_3 ||
-                    element.idTrangThaiDonDichVu!.id == NHOM_DICH_VU_4,
+                    element.idNhomDichVu!.id == NHOM_DICH_VU_3 ||
+                    element.idNhomDichVu!.id == NHOM_DICH_VU_4 ||
+                    element.idNhomDichVu!.id == NHOM_DICH_VU_8,
               );
             }
 

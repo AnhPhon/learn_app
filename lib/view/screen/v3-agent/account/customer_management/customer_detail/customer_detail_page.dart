@@ -138,7 +138,7 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.vatTuList.length,
+                        itemCount: controller.donDichVuList.length,
                         itemBuilder: (BuildContext ctx, int index) {
                           return Padding(
                             padding: const EdgeInsets.only(
@@ -147,21 +147,23 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                               right: Dimensions.PADDING_SIZE_LARGE,
                             ),
                             child: ItemListWidget(
-                              title: controller.vatTuList[index].tenVatTu
+                              title: controller.donDichVuList[index].moTa
                                   .toString(),
                               iconSubTitle: const Icon(
                                 Icons.location_on,
                                 size: Dimensions.ICON_SIZE_SMALL,
                               ),
-                              rowText1: controller.vatTuList[index].donGia !=
+                              rowText1: controller
+                                          .donDichVuList[index].tongDon !=
                                       null
-                                  ? "${PriceConverter.convertPrice(context, double.parse(controller.vatTuList[index].donGia.toString()))} vnđ"
+                                  ? "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuList[index].tongDon.toString()))} vnđ"
                                   : "",
                               colorRowText1: ColorResources.RED,
                               rowText2:
-                                  controller.vatTuList[index].createdAt != null
+                                  controller.donDichVuList[index].createdAt !=
+                                          null
                                       ? DateConverter.formatDateTime(controller
-                                          .vatTuList[index].createdAt
+                                          .donDichVuList[index].createdAt
                                           .toString())
                                       : "",
                               onTap: () {},
