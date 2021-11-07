@@ -8,11 +8,13 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_request.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -38,9 +40,9 @@ class V2QuotationG1Controller extends GetxController {
   DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider =
       GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
 
-  ChiTietVatTuProvider chiTietVatTuProvider =
-      GetIt.I.get<ChiTietVatTuProvider>();
-  List<ChiTietVatTuResponse>? chiTietVatTuResponse;
+  ChiTietCongViecProvider chiTietCongViecProvider =
+      GetIt.I.get<ChiTietCongViecProvider>();
+  List<ChiTietCongViecResponse>? chiTietCongViecResponse;
 
   bool flagSeeMore = false;
 
@@ -53,7 +55,7 @@ class V2QuotationG1Controller extends GetxController {
       idDonDichVu = arguments!['id'] as String;
       danhSachBaoGiaDonDichVuRequest.idDonDichVu = idDonDichVu;
       print('idDonDichVu $idDonDichVu title $title');
-      getListChiTietVatTu();
+      getListChiTietCongViec();
     }
 
     Future.delayed(Duration.zero, () {});
@@ -81,26 +83,26 @@ class V2QuotationG1Controller extends GetxController {
   }
 
   /// Lay danh sach vat tu cua don dich vu
-  void getListChiTietVatTu() {
-    chiTietVatTuProvider.paginate(
+  void getListChiTietCongViec() {
+    chiTietCongViecProvider.paginate(
       page: 1,
       limit: 100,
       filter: '&idDonDichVu=${idDonDichVu.toString()}',
       onSuccess: (data) {
-        chiTietVatTuResponse = data;
-        if (chiTietVatTuResponse != null && chiTietVatTuResponse!.isNotEmpty) {
-          for (var i = 0; i < chiTietVatTuResponse!.length; i++) {
+        chiTietCongViecResponse = data;
+        if (chiTietCongViecResponse != null && chiTietCongViecResponse!.isNotEmpty) {
+          for (var i = 0; i < chiTietCongViecResponse!.length; i++) {
             unitPriceControllers.add(TextEditingController());
             unitPriceControllers[i].addListener(() => calculator());
           }
         }
         print(
-            'V2ShorthandedGroup1Controller getListChiTietVatTu onSuccess ${chiTietVatTuResponse}');
+            'V2ShorthandedGroup1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
         update();
       },
       onError: (error) {
         print(
-            'V2ShorthandedGroup1Controller getListChiTietVatTu onError $error');
+            'V2ShorthandedGroup1Controller getListChiTietCongViec onError $error');
       },
     );
   }
@@ -188,10 +190,10 @@ class V2QuotationG1Controller extends GetxController {
           unitPriceControllers[i].text.isNotEmpty &&
           unitPriceControllers[i].text != 'null') {
         orderValue += int.parse(unitPriceControllers[i].text) *
-            int.parse((chiTietVatTuResponse![i].soLuong != null &&
-                    chiTietVatTuResponse![i].soLuong!.isNotEmpty &&
-                    chiTietVatTuResponse![i].soLuong != 'null')
-                ? chiTietVatTuResponse![i].soLuong.toString()
+            int.parse((chiTietCongViecResponse![i].soLuong != null &&
+                    chiTietCongViecResponse![i].soLuong!.isNotEmpty &&
+                    chiTietCongViecResponse![i].soLuong != 'null')
+                ? chiTietCongViecResponse![i].soLuong.toString()
                 : '0');
       }
     }
@@ -249,7 +251,7 @@ class V2QuotationG1Controller extends GetxController {
     danhSachBaoGiaDonDichVuRequest.giaVatTus = [];
     for (var i = 0; i < unitPriceControllers.length; i++) {
       danhSachBaoGiaDonDichVuRequest.giaVatTus!.add(GiaVatTuRequest.fromJson({
-        'idChiTietVatTu': chiTietVatTuResponse![i].id,
+        'idChiTietCongViec': chiTietCongViecResponse![i].id,
         'donGia': int.parse(unitPriceControllers[i].text),
       }));
       print('Gia vat tu $i ${danhSachBaoGiaDonDichVuRequest.giaVatTus![i].toJson()}');

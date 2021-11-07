@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
@@ -29,9 +31,9 @@ class V2ShorthandedGroup1Controller extends GetxController {
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   List<VatTuResponse>? vatTuResponse;
 
-  ChiTietVatTuProvider chiTietVatTuProvider =
-      GetIt.I.get<ChiTietVatTuProvider>();
-  List<ChiTietVatTuResponse>? chiTietVatTuResponse;
+  ChiTietCongViecProvider chiTietCongViecProvider =
+      GetIt.I.get<ChiTietCongViecProvider>();
+  List<ChiTietCongViecResponse>? chiTietCongViecResponse;
 
   bool flagSeeMore = false;
 
@@ -70,7 +72,7 @@ class V2ShorthandedGroup1Controller extends GetxController {
             'V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.toJson()}');
         // print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.idBangGiaDonHang!.toJson()}');
         update();
-        getListChiTietVatTu();
+        getListChiTietCongViec();
       },
       onError: (error) {
         print(
@@ -80,20 +82,20 @@ class V2ShorthandedGroup1Controller extends GetxController {
   }
 
   /// Lay danh sach vat tu cua don dich vu
-  void getListChiTietVatTu() {
-    chiTietVatTuProvider.paginate(
+  void getListChiTietCongViec() {
+    chiTietCongViecProvider.paginate(
       page: 1,
       limit: 100,
       filter: '&idDonDichVu=${idDonDichVu.toString()}',
       onSuccess: (data) {
-        chiTietVatTuResponse = data;
+        chiTietCongViecResponse = data;
         print(
-            'V2ShorthandedGroup1Controller getListChiTietVatTu onSuccess ${chiTietVatTuResponse}');
+            'V2ShorthandedGroup1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
         update();
       },
       onError: (error) {
         print(
-            'V2ShorthandedGroup1Controller getListChiTietVatTu onError $error');
+            'V2ShorthandedGroup1Controller getListChiTietCongViec onError $error');
       },
     );
   }

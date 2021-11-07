@@ -94,8 +94,9 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                       ),
                       child: BoxShadowWidget(
                         child: Column(
-                          children: (controller.chiTietVatTuResponse == null ||
-                                  controller.chiTietVatTuResponse!.isEmpty)
+                          children: (controller.chiTietCongViecResponse ==
+                                      null ||
+                                  controller.chiTietCongViecResponse!.isEmpty)
                               ? []
                               : [
                                   const SizedBox(
@@ -103,26 +104,26 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                                   ),
                                   _rowtext(
                                     text1: "Tên công việc:",
-                                    text2: controller.chiTietVatTuResponse![0]
-                                        .idVatTu!.tenVatTu
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].tenCongViec
                                         .toString(),
                                   ),
                                   _rowtext(
                                     text1: "Quy cách:",
-                                    text2: controller.chiTietVatTuResponse![0]
-                                        .idVatTu!.quyCach
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].quyCach
                                         .toString(),
                                   ),
                                   _rowtext(
                                     text1: "Khối lượng:",
-                                    text2: controller.chiTietVatTuResponse![0]
-                                        .idVatTu!.khoiLuong
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].soLuong
                                         .toString(),
                                   ),
                                   _rowtext(
                                     text1: "Đơn vị",
                                     text2: controller
-                                        .chiTietVatTuResponse![0].idVatTu!.donVi
+                                        .chiTietCongViecResponse![0].donVi
                                         .toString(),
                                   ),
                                   const SizedBox(
@@ -216,10 +217,10 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
         ),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: (controller.chiTietVatTuResponse == null ||
-                controller.chiTietVatTuResponse!.isEmpty)
+        itemCount: (controller.chiTietCongViecResponse == null ||
+                controller.chiTietCongViecResponse!.isEmpty)
             ? 0
-            : controller.chiTietVatTuResponse!.length,
+            : controller.chiTietCongViecResponse!.length,
         itemBuilder: (BuildContext ctx, int index) {
           return Container(
             margin: const EdgeInsets.only(
@@ -235,25 +236,25 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                   _rowtext(
                     text1: "Tên công việc:",
                     text2: controller
-                        .chiTietVatTuResponse![index].idVatTu!.tenVatTu
+                        .chiTietCongViecResponse![index].tenCongViec
                         .toString(),
                   ),
                   _rowtext(
                     text1: "Quy cách:",
                     text2: controller
-                        .chiTietVatTuResponse![index].idVatTu!.quyCach
+                        .chiTietCongViecResponse![index].quyCach
                         .toString(),
                   ),
                   _rowtext(
                     text1: "Khối lượng:",
                     text2: controller
-                        .chiTietVatTuResponse![index].idVatTu!.khoiLuong
+                        .chiTietCongViecResponse![index].soLuong
                         .toString(),
                   ),
                   _rowtext(
                     text1: "Đơn vị",
                     text2: controller
-                        .chiTietVatTuResponse![index].idVatTu!.donVi
+                        .chiTietCongViecResponse![index].donVi
                         .toString(),
                   ),
                   const SizedBox(
