@@ -10,6 +10,7 @@ import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -22,7 +23,7 @@ import 'package:template/utils/color_resources.dart';
 class V1OrderFeedBackController extends GetxController{
   final VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-  final ChiTietVatTuProvider chiTietVatTuProvider = GetIt.I.get<ChiTietVatTuProvider>();
+  final ChiTietCongViecProvider chiTietCongViecProvider = GetIt.I.get<ChiTietCongViecProvider>();
   final DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider = GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
   
   DonDichVuResponse? donDichVu;
@@ -59,33 +60,10 @@ class V1OrderFeedBackController extends GetxController{
     danhSachBaoGiaDonDichVuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (donBaoGia){
        if(donBaoGia.isNotEmpty){
           donPhanHoi = donBaoGia.first;
-          for(int i=0; i<donPhanHoi!.giaVatTus!.length; i++ ){
-            chiTietVatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
-              if(data.isNotEmpty){
-                donPhanHoi!.giaVatTus![i].idChiTietVatTu = data.first;
-              }
-              if(i == donPhanHoi!.giaVatTus!.length - 1){
-                isLoading = false;
-                update();
-              }
-            }, onError: (error){
-              print("getJobMass $error");
-            }
-          );
-
-          if(donPhanHoi!.giaVatTus!.isEmpty){
-            isLoading = false;
-            update();
-          }
-          
-        }
        }
+       isLoading = false;
+       update();
        
-       
-       if(donBaoGia.isEmpty){
-           isLoading = false;
-           update();
-       }
      
     }, onError: (onError){
       print("V1OrderFeedBackController getJobMass onError $onError");

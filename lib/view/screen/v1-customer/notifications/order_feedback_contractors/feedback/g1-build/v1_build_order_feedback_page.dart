@@ -173,7 +173,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
 
   Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return controller.donPhanHoi == null ?  const SizedBox.shrink() : controller.donPhanHoi!.giaVatTus!.isEmpty  ? const SizedBox.shrink() : Padding(
+    return controller.donPhanHoi == null ?  const SizedBox.shrink() : controller.donPhanHoi!.giaCongViecs!.isEmpty  ? const SizedBox.shrink() : Padding(
       padding: const EdgeInsets.only(
         left:Dimensions.PADDING_SIZE_DEFAULT,
         right:Dimensions.PADDING_SIZE_DEFAULT,
@@ -192,7 +192,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.donPhanHoi!.giaVatTus!.length,
+                  controller.donPhanHoi!.giaCongViecs!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -214,25 +214,25 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                          controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.tenVatTu ?? '',
+                                      content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                          controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.tenCongViec ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.quyCach ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.soLuong ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                           controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.donVi ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                           controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.donVi ?? ''),
                                     TextHighlight(
                                       title:"Đơn giá:" ,
                                       content: controller.donPhanHoi == null ? '':
-                                      '${controller.donPhanHoi!.giaVatTus![index].donGia ?? ''}VNĐ' , 
+                                      '${controller.donPhanHoi!.giaCongViecs![index].donGia ?? ''}VNĐ' , 
                                       style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE

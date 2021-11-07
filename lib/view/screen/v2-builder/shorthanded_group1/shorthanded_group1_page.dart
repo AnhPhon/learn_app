@@ -23,82 +23,124 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
               child: Column(
                 children: [
                   //title
-                  ContentWidget(label: controller.donDichVuResponse == null ? '' : controller.donDichVuResponse!.idNhomDichVu!.tenDichVu!.toString(), center: true),
+                  ContentWidget(
+                      label: controller.donDichVuResponse == null
+                          ? ''
+                          : controller
+                              .donDichVuResponse!.idNhomDichVu!.tenDichVu!
+                              .toString(),
+                      center: true),
 
                   //job label
                   ContentWidget(
                     label: "Tiêu đề công việc: ",
-                    content: controller.donDichVuResponse == null ? '' : controller.donDichVuResponse!.tieuDe.toString(),
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.tieuDe.toString(),
                   ),
 
                   //job detail
                   ContentWidget(
                     label: "Mô tả công việc: ",
-                    content: controller.donDichVuResponse == null ? '' : controller.donDichVuResponse!.moTa.toString(),
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.moTa.toString(),
                   ),
 
                   //working address
                   ContentWidget(
                     label: "Địa điểm làm việc: ",
-                    content: controller.donDichVuResponse == null ? '' : controller.donDichVuResponse!.diaDiemLamViec.toString(),
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.diaDiemLamViec
+                            .toString(),
                   ),
 
                   //start
                   ContentWidget(
                     label: "Thời gian bắt đầu dự kiến: ",
-                    content: controller.donDichVuResponse == null ? '' : controller.getDateOutput(controller.donDichVuResponse!.ngayBatDau.toString()),
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.getDateOutput(controller
+                            .donDichVuResponse!.ngayBatDau
+                            .toString()),
                   ),
 
                   //end
                   ContentWidget(
                     label: "Thời gian kết thúc dự kiến: ",
-                    content: controller.donDichVuResponse == null ? '' : controller.getDateOutput(controller.donDichVuResponse!.ngayKetThuc.toString()),
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.getDateOutput(controller
+                            .donDichVuResponse!.ngayKetThuc
+                            .toString()),
                   ),
 
                   //table label
                   const ContentWidget(
-                    label: "Bảng khối lượng công việc cần báo giá\n(Chỉ báo giá phần nhân công) ",
+                    label:
+                        "Bảng khối lượng công việc cần báo giá\n(Chỉ báo giá phần nhân công) ",
                     center: true,
                     centerLabel: true,
                   ),
 
                   //table
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-                    child: BoxShadowWidget(
-                      child: controller.flagSeeMore == false
-                          ? Column(
-                              children: (controller.vatTuResponse == null || controller.vatTuResponse!.isEmpty) ? [] : [
-                                const SizedBox(
-                                  height: Dimensions.MARGIN_SIZE_DEFAULT,
-                                ),
-                                _rowtext(
-                                  text1: "Tên công việc:",
-                                  text2: controller.vatTuResponse![0].tenVatTu.toString(),
-                                ),
-                                _rowtext(
-                                  text1: "Quy cách:",
-                                  text2: controller.vatTuResponse![0].quyCach.toString(),
-                                ),
-                                _rowtext(
-                                  text1: "Khối lượng:",
-                                  text2: controller.vatTuResponse![0].khoiLuong.toString(),
-                                ),
-                                _rowtext(
-                                  text1: "Đơn vị",
-                                  text2: controller.vatTuResponse![0].donVi.toString(),
-                                ),
-                                const SizedBox(
-                                  height: Dimensions.MARGIN_SIZE_DEFAULT,
-                                ),
-                              ],
-                            )
-                          : buildListViewVatTu(controller),
-                    ),
-                  ),
+                  if (controller.flagSeeMore == false)
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: Dimensions.PADDING_SIZE_DEFAULT,
+                        right: Dimensions.PADDING_SIZE_DEFAULT,
+                        // right: Dimensions.PADDING_SIZE_SMALL,
+                      ),
+                      child: BoxShadowWidget(
+                        child: Column(
+                          children: (controller.chiTietCongViecResponse ==
+                                      null ||
+                                  controller.chiTietCongViecResponse!.isEmpty)
+                              ? []
+                              : [
+                                  const SizedBox(
+                                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                                  ),
+                                  _rowtext(
+                                    text1: "Tên công việc:",
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].tenCongViec
+                                        .toString(),
+                                  ),
+                                  _rowtext(
+                                    text1: "Quy cách:",
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].quyCach
+                                        .toString(),
+                                  ),
+                                  _rowtext(
+                                    text1: "Khối lượng:",
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].soLuong
+                                        .toString(),
+                                  ),
+                                  _rowtext(
+                                    text1: "Đơn vị",
+                                    text2: controller
+                                        .chiTietCongViecResponse![0].donVi
+                                        .toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                                  ),
+                                ],
+                        ),
+                      ),
+                    )
+                  else
+                    buildListViewVatTu(controller),
 
                   //show more
-                  _showMore(),
+                  if (controller.flagSeeMore == false)
+                    _showMore()
+                  else
+                    SizedBox(),
 
                   //table label
                   const ContentWidget(
@@ -108,7 +150,7 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
                   ),
                   //file
                   //item list
-                  buildListViewVatTu(controller),
+                  // buildListViewVatTu(controller),
 
                   const SizedBox(
                     height: Dimensions.MARGIN_SIZE_DEFAULT,
@@ -116,14 +158,22 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
 
                   //image
                   ImageListHorizontal(
-                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhBanKhoiLuongs == null ? [] : controller.donDichVuResponse!.hinhAnhBanKhoiLuongs!,
+                    imageList: controller.donDichVuResponse == null ||
+                            controller
+                                    .donDichVuResponse!.hinhAnhBanKhoiLuongs ==
+                                null
+                        ? []
+                        : controller.donDichVuResponse!.hinhAnhBanKhoiLuongs!,
                     label: "Hình ảnh bảng khối lượng",
                     labelBold: true,
                   ),
 
                   //image
                   ImageListHorizontal(
-                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhBanVes == null ? [] : controller.donDichVuResponse!.hinhAnhBanVes!,
+                    imageList: controller.donDichVuResponse == null ||
+                            controller.donDichVuResponse!.hinhAnhBanVes == null
+                        ? []
+                        : controller.donDichVuResponse!.hinhAnhBanVes!,
                     label: "Hình ảnh bảng vẽ",
                     labelBold: true,
                   ),
@@ -161,45 +211,57 @@ class V2ShorthandedGroup1Page extends GetView<V2ShorthandedGroup1Controller> {
   ListView buildListViewVatTu(V2ShorthandedGroup1Controller controller) {
     return ListView.builder(
         padding: const EdgeInsets.only(
-          top: Dimensions.PADDING_SIZE_SMALL,
-          left: Dimensions.PADDING_SIZE_SMALL,
-          right: Dimensions.PADDING_SIZE_SMALL,
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: (controller.vatTuResponse == null || controller.vatTuResponse!.isEmpty) ? 0 : controller.vatTuResponse!.length,
+        itemCount: (controller.chiTietCongViecResponse == null ||
+                controller.chiTietCongViecResponse!.isEmpty)
+            ? 0
+            : controller.chiTietCongViecResponse!.length,
         itemBuilder: (BuildContext ctx, int index) {
           return Container(
             margin: const EdgeInsets.only(
-              top: Dimensions.PADDING_SIZE_SMALL,
-              bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+              top: Dimensions.PADDING_SIZE_DEFAULT,
               // right: Dimensions.PADDING_SIZE_SMALL,
             ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_DEFAULT,
-                ),
-                _rowtext(
-                  text1: "Tên công việc:",
-                  text2: controller.vatTuResponse![index].tenVatTu.toString(),
-                ),
-                _rowtext(
-                  text1: "Quy cách:",
-                  text2: controller.vatTuResponse![index].quyCach.toString(),
-                ),
-                _rowtext(
-                  text1: "Khối lượng:",
-                  text2: controller.vatTuResponse![index].khoiLuong.toString(),
-                ),
-                _rowtext(
-                  text1: "Đơn vị",
-                  text2: controller.vatTuResponse![index].donVi.toString(),
-                ),
-                const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_DEFAULT,
-                ),
-              ],
+            child: BoxShadowWidget(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                  _rowtext(
+                    text1: "Tên công việc:",
+                    text2: controller
+                        .chiTietCongViecResponse![index].tenCongViec
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Quy cách:",
+                    text2: controller
+                        .chiTietCongViecResponse![index].quyCach
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Khối lượng:",
+                    text2: controller
+                        .chiTietCongViecResponse![index].soLuong
+                        .toString(),
+                  ),
+                  _rowtext(
+                    text1: "Đơn vị",
+                    text2: controller
+                        .chiTietCongViecResponse![index].donVi
+                        .toString(),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                ],
+              ),
             ),
           );
         });

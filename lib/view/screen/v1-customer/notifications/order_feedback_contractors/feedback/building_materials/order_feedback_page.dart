@@ -180,7 +180,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: controller.donPhanHoi!.giaVatTus!.isEmpty  ? []: [
+        children: controller.donPhanHoi!.giaCongViecs!.isEmpty  ? []: [
           const Text(
             "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
@@ -191,7 +191,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.donPhanHoi!.giaVatTus!.length,
+                  controller.donPhanHoi!.giaCongViecs!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -213,25 +213,25 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                          controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.tenVatTu ?? '',
+                                      content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                          controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.tenCongViec ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.quyCach ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.soLuong ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
-                                           controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.donVi ?? ''),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                           controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.donVi ?? ''),
                                     TextHighlight(
                                       title:"Đơn giá:" ,
                                       content: controller.donPhanHoi == null ? '':
-                                      '${controller.donPhanHoi!.giaVatTus![index].donGia ?? ''}VNĐ' , 
+                                      '${controller.donPhanHoi!.giaCongViecs![index].donGia ?? ''}VNĐ' , 
                                       style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE

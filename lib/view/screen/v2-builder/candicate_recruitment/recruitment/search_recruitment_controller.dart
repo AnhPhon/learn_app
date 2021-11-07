@@ -77,7 +77,7 @@ class V2SearchRecruitmentController extends GetxController {
 
   //set default giới tính
   List<GioiTinhModel> gioiTinhModel = [
-    GioiTinhModel(key: '0', value: 'Giới tính'),
+    GioiTinhModel(key: '0', value: 'Tất cả'),
     GioiTinhModel(key: '1', value: 'Nam'),
     GioiTinhModel(key: '2', value: 'Nữ'),
   ];
@@ -110,7 +110,7 @@ class V2SearchRecruitmentController extends GetxController {
     getDataSoNamKinhNghiem();
     getDataMucLuongDuKien();
     getDataTinhTp();
-    gioiTinh = gioiTinhModel.first;
+    //gioiTinh = gioiTinhModel.first;
     onLoadDataTuyenDung(isRefresh: true);
   }
 
@@ -178,8 +178,8 @@ class V2SearchRecruitmentController extends GetxController {
           hinhThucLamViecListModel = value;
           //set id 0
           hinhThucLamViecListModel.insert(
-              0, HinhThucLamViecResponse(id: '0', tieuDe: 'Hình thức'));
-          hinhThucLamViec = hinhThucLamViecListModel.first;
+              0, HinhThucLamViecResponse(id: '0', tieuDe: 'Tất cả'));
+          //hinhThucLamViec = hinhThucLamViecListModel.first;
           isLoading = false;
           update();
         },
@@ -198,8 +198,8 @@ class V2SearchRecruitmentController extends GetxController {
           trinhDoHocVanListModel = value;
           //set id 0
           trinhDoHocVanListModel.insert(
-              0, TrinhDoHocVanResponse(id: '0', tieuDe: 'Trình độ'));
-          trinhDoHocVan = trinhDoHocVanListModel.first;
+              0, TrinhDoHocVanResponse(id: '0', tieuDe: 'Tất cả'));
+          //trinhDoHocVan = trinhDoHocVanListModel.first;
           isLoading = false;
           update();
         },
@@ -218,8 +218,8 @@ class V2SearchRecruitmentController extends GetxController {
           chuyenNganhChinhListModel = value;
           //set id 0
           chuyenNganhChinhListModel.insert(
-              0, ChuyenNganhChinhResponse(id: '0', tieuDe: 'Chuyên ngành'));
-          chuyenNganhChinh = chuyenNganhChinhListModel.first;
+              0, ChuyenNganhChinhResponse(id: '0', tieuDe: 'Tất cả'));
+          //chuyenNganhChinh = chuyenNganhChinhListModel.first;
           isLoading = false;
           update();
         },
@@ -238,8 +238,8 @@ class V2SearchRecruitmentController extends GetxController {
           soNamKinhNghiemListModel = value;
           //set id 0
           soNamKinhNghiemListModel.insert(
-              0, SoNamKinhNghiemResponse(id: '0', tieuDe: 'Kinh nghiệm'));
-          soNamKinhNghiem = soNamKinhNghiemListModel.first;
+              0, SoNamKinhNghiemResponse(id: '0', tieuDe: 'Tất cả'));
+          //soNamKinhNghiem = soNamKinhNghiemListModel.first;
           isLoading = false;
           update();
         },
@@ -258,8 +258,8 @@ class V2SearchRecruitmentController extends GetxController {
           mucLuongDuKienListModel = value;
           //set id 0
           mucLuongDuKienListModel.insert(
-              0, MucLuongDuKienResponse(id: '0', tieuDe: 'Mức lương'));
-          mucLuongDuKien = mucLuongDuKienListModel.first;
+              0, MucLuongDuKienResponse(id: '0', tieuDe: 'Tất cả'));
+          //mucLuongDuKien = mucLuongDuKienListModel.first;
           isLoading = false;
           update();
         },
@@ -277,8 +277,8 @@ class V2SearchRecruitmentController extends GetxController {
           //add list
           tinhTpListModel = value;
           //set id 0
-          tinhTpListModel.insert(0, TinhTpResponse(id: '0', ten: 'Tỉnh/Tp'));
-          noiLamViec = tinhTpListModel.first;
+          tinhTpListModel.insert(0, TinhTpResponse(id: '0', ten: 'Toàn quốc'));
+          //noiLamViec = tinhTpListModel.first;
           isLoading = false;
           update();
         },
@@ -297,12 +297,12 @@ class V2SearchRecruitmentController extends GetxController {
     onSearch(
       term: term,
       idHinhThucLamViec: item.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -317,13 +317,13 @@ class V2SearchRecruitmentController extends GetxController {
     isLoading = true;
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: item.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' : hinhThucLamViec!.id!,
+      idTrinhDoHocVan: item == null ? '' : item.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -338,13 +338,13 @@ class V2SearchRecruitmentController extends GetxController {
     isLoading = true;
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' : hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -359,13 +359,13 @@ class V2SearchRecruitmentController extends GetxController {
     isLoading = true;
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' : hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -381,13 +381,13 @@ class V2SearchRecruitmentController extends GetxController {
 
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' : hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -402,13 +402,13 @@ class V2SearchRecruitmentController extends GetxController {
     isLoading = true;
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' : hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -423,13 +423,13 @@ class V2SearchRecruitmentController extends GetxController {
     isLoading = true;
     onSearch(
       term: term,
-      idHinhThucLamViec: hinhThucLamViec!.id!,
-      idTrinhDoHocVan: trinhDoHocVan!.id!,
-      idChuyenNganhChinh: chuyenNganhChinh!.id!,
-      idGioiTinh: gioiTinh!.key!,
-      idMucLuongDuKien: mucLuongDuKien!.id!,
-      idNoiLamViec: noiLamViec!.id!,
-      idSoNamKinhNghiem: soNamKinhNghiem!.id!,
+      idHinhThucLamViec: hinhThucLamViec == null ? '' :hinhThucLamViec!.id!,
+      idTrinhDoHocVan: trinhDoHocVan == null ? '' : trinhDoHocVan!.id!,
+      idChuyenNganhChinh: chuyenNganhChinh == null ? '' : chuyenNganhChinh!.id!,
+      idGioiTinh: gioiTinh == null ? '' : gioiTinh!.key!,
+      idMucLuongDuKien: mucLuongDuKien == null ? '' : mucLuongDuKien!.id!,
+      idNoiLamViec: noiLamViec == null ? '' : noiLamViec!.id!,
+      idSoNamKinhNghiem: soNamKinhNghiem == null ? '' : soNamKinhNghiem!.id!,
       termCompany: termCompany,
       isRefresh: true,
     );
@@ -468,7 +468,7 @@ class V2SearchRecruitmentController extends GetxController {
       condition = '$condition&idMucLuongDuKien=$idMucLuongDuKien';
     }
     if (idNoiLamViec.isNotEmpty && idNoiLamViec != '0') {
-      condition = '$condition&noiLamViec=$idNoiLamViec';
+      condition = '$condition&idNoiLamViec=$idNoiLamViec';
     }
     if (idGioiTinh.isNotEmpty && idGioiTinh != '0') {
       condition = '$condition&gioiTinh=$idGioiTinh';
@@ -608,7 +608,7 @@ class V2SearchRecruitmentController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.noiLamViec.toString()),
+      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.idNoiLamViec.toString()),
       "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendung.thoiGianThuViec,
       "MoTaCongViec": tuyendung.moTaCongViec,

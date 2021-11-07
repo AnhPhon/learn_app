@@ -276,6 +276,7 @@ class AppRoutes {
 
   static const String V4_NOTIFICATION = '/v4_notification';
   static const String V4_DETAIL_NOTIFICATION = '/v4_detail_notification';
+  static const String V4_DETAIL_REPORT = '/v4_detail_report';
 
   //builder
 
