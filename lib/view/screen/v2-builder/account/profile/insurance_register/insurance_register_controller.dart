@@ -96,13 +96,8 @@ class V2InsuranceRegisterController extends GetxController {
             dangKyBaoHiemResponse = dangKyBaoHiemResponse.toList() + value;
             refreshController.loadComplete();
           }
-          dangKyBaoHiemResponse.map(
-            (e) {
-              if (e.idBaoHiem!.loai != "1") {
-                dangKyBaoHiemResponse.remove(e);
-              }
-            },
-          );
+          dangKyBaoHiemResponse
+              .removeWhere((element) => element.idBaoHiem!.loai != "1");
         }
 
         isLoading = false;

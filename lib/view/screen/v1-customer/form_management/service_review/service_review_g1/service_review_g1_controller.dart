@@ -28,7 +28,6 @@ class V1ServiceReviewG1Controller extends GetxController {
     super.onInit();
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
-      print(donDichVuResponse.toJson());
     }
     getListChiTietVatTu();
   }
@@ -42,6 +41,7 @@ class V1ServiceReviewG1Controller extends GetxController {
       limit: 100,
       filter: "&idDonDichVu=${donDichVuResponse.id}",
       onSuccess: (data) {
+        print(data.length);
         chiTietVatTuList = data;
         isLoading = false;
         update();
@@ -56,7 +56,6 @@ class V1ServiceReviewG1Controller extends GetxController {
   ///download file
   ///
   Future<void> downloadFile({required String url}) async {
-    print(url);
     if (await canLaunch(url)) {
       await launch(url);
     } else {
