@@ -7,9 +7,11 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
+import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/routes/app_routes.dart';
@@ -21,10 +23,15 @@ class V1OrderFeedBackController extends GetxController{
   final VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   final ChiTietVatTuProvider chiTietVatTuProvider = GetIt.I.get<ChiTietVatTuProvider>();
+  final DanhSachBaoGiaDonDichVuProvider danhSachBaoGiaDonDichVuProvider = GetIt.I.get<DanhSachBaoGiaDonDichVuProvider>();
+  
   DonDichVuResponse? donDichVu;
 
   // Khối lương công việc
-  List<ChiTietVatTuResponse> workMass = [];
+  DanhSachBaoGiaDonDichVuResponse? donPhanHoi;
+
+  // Khối lương công việc
+  //List<ChiTietVatTuResponse> workMass = [];
   bool isLoading = true;
   double soTien = 0;
   double phiDichVu = 0;
@@ -49,16 +56,50 @@ class V1OrderFeedBackController extends GetxController{
   /// Lấy báo giá công việc or vâtk liệu thuộc đơn dịch vụ
   ///
   void getJobMass(){
-    chiTietVatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
-      workMass.clear();
-      workMass.addAll(data);
-      isLoading = false;
-      update();
+    danhSachBaoGiaDonDichVuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (donBaoGia){
+       if(donBaoGia.isNotEmpty){
+          donPhanHoi = donBaoGia.first;
+          for(int i=0; i<donPhanHoi!.giaVatTus!.length; i++ ){
+            chiTietVatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
+              if(data.isNotEmpty){
+                donPhanHoi!.giaVatTus![i].idChiTietVatTu = data.first;
+              }
+              if(i == donPhanHoi!.giaVatTus!.length - 1){
+                isLoading = false;
+                update();
+              }
+            }, onError: (error){
+              print("getJobMass $error");
+            }
+          );
+
+          if(donPhanHoi!.giaVatTus!.isEmpty){
+            isLoading = false;
+            update();
+          }
+          
+        }
+       }
+       
+       
+       if(donBaoGia.isEmpty){
+           isLoading = false;
+           update();
+       }
+     
     }, onError: (onError){
-      isLoading = false;
-      update();
       print("V1OrderFeedBackController getJobMass onError $onError");
     });
+    // chiTietVatTuProvider.paginate(page: 1, limit: 100, filter: '&idDonDichVu=${donDichVu!.id!}', onSuccess: (data){
+    //   workMass.clear();
+    //   workMass.addAll(data);
+    //   isLoading = false;
+    //   update();
+    // }, onError: (onError){
+    //   isLoading = false;
+    //   update();
+    //   print("V1OrderFeedBackController getJobMass onError $onError");
+    // });
   }
 
   void onClickAgreeButton(){

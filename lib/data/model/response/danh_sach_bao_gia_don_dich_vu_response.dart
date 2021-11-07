@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+
 import 'don_dich_vu_response.dart';
 
 class DanhSachBaoGiaDonDichVuResponse {
   String? id;
   DonDichVuResponse? idDonDichVu;
   String? taiKhoanBaoGia;
+  String? tongTien;
+  List<GiaVatTus>? giaVatTus;
   String? giaBao;
   String? ghiChu;
   String? file;
@@ -13,27 +19,37 @@ class DanhSachBaoGiaDonDichVuResponse {
   String? updatedAt;
 
   DanhSachBaoGiaDonDichVuResponse({
-      this.id,
-      this.idDonDichVu,
-      this.taiKhoanBaoGia,
-      this.giaBao,
-      this.ghiChu,
-      this.file,
-      this.daXem,
-      this.createdAt,
-      this.updatedAt});
+    this.id,
+    this.idDonDichVu,
+    this.taiKhoanBaoGia,
+    this.tongTien,
+    this.giaVatTus = const [],
+    this.giaBao,
+    this.ghiChu,
+    this.file,
+    this.daXem,
+    this.createdAt,
+    this.updatedAt
+  });
   
   ///
   /// From JSON
   ///
   DanhSachBaoGiaDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    tongTien = (json['tongTien'] == null) ? null : json['tongTien'].toString();
 
     // mapping idDonDichVu                                                              
     if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {                                                  
       idDonDichVu = DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
     } else {                                                                           
       idDonDichVu = null;                                                               
+    }                                                                                  
+    // mapping idDonDichVu                                                              
+    if (json['giaVatTus'] != null && json['giaVatTus'].toString().length!=24) {                                                  
+      giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList(); 
+    } else {                                                                           
+      giaVatTus = null;                                                               
     }                                                                                  
     taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
     giaBao = json['giaBao'].toString();
@@ -74,4 +90,37 @@ class DanhSachBaoGiaDonDichVuResponse {
 
     return data;
   }
+}
+
+
+class GiaVatTus {
+  String? id;
+  ChiTietVatTuResponse? idChiTietVatTu;
+  String? donGia;
+  GiaVatTus({
+    this.id,
+    this.idChiTietVatTu,
+    this.donGia,
+  });
+  
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'idChiTietVatTu': idChiTietVatTu,
+      'donGia': donGia,
+    };
+  }
+
+  factory GiaVatTus.fromMap(Map<String, dynamic> map) {
+    return GiaVatTus(
+      id: map['id'] != null ? map['id'] as String : null,
+      idChiTietVatTu: map['idChiTietVatTu'] != null ? ChiTietVatTuResponse.fromJson(map['idChiTietVatTu'] as Map<String, dynamic>) : null,
+      donGia: map['donGia'] != null ? (map['donGia'] as int).toString(): null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory GiaVatTus.fromJson(String source) => GiaVatTus.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -132,9 +132,6 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    controller.donDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
-      print("Hình ảnh $element");
-    });
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -176,7 +173,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
 
   Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
+    return controller.donPhanHoi == null ?  const SizedBox.shrink() : controller.donPhanHoi!.giaVatTus!.isEmpty  ? const SizedBox.shrink() : Padding(
       padding: const EdgeInsets.only(
         left:Dimensions.PADDING_SIZE_DEFAULT,
         right:Dimensions.PADDING_SIZE_DEFAULT,
@@ -195,7 +192,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.workMass.length,
+                  controller.donPhanHoi!.giaVatTus!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -217,24 +214,25 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content: controller.workMass[index].idVatTu == null ? '': 
-                                          controller.workMass[index].idVatTu!.tenVatTu ?? '',
+                                      content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                          controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.tenVatTu ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content: controller.workMass[index].idVatTu == null ? '': 
-                                            controller.workMass[index].idVatTu!.quyCach ?? ''),
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content: controller.workMass[index].idVatTu == null ? '': 
-                                            controller.workMass[index].soLuong ?? ''),
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content: controller.workMass[index].idVatTu == null ? '': 
-                                            controller.workMass[index].idVatTu!.donVi ?? ''),
-                                    TextHighlight(title:"Đơn giá:" ,
-                                      content: controller.workMass[index].idVatTu == null ? '': 
-                                      '${controller.workMass[index].idVatTu!.donGia ?? ''} VNĐ' , 
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                           controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.donVi ?? ''),
+                                    TextHighlight(
+                                      title:"Đơn giá:" ,
+                                      content: controller.donPhanHoi == null ? '':
+                                      '${controller.donPhanHoi!.giaVatTus![index].donGia ?? ''}VNĐ' , 
                                       style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE

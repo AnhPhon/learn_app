@@ -180,7 +180,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: controller.workMass.isEmpty  ? []: [
+        children: controller.donPhanHoi!.giaVatTus!.isEmpty  ? []: [
           const Text(
             "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
@@ -191,7 +191,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.workMass.length,
+                  controller.donPhanHoi!.giaVatTus!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -213,25 +213,25 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:controller.workMass[index].idVatTu == null ? '':
-                                          controller.workMass[index].idVatTu!.tenVatTu ?? '',
+                                      content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                          controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.tenVatTu ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:controller.workMass[index].idVatTu == null ? '':
-                                            controller.workMass[index].idVatTu!.quyCach ?? ''),
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:controller.workMass[index].idVatTu == null ? '':
-                                            controller.workMass[index].soLuong ?? ''),
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                            controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:controller.workMass[index].idVatTu == null ? '':
-                                            controller.workMass[index].idVatTu!.donVi ?? ''),
+                                        content:controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu == null ? '':
+                                           controller.donPhanHoi!.giaVatTus![index].idChiTietVatTu!.idVatTu!.donVi ?? ''),
                                     TextHighlight(
                                       title:"Đơn giá:" ,
-                                      content: controller.workMass[index].idVatTu == null ? '':
-                                      '${controller.workMass[index].idVatTu!.donGia ?? ''}VNĐ' , 
+                                      content: controller.donPhanHoi == null ? '':
+                                      '${controller.donPhanHoi!.giaVatTus![index].donGia ?? ''}VNĐ' , 
                                       style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE

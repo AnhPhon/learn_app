@@ -260,11 +260,16 @@ class DonDichVuResponse {
     gioiTinh = json['gioiTinh'].toString();
 
     // mapping idThongSoKyThuats
-    if (json['idThongSoKyThuats'] != null &&
+    if (json['idThongSoKyThuats'] != null && (json['idThongSoKyThuats'] as List<dynamic>).isNotEmpty &&
         json['idThongSoKyThuats'].toString().length != 24) {
       idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
           .map(
-              (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
+              (e){
+                if(e.length != 24){
+                  return ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>);
+                }
+                return ThongSoKyThuatResponse();
+              })
           .toList();
     } else {
       idThongSoKyThuats = [];
