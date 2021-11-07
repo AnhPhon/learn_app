@@ -21,9 +21,11 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
         init: V1CandidateController(),
         builder: (V1CandidateController controller) {
           return Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                vertical: Dimensions.PADDING_SIZE_SMALL),
+            padding: const EdgeInsets.only(
+              left: Dimensions.PADDING_SIZE_DEFAULT,
+              right: Dimensions.PADDING_SIZE_DEFAULT,
+              bottom: Dimensions.PADDING_SIZE_SMALL,
+            ),
             child: BoxShadowWidget(
               child: SizedBox(
                 height: Dimensions.AVATAR_SQUARE_SIZE_DEFAULT,
@@ -46,13 +48,14 @@ class RecruimentNewsCard extends GetView<V1CandidateController> {
                                   urlImage: tuyenDungResponse.hinhAnhDaiDien
                                       .toString(),
                                 )),
-                            Text(
-                              '${controller.onChangeNameTinhTp(tuyenDungResponse.noiLamViec.toString())}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                                  shadows: boxShadowText),
-                            )
+                            if (tuyenDungResponse.idNoiLamViec!.id != null)
+                              Text(
+                                '${tuyenDungResponse.idNoiLamViec!.ten}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                                    shadows: boxShadowText),
+                              )
                           ],
                         ),
                       ),

@@ -118,7 +118,12 @@ class V2RecruitmentController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
-    return tinhTpListModel.firstWhere((element) => element.id == id).ten;
+    final tinh =
+        tinhTpListModel.firstWhereOrNull((element) => element.id == id);
+    if (tinh != null) {
+      return tinh.ten;
+    }
+    return null;
   }
 
   ///
@@ -207,7 +212,7 @@ class V2RecruitmentController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.noiLamViec.toString()),
+      "TenNoiLamViec": tuyendung.idNoiLamViec!.ten,
       "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendung.thoiGianThuViec,
       "MoTaCongViec": tuyendung.moTaCongViec,
@@ -253,5 +258,14 @@ class V2RecruitmentController extends GetxController {
       return '${text.substring(0, 10)}...';
     }
     return text;
+  }
+}
+
+extension IterableExtension<T> on Iterable<T> {
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
   }
 }

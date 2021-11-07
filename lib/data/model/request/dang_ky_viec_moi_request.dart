@@ -26,6 +26,7 @@ class DangKyViecMoiRequest {
   String? idNgoaiNgu;
   String? idTinHoc;
   String? idHinhThucLamViec;
+  String? idNhomDichVu;
 
   DangKyViecMoiRequest(
       {this.id,
@@ -54,7 +55,8 @@ class DangKyViecMoiRequest {
       this.kyNangSoTruong,
       this.idNgoaiNgu,
       this.idTinHoc,
-      this.idHinhThucLamViec});
+      this.idHinhThucLamViec,
+      this.idNhomDichVu});
 
   ///
   /// From JSON
@@ -87,6 +89,7 @@ class DangKyViecMoiRequest {
     idNgoaiNgu = json['idNgoaiNgu'].toString();
     idTinHoc = json['idTinHoc'].toString();
     idHinhThucLamViec = json['idHinhThucLamViec'].toString();
+    idNhomDichVu = json['idNhomDichVu'].toString();
   }
 
   ///
@@ -178,6 +181,8 @@ class DangKyViecMoiRequest {
     // check null idHinhThucLamViec
     if (idHinhThucLamViec != null)
       data['idHinhThucLamViec'] = idHinhThucLamViec;
+    // check null idNhomDichVu
+    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 
     return data;
   }

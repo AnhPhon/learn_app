@@ -1,10 +1,13 @@
 class ChiTietCongViecRequest {
-    String? idDonDichVu;
-    String? tenCongViec;
-    String? quyCach;
-    String? soLuong;
-    String? donVi;
+  String? id;
+  String? idDonDichVu;
+  String? tenCongViec;
+  String? quyCach;
+  String? soLuong;
+  String? donVi;
+
   ChiTietCongViecRequest({
+    this.id,
     this.idDonDichVu,
     this.tenCongViec,
     this.quyCach,
@@ -16,11 +19,29 @@ class ChiTietCongViecRequest {
   /// From JSON
   ///
   ChiTietCongViecRequest.fromJson(Map<String, dynamic> json) {
-    idDonDichVu = (json['idDonDichVu'] == null) ? null : json['idDonDichVu'].toString();
-    tenCongViec = json['tenCongViec'].toString();
-    quyCach = json['quyCach'].toString();
-    soLuong = json['soLuong'].toString();
-    donVi = json['donVi'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
+
+    // mapping idDonDichVu
+    if (json != null && json['idDonDichVu'] != null) {
+      idDonDichVu = json['idDonDichVu'].toString();
+    }
+    // mapping tenCongViec
+    if (json != null && json['tenCongViec'] != null) {
+      tenCongViec = json['tenCongViec'].toString();
+    }
+    // mapping quyCach
+    if (json != null && json['quyCach'] != null) {
+      quyCach = json['quyCach'].toString();
+    }
+    // mapping soLuong
+    if (json != null && json['soLuong'] != null) {
+      soLuong = json['soLuong'].toString();
+    }
+    // mapping donVi
+    if (json != null && json['donVi'] != null) {
+      donVi = json['donVi'].toString();
+    }
+
   }
 
   ///
@@ -29,18 +50,22 @@ class ChiTietCongViecRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+    if (id != null) data['id'] = id;
 
-    // check null idDonHang
-    if (tenCongViec != null) data['tenCongViec'] = tenCongViec; 
+    // check null idDonDichVu
+    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
-    // check null idSanPham
-    if (soLuong != null) data['soLuong'] = soLuong; 
+    // check null tenCongViec
+    if (tenCongViec != null) data['tenCongViec'] = tenCongViec;
+
+    // check null quyCach
+    if (quyCach != null) data['quyCach'] = quyCach;
 
     // check null soLuong
-    if (donVi != null) data['donVi'] = donVi; 
-    if (quyCach != null) data['quyCach'] = quyCach; 
+    if (soLuong != null) data['soLuong'] = soLuong;
 
+    // check null donVi
+    if (donVi != null) data['donVi'] = donVi;
 
     return data;
   }

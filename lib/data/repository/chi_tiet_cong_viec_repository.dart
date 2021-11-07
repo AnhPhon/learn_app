@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:template/data/model/request/bang_gia_dang_tin_request.dart';
 import 'package:template/data/model/request/chi_tiet_cong_viec_request.dart';
+import 'package:template/data/model/request/chi_tiet_vat_tu_request.dart';
 import 'package:template/data/model/response/base/api_response.dart';
 
 class ChiTietCongViecRepository {
@@ -23,7 +23,7 @@ class ChiTietCongViecRepository {
   }
 
   ///
-  /// Insert bang-gia-dang-tin to database
+  /// Insert chi-tiet-vat-tu to database
   ///
   Future<ApiResponse> add(ChiTietCongViecRequest data) async {
     try {
@@ -35,7 +35,7 @@ class ChiTietCongViecRepository {
   }
 
   ///
-  /// Update bang-gia-dang-tin to database
+  /// Update chi-tiet-vat-tu to database
   ///
   Future<ApiResponse> update(ChiTietCongViecRequest data) async {
     try {
@@ -47,7 +47,7 @@ class ChiTietCongViecRepository {
   }
 
   ///
-  /// Update bang-gia-dang-tin to database
+  /// Update chi-tiet-vat-tu to database
   ///
   Future<ApiResponse> delete(String id) async {
     try {
@@ -79,7 +79,7 @@ class ChiTietCongViecRepository {
   }
 
   ///
-  /// Find bang-gia-dang-tin by id
+  /// Find chi-tiet-vat-tu by id
   ///
   Future<ApiResponse> find(String id) async {
     try {

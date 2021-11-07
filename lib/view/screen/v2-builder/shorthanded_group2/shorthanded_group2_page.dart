@@ -27,48 +27,64 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   ),
 
                   //job title
-                  const ContentWidget(
-                    label: "Tiêu đề công việc ",
-                    content: "Bảo vệ công ty (bảo vệ chuyên nghiệp)",
+                  ContentWidget(
+                    label: "Tiêu đề công việc: ",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.tieuDe.toString(),
                   ),
 
                   //working time in day
-                  const ContentWidget(
-                    label: "Thời gian làm trong ngày ",
-                    content:
-                        "Sáng: Từ  ??h?? đến ??h??\nChiều: Từ ??h?? đến ??h??\nTối: Từ ??h?? đến ??h??",
+                  ContentWidget(
+                    label: "Thời gian làm trong ngày: ",
+                    content: controller.donDichVuResponse == null
+                        ? '' : '' + controller.donDichVuResponse!.idThoiGianLamViecs!.map((e) => e.toString()).join('\n').toString(),
                   ),
 
                   //start
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thời gian bắt đầu dự kiến: ",
-                    content: "12/09/2021",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.getDateOutput(controller
+                        .donDichVuResponse!.ngayBatDau
+                        .toString()),
                   ),
 
                   //end
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thời gian kết thúc dự kiến: ",
-                    content: "12/09/2021",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.getDateOutput(controller
+                        .donDichVuResponse!.ngayKetThuc
+                        .toString()),
                   ),
 
                   //value of customer idea
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Giá trị khách hàng đề xuất ",
-                    content:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.giaTriKhachDeXuat.toString(),
                   ),
 
                   //working address
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Địa điểm làm việc: ",
-                    content: "Quận Hải Châu",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.diaDiemLamViec
+                        .toString(),
                   ),
 
                   //job description
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Mô tả, yêu cầu công việc ",
-                    content:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.moTa
+                        .toString(),
                   ),
 
                   const SizedBox(
@@ -76,8 +92,10 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   ),
 
                   //image
-                  const ImageListHorizontal(
-                    imageList: [],
+                  ImageListHorizontal(
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhChiTiet == null || controller.donDichVuResponse!.hinhAnhChiTiet!.isEmpty
+                        ? []
+                        : [controller.donDichVuResponse!.hinhAnhChiTiet!],
                     label: "Hình ảnh chi tiết nếu có (hình ảnh thực tế)",
                     labelBold: true,
                   ),
@@ -87,18 +105,22 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   ),
 
                   //image
-                  const ImageListHorizontal(
-                    imageList: [],
+                  ImageListHorizontal(
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhBaoGia == null || controller.donDichVuResponse!.hinhAnhBaoGia!.isEmpty
+                        ? []
+                        : [controller.donDichVuResponse!.hinhAnhBaoGia!],
                     label: "Hình ảnh sản phẩm mẫu (nếu có)",
                     labelBold: true,
                   ),
 
                   //job value description
-                  const ContentWidget(
+                  ContentWidget(
                     label:
                         "Mô tả khối lượng công việc thực hiện (sơ bộ tham khảo) ",
-                    content:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.moTaChiTiet
+                        .toString(),
                   ),
 
                   const SizedBox(
@@ -106,17 +128,22 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   ),
 
                   //image
-                  const ImageListHorizontal(
-                    imageList: [],
+                  ImageListHorizontal(
+                    imageList: controller.donDichVuResponse == null || controller.donDichVuResponse!.hinhAnhBanKhoiLuongs == null || controller.donDichVuResponse!.hinhAnhBanKhoiLuongs!.isEmpty
+                        ? []
+                        : controller.donDichVuResponse!.hinhAnhBanKhoiLuongs!,
                     label:
                         "Hình ảnh bảng khối lượng hoặc mô tả công việc (nếu có)",
                     labelBold: true,
                   ),
 
                   //file
-                  const RowText(
+                  RowText(
                     text1: "File đính kèm",
-                    text2: "Nhom2dinhkem.doc",
+                    text2: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.file
+                        .toString(),
                   ),
 
                   //btn

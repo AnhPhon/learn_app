@@ -37,7 +37,7 @@ class RechargeController extends GetxController {
   TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
 
   //upload file
-  File? image;
+  String? image;
 
   //titile
   String title = "Thông tin thanh toán";
@@ -116,26 +116,47 @@ class RechargeController extends GetxController {
   }
 
   ///
-  ///pick image
-  ///
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      update();
-    } on PlatformException catch (e) {
-      print("Failed to pick image: $e");
-    }
-  }
-
-  ///
   ///onChangeRadio
   ///
   void onChangeRadio(int value) {
     selected = value;
     update();
+  }
+
+  ///
+  /// Pick HinhDaiDien
+  ///
+  Future pickHinhHoaDon() async {
+    try {
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            image = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
+      update();
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
+    }
   }
 
   ///
@@ -148,42 +169,35 @@ class RechargeController extends GetxController {
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
-      imageUpdateProvider.add(
-        file: image!,
-        onSuccess: (image) {
-          //set data
-          lichSuViTienRequest.idTaiKhoan = userId;
-          lichSuViTienRequest.idViTien = viTienResponse.id;
-          lichSuViTienRequest.noiDung = "Nạp tiền vào ví";
-          lichSuViTienRequest.loaiGiaoDich = "1";
-          lichSuViTienRequest.soTien = soTienToiThieu.toString();
-          lichSuViTienRequest.hinhAnhHoaDon = image.data;
-          lichSuViTienRequest.trangThai = "1";
-          lichSuViTienRequest.type = '0';
 
-          final Map<String, dynamic> param = {
-            'type': 2,
-            'status': true,
-            'hinhAnhHoaDon': image.data
-          };
-          //add
-          lichSuViTienProvider.add(
-            data: lichSuViTienRequest,
-            onSuccess: (value) {
-              //go to payment success page
-              EasyLoading.dismiss();
-              Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=1')!
-                  .then((value) => {
-                        if (value == true) {Get.back(result: param)}
-                      });
-            },
-            onError: (error) {
-              print("RechargeController onCheckoutClick onError $error");
-            },
-          );
+      //set data
+      lichSuViTienRequest.idTaiKhoan = userId;
+      lichSuViTienRequest.idViTien = viTienResponse.id;
+      lichSuViTienRequest.noiDung = "Nạp tiền vào ví";
+      lichSuViTienRequest.loaiGiaoDich = "1";
+      lichSuViTienRequest.soTien = soTienToiThieu.toString();
+      lichSuViTienRequest.hinhAnhHoaDon = image;
+      lichSuViTienRequest.trangThai = "1";
+      lichSuViTienRequest.type = '0';
+
+      final Map<String, dynamic> param = {
+        'type': 2,
+        'status': true,
+        'hinhAnhHoaDon': image
+      };
+      //add
+      lichSuViTienProvider.add(
+        data: lichSuViTienRequest,
+        onSuccess: (value) {
+          //go to payment success page
+          EasyLoading.dismiss();
+          Get.toNamed('${AppRoutes.PAYMENT_SUCCESS}?isPayment=1')!
+              .then((value) => {
+                    if (value == true) {Get.back(result: param)}
+                  });
         },
         onError: (error) {
-          Alert.error(message: 'Vui lòng thực hiện lại');
+          print("RechargeController onCheckoutClick onError $error");
         },
       );
     }

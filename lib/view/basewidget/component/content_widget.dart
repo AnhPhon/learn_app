@@ -8,6 +8,8 @@ class ContentWidget extends StatelessWidget {
   final bool? centerLabel;
   final bool? centerContent;
   final Color? colorLabel;
+  final EdgeInsetsGeometry? padding;
+
   const ContentWidget({
     Key? key,
     required this.label,
@@ -16,12 +18,13 @@ class ContentWidget extends StatelessWidget {
     this.colorLabel,
     this.centerLabel = false,
     this.centerContent = false,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: padding ?? const EdgeInsets.symmetric(
         vertical: Dimensions.PADDING_SIZE_SMALL,
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),

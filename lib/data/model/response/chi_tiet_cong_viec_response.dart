@@ -1,28 +1,59 @@
-import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'don_dich_vu_response.dart';
+import 'vat_tu_response.dart';
 
 class ChiTietCongViecResponse {
-    DonDichVuResponse? idDonDichVu;
-    String? tenCongViec;
-    String? quyCach;
-    String? soLuong;
-    String? sonVi;
-  ChiTietCongViecResponse({
-    this.idDonDichVu,
-    this.tenCongViec,
-    this.quyCach,
-    this.soLuong,
-    this.sonVi,
-  });
+  String? id;
+  DonDichVuResponse? idDonDichVu;
+  String? tenCongViec;
+  String? quyCach;
+  String? soLuong;
+  String? donVi;
 
+  String? createdAt;
+  String? updatedAt;
+
+  ChiTietCongViecResponse({
+      this.id,
+      this.idDonDichVu,
+      this.tenCongViec,
+      this.quyCach,
+      this.soLuong,
+      this.donVi,
+      this.createdAt,
+      this.updatedAt});
+  
   ///
   /// From JSON
   ///
   ChiTietCongViecResponse.fromJson(Map<String, dynamic> json) {
-    idDonDichVu = (json['idDonDichVu'] == null) ? null : DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>);
-    tenCongViec = json['tenCongViec'].toString();
-    quyCach = json['quyCach'].toString();
-    soLuong = json['soLuong'].toString();
-    sonVi = json['sonVi'].toString();
+    id = (json['id'] == null) ? null : json['id'].toString();
+
+    // mapping idDonDichVu                                                              
+    if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {                                                  
+      idDonDichVu = DonDichVuResponse.fromJson(json['idDonDichVu'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idDonDichVu = null;                                                               
+    }                                                                                  
+
+    // mapping tenCongViec
+    if (json != null && json['tenCongViec'] != null) {
+      tenCongViec = json['tenCongViec'].toString();
+    }
+    // mapping quyCach
+    if (json != null && json['quyCach'] != null) {
+      quyCach = json['quyCach'].toString();
+    }
+    // mapping soLuong
+    if (json != null && json['soLuong'] != null) {
+      soLuong = json['soLuong'].toString();
+    }
+    // mapping donVi
+    if (json != null && json['donVi'] != null) {
+      donVi = json['donVi'].toString();
+    }
+
+    createdAt = json['created_at'].toString();
+    updatedAt = json['updated_at'].toString();
   }
 
   ///
@@ -31,18 +62,22 @@ class ChiTietCongViecResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
+    if (id != null) data['id'] = id; 
+
+    // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
 
-    // check null idDonHang
-    if (tenCongViec != null) data['tenCongViec'] = tenCongViec; 
+    // check null tenCongViec
+    if (tenCongViec != null) data['tenCongViec'] = tenCongViec;
 
-    // check null idSanPham
-    if (soLuong != null) data['soLuong'] = soLuong; 
+    // check null quyCach
+    if (quyCach != null) data['quyCach'] = quyCach;
 
     // check null soLuong
-    if (sonVi != null) data['sonVi'] = sonVi; 
-    if (quyCach != null) data['quyCach'] = quyCach; 
+    if (soLuong != null) data['soLuong'] = soLuong;
 
+    // check null donVi
+    if (donVi != null) data['donVi'] = soLuong;
 
     return data;
   }
