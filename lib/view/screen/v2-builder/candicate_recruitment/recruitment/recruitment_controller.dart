@@ -118,8 +118,9 @@ class V2RecruitmentController extends GetxController {
   ///onChangeNameTinhTp
   ///
   String? onChangeNameTinhTp(String id) {
-    final tinh =  tinhTpListModel.firstWhereOrNull((element) => element.id == id);
-    if(tinh != null){
+    final tinh =
+        tinhTpListModel.firstWhereOrNull((element) => element.id == id);
+    if (tinh != null) {
       return tinh.ten;
     }
     return null;
@@ -211,7 +212,7 @@ class V2RecruitmentController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.idNoiLamViec.toString()),
+      "TenNoiLamViec": tuyendung.idNoiLamViec!.ten,
       "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendung.thoiGianThuViec,
       "MoTaCongViec": tuyendung.moTaCongViec,

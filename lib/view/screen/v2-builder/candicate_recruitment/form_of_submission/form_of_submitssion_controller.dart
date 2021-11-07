@@ -26,37 +26,14 @@ class V2FormOfSubmitssionController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     idTuyenDung = Get.parameters['idTuyenDung'];
-    sl.get<SharedPreferenceHelper>().userId.then((value) {
-      userId = value;
-      getCheckDataDangKyViecMoiUser();
-    });
+    isLoading = false;
+    update();
   }
 
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-  }
-
-  ///
-  ///getCheckDataDangKyViecMoiUser
-  ///
-  void getCheckDataDangKyViecMoiUser() {
-    dangKyViecMoiProvider.paginate(
-        page: 1,
-        limit: 5,
-        filter: '&idTaiKhoan=$userId&idNhomDichVu=${app_constants.NHOM_DICH_VU_7}',
-        onSuccess: (value) {
-          if (value.isNotEmpty) {
-            isDangKyViecMoiWithUser = true;
-          } else {
-            isDangKyViecMoiWithUser = false;
-          }
-          isLoading = false;
-          update();
-        },
-        onError: (error) => print(
-            'V2FormOfSubmitssionController getCheckDataDangKyViecMoiUser $error'));
   }
 
   ///

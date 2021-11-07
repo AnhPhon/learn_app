@@ -62,14 +62,8 @@ class V2FormOfSubmitssionPage extends GetView<V2FormOfSubmitssionController> {
               // Nút cv
               LongButton(
                 title: "Nộp file CV",
-                color: controller.isDangKyViecMoiWithUser
-                    ? ColorResources.PRIMARYCOLOR
-                    : ColorResources.GREY,
-                onPressed: controller.isDangKyViecMoiWithUser
-                    ? () {
-                        controller.onClickCvButton();
-                      }
-                    : () {},
+                color: ColorResources.PRIMARYCOLOR,
+                onPressed: () => controller.onClickCvButton(),
                 horizontal: Dimensions.PADDING_SIZE_DEFAULT,
               ),
 

@@ -85,11 +85,12 @@ class V2CandidateCard extends StatelessWidget {
                                 ? dangKyViecMoiResponse!.idTaiKhoan!.soDienThoai
                                     .toString()
                                 : "*********"),
-                        TextHighlight(
-                            title: "Kinh nghiệm: ",
-                            content: dangKyViecMoiResponse!
-                                .idSoNamKinhNghiem!.tieuDe
-                                .toString()),
+                        if (dangKyViecMoiResponse!.idSoNamKinhNghiem != null)
+                          TextHighlight(
+                              title: "Kinh nghiệm: ",
+                              content: dangKyViecMoiResponse!
+                                  .idSoNamKinhNghiem!.tieuDe
+                                  .toString()),
                         TextHighlight(
                             title: "Email: ",
                             content: showEmailAndPass!
