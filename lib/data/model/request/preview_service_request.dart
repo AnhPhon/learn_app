@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 
 class PreviewServiceRequest {
@@ -10,7 +11,7 @@ class PreviewServiceRequest {
   String? moTa;
   String? ngayBatDau;
   String? ngayKetThuc;
-  List<VatTuResponse>? bangKhoiLuong;
+  List<ChiTietCongViecResponse>? bangKhoiLuongCongViec;
   List<String>? hinhAnhBanKhoiLuongs;
   List<String>? hinhAnhBanVes;
   String? hinhAnhChiTiet;
@@ -85,7 +86,7 @@ class PreviewServiceRequest {
       this.taiKhoanNhanDon,
       this.tienCoc,
       this.diaChiCuThe,
-      this.bangKhoiLuong,
+      this.bangKhoiLuongCongViec,
       this.idTaiKhoanNhanDon
       });
   
@@ -133,7 +134,7 @@ class PreviewServiceRequest {
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
     idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
-    bangKhoiLuong = json['bangKhoiLuong'] as List<VatTuResponse>;
+    bangKhoiLuongCongViec = json['bangKhoiLuongCongViec'] as List<ChiTietCongViecResponse>;
   }
 
   ///

@@ -218,7 +218,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChamCongRepository());
   sl.registerLazySingleton(() => ChiTietDonHangRepository());
   sl.registerLazySingleton(() => ChiTietVatTuRepository());
-  sl.registerLazySingleton(() => ChiTietCongViecRepository());
   sl.registerLazySingleton(() => ChucVuRepository());
   sl.registerLazySingleton(() => ChuyenMonRepository());
   sl.registerLazySingleton(() => ChuyenNganhChinhRepository());
@@ -390,5 +389,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungProvider());
   sl.registerLazySingleton(() => PhiAppProvider());
   sl.registerLazySingleton(() => CaiDatChungProvider());
-  sl.registerLazySingleton(() => ChiTietCongViecProvider());
 }

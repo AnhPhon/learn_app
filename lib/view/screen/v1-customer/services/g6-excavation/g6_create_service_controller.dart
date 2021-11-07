@@ -242,7 +242,6 @@ class V1G6CreateServiceController extends GetxController{
       }
       dichVuRequest.idThoiGianLamViecs = workTime;
       if(workWidthController.text.toString().isNotEmpty){
-        // Thiếu bề rộng mặt đường làm việc
         dichVuRequest.beRongMatDuong = workWidthController.text.toString();
       }
       if(thongSo.isNotEmpty){

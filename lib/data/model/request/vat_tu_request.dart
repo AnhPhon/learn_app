@@ -4,7 +4,6 @@ class VatTuRequest {
   String? quyCach;
   String? donVi;
   String? donGia;
-  String? khoiLuong;
   String? idDonDichVu;
 
   VatTuRequest({
@@ -24,7 +23,6 @@ class VatTuRequest {
     donVi = json['donVi'].toString();
     donGia = json['donGia'].toString();
     idDonDichVu = json['idDonDichVu'].toString();
-    khoiLuong = json['khoiLuong'].toString();
   }
 
   ///
@@ -48,8 +46,7 @@ class VatTuRequest {
     if (donGia != null) data['donGia'] = donGia; 
     // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
-    // khối lượng
-    if (khoiLuong != null) data['khoiLuong'] = khoiLuong; 
+
 
 
     return data;

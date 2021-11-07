@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/upload_image_provider.dart';
@@ -32,7 +33,7 @@ class V1G1CreateWorkController extends GetxController{
   String? fileName;
 
   // Dach sách bảng khối lượng công việc
-  List<VatTuResponse> massList = [];
+  List<ChiTietCongViecResponse> workList = [];
   // Danh sách hình ảnh bảng khối lượng
   List<String> anhKhoiLuong = [];
   // Danh sách hình ảnh bản vẽ
@@ -89,7 +90,7 @@ class V1G1CreateWorkController extends GetxController{
     previewServiceRequest.tieuDe = serviceApplication!.tieuDe;
     previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
     previewServiceRequest.hinhAnhBanKhoiLuongs = anhKhoiLuong;
-    previewServiceRequest.bangKhoiLuong = massList;
+    previewServiceRequest.bangKhoiLuongCongViec = workList;
     previewServiceRequest.idTaiKhoanNhanDon = serviceApplication!.idTaiKhoanNhanDon;
     previewServiceRequest.hinhAnhBanVes  = drawingImages;
     if(donDichVuFiles.isNotEmpty){
@@ -120,13 +121,13 @@ class V1G1CreateWorkController extends GetxController{
     }else if(massController.text.toString().isEmpty){
       return Alert.error(message: "Khối lượng không được để trống");
     }else{
-      final VatTuResponse supplies = VatTuResponse(
-        khoiLuong: massController.text.toString(),
+      final ChiTietCongViecResponse supplies = ChiTietCongViecResponse(
+        soLuong: massController.text.toString(),
         donVi: unit,
         quyCach: specificationController.text.toString(),
-        tenVatTu: nameTitleController.text.toString(),
+        tenCongViec: nameTitleController.text.toString(),
       );
-      massList.add(supplies);
+      workList.add(supplies);
       nameTitleController.text = '';
       specificationController.text = '';
       massController.text = '';
@@ -138,8 +139,8 @@ class V1G1CreateWorkController extends GetxController{
   ///
   /// Xoá vật liệu
   ///
-  void deleteSupplies(VatTuResponse supplies){
-    massList.removeWhere((element) => element.hashCode == supplies.hashCode);
+  void deleteSupplies(ChiTietCongViecResponse supplies){
+    workList.removeWhere((element) => element.hashCode == supplies.hashCode);
     update();
   }
 

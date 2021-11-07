@@ -212,10 +212,10 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                         title: "Quy cách:",
                                         content:
                                             controller.workMass[index].quyCach!),
-                                    TextHighlight(
-                                        title: "Khối lượng:",
-                                        content:
-                                            controller.workMass[index].khoiLuong!),
+                                    // TextHighlight(
+                                    //     title: "Khối lượng:",
+                                    //     content:
+                                    //         controller.workMass[index].khoiLuong!),
                                     TextHighlight(
                                         title: "Đơn vị:",
                                         content:
