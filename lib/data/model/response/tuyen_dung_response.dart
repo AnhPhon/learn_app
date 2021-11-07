@@ -30,7 +30,7 @@ class TuyenDungResponse {
   ChuyenNganhChinhResponse? idChuyenNganhChinh;
   SoNamKinhNghiemResponse? idSoNamKinhNghiem;
   MucLuongDuKienResponse? idMucLuongDuKien;
-  String? noiLamViec;
+  TinhTpResponse? idNoiLamViec;
   ThoiGianLamViecResponse? idThoiGianLamViec;
   String? moTaCongViec;
   String? yeuCauCongViec;
@@ -75,7 +75,7 @@ class TuyenDungResponse {
       this.idChuyenNganhChinh,
       this.idSoNamKinhNghiem,
       this.idMucLuongDuKien,
-      this.noiLamViec,
+      this.idNoiLamViec,
       this.idThoiGianLamViec,
       this.moTaCongViec,
       this.yeuCauCongViec,
@@ -193,7 +193,14 @@ class TuyenDungResponse {
     } else {
       idMucLuongDuKien = null;
     }
-    noiLamViec = json['noiLamViec'].toString();
+    // mapping idTinhTp
+    if (json['idNoiLamViec'] != null &&
+        json['idNoiLamViec'].toString().length != 24) {
+      idNoiLamViec =
+          TinhTpResponse.fromJson(json['idNoiLamViec'] as Map<String, dynamic>);
+    } else {
+      idNoiLamViec = null;
+    }
 
     // mapping idThoiGianLamViec
     if (json['idThoiGianLamViec'] != null &&
@@ -330,8 +337,8 @@ class TuyenDungResponse {
     // check null idMucLuongDuKien
     if (idMucLuongDuKien != null) data['idMucLuongDuKien'] = idMucLuongDuKien;
 
-    // check null noiLamViec
-    if (noiLamViec != null) data['noiLamViec'] = noiLamViec;
+    // check null idNoiLamViec
+    if (idNoiLamViec != null) data['idNoiLamViec'] = idNoiLamViec;
 
     // check null idThoiGianLamViec
     if (idThoiGianLamViec != null)

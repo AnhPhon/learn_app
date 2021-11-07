@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
 import 'package:template/helper/date_converter.dart';
@@ -12,6 +14,8 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/snack_bar.dart';
 import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
@@ -40,16 +44,15 @@ class V1G2CreateWorkController extends GetxController {
   // Thời gian làm việc trong ngày
 
   // File
-  File? file;
-  // File name
-  String? fileName;
+  List<String> donDichVuFiles = [];
+
 
   // Danh sách hình ảnh hien trang
-  List<File> images = [];
+  List<String> currentStatusimages = [];
   // Danh sách hình san pham mau
-  List<File> productImages = [];
+  List<String> productImages = [];
   // Hinh ảnh bản khối lương
-  List<File> massImages = [];
+  List<String> massImages = [];
   // Dịch vụ resquest
   DonDichVuRequest? serviceApplication;
   // loading
@@ -97,38 +100,83 @@ class V1G2CreateWorkController extends GetxController {
     update();
   }
 
-  void pickerFile()async{
-    final FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      file = File(result.files.single.path!);
-      fileName = result.files.first.name;
+  ///
+  /// Pick multi files
+  ///
+  Future pickFiles() async {
+    try {
+      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+      if (result == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<PlatformFile> files = result.files;
+
+      print('Count files select ${files.length}');
+      // load files
+      imageUpdateProvider.addFiles(
+        files: files,
+        onSuccess: (value) {
+          print('V1G1CreateWorkController pickFiles addFiles ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            donDichVuFiles.add(value.files!.first);
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
-      // return fileName;
-    } else {
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
+    } on PlatformException catch (e) {
+      print("Failed to pick file: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
   ///
-  /// Chọn nhiều file (Image)
+  /// Pick multi images
   ///
-  Future<void> pickerMuilFile({required List<File> files}) async {
-    final FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    if (result != null) {
-      files.addAll(result.paths.map((path) => File(path!)).toList());
+  Future pickImages({required List<String> data}) async {
+    try {
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          print('V1G1CreateWorkController pickImages addImages ${value.files}');
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            data.addAll(value.files!);
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
-    } else {
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thêm file thất bại");
+    } on PlatformException catch (e) {
+      print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
-
+  
   ///
   /// Xoá hình ảnh
   ///
-  void onDeleteImage({required File file, required List<File> files}) {
+  void onDeleteImage({required String file, required List<String> files}){
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    SnackBarUtils.showSnackBar(title: "Xoá", message: "Xoá ảnh thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 
@@ -163,25 +211,25 @@ class V1G2CreateWorkController extends GetxController {
   ///
   bool validate(){
     if(tommorow == false && afternoon == false && tonight == false){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian làm việc trong ngày");
+      Alert.error(message: "Bạn phải chọn thời gian làm việc trong ngày");
       return false;
     }else if(startTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bạn phải chọn thời gian bắt đầu dự kiến");
+      Alert.error(message: "Bạn phải chọn thời gian bắt đầu dự kiến");
       return false;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.error(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     }else if(endTime.text.toString().isNotEmpty){
       if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        Alert.error(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return false;
       }else if(workDesc.text.toString().isEmpty){
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
+        Alert.error(message: "Mô tả công việc không được để trống");
         return false;
       }
       return true;
     }else if(workDesc.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả công việc không được để trống");
+      Alert.error(message: "Mô tả công việc không được để trống");
       return false;
     }else{
       return true;
@@ -193,14 +241,14 @@ class V1G2CreateWorkController extends GetxController {
   ///
   Future<void> onSaveService() async{
     EasyLoading.show(status:"Loading ...");
-      final DonDichVuRequest data = await request();
+      final DonDichVuRequest data = request();
       donDichVuProvider.add(data: data, onSuccess: (data){
         EasyLoading.dismiss();
+        Alert.success(message: "Tạo dich đơn thành công. Chúng tôi sẽ phản hồi bạn sơm nhất có thể");
         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY);
       }, onError: (onError){
         EasyLoading.dismiss();
-        SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: onError.toString());
         print("V1G2CreateWorkController onClickContinueButton $onError");
       });
   }
@@ -208,11 +256,8 @@ class V1G2CreateWorkController extends GetxController {
   ///
   /// Tạo đối tượng request
   ///
-  Future<DonDichVuRequest> request(){
+  DonDichVuRequest request(){
       final List<String> workTime = [];
-      List<String> massImagesLink = [];
-      String productImagesLink = '';
-      String currentStatusimages ='';
       DonDichVuRequest dichVuRequest = DonDichVuRequest();
       dichVuRequest = serviceApplication!;
       if(tommorow == true){
@@ -233,67 +278,19 @@ class V1G2CreateWorkController extends GetxController {
       }
       dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
       dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
+      // trạng thái đơn
+      dichVuRequest.idTrangThaiThanhToan= CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
 
-    // Tải hình ảnh hiên trạng
-    images.forEach((element) {
-      imageUpdateProvider.add(
-          file: element,
-          onSuccess: (data) {
-            currentStatusimages = "$currentStatusimages${data.data},";
-          },
-          onError: (onError) {
-            print("V1G2CreateWorkController request hiện trạng $onError");
-            EasyLoading.dismiss();
-          });
-    });
+      // Tải file
+      if (donDichVuFiles.isNotEmpty) {
+        dichVuRequest.files = donDichVuFiles;
+      }
 
-    // HỈnh ảnh sản phẩm mẫu
-    productImages.forEach((element) {
-      imageUpdateProvider.add(
-          file: element,
-          onSuccess: (data) {
-            productImagesLink = "$productImagesLink${data.data},";
-          },
-          onError: (onError) {
-            print("V1G2CreateWorkController request ảnh sản phẩm mẫu $onError");
-            EasyLoading.dismiss();
-          });
-    });
-
-    // HÌnh ảnh khối lượng
-    massImages.forEach((element) {
-      imageUpdateProvider.add(
-          file: element,
-          onSuccess: (data) {
-            massImagesLink.add(data.data!);// = "$massImagesLink${data.data},";
-          },
-          onError: (onError) {
-            print("V1G2CreateWorkController request khối lượng $onError");
-            EasyLoading.dismiss();
-          });
-    });
-
-    // Tải file
-    if (file != null) {
-      imageUpdateProvider.add(
-          file: file!,
-          onSuccess: (data) {
-            dichVuRequest.file = data.data;
-          },
-          onError: (onError) {
-            EasyLoading.dismiss();
-            print("V1G2CreateWorkController request tải file $onError");
-          });
-    }
-
-    return Future.delayed(const Duration(seconds: 1), () {
-      dichVuRequest.hinhAnhBanKhoiLuongs = massImagesLink;
-      dichVuRequest.hinhAnhBanVe =
-          productImagesLink; // Hình ảnh bản vẽ là hình ảnh sản phẩm mẫu
-      dichVuRequest.hinhAnhChiTiet =
-          currentStatusimages; // Hình ảnh chi tiết cho là hình ảnh hiện trạng
+      dichVuRequest.hinhAnhBanKhoiLuongs = massImages;
+      dichVuRequest.hinhAnhBanVes = productImages; // Hình ảnh bản vẽ là hình ảnh sản phẩm mẫu
+      dichVuRequest.hinhAnhThucTes = currentStatusimages; // Hình ảnh chi tiết cho là hình ảnh hiện trạng
       return dichVuRequest;
-    });
     //return dichVuRequest;
   }
 

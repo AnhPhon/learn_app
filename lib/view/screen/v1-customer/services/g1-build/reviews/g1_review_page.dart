@@ -12,6 +12,7 @@ import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/services/components/material_card.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/components/work_card.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/reviews/g1_review_controller.dart';
 
 class V1G1ReviewPage extends GetView<V1G1ReviewController> {
@@ -84,29 +85,29 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   /// Danh sách vật liệu được thêm 
   ///
   Widget materialList(BuildContext context,{required V1G1ReviewController controller}){
-    return controller.previewServiceRequest!.bangKhoiLuong!.isEmpty ? Container() : Column(
+    return controller.previewServiceRequest!.bangKhoiLuongCongViec!.isEmpty ? Container() : Column(
       children:  [
         const Label(
           label: "Bảng khối lượng công việc(nếu có)",
           obligatory: false,
           topPadding: 0,
         ),
-        ...controller.previewServiceRequest!.bangKhoiLuong!.map((e) => 
+        ...controller.previewServiceRequest!.bangKhoiLuongCongViec!.map((e) => 
         SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
-        child: MaterialCard(mass: e))).toList()
+        child: WorkCard(work: e))).toList()
       ],
     );
   }
 
   Widget attchFile(BuildContext context,{required V1G1ReviewController controller}){
-    return controller.previewServiceRequest!.file != null ? 
+    return controller.previewServiceRequest!.files!= null ? 
     Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_LARGE
       ),
       child: AttachButton(
-        title: controller.previewServiceRequest!.file.toString(), 
+        title: controller.previewServiceRequest!.files.toString(), 
         color: ColorResources.WHITE, 
         onPressed: (){},
         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -115,7 +116,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   }
 
   Widget imageMaterial({required V1G1ReviewController controller}){
-    return controller.previewServiceRequest!.hinhAnhBanKhoiLuong!.isEmpty ?  Container(): Column(
+    return controller.previewServiceRequest!.hinhAnhBanKhoiLuongs!.isEmpty ?  Container(): Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
         const Label(
@@ -129,14 +130,14 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanKhoiLuong!),
+          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanKhoiLuongs!),
         ),
       ],
     );
   }
 
   Widget drawing({required V1G1ReviewController controller}){
-    return controller.previewServiceRequest!.hinhAnhBanVe!.isEmpty ?  Container() : Column(
+    return controller.previewServiceRequest!.hinhAnhBanVes!.isEmpty ?  Container() : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
         const Label(
@@ -146,7 +147,7 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanVe!,),
+          child: BoxImage(images: controller.previewServiceRequest!.hinhAnhBanVes!,),
         ),
       ],
     );

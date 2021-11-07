@@ -169,7 +169,7 @@ class V1G7ReviewController extends GetxController {
           request['IdSoNamKinhNghiem'].toString();
       tuyenDungRequest.idMucLuongDuKien =
           request['IdMucLuongDuKien'].toString();
-      tuyenDungRequest.noiLamViec = request['NoiLamViec'].toString();
+      tuyenDungRequest.idNoiLamViec = request['NoiLamViec'].toString();
       tuyenDungRequest.idThoiGianLamViec =
           request['IdThoiGianLamViec'].toString();
       tuyenDungRequest.moTaCongViec = request['MoTaCongViec'].toString();

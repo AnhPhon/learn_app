@@ -13,7 +13,11 @@ class DonDichVuRequest {
   String? ngayBatDau;
   String? ngayKetThuc;
   List<String>? hinhAnhBanKhoiLuongs;
-  String? hinhAnhBanVe;
+  List<String>? hinhAnhBanVes;
+  List<String>? hinhAnhChiTiets;
+  List<String>? hinhAnhBaoGias;
+  List<String>? hinhAnhThucTes;
+  List<String>? hinhAnhBaoHanhs;
   String? idTrangThaiDonHang;
   String? idTrangThaiDonDichVu;
   String? idHinhThucThanhToan;
@@ -25,9 +29,8 @@ class DonDichVuRequest {
   String? idQuanHuyen;
   String? idPhuongXa;
   String? giaTriKhachDeXuat;
-  String? hinhAnhChiTiet;
   String? moTaChiTiet;
-  String? file;
+  List<String>? files;
   String? soLuongYeuCau;
   String? soNgay;
   String? diaDiemLamViec;
@@ -38,7 +41,7 @@ class DonDichVuRequest {
   String? cuLyVanChuyen;
   String? beRongDiemNhan;
   String? beRongDiemTra;
-  String? hinhAnhBaoGia;
+  String? beRongMatDuong;
   String? phiDichVu;
   String? khuyenMai;
   String? soTien;
@@ -46,6 +49,8 @@ class DonDichVuRequest {
   String? taiKhoanNhanDon;
   String? tienCoc;
   String? diaChiCuThe;
+  String? idLoaiCongViec;
+  String? idTaiKhoanNhanDon;
 
   DonDichVuRequest(
       {this.id,
@@ -56,19 +61,21 @@ class DonDichVuRequest {
       this.ngayBatDau,
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuongs,
-      this.hinhAnhBanVe,
+      this.hinhAnhBanVes,
+      this.hinhAnhThucTes,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViecs,
+      this.beRongMatDuong,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
-      this.hinhAnhChiTiet,
+      this.hinhAnhChiTiets,
       this.moTaChiTiet,
-      this.file,
+      this.files,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,
@@ -80,13 +87,15 @@ class DonDichVuRequest {
       this.cuLyVanChuyen,
       this.beRongDiemNhan,
       this.beRongDiemTra,
-      this.hinhAnhBaoGia,
+      this.hinhAnhBaoGias,
       this.phiDichVu,
       this.khuyenMai,
       this.soTien,
       this.tongDon,
       this.taiKhoanNhanDon,
+      this.idLoaiCongViec,
       this.tienCoc,
+      this.idTaiKhoanNhanDon,
       this.diaChiCuThe});
 
   ///
@@ -101,7 +110,11 @@ class DonDichVuRequest {
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
     hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBanVe = json['hinhAnhBanVe'].toString();
+    hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>).map((e) => e.toString()).toList();
+    hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>).map((e) => e.toString()).toList();
     idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
     idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
     idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
@@ -117,9 +130,8 @@ class DonDichVuRequest {
     idQuanHuyen = json['idQuanHuyen'].toString();
     idPhuongXa = json['idPhuongXa'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
-    hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'].toString();
+    files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
@@ -133,7 +145,7 @@ class DonDichVuRequest {
     cuLyVanChuyen = json['cuLyVanChuyen'].toString();
     beRongDiemNhan = json['beRongDiemNhan'].toString();
     beRongDiemTra = json['beRongDiemTra'].toString();
-    hinhAnhBaoGia = json['hinhAnhBaoGia'].toString();
+    beRongMatDuong = json['beRongMatDuong'].toString();
     phiDichVu = json['phiDichVu'].toString();
     khuyenMai = json['khuyenMai'].toString();
     soTien = json['soTien'].toString();
@@ -141,6 +153,8 @@ class DonDichVuRequest {
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
     diaChiCuThe = json['diaChiCuThe'].toString();
+    idLoaiCongViec = json['idLoaiCongViec'].toString();
+    idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
   }
 
   ///
@@ -174,8 +188,8 @@ class DonDichVuRequest {
       data['hinhAnhBanKhoiLuongs'] = hinhAnhBanKhoiLuongs;
     }
 
-    // check null hinhAnhBanVe
-    if (hinhAnhBanVe != null) data['hinhAnhBanVe'] = hinhAnhBanVe;
+    // check null hinhAnhBanVes
+    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes;
 
     // check null idTrangThaiDonDichVu
     if (idTrangThaiDonDichVu != null) {
@@ -215,14 +229,18 @@ class DonDichVuRequest {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
     }
 
-    // check null hinhAnhChiTiet
-    if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) data['hinhAnhChiTiets'] = hinhAnhChiTiets;
+    // HÌnh ảnh thực tế
+    if (hinhAnhThucTes != null) data['hinhAnhThucTes'] = hinhAnhThucTes;
+    // hinh Anh Bao Hanhs
+    if (hinhAnhBaoHanhs != null) data['hinhAnhBaoHanhs'] = hinhAnhBaoHanhs;
 
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
 
-    // check null file
-    if (file != null) data['file'] = file;
+    // check null files
+    if (files != null) data['files'] = files;
 
     // check null soLuongYeuCau
     if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau;
@@ -257,9 +275,11 @@ class DonDichVuRequest {
 
     // check null beRongDiemTra
     if (beRongDiemTra != null) data['beRongDiemTra'] = beRongDiemTra;
+    // check null beRongMatDuong
+    if (beRongMatDuong != null) data['beRongMatDuong'] = beRongMatDuong;
 
-    // check null hinhAnhBaoGia
-    if (hinhAnhBaoGia != null) data['hinhAnhBaoGia'] = hinhAnhBaoGia;
+    // check null hinhAnhBaoGias
+    if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;
 
     // check null phiDichVu
     if (phiDichVu != null) data['phiDichVu'] = phiDichVu;
@@ -280,6 +300,8 @@ class DonDichVuRequest {
     if (tienCoc != null) data['tienCoc'] = tienCoc;
     // check dịa chi cụ the
     if (diaChiCuThe != null) data['diaChiCuThe'] = diaChiCuThe;
+    if (idLoaiCongViec != null) data['idLoaiCongViec'] = idLoaiCongViec;
+    if (idTaiKhoanNhanDon != null) data['idTaiKhoanNhanDon'] = idTaiKhoanNhanDon;
     return data;
   }
 }
