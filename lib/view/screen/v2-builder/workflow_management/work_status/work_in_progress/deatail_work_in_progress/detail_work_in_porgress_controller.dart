@@ -112,37 +112,48 @@ class V2DetailWorkInProgressController extends GetxController {
         }
         for (final element in models) {
           // lấy hình ảnh báo giá
-          urlHinhAnhKhoiLuongList.addAll(
-            element.idDonDichVu!.hinhAnhBanKhoiLuongs!,
-          );
-          urlHinhAnhBangVeList.addAll(
-            element.idDonDichVu!.hinhAnhBanVes!,
-          );
+          donDichVuProvider.find(
+            id: element.idDonDichVu.toString(),
+            onSuccess: (data) {
+              urlHinhAnhKhoiLuongList.addAll(
+                data.hinhAnhBanKhoiLuongs!,
+              );
+              urlHinhAnhBangVeList.addAll(
+                data.hinhAnhBanVes!,
+              );
 
-          // lấy các thông tin về vật tư
-          vatTuProvider.paginate(
-            page: 1,
-            limit: 50,
-            filter: "&idDonDichVu=${element.idDonDichVu!.id}",
-            onSuccess: (vatTuList) {
-              // duyệt vật tư liên quan với id đơn dịch vụ
-              for (final vatTu in vatTuList) {
-                bangKhoiLuongCongViecs.add({
-                  "tencongviec": element.idDonDichVu!.tieuDe!,
-                  "quycach": vatTu.quyCach!,
-                  "mass": vatTu.donGia!,
-                  "unit": vatTu.donVi!,
-                });
-              }
+              // lấy các thông tin về vật tư
+              vatTuProvider.paginate(
+                page: 1,
+                limit: 50,
+                filter: "&idDonDichVu=${element.idDonDichVu.toString()}",
+                onSuccess: (vatTuList) {
+                  // duyệt vật tư liên quan với id đơn dịch vụ
+                  for (final vatTu in vatTuList) {
+                    bangKhoiLuongCongViecs.add({
+                      "tencongviec": data.tieuDe.toString(),
+                      "quycach": vatTu.quyCach!,
+                      "mass": vatTu.donGia!,
+                      "unit": vatTu.donVi!,
+                    });
+                  }
+                  isLoading = false;
+                  update();
+                },
+                onError: (error) {
+                  print(
+                    "TermsAndPolicyController getTermsAndPolicy onError $error",
+                  );
+                },
+              );
+              update();
             },
             onError: (error) {
               print(
-                "TermsAndPolicyController getTermsAndPolicy onError $error",
-              );
+                  "V2DetailWorkInProgressController getBaoGia onError $error");
             },
           );
         }
-        isLoading = false;
         update();
       },
       onError: (error) {

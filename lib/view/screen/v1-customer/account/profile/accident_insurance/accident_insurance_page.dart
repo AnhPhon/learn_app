@@ -24,7 +24,7 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
+                vertical: Dimensions.PADDING_SIZE_SMALL,
               ),
               child: Column(
                 children: [
@@ -84,34 +84,28 @@ class V1AccidentInsurancePage extends GetView<V1AccidentInsuranceController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, .1),
-      child: Container(
-        alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 1),
-        height: DeviceUtils.getScaledHeight(context, .07),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['GT']!,
-              index: 0,
-            ),
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['QL']!,
-              index: 1,
-            ),
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['BT']!,
-              index: 2,
-            ),
-          ],
-        ),
+      height: DeviceUtils.getScaledHeight(context, .07),
+      child: Row(
+        children: [
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['GT']!,
+            index: 0,
+          ),
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['QL']!,
+            index: 1,
+          ),
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['BT']!,
+            index: 2,
+          ),
+        ],
       ),
     );
   }

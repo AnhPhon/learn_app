@@ -192,6 +192,7 @@ class V1CartController extends GetxController {
           donHangRequest.phiVanChuyen = donHangResponse!.phiVanChuyen;
           donHangRequest.soTien = total.toString();
           donHangRequest.tongTien = value['tongTien'].toString();
+          donHangRequest.khuyenMai = value['khuyenMai'].toString();
           donHangRequest.idHinhThucThanhToan =
               app_constants.THANH_TOAN_CHUYEN_KHOAN;
           donHangRequest.idTrangThaiDonHang =

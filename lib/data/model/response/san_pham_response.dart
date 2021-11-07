@@ -138,4 +138,9 @@ class SanPhamResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return ten.toString();
+  }
 }

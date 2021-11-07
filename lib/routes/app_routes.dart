@@ -270,6 +270,7 @@ class AppRoutes {
 
   static const String V4_NOTIFICATION = '/v4_notification';
   static const String V4_DETAIL_NOTIFICATION = '/v4_detail_notification';
+  static const String V4_DETAIL_REPORT = '/v4_detail_report';
 
   //builder
 
@@ -288,6 +289,7 @@ class AppRoutes {
   static const String V3_REVENUE = '/v3_revenue';
   static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
   static const String V3_PRODUCT_ADD = '/v3_product_add';
+  static const String V3_TO_RECEIVE = '/v3_to_receive';
 
   // Builder
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';

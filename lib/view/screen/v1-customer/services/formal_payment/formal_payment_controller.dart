@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/chi_tiet_cong_viec_request.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
@@ -15,6 +17,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 class V1FormalPaymentController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRepository donDichVuRepository = GetIt.I.get<DonDichVuRepository>();
+  ChiTietCongViecProvider chiTietCongViecProvider = GetIt.I.get<ChiTietCongViecProvider>();
   DonDichVuRequest? dichVuRequest;
 
   int formalPaymentGroup = 0;
@@ -88,20 +91,33 @@ class V1FormalPaymentController extends GetxController{
                   dichVuRequest!.khuyenMai = value['khuyenMai'].toString(),
                   dichVuRequest!.tongDon = value['tongTien'].toString(),
                   //insert db
-                  donDichVuRepository.add(dichVuRequest!).then((value) => {
-                        if (value.response.data != null)
-                          {
-                            //Get.back(result: true),
-                            Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
-                            Get.back(),
-                            Get.back(),
-                            Alert.success(
-                                message: 'Tạo đơn thành công'),
+                  dichVuProvider.add(data: dichVuRequest!, onSuccess: (data){
+                      
+                      if (data != null)
+                            {
+                              final ChiTietCongViecRequest chitTietCongViec = ChiTietCongViecRequest();
+                              chitTietCongViec.tenCongViec = dichVuRequest!.tieuDe;
+                              chitTietCongViec.idDonDichVu  = data.id;
+                              chitTietCongViec.donVi = dichVuRequest!.tieuDe!.split('(').last.replaceAll(')', '');
+                              chitTietCongViec.soLuong = dichVuRequest!.soLuongYeuCau;
+                              chiTietCongViecProvider.add(data: chitTietCongViec, onSuccess: (data){
+                                Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                                Get.back();
+                                Get.back();
+                                Alert.success(
+                                    message: 'Tạo đơn thành công');
+                              }, onError: (onError){
+                                Alert.error(message: 'Vui lòng thực hiện lại');
+                                print("V1FormalPaymentController  onClickContinueButton $onError");
+                              });
+                            }
+                          else{
+                            Alert.error(message: 'Vui lòng thực hiện lại');
                           }
-                        else
-                          Alert.error(message: 'Vui lòng thực hiện lại')
-                      })
-                }
+
+                  }, onError: (onError){
+                    print("V1FormalPaymentController  onClickContinueButton $onError");
+                  })}
               //chưa thanh toán
               else if (value != null && value['type'] == 2)
                 {
@@ -112,20 +128,33 @@ class V1FormalPaymentController extends GetxController{
                   dichVuRequest!.khuyenMai = value['khuyenMai'].toString(),
                   dichVuRequest!.tongDon = value['tongTien'].toString(),
                   //insert db
-                  donDichVuRepository.add(dichVuRequest!).then((value) => {
-                        if (value.response.data != null)
-                          {
-                            //Get.back(result: true),
-                            Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
-                            Get.back(),
-                            Get.back(),
-                            Alert.error(
-                                message: 'Tạo đơn thành công'),
+                  dichVuProvider.add(data: dichVuRequest!, onSuccess: (data){
+                      
+                      if (data != null)
+                            {
+                              final ChiTietCongViecRequest chitTietCongViec = ChiTietCongViecRequest();
+                              chitTietCongViec.tenCongViec = dichVuRequest!.tieuDe;
+                              chitTietCongViec.idDonDichVu  = data.id;
+                              chitTietCongViec.donVi = dichVuRequest!.tieuDe!.split('(').last.replaceAll(')', '');
+                              chitTietCongViec.soLuong = dichVuRequest!.soLuongYeuCau;
+                              chiTietCongViecProvider.add(data: chitTietCongViec, onSuccess: (data){
+                                Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD));
+                                Get.back();
+                                Get.back();
+                                Alert.success(
+                                    message: 'Tạo đơn thành công');
+                              }, onError: (onError){
+                                Alert.error(message: 'Vui lòng thực hiện lại');
+                                print("V1FormalPaymentController  onClickContinueButton $onError");
+                              });
+                            }
+                          else{
+                            Alert.error(message: 'Vui lòng thực hiện lại');
                           }
-                        else
-                          {Alert.error(message: 'Vui lòng thực hiện lại')}
-                      })
-                }
+
+                  }, onError: (onError){
+                    print("V1FormalPaymentController  onClickContinueButton $onError");
+                  })}
             });
   }
 

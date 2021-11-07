@@ -153,7 +153,6 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
 
           Future.delayed(Duration.zero, () {
             Get.back();
-            Get.back();
           });
 
         },
@@ -182,7 +181,8 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         loaiCongViecMultiSelectItem = [];
         if (data.isNotEmpty) {
           loaiCongViecResponse = data;
-          loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e, e.tenCongViec.toString())).toList();
+          loaiCongViecMultiSelectItem = loaiCongViecResponse!.map((e) => MultiSelectItem(e,
+e.tenCongViec.toString())).toList();
         }
 
         update();

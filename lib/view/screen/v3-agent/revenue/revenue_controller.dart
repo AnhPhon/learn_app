@@ -2,23 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/response/revenue_data_model.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V3RevenueController extends GetxController {
   //TextEditingController
   final startController = TextEditingController(
     text: DateConverter.estimatedDateOnly(
-      DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(const Duration(days: 7)),
     ),
   );
   final endController = TextEditingController(
     text: DateConverter.estimatedDateOnly(
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .add(const Duration(hours: 15)),
     ),
   );
 
@@ -54,13 +58,16 @@ class V3RevenueController extends GetxController {
   void onInit() {
     super.onInit();
     //binding time range to stamp
-    startStamp = DateConverter.toTimeStamp(
-      DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day - 7),
-    ).toString();
-    endStamp = DateConverter.toTimeStamp(
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-    ).toString();
+    startStamp =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+            .subtract(const Duration(days: 7))
+            .millisecondsSinceEpoch
+            .toString();
+    endStamp =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+            .add(const Duration(hours: 15))
+            .millisecondsSinceEpoch
+            .toString();
 
     //get load data
     getAllOrderInRange();
@@ -90,7 +97,7 @@ class V3RevenueController extends GetxController {
     donHangProvider.paginate(
       page: 1,
       limit: 100,
-      filter: "&idTaiKhoan=$userId&dateStart=$startStamp&dateEnd=$endStamp",
+      filter: "&idTaiKhoan=$userId&idTrangThaiDonHang=$TRANG_THAI_DON_HANG_HOAN_THANH&dateStart=$startStamp&dateEnd=$endStamp",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
@@ -122,8 +129,6 @@ class V3RevenueController extends GetxController {
         //set data
         startStamp = convertToTimeStamp(dateTime: startController.text);
         endStamp = convertToTimeStamp(dateTime: endController.text);
-        print(DateConverter.differenceDate(
-            startDate: startController.text, endDate: endController.text));
         //check time diff
         if (DateConverter.differenceDate(
                 startDate: startController.text, endDate: endController.text) <
@@ -146,16 +151,12 @@ class V3RevenueController extends GetxController {
         //set data
         startStamp = convertToTimeStamp(dateTime: startController.text);
         endStamp = convertToTimeStamp(dateTime: endController.text);
-        print(DateConverter.differenceDate(
-            startDate: startController.text, endDate: endController.text));
         //check time diff
         if (DateConverter.differenceDate(
                 startDate: startController.text, endDate: endController.text) <
             0) {
-          SnackBarUtils.showSnackBar(
-            title: "Vui lòng kiểm tra lại",
-            message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
-          );
+          Alert.error(
+              message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
         } else {
           //reset chart
           getAllOrderInRange();
@@ -172,11 +173,4 @@ class V3RevenueController extends GetxController {
       DateConverter.convertStringddMMyyyyToDate(dateTime),
     ).toString();
   }
-}
-
-class RevenueData {
-  RevenueData({this.unit, this.money, this.color});
-  String? unit;
-  double? money;
-  Color? color;
 }

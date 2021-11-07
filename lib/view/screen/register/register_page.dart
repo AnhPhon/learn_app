@@ -206,26 +206,15 @@ class RegisterPage extends GetView<RegisterController> {
                       obligatory: true,
                       typeInput: TextInputType.emailAddress,
                       width: DeviceUtils.getScaledWidth(context, 1),
-                    ),
+                    ), 
 
-                    // Khu vực tham gia chọn nhiều
-                    // DropDownButton<LoaiTaiKhoanResponse>(
-                    //   data: controller.loaiTaiKhoans,
-                    //   obligatory: true,
-                    //   onChanged: (value) =>
-                    //       controller.onLoaiTaikhoanChange(value!),
-                    //   value: controller.loaiTaiKhoan,
-                    //   width: DeviceUtils.getScaledSize(context, 1),
-                    //   label: "Khu vực tham gia chọn nhiều ",
-                    //   hint: "Khu vực tham gia",
-                    //   padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
-                    // ),
                     const Label(label: "Khu vực tham gia chọn nhiều", obligatory: true),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                       child: MultiSelectDialogField(
+                        searchable: true,
                         listType: MultiSelectListType.LIST,
                         buttonIcon: const Icon(Icons.arrow_drop_down),
                         items: controller.multipSelecteProvince,

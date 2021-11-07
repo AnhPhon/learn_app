@@ -41,7 +41,12 @@ class V4HomePage extends GetView<V4HomeController> {
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // time keeping
-                  _btnTimekeeping(context),
+                  if (controller.isSelected == true)
+                    _btnTimed(context)
+                  else if (controller.isReport == true)
+                    _btnReported(context)
+                  else
+                    _btnTimekeeping(context),
                   const SizedBox(height: Dimensions.MARGIN_SIZE_LARGE),
 
                   // _followWorkProgressWidget
@@ -81,14 +86,23 @@ class V4HomePage extends GetView<V4HomeController> {
   ///
   Widget _notificateLabel() {
     return Container(
-      alignment: Alignment.centerLeft,
-      child: const Text(
-        'Chủ nhật, ngày 26 tháng 9 năm 2021. \nBạn chưa chấm công, vui lòng nhấn nút nhé!',
-        style: TextStyle(
+      alignment: Alignment.center,
+      child: Text(
+        // ignore: prefer_interpolation_to_compose_strings
+        controller.thu +
+            ", "
+                "ngày " +
+            controller.ngay +
+            " tháng " +
+            controller.thang +
+            " năm " +
+            controller.nam +
+            "\nBạn chưa chấm công, vui lòng nhấn nút nhé!",
+        style: const TextStyle(
           color: Color(0xff2A3547),
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-          fontWeight: FontWeight.bold,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -125,6 +139,58 @@ class V4HomePage extends GetView<V4HomeController> {
   }
 
   ///
+  /// button đã chấm công
+  ///
+  Widget _btnTimed(BuildContext context) {
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: ColorResources.GREY,
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+      ),
+      child: const Center(
+        child: Text(
+          "Đã chấm công",
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// button đã báo cáo
+  ///
+  Widget _btnReported(BuildContext context) {
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: ColorResources.GREY,
+        borderRadius:
+            BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+      ),
+      child: const Center(
+        child: Text(
+          "Đã báo cáo",
+          style: TextStyle(
+            fontSize: Dimensions.FONT_SIZE_LARGE,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
   /// follow work progress
   ///
   Widget _followWorkProgressWidget(BuildContext context) {
@@ -147,7 +213,7 @@ class V4HomePage extends GetView<V4HomeController> {
                 fontWeight: FontWeight.bold),
           ),
           Container(
-            height: DeviceUtils.getScaledHeight(context, .3),
+            height: DeviceUtils.getScaledHeight(context, .33),
             child: GridView.builder(
               padding: const EdgeInsets.symmetric(
                 vertical: Dimensions.MARGIN_SIZE_DEFAULT,

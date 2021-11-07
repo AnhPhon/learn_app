@@ -4,6 +4,8 @@ import 'package:template/view/screen/v3-agent/entertainment/entertainment_contro
 import 'package:template/view/screen/v3-agent/home/home_controller.dart';
 import 'package:template/view/screen/v3-agent/news/news_controller.dart';
 import 'package:template/view/screen/v3-agent/project/project_controller.dart';
+import 'package:template/view/screen/v3-agent/quote/bao_gia_don_hang/quote_phan_hoi_bao_gia_controller.dart';
+import 'package:template/view/screen/v3-agent/quote/list/quote_list_controller.dart';
 
 class V3DashboardBinding extends Bindings {
   @override
@@ -13,5 +15,8 @@ class V3DashboardBinding extends Bindings {
     Get.lazyPut<V3EntertainmentController>(() => V3EntertainmentController());
     Get.lazyPut<V3NewsController>(() => V3NewsController());
     Get.lazyPut<V3AccountController>(() => V3AccountController());
+    Get.lazyPut<V3QuoteListController>(() => V3QuoteListController());
+    Get.lazyPut<V3QuotePhanHoiBaoGiaController>(
+        () => V3QuotePhanHoiBaoGiaController());
   }
 }

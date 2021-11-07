@@ -105,21 +105,32 @@ const String TUYEN_DUNG_CHUA_THANH_TOAN = '61615180e87a9124404abe82';
 
 const String THANH_TOAN_CHUYEN_KHOAN = '616120008c19c11eb11f862a';
 const String THANH_TOAN_KHI_NHAN_HANG = '616cd5d67aade64ebae7c01c';
+
 //Nhóm dịch vụ
 
-const String NHOM_1 = '616cd0267aade64ebae7bd81';
-const String NHOM_2 = '6168ecdd7cb8ed05dbf3bba5';
-const String NHOM_3 = '61693a7c3391622ae9201fe7';
-const String NHOM_4 = '616049b2c8e6fa122227e283';
-const String NHOM_5 = '616049b6c8e6fa122227e286';
-const String NHOM_6 = '616049bac8e6fa122227e289';
-const String NHOM_7 = '6168f03c7cb8ed05dbf3bcc7';
-
-// Trạng thái tuyển dụng tin chưa duyệt
+const String NHOM_DICH_VU_1 = '616cd0267aade64ebae7bd81';
+const String NHOM_DICH_VU_2 = '6168ecdd7cb8ed05dbf3bba5';
+const String NHOM_DICH_VU_3 = '61693a7c3391622ae9201fe7';
+const String NHOM_DICH_VU_4 = '616049b2c8e6fa122227e283';
+const String NHOM_DICH_VU_5 = '616049b6c8e6fa122227e286';
+const String NHOM_DICH_VU_6 = '616049bac8e6fa122227e289';
+const String NHOM_DICH_VU_7 = '6168f03c7cb8ed05dbf3bcc7';
 const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
+
+//trang thai don hang moi tao
+const String TRANG_THAI_DON_HANG_MOI_TAO = '616a39faea30f845b562876d';
+
+//trang thai don hang hoan thanh
+const String TRANG_THAI_DON_HANG_HOAN_THANH = '6169a7843391622ae92038ef';
 
 //tình trạng sản phẩm
 const dynamic TINH_TRANG_SAN_PHAM = {
   "0": "Mới",
   "1": "Thanh lý",
+};
+
+//kiểu vận chuyển
+const Map<String, String> KIEU_VAN_CHUYEN = {
+  "0": "Không giao đc qua các đơn vị giao hàng (tự vận chuyển)",
+  "1": "Giao đc qua các đơn vị giao hàng",
 };

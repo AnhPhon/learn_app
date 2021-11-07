@@ -122,6 +122,7 @@ class DropDownMapButton<T> extends StatelessWidget {
                           style: TextStyle(color: colorText),
                           value: value,
                           isDense: true,
+                          isExpanded: true,
                           onChanged: onChanged,
                           items: data.entries
                               .map((item) => DropdownMenuItem<T>(

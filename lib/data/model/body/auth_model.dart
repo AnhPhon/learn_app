@@ -47,7 +47,6 @@ class AuthModel {
   String? refresh;
   String? resetPasswordToken;
 
-
   AuthModel(
       {this.id,
       this.idRole,
@@ -101,7 +100,7 @@ class AuthModel {
     // } else {
     //   idRole = null;
     // }
-    if(json['idRole'] != null){
+    if (json['idRole'] != null) {
       idRole = json['idRole'].toString();
     }
     tinhTpHoatDong = json['tinhTpHoatDong'].toString();
@@ -166,7 +165,6 @@ class AuthModel {
     access = json['access'].toString();
     refresh = json['refresh'].toString();
     hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
-
   }
 
   ///

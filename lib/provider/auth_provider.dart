@@ -24,7 +24,34 @@ class AuthProvider with ChangeNotifier {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await authRepository!.login(request);
-    if(apiResponse.response.statusCode == null){
+    if (apiResponse.response.statusCode == null) {
+      onError(apiResponse.error);
+    }
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data as dynamic;
+      final AuthModel authResponse =
+          AuthModel.fromJson(results['nhanVien'] as Map<String, dynamic>);
+      authResponse.access = results['tokens']['access']['token'].toString();
+      authResponse.refresh = results['tokens']['refresh']['token'].toString();
+      onSuccess(authResponse);
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// login to salary with employee
+  ///
+  Future<void> loginToSalaryInEmployee({
+    required AuthRequest request,
+    required Function(AuthModel auth) onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse =
+        await authRepository!.loginSalaryInEmployee(request);
+    if (apiResponse.response.statusCode == null) {
       onError(apiResponse.error);
     }
     if (apiResponse.response.statusCode! >= 200 &&
@@ -65,7 +92,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   /// Dăng nhập bằng ttài khoản (SĐT)
-  
+
   ///
   /// Dăng nhập bằng ttài khoản (SĐT)
   ///
@@ -75,7 +102,7 @@ class AuthProvider with ChangeNotifier {
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await authRepository!.loginAccount(request);
-    if(apiResponse.response.statusCode == null){
+    if (apiResponse.response.statusCode == null) {
       onError(apiResponse.error);
       //EasyLoading.dismiss();
     }
@@ -83,8 +110,8 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      final TaiKhoanResponse account =
-          TaiKhoanResponse.fromJson(results['taiKhoan'] as Map<String, dynamic>);
+      final TaiKhoanResponse account = TaiKhoanResponse.fromJson(
+          results['taiKhoan'] as Map<String, dynamic>);
       account.access = results['tokens']['access']['token'].toString();
       account.refresh = results['tokens']['refresh']['token'].toString();
       onSuccess(account);
@@ -92,6 +119,7 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
+
   ///
   /// Đăng ký tài khoản (SĐT)
   ///
@@ -100,8 +128,9 @@ class AuthProvider with ChangeNotifier {
     required Function(TaiKhoanResponse auth) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await authRepository!.registerAccount(request);
-    if(apiResponse.response.statusCode == null){
+    final ApiResponse apiResponse =
+        await authRepository!.registerAccount(request);
+    if (apiResponse.response.statusCode == null) {
       onError(apiResponse.error);
       //EasyLoading.dismiss();
     }
@@ -109,8 +138,8 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      final TaiKhoanResponse account =
-          TaiKhoanResponse.fromJson(results['taiKhoan'] as Map<String, dynamic>);
+      final TaiKhoanResponse account = TaiKhoanResponse.fromJson(
+          results['taiKhoan'] as Map<String, dynamic>);
       account.access = results['tokens']['access']['token'].toString();
       account.refresh = results['tokens']['refresh']['token'].toString();
       onSuccess(account);
@@ -127,7 +156,8 @@ class AuthProvider with ChangeNotifier {
     required Function(bool status) onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await authRepository!.logoutAccount(request);
+    final ApiResponse apiResponse =
+        await authRepository!.logoutAccount(request);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -136,6 +166,7 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
+
   ///
   /// Quên mật khẩu
   ///
@@ -151,13 +182,15 @@ class AuthProvider with ChangeNotifier {
       final results = apiResponse.response.data as dynamic;
       // final TaiKhoanResponse account = TaiKhoanResponse();
       // account.resetPasswordToken= results['resetPasswordToken'].toString();
-      final String resetPasswordToken = results['resetPasswordToken'].toString();
+      final String resetPasswordToken =
+          results['resetPasswordToken'].toString();
       print("Token: ${results['otp'].toString()}");
       onSuccess(resetPasswordToken);
     } else {
       onError(apiResponse.error);
     }
   }
+
   ///
   /// Verify OTP
   ///
@@ -177,6 +210,7 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
+
   ///
   /// reset passowrd
   ///
@@ -185,7 +219,8 @@ class AuthProvider with ChangeNotifier {
     required Function() onSuccess,
     required Function(dynamic error) onError,
   }) async {
-    final ApiResponse apiResponse = await authRepository!.resetPassword(request);
+    final ApiResponse apiResponse =
+        await authRepository!.resetPassword(request);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -194,6 +229,7 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
+
   ///
   /// send otp
   ///
@@ -213,5 +249,4 @@ class AuthProvider with ChangeNotifier {
       onError(apiResponse.error);
     }
   }
-
 }

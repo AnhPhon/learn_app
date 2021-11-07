@@ -27,6 +27,7 @@ class InputField extends StatelessWidget {
       this.isColorFieldWhite,
       this.focusNode,
       this.padding,
+      this.isDecimal = false,
       required this.fontSize});
   final String label, holdplacer;
   final TextEditingController controller;
@@ -43,6 +44,7 @@ class InputField extends StatelessWidget {
   bool? boldHinText;
   final bool? isColorFieldWhite;
   final bool? isFormatCurrency;
+  final bool? isDecimal;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? padding;
 
@@ -91,7 +93,7 @@ class InputField extends StatelessWidget {
                       ? [
                           ThousandsSeparatorInputFormatterCurrency(),
                         ]
-                      : [FilteringTextInputFormatter.digitsOnly]
+                      : isDecimal! ? null : [FilteringTextInputFormatter.digitsOnly]
                   : null,
               textInputAction: textInputAction,
               keyboardType: typeInput,

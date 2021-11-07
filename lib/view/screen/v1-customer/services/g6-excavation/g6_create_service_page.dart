@@ -176,6 +176,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           hidden: false,
           label: "Bề rộng mặt đường làm việc(m)",
           obligatory: false,
+          isDecimal: true,
           typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context,1),
         ),

@@ -7,13 +7,13 @@ class BaoCaoNhanVienRequest {
   String? noiDung;
 
   BaoCaoNhanVienRequest({
-      this.id,
-      this.idNhanVien,
-      this.idDuAnNhanVien,
-      this.loai,
-      this.soTuan,
-      this.noiDung});
-  
+    this.id,
+    this.idNhanVien,
+    this.idDuAnNhanVien,
+    this.loai,
+    this.soTuan,
+    this.noiDung});
+
   ///
   /// From JSON
   ///
@@ -32,22 +32,22 @@ class BaoCaoNhanVienRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idNhanVien
-    if (idNhanVien != null) data['idNhanVien'] = idNhanVien; 
+    if (idNhanVien != null) data['idNhanVien'] = idNhanVien;
 
     // check null idDuAnNhanVien
-    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien; 
+    if (idDuAnNhanVien != null) data['idDuAnNhanVien'] = idDuAnNhanVien;
 
     // check null loai
-    if (loai != null) data['loai'] = loai; 
+    if (loai != null) data['loai'] = loai;
 
     // check null soTuan
-    if (soTuan != null) data['soTuan'] = soTuan; 
+    if (soTuan != null) data['soTuan'] = soTuan;
 
     // check null noiDung
-    if (noiDung != null) data['noiDung'] = noiDung; 
+    if (noiDung != null) data['noiDung'] = noiDung;
 
 
     return data;
