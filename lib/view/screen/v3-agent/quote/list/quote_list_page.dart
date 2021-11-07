@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/card/bao_gia_card.dart';
@@ -10,29 +11,45 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Danh sách báo giá đơn hàng"),
+      appBar: AppBarWidget(title: controller.title),
       body: GetBuilder<V3QuoteListController>(
         init: V3QuoteListController(),
         builder: (V3QuoteListController controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           return SizedBox(
             height: double.infinity,
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: controller.donDichVus.length,
               shrinkWrap: true,
               itemBuilder: (
                 BuildContext ctx,
                 index,
               ) {
+                final DonDichVuResponse donDichVuResponse =
+                    controller.donDichVus[index];
                 return BaoGiaCard(
-                  donHangName: "Cần báo giá vật liệu cát, xi, đá, gạch xây",
-                  donHangId: "ĐH123456",
-                  time: "12:00pm",
-                  date: "20/09/2021 ",
-                  label: "Thợ ốp lát",
-                  content: "Công trình khách 5 sao",
-                  locationName: "Đà Nẵng",
-                  image: Images.location_example,
+                  donHangName: donDichVuResponse.tieuDe.toString(),
+                  donHangId: "BH${donDichVuResponse.id!.substring(0, 6)}",
+                  time:
+                      donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  date:
+                      donDichVuResponse.ngayKetThuc.toString().substring(0, 10),
+                  label: donDichVuResponse.tieuDe!,
+                  content: donDichVuResponse.moTa!,
+                  locationName: donDichVuResponse.diaDiemBocHang.toString(),
+                  image: donDichVuResponse.hinhAnhBaoGia == null
+                      ? Images.location_example
+                      : donDichVuResponse.hinhAnhBaoGia!,
                   onTap: () {
+                    controller.onYeuCauBaoGiaPageClick(
+                        controller.danhSachBaoGiaDonDichVuResponse[index].id
+                            .toString(),
+                        donDichVuResponse.id.toString());
                   },
                 );
               },
@@ -44,5 +61,4 @@ class V3QuoteListPage extends GetView<V3QuoteListController> {
   }
 }
 
-mixin V3_QUOTE_REQUEST {
-}
+mixin V3_QUOTE_REQUEST {}

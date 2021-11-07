@@ -9,7 +9,6 @@ import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
 import 'package:template/data/repository/bang_gia_loc_ho_so_repository.dart';
 import 'package:template/data/repository/bang_luong_repository.dart';
 import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
-import 'package:template/data/repository/bao_hiem_repository.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 import 'package:template/data/repository/chi_tiet_don_hang_repository.dart';
 import 'package:template/data/repository/chi_tiet_vat_tu_repository.dart';
@@ -96,7 +95,6 @@ import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
 import 'package:template/provider/bang_gia_phi_van_chuyen_provider.dart';
 import 'package:template/provider/bang_luong_provider.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
-import 'package:template/provider/bao_hiem_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
@@ -205,6 +203,8 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => AuthRepository());
+  sl.registerLazySingleton(() => TinTucRepository());
+  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   sl.registerLazySingleton(() => BangBangCapRepository());
   sl.registerLazySingleton(() => BangGiaDangTinRepository());
   sl.registerLazySingleton(() => BangGiaDonHangRepository());
@@ -219,7 +219,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChuyenMonRepository());
   sl.registerLazySingleton(() => ChuyenNganhChinhRepository());
   sl.registerLazySingleton(() => DangKyBaoHiemRepository());
-  sl.registerLazySingleton(() => BaoHiemRepository());
   sl.registerLazySingleton(() => HangMucXayDungRepository());
   sl.registerLazySingleton(() => LoaiCongViecRepository());
   sl.registerLazySingleton(() => NhomDichVuRepository());
@@ -228,8 +227,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => PhuongXaRepository());
   sl.registerLazySingleton(() => TaiKhoanRepository());
   sl.registerLazySingleton(() => DonDichVuRepository());
-  sl.registerLazySingleton(() => TinTucRepository());
-  sl.registerLazySingleton(() => DanhMucTinTucRepository());
   sl.registerLazySingleton(() => CongViecNhanVienRepository());
   sl.registerLazySingleton(() => KhoHangRepository());
   sl.registerLazySingleton(() => ThuChiNhanVienRepository());
@@ -315,7 +312,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ChuyenNganhChinhProvider());
   sl.registerLazySingleton(() => CongViecNhanVienProvider());
   sl.registerLazySingleton(() => DangKyBaoHiemProvider());
-  sl.registerLazySingleton(() => BaoHiemProvider());
   sl.registerLazySingleton(() => HangMucXayDungProvider());
   sl.registerLazySingleton(() => LoaiCongViecProvider());
   sl.registerLazySingleton(() => NhomDichVuProvider());
