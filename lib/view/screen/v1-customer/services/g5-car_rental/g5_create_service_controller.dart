@@ -201,7 +201,7 @@ class V1G5CreateServiceController extends GetxController{
       dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
       dichVuRequest.moTaChiTiet = workDescController.text.toString();
       // trạng thái đơn
-      dichVuRequest.idTrangThaiDonHang = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
       dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
       
       if(amountController.text.toString().isNotEmpty){
