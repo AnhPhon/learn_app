@@ -227,7 +227,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                     TextHighlight(
                                         title: "Khối lượng:",
                                         content: controller.workMass[index].idVatTu == null ? '': 
-                                            controller.workMass[index].idVatTu!.khoiLuong ?? ''),
+                                            controller.workMass[index].soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
                                         content: controller.workMass[index].idVatTu == null ? '': 
