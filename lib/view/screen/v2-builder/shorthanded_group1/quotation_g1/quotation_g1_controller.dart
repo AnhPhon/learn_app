@@ -59,10 +59,16 @@ class V2QuotationG1Controller extends GetxController {
     Future.delayed(Duration.zero, () {});
   }
 
+  ///
+  /// Dinh dang ngay thang nam
+  ///
   String getDateOutput(String dateString) {
     return DateConverter.isoStringToddMMYYYY(dateString.toString());
   }
 
+  ///
+  /// Dinh dang ten file da upload
+  ///
   String getFileNameBaoGia() {
     if (danhSachBaoGiaDonDichVuRequest.file != null &&
         danhSachBaoGiaDonDichVuRequest.file!.isNotEmpty &&

@@ -11,6 +11,7 @@ import 'package:template/routes/app_routes.dart';
 
 class V2ShorthandedGroup1Controller extends GetxController {
   String title = "Công việc đang cần người";
+
   //
   // String urlImage = "https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg";
   //
@@ -28,7 +29,8 @@ class V2ShorthandedGroup1Controller extends GetxController {
   VatTuProvider vatTuProvider = GetIt.I.get<VatTuProvider>();
   List<VatTuResponse>? vatTuResponse;
 
-  ChiTietVatTuProvider chiTietVatTuProvider = GetIt.I.get<ChiTietVatTuProvider>();
+  ChiTietVatTuProvider chiTietVatTuProvider =
+      GetIt.I.get<ChiTietVatTuProvider>();
   List<ChiTietVatTuResponse>? chiTietVatTuResponse;
 
   bool flagSeeMore = false;
@@ -64,13 +66,15 @@ class V2ShorthandedGroup1Controller extends GetxController {
       id: idDonDichVu.toString(),
       onSuccess: (data) {
         donDichVuResponse = data;
-        print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.toJson()}');
+        print(
+            'V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.toJson()}');
         // print('V2ShorthandedGroup1Controller getDetailDonDichVu onSuccess ${donDichVuResponse!.idBangGiaDonHang!.toJson()}');
         update();
         getListChiTietVatTu();
       },
       onError: (error) {
-        print('V2ShorthandedGroup1Controller getDetailDonDichVu onError $error');
+        print(
+            'V2ShorthandedGroup1Controller getDetailDonDichVu onError $error');
       },
     );
   }
@@ -83,11 +87,13 @@ class V2ShorthandedGroup1Controller extends GetxController {
       filter: '&idDonDichVu=${idDonDichVu.toString()}',
       onSuccess: (data) {
         chiTietVatTuResponse = data;
-        print('V2ShorthandedGroup1Controller getListChiTietVatTu onSuccess ${chiTietVatTuResponse}');
+        print(
+            'V2ShorthandedGroup1Controller getListChiTietVatTu onSuccess ${chiTietVatTuResponse}');
         update();
       },
       onError: (error) {
-        print('V2ShorthandedGroup1Controller getListChiTietVatTu onError $error');
+        print(
+            'V2ShorthandedGroup1Controller getListChiTietVatTu onError $error');
       },
     );
   }
@@ -98,7 +104,9 @@ class V2ShorthandedGroup1Controller extends GetxController {
   void onQuotationG1PageClick() {
     Get.toNamed(
       AppRoutes.V2_QUOTATION_GROUP1,
-      arguments: {'id': idDonDichVu.toString(),},
+      arguments: {
+        'id': idDonDichVu.toString(),
+      },
     );
   }
 

@@ -139,7 +139,7 @@ class GiaCongViecRequest {
   GiaCongViecRequest.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
     idChiTietCongViec = json['idChiTietCongViec'].toString();
-    donGia = json['idTaiKhoanBaoGia'].toString();
+    donGia = json['donGia'].toString();
   }
 
   ///
