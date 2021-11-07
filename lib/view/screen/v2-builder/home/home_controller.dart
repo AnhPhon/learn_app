@@ -161,11 +161,13 @@ class V2HomeController extends GetxController {
   ///
   void _loadCongViecDangCanNguoi(String idNguoiDung) {
     print("&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc");
+    // print("&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc");
     donDichVuList.clear();
     _donDichVuProvider.paginate(
       page: 1,
       limit: 30,
-      filter: "&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc",
+      // filter: "&idTaiKhoan=$idNguoiDung&sortBy=created_at:desc",
+      filter: "&sortBy=created_at:desc",
       onSuccess: (values) {
         for (final value in values) {
           final int index = idCongViecDangCanNguoiList!

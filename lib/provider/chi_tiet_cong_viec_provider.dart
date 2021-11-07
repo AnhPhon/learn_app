@@ -1,22 +1,23 @@
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_request.dart';
-import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
+import 'package:template/data/model/request/bang_gia_don_hang_request.dart';
+import 'package:template/data/model/request/chi_tiet_cong_viec_request.dart';
+import 'package:template/data/model/response/bang_gia_don_hang_response.dart';
 import 'package:template/data/model/response/base/api_response.dart';
-import 'package:template/data/repository/danh_sach_bao_gia_don_dich_vu_repository.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
+import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
+import 'package:template/data/repository/chi_tiet_cong_viec_repository.dart';
 
-class DanhSachBaoGiaDonDichVuProvider {
-  DanhSachBaoGiaDonDichVuRepository? repository =
-      GetIt.I.get<DanhSachBaoGiaDonDichVuRepository>();
+class ChiTietCongViecProvider {
+  ChiTietCongViecRepository? repository =
+      GetIt.I.get<ChiTietCongViecRepository>();
 
-  DanhSachBaoGiaDonDichVuProvider();
+  ChiTietCongViecProvider();
 
   ///
-  /// Get all danhSachBaoGiaDonDichVus
+  /// Get all ChiTietCongViecs
   ///
   Future<void> all({
-    required Function(
-            List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVus)
-        onSuccess,
+    required Function(List<ChiTietCongViecResponse> ChiTietCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.get();
@@ -25,8 +26,8 @@ class DanhSachBaoGiaDonDichVuProvider {
       // call back data success
       final results = apiResponse.response.data as List<dynamic>;
       onSuccess(results
-          .map((e) => DanhSachBaoGiaDonDichVuResponse.fromJson(
-              e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -34,35 +35,31 @@ class DanhSachBaoGiaDonDichVuProvider {
   }
 
   ///
-  /// Insert danhSachBaoGiaDonDichVu to database
+  /// Insert ChiTietCongViec to database
   ///
   Future<void> add({
-    required DanhSachBaoGiaDonDichVuRequest data,
-    required Function(DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVu)
-        onSuccess,
+    required ChiTietCongViecRequest data,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.add(data);
-    print('apiResponse $apiResponse');
-    print('apiResponse ${apiResponse.response}');
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhSachBaoGiaDonDichVuRequest.fromJson(
-          results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Update danhSachBaoGiaDonDichVu to database
+  /// Update ChiTietCongViec to database
   ///
   Future<void> update({
-    required DanhSachBaoGiaDonDichVuRequest data,
-    required Function(DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVu)
-        onSuccess,
+    required ChiTietCongViecRequest data,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.update(data);
@@ -70,20 +67,19 @@ class DanhSachBaoGiaDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhSachBaoGiaDonDichVuRequest.fromJson(
-          results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Delete danhSachBaoGiaDonDichVu to database
+  /// Delete ChiTietCongViec to database
   ///
   Future<void> delete({
     required String id,
-    required Function(DanhSachBaoGiaDonDichVuRequest danhSachBaoGiaDonDichVu)
-        onSuccess,
+    required Function(ChiTietCongViecRequest ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.delete(id);
@@ -91,23 +87,21 @@ class DanhSachBaoGiaDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhSachBaoGiaDonDichVuRequest.fromJson(
-          results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecRequest.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }
   }
 
   ///
-  /// Get paginate danhSachBaoGiaDonDichVus "page": 1, "limit": 10
+  /// Get paginate ChiTietCongViecs "page": 1, "limit": 10
   ///
   Future<void> paginate({
     required int page,
     required int limit,
     required String filter,
-    required Function(
-            List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVus)
-        onSuccess,
+    required Function(List<ChiTietCongViecResponse> ChiTietCongViecs) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
@@ -119,8 +113,8 @@ class DanhSachBaoGiaDonDichVuProvider {
           ? apiResponse.response.data['results'] as List<dynamic>
           : [];
       onSuccess(results
-          .map((e) => DanhSachBaoGiaDonDichVuResponse.fromJson(
-              e as Map<String, dynamic>))
+          .map(
+              (e) => ChiTietCongViecResponse.fromJson(e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);
@@ -128,12 +122,11 @@ class DanhSachBaoGiaDonDichVuProvider {
   }
 
   ///
-  /// Delete danhSachBaoGiaDonDichVu to database
+  /// Delete ChiTietCongViec to database
   ///
   Future<void> find({
     required String id,
-    required Function(DanhSachBaoGiaDonDichVuResponse danhSachBaoGiaDonDichVu)
-        onSuccess,
+    required Function(ChiTietCongViecResponse ChiTietCongViec) onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse = await repository!.find(id);
@@ -141,8 +134,8 @@ class DanhSachBaoGiaDonDichVuProvider {
         apiResponse.response.statusCode! <= 300) {
       // call back data success
       final results = apiResponse.response.data as dynamic;
-      onSuccess(DanhSachBaoGiaDonDichVuResponse.fromJson(
-          results as Map<String, dynamic>));
+      onSuccess(
+          ChiTietCongViecResponse.fromJson(results as Map<String, dynamic>));
     } else {
       onError(apiResponse.error);
     }

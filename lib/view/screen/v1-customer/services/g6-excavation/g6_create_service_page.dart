@@ -172,10 +172,11 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowMultiline: false,
           controller: controller.workWidthController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "100",
+          holdplacer: "5.5m",
           hidden: false,
           label: "Bề rộng mặt đường làm việc(m)",
           obligatory: false,
+          isDecimal: true,
           typeInput: TextInputType.number,
           width: DeviceUtils.getScaledWidth(context,1),
         ),
@@ -188,7 +189,7 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
           allowMultiline: true,
           controller: controller.workDescController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "Diện tích móng/ móng đơn bằng 1/2 phương bằng 2 phương",
+          holdplacer: "Diện tích móng (DxR);Móng đơn/bằng 1/2 phương bằng 2 phương;Độ sâu của móng;Đất chở đi hay để lại 1 bên; Có đắp đất lại không ?;Đào 1 lần hay 2 lần?.../Nội dung khác",
           hidden: false,
           label: "Miêu tả yêu cầu công việc cụ thể",
           obligatory: true,
@@ -216,7 +217,12 @@ class V1G6CreateServicePage extends GetView<V1G6CreateServiceController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.productImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.productImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.productImages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.productImages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );

@@ -279,6 +279,8 @@ class DangKyViecMoiRequest {
     // if (anhBangCaps != null) {
     //   data['anhBangCaps'] = anhBangCaps;
     // }
+    // check null idNhomDichVu
+    if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 
     // tieuDeSearch
     return data;

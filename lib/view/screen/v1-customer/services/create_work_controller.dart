@@ -15,8 +15,8 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/snack_bar.dart';
 import '../../../../di_container.dart';
 
 class CreateWorkController extends GetxController {
@@ -74,17 +74,17 @@ class CreateWorkController extends GetxController {
     // Nếu tạo công việc chỉ có mhóm 1, 2 , 5 ,6
     if (Get.arguments != null) {
       services = Get.arguments as SERVICES;
+
+      /// Change Title App bar
+      if (services == SERVICES.REGULARLY) {
+        titleAppBar = "Dịch vụ thường xuyên";
+      } else if (services == SERVICES.WORK) {
+        titleAppBar = 'Tạo đơn công việc';
+      }
     }
     getNhomDichVu();
     getTinhThanh();
     getUserId();
-
-    /// Change Title App bar
-    if (services == SERVICES.REGULARLY) {
-      titleAppBar = "Dịch vụ thường xuyên";
-    } else if (services == SERVICES.WORK) {
-      titleAppBar = 'Tạo đơn công việc';
-    }
   }
 
   Future<void> getUserId() async {
@@ -114,6 +114,14 @@ class CreateWorkController extends GetxController {
   /// Thay đổi radio button
   ///
   void onChangedGroup(int val) {
+    khacHuyen = null;
+    khacPhuong = null;
+    haNoiHuyen = null;
+    haNoiPhuong = null;
+    daNangHuyen = null;
+    daNangPhuong = null;
+    hcmHuyen = null;
+    hcmPhuong = null;
     groupTinhTpValue = val;
     if (groupTinhTpValue == 3) {
       khacHuyen = null;
@@ -205,10 +213,7 @@ class CreateWorkController extends GetxController {
     }, onError: (error) {
       isLoadingNhomDichVu = false;
       update();
-      SnackBarUtils.showSnackBar(
-        title: "Error",
-        message: error.message.toString(),
-      );
+      print('getNhomDichVu CreateWorkController $error');
     });
   }
 
@@ -232,10 +237,6 @@ class CreateWorkController extends GetxController {
         onError: (error) {
           print("CreateWorkController getLoaiCongViec onError $error");
           update();
-          SnackBarUtils.showSnackBar(
-            title: "Error",
-            message: error.message.toString(),
-          );
         });
   }
 
@@ -354,40 +355,31 @@ class CreateWorkController extends GetxController {
   ///
   void onClickContinue() async {
     if (dichvu == null) {
-      SnackBarUtils.showSnackBar(
-          title: "Nhóm dich vụ bắt buộc", message: "Vui lòng chọn dịch vụ");
+      Alert.error(message: "Vui lòng chọn dịch vụ");
       return;
     } else if (hcmProvince == null &&
         otherProvince == null &&
         haNoiProvince == null &&
         daNangProvince == null) {
-      SnackBarUtils.showSnackBar(
-          title: "Trường tỉnh bắt buộc", message: "Vui lòng chọn tỉnh");
+      Alert.error(message: "Vui lòng chọn tỉnh");
       return;
     } else if (hcmHuyen == null &&
         khacHuyen == null &&
         haNoiHuyen == null &&
         daNangHuyen == null) {
-      SnackBarUtils.showSnackBar(
-          title: "Trường quận huyện bắt buộc",
-          message: "Vui lòng chọn quận huyện");
+      Alert.error(message: "Vui lòng chọn quận huyện");
       return;
     } else if (hcmPhuong == null &&
         khacPhuong == null &&
         haNoiPhuong == null &&
         daNangPhuong == null) {
-      SnackBarUtils.showSnackBar(
-          title: "Trường phường xã bắt buộc", message: "Vui lòng phường xã");
+      Alert.error(message: "Vui lòng phường xã");
       return;
     } else if (loaiCongViec == null) {
-      SnackBarUtils.showSnackBar(
-          title: "Trường công việc bắt buộc",
-          message: "Vui lòng chọn công việc");
+      Alert.error(message: "Vui lòng chọn công việc");
       return;
     } else if (addressController.text.toString().isEmpty) {
-      SnackBarUtils.showSnackBar(
-          title: "Trường địa chỉ bắt buộc",
-          message: "Vui lòng điền địa chỉ cụ thể");
+      Alert.error(message: "Vui lòng điền địa chỉ cụ thể");
       return;
     } else {
       if (dichvu!.nhomDichVu! == '1') {
@@ -395,12 +387,22 @@ class CreateWorkController extends GetxController {
         Get.toNamed(AppRoutes.V1_G1_CREATE_WORK, arguments: await request());
       } else if (dichvu!.nhomDichVu! == '7') {
         // Nhóm 7
-        Get.toNamed(AppRoutes.V1_G7_RECRUITMENT, arguments: await request());
+        Get.toNamed(AppRoutes.V1_G7_RECRUITMENT,
+            arguments: {'status': false, 'id': await request()});
       } else {
         Get.toNamed(
           "${AppRoutes.V1_REFERENCE_PRICE_TABLE}?id=${dichvu!.nhomDichVu!}&title=${dichvu!.tenDichVu!}&appbar=$titleAppBar",
           arguments: await request(),
-        );
+        )!
+            .then((value) {
+          if (value != null) {
+            loaiCongViec = loaiCongViecResponseList.firstWhereOrNull(
+                    (element) =>
+                        element.tenCongViec ==
+                        (value as DonDichVuRequest).tieuDe) ??
+                loaiCongViecResponseList.first;
+          }
+        });
       }
     }
   }
@@ -428,6 +430,7 @@ class CreateWorkController extends GetxController {
         "Tinh: ${serviceApplication.idTinhTp} Huyen: ${serviceApplication.idQuanHuyen} xa: ${serviceApplication.idPhuongXa}");
 
     serviceApplication.idNhomDichVu = dichvu!.id;
+    serviceApplication.idTaiKhoanNhanDon = idUser;
     serviceApplication.idTaiKhoan =
         idUser; //await sl.get<SharedPreferenceHelper>().userId;
     serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
@@ -439,5 +442,14 @@ class CreateWorkController extends GetxController {
   void onClose() {
     super.onClose();
     addressController.dispose();
+  }
+}
+
+extension IterableExtension<T> on Iterable<T> {
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
   }
 }

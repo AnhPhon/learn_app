@@ -737,7 +737,78 @@ class V2WorkRegisterController extends GetxController {
           );
         });
       } else {
-        Get.toNamed(AppRoutes.V2_WORK_CREATE);
+        // get user id
+        sl.get<SharedPreferenceHelper>().userId.then((userId) {
+          final List<String> split1 = timeStartController.text.split("/");
+          final List<String> split2 = timeEndController.text.split("/");
+
+          final List<String> timeStart = [];
+          for (int i = split1.length - 1; i >= 0; i--) {
+            timeStart.add(split1[i]);
+          }
+
+          final List<String> timeEnd = [];
+          for (int i = split2.length - 1; i >= 0; i--) {
+            timeEnd.add(split2[i]);
+          }
+
+          taiKhoanProvider.find(
+            id: userId!,
+            onSuccess: (taiKhoan) async {
+              // đăng ký việc mới
+              dangKyViecMoiProvider.update(
+                data: DangKyViecMoiRequest(
+                  id: await sl.get<SharedPreferenceHelper>().viecMoi,
+                  idTaiKhoan: userId,
+                  idNhomDichVu: idNhomCongViec,
+                  idLoaiCongViec: idCongViec,
+                  soLuong: soLuongController.text,
+                  thoiGianBatDau: timeStart.join("-"),
+                  thoiGianKetThuc: timeEnd.join("-"),
+                  tieuDe: '...',
+                  tenUngVien: taiKhoan.hoTen ?? "",
+                  gioiTinh: taiKhoan.gioiTinh ?? "",
+                  ngaySinh: taiKhoan.ngaySinh ?? "",
+                  email: taiKhoan.email ?? "",
+                  diaChi: taiKhoan.diaChi ?? "",
+                  idDiaDiemDangKyLamViecs: [],
+                ),
+                onSuccess: (data) {
+                  themDiaDiemDangKyLamViec(data.id!);
+
+                  // save id
+                  sl
+                      .get<SharedPreferenceHelper>()
+                      .saveViecMoi(id: data.id.toString());
+
+                  // update thông tin địa điểm sau khi tạo
+                  Future.delayed(const Duration(milliseconds: 500))
+                      .then((value) {
+                    updateDiaDiem(data.id!);
+                    EasyLoading.showSuccess("Thêm thành công");
+                    sl.get<SharedPreferenceHelper>().nhom7.then((nhom7) {
+                      if (nhom7 == true) {
+                        Get.toNamed(AppRoutes.V2_WORK_CREATE);
+                      } else {
+                        Get.back();
+                      }
+                    });
+                  });
+                  update();
+                },
+                onError: (error) {
+                  print(
+                      "TermsAndPolicyController getTermsAndPolicy onError $error");
+                },
+              );
+              update();
+            },
+            onError: (error) {
+              print(
+                  "TermsAndPolicyController getTermsAndPolicy onError $error");
+            },
+          );
+        });
       }
     }
   }

@@ -25,6 +25,10 @@ class DonDichVuResponse {
   String? ngayKetThuc;
   List<String>? hinhAnhBanKhoiLuongs;
   List<String>? hinhAnhBanVes;
+  List<String>? hinhAnhChiTiets;
+  List<String>? hinhAnhBaoGias;
+  List<String>? hinhAnhThucTes;
+  List<String>? hinhAnhBaoHanhs;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiDonDichVuResponse? idTrangThaiDonDichVu;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
@@ -71,19 +75,24 @@ class DonDichVuResponse {
       this.ngayBatDau,
       this.ngayKetThuc,
       this.hinhAnhBanKhoiLuongs,
+      this.hinhAnhChiTiets,
       this.hinhAnhBanVes,
+      this.hinhAnhBaoGias,
+      this.hinhAnhThucTes,
+      this.hinhAnhBaoHanhs,
       this.idTrangThaiDonHang,
       this.idTrangThaiDonDichVu,
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViecs,
       this.idTinhTp,
+      this.file,
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
-      this.file,
+      this.files,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,
@@ -152,13 +161,43 @@ class DonDichVuResponse {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
+    //hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    if (json['hinhAnhBanVes'] != null) {
+      hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhBaoGias'] != null) {
+      hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhThucTes'] != null) {
+      hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhBaoHanhs'] != null) {
+      hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['files'] != null) {
+      files =
+          (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
+    }
     if (json['hinhAnhBanKhoiLuongs'] != null) {
       hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
     if (json['hinhAnhBanVes'] != null) {
-      hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
+      hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
@@ -248,7 +287,6 @@ class DonDichVuResponse {
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
-    file = json['file'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
     soNgay = json['soNgay'].toString();
     diaDiemLamViec = json['diaDiemLamViec'].toString();
@@ -267,8 +305,9 @@ class DonDichVuResponse {
     if (json['idThongSoKyThuats'] != null &&
         json['idThongSoKyThuats'].toString().length != 24) {
       idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
-          .map(
-              (e) => ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) => ThongSoKyThuatResponse.fromJson((e.toString().length != 24
+              ? e
+              : {'id': e.toString()}) as Map<String, dynamic>))
           .toList();
     } else {
       idThongSoKyThuats = [];
@@ -288,6 +327,7 @@ class DonDichVuResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    file = json['file'].toString();
   }
 
   ///
@@ -327,9 +367,32 @@ class DonDichVuResponse {
       data['hinhAnhBanKhoiLuongs'] =
           hinhAnhBanKhoiLuongs!.map((e) => e.toString()).toList();
     }
+    //hinhAnhBaoGias
+    if (hinhAnhBaoGias != null) {
+      data['hinhAnhBaoGias'] =
+          hinhAnhBaoGias!.map((e) => e.toString()).toList();
+    }
+    //hinhAnhThucTes
+    if (hinhAnhThucTes != null) {
+      data['hinhAnhThucTes'] =
+          hinhAnhThucTes!.map((e) => e.toString()).toList();
+    }
+    //hinhAnhBaoHanhs
+    if (hinhAnhBaoHanhs != null) {
+      data['hinhAnhBaoHanhs'] =
+          hinhAnhBaoHanhs!.map((e) => e.toString()).toList();
+    }
+
+    // Hình ảnh chi tiết
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
+    }
 
     // check null hinhAnhBanVe
-    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes;
+    if (hinhAnhBanVes != null)
+      data['hinhAnhBanVes'] = hinhAnhBanVes!.map((e) => e.toString()).toList();
+    ;
 
     // check null idTrangThaiDonDichVu
     if (idTrangThaiDonDichVu != null) {
@@ -375,9 +438,6 @@ class DonDichVuResponse {
 
     // check null moTaChiTiet
     if (moTaChiTiet != null) data['moTaChiTiet'] = moTaChiTiet;
-
-    // check null file
-    if (file != null) data['file'] = file;
 
     // check null soLuongYeuCau
     if (soLuongYeuCau != null) data['soLuongYeuCau'] = soLuongYeuCau;
@@ -434,6 +494,8 @@ class DonDichVuResponse {
 
     // check null tienCoc
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null file
+    if (file != null) data['file'] = file;
 
     return data;
   }

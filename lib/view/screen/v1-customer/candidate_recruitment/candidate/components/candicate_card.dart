@@ -72,36 +72,40 @@ class CandidateCard extends StatelessWidget {
                       children: [
                         TextHighlight(
                             title: "Tên: ",
-                            content: dangKyViecMoiResponse!.idTaiKhoan!.hoTen
+                            content: dangKyViecMoiResponse!.idTaiKhoan == null ? '' :
+                            dangKyViecMoiResponse!.idTaiKhoan!.hoTen
                                 .toString()),
                         TextHighlight(
                             title: "Ngày sinh: ",
-                            content: DateConverter.readMongoToString(
+                            content: dangKyViecMoiResponse!.ngaySinh ==  null ? '' :
+                            DateConverter.readMongoToString(
                                 dangKyViecMoiResponse!.ngaySinh.toString())),
                         TextHighlight(
                             title: "Điện thoại: ",
                             content: showEmailAndPass!
-                                ? dangKyViecMoiResponse!.idTaiKhoan!.soDienThoai
+                                ? dangKyViecMoiResponse!.idTaiKhoan == null ? '' :dangKyViecMoiResponse!.idTaiKhoan!.soDienThoai
                                     .toString()
                                 : "*********"),
                         TextHighlight(
                             title: "Kinh nghiệm: ",
                             content: dangKyViecMoiResponse!
+                                .idSoNamKinhNghiem == null ? '' :
+                            dangKyViecMoiResponse!
                                 .idSoNamKinhNghiem!.tieuDe
                                 .toString()),
                         TextHighlight(
                             title: "Email: ",
                             content: showEmailAndPass!
-                                ? dangKyViecMoiResponse!.idTaiKhoan!.email
+                                ? dangKyViecMoiResponse!.idTaiKhoan == null ? '' : dangKyViecMoiResponse!.idTaiKhoan!.email
                                     .toString()
                                 : "*************"),
                         TextHighlight(
                             title: "Chỗ ở hiện tại: ",
-                            content:
+                            content: dangKyViecMoiResponse!.idTaiKhoan == null ? '' :
                                 '${dangKyViecMoiResponse!.idTaiKhoan!.diaChi}, ${dangKyViecMoiResponse!.idTaiKhoan!.idPhuongXa}, ${dangKyViecMoiResponse!.idTaiKhoan!.idQuanHuyen}, ${dangKyViecMoiResponse!.idTaiKhoan!.idTinhTp}'),
                         TextHighlight(
                             title: "Hôn nhân: ",
-                            content:
+                            content: dangKyViecMoiResponse!.honNhan == null ? '' :
                                 dangKyViecMoiResponse!.honNhan.toString() == '1'
                                     ? 'Độc thân'
                                     : dangKyViecMoiResponse!.honNhan

@@ -411,11 +411,11 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         ),
 
         const Label(label: "Ảnh bằng cấp (nếu có)", obligatory: true),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+        const Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
           child: BoxImage(
-            images: controller.anhBangCap,
+            images: [],
             isAddImage: true,
           ),
         ),

@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/model/response/chuyen_nganh_chinh_response.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
@@ -144,13 +145,20 @@ class V1G7RecruitmentController extends GetxController {
   List<ChuyenNganhChinhResponse> chuyenNganhPhuModel = [];
 
   //hình ảnh
-  File? image;
   String? hinhAnhDaiDien;
 
+  // Check từ tạo đơn sang hay từ tin tuyển dụng sang
+  bool isEdit = true;
+  DonDichVuRequest? idTinhTp;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    if(Get.arguments != null){
+      isEdit = Get.arguments['status']  as bool;
+      idTinhTp = Get.arguments['id'] as DonDichVuRequest;
+    }
 
     sl.get<SharedPreferenceHelper>().userId.then(
       (value) {
@@ -351,11 +359,17 @@ class V1G7RecruitmentController extends GetxController {
 
           if (isLoadFrist) {
             //set idTinh
-            tinhTpDiaChi = value.firstWhere((element) =>
-                element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
+            if(idTinhTp != null){
+              tinhTpDiaChi = value.firstWhere((element) =>
+                  element.id!.contains(idTinhTp!.idTinhTp.toString()));
+            }else{
+              tinhTpDiaChi = value.firstWhere((element) =>
+                  element.ten!.contains(taiKhoanResponse.idTinhTp.toString()));
+            }
 
             getDataQuanHuyen(
                 idTinh: tinhTpDiaChi!.id.toString(), isLoadFrist: true);
+            
           }
 
           update();
@@ -383,9 +397,15 @@ class V1G7RecruitmentController extends GetxController {
 
             //mapping quận huyện lần đầu
             if (isLoadFrist) {
+              if(idTinhTp != null){
+                quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
+                  .id!
+                  .contains(idTinhTp!.idQuanHuyen!.toString()));
+              }else{
               quanHuyenResponse = quanHuyenModel.firstWhere((element) => element
                   .ten!
                   .contains(taiKhoanResponse.idQuanHuyen.toString()));
+              }
               // xã khi chon huỵen
               getDataPhuongXa(
                   idHuyen: quanHuyenResponse!.id.toString(), isLoadFrist: true);
@@ -418,9 +438,15 @@ class V1G7RecruitmentController extends GetxController {
 
             //mapping xã phường lần đầu
             if (isLoadFrist) {
+              if(idTinhTp != null){
+                phuongXaResponse = phuongXaModel.firstWhere((element) => element
+                  .id!
+                  .contains(idTinhTp!.idPhuongXa!.toString()));
+              }else{
               phuongXaResponse = phuongXaModel.firstWhere((element) => element
                   .ten!
                   .contains(taiKhoanResponse.idPhuongXa.toString()));
+              }
             }
           }
 
@@ -564,17 +590,38 @@ class V1G7RecruitmentController extends GetxController {
   }
 
   ///
-  ///pick image
+  /// Pick HinhDaiDien
   ///
-  Future pickImage() async {
+  Future pickHinhDaiDien() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
+
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
+
+      // load images
+      imageUpdateProvider.addImages(
+        files: files,
+        onSuccess: (value) {
+          EasyLoading.dismiss();
+          if (value.files != null && value.files!.isNotEmpty) {
+            hinhAnhDaiDien = value.files![0];
+          }
+          update();
+        },
+        onError: (e) {
+          EasyLoading.dismiss();
+          Alert.error(message: e.toString());
+        },
+      );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
+      EasyLoading.dismiss();
+      Alert.error(message: e.toString());
     }
   }
 
@@ -649,71 +696,55 @@ class V1G7RecruitmentController extends GetxController {
       return Alert.error(message: "Vui lòng nhập địa chỉ");
     } else if (emailController.text.isEmpty) {
       return Alert.error(message: "Vui lòng nhập email");
-    } else if (image == null) {
+    } else if (hinhAnhDaiDien == null) {
       return Alert.error(message: "Vui lòng chọn ảnh đại diện");
     } else {
-      EasyLoading.show(status: 'loading....');
-      //upload ảnh
-      imageUpdateProvider.add(
-          file: image!,
-          onSuccess: (value) {
-            EasyLoading.dismiss();
-            hinhAnhDaiDien = value.data;
+      ///gán data tuyển dụng
+      Map<String, dynamic> param = {
+        "IdTaiKhoan": taiKhoanResponse.id,
+        "TieuDe": titleController.text.trim(),
+        "CongTy": companyController.text,
+        'TenDiaChiCongTy':
+            '${addressController.text}, ${phuongXaResponse!.ten}, ${quanHuyenResponse!.ten}, ${tinhTpDiaChi!.ten}',
+        "DiaChi": addressController.text,
+        "IdTinhTp": tinhTpDiaChi!.id,
+        "IdQuanHuyen": quanHuyenResponse!.id,
+        "IdPhuongXa": phuongXaResponse!.id,
+        "GioiTinh": chooseSex,
+        "SoLuong": amountController.text,
+        "IdHinhThucLamViec": hinhThucLamViec!.id,
+        "TenHinhThucLamViec": hinhThucLamViec!.tieuDe,
+        "IdTrinhDoHocVan": trinhDoHocVan!.id,
+        "TenTrinhDoHocVan": trinhDoHocVan!.tieuDe,
+        "IdChuyenNganhChinh": chuyenNgangChinh!.id,
+        "TenChuyenNganhChinh": chuyenNgangChinh!.tieuDe,
+        "IdChuyenNganhPhus": chuyenNganhPhuSend,
+        "TenChuyenNganhPhu": tenChuyenNganhPhu,
+        "IdSoNamKinhNghiem": soNamKinhNghiem!.id,
+        "TenSoNamKinhNghiem": soNamKinhNghiem!.tieuDe,
+        "IdMucLuongDuKien": mucLuongDuKien!.id,
+        "TenMucLuongDuKien": mucLuongDuKien!.tieuDe,
+        "NoiLamViec": tinhTp!.id,
+        "TenNoiLamViec": tinhTp!.ten,
+        "IdThoiGianLamViec": thoiGianLamViec!.id,
+        "TenThoiGianLamViec": thoiGianLamViec!.tieuDe,
+        "ThoiGianThuViec": thoiGianThucTapController.text,
+        "MoTaCongViec": descController.text.trim(),
+        "YeuCauCongViec": requiredController.text.trim(),
+        "QuyenLoi": benifitController.text.trim(),
+        "UuTien": prioritizedController.text.trim(),
+        "HanNopHoSo": dateFormat.format(selectedDate).toString(),
+        "HoTenLienHe": nameController.text.trim(),
+        "SoDienThoaiLienHe": phoneController.text.trim(),
+        "DiaChiLienHe": contactAddressController.text.trim(),
+        "EmailLienHe": emailController.text.trim(),
+        "HinhAnhDaiDien": hinhAnhDaiDien
+      };
 
-            ///gán data tuyển dụng
-            Map<String, dynamic> param = {
-              "IdTaiKhoan": taiKhoanResponse.id,
-              "TieuDe": titleController.text.trim(),
-              "CongTy": companyController.text,
-              'TenDiaChiCongTy':
-                  '${addressController.text}, ${phuongXaResponse!.ten}, ${quanHuyenResponse!.ten}, ${tinhTpDiaChi!.ten}',
-              "DiaChi": addressController.text,
-              "IdTinhTp": tinhTpDiaChi!.id,
-              "IdQuanHuyen": quanHuyenResponse!.id,
-              "IdPhuongXa": phuongXaResponse!.id,
-              "GioiTinh": chooseSex,
-              "SoLuong": amountController.text,
-              "IdHinhThucLamViec": hinhThucLamViec!.id,
-              "TenHinhThucLamViec": hinhThucLamViec!.tieuDe,
-              "IdTrinhDoHocVan": trinhDoHocVan!.id,
-              "TenTrinhDoHocVan": trinhDoHocVan!.tieuDe,
-              "IdChuyenNganhChinh": chuyenNgangChinh!.id,
-              "TenChuyenNganhChinh": chuyenNgangChinh!.tieuDe,
-              "IdChuyenNganhPhus": chuyenNganhPhuSend,
-              "TenChuyenNganhPhu": tenChuyenNganhPhu,
-              "IdSoNamKinhNghiem": soNamKinhNghiem!.id,
-              "TenSoNamKinhNghiem": soNamKinhNghiem!.tieuDe,
-              "IdMucLuongDuKien": mucLuongDuKien!.id,
-              "TenMucLuongDuKien": mucLuongDuKien!.tieuDe,
-              "NoiLamViec": tinhTp!.id,
-              "TenNoiLamViec": tinhTp!.ten,
-              "IdThoiGianLamViec": thoiGianLamViec!.id,
-              "TenThoiGianLamViec": thoiGianLamViec!.tieuDe,
-              "ThoiGianThuViec": thoiGianThucTapController.text,
-              "MoTaCongViec": descController.text.trim(),
-              "YeuCauCongViec": requiredController.text.trim(),
-              "QuyenLoi": benifitController.text.trim(),
-              "UuTien": prioritizedController.text.trim(),
-              "HanNopHoSo": dateFormat.format(selectedDate).toString(),
-              "HoTenLienHe": nameController.text.trim(),
-              "SoDienThoaiLienHe": phoneController.text.trim(),
-              "DiaChiLienHe": contactAddressController.text.trim(),
-              "EmailLienHe": emailController.text.trim(),
-              "HinhAnhDaiDien": hinhAnhDaiDien
-            };
-
-            Get.toNamed('${AppRoutes.V1_G7_REVIEW}?isReview=true',
-                    arguments: param)!
-                .then((value) => {
-                      if (value != null && value == true)
-                        {Get.back(result: true)}
-                    });
-          },
-          onError: (error) {
-            EasyLoading.dismiss();
-            print('V1G7RecruitmentController onClickContinueButton $error');
-            Alert.error(message: "Vui lòng thực hiện lại");
-          });
+      Get.toNamed('${AppRoutes.V1_G7_REVIEW}?isReview=true', arguments: param)!
+          .then((value) => {
+                if (value != null && value == true) {Get.back(result: true)}
+              });
     }
   }
 }

@@ -17,6 +17,7 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/components/material_card.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/components/work_card.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/create/g1_create_work_controller.dart';
 
 class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
@@ -186,7 +187,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               ),
             ),
           DropDownButton<String>(
-            data: const ["M2","M3",'Tấn','Tạ','Kg'],
+            data: const ["m2","m3",'Tấn','Tạ','Kg'],
             obligatory: false,
             onChanged: (unit)=> controller.onChangedUnit(unit!),
             value: controller.unit,
@@ -221,11 +222,11 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   ///
   Widget materialList(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
-      children: controller.massList.map((e) => 
+      children: controller.workList.map((e) => 
       SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
         child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
+          actionPane: const SlidableDrawerActionPane(),
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: 'Xoá',
@@ -234,7 +235,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               onTap: ()=> controller.deleteSupplies(e)
             ),
           ],
-          child: MaterialCard(mass: e)))
+          child: WorkCard(work: e)))
       ).toList()
     );
   }
@@ -247,9 +248,9 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
           obligatory: false,
         ),
         AttachButton(
-          title: controller.file == null ? "Thêm tập tin" : controller.fileName!, 
+          title: controller.donDichVuFiles.isEmpty  ? "Thêm tập tin" : controller.donDichVuFiles.first, 
           color: ColorResources.WHITE, 
-          onPressed: controller.pickerFile,
+          onPressed: controller.pickFiles,
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         )
       ],
@@ -271,7 +272,11 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.images,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.images) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.anhKhoiLuong,
+            isAddImage: true,onPress:()=> controller.pickImages(data: controller.anhKhoiLuong),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,),
+          ),
         ),
       ],
     );
@@ -288,7 +293,12 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-          child: BoxImage(images: controller.drawingImages,isAddImage: true,onPress:()=> controller.pickerMuilFile(files: controller.drawingImages) ,onDelete: (File? file, List<File> files)=>controller.onDeleteImage(file: file!,files: files),),
+          child: BoxImage(
+            images: controller.drawingImages,
+            isAddImage: true,
+            onPress:()=> controller.pickImages(data: controller.drawingImages),
+            onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+          ),
         ),
       ],
     );

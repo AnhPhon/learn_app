@@ -96,27 +96,20 @@ class V2CvPage extends GetView<V2CvController> {
             children: [
               text(
                   title: "Tên ứng viên: ",
-                  content:
-                      controller.dangKyViecMoiResponse.tenUngVien.toString()),
+                  content: controller.tenUngVienController.text),
               text(
                   title: "Giới tính: ",
-                  content:
-                      controller.dangKyViecMoiResponse.gioiTinh.toString() ==
-                              '1'
-                          ? 'Nam'
-                          : 'Nữ'),
+                  content: controller.gioiTinhVienController.text == '1'
+                      ? 'Nam'
+                      : 'Nữ'),
               text(
                   title: "Ngày sinh: ",
                   content: DateConverter.readMongoToString(
-                      controller.dangKyViecMoiResponse.ngaySinh.toString())),
+                      controller.ngaySinhController.text)),
               text(
                   title: "Điện thoại: ",
-                  content: controller
-                      .dangKyViecMoiResponse.idTaiKhoan!.soDienThoai
-                      .toString()),
-              text(
-                  title: "Email: ",
-                  content: controller.dangKyViecMoiResponse.email.toString()),
+                  content: controller.dienThoaiController.text),
+              text(title: "Email: ", content: controller.emailController.text),
             ],
           ),
         ),
@@ -219,9 +212,9 @@ class V2CvPage extends GetView<V2CvController> {
           allowMultiline: false,
           controller: controller.mucTieuController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "Nhập mục tiêu nghê nghiệp",
+          holdplacer: "Nhập mục tiêu nghề nghiệp",
           hidden: false,
-          label: "Mục tiêu nghê nghiệp",
+          label: "Mục tiêu nghề nghiệp",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
@@ -238,12 +231,19 @@ class V2CvPage extends GetView<V2CvController> {
           child: SizedBox(
             width: DeviceUtils.getScaledWidth(context, 1),
             child: GestureDetector(
-              onTap: () => controller.onBtnDownloadCv(
-                  url: controller.dangKyViecMoiResponse.fileHoSoXinViec
-                      .toString()),
+              onTap:
+                  controller.dangKyViecMoiResponse.fileHoSoXinViec.toString() !=
+                          'null'
+                      ? () => controller.onBtnDownloadCv(
+                          url: controller.dangKyViecMoiResponse.fileHoSoXinViec
+                              .toString())
+                      : () {},
               child: BoxShadowWidget(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                child: Text(controller.tenFile.toString(),
+                child: Text(
+                    controller.tenFile.toString() == 'null'
+                        ? ''
+                        : controller.tenFile.toString(),
                     style: const TextStyle(
                       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     )),
@@ -253,9 +253,13 @@ class V2CvPage extends GetView<V2CvController> {
         ),
 
         CustomFileButton(
-            title: "Cập nhật file",
+            title:
+                controller.dangKyViecMoiResponse.fileHoSoXinViec.toString() ==
+                        'null'
+                    ? 'Thêm file hồ sơ'
+                    : 'Cập nhật file',
             verticalPadding: Dimensions.PADDING_SIZE_DEFAULT,
-            onTap: () => controller.pickFile())
+            onTap: () => controller.pickFiles())
       ],
     );
   }
