@@ -87,14 +87,14 @@ class V1G1ReviewController extends GetxController{
   void addMass({required String idDon}){
     previewServiceRequest!.bangKhoiLuong!.forEach((item) {
       final VatTuRequest vatTuRequest = VatTuRequest();
-      vatTuRequest.khoiLuong = item.khoiLuong;
       vatTuRequest.donVi = item.donVi;
       vatTuRequest.tenVatTu = item.tenVatTu;
       vatTuRequest.quyCach = item.quyCach;
       // vatTuRequest.idDonDichVu = idDon;
       vatTuProvider.add(data: vatTuRequest, onSuccess: (data){
-          ChiTietVatTuRequest chiTietVatTu = ChiTietVatTuRequest();
+          final ChiTietVatTuRequest chiTietVatTu = ChiTietVatTuRequest();
           chiTietVatTu.idVatTu = data.id;
+          chiTietVatTu.soLuong = item.khoiLuong;
           chiTietVatTu.idDonDichVu = idDon;
           chiTietVatTuProvider.add(data: chiTietVatTu, onSuccess: (onSuccess){
             print("Thêm vật tư thành công $data");
