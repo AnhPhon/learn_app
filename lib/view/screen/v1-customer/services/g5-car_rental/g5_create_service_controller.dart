@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -15,9 +12,8 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V1G5CreateServiceController extends GetxController{
 
@@ -59,7 +55,7 @@ class V1G5CreateServiceController extends GetxController{
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
-    appBarTitle = Get.parameters['title'].toString();
+    appBarTitle = Get.parameters['appbar'].toString();
     print(appBarTitle);
     getWorkTime();
     getAllThongSo();
@@ -138,30 +134,30 @@ class V1G5CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(thongSo.isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Bản phải chọn thông số kỹ thuật");
+      Alert.error( message: "Bản phải chọn thông số kỹ thuật");
     }else if(tommorow == false && afternoon == false && tonight == false){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời làm việc không được để trống");
+      Alert.error( message: "Thời làm việc không được để trống");
     }else if(amountController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng yêu cầu không được để trống");
+      Alert.error( message: "Số lượng yêu cầu không được để trống");
     }else if(int.parse(amountController.text.toString()) <= 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Số lượng không hợp lệ");
+      Alert.error( message: "Số lượng không hợp lệ");
     }else if(startWorkController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày làm việc không được để trống");
+      Alert.error( message: "Ngày làm việc không được để trống");
     }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.error( message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
     }else if(estimatedPickUpLocation.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Địa điểm bốc hàng dự kiến không được để trống");
+      Alert.error( message: "Địa điểm bốc hàng dự kiến không được để trống");
     }else if(estimatedDeliveryLocation.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Địa điểm trả hàng dự kiến không được để trống");
+      Alert.error( message: "Địa điểm trả hàng dự kiến không được để trống");
     }else if(distanceController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Cự ly vận chuyển tương đối không được để trống");
+      Alert.error( message: "Cự ly vận chuyển tương đối không được để trống");
     }else if(workDescController.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Mô tả yêu cầu cụ thể không được để trống");
+      Alert.error( message: "Mô tả yêu cầu cụ thể không được để trống");
     }else{
       EasyLoading.show(status: "Loading ...");
       donDichVuProvider.add(data: request(), onSuccess: (data){
          EasyLoading.dismiss();
-         SnackBarUtils.showSnackBar(title: "Tạo đơn dịch vụ thành công", message: "Chúng tối sẽ phản hội lại cho bạn sơm nhất", backgroundColor: ColorResources.PRIMARYCOLOR);
+         Alert.success(message: "Tạo đơn dịch vụ thành công. Chúng tối sẽ phản hội lại cho bạn sơm nhất");
          Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),arguments: request());
          //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
       }, onError: (onError){
@@ -204,6 +200,10 @@ class V1G5CreateServiceController extends GetxController{
       dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
       dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
       dichVuRequest.moTaChiTiet = workDescController.text.toString();
+      // trạng thái đơn
+      dichVuRequest.idTrangThaiDonHang = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
+      
       if(amountController.text.toString().isNotEmpty){
         dichVuRequest.soLuongYeuCau = amountController.text.toString();
       }
@@ -213,7 +213,6 @@ class V1G5CreateServiceController extends GetxController{
 
   @override
   void onClose() {
-    onClose();
     workTitleController.dispose();
     amountController.dispose();
     startWorkController.dispose();
@@ -223,6 +222,7 @@ class V1G5CreateServiceController extends GetxController{
     workDescController.dispose();
     returnWidthController.dispose();
     receivingWidthController.dispose();
+    super.onClose();
   }
 }
 
