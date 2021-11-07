@@ -14,6 +14,7 @@ class DropDownButton<T> extends StatelessWidget {
       required this.obligatory,
       this.paddingTop = Dimensions.PADDING_SIZE_LARGE,
       this.isColorFieldWhite = false,
+      this.isEnable = true,
       this.padding})
       : super(key: key);
   final String? hint;
@@ -25,6 +26,7 @@ class DropDownButton<T> extends StatelessWidget {
   final double? paddingTop;
   final bool? isColorFieldWhite;
   final T? value;
+  final bool? isEnable;
   final EdgeInsetsGeometry? padding;
 
   @override
@@ -65,6 +67,7 @@ class DropDownButton<T> extends StatelessWidget {
           else
             const SizedBox.shrink(),
           FormField(
+            enabled: isEnable!,
             builder: (field) {
               return InputDecorator(
                 decoration: InputDecoration(
@@ -101,14 +104,17 @@ class DropDownButton<T> extends StatelessWidget {
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<T>(
-                    hint: Text(hint!),
+                    hint: Text(hint!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                     value: value,
                     style: const TextStyle(
                         fontSize: Dimensions.PADDING_SIZE_DEFAULT,
                         color: ColorResources.BLACK),
                     isDense: true,
                     isExpanded: true,
-                    onChanged: onChanged,
+                    onChanged: isEnable! ? onChanged : null,
                     items: data
                         .map((e) => DropdownMenuItem<T>(
                             value: e,

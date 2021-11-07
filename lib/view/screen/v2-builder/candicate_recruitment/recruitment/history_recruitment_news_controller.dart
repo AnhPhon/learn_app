@@ -123,7 +123,9 @@ class V2HistoryRecruitmentNewsController extends GetxController {
         limit: 100,
         filter: '&idTaiKhoanUngTuyen=$userId',
         onSuccess: (value) {
-          danhSachUngTuyenList.addAll(value);
+          if (value.isNotEmpty) {
+            danhSachUngTuyenList.addAll(value);
+          }
 
           getDataTuyenDung(isRefresh: true);
         },
@@ -151,7 +153,6 @@ class V2HistoryRecruitmentNewsController extends GetxController {
     } else {
       tieuDeSearch = '&tieuDe=$tieuDeSearch';
     }
-
     tuyenDungProvider.paginate(
         page: pageMax,
         limit: limit,
@@ -164,14 +165,12 @@ class V2HistoryRecruitmentNewsController extends GetxController {
             //check refresh
             tuyenDungListSearch = value;
             refreshController.refreshCompleted();
-            //check đã ứng tuyển
+
             for (int i = 0; i < danhSachUngTuyenList.length; i++) {
               for (int j = 0; j < tuyenDungListSearch.length; j++) {
                 if (danhSachUngTuyenList[i].idTuyenDung!.id.toString() ==
                     tuyenDungListSearch[j].id.toString()) {
                   tuyenDungListSearch[j].isUngTuyen = true;
-                } else {
-                  tuyenDungListSearch[j].isUngTuyen = false;
                 }
               }
             }
@@ -183,8 +182,6 @@ class V2HistoryRecruitmentNewsController extends GetxController {
                 if (danhSachUngTuyenList[i].idTuyenDung!.id.toString() ==
                     tuyenDungListSearch[j].id.toString()) {
                   tuyenDungListSearch[j].isUngTuyen = true;
-                } else {
-                  tuyenDungListSearch[j].isUngTuyen = false;
                 }
               }
             }
@@ -253,7 +250,7 @@ class V2HistoryRecruitmentNewsController extends GetxController {
       "TenChuyenNganhPhu": tenChuyenNganhPhu,
       "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
       "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
-      "TenNoiLamViec": onChangeNameTinhTp(tuyendung.noiLamViec.toString()),
+      "TenNoiLamViec": tuyendung.idNoiLamViec!.ten,
       "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
       "ThoiGianThuViec": tuyendung.thoiGianThuViec,
       "MoTaCongViec": tuyendung.moTaCongViec,
@@ -268,7 +265,8 @@ class V2HistoryRecruitmentNewsController extends GetxController {
     };
 
     Get.toNamed(
-        '${AppRoutes.V2_VIEW_RECRUITMENT_NEWS}?isUngTuyen=${tuyendung.isUngTuyen}',
-        arguments: param);
+            '${AppRoutes.V2_VIEW_RECRUITMENT_NEWS}?isUngTuyen=${tuyendung.isUngTuyen}',
+            arguments: param)!
+        .then((value) => getDataUngTuyen());
   }
 }

@@ -102,15 +102,18 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          ...List.generate(
-              controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.length,
-              (index) => Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: Dimensions.MARGIN_SIZE_SMALL),
-                    child: Text(
-                      "+ ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa}, ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen}, ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp}",
-                    ),
-                  )),
+          if (controller
+              .dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.isNotEmpty)
+            ...List.generate(
+                controller
+                    .dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.length,
+                (index) => Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: Dimensions.MARGIN_SIZE_SMALL),
+                      child: Text(
+                        "+ ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa}, ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen}, ${controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp}",
+                      ),
+                    )),
 
           Padding(
             padding:
@@ -121,8 +124,12 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
-              content:
-                  controller.dangKyViecMoiResponse.mucTieuNgheNghiep.toString(),
+              content: controller.dangKyViecMoiResponse.mucTieuNgheNghiep
+                          .toString() ==
+                      'null'
+                  ? ''
+                  : controller.dangKyViecMoiResponse.mucTieuNgheNghiep
+                      .toString(),
             ),
           ),
           //Bằng cấp và trình độ
@@ -154,7 +161,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
             padding:
                 const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
             child: Text(
-                'Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai.toString()} \nChức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString()} \nSố năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()} \nMức lương đề xuất tối thiểu: ${PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.mucLuongDeXuat.toString()))} vnđ/tháng \nNơi làm việc mong muốn nhất: ${controller.dangKyViecMoiResponse.noiLamViec.toString()}\nNgành nghề mong muốn ứng tuyển: ${controller.tenNganhNgheMongMuon}'),
+                'Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai.toString() == 'null' ? '' : controller.dangKyViecMoiResponse.chucVuHienTai.toString()} \nChức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString() == 'null' ? '' : controller.dangKyViecMoiResponse.chucVuMongMuon.toString()} \nSố năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString() == 'null' ? '' : controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()} \nMức lương đề xuất tối thiểu: ${controller.dangKyViecMoiResponse.mucLuongDeXuat.toString() == 'null' ? '' : PriceConverter.convertPrice(context, double.parse(controller.dangKyViecMoiResponse.mucLuongDeXuat.toString(), (error) => 0))} ${controller.dangKyViecMoiResponse.mucLuongDeXuat.toString() == 'null' ? '' : 'vnđ/tháng'} \nNơi làm việc mong muốn nhất: ${controller.dangKyViecMoiResponse.noiLamViec.toString() == 'null' ? '' : controller.dangKyViecMoiResponse.noiLamViec.toString()}\nNgành nghề mong muốn ứng tuyển: ${controller.tenNganhNgheMongMuon}'),
           ),
 
           const Text(
@@ -184,8 +191,11 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
-              content:
-                  controller.dangKyViecMoiResponse.kyNangSoTruong.toString(),
+              content: controller.dangKyViecMoiResponse.kyNangSoTruong
+                          .toString() ==
+                      'null'
+                  ? ''
+                  : controller.dangKyViecMoiResponse.kyNangSoTruong.toString(),
             ),
           ),
 
@@ -217,7 +227,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  '\n- Word : ${controller.dangKyViecMoiResponse.idTinHoc!.word.toString()}\n- Excel: ${controller.dangKyViecMoiResponse.idTinHoc!.excel.toString()}\n- Internet: ${controller.dangKyViecMoiResponse.idTinHoc!.internet.toString()}',
+                  '\n- Word : ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.word.toString()}\n- Excel: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.excel.toString()}\n- Internet: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.internet.toString()}',
             ),
           ),
 
@@ -231,7 +241,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  "\n - ${controller.dangKyViecMoiResponse.idTinHoc!.phanMemHoTro.toString()}",
+                  "\n - ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.phanMemHoTro.toString()}",
             ),
           ),
           Padding(
@@ -244,7 +254,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   color: ColorResources.BLACK,
                   fontWeight: FontWeight.bold),
               content:
-                  "\n- ${controller.dangKyViecMoiResponse.idTinHoc!.soThichTrinhDo.toString()} \n- ${controller.dangKyViecMoiResponse.idTinHoc!.soThichKyNang.toString()}\n- ${controller.dangKyViecMoiResponse.idTinHoc!.soTichTinhCach.toString()}",
+                  "\n- ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soThichTrinhDo.toString()} \n- ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soThichKyNang.toString()}\n- ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.soTichTinhCach.toString()}",
             ),
           ),
 
@@ -362,7 +372,12 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
               SizedBox(
                 width: DeviceUtils.getScaledWidth(context, .75),
                 child: Text(
-                    controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
+                    controller.dangKyViecMoiResponse.fileHoSoXinViec
+                                .toString() ==
+                            'null'
+                        ? ''
+                        : controller.dangKyViecMoiResponse.fileHoSoXinViec
+                            .toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: const TextStyle(
@@ -370,7 +385,9 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                     )),
               ),
-              const Icon(Icons.download, color: ColorResources.PRIMARYCOLOR)
+              if (controller.dangKyViecMoiResponse.fileHoSoXinViec.toString() !=
+                  'null')
+                const Icon(Icons.download, color: ColorResources.PRIMARYCOLOR)
             ],
           ),
         ),

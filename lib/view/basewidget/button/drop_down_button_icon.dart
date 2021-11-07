@@ -74,6 +74,7 @@ class DropDownButtonIcon<T> extends StatelessWidget {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<T>(
                     hint: Text(hint!,
+                        overflow: TextOverflow.ellipsis,
                         style: style ??
                             const TextStyle(color: ColorResources.LIGHT_BLACK)),
                     value: value,
