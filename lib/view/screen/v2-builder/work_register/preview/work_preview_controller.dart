@@ -74,7 +74,7 @@ class V2WorkPreviewController extends GetxController {
     return [];
   }
 
-  List<String> getAnhHoSoXinViec() {
+  List<dynamic> getAnhHoSoXinViec() {
     if (dangKyViecMoiRequest.anhHoSoXinViecs != null &&
         dangKyViecMoiRequest.anhHoSoXinViecs!.isNotEmpty &&
         dangKyViecMoiRequest.anhHoSoXinViecs.toString() != 'null') {
@@ -222,11 +222,31 @@ class V2WorkPreviewController extends GetxController {
   /// go to done page
   ///
   void toDonePage(DangKyViecMoiModel dangKiModel) {
-    // dangKyViecMoiProvider.update(
-    //   data: data,
-    //   onSuccess: onSuccess,
-    //   onError: onError,
-    // );
+    sl.get<SharedPreferenceHelper>().userId.then((userId) async {
+      print("kiem tra id User de hoan thien $userId");
+      print("Kiem tra id hinh Thuc lam viec ${dangKiModel.hinhThucLamViec}");
+      print("Kiem tra id Bang Cap ${getAnhHoSoXinViec()}");
+
+      print(await sl.get<SharedPreferenceHelper>().viecMoi);
+      dangKyViecMoiProvider.update(
+        data: DangKyViecMoiRequest(
+          id: await sl.get<SharedPreferenceHelper>().viecMoi,
+          idTaiKhoan: userId,
+          tieuDe: dangKiModel.tieuDe,
+          diaChi: dangKiModel.choOHienTai,
+          honNhan: dangKiModel.honNhan,
+          mucTieuNgheNghiep: dangKiModel.mucTieuNgheNghiep,
+          anhHoSoXinViecs: getAnhHoSoXinViec(),
+        ),
+        onSuccess: (value) {
+          print(value.id);
+          update();
+        },
+        onError: (error) {
+          print("TermsAndPolicyController getTermsAndPolicy onError $error");
+        },
+      );
+    });
     Get.toNamed(AppRoutes.V2_REGISTER_DONE);
   }
 

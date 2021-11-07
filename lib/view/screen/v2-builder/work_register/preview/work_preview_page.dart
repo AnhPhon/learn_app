@@ -382,12 +382,13 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
               ),
 
               //Ảnh hồ sơ xin việc(nếu có)
-              V2ImageListHorizontalAdd(
-                onDelete: (String file, List<String> files) =>
-                    controller.onDeleteImage(
-                  file: file,
-                  files: files,
-                ),
+              V2ImageListHorizontalAdd<dynamic>(
+                onDelete: (dynamic file, List<dynamic> files) {
+                  controller.onDeleteImage(
+                    file: file as String,
+                    files: files as List<String>,
+                  );
+                },
                 labelBold: true,
                 label: "Ảnh hồ sơ xin việc(nếu có)",
                 pickImage: () => controller.pickAnhHoSoXinViec(),

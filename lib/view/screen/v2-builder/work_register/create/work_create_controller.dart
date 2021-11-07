@@ -832,7 +832,7 @@ class V2WorkCreateController extends GetxController {
           dangKyModel: DangKyViecMoiModel(
             kyNangSoTruong: kyNangSotruong,
             bangBangCaps: bangBangCap,
-            choOHienTai: noiOHienTai,
+            choOHienTai: addressController.text,
             dienThoai: dienThoai,
             email: email,
             gioiTinh: gioiTinh,

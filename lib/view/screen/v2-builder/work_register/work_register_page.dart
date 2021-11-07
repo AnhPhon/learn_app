@@ -224,6 +224,7 @@ class V2WorkRegisterPage extends GetView<V2WorkRegisterController> {
         const SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
         MultiSelectDialogField<TinhTpResponse?>(
           decoration: BoxDecoration(
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
             border: const Border(
               bottom: BorderSide(

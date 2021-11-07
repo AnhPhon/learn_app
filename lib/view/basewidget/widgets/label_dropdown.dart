@@ -47,23 +47,28 @@ class LabelDropdown<T> extends StatelessWidget {
               )
           ],
         ),
-        SizedBox(
-            height:
-                DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
-        SizedBox(
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: ColorResources.WHITE,
+          ),
           height: 60,
           child: FormField<String>(
             builder: (FormFieldState<String> state) {
               return InputDecorator(
                 decoration: InputDecoration(
-                    labelStyle: Dimensions.textNormalStyleCard(),
-                    errorStyle: const TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: Dimensions.FONT_SIZE_LARGE,
-                    ),
-                    hintText: labelText,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
+                  labelStyle: Dimensions.textNormalStyleCard(),
+                  errorStyle: const TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: Dimensions.FONT_SIZE_LARGE,
+                  ),
+                  hintText: labelText,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
                 isEmpty: currentSelectvalue == '',
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(

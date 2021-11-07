@@ -15,7 +15,7 @@ class DangKyViecMoiRequest {
   String? honNhan;
   String? idLoaiNhanVien;
   String? mucTieuNgheNghiep;
-  String? idBangBangCap;
+  List<String>? idBangBangCap;
   String? chucVuHienTai;
   String? chucVuMongMuon;
   String? idSoNamKinhNghiem;
@@ -35,7 +35,7 @@ class DangKyViecMoiRequest {
   String? soLuong;
   String? tieuDeSearch;
   List<dynamic>? idDiaDiemDangKyLamViecs;
-  List<String>? anhHoSoXinViecs;
+  List<dynamic>? anhHoSoXinViecs;
   List<String>? anhBangCaps;
 
   DangKyViecMoiRequest({
@@ -94,7 +94,7 @@ class DangKyViecMoiRequest {
     honNhan = json['honNhan'].toString();
     idLoaiNhanVien = json['idLoaiNhanVien'].toString();
     mucTieuNgheNghiep = json['mucTieuNgheNghiep'].toString();
-    idBangBangCap = json['idBangBangCap'].toString();
+
     chucVuHienTai = json['chucVuHienTai'].toString();
     chucVuMongMuon = json['chucVuMongMuon'].toString();
     idSoNamKinhNghiem = json['idSoNamKinhNghiem'].toString();
@@ -131,9 +131,13 @@ class DangKyViecMoiRequest {
           json['idDiaDiemDangKyLamViecs'] as List<dynamic>;
     }
 
-    // if (json['anhHoSoXinViecs'] != null) {
-    //   anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<String>;
-    // }
+    if (json['idBangBangCap'] != null) {
+      idBangBangCap = json['idBangBangCap'] as List<String>;
+    }
+
+    if (json['anhHoSoXinViecs'] != null) {
+      anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<dynamic>;
+    }
 
     // if (json['anhBangCaps'] != null) {
     //   anhBangCaps = json['anhBangCaps'] as List<String>;
@@ -267,9 +271,9 @@ class DangKyViecMoiRequest {
     }
 
     // check null anhHoSo
-    // if (anhHoSoXinViecs != null) {
-    //   data['anhHoSoXinViecs'] = anhHoSoXinViecs;
-    // }
+    if (anhHoSoXinViecs != null) {
+      data['anhHoSoXinViecs'] = anhHoSoXinViecs;
+    }
 
     // check null anhbangCap
     // if (anhBangCaps != null) {

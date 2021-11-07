@@ -43,17 +43,19 @@ class LabelInput extends StatelessWidget {
               )
           ],
         ),
-        SizedBox(
-            height:
-                DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
-        TextField(
-          keyboardType:
-              (isNumber == true) ? TextInputType.number : TextInputType.text,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: labelText,
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
+        Container(
+          color: ColorResources.WHITE,
+          child: TextField(
+            keyboardType:
+                (isNumber == true) ? TextInputType.number : TextInputType.text,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+            ),
+            controller: controller,
           ),
-          controller: controller,
         )
       ],
     );

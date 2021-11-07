@@ -69,6 +69,9 @@ class TextFieldDate extends StatelessWidget {
                 ],
               ),
             ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+          ),
           GestureDetector(
             onTap: isDate
                 ? () {
