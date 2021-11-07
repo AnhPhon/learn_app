@@ -308,10 +308,10 @@ class RechargePage extends GetView<RechargeController> {
   ///
   Widget _uploadImage(BuildContext context, RechargeController controller) {
     return GestureDetector(
-      onTap: () => controller.pickImage(),
+      onTap: () => controller.pickHinhHoaDon(),
       child: Container(
         child: controller.image != null
-            ? Image.file(
+            ? Image.network(
                 controller.image!,
                 fit: BoxFit.cover,
               )

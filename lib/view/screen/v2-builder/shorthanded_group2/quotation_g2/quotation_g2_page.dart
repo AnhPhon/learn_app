@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -9,7 +11,9 @@ import 'package:template/view/basewidget/component/content_widget.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal_add.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/cupertino_supreme/select_box_supreme.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group2/quotation_g2/quotation_g2_controller.dart';
 
 class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
@@ -24,14 +28,16 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
               child: Column(
                 children: [
                   //quotation ifo
-                  DropDownButton1<String>(
-                    label: "Thông tin báo giá:",
-                    labelBold: true,
-                    hint: "Chọn thông tin báo giá",
-                    onChanged: (val) {},
-                    data: controller.quotationInfo,
-                    isColorFieldWhite: true,
-                    width: double.infinity,
+                  Container(
+                    child: SelectBoxSupreme<String?>(
+                      obligatory: true,
+                      label: "Thông tin báo giá:",
+                      items: controller.quotationInfo,
+                      onChanged: (val) {
+                        controller.quotationInfoSelected = val.toString();
+                      },
+                      hint: "Chọn thông tin báo giá",
+                    ),
                   ),
 
                   //title
@@ -46,53 +52,8 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
                     centerContent: true,
                   ),
 
-                  //job name
-                  InputWidget(
-                    label: "Tên công việc:",
-                    textEditingController: controller.jobNameController,
-                    width: double.infinity,
-                    isColorFieldWhite: true,
-                  ),
-
-                  //specifications
-                  InputWidget(
-                    label: "Quy cách:",
-                    textEditingController: controller.specificationsController,
-                    width: double.infinity,
-                    isColorFieldWhite: true,
-                  ),
-
-                  // weight and unit
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //weight
-                      InputWidget(
-                        label: "Khối lượng:",
-                        textEditingController: controller.weightController,
-                        width: .35,
-                        isColorFieldWhite: true,
-                      ),
-                      //unit
-                      DropDownButton1<String>(
-                        label: "Đơn vị",
-                        labelBold: true,
-                        hint: " ",
-                        onChanged: (val) {},
-                        data: const ["m2", "km2"],
-                        isColorFieldWhite: true,
-                        width: .35,
-                      ),
-                    ],
-                  ),
-
-                  //unit price
-                  InputWidget(
-                    label: "Đơn giá (vnđ):",
-                    textEditingController: controller.unitPriceController,
-                    width: double.infinity,
-                    isColorFieldWhite: true,
-                  ),
+                  //infomation
+                  buildListViewVatTu(controller),
 
                   //add more
                   _addMore(),
@@ -106,9 +67,13 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
 
                   //quotation image
                   ImageListHorizontalAdd(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
                     label: "Hình ảnh báo giá (nếu có)",
-                    pickImage: () => controller.pickImage(),
-                    imageFileList: controller.imageList,
+                    pickImage: () => controller.pickImages(),
+                    imageFileList: controller.danhSachBaoGiaDonDichVuRequest.hinhAnhBaoGias ?? [],
                   ),
 
                   const SizedBox(
@@ -116,17 +81,25 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
                   ),
 
                   InputWidget(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
                     label: "Giá trị đơn hàng (nếu báo giá bằng file/ hình ảnh)",
                     textEditingController: controller.orderValueController,
                     width: double.infinity,
                     isColorFieldWhite: true,
                     allowEdit: controller.allowEdit,
+                    textInputType: TextInputType.number,
+                    onChanged: (val){
+                      controller.setPriceFromInputCustom(val);
+                    },
                   ),
 
                   //order value
                   RowText(
                     text1: "Giá trị đơn hàng",
-                    text2: controller.orderValue,
+                    text2: "${CurrencyConverter.currencyConverterVND(controller.orderValue * 1.0)} VNĐ",
                     colorRed: true,
                   ),
 
@@ -148,6 +121,294 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
         });
   }
 
+  ListView buildListViewVatTu(V2QuotationG2Controller controller) {
+    return ListView.builder(
+        padding: const EdgeInsets.only(
+          left: Dimensions.PADDING_SIZE_DEFAULT,
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: (controller.chiTietCongViecRequest == null ||
+                controller.chiTietCongViecRequest.isEmpty)
+            ? 0
+            : controller.chiTietCongViecRequest.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          return Container(
+            child: BoxShadowWidget(
+              padding: const EdgeInsets.only(
+                left: Dimensions.PADDING_SIZE_DEFAULT,
+                right: Dimensions.PADDING_SIZE_DEFAULT,
+              ),
+              margin: const EdgeInsets.only(
+                bottom: Dimensions.PADDING_SIZE_DEFAULT,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
+                  const Label(
+                    label: "Tên công việc:",
+                    obligatory: true,
+                    horizontalPadding: 0,
+                    style: TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      textAlignVertical: TextAlignVertical.center,
+                      controller: controller.jobNameControllers[index],
+                      keyboardType: TextInputType.text,
+                      cursorColor: ColorResources.PRIMARY,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL,
+                          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide: const BorderSide(
+                                color: ColorResources.PRIMARY)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        hintText: "Nhập Tên công việc",
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                      onChanged: (val) {
+                        if (val.isNotEmpty) {
+                          controller.chiTietCongViecRequest[index].tenCongViec =
+                              val.toString();
+                        }
+                      },
+                    ),
+                  ),
+
+                  const Label(
+                    label: "Quy cách:",
+                    obligatory: true,
+                    horizontalPadding: 0,
+                    style: TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      textAlignVertical: TextAlignVertical.center,
+                      controller: controller.specificationsControllers[index],
+                      keyboardType: TextInputType.text,
+                      cursorColor: ColorResources.PRIMARY,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL,
+                          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide: const BorderSide(
+                                color: ColorResources.PRIMARY)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        hintText: "Nhập Quy cách",
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                      onChanged: (val) {
+                        if (val.isNotEmpty) {
+                          controller.chiTietCongViecRequest[index].quyCach =
+                              val.toString();
+                        }
+                      },
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          children: [
+                            const Label(
+                              label: "Khối lượng:",
+                              obligatory: true,
+                              horizontalPadding: 0,
+                              style: TextStyle(
+                                fontSize: Dimensions.FONT_SIZE_LARGE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Container(
+                              child: TextField(
+                                textInputAction: TextInputAction.next,
+                                textAlignVertical: TextAlignVertical.center,
+                                controller: controller.weightControllers[index],
+                                keyboardType: TextInputType.number,
+                                cursorColor: ColorResources.PRIMARY,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(
+                                    horizontal:
+                                        Dimensions.PADDING_SIZE_SMALL,
+                                    vertical:
+                                        Dimensions.PADDING_SIZE_DEFAULT,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions
+                                            .BORDER_RADIUS_EXTRA_SMALL),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.BORDER_RADIUS_DEFAULT),
+                                      borderSide: const BorderSide(
+                                          color: ColorResources.PRIMARY)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.BORDER_RADIUS_DEFAULT),
+                                      borderSide: const BorderSide(
+                                          color: ColorResources.GREY)),
+                                  disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.BORDER_RADIUS_DEFAULT),
+                                      borderSide: const BorderSide(
+                                          color: ColorResources.GREY)),
+                                  hintText: "Nhập Khối lượng:",
+                                  filled: true,
+                                  fillColor: Colors.transparent,
+                                ),
+                                onChanged: (val) {
+                                  if (val.isNotEmpty && val.isNumericOnly) {
+                                    controller.chiTietCongViecRequest[index].soLuong =
+                                        val.toString();
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          children: [
+                            SelectBoxSupreme<String?>(
+                              obligatory: true,
+                              margin: EdgeInsets.all(0),
+                              label: "Đơn vị",
+                              items: controller.unitArray,
+                              onChanged: (val) {
+                                controller.chiTietCongViecRequest[index]
+                                    .donVi = val.toString();
+                              },
+                              hint: "Chọn Đơn vị",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Label(
+                    label: "Đơn giá",
+                    obligatory: true,
+                    horizontalPadding: 0,
+                    style: TextStyle(
+                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      textAlignVertical: TextAlignVertical.center,
+                      controller: controller.unitPriceControllers[index],
+                      keyboardType: TextInputType.number,
+                      cursorColor: ColorResources.PRIMARY,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL,
+                          vertical: Dimensions.PADDING_SIZE_DEFAULT,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide: const BorderSide(
+                                color: ColorResources.PRIMARY)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.BORDER_RADIUS_DEFAULT),
+                            borderSide:
+                                const BorderSide(color: ColorResources.GREY)),
+                        hintText: "Nhập Đơn giá",
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                      onChanged: (val) {
+                        if (val.isNotEmpty && val.isNumericOnly) {
+                          controller.unitPrices[index] = val.toString();
+                        }
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   ///
   ///add more
   ///
@@ -158,7 +419,7 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
         vertical: Dimensions.PADDING_SIZE_SMALL,
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: controller.addChiTietCongViecForm,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -186,7 +447,7 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
     return Column(
       children: [
         //show file
-        const RowText(text1: "File báo giá (nếu có)", text2: "baogia.pdf"),
+        RowText(text1: "File báo giá (nếu có)", text2: controller.getFileNameBaoGia()),
 
         const SizedBox(
           height: Dimensions.MARGIN_SIZE_SMALL,
@@ -194,7 +455,7 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
 
         //add file
         GestureDetector(
-          onTap: () {},
+          onTap: controller.pickFiles,
           child: BoxShadowWidget(
               padding: const EdgeInsets.symmetric(
                   vertical: Dimensions.PADDING_SIZE_LARGE,
@@ -208,6 +469,50 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
               )),
         ),
       ],
+    );
+  }
+
+  ///
+  ///row text
+  ///
+  Widget _rowtext(
+      {required String text1,
+      String? text2,
+      TextEditingController? textController}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+      ),
+      child: DefaultTextStyle(
+        textAlign: TextAlign.left,
+        style: Dimensions.fontSizeStyle16().copyWith(
+          color: ColorResources.BLACK,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 4,
+              child: Text(
+                text1,
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: text2 != null
+                  ? Text(
+                      text2,
+                    )
+                  : InputWidget(
+                      textEditingController: textController!,
+                      hintText: "",
+                      width: double.infinity,
+                    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

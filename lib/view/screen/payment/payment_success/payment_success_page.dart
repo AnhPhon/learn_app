@@ -59,6 +59,8 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
           horizontal: Dimensions.PADDING_SIZE_DEFAULT,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
@@ -67,6 +69,7 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
               controller.isPayment
                   ? "Bạn đã thanh toán thành công!"
                   : "Bạn đã gửi yêu cầu nạp tiền thành công",
+                  textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -74,11 +77,12 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
             ),
             Text(controller.isPayment
                 ? 'Chúng tôi sẽ bố trí người để thực hiện đơn hàng sớm nhất!'
-                : "Chúng tôi sẽ kiểm tra yêu cầu sớm nhất!"),
+                : "Chúng tôi sẽ kiểm tra yêu cầu sớm nhất!",
+                textAlign: TextAlign.center,),
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_DEFAULT,
             ),
-            const Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!"),
+            const Text("Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!",textAlign: TextAlign.center,),
           ],
         ),
       ),

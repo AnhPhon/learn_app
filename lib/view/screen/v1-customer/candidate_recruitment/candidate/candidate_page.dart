@@ -202,6 +202,7 @@ class V1CandidatePage extends GetView<V1CandidateController> {
             boxShadow: boxShadowMedium),
         child: Text(
           title,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: controller.currentIndex == index
                 ? ColorResources.WHITE
@@ -223,7 +224,8 @@ class V1CandidatePage extends GetView<V1CandidateController> {
       padding: const EdgeInsets.only(
           top: Dimensions.PADDING_SIZE_DEFAULT,
           left: Dimensions.PADDING_SIZE_DEFAULT,
-          right: Dimensions.PADDING_SIZE_DEFAULT),
+          right: Dimensions.PADDING_SIZE_DEFAULT,
+          bottom: Dimensions.PADDING_SIZE_DEFAULT),
       child: Container(
         alignment: Alignment.center,
         width: DeviceUtils.getScaledWidth(context, 1).roundToDouble(),

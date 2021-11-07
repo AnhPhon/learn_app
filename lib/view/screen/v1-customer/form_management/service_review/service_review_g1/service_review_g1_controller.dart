@@ -30,13 +30,13 @@ class V1ServiceReviewG1Controller extends GetxController {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
       print(donDichVuResponse.toJson());
     }
-    getVatTu();
+    getListChiTietVatTu();
   }
 
   ///
   ///vatTu
   ///
-  void getVatTu() {
+  void getListChiTietVatTu() {
     chiTietVatTuProvider.paginate(
       page: 1,
       limit: 100,
@@ -47,7 +47,7 @@ class V1ServiceReviewG1Controller extends GetxController {
         update();
       },
       onError: (error) {
-        print("V1JobDetailController getVatTu onError $error");
+        print("V1JobDetailController getListChiTietVatTu onError $error");
       },
     );
   }

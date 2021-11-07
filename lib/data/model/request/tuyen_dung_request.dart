@@ -14,7 +14,7 @@ class TuyenDungRequest {
   String? idChuyenNganhChinh;
   String? idSoNamKinhNghiem;
   String? idMucLuongDuKien;
-  String? noiLamViec;
+  String? idNoiLamViec;
   String? idThoiGianLamViec;
   String? moTaCongViec;
   String? yeuCauCongViec;
@@ -56,7 +56,7 @@ class TuyenDungRequest {
       this.idChuyenNganhChinh,
       this.idSoNamKinhNghiem,
       this.idMucLuongDuKien,
-      this.noiLamViec,
+      this.idNoiLamViec,
       this.idThoiGianLamViec,
       this.moTaCongViec,
       this.yeuCauCongViec,
@@ -101,7 +101,7 @@ class TuyenDungRequest {
     idChuyenNganhChinh = json['idChuyenNganhChinh'].toString();
     idSoNamKinhNghiem = json['idSoNamKinhNghiem'].toString();
     idMucLuongDuKien = json['idMucLuongDuKien'].toString();
-    noiLamViec = json['noiLamViec'].toString();
+    idNoiLamViec = json['idNoiLamViec'].toString();
     idThoiGianLamViec = json['idThoiGianLamViec'].toString();
     moTaCongViec = json['moTaCongViec'].toString();
     yeuCauCongViec = json['yeuCauCongViec'].toString();
@@ -181,8 +181,8 @@ class TuyenDungRequest {
     // check null idMucLuongDuKien
     if (idMucLuongDuKien != null) data['idMucLuongDuKien'] = idMucLuongDuKien;
 
-    // check null noiLamViec
-    if (noiLamViec != null) data['noiLamViec'] = noiLamViec;
+    // check null idNoiLamViec
+    if (idNoiLamViec != null) data['idNoiLamViec'] = idNoiLamViec;
 
     // check null idThoiGianLamViec
     if (idThoiGianLamViec != null)

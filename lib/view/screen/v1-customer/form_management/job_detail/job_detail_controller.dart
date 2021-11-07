@@ -34,13 +34,13 @@ class V1JobDetailController extends GetxController {
         hinhAnhBanVe.add(banVe);
       }
     }
-    getVatTu();
+    getListChiTietVatTu();
   }
 
   ///
   ///vatTu
   ///
-  void getVatTu() {
+  void getListChiTietVatTu() {
     vatTuProvider.paginate(
       page: 1,
       limit: 100,
@@ -51,7 +51,7 @@ class V1JobDetailController extends GetxController {
         update();
       },
       onError: (error) {
-        print("V1JobDetailController getVatTu onError $error");
+        print("V1JobDetailController getListChiTietVatTu onError $error");
       },
     );
   }
