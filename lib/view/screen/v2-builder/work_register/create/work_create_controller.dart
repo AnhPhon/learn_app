@@ -22,6 +22,7 @@ import 'package:template/data/model/response/tin_hoc_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/data/model/response/trinh_do_response.dart';
 import 'package:template/di_container.dart';
+import 'package:template/provider/bang_bang_cap_provider.dart';
 import 'package:template/provider/chuc_vu_provider.dart';
 import 'package:template/provider/chuyen_mon_provider.dart';
 import 'package:template/provider/chuyen_nganh_chinh_provider.dart';
@@ -63,6 +64,9 @@ class V2WorkCreateController extends GetxController {
       GetIt.I.get<DiaDiemDangKyLamViecProvider>();
   ChuyenNganhChinhProvider chuyenNganhChinhProvider =
       GetIt.I.get<ChuyenNganhChinhProvider>();
+
+  //Bằng cấp Provider
+  BangBangCapProvider bangBangCapProvider = GetIt.I.get<BangBangCapProvider>();
 
   NgoaiNguProvider ngoaiNguProvider = GetIt.I.get<NgoaiNguProvider>();
   TrinhDoProvider trinhDoProvider = GetIt.I.get<TrinhDoProvider>();
@@ -460,15 +464,15 @@ class V2WorkCreateController extends GetxController {
 
     if (namTotNghiepController.text.isNotEmpty) {
       sl.get<SharedPreferenceHelper>().userId.then((value) {
-        bangBangCap.add(BangBangCapRequest(
-          anhBangCap: anhBangCap.map((e) => e.path).toList().join(","),
-          donViDaoTao: donViDaotaoController.text,
-          namTotNghiep: namTotNghiepController.text,
-          idChuyenMon: chuyenMonIndex!.id,
-          idLoaiTotNghiep: loaiTotNghiepIndex!.id,
-          idTaiKhoan: value,
-          idTrinhDo: trinhDoIndex!.id,
-        ));
+        // bangBangCap.add(BangBangCapRequest(
+        //   anhBangCap: anhBangCap.map((e) => e.path).toList().join(","),
+        //   donViDaoTao: donViDaotaoController.text,
+        //   namTotNghiep: namTotNghiepController.text,
+        //   idChuyenMon: chuyenMonIndex!.id,
+        //   idLoaiTotNghiep: loaiTotNghiepIndex!.id,
+        //   idTaiKhoan: value,
+        //   idTrinhDo: trinhDoIndex!.id,
+        // ));
 
         bangBangCapDisplay.add({
           "donViDaoTao": donViDaotaoController.text,

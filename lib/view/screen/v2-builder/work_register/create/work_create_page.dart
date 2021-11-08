@@ -67,7 +67,8 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         title: title,
         content: content,
         style: const TextStyle(
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -88,12 +89,15 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_LARGE,
+        ),
         // Tiêu đề cần tuyển
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.titleController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Tiêu đề công việc",
           hidden: false,
           label: "Tiêu đề",
@@ -123,19 +127,25 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
             ],
           ),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         //Chỗ ở hiện tại
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.addressController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "123B/22 Thanh Khê - Đà Nẵng",
           hidden: false,
           label: "Chỗ ở hiện tại",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // hôn nhân
@@ -154,6 +164,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Hôn nhân",
           hint: controller.honNhan,
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Hình thức làm việc
         DropDownButton<HinhThucLamViecResponse>(
@@ -171,8 +184,14 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Hình thức làm việc",
           hint: "Hình thức làm việc",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         const Label(label: "Mục tiêu nghê nghiệp", obligatory: true),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
         Container(
           width: DeviceUtils.getScaledWidth(context, 1),
           padding: const EdgeInsets.symmetric(
@@ -212,6 +231,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
       children: [
         const Label(
             label: "Chọn chức vụ, kinh nghiệm, mức lương", obligatory: false),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
+
         // Chức vụ hiện tại *
         DropDownButton<ChucVuResponse>(
           padding: const EdgeInsets.symmetric(
@@ -228,6 +251,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           obligatory: true,
           label: "Chức vụ hiện tại",
           hint: "Chức vụ hiện tại *",
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // Chức vụ mong muốn *
@@ -246,6 +272,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Chức vụ mong muốn",
           hint: "Chức vụ mong muốn",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Năm kinh nghiệm *
         DropDownButton<SoNamKinhNghiemResponse>(
@@ -262,6 +291,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           obligatory: true,
           label: "Năm kinh nghiệm",
           hint: "Năm kinh nghiệm",
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // Mức lương đề xuất *
@@ -280,6 +312,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Mức lương đề xuất",
           hint: "Mức lương đề xuất",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Nơi làm việc *
         DropDownButton<DiaDiemDangKyLamViecResponse>(
@@ -296,6 +331,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           obligatory: true,
           label: "Nơi làm việc",
           hint: "Chọn tỉnh/TP",
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // Ngành nghề mong muốn ứng tuyển *
@@ -314,6 +352,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Ngành nghề mong muốn ứng tuyển",
           hint: "Chọn ngành nghề",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
       ],
     );
   }
@@ -324,6 +365,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
   Widget aualificationsAndQualifications(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
         const Label(label: "Bằng cấp và trình độ", obligatory: false),
 
         // Trình độ
@@ -343,6 +387,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Trình độ",
           hint: "Cùi",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Chuyên môn *
         DropDownButton<ChuyenMonResponse>(
@@ -360,6 +407,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           obligatory: true,
           label: "Chuyên môn",
           hint: "Chuyên môn",
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // Tốt nghiệp lọai *
@@ -379,6 +429,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Tốt nghiệp lọai",
           hint: "Tốt nghiệp lọai",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Năm tốt nghiệp *
         TextFieldDate(
@@ -387,7 +440,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           ),
           allowEdit: true,
           controller: controller.namTotNghiepController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-12-2021",
           label: "Năm tốt nghiệp",
           obligatory: true,
@@ -395,19 +448,25 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           width: DeviceUtils.getScaledWidth(context, 1),
           isDate: true,
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         //Đơn vị đào tạo *
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.donViDaotaoController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Đơn vị đào tạo",
           hidden: false,
           label: "Đơn vị đào tạo",
           obligatory: false,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         const Label(label: "Ảnh bằng cấp (nếu có)", obligatory: true),
@@ -488,6 +547,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
         const Label(
             label: "Kê khai kinh nghiệm (kê khai rõ - cơ hội tuyển dụng lớn)",
             obligatory: false),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
+
         // từ
         TextFieldDate(
           padding: const EdgeInsets.symmetric(
@@ -496,13 +559,16 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           paddingTop: 0,
           allowEdit: true,
           controller: controller.startTimeController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-12-2021",
           label: "Từ",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
           isDate: true,
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         // đến
@@ -512,7 +578,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           ),
           allowEdit: true,
           controller: controller.endTimeController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "12-12-2021",
           label: "Đến",
           obligatory: true,
@@ -520,13 +586,16 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           width: DeviceUtils.getScaledWidth(context, 1),
           isDate: true,
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         //Đơn vị  *
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.donViController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Đơn vị",
           hidden: false,
           label: "Đơn vị",
@@ -534,19 +603,25 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         //Chức vụ *
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.chucVuController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Chức vụ",
           hidden: false,
           label: "Chức vụ",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         //Mức lương *
@@ -556,25 +631,32 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
               allowEdit: true,
               allowMultiline: false,
               controller: controller.mucLuongController,
-              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+              fontSize: Dimensions.FONT_SIZE_LARGE,
               holdplacer: "Mức lương",
               hidden: false,
               label: "Mức lương",
               obligatory: true,
-              typeInput: TextInputType.text,
+              typeInput: TextInputType.number,
               width: DeviceUtils.getScaledWidth(context, 0.5),
             ),
             // Đơn vị
             DropDownButton<String>(
+              isColorFieldWhite: true,
+              padding: const EdgeInsets.only(
+                top: Dimensions.PADDING_SIZE_SMALL,
+              ),
               onChanged: (val) {},
-              data: const [],
+              data: const ["USD"],
               width: DeviceUtils.getScaledWidth(context, 0.5),
-              value: "US",
+              value: "USD",
               obligatory: false,
               label: "",
               hint: "USD",
             ),
           ],
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         //Công việc phụ trách *
@@ -582,7 +664,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.congViecPhuTrachController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Công việc phụ trách",
           hidden: false,
           label: "Công việc phụ trách",
@@ -590,13 +672,16 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         //thành tích đạt được *
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.ketQuaController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Kết quả / thành tích đạt được",
           hidden: false,
           label: "Kết quả / thành tích đạt được",
@@ -604,12 +689,18 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         AddInfoButton(
             title: "Thêm kê khai kinh nghiệm",
             onPress: () {
               controller.themKeKhaiKinhNghiem();
             }),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // List thêm
         Column(
@@ -742,6 +833,10 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
       children: [
         //Ngoại ngữ *
         const Label(label: "Ngoại ngữ", obligatory: true),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
+
         // Chọn ngoại ngữ
         DropDownButton<NgoaiNguResponse>(
           padding: const EdgeInsets.symmetric(
@@ -757,6 +852,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           label: "Chọn ngoại ngữ",
           hint: "Chọn ngoại ngữ",
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Trình độ
         DropDownButton<TrinhDoResponse>(
@@ -771,6 +869,9 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           obligatory: true,
           label: "Trình độ",
           hint: "Trình độ",
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
 
         Table(
@@ -1068,7 +1169,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           allowEdit: true,
           allowMultiline: false,
           controller: controller.phanMemHoTroController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Phần mềm hỗ trợ công việc từng ngành",
           hidden: false,
           label: "Phần mềm hỗ trợ công việc từng ngành",
@@ -1076,13 +1177,16 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Sở thích thể hiện trình độ / khả năng tư duy
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.soThichTheHienTrinhDoController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Sở thích thể hiện trình độ / khả năng tư duy",
           hidden: false,
           label: "Sở thích thể hiện trình độ / khả năng tư duy",
@@ -1090,13 +1194,16 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Sở thích thể hiện kỹ năng
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.soThichTheHienKyNangController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Sở thích thể hiện kỹ năng",
           hidden: false,
           label: "Sở thích thể hiện kỹ năng",
@@ -1104,19 +1211,25 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
         ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
+        ),
 
         // Sở thích thể hiện tích cách
         InputField(
           allowEdit: true,
           allowMultiline: false,
           controller: controller.soThichTheHienTinhCachController,
-          fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+          fontSize: Dimensions.FONT_SIZE_LARGE,
           holdplacer: "Sở thích thể hiện tích cách",
           hidden: false,
           label: "Sở thích thể hiện tích cách",
           obligatory: true,
           typeInput: TextInputType.text,
           width: DeviceUtils.getScaledWidth(context, 1),
+        ),
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_DEFAULT,
         ),
       ],
     );

@@ -36,7 +36,6 @@ class DangKyViecMoiRequest {
   String? tieuDeSearch;
   List<dynamic>? idDiaDiemDangKyLamViecs;
   List<dynamic>? anhHoSoXinViecs;
-  List<String>? anhBangCaps;
 
   DangKyViecMoiRequest({
     this.id,
@@ -73,7 +72,6 @@ class DangKyViecMoiRequest {
     this.idDiaDiemDangKyLamViecs,
     this.tieuDeSearch,
     this.anhHoSoXinViecs,
-    this.anhBangCaps,
   });
 
   ///
@@ -138,10 +136,6 @@ class DangKyViecMoiRequest {
     if (json['anhHoSoXinViecs'] != null) {
       anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<dynamic>;
     }
-
-    // if (json['anhBangCaps'] != null) {
-    //   anhBangCaps = json['anhBangCaps'] as List<String>;
-    // }
   }
 
   ///
@@ -275,10 +269,6 @@ class DangKyViecMoiRequest {
       data['anhHoSoXinViecs'] = anhHoSoXinViecs;
     }
 
-    // check null anhbangCap
-    // if (anhBangCaps != null) {
-    //   data['anhBangCaps'] = anhBangCaps;
-    // }
     // check null idNhomDichVu
     if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 

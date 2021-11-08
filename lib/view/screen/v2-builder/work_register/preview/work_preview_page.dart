@@ -19,6 +19,7 @@ import 'package:template/view/screen/v2-builder/work_register/preview/work_previ
 class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
   DangKyViecMoiModel? dangKyModel;
   List<Map<String, String>>? bangBangCapDisplay;
+
   @override
   V2WorkPreviewController controller = Get.put(V2WorkPreviewController());
 
@@ -365,16 +366,16 @@ class V2WorkPreviewPage extends GetView<V2WorkPreviewController> {
               ),
 
               //Ảnh bằng cấp(nếu có)
-              V2ImageListHorizontalAdd(
-                onDelete: (String file, List<String> files) =>
+              V2ImageListHorizontalAdd<dynamic>(
+                onDelete: (dynamic file, List<dynamic> files) =>
                     controller.onDeleteImage(
-                  file: file,
-                  files: files,
+                  file: file as String,
+                  files: files as List<String>,
                 ),
                 labelBold: true,
                 label: "Ảnh bằng cấp(nếu có)",
                 pickImage: () => controller.pickAnhBangCap(),
-                imageFileList: controller.dangKyViecMoiRequest.anhBangCaps ??
+                imageFileList: controller.bangCapRequest.anhBangCaps ??
                     controller.getAnhBangCap(),
               ),
               const SizedBox(

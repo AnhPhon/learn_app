@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/body/dang_ky_viec_moi_model.dart';
+import 'package:template/data/model/request/bang_bang_cap_request.dart';
 import 'package:template/data/model/request/dang_ky_viec_moi_request.dart';
 import 'package:template/data/model/request/danh_sach_ung_tuyen_request.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
@@ -38,6 +39,7 @@ class V2WorkPreviewController extends GetxController {
   DanhSachUngTuyenRequest danhSachUngTuyenRequest = DanhSachUngTuyenRequest();
   DangKyViecMoiProvider dangKyViecMoiProvider =
       GetIt.I.get<DangKyViecMoiProvider>();
+  BangBangCapRequest bangCapRequest = BangBangCapRequest();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -64,11 +66,11 @@ class V2WorkPreviewController extends GetxController {
     });
   }
 
-  List<String> getAnhBangCap() {
-    if (dangKyViecMoiRequest.anhBangCaps != null &&
-        dangKyViecMoiRequest.anhBangCaps!.isNotEmpty &&
-        dangKyViecMoiRequest.anhBangCaps.toString() != 'null') {
-      final arrayNameSplit = dangKyViecMoiRequest.anhBangCaps;
+  List<dynamic> getAnhBangCap() {
+    if (bangCapRequest.anhBangCaps != null &&
+        bangCapRequest.anhBangCaps!.isNotEmpty &&
+        bangCapRequest.anhBangCaps.toString() != 'null') {
+      final arrayNameSplit = bangCapRequest.anhBangCaps;
       return arrayNameSplit!;
     }
     return [];
@@ -105,7 +107,7 @@ class V2WorkPreviewController extends GetxController {
           EasyLoading.dismiss();
 
           if (value.files != null && value.files!.isNotEmpty) {
-            dangKyViecMoiRequest.anhBangCaps = value.files;
+            bangCapRequest.anhBangCaps = value.files;
           }
 
           update();

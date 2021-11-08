@@ -686,20 +686,20 @@ class V2WorkRegisterController extends GetxController {
               // đăng ký việc mới
               dangKyViecMoiProvider.add(
                 data: DangKyViecMoiRequest(
-                  idTaiKhoan: userId,
-                  idNhomDichVu: idNhomCongViec,
-                  idLoaiCongViec: idCongViec,
-                  soLuong: soLuongController.text,
-                  thoiGianBatDau: timeStart.join("-"),
-                  thoiGianKetThuc: timeEnd.join("-"),
-                  tieuDe: '...',
-                  tenUngVien: taiKhoan.hoTen ?? "",
-                  gioiTinh: taiKhoan.gioiTinh ?? "",
-                  ngaySinh: taiKhoan.ngaySinh ?? "",
-                  email: taiKhoan.email ?? "",
-                  diaChi: taiKhoan.diaChi ?? "",
-                  idDiaDiemDangKyLamViecs: [],
-                ),
+                    idTaiKhoan: userId,
+                    idNhomDichVu: idNhomCongViec,
+                    idLoaiCongViec: idCongViec,
+                    soLuong: soLuongController.text,
+                    thoiGianBatDau: timeStart.join("-"),
+                    thoiGianKetThuc: timeEnd.join("-"),
+                    tieuDe: '...',
+                    tenUngVien: taiKhoan.hoTen ?? "",
+                    gioiTinh: taiKhoan.gioiTinh ?? "",
+                    ngaySinh: taiKhoan.ngaySinh ?? "",
+                    email: taiKhoan.email ?? "",
+                    diaChi: taiKhoan.diaChi ?? "",
+                    idDiaDiemDangKyLamViecs: [],
+                    anhHoSoXinViecs: []),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
 
@@ -712,7 +712,7 @@ class V2WorkRegisterController extends GetxController {
                   Future.delayed(const Duration(milliseconds: 500))
                       .then((value) {
                     updateDiaDiem(data.id!);
-                    EasyLoading.showSuccess("Thêm thành công");
+                    EasyLoading.showSuccess("Thêm thành công!");
                     sl.get<SharedPreferenceHelper>().nhom7.then((nhom7) {
                       if (nhom7 == true) {
                         Get.toNamed(AppRoutes.V2_WORK_CREATE);
@@ -758,21 +758,21 @@ class V2WorkRegisterController extends GetxController {
               // đăng ký việc mới
               dangKyViecMoiProvider.update(
                 data: DangKyViecMoiRequest(
-                  id: await sl.get<SharedPreferenceHelper>().viecMoi,
-                  idTaiKhoan: userId,
-                  idNhomDichVu: idNhomCongViec,
-                  idLoaiCongViec: idCongViec,
-                  soLuong: soLuongController.text,
-                  thoiGianBatDau: timeStart.join("-"),
-                  thoiGianKetThuc: timeEnd.join("-"),
-                  tieuDe: '...',
-                  tenUngVien: taiKhoan.hoTen ?? "",
-                  gioiTinh: taiKhoan.gioiTinh ?? "",
-                  ngaySinh: taiKhoan.ngaySinh ?? "",
-                  email: taiKhoan.email ?? "",
-                  diaChi: taiKhoan.diaChi ?? "",
-                  idDiaDiemDangKyLamViecs: [],
-                ),
+                    id: await sl.get<SharedPreferenceHelper>().viecMoi,
+                    idTaiKhoan: userId,
+                    idNhomDichVu: idNhomCongViec,
+                    idLoaiCongViec: idCongViec,
+                    soLuong: soLuongController.text,
+                    thoiGianBatDau: timeStart.join("-"),
+                    thoiGianKetThuc: timeEnd.join("-"),
+                    tieuDe: '...',
+                    tenUngVien: taiKhoan.hoTen ?? "",
+                    gioiTinh: taiKhoan.gioiTinh ?? "",
+                    ngaySinh: taiKhoan.ngaySinh ?? "",
+                    email: taiKhoan.email ?? "",
+                    diaChi: taiKhoan.diaChi ?? "",
+                    idDiaDiemDangKyLamViecs: [],
+                    anhHoSoXinViecs: []),
                 onSuccess: (data) {
                   themDiaDiemDangKyLamViec(data.id!);
 
@@ -785,7 +785,7 @@ class V2WorkRegisterController extends GetxController {
                   Future.delayed(const Duration(milliseconds: 500))
                       .then((value) {
                     updateDiaDiem(data.id!);
-                    EasyLoading.showSuccess("Thêm thành công");
+                    EasyLoading.showSuccess("Cập nhập thành công!");
                     sl.get<SharedPreferenceHelper>().nhom7.then((nhom7) {
                       if (nhom7 == true) {
                         Get.toNamed(AppRoutes.V2_WORK_CREATE);

@@ -7,6 +7,7 @@ class BangBangCapRequest {
   String? namTotNghiep;
   String? donViDaoTao;
   String? anhBangCap;
+  List<dynamic>? anhBangCaps;
 
   BangBangCapRequest(
       {this.id,
@@ -16,6 +17,7 @@ class BangBangCapRequest {
       this.idLoaiTotNghiep,
       this.namTotNghiep,
       this.donViDaoTao,
+      this.anhBangCaps,
       this.anhBangCap});
 
   ///
@@ -30,6 +32,10 @@ class BangBangCapRequest {
     namTotNghiep = json['namTotNghiep'].toString();
     donViDaoTao = json['donViDaoTao'].toString();
     anhBangCap = json['anhBangCap'].toString();
+
+    if (json['anhBangCaps'] != null) {
+      anhBangCaps = json['anhBangCaps'] as List<dynamic>;
+    }
   }
 
   ///
@@ -60,6 +66,11 @@ class BangBangCapRequest {
 
     // check null anhBangCap
     if (anhBangCap != null) data['anhBangCap'] = anhBangCap;
+
+    // check null anhBangCaps
+    if (anhBangCaps != null) {
+      data['anhBangCaps'] = anhBangCaps;
+    }
 
     return data;
   }
