@@ -131,7 +131,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
-    return controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
+    return controller.donDichVu!.hinhAnhBaoGias == null ? const SizedBox.shrink() :  controller.donDichVu!.hinhAnhBaoGias!.isEmpty ?  const SizedBox() :
     Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_SMALL,
@@ -145,7 +145,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
-          BoxImage(images: controller.donDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(images: controller.donDichVu!.hinhAnhBaoGias),
         ],
       ),
     );

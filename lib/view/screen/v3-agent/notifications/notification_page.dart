@@ -115,7 +115,7 @@ class V3NotificationPage extends GetView<V3NotificationController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
+                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].createdAt!).subtract(const Duration(hours:  -7)))),
                             // Row(
                             //   crossAxisAlignment: CrossAxisAlignment.end,
                             //   children: [

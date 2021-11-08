@@ -120,7 +120,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
+                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].createdAt!).subtract(const Duration(hours:  -7)))),
                             // if(controller.notifications[index].idDonDichVu != null)
                             // chuaPhanHoi(),
                             // if(controller.notifications[index].idDonDichVu != null)

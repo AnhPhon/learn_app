@@ -81,7 +81,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                     borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder, 
-                      height: DeviceUtils.getScaledHeight(context,1),
+                      height: 100,
                       image: controller.notifications[index].hinhDaiDien != 'null' ? controller.notifications[index].hinhDaiDien! : ImageURL.V2_IMAGE_WORK_IN_PROGRESS,
                       fit: BoxFit.cover,
                       imageErrorBuilder: (context, error, stackTrace) {
@@ -119,7 +119,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].updatedAt!))),
+                            Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].createdAt!).subtract(const Duration(hours:  -7)))),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
