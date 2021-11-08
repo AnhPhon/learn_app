@@ -7,8 +7,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/widgets/image_card.dart';
 
-class BoxImage extends StatelessWidget {
-  const BoxImage({
+class V2BoxImage extends StatelessWidget {
+  const V2BoxImage({
     Key? key,
     this.isAddImage = false,
     this.onPress,
