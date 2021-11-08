@@ -6,8 +6,6 @@ class ChiTietVatTuResponse {
   DonDichVuResponse? idDonDichVu;
   VatTuResponse? idVatTu;
   String? soLuong;
-  String? donGia;
-
   String? createdAt;
   String? updatedAt;
 
@@ -16,7 +14,6 @@ class ChiTietVatTuResponse {
       this.idDonDichVu,
       this.idVatTu,
       this.soLuong,
-      this.donGia,
       this.createdAt,
       this.updatedAt});
   

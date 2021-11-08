@@ -6,6 +6,9 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
 class ReferencePriceTableController extends GetxController{
+
+
+
   DonDichVuRequest? request;
   String id = '0';
   String title = '';
@@ -22,6 +25,14 @@ class ReferencePriceTableController extends GetxController{
     }
   }
 
+
+
+  ///
+  /// Get image
+  ///
+  void getImage(){
+    
+  }
 
   ///
   /// on back
