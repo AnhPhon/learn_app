@@ -285,6 +285,11 @@ class DonDichVuResponse {
     }
     loai = json['loai'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
@@ -395,24 +400,29 @@ class DonDichVuResponse {
     ;
 
     // check null idTrangThaiDonDichVu
-    if (idTrangThaiDonDichVu != null)
+    if (idTrangThaiDonDichVu != null) {
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
+    }
 
     // check null idTrangThaiDonDichVu
-    if (idTrangThaiDonDichVu != null)
+    if (idTrangThaiDonDichVu != null) {
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
+    }
 
     // check null idHinhThucThanhToan
-    if (idHinhThucThanhToan != null)
+    if (idHinhThucThanhToan != null) {
       data['idHinhThucThanhToan'] = idHinhThucThanhToan;
+    }
 
     // check null idTrangThaiThanhToan
-    if (idTrangThaiThanhToan != null)
+    if (idTrangThaiThanhToan != null) {
       data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
+    }
 
     // check null idThoiGianLamViec
-    if (idThoiGianLamViecs != null)
+    if (idThoiGianLamViecs != null) {
       data['idThoiGianLamViecs'] = idThoiGianLamViecs;
+    }
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
@@ -424,8 +434,15 @@ class DonDichVuResponse {
     if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null giaTriKhachDeXuat
-    if (giaTriKhachDeXuat != null)
+    if (giaTriKhachDeXuat != null) {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
+    }
+
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
+    }
 
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
@@ -449,8 +466,9 @@ class DonDichVuResponse {
     if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null idThongSoKyThuats
-    if (idThongSoKyThuats != null)
+    if (idThongSoKyThuats != null) {
       data['idThongSoKyThuats'] = idThongSoKyThuats;
+    }
 
     // check null diaDiemBocHang
     if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang;

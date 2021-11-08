@@ -114,6 +114,8 @@ class LoginController extends GetxController {
             sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
             sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
+            // sl.get<SharedPreferenceHelper>().savePassword(password)
+            // sl.get<SharedPreferenceHelper>().saveUsername(username)
             // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
             if (isRemember) {
               sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);

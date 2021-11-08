@@ -279,7 +279,9 @@ class V2HomePage extends GetView<V2HomeController> {
                   "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
               trangThai:
                   controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
-              imageURL: controller.donDichVuList[index].hinhAnhChiTiet,
+              imageURL: controller.donDichVuList[index].hinhAnhChiTiets!.isEmpty
+                  ? ""
+                  : controller.donDichVuList[index].hinhAnhChiTiets![0],
             );
           },
         ),

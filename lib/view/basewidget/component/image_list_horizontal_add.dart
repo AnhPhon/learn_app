@@ -9,8 +9,9 @@ class ImageListHorizontalAdd<T> extends StatelessWidget {
   final VoidCallback pickImage;
   final List<T> imageFileList;
   final String? label;
-  final bool? labelBold, obligatory;
+  final bool? labelBold, obligatory, isAddImage;
   final EdgeInsetsGeometry? padding;
+  final double? height;
   const ImageListHorizontalAdd({
     Key? key,
     required this.pickImage,
@@ -19,6 +20,8 @@ class ImageListHorizontalAdd<T> extends StatelessWidget {
     this.labelBold = false,
     this.obligatory = false,
     this.padding,
+    this.height,
+    this.isAddImage = true,
   }) : super(key: key);
 
   @override
@@ -64,7 +67,7 @@ class ImageListHorizontalAdd<T> extends StatelessWidget {
               borderRadius:
                   BorderRadius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
             ),
-            height: DeviceUtils.getScaledHeight(context, .158),
+            height: DeviceUtils.getScaledHeight(context, height ?? .158),
             child: Align(
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -85,10 +88,7 @@ class ImageListHorizontalAdd<T> extends StatelessWidget {
                                   ? Image.file(
                                       imageFileList[index] as File,
                                       fit: BoxFit.fill,
-                                      height: DeviceUtils.getScaledHeight(
-                                        context,
-                                        .122,
-                                      ),
+                                      height: double.infinity,
                                       width: DeviceUtils.getScaledWidth(
                                         context,
                                         .254,
@@ -102,22 +102,23 @@ class ImageListHorizontalAdd<T> extends StatelessWidget {
                             ),
                           );
                         }),
-                    GestureDetector(
-                      onTap: pickImage,
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: DeviceUtils.getScaledWidth(context, .254),
-                        padding: const EdgeInsets.only(
-                          top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                    if (isAddImage == true)
+                      GestureDetector(
+                        onTap: pickImage,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: DeviceUtils.getScaledWidth(context, .254),
+                          padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          ),
+                          decoration: BoxDecoration(
+                              color:
+                                  ColorResources.LIGHT_SKY_BLUE.withOpacity(.5),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.BORDER_RADIUS_DEFAULT)),
+                          child: const Icon(Icons.add),
                         ),
-                        decoration: BoxDecoration(
-                            color:
-                                ColorResources.LIGHT_SKY_BLUE.withOpacity(.5),
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.BORDER_RADIUS_DEFAULT)),
-                        child: const Icon(Icons.add),
                       ),
-                    ),
                   ],
                 ),
               ),

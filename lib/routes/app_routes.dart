@@ -206,6 +206,8 @@ class AppRoutes {
       '/v2_project_detail_trien_khai';
   static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
       '/v2_project_dang_ky_trien_khai';
+  static const String V2_WORK_CREATE = "/v2_work_create";
+  static const String V2_WORK_PREVIEW = "/v2_work_preview";
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -223,6 +225,14 @@ class AppRoutes {
   static const String V2_WINNING_BID = '/v2_winning_bid';
   static const String V2_PAYMENT_ORDER = '/v2_payment_order';
   static const String V2_FINISH_UPDATE = '/v2_finish_update';
+  static const String V2_PERSONAL_INFORMATION = '/v2_personal_information';
+  static const String V2_MAIL = '/v2_mail';
+  static const String V2_REVENUE = '/v2_revenue';
+  static const String V2_SAFETY = '/v2_safety';
+  static const String V2_PRODUCT_UPDATE = '/v2_product_update';
+  static const String V2_SERVICE_UPDATE = '/v2_service_update';
+  static const String V2_TAX_REGISTER = '/v2_tax_register';
+  static const String V2_SAFETY_PAPER = '/v2_safety_paper';
 
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
@@ -257,6 +267,12 @@ class AppRoutes {
       '/v3_project_dang_ky_trien_khai';
   static const String V3_ORDER_DETAIL = '/v3_order_detail';
   static const String V3_PRODUCT_DETAIL = '/v3_product_detail';
+  static const String V3_BEFORE_RECHARGE = '/v3_before_recharge';
+  static const String V3_PERSONAL_INFORMATION = '/v3_personal_information';
+  static const String V3_MAIL = '/v3_mail';
+  static const String V3_CUSTOMER_MANAGEMENT = '/v3_customer_management';
+  static const String V3_TAX_REGISTER = '/v3_tax_register';
+  static const String V3_CUSTOMER_DETAIL = '/v3_customer_detail';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -332,6 +348,7 @@ class AppRoutes {
   //builder
   static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
   static const String V2_WORK_DONE = '/v2_work_done';
+  static const String V2_REGISTER_DONE = '/v2_work_done';
   static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
   static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
   static const String V2_DETAIL_WORK_IN_PROGRESS =

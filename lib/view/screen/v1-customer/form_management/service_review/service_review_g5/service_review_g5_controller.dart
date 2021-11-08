@@ -29,9 +29,9 @@ class V1ServiceReviewG5Controller extends GetxController {
     super.onInit();
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
+      thoiGianLamViec();
+      getThongSoKyThuat();
     }
-    thoiGianLamViec();
-    getThongSoKyThuat();
   }
 
   ///

@@ -1,3 +1,5 @@
+import 'package:template/data/model/response/tinh_tp_response.dart';
+
 class DangKyViecMoiRequest {
   String? id;
   String? idTaiKhoan;
@@ -13,50 +15,64 @@ class DangKyViecMoiRequest {
   String? honNhan;
   String? idLoaiNhanVien;
   String? mucTieuNgheNghiep;
-  String? idBangBangCap;
+  List<String>? idBangBangCap;
   String? chucVuHienTai;
   String? chucVuMongMuon;
   String? idSoNamKinhNghiem;
   String? noiLamViec;
   String? mucLuongDeXuat;
   String? idKeKhaiKinhNghiem;
-  String? anhHoSoXinViec;
+
   String? fileHoSoXinViec;
   String? kyNangSoTruong;
   String? idNgoaiNgu;
   String? idTinHoc;
   String? idHinhThucLamViec;
   String? idNhomDichVu;
+  String? idLoaiCongViec;
+  String? thoiGianBatDau;
+  String? thoiGianKetThuc;
+  String? soLuong;
+  String? tieuDeSearch;
+  List<dynamic>? idDiaDiemDangKyLamViecs;
+  List<dynamic>? anhHoSoXinViecs;
 
-  DangKyViecMoiRequest(
-      {this.id,
-      this.idTaiKhoan,
-      this.tieuDe,
-      this.tenUngVien,
-      this.gioiTinh,
-      this.ngaySinh,
-      this.email,
-      this.diaChi,
-      this.idTinhTp,
-      this.idQuanHuyen,
-      this.idPhuongXa,
-      this.honNhan,
-      this.idLoaiNhanVien,
-      this.mucTieuNgheNghiep,
-      this.idBangBangCap,
-      this.chucVuHienTai,
-      this.chucVuMongMuon,
-      this.idSoNamKinhNghiem,
-      this.noiLamViec,
-      this.mucLuongDeXuat,
-      this.idKeKhaiKinhNghiem,
-      this.anhHoSoXinViec,
-      this.fileHoSoXinViec,
-      this.kyNangSoTruong,
-      this.idNgoaiNgu,
-      this.idTinHoc,
-      this.idHinhThucLamViec,
-      this.idNhomDichVu});
+  DangKyViecMoiRequest({
+    this.id,
+    this.idTaiKhoan,
+    this.tieuDe,
+    this.tenUngVien,
+    this.gioiTinh,
+    this.ngaySinh,
+    this.email,
+    this.diaChi,
+    this.idTinhTp,
+    this.idQuanHuyen,
+    this.idPhuongXa,
+    this.honNhan,
+    this.idLoaiNhanVien,
+    this.mucTieuNgheNghiep,
+    this.idBangBangCap,
+    this.chucVuHienTai,
+    this.chucVuMongMuon,
+    this.idSoNamKinhNghiem,
+    this.noiLamViec,
+    this.mucLuongDeXuat,
+    this.idKeKhaiKinhNghiem,
+    this.fileHoSoXinViec,
+    this.kyNangSoTruong,
+    this.idNgoaiNgu,
+    this.idTinHoc,
+    this.idHinhThucLamViec,
+    this.idNhomDichVu,
+    this.idLoaiCongViec,
+    this.thoiGianBatDau,
+    this.thoiGianKetThuc,
+    this.soLuong,
+    this.idDiaDiemDangKyLamViecs,
+    this.tieuDeSearch,
+    this.anhHoSoXinViecs,
+  });
 
   ///
   /// From JSON
@@ -76,20 +92,50 @@ class DangKyViecMoiRequest {
     honNhan = json['honNhan'].toString();
     idLoaiNhanVien = json['idLoaiNhanVien'].toString();
     mucTieuNgheNghiep = json['mucTieuNgheNghiep'].toString();
-    idBangBangCap = json['idBangBangCap'].toString();
+
     chucVuHienTai = json['chucVuHienTai'].toString();
     chucVuMongMuon = json['chucVuMongMuon'].toString();
     idSoNamKinhNghiem = json['idSoNamKinhNghiem'].toString();
     noiLamViec = json['noiLamViec'].toString();
     mucLuongDeXuat = json['mucLuongDeXuat'].toString();
     idKeKhaiKinhNghiem = json['idKeKhaiKinhNghiem'].toString();
-    anhHoSoXinViec = json['anhHoSoXinViec'].toString();
+
     fileHoSoXinViec = json['fileHoSoXinViec'].toString();
     kyNangSoTruong = json['kyNangSoTruong'].toString();
     idNgoaiNgu = json['idNgoaiNgu'].toString();
     idTinHoc = json['idTinHoc'].toString();
     idHinhThucLamViec = json['idHinhThucLamViec'].toString();
     idNhomDichVu = json['idNhomDichVu'].toString();
+    idLoaiCongViec = json['idLoaiCongViec'].toString();
+
+    if (json['tieuDeSearch'] != null) {
+      tieuDeSearch = json['tieuDeSearch'].toString();
+    }
+
+    if (json['thoiGianBatDau'] != null) {
+      thoiGianBatDau = json['thoiGianBatDau'].toString();
+    }
+
+    if (json['thoiGianKetThuc'] != null) {
+      thoiGianKetThuc = json['thoiGianKetThuc'].toString();
+    }
+
+    if (json['soLuong'] != null) {
+      soLuong = json['soLuong'].toString();
+    }
+
+    if (json['idDiaDiemDangKyLamViecs'] != null) {
+      idDiaDiemDangKyLamViecs =
+          json['idDiaDiemDangKyLamViecs'] as List<dynamic>;
+    }
+
+    if (json['idBangBangCap'] != null) {
+      idBangBangCap = json['idBangBangCap'] as List<String>;
+    }
+
+    if (json['anhHoSoXinViecs'] != null) {
+      anhHoSoXinViecs = json['anhHoSoXinViecs'] as List<dynamic>;
+    }
   }
 
   ///
@@ -137,8 +183,9 @@ class DangKyViecMoiRequest {
     if (idLoaiNhanVien != null) data['idLoaiNhanVien'] = idLoaiNhanVien;
 
     // check null mucTieuNgheNghiep
-    if (mucTieuNgheNghiep != null)
+    if (mucTieuNgheNghiep != null) {
       data['mucTieuNgheNghiep'] = mucTieuNgheNghiep;
+    }
 
     // check null idBangBangCap
     if (idBangBangCap != null) data['idBangBangCap'] = idBangBangCap;
@@ -150,8 +197,9 @@ class DangKyViecMoiRequest {
     if (chucVuMongMuon != null) data['chucVuMongMuon'] = chucVuMongMuon;
 
     // check null idSoNamKinhNghiem
-    if (idSoNamKinhNghiem != null)
+    if (idSoNamKinhNghiem != null) {
       data['idSoNamKinhNghiem'] = idSoNamKinhNghiem;
+    }
 
     // check null noiLamViec
     if (noiLamViec != null) data['noiLamViec'] = noiLamViec;
@@ -160,11 +208,9 @@ class DangKyViecMoiRequest {
     if (mucLuongDeXuat != null) data['mucLuongDeXuat'] = mucLuongDeXuat;
 
     // check null idKeKhaiKinhNghiem
-    if (idKeKhaiKinhNghiem != null)
+    if (idKeKhaiKinhNghiem != null) {
       data['idKeKhaiKinhNghiem'] = idKeKhaiKinhNghiem;
-
-    // check null anhHoSoXinViec
-    if (anhHoSoXinViec != null) data['anhHoSoXinViec'] = anhHoSoXinViec;
+    }
 
     // check null fileHoSoXinViec
     if (fileHoSoXinViec != null) data['fileHoSoXinViec'] = fileHoSoXinViec;
@@ -179,11 +225,54 @@ class DangKyViecMoiRequest {
     if (idTinHoc != null) data['idTinHoc'] = idTinHoc;
 
     // check null idHinhThucLamViec
-    if (idHinhThucLamViec != null)
+    if (idHinhThucLamViec != null) {
       data['idHinhThucLamViec'] = idHinhThucLamViec;
+    }
+
+    // check null idNhomDichVu
+    if (idNhomDichVu != null) {
+      data['idNhomDichVu'] = idNhomDichVu;
+    }
+
+    // check null idLoaiCongViec
+    if (idLoaiCongViec != null) {
+      data['idLoaiCongViec'] = idLoaiCongViec;
+    }
+
+    // check null thoiGianBatDau
+    if (thoiGianBatDau != null) {
+      data['thoiGianBatDau'] = thoiGianBatDau;
+    }
+
+    // check null thoiGianKetThuc
+    if (thoiGianKetThuc != null) {
+      data['thoiGianKetThuc'] = thoiGianKetThuc;
+    }
+
+    // check null soLuong
+    if (soLuong != null) {
+      data['soLuong'] = soLuong;
+    }
+
+    // check null idDiaDiemDangKyLamViecs
+    if (idDiaDiemDangKyLamViecs != null) {
+      data['idDiaDiemDangKyLamViecs'] = idDiaDiemDangKyLamViecs;
+    }
+
+    // check null tieuDeSearch
+    if (tieuDeSearch != null) {
+      data['tieuDeSearch'] = tieuDeSearch;
+    }
+
+    // check null anhHoSo
+    if (anhHoSoXinViecs != null) {
+      data['anhHoSoXinViecs'] = anhHoSoXinViecs;
+    }
+
     // check null idNhomDichVu
     if (idNhomDichVu != null) data['idNhomDichVu'] = idNhomDichVu;
 
+    // tieuDeSearch
     return data;
   }
 }

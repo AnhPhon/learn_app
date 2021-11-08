@@ -15,12 +15,12 @@ import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 
-class V1G5CreateServiceController extends GetxController{
-
+class V1G5CreateServiceController extends GetxController {
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
-  final ThoiGianLamViecProvider thoiGianLamViecProvider = GetIt.I.get<ThoiGianLamViecProvider>();
-  final ThongSoKyThuatProvider thongSoKyThuatProvider = GetIt.I.get<ThongSoKyThuatProvider>();
-
+  final ThoiGianLamViecProvider thoiGianLamViecProvider =
+      GetIt.I.get<ThoiGianLamViecProvider>();
+  final ThongSoKyThuatProvider thongSoKyThuatProvider =
+      GetIt.I.get<ThongSoKyThuatProvider>();
 
   final workTitleController = TextEditingController();
   final amountController = TextEditingController();
@@ -40,8 +40,8 @@ class V1G5CreateServiceController extends GetxController{
   ThoiGianLamViecResponse? afternoonReponse;
   ThoiGianLamViecResponse? tonightReponse;
   List<ThoiGianLamViecResponse> thoiGianLamViecList = [];
-  // loading 
-  bool isLoading = true;  
+  // loading
+  bool isLoading = true;
   bool isThongSo = true;
   // Dịch vụ resquest
   DonDichVuRequest? serviceApplication;
@@ -65,46 +65,49 @@ class V1G5CreateServiceController extends GetxController{
   ///
   ///// Chọn thời gian làm việc
   ///
-  void onSelectedTommorow({required bool val}){
+  void onSelectedTommorow({required bool val}) {
     tommorow = val;
-    if(tommorow){
-      tommowReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('7h30 - 11h30'));
-    }else{
+    if (tommorow) {
+      tommowReponse = thoiGianLamViecList.firstWhereOrNull(
+          (element) => element.tieuDe!.contains('7h30 - 11h30'));
+    } else {
       tommowReponse = null;
     }
     update();
   }
 
-  void onSelectedAfternoon({required bool val}){
+  void onSelectedAfternoon({required bool val}) {
     afternoon = val;
-    if(afternoon){
-      afternoonReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('13h30 - 17h30'));
-    }else{
+    if (afternoon) {
+      afternoonReponse = thoiGianLamViecList.firstWhereOrNull(
+          (element) => element.tieuDe!.contains('13h30 - 17h30'));
+    } else {
       afternoonReponse = null;
     }
     update();
   }
-  
-  void onSelectedTonight({required bool val}){
+
+  void onSelectedTonight({required bool val}) {
     tonight = val;
-    if(tonight){
-      tonightReponse = thoiGianLamViecList.firstWhereOrNull((element) => element.tieuDe!.contains('18h30 - 22h30'));
-    }else{
+    if (tonight) {
+      tonightReponse = thoiGianLamViecList.firstWhereOrNull(
+          (element) => element.tieuDe!.contains('18h30 - 22h30'));
+    } else {
       tonightReponse = null;
     }
     update();
   }
 
-  /// 
+  ///
   /// lấy thời gian làm việc
-  /// 
-  void getWorkTime(){
-    thoiGianLamViecProvider.all(onSuccess: (data){
+  ///
+  void getWorkTime() {
+    thoiGianLamViecProvider.all(onSuccess: (data) {
       thoiGianLamViecList.clear();
       thoiGianLamViecList.addAll(data);
       isLoading = false;
       update();
-    }, onError: (error){
+    }, onError: (error) {
       isLoading = false;
       update();
       print("V1G5CreateServiceController getWorkTime Error $error");
@@ -114,15 +117,16 @@ class V1G5CreateServiceController extends GetxController{
   ///
   /// Get thông số kỹ thuật
   ///
-  void getAllThongSo(){
-    thongSoKyThuatProvider.all(onSuccess: (data){
+  void getAllThongSo() {
+    thongSoKyThuatProvider.all(onSuccess: (data) {
       thongSoKyThuatList.clear();
-      if(data.isNotEmpty){
-        thongSoKyThuatList = data.map((e) => MultiSelectItem(e, e.tieuDe!)).toList();
+      if (data.isNotEmpty) {
+        thongSoKyThuatList =
+            data.map((e) => MultiSelectItem(e, e.tieuDe!)).toList();
       }
       isThongSo = false;
       update();
-    }, onError: (onError){
+    }, onError: (onError) {
       print("V1G5CreateServiceController getAllThongSo $onError");
       isThongSo = false;
       update();
@@ -132,84 +136,104 @@ class V1G5CreateServiceController extends GetxController{
   ///
   /// Nhấn tiếp tục tới trang báo giá đơn hàng
   ///
-  void onClickContinueButton(){
-    if(thongSo.isEmpty){
-      Alert.error( message: "Bản phải chọn thông số kỹ thuật");
-    }else if(tommorow == false && afternoon == false && tonight == false){
-      Alert.error( message: "Thời làm việc không được để trống");
-    }else if(amountController.text.toString().isEmpty){
-      Alert.error( message: "Số lượng yêu cầu không được để trống");
-    }else if(int.parse(amountController.text.toString()) <= 0){
-      Alert.error( message: "Số lượng không hợp lệ");
-    }else if(startWorkController.text.toString().isEmpty){
-      Alert.error( message: "Ngày làm việc không được để trống");
-    }else if(DateConverter.differenceDate(startDate: startWorkController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      Alert.error( message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
-    }else if(estimatedPickUpLocation.text.toString().isEmpty){
-      Alert.error( message: "Địa điểm bốc hàng dự kiến không được để trống");
-    }else if(estimatedDeliveryLocation.text.toString().isEmpty){
-      Alert.error( message: "Địa điểm trả hàng dự kiến không được để trống");
-    }else if(distanceController.text.toString().isEmpty){
-      Alert.error( message: "Cự ly vận chuyển tương đối không được để trống");
-    }else if(workDescController.text.toString().isEmpty){
-      Alert.error( message: "Mô tả yêu cầu cụ thể không được để trống");
-    }else{
+  void onClickContinueButton() {
+    if (thongSo.isEmpty) {
+      Alert.error(message: "Bản phải chọn thông số kỹ thuật");
+    } else if (tommorow == false && afternoon == false && tonight == false) {
+      Alert.error(message: "Thời làm việc không được để trống");
+    } else if (amountController.text.toString().isEmpty) {
+      Alert.error(message: "Số lượng yêu cầu không được để trống");
+    } else if (int.parse(amountController.text.toString()) <= 0) {
+      Alert.error(message: "Số lượng không hợp lệ");
+    } else if (startWorkController.text.toString().isEmpty) {
+      Alert.error(message: "Ngày làm việc không được để trống");
+    } else if (DateConverter.differenceDate(
+            startDate: startWorkController.text.toString(),
+            endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
+        0) {
+      Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+    } else if (estimatedPickUpLocation.text.toString().isEmpty) {
+      Alert.error(message: "Địa điểm bốc hàng dự kiến không được để trống");
+    } else if (estimatedDeliveryLocation.text.toString().isEmpty) {
+      Alert.error(message: "Địa điểm trả hàng dự kiến không được để trống");
+    } else if (distanceController.text.toString().isEmpty) {
+      Alert.error(message: "Cự ly vận chuyển tương đối không được để trống");
+    } else if (workDescController.text.toString().isEmpty) {
+      Alert.error(message: "Mô tả yêu cầu cụ thể không được để trống");
+    } else {
       EasyLoading.show(status: "Loading ...");
-      donDichVuProvider.add(data: request(), onSuccess: (data){
-         EasyLoading.dismiss();
-         Alert.success(message: "Tạo đơn dịch vụ thành công. Chúng tối sẽ phản hội lại cho bạn sơm nhất");
-         Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),arguments: request());
-         //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
-      }, onError: (onError){
-         EasyLoading.dismiss();
-         print("V1G5CreateServiceController onClickContinueButton $onError");
-      });
-       
+      donDichVuProvider.add(
+          data: request(),
+          onSuccess: (data) {
+            EasyLoading.dismiss();
+            Alert.success(
+                message:
+                    "Tạo đơn dịch vụ thành công. Chúng tối sẽ phản hội lại cho bạn sơm nhất");
+            Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY,
+                predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY),
+                arguments: request());
+            //Get.toNamed(AppRoutes.V1_SUCCESSFULLY, arguments: request());
+          },
+          onError: (onError) {
+            EasyLoading.dismiss();
+            print("V1G5CreateServiceController onClickContinueButton $onError");
+          });
     }
   }
 
   ///
   /// Tạo đối tượng request
   ///
-  DonDichVuRequest request(){
-      final List<String> workTime = [];
-      DonDichVuRequest dichVuRequest = DonDichVuRequest();
-      dichVuRequest = serviceApplication!;
-      if(tommorow == true){
-        workTime.add(tommowReponse!.id!);
-      }
-      if(afternoon == true){
-        workTime.add(afternoonReponse!.id!); 
-      }
-      if(tonight == true){
-        workTime.add(tonightReponse!.id!);
-      }
-      dichVuRequest.idThoiGianLamViecs= workTime;
-      if(receivingWidthController.text.toString().isNotEmpty){
-        dichVuRequest.beRongDiemNhan = receivingWidthController.text.toString();
-      }
-      if(returnWidthController.text.toString().isNotEmpty){
-        dichVuRequest.beRongDiemTra = returnWidthController.text.toString();
-      }
-      if(thongSo.isNotEmpty){
-        dichVuRequest.idThongSoKyThuats = thongSo.map((e) => e!.id!).toList(); 
-      }
-      dichVuRequest.ngayBatDau = DateConverter.formatYYYYMMDD(startWorkController.text.toString());
-      dichVuRequest.soLuongYeuCau = amountController.text.toString();
-      dichVuRequest.diaDiemBocHang = estimatedPickUpLocation.text.toString();
-      dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
-      dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
-      dichVuRequest.moTaChiTiet = workDescController.text.toString();
-      // trạng thái đơn
-      dichVuRequest.idTrangThaiDonHang = CHUA_THANH_TOAN;
-      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
-      
-      if(amountController.text.toString().isNotEmpty){
-        dichVuRequest.soLuongYeuCau = amountController.text.toString();
-      }
-      return dichVuRequest;
-  }
+  DonDichVuRequest request() {
+    final List<String> workTime = [];
+    DonDichVuRequest dichVuRequest = DonDichVuRequest();
+    dichVuRequest = serviceApplication!;
+    if (tommorow == true) {
+      workTime.add(tommowReponse!.id!);
+    }
+    if (afternoon == true) {
+      workTime.add(afternoonReponse!.id!);
+    }
+    if (tonight == true) {
+      workTime.add(tonightReponse!.id!);
+    }
+    dichVuRequest.idThoiGianLamViecs = workTime;
+    if (receivingWidthController.text.toString().isNotEmpty) {
+      dichVuRequest.beRongDiemNhan = receivingWidthController.text.toString();
+    }
+    if (returnWidthController.text.toString().isNotEmpty) {
+      dichVuRequest.beRongDiemTra = returnWidthController.text.toString();
+    }
+    if (thongSo.isNotEmpty) {
+      dichVuRequest.idThongSoKyThuats = thongSo.map((e) => e!.id!).toList();
+    }
+    dichVuRequest.ngayBatDau =
+        DateConverter.formatYYYYMMDD(startWorkController.text.toString());
+    dichVuRequest.soLuongYeuCau = amountController.text.toString();
+    dichVuRequest.diaDiemBocHang = estimatedPickUpLocation.text.toString();
+    dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
+    dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
+    dichVuRequest.moTaChiTiet = workDescController.text.toString();
+    // trạng thái đơn
+    dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
+    dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
 
+    if (amountController.text.toString().isNotEmpty) {
+      dichVuRequest.soLuongYeuCau = amountController.text.toString();
+    }
+    dichVuRequest.diaDiemBocHang = estimatedPickUpLocation.text.toString();
+    dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
+    dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
+    dichVuRequest.moTaChiTiet = workDescController.text.toString();
+    // trạng thái đơn
+    dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
+    dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
+
+    if (amountController.text.toString().isNotEmpty) {
+      dichVuRequest.soLuongYeuCau = amountController.text.toString();
+    }
+    return dichVuRequest;
+  }
 
   @override
   void onClose() {
@@ -225,7 +249,6 @@ class V1G5CreateServiceController extends GetxController{
     super.onClose();
   }
 }
-
 
 extension IterableExtension<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
