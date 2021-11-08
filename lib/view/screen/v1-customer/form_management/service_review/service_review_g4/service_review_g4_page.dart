@@ -23,24 +23,26 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
       builder: (controller) {
         return Scaffold(
           appBar: const AppBarWidget(title: "Xem đơn công việc"),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Tiêu đề nhóm công việc
-              const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Tiêu đề nhóm công việc
+                const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
 
-              //tieu de cong viec
-              tieuDeCongViec(controller: controller),
+                //tieu de cong viec
+                tieuDeCongViec(controller: controller),
 
-              //gioi tinh check box
-              gioiTinh(),
+                //gioi tinh check box
+                gioiTinh(),
 
-              //thoigian lam viec
-              thoiGianLamViec(controller: controller),
+                //thoigian lam viec
+                thoiGianLamViec(controller: controller),
 
-              //content
-              content(context, controller: controller),
-            ],
+                //content
+                content(context, controller: controller),
+              ],
+            ),
           ),
           bottomNavigationBar: Container(
             height: DeviceUtils.getScaledHeight(context, .1),
