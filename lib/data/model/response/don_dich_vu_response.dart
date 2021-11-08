@@ -93,7 +93,6 @@ class DonDichVuResponse {
       this.hinhAnhChiTiet,
       this.moTaChiTiet,
       this.files,
-      this.file,
       this.soLuongYeuCau,
       this.soNgay,
       this.diaDiemLamViec,

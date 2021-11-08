@@ -71,7 +71,7 @@ class V2NotificationPage extends GetView<V2NotificationController> {
               color: controller.notifications[index].status == null ? ColorResources.WHITE :
               controller.notifications[index].status! != '0' ? 
               ColorResources.WHITE :
-              ColorResources.PRIMARYCOLOR.withOpacity(0.3),
+              ColorResources.PRIMARYCOLOR.withOpacity(0.2),
             ),
             child: Row(
               children: [

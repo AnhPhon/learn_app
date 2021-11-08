@@ -180,15 +180,15 @@ class V2NotificationController extends GetxController {
           final String id = data.idNhomDichVu!.nhomDichVu!;
           if (id.contains('1') || id.contains('2') || id.contains('5') || id.contains('6')) {
 
-            onQuote(idDonDichVu: data.id!, idTrangThaiDonDichVu: data.idTrangThaiDonDichVu!.id!);
+            onQuote(idDonDichVu: data.id!, idTrangThaiDonDichVu: data.idTrangThaiDonDichVu!.id!, nhomDichVu: id);
 
           }else if (id.contains('3')){
             // Nhóm 3
-            //Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: {'id':data.id,'title':''});
 
           }else if (id.contains('4')){
             // Nhóm 4
-            //Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: {'id':data.id,'title':''});
 
           }else if (id.contains('7')) {
             // Nhóm 7 tuyển dụng ứng viên
@@ -197,7 +197,6 @@ class V2NotificationController extends GetxController {
           } else {
             // Xem thông báo chi tiết admin
             Get.toNamed(AppRoutes.V2_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
-
           }
         },
         onError: (onError) {
@@ -212,13 +211,23 @@ class V2NotificationController extends GetxController {
   ///
   /// Kết qủa báo giá
   ///
-  void onQuote({required String idDonDichVu, required String idTrangThaiDonDichVu}){
+  void onQuote({required String idDonDichVu, required String idTrangThaiDonDichVu, required String nhomDichVu}){
     if(idTrangThaiDonDichVu == THAT_BAI){
       // Link to page trạng thất bại
       Get.toNamed(AppRoutes.V2_FAIL);
+    }else if(idTrangThaiDonDichVu == CHOT_GIA){
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP1, arguments: {'id':idDonDichVu,'title':''});
     }else{
       // Link to page kết quả báo giá
-      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP5, arguments: idDonDichVu);
+      if(nhomDichVu.contains('1')){
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP1, arguments: {'id':idDonDichVu,'title':''});
+      }else if(nhomDichVu.contains('2')){
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: {'id':idDonDichVu,'title':''});
+      }else if(nhomDichVu.contains('5')){
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP5, arguments: {'id':idDonDichVu,'title':''});
+      }else if(nhomDichVu.contains('6')){
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP6, arguments: {'id':idDonDichVu,'title':''});
+      }
     }
   }
 
