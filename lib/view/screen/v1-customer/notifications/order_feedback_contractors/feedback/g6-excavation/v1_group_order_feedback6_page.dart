@@ -59,12 +59,18 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
       bottomSheet: OrderBottomSheet(
         itemValue: controller.tongTien,
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == THAT_BAI ? 
+        [
+          const Flexible(
+            child: Text(
+              "Bạn đã không đồng ý giá đơn dich vụ. Rất vui hợp tác với bạn lần sau !",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            )
+          )
+        ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
         [
           const Flexible(
@@ -79,7 +85,7 @@ class V1GroupOrderFeedBack6Page extends GetView<V1GroupOrderFeedBack6Controller>
         : 
         [
           SmallButton(title: "Huỷ", color: ColorResources.GREY, onPressed: (){
-            _controller.onFeebacked();
+            _controller.showDialog();
           }),
           SmallButton(title: "Đồng ý", color: ColorResources.PRIMARYCOLOR, onPressed: (){
             _controller.onClickAgreeButton();

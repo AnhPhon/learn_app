@@ -57,14 +57,26 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: controller
-            .tongTien, //controller.donDichVu!.tongDon != null ? double.parse(controller.donDichVu!.tongDon!) : 0,
+            .tongTien, 
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == THAT_BAI ? 
+        [
+          const Flexible(
+            child: Text(
+              "Bạn đã không đồng ý giá đơn dich vụ. Rất vui hợp tác với bạn lần sau !",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            )
+          )
+        ] : 
+        controller.donDichVu!.idTrangThaiThanhToan == null ? const [
+          Text('Đơn dich vụ đã bị huỷ hoặc vi phạm quy chế của công ty',
+          style: TextStyle(
+              color: ColorResources.RED
+          ),)
+        ] :
         controller.donDichVu!.idTrangThaiThanhToan!.id! == DA_THANH_TOAN ? 
         [
           const Flexible(
@@ -80,7 +92,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
         [
           SmallButton(
             title: "Huỷ ", color: ColorResources.GREY, onPressed: (){
-              controller.onFeebacked();
+              controller.showDialog();
             }
           ),
           SmallButton(
@@ -120,23 +132,20 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    controller.donDichVu!.hinhAnhBanKhoiLuongs!.forEach((element) {
-      print("Hình ảnh $element");
-    });
     return Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ? const SizedBox() : Column(
+      child: controller.donDichVu!.hinhAnhBaoGias == null ? const SizedBox.shrink() : controller.donDichVu!.hinhAnhBaoGias!.isEmpty ? const SizedBox() : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("Đơn giá bằng hình ảnh",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(images: controller.donDichVu!.hinhAnhBaoGias),
         ],
       ),
     );
@@ -164,7 +173,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
 
   Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return controller.workMass.isEmpty ? const SizedBox.shrink() : Padding(
+    return controller.donPhanHoi == null ?  const SizedBox.shrink() : controller.donPhanHoi!.giaCongViecs!.isEmpty  ? const SizedBox.shrink() : Padding(
       padding: const EdgeInsets.only(
         left:Dimensions.PADDING_SIZE_DEFAULT,
         right:Dimensions.PADDING_SIZE_DEFAULT,
@@ -183,7 +192,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.workMass.length,
+                  controller.donPhanHoi!.giaCongViecs!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -205,22 +214,26 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:
-                                          controller.workMass[index].tenVatTu!,
+                                      content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                          controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.tenCongViec ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:
-                                            controller.workMass[index].quyCach!),
-                                    // TextHighlight(
-                                    //     title: "Khối lượng:",
-                                    //     content:
-                                    //         controller.workMass[index].khoiLuong!),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.quyCach ?? ''),
+                                    TextHighlight(
+                                        title: "Khối lượng:",
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:
-                                            controller.workMass[index].donVi!),
-                                    TextHighlight(title:"Đơn giá:" ,content: '${controller.workMass[index].donGia} VNĐ' , style: const TextStyle(
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                           controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.donVi ?? ''),
+                                    TextHighlight(
+                                      title:"Đơn giá:" ,
+                                      content: controller.donPhanHoi == null ? '':
+                                      '${controller.donPhanHoi!.giaCongViecs![index].donGia ?? ''}VNĐ' , 
+                                      style: const TextStyle(
                                       color: ColorResources.RED,
                                       fontSize: Dimensions.FONT_SIZE_LARGE
                                     ),),

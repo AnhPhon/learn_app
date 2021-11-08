@@ -164,6 +164,11 @@ import 'package:template/view/screen/v2-builder/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v2-builder/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v2-builder/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v2-builder/news/news_page.dart';
+import 'package:template/view/screen/v2-builder/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v2-builder/notifications/detail_notification/detail_notification_page.dart';
+import 'package:template/view/screen/v2-builder/notifications/fail_page.dart';
+import 'package:template/view/screen/v2-builder/notifications/notification_binding.dart';
+import 'package:template/view/screen/v2-builder/notifications/notification_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20account/payment_account_page.dart';
 import 'package:template/view/screen/v2-builder/payment%20order/payment_order_page.dart';
 import 'package:template/view/screen/v2-builder/payment_method/payment_method_page.dart';
@@ -229,6 +234,10 @@ import 'package:template/view/screen/v3-agent/dashboard/dashboard_page.dart';
 import 'package:template/view/screen/v3-agent/finish_update/finish_update_page.dart';
 import 'package:template/view/screen/v3-agent/news/new_detail/news_detail_page.dart';
 import 'package:template/view/screen/v3-agent/news/news_page.dart';
+import 'package:template/view/screen/v3-agent/notifications/detail_notification/detail_notification_binding.dart';
+import 'package:template/view/screen/v3-agent/notifications/detail_notification/detail_notification_page.dart';
+import 'package:template/view/screen/v3-agent/notifications/notification_binding.dart';
+import 'package:template/view/screen/v3-agent/notifications/notification_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_detail/order_detail_page.dart';
 import 'package:template/view/screen/v3-agent/order_management/order_management_page.dart';
 import 'package:template/view/screen/v3-agent/product_add/product_add_page.dart';
@@ -618,12 +627,54 @@ class AppPages {
     ),
 
     ///
+    /// Thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V2_NOTIFICATION,
+      page: () => const V2NotificationPage(),
+      binding: V2NotificationBinding(),
+    ),
+
+    ///
+    /// Thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V3_NOTIFICATION,
+      page: () => const V3NotificationPage(),
+      binding: V3NotificationBinding(),
+    ),
+
+    ///
     /// Xem chi tiết thông báo
     ///
     GetPage(
       name: AppRoutes.V1_DETAIL_NOTIFICATION,
       page: () => V1DetailNotificationPage(),
       binding: V1DetailNotificationBinding(),
+    ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V2_DETAIL_NOTIFICATION,
+      page: () => V2DetailNotificationPage(),
+      binding: V2DetailNotificationBinding(),
+    ),
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V3_DETAIL_NOTIFICATION,
+      page: () => V3DetailNotificationPage(),
+      binding: V3DetailNotificationBinding(),
+    ),
+
+    ///
+    /// Xem chi tiết thông báo
+    ///
+    GetPage(
+      name: AppRoutes.V2_FAIL,
+      page: () => const V2FailPage(),
     ),
 
     ///

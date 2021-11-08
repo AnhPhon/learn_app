@@ -17,6 +17,7 @@ class Images {
   static const String banner3 = 'assets/images/banner3.jpeg';
   static const String register_success = 'assets/images/register_success.jpg';
   static const String create_success = 'assets/images/successfully.png';
+  static const String fail = 'assets/images/fail.png';
   static const String shipping_method = 'assets/images/shipping_method.png';
   static const String add_image = 'assets/images/add_image.png';
   static const String payment_success = 'assets/images/payment_success.png';
