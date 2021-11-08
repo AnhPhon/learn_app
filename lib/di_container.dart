@@ -12,6 +12,7 @@ import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 import 'package:template/data/repository/chi_tiet_cong_viec_repository.dart';
 import 'package:template/data/repository/chi_tiet_don_hang_repository.dart';
+import 'package:template/data/repository/chi_tiet_gia_tham_khao_repository.dart';
 import 'package:template/data/repository/chi_tiet_vat_tu_repository.dart';
 import 'package:template/data/repository/chuc_vu_repository.dart';
 import 'package:template/data/repository/chuyen_mon_repository.dart';
@@ -99,6 +100,7 @@ import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
+import 'package:template/provider/chi_tiet_gia_tham_khao_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/chuc_vu_provider.dart';
 import 'package:template/provider/chuyen_mon_provider.dart';
@@ -296,6 +298,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CaiDatChungRepository());
   sl.registerLazySingleton(() => PhiAppRepository());
   sl.registerLazySingleton (() => ChiTietCongViecRepository());
+  sl.registerLazySingleton (() => ChiTietGiaThamKhaoRepository());
 
   // Provider
   sl.registerLazySingleton(() => AuthProvider());
@@ -389,4 +392,5 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungProvider());
   sl.registerLazySingleton(() => PhiAppProvider());
   sl.registerLazySingleton(() => CaiDatChungProvider());
+  sl.registerLazySingleton(() => ChiTietGiaThamKhaoProvider());
 }
