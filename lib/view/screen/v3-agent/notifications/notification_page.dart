@@ -1,32 +1,28 @@
 
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/helper/common_helper.dart';
 import 'package:template/helper/date_converter.dart';
-import 'package:template/helper/string_cut.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/image_url.dart';
 import 'package:template/utils/images.dart';
+import 'package:template/view/screen/v3-agent/notifications/notification_controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v1-customer/notifications/notification_controller.dart';
 
-class V1NotificationPage extends GetView<V1NotificationController> {
-  const V1NotificationPage({Key? key}) : super(key: key);
+class V3NotificationPage extends GetView<V3NotificationController> {
+  const V3NotificationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(title: "Thông báo"),
       body: GetBuilder(
-        builder: (V1NotificationController controller) {
+        builder: (V3NotificationController controller) {
           if(controller.isLoading){
             return const Center(child: CircularProgressIndicator(),);
           }
@@ -53,7 +49,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
     );
   }
 
-   Widget itemNotification(BuildContext context,{required int index}){
+  Widget itemNotification(BuildContext context,{required int index}){
     return GestureDetector(
       onTap: (){
         controller.onClickItem(controller.notifications[index]);
@@ -71,7 +67,7 @@ class V1NotificationPage extends GetView<V1NotificationController> {
               color: controller.notifications[index].status == null ? ColorResources.WHITE :
               controller.notifications[index].status! != '0' ? 
               ColorResources.WHITE :
-              ColorResources.PRIMARYCOLOR.withOpacity(0.3) ,
+              ColorResources.PRIMARYCOLOR.withOpacity(0.3),
             ),
             child: Row(
               children: [
@@ -108,7 +104,6 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                         padding: const EdgeInsets.symmetric( horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         child: Text(controller.notifications[index].noiDung.toString(),
                         maxLines: 1,
-                        textAlign: TextAlign.start,
                         style: const TextStyle(
                           fontSize: Dimensions.FONT_SIZE_SMALL
                         ),),
@@ -121,10 +116,24 @@ class V1NotificationPage extends GetView<V1NotificationController> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(timeago.format(DateConverter.stringToLocalDate(controller.notifications[index].createdAt!).subtract(const Duration(hours:  -7)))),
-                            // if(controller.notifications[index].idDonDichVu != null)
-                            // chuaPhanHoi(),
-                            // if(controller.notifications[index].idDonDichVu != null)
-                            // daPhanHoi()
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.end,
+                            //   children: [
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idNhomDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '3' || 
+                            //       controller.notifications[index].idDonDichVu!.idNhomDichVu!.nhomDichVu == '4')
+                            //     needPerson(),
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == THAT_BAI)
+                            //     thatBai(),
+                            //     if(controller.notifications[index].idDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu != null)
+                            //     if(controller.notifications[index].idDonDichVu!.idTrangThaiDonDichVu!.id == CHOT_GIA)
+                            //     thanhCong()
+                            //   ],
+                            // )
                           ],
                         ),
                       )
@@ -139,21 +148,38 @@ class V1NotificationPage extends GetView<V1NotificationController> {
     );
   }
 
-  Widget chuaPhanHoi(){
+  Widget needPerson(){
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: const [
-        Icon(Icons.warning),
-        Text("Chưa phản hồi")
+        Icon(
+          Icons.work,
+          color: ColorResources.YELLOW,
+        ),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        Text("Đang cần người")
       ],
     );
   }
-  Widget daPhanHoi(){
+  //Thành công
+  Widget thanhCong(){
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: const [
-        Icon(Icons.check_circle),
-        Text("Đã phản hồi")
+        Icon(
+          Icons.check_circle,
+          color: ColorResources.GREEN,
+        ),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        Text("Thành công")
+      ],
+    );
+  }
+  // Thất bại
+  Widget thatBai(){
+    return Row(
+      children: const [
+        Icon(Icons.feedback, size: 20),
+        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        Text("Thất bại")
       ],
     );
   }

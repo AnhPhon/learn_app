@@ -9,15 +9,17 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 
-class V1NotificationController extends GetxController {
+class V3NotificationController extends GetxController {
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
 
-
   List<ThongBaoResponse> notifications = [];
+  List<DonDichVuResponse> donDichVuResponses = [];
+  
   int pageMax = 1;
-  int limit = 10;
+  int limit = 5;
   bool isLoading = true;
   String userId = '';
 
@@ -41,10 +43,11 @@ class V1NotificationController extends GetxController {
     thongBaoProvider.paginate(
         page: pageMax,
         limit: limit,
-        filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',
+        filter: '&doiTuong=3&idTaiKhoan=$userId&sortBy=created_at:desc',
         onSuccess: (data) {
           notifications.clear();
-          notifications = data;
+          notifications.addAll(data);
+
           isLoading = false;
           update();
         },
@@ -73,7 +76,7 @@ class V1NotificationController extends GetxController {
     thongBaoProvider.paginate(
         page: pageMax,
         limit: limit,
-        filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',
+        filter: '&doiTuong=3&idTaiKhoan=$userId&sortBy=created_at:desc',
         onSuccess: (data) {
           notifications.clear();
           notifications = data;
@@ -98,13 +101,14 @@ class V1NotificationController extends GetxController {
     thongBaoProvider.paginate(
         page: pageMax,
         limit: limit,
-        filter: '&doiTuong=1&idTaiKhoan=$userId&sortBy=created_at:desc',
+        filter: '&doiTuong=3&idTaiKhoan=$userId&sortBy=created_at:desc',
         onSuccess: (data) {
-          print("Dài: ${data.length}");
           if (data.isEmpty) {
             refreshController.loadNoData();
           } else {
+
             notifications.addAll(data);
+            
             refreshController.loadComplete();
           }
           isLoading = false;
@@ -117,45 +121,26 @@ class V1NotificationController extends GetxController {
         });
   }
 
-
+  ///
+  /// On Click notification
+  ///
   void onClickItem(ThongBaoResponse notification) {
     updateNotification(notification);
     if(notification.idDonDichVu != null){
       donDichVuProvider.find(
         id: notification.idDonDichVu!.id!,
         onSuccess: (data) {
-          // print("Data: $data");
-          final String id = data.idNhomDichVu!.nhomDichVu!;
-          print("Nhóm dịch vụ : $id");
-          if (id.contains('1')) {
-            // phản hồi nhóm 1
-            Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data);
-          } else if (id.contains('2')) {
-            // Đây là nhóm 2 Công việc DVTX khảo sát báo giá
-            Get.toNamed(AppRoutes.V1_ORDER_FEEDBACK_CONTRACTORS,
-                arguments: data);
-          } else if (id.contains('5')) {
-            // Đây là nhóm 5 phản hồi dịch vụ xe tải, xe ben, cầu thùng
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK5, arguments: data);
-          } else if (id.contains('6')) {
-            // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
-            Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
-          } else if (id.contains('7')) {
-            // NHóm 7
-            Get.toNamed(AppRoutes.V1_CANDICATE,);
-          } else {
-            // Xem thông báo chi tiết admin
-            Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
-          }
+          sl.get<SharedPreferenceHelper>().saveIdDonDichVu(id: data.id!);
+          sl.get<SharedPreferenceHelper>().saveIdYeuCau(id: data.id!);
+          Get.toNamed(AppRoutes.V3_QUOTE_REQUEST);
         },
         onError: (onError) {
           print("V1NotificationController onClickItem onError $onError");
         }
       );
     }else{
-      Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
-    }
-    
+      Get.toNamed(AppRoutes.V3_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
+    } 
   }
 
   ///
@@ -172,10 +157,10 @@ class V1NotificationController extends GetxController {
       }, onError: (onError)=> print("Lỗi thay đổi trạng thái thông báo"));
     }
   }
-
+  
   @override
   void onClose() {
-    super.onClose();
     refreshController.dispose();
+    super.onClose();
   }
 }

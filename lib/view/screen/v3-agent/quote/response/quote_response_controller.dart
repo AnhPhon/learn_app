@@ -79,7 +79,7 @@ class V3QuoteResponseController extends GetxController {
           }
 
           giaTriDonHang +=
-              local[model.id.toString()]! * int.parse(model.donGia.toString());
+              local[model.id.toString()]! * 1;
 
           infoCard.add([
             {
@@ -105,8 +105,8 @@ class V3QuoteResponseController extends GetxController {
             {
               "input": true,
               "controller":
-                  TextEditingController(text: model.donGia.toString()),
-              "value": int.parse(model.donGia.toString()).toString(),
+                  '',
+              "value": '',
               "label": "Đơn giá",
             }
           ]);

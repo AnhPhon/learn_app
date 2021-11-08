@@ -6,7 +6,6 @@ class ChiTietVatTuResponse {
   DonDichVuResponse? idDonDichVu;
   VatTuResponse? idVatTu;
   String? soLuong;
-
   String? createdAt;
   String? updatedAt;
 

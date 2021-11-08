@@ -129,7 +129,7 @@ class V1NoResponseController extends GetxController {
                 },
                 {
                   "label": "Đơn giá",
-                  "value": vatTu.donGia,
+                  "value": 1,
                   "input": false,
                 },
               ];
@@ -140,7 +140,7 @@ class V1NoResponseController extends GetxController {
                   .toString();
             }
 
-            tongTien += double.parse(vatTu.donGia!);
+            tongTien += double.parse('1');
           }
           isLoading = false;
           update();

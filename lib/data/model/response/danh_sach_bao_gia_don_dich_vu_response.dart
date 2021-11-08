@@ -1,9 +1,19 @@
+import 'dart:convert';
+
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
+import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+import 'package:template/data/model/response/gai_vat_tu.dart';
+import 'package:template/data/model/response/gia_cong_viec.dart';
+
 import 'don_dich_vu_response.dart';
 
 class DanhSachBaoGiaDonDichVuResponse {
   String? id;
   DonDichVuResponse? idDonDichVu;
   String? taiKhoanBaoGia;
+  String? tongTien;
+  List<GiaVatTus>? giaVatTus;
+  List<GiaCongViecs>? giaCongViecs;
   String? giaBao;
   String? ghiChu;
   String? file;
@@ -31,6 +41,7 @@ class DanhSachBaoGiaDonDichVuResponse {
   ///
   DanhSachBaoGiaDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    tongTien = (json['tongTien'] == null) ? null : json['tongTien'].toString();
 
     // mapping idDonDichVu
     if (json['idDonDichVu'] != null &&
@@ -49,6 +60,8 @@ class DanhSachBaoGiaDonDichVuResponse {
     if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<dynamic>;
     }
+    giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList();
+    giaCongViecs = (json['giaCongViecs'] as List<dynamic>).map((e) => GiaCongViecs.fromMap(e as Map<String, dynamic>)).toList();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -89,3 +102,4 @@ class DanhSachBaoGiaDonDichVuResponse {
     return data;
   }
 }
+
