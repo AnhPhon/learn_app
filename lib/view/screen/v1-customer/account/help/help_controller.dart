@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/thong_tin_f_s_s_response.dart';
 import 'package:template/provider/thong_tin_f_s_s_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class V1HelpController extends GetxController {
   //thong tin ffs
@@ -37,7 +36,7 @@ class V1HelpController extends GetxController {
         update();
       },
       onError: (error){
-        print("V1PersonalInfoController getHelp onError $error");
+        print("V1HelpController getHelp onError $error");
       },
     );
   }

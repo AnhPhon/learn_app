@@ -8,36 +8,38 @@ import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/account/wallet/before_recharge/before_recharge_controller.dart';
 
 class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1BeforeRechargeController>(
-        init: V1BeforeRechargeController(),
-        builder: (controller) {
-          return Scaffold(
-            appBar: AppBarWidget(title: controller.title),
-            body: Column(
-              children: [
-                //account balance
-                _accountBalance(context, controller: controller),
+      init: V1BeforeRechargeController(),
+      builder: (controller) {
+        return Scaffold(
+          appBar: AppBarWidget(title: controller.title),
+          body: Column(
+            children: [
+              //account balance
+              _accountBalance(context, controller: controller),
 
-                //box input
-                _boxInput(context, controller: controller),
+              //box input
+              _boxInput(context, controller: controller),
 
-                const Spacer(),
+              const Spacer(),
 
-                //btn recharge
-                btnRecharge(context, controller: controller),
+              //btn recharge
+              btnRecharge(context, controller: controller),
 
-                const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
-                ),
-              ],
-            ),
-          );
-        });
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   ///
@@ -111,17 +113,14 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
             width: .85,
             thousandsSeparator: true,
             textInputType: TextInputType.number,
+            fillColor: ColorResources.WHITE,
             onChanged: (val) {
               controller.onChanged(context, val);
             },
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-            child: Text(
-              "Hoặc chọn nhanh số tiền",
-              style: Dimensions.fontSizeStyle16(),
-            ),
+          const Label(
+            label: "Hoặc chọn nhanh số tiền",
+            obligatory: false,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -154,7 +153,7 @@ class V1BeforeRechargePage extends GetView<V1BeforeRechargeController> {
                     ),
                     child: Align(
                       child: Text(
-                        "${controller.optionList[index]}vnđ",
+                        "${controller.optionList[index]}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: (controller.indexSelected == index)

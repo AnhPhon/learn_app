@@ -8,7 +8,8 @@ class GiayChungNhanSucKhoeRequest {
       this.id,
       this.idTaiKhoan,
       this.file,
-      this.trangThai});
+      this.trangThai,
+      });
   
   ///
   /// From JSON

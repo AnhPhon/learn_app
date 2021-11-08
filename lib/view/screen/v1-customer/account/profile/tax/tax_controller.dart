@@ -34,6 +34,9 @@ class V1TaxController extends GetxController {
   //CircularProgressIndicator
   bool isLoading = true;
 
+  //is update
+  bool isUpdate = false;
+
   //user id
   String userId = "";
 
@@ -64,7 +67,7 @@ class V1TaxController extends GetxController {
     dangKyThueProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      filter: "&idTaiKhoan=$userId&loai=1&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
@@ -73,6 +76,7 @@ class V1TaxController extends GetxController {
           //if tax already exits => set data to taxController
           if (dangKyThueResponse != null) {
             taxController.text = dangKyThueResponse!.file!;
+            dangKyThueRequest.hinhAnhs = dangKyThueResponse!.hinhAnhs;
           }
         }
 
@@ -127,7 +131,7 @@ class V1TaxController extends GetxController {
   ///
   ///on click btn done
   ///
-  void onBtnDoneClick(BuildContext context) {
+  void onBtnDoneClick() {
     //validate
     if (taxController.text.isNotEmpty) {
       //show loading
@@ -146,7 +150,7 @@ class V1TaxController extends GetxController {
         onSuccess: (value) {
           //dismiss loading
           EasyLoading.dismiss();
-          Get.offNamed(AppRoutes.V1_PROFILE);
+          Get.back();
 
           //show dialog
           Alert.success(message: 'Đăng ký thuế thành công');
@@ -159,6 +163,40 @@ class V1TaxController extends GetxController {
       // show errors
       EasyLoading.dismiss();
       Alert.error(message: 'Vui lòng điền mã số thuế');
+    }
+  }
+
+  ///
+  ///on btn update
+  ///
+  void onBtnUpdate() {
+    //show loading
+    EasyLoading.show(status: 'loading...');
+    if (isUpdate == true) {
+      //set data
+      dangKyThueRequest.id = dangKyThueResponse!.id;
+      dangKyThueRequest.idTaiKhoan = userId;
+      dangKyThueRequest.file = taxController.text;
+
+      //update
+      dangKyThueProvider.update(
+        data: dangKyThueRequest,
+        onSuccess: (data) {
+          EasyLoading.dismiss();
+          Get.back();
+          Alert.success(message: "Chỉnh sửa thông tin thuế thành công");
+        },
+        onError: (error) {
+          EasyLoading.dismiss();
+          print("V1TaxController onBtnUpdate onError $error");
+        },
+      );
+    } else {
+      isUpdate = true;
+      EasyLoading.dismiss();
+      Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+      update();
+      return;
     }
   }
 }

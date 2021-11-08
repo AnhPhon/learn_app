@@ -73,7 +73,7 @@ class V3ProductManagementController extends GetxController
     danhMucSanPhamProvider.all(
       onSuccess: (value) {
         danhMucSanPhamResponse = value;
-
+        danhMucSanPhamResponse.insert(0, DanhMucSanPhamResponse(ten: "Tất cả"));
         //binding tab controller
         tabController =
             TabController(length: danhMucSanPhamResponse.length, vsync: this);
@@ -133,8 +133,9 @@ class V3ProductManagementController extends GetxController
     sanPhamProvider.paginate(
       page: pageMax,
       limit: limitMax,
-      filter:
-          "&idTaiKhoan=$userId&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
+      filter: (tabController!.index == 0)
+          ? "&idTaiKhoan=$userId&sortBy=created_at:desc"
+          : "&idTaiKhoan=$userId&idDanhMucSanPham=${danhMucSanPhamResponse[tabController!.index].id}&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is empty
         if (value.isEmpty) {

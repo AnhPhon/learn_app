@@ -6,6 +6,7 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
 import 'package:template/view/screen/v1-customer/account/profile/other_insurance/other_insurance_controller.dart';
 
 class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
@@ -14,6 +15,11 @@ class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
     return GetBuilder<V1OtherInsuranceController>(
         init: V1OtherInsuranceController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
@@ -92,7 +98,16 @@ class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BtnCustom(
-            onTap: () => controller.dangKyTuVanBtn(context),
+            onTap: () {
+              Get.dialog(
+                dialogRegister(
+                  context,
+                  note: "Bạn có chắc chắn muốn đăng ký tư vấn bảo hiểm",
+                  onTap: () => controller.dangKyTuVanBtn(context),
+                  controller: controller,
+                ),
+              );
+            },
             color: ColorResources.PRIMARY,
             text: "Đăng ký tư vấn",
             width: DeviceUtils.getScaledWidth(context, .4),
@@ -101,12 +116,106 @@ class V1OtherInsurancePage extends GetView<V1OtherInsuranceController> {
             width: Dimensions.MARGIN_SIZE_LARGE,
           ),
           BtnCustom(
-            onTap: () => controller.dangKyMuaBtn(context),
+            onTap: () {
+              Get.dialog(
+                dialogRegister(
+                  context,
+                  note: "Bạn có chắc chắn muốn đăng ký mua bảo hiểm",
+                  onTap: () => controller.dangKyMuaBtn(context),
+                  controller: controller,
+                ),
+              );
+            },
             color: ColorResources.PRIMARY,
             text: "Đăng ký mua",
             width: DeviceUtils.getScaledWidth(context, .4),
           ),
         ],
+      ),
+    );
+  }
+
+  ///
+  ///dialog register
+  ///
+  Widget dialogRegister(
+    BuildContext context, {
+    required String note,
+    required VoidCallback onTap,
+    required V1OtherInsuranceController controller,
+  }) {
+    return Center(
+      child: Container(
+        height: DeviceUtils.getScaledHeight(context, .35),
+        margin: const EdgeInsets.symmetric(
+          horizontal: Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+        ),
+        padding: const EdgeInsets.all(
+          Dimensions.PADDING_SIZE_DEFAULT,
+        ),
+        decoration: BoxDecoration(
+          color: ColorResources.WHITE,
+          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_SMALL),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //title
+            const Text(
+              "Xác nhận",
+              style: TextStyle(
+                fontSize: Dimensions.FONT_SIZE_OVER_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const Divider(
+              color: ColorResources.GREY,
+              height: 0,
+            ),
+
+            //note
+            Flexible(
+              child: Text(
+                note,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: ColorResources.BLACK,
+                  fontSize: Dimensions.FONT_SIZE_EXTRA_SUPER_LARGE,
+                ),
+              ),
+            ),
+
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_LARGE,
+            ),
+
+            //btn
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //accept
+                BtnCustomBorder(
+                  onTap: onTap,
+                  text: "Đồng ý",
+                  width: DeviceUtils.getScaledWidth(context, 0.35),
+                ),
+
+                const SizedBox(
+                  width: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+
+                //cancel
+                BtnCustom(
+                  onTap: () => Get.back(),
+                  color: ColorResources.PRIMARY,
+                  text: "Huỷ",
+                  width: DeviceUtils.getScaledWidth(context, 0.35),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

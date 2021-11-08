@@ -20,10 +20,6 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 
 class V3ProductAddController extends GetxController {
-  //image
-  File? image;
-  List<File> imageList = [];
-
   //ImageUpdate
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
   List<String> urlImage = [];
@@ -235,7 +231,6 @@ class V3ProductAddController extends GetxController {
   ///
   void btnUpdateAndAdd(BuildContext context) {
     btnAdd(context, isUpdateAndAdd: true);
-    imageList.clear();
     urlImage.clear();
     name.clear();
     branch.clear();
