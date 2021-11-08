@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
+import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 
 class V3ProductDetailController extends GetxController {
@@ -17,12 +19,19 @@ class V3ProductDetailController extends GetxController {
   List<SanPhamResponse> sanPhamList = [];
   SanPhamResponse sanPhamResponse = SanPhamResponse();
 
+  //NhapKhoHangDaiLy
+  NhapKhoHangDaiLyProvider nhapKhoHangDaiLyProvider =
+      GetIt.I.get<NhapKhoHangDaiLyProvider>();
+  List<NhapKhoHangDaiLyResponse> nhapKhoHangDaiLyList = [];
+  int stock = 0;
+
   //title appbar
   String title = "Chi tiết sản phẩm";
 
   //loading
   bool isLoading = true;
   bool isLoadingMore = false;
+  bool isLoadingStock = true;
 
   //page for for load more refresh
   int pageMax = 1;
@@ -37,6 +46,8 @@ class V3ProductDetailController extends GetxController {
     //get arguments
     sanPhamResponse = Get.arguments as SanPhamResponse;
 
+    getStock();
+
     //get load data
     getMoreProduct(isRefresh: true);
   }
@@ -46,6 +57,42 @@ class V3ProductDetailController extends GetxController {
     scrollController!.dispose();
     refreshController.dispose();
     super.onClose();
+  }
+
+  ///
+  ///get stock
+  ///
+  void getStock() {
+    nhapKhoHangDaiLyProvider.paginate(
+      page: 1,
+      limit: 100,
+      filter:
+          "&idTaiKhoan=${sanPhamResponse.idTaiKhoan!.id}&idSanPham=${sanPhamResponse.id}",
+      onSuccess: (data) {
+        //check is not empty
+        if (data.isNotEmpty) {
+          int nhap = 0;
+          int xuat = 0;
+          nhapKhoHangDaiLyList = data;
+          for (final item in data) {
+            if (item.loai == "1") {
+              nhap += int.parse(item.soLuong.toString());
+            } else if (item.loai == "2") {
+              xuat += int.parse(item.soLuong.toString());
+            }
+            if (item.id == nhapKhoHangDaiLyList.last.id) {
+              stock = nhap - xuat;
+            }
+          }
+        }
+
+        isLoadingStock = false;
+        update();
+      },
+      onError: (error) {
+        print("V1ProductDetailController getStock onError $error");
+      },
+    );
   }
 
   ///

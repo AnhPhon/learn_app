@@ -4,7 +4,6 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/format/format_html.dart';
-import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_controller.dart';
 
 class V1HelpPage extends GetView<V1HelpController> {

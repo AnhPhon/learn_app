@@ -9,6 +9,7 @@ import 'package:template/data/repository/bang_gia_don_hang_repository.dart';
 import 'package:template/data/repository/bang_gia_loc_ho_so_repository.dart';
 import 'package:template/data/repository/bang_luong_repository.dart';
 import 'package:template/data/repository/bao_cao_nhan_vien_repository.dart';
+import 'package:template/data/repository/bao_hiem_repository.dart';
 import 'package:template/data/repository/cham_cong_repository.dart';
 import 'package:template/data/repository/chi_tiet_cong_viec_repository.dart';
 import 'package:template/data/repository/chi_tiet_don_hang_repository.dart';
@@ -71,6 +72,7 @@ import 'package:template/data/repository/thong_so_ky_thuat_repository.dart';
 import 'package:template/data/repository/thong_tin_dang_ky_hop_dong_repository.dart';
 import 'package:template/data/repository/thong_tin_f_s_s_repository.dart';
 import 'package:template/data/repository/thong_tin_ngan_hang_repository.dart';
+import 'package:template/data/repository/thong_tin_thue_repository.dart';
 import 'package:template/data/repository/thu_chi_nhan_vien_repository.dart';
 import 'package:template/data/repository/tin_hoc_repository.dart';
 import 'package:template/data/repository/tin_tuc_repository.dart';
@@ -96,6 +98,7 @@ import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
 import 'package:template/provider/bang_gia_phi_van_chuyen_provider.dart';
 import 'package:template/provider/bang_luong_provider.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
+import 'package:template/provider/bao_hiem_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
@@ -156,6 +159,7 @@ import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/provider/thong_tin_dang_ky_hop_dong_provider.dart';
 import 'package:template/provider/thong_tin_f_s_s_provider.dart';
 import 'package:template/provider/thong_tin_ngan_hang_provider.dart';
+import 'package:template/provider/thong_tin_thue_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/provider/tin_hoc_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
@@ -295,6 +299,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungRepository());
   sl.registerLazySingleton(() => CaiDatChungRepository());
   sl.registerLazySingleton(() => PhiAppRepository());
+  sl.registerLazySingleton(() => ThongTinThueRepository());
+  sl.registerLazySingleton(() => BaoHiemRepository());
   sl.registerLazySingleton (() => ChiTietCongViecRepository());
 
   // Provider
@@ -389,4 +395,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DanhSachLuuTinTuyenDungProvider());
   sl.registerLazySingleton(() => PhiAppProvider());
   sl.registerLazySingleton(() => CaiDatChungProvider());
+  sl.registerLazySingleton(() => ThongTinThueProvider());
+  sl.registerLazySingleton(() => BaoHiemProvider());
 }

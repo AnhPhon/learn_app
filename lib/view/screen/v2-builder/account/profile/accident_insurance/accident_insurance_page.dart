@@ -5,6 +5,8 @@ import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
+import 'package:template/view/basewidget/component/btn_component_border.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
 import 'package:template/view/screen/v2-builder/account/profile/accident_insurance/accident_insurance_controller.dart';
 
 class V2AccidentInsurancePage extends GetView<V2AccidentInsuranceController> {
@@ -13,24 +15,28 @@ class V2AccidentInsurancePage extends GetView<V2AccidentInsuranceController> {
     return GetBuilder<V2AccidentInsuranceController>(
         init: V2AccidentInsuranceController(),
         builder: (controller) {
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: Dimensions.PADDING_SIZE_LARGE,
+                vertical: Dimensions.PADDING_SIZE_SMALL,
               ),
               child: Column(
                 children: [
                   //tab bar
                   _tabBarWidget(context: context, controller: controller),
 
-                  const Spacer(),
-
-                  //btn bottom
-                  _btnBottom(context, controller),
+                  //tab view
+                  _tabView(),
                 ],
               ),
             ),
+            bottomNavigationBar: _btnBottom(context, controller: controller),
           );
         });
   }
@@ -78,33 +84,44 @@ class V2AccidentInsurancePage extends GetView<V2AccidentInsuranceController> {
     return Container(
       alignment: Alignment.center,
       width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, .1),
-      child: Container(
-        alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, 1),
-        height: DeviceUtils.getScaledHeight(context, .07),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['GT']!,
-              index: 0,
-            ),
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['QL']!,
-              index: 1,
-            ),
-            _onSelectedTab(
-              context,
-              controller,
-              title: controller.titleTabBar['BT']!,
-              index: 2,
-            ),
-          ],
+      height: DeviceUtils.getScaledHeight(context, .07),
+      child: Row(
+        children: [
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['GT']!,
+            index: 0,
+          ),
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['QL']!,
+            index: 1,
+          ),
+          _onSelectedTab(
+            context,
+            controller,
+            title: controller.titleTabBar['BT']!,
+            index: 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  ///tab view
+  ///
+  Widget _tabView() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Specification(
+          specification: (controller.currentIndex == 1)
+              ? controller.baoHiemResponse.quyenLoi.toString()
+              : (controller.currentIndex == 2)
+                  ? controller.baoHiemResponse.boiThuong.toString()
+                  : controller.baoHiemResponse.gioiThieu.toString(),
         ),
       ),
     );
@@ -113,29 +130,31 @@ class V2AccidentInsurancePage extends GetView<V2AccidentInsuranceController> {
   ///
   ///btn bottom
   ///
-  Widget _btnBottom(
-      BuildContext context, V2AccidentInsuranceController controller) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        BtnCustom(
-          onTap: () => controller.onYourInsurancePageClick(),
-          color: ColorResources.GREY,
-          text: "Bảo hiểm của bạn",
-          width: DeviceUtils.getScaledWidth(context, .4),
-          isPadding: true,
-        ),
-        const SizedBox(
-          width: Dimensions.MARGIN_SIZE_SMALL,
-        ),
-        BtnCustom(
-          onTap: () => controller.onRegisterClick(),
-          color: ColorResources.PRIMARY,
-          text: "Đăng ký mua bảo hiểm",
-          width: DeviceUtils.getScaledWidth(context, .4),
-          isPadding: true,
-        ),
-      ],
+  Widget _btnBottom(BuildContext context,
+      {required V2AccidentInsuranceController controller}) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BtnCustomBorder(
+            onTap: () => controller.onBtnClick(currentIndex: 0),
+            text: "Bảo hiểm của bạn",
+            width: DeviceUtils.getScaledWidth(context, .4),
+          ),
+          const SizedBox(
+            width: Dimensions.MARGIN_SIZE_LARGE,
+          ),
+          BtnCustom(
+            onTap: () => controller.onBtnClick(currentIndex: 1),
+            color: ColorResources.PRIMARY,
+            text: "Đăng ký mua",
+            width: DeviceUtils.getScaledWidth(context, .4),
+          ),
+        ],
+      ),
     );
   }
 }

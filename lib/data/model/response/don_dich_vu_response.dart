@@ -285,6 +285,11 @@ class DonDichVuResponse {
     }
     loai = json['loai'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
@@ -432,6 +437,12 @@ class DonDichVuResponse {
     // check null giaTriKhachDeXuat
     if (giaTriKhachDeXuat != null) {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
+    }
+
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
     }
 
     // check null hinhAnhChiTiet
