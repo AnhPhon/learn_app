@@ -184,11 +184,11 @@ class V2NotificationController extends GetxController {
 
           }else if (id.contains('3')){
             // Nhóm 3
-            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+            //Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
 
           }else if (id.contains('4')){
             // Nhóm 4
-            Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
+            //Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2, arguments: data.id);
 
           }else if (id.contains('7')) {
             // Nhóm 7 tuyển dụng ứng viên
