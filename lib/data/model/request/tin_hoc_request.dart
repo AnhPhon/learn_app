@@ -9,8 +9,8 @@ class TinHocRequest {
   String? soThichKyNang;
   String? soTichTinhCach;
 
-  TinHocRequest({
-      this.id,
+  TinHocRequest(
+      {this.id,
       this.idTaiKhoan,
       this.word,
       this.excel,
@@ -19,7 +19,7 @@ class TinHocRequest {
       this.soThichTrinhDo,
       this.soThichKyNang,
       this.soTichTinhCach});
-  
+
   ///
   /// From JSON
   ///
@@ -41,33 +41,34 @@ class TinHocRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // check null id
-    if (id != null) data['id'] = id; 
+    if (id != null) data['id'] = id;
 
     // check null idTaiKhoan
-    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+    if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan;
 
     // check null word
-    if (word != null) data['word'] = word; 
+    if (word != null) data['word'] = word;
 
     // check null excel
-    if (excel != null) data['excel'] = excel; 
+    if (excel != null) data['excel'] = excel;
 
     // check null internet
-    if (internet != null) data['internet'] = internet; 
+    if (internet != null) data['internet'] = internet;
 
     // check null phanMemHoTro
-    if (phanMemHoTro != null) data['phanMemHoTro'] = phanMemHoTro; 
+    if (phanMemHoTro != null) data['phanMemHoTro'] = phanMemHoTro;
 
     // check null soThichTrinhDo
-    if (soThichTrinhDo != null) data['soThichTrinhDo'] = soThichTrinhDo; 
+    if (soThichTrinhDo != null) data['soThichTrinhDo'] = soThichTrinhDo;
 
     // check null soThichKyNang
-    if (soThichKyNang != null) data['soThichKyNang'] = soThichKyNang; 
+    if (soThichKyNang != null) data['soThichKyNang'] = soThichKyNang;
 
     // check null soTichTinhCach
-    if (soTichTinhCach != null) data['soTichTinhCach'] = soTichTinhCach; 
-
+    if (soTichTinhCach != null) data['soTichTinhCach'] = soTichTinhCach;
 
     return data;
   }
+
+  void add(String? value) {}
 }

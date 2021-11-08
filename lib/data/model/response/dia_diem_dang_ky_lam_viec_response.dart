@@ -75,4 +75,9 @@ class DiaDiemDangKyLamViecResponse {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return "${idTinhTp!.ten!}, ${idQuanHuyen!.ten!}, ${idPhuongXa!.ten!}";
+  }
 }

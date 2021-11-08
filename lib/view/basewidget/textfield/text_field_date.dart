@@ -1,6 +1,7 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 
@@ -68,6 +69,9 @@ class TextFieldDate extends StatelessWidget {
                 ],
               ),
             ),
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+          ),
           GestureDetector(
             onTap: isDate
                 ? () {
@@ -169,5 +173,13 @@ class TextFieldDate extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ///
+  /// format date
+  ///
+  String formatDate(String date) {
+    return DateFormat("dd/MM/yyyy")
+        .format(DateFormat("yyyy-MM-dd").parse(date));
   }
 }

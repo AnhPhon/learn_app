@@ -38,7 +38,11 @@ class V1Request2Page extends GetView<V1Request2Controller> {
                   _dropdownWidget(
                     'Tên vật tư',
                     controller.tenVatTuController!,
-                    ["Xi măng 1", "Vật tư 1", "Vật tư 2"],
+                    [
+                      ["1", "Thông tin 1"],
+                      ["2", "Thông tin 2"],
+                      ["3", "Thông tin 3"],
+                    ],
                     controller.onVatTuChange,
                     controller.tenVatTuIndex,
                   ),
@@ -53,7 +57,11 @@ class V1Request2Page extends GetView<V1Request2Controller> {
                   _dropdownWidget(
                     'Quy cách',
                     controller.tenVatTuController!,
-                    ["Xi măng 1", "Vật tư 1", "Vật tư 2"],
+                    [
+                      ["1", "Thông tin 1"],
+                      ["2", "Thông tin 2"],
+                      ["3", "Thông tin 3"],
+                    ],
                     controller.onVatTuChange,
                     controller.tenVatTuIndex,
                   ),
@@ -76,7 +84,8 @@ class V1Request2Page extends GetView<V1Request2Controller> {
                         padding: const EdgeInsets.only(
                           top: Dimensions.PADDING_SIZE_DEFAULT,
                         ),
-                        child: ContentWhiteBox(infoCard: controller.infoCard ?? []),
+                        child: ContentWhiteBox(
+                            infoCard: controller.infoCard ?? []),
                       );
                     }),
                   ),
@@ -144,8 +153,13 @@ class V1Request2Page extends GetView<V1Request2Controller> {
   ///
   /// Loại công trình
   ///
-  Widget _dropdownWidget(String label, TextEditingController ctrl,
-      List<String> currencies, Function(String?) onChanged, String? index) {
+  Widget _dropdownWidget(
+    String label,
+    TextEditingController ctrl,
+    List<List<String>> currencies,
+    Function(String?) onChanged,
+    String? index,
+  ) {
     return LabelDropdown(
       label: label,
       labelText: label,

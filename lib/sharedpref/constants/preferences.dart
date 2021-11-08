@@ -32,6 +32,9 @@ class Preferences {
   static const String registerToken = "resetPasswordToken";
   static const String isRegister = "isRegister";
   static const String remember = "remember";
+  static const String ids = "ids";
+  static const String nhom7 = "nhom7";
+  static const String viecMoi = "viecMoi";
   static const String idDonDichVu = "idDonDichVu";
   static const String idYeuCau = "idYeuCau";
 }
