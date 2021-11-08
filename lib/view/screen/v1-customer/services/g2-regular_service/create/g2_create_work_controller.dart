@@ -279,7 +279,7 @@ class V1G2CreateWorkController extends GetxController {
       dichVuRequest.moTa = workDesc.text.toString(); // Mô tả công viêc
       dichVuRequest.moTaChiTiet = massDesc.text.toString();// Mô tả khói lượng công việc
       // trạng thái đơn
-      dichVuRequest.idTrangThaiDonDichVu = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiThanhToan= CHUA_THANH_TOAN;
       dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
 
       // Tải file

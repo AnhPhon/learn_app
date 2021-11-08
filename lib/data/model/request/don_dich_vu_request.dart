@@ -41,6 +41,7 @@ class DonDichVuRequest {
   String? cuLyVanChuyen;
   String? beRongDiemNhan;
   String? beRongDiemTra;
+  String? beRongMatDuong;
   String? phiDichVu;
   String? khuyenMai;
   String? soTien;
@@ -67,6 +68,7 @@ class DonDichVuRequest {
       this.idHinhThucThanhToan,
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViecs,
+      this.beRongMatDuong,
       this.idTinhTp,
       this.idQuanHuyen,
       this.idPhuongXa,
@@ -143,6 +145,7 @@ class DonDichVuRequest {
     cuLyVanChuyen = json['cuLyVanChuyen'].toString();
     beRongDiemNhan = json['beRongDiemNhan'].toString();
     beRongDiemTra = json['beRongDiemTra'].toString();
+    beRongMatDuong = json['beRongMatDuong'].toString();
     phiDichVu = json['phiDichVu'].toString();
     khuyenMai = json['khuyenMai'].toString();
     soTien = json['soTien'].toString();
@@ -272,6 +275,8 @@ class DonDichVuRequest {
 
     // check null beRongDiemTra
     if (beRongDiemTra != null) data['beRongDiemTra'] = beRongDiemTra;
+    // check null beRongMatDuong
+    if (beRongMatDuong != null) data['beRongMatDuong'] = beRongMatDuong;
 
     // check null hinhAnhBaoGias
     if (hinhAnhBaoGias != null) data['hinhAnhBaoGias'] = hinhAnhBaoGias;

@@ -25,10 +25,6 @@ class V2ShorthandedGroup2Controller extends GetxController {
 
   bool flagSeeMore = false;
 
-  String getDateOutput(String dateString) {
-    return DateConverter.isoStringToddMMYYYY(dateString.toString());
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -75,4 +71,12 @@ class V2ShorthandedGroup2Controller extends GetxController {
       },
     );
   }
+
+  ///
+  /// Dinh dang ngay thang nam
+  ///
+  String getDateOutput(String dateString) {
+    return DateConverter.isoStringToddMMYYYY(dateString.toString());
+  }
+
 }

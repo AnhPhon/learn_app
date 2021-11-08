@@ -86,6 +86,7 @@ class DonDichVuResponse {
       this.idTrangThaiThanhToan,
       this.idThoiGianLamViecs,
       this.idTinhTp,
+      this.file,
       this.idQuanHuyen,
       this.idPhuongXa,
       this.giaTriKhachDeXuat,
@@ -161,13 +162,43 @@ class DonDichVuResponse {
     moTa = json['moTa'].toString();
     ngayBatDau = json['ngayBatDau'].toString();
     ngayKetThuc = json['ngayKetThuc'].toString();
+    //hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    if (json['hinhAnhBanVes'] != null) {
+      hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhBaoGias'] != null) {
+      hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhThucTes'] != null) {
+      hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhBaoHanhs'] != null) {
+      hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
+    if (json['files'] != null) {
+      files =
+          (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
+    }
     if (json['hinhAnhBanKhoiLuongs'] != null) {
       hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
     if (json['hinhAnhBanVes'] != null) {
-      hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>)
+      hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>)
           .map((e) => e.toString())
           .toList();
     }
@@ -275,13 +306,9 @@ class DonDichVuResponse {
     if (json['idThongSoKyThuats'] != null && (json['idThongSoKyThuats'] as List<dynamic>).isNotEmpty &&
         json['idThongSoKyThuats'].toString().length != 24) {
       idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
-          .map(
-              (e){
-                if(e.length != 24){
-                  return ThongSoKyThuatResponse.fromJson(e as Map<String, dynamic>);
-                }
-                return ThongSoKyThuatResponse();
-              })
+          .map((e) => ThongSoKyThuatResponse.fromJson((e.toString().length != 24
+              ? e
+              : {'id': e.toString()}) as Map<String, dynamic>))
           .toList();
     } else {
       idThongSoKyThuats = [];
@@ -302,6 +329,7 @@ class DonDichVuResponse {
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
+    file = json['file'].toString();
   }
 
   ///
@@ -342,45 +370,56 @@ class DonDichVuResponse {
           hinhAnhBanKhoiLuongs!.map((e) => e.toString()).toList();
     }
     //hinhAnhBaoGias
-    if(hinhAnhBaoGias != null){
-      data['hinhAnhBaoGias'] = hinhAnhBaoGias!.map((e) => e.toString()).toList();
+    if (hinhAnhBaoGias != null) {
+      data['hinhAnhBaoGias'] =
+          hinhAnhBaoGias!.map((e) => e.toString()).toList();
     }
     //hinhAnhThucTes
-    if(hinhAnhThucTes != null){
-      data['hinhAnhThucTes'] = hinhAnhThucTes!.map((e) => e.toString()).toList();
+    if (hinhAnhThucTes != null) {
+      data['hinhAnhThucTes'] =
+          hinhAnhThucTes!.map((e) => e.toString()).toList();
     }
     //hinhAnhBaoHanhs
-    if(hinhAnhBaoHanhs != null){
-      data['hinhAnhBaoHanhs'] = hinhAnhBaoHanhs!.map((e) => e.toString()).toList();
+    if (hinhAnhBaoHanhs != null) {
+      data['hinhAnhBaoHanhs'] =
+          hinhAnhBaoHanhs!.map((e) => e.toString()).toList();
     }
-    
+
     // Hình ảnh chi tiết
-    if(hinhAnhChiTiets != null){
-      data['hinhAnhChiTiets'] = hinhAnhChiTiets!.map((e) => e.toString()).toList();
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
     }
 
     // check null hinhAnhBanVe
-    if (hinhAnhBanVes != null) data['hinhAnhBanVes'] = hinhAnhBanVes!.map((e) => e.toString()).toList();;
+    if (hinhAnhBanVes != null)
+      data['hinhAnhBanVes'] = hinhAnhBanVes!.map((e) => e.toString()).toList();
+    ;
 
     // check null idTrangThaiDonDichVu
-    if (idTrangThaiDonDichVu != null)
+    if (idTrangThaiDonDichVu != null) {
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
+    }
 
     // check null idTrangThaiDonDichVu
-    if (idTrangThaiDonDichVu != null)
+    if (idTrangThaiDonDichVu != null) {
       data['idTrangThaiDonDichVu'] = idTrangThaiDonDichVu;
+    }
 
     // check null idHinhThucThanhToan
-    if (idHinhThucThanhToan != null)
+    if (idHinhThucThanhToan != null) {
       data['idHinhThucThanhToan'] = idHinhThucThanhToan;
+    }
 
     // check null idTrangThaiThanhToan
-    if (idTrangThaiThanhToan != null)
+    if (idTrangThaiThanhToan != null) {
       data['idTrangThaiThanhToan'] = idTrangThaiThanhToan;
+    }
 
     // check null idThoiGianLamViec
-    if (idThoiGianLamViecs != null)
+    if (idThoiGianLamViecs != null) {
       data['idThoiGianLamViecs'] = idThoiGianLamViecs;
+    }
 
     // check null idTinhTp
     if (idTinhTp != null) data['idTinhTp'] = idTinhTp;
@@ -392,8 +431,9 @@ class DonDichVuResponse {
     if (idPhuongXa != null) data['idPhuongXa'] = idPhuongXa;
 
     // check null giaTriKhachDeXuat
-    if (giaTriKhachDeXuat != null)
+    if (giaTriKhachDeXuat != null) {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
+    }
 
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
@@ -419,8 +459,9 @@ class DonDichVuResponse {
     if (gioiTinh != null) data['gioiTinh'] = gioiTinh;
 
     // check null idThongSoKyThuats
-    if (idThongSoKyThuats != null)
+    if (idThongSoKyThuats != null) {
       data['idThongSoKyThuats'] = idThongSoKyThuats;
+    }
 
     // check null diaDiemBocHang
     if (diaDiemBocHang != null) data['diaDiemBocHang'] = diaDiemBocHang;
@@ -457,6 +498,8 @@ class DonDichVuResponse {
 
     // check null tienCoc
     if (tienCoc != null) data['tienCoc'] = tienCoc;
+    // check null file
+    if (file != null) data['file'] = file;
 
     return data;
   }

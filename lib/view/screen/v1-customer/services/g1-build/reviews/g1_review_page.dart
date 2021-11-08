@@ -12,6 +12,7 @@ import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/services/components/material_card.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/components/work_card.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/reviews/g1_review_controller.dart';
 
 class V1G1ReviewPage extends GetView<V1G1ReviewController> {
@@ -84,17 +85,17 @@ class V1G1ReviewPage extends GetView<V1G1ReviewController> {
   /// Danh sách vật liệu được thêm 
   ///
   Widget materialList(BuildContext context,{required V1G1ReviewController controller}){
-    return controller.previewServiceRequest!.bangKhoiLuong!.isEmpty ? Container() : Column(
+    return controller.previewServiceRequest!.bangKhoiLuongCongViec!.isEmpty ? Container() : Column(
       children:  [
         const Label(
           label: "Bảng khối lượng công việc(nếu có)",
           obligatory: false,
           topPadding: 0,
         ),
-        ...controller.previewServiceRequest!.bangKhoiLuong!.map((e) => 
+        ...controller.previewServiceRequest!.bangKhoiLuongCongViec!.map((e) => 
         SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
-        child: MaterialCard(mass: e))).toList()
+        child: WorkCard(work: e))).toList()
       ],
     );
   }

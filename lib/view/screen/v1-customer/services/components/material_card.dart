@@ -56,16 +56,16 @@ class MaterialCard extends StatelessWidget {
                   top: Dimensions.PADDING_SIZE_EXTRA_SMALL
                 ),
               ),
-              OrderContentStringValue(
-                title: "Khối lượng: ",
-                value: mass.khoiLuong!,
-                boldTitle: true,
-                padding: const EdgeInsets.only(
-                  left: Dimensions.PADDING_SIZE_SMALL,
-                  right: Dimensions.PADDING_SIZE_SMALL,
-                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL
-                ),
-              ),
+              // OrderContentStringValue(
+              //   title: "Khối lượng: ",
+              //   value: mass.khoiLuong!,
+              //   boldTitle: true,
+              //   padding: const EdgeInsets.only(
+              //     left: Dimensions.PADDING_SIZE_SMALL,
+              //     right: Dimensions.PADDING_SIZE_SMALL,
+              //     top: Dimensions.PADDING_SIZE_EXTRA_SMALL
+              //   ),
+              // ),
               OrderContentStringValue(
                 title: "Đơn vị: ",
                 value: mass.donVi!,

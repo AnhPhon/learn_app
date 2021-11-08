@@ -10,6 +10,7 @@ class DanhSachBaoGiaDonDichVuRequest {
   List<String>? hinhAnhBaoGias;
   List<GiaVatTuRequest>? giaVatTus;
   List<GiaCongViecRequest>? giaCongViecs;
+  String? baoGiaTheo;
 
   DanhSachBaoGiaDonDichVuRequest({
     this.id,
@@ -21,6 +22,7 @@ class DanhSachBaoGiaDonDichVuRequest {
     this.daXem,
     // this.trangThaiBaoGia,
     this.hinhAnhBaoGias,
+    this.baoGiaTheo,
   });
 
   ///
@@ -36,6 +38,7 @@ class DanhSachBaoGiaDonDichVuRequest {
     if(json['file'] != null && json['file'] != 'null') file = json['file'].toString();
     if(json['daXem'] != null && json['daXem'] != 'null') daXem = json['daXem'].toString();
     // trangThaiBaoGia = json['trangThaiBaoGia'].toString();
+    baoGiaTheo = json['baoGiaTheo'].toString();
 
     if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).cast<String>().toList();
@@ -79,6 +82,9 @@ class DanhSachBaoGiaDonDichVuRequest {
 
     // check null daXem
     if (giaCongViecs != null) data['giaCongViecs'] = giaCongViecs;
+
+    // check null baoGiaTheo
+    if (baoGiaTheo != null) data['baoGiaTheo'] = baoGiaTheo;
 
     return data;
   }

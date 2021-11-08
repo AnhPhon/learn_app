@@ -242,8 +242,7 @@ class V1G6CreateServiceController extends GetxController{
       }
       dichVuRequest.idThoiGianLamViecs = workTime;
       if(workWidthController.text.toString().isNotEmpty){
-        // Thiếu bề rộng mặt đường làm việc
-        dichVuRequest.beRongDiemNhan = workWidthController.text.toString();
+        dichVuRequest.beRongMatDuong = workWidthController.text.toString();
       }
       if(thongSo.isNotEmpty){
         dichVuRequest.idThongSoKyThuats = thongSo.map((e) => e!.id!).toList();
@@ -254,8 +253,8 @@ class V1G6CreateServiceController extends GetxController{
       dichVuRequest.moTaChiTiet = workDescController.text.toString();
       dichVuRequest.soLuongYeuCau = amountController.text.toString();
       // trạng thái đơn
-      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
       dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
+      dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
       // Updalod image ảnh sản phẩm mẫu nếu có
       dichVuRequest.hinhAnhBanVes = productImages;
 

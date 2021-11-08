@@ -17,6 +17,7 @@ import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v1-customer/services/components/material_card.dart';
+import 'package:template/view/screen/v1-customer/services/g1-build/components/work_card.dart';
 import 'package:template/view/screen/v1-customer/services/g1-build/create/g1_create_work_controller.dart';
 
 class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
@@ -221,7 +222,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
   ///
   Widget materialList(BuildContext context,{required V1G1CreateWorkController controller}){
     return Column(
-      children: controller.massList.map((e) => 
+      children: controller.workList.map((e) => 
       SizedBox(
         width: DeviceUtils.getScaledWidth(context, 1),
         child: Slidable(
@@ -234,7 +235,7 @@ class V1G1CreateWorkPage extends GetView<V1G1CreateWorkController>{
               onTap: ()=> controller.deleteSupplies(e)
             ),
           ],
-          child: MaterialCard(mass: e)))
+          child: WorkCard(work: e)))
       ).toList()
     );
   }

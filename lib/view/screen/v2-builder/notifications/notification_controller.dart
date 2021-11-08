@@ -218,7 +218,7 @@ class V2NotificationController extends GetxController {
       Get.toNamed(AppRoutes.V2_FAIL);
     }else{
       // Link to page kết quả báo giá
-      Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: idDonDichVu);
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP5, arguments: idDonDichVu);
     }
   }
 

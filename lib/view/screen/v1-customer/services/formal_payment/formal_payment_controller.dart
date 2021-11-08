@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/chi_tiet_cong_viec_request.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
+import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
@@ -15,6 +17,7 @@ import 'package:template/view/screen/v1-customer/services/g7-recruitment/priceli
 class V1FormalPaymentController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();
   DonDichVuRepository donDichVuRepository = GetIt.I.get<DonDichVuRepository>();
+  ChiTietCongViecProvider chiTietCongViecProvider = GetIt.I.get<ChiTietCongViecProvider>();
   DonDichVuRequest? dichVuRequest;
 
   int formalPaymentGroup = 0;
@@ -73,7 +76,7 @@ class V1FormalPaymentController extends GetxController{
             child: const Text("Hủy")));
   }
 
-  void onClickContinueButton() {
+   void onClickContinueButton() {
     double tienCoc = 0;
     Get.toNamed(
             '${AppRoutes.ORDER_INFORMATION}?soTien=$thanhToan&tienCoc=$tienCoc')!
@@ -127,7 +130,7 @@ class V1FormalPaymentController extends GetxController{
                       })
                 }
             });
-  }
+   }
 
 
 }

@@ -8,14 +8,16 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/alert.dart';
 
-class V1G1CreateWorkController extends GetxController{
-  final ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
+class V1G1CreateWorkController extends GetxController {
+  final ImageUpdateProvider imageUpdateProvider =
+      GetIt.I.get<ImageUpdateProvider>();
 
   final worKTitleController = TextEditingController();
   final descController = TextEditingController();
@@ -32,7 +34,7 @@ class V1G1CreateWorkController extends GetxController{
   String? fileName;
 
   // Dach sách bảng khối lượng công việc
-  List<VatTuResponse> massList = [];
+  List<ChiTietCongViecResponse> workList = [];
   // Danh sách hình ảnh bảng khối lượng
   List<String> anhKhoiLuong = [];
   // Danh sách hình ảnh bản vẽ
@@ -42,43 +44,49 @@ class V1G1CreateWorkController extends GetxController{
   // Dịch vụ resquest
   DonDichVuRequest? serviceApplication;
   // Xem trươc đon dich vụ
-  
 
   @override
   void onInit() {
     serviceApplication = Get.arguments as DonDichVuRequest;
     worKTitleController.text = serviceApplication!.tieuDe ?? '';
   }
+
   ///
   /// Nhấn tiếp tục qua trang xem lại đơn tạo
   ///
-  void onClickContinueButton(){
-    if(descController.text.toString().isEmpty){
-      Alert.error(message:"Trường mô công việc không được để trống");
+  void onClickContinueButton() {
+    if (descController.text.toString().isEmpty) {
+      Alert.error(message: "Trường mô công việc không được để trống");
       return;
-    }else if(startTimeController.text.toString().isEmpty){
-      Alert.error(message:"Trường thời gian bắt đầu không được để trống");
+    } else if (startTimeController.text.toString().isEmpty) {
+      Alert.error(message: "Trường thời gian bắt đầu không được để trống");
       return;
-    }else if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
+    } else if (DateConverter.differenceDate(
+            startDate: startTimeController.text.toString(),
+            endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
+        0) {
       Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       return;
-    } 
-    if(endTimeController.text.toString().isNotEmpty){
-      if(DateConverter.differenceDate(startDate: startTimeController.text.toString(), endDate: endTimeController.text.toString()) <= 0){
+    }
+    if (endTimeController.text.toString().isNotEmpty) {
+      if (DateConverter.differenceDate(
+              startDate: startTimeController.text.toString(),
+              endDate: endTimeController.text.toString()) <=
+          0) {
         Alert.error(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return;
       }
     }
-    
+
     // Lưu dich vụ
     saveServices();
   }
 
-  void saveServices(){
+  void saveServices() {
     final PreviewServiceRequest previewServiceRequest = PreviewServiceRequest();
     previewServiceRequest.moTa = descController.text.toString();
     previewServiceRequest.ngayBatDau = startTimeController.text.toString();
-    if(endTimeController.text.toString().isNotEmpty){
+    if (endTimeController.text.toString().isNotEmpty) {
       previewServiceRequest.ngayKetThuc = endTimeController.text.toString();
     }
     previewServiceRequest.idTinhTp = serviceApplication!.idTinhTp;
@@ -89,10 +97,11 @@ class V1G1CreateWorkController extends GetxController{
     previewServiceRequest.tieuDe = serviceApplication!.tieuDe;
     previewServiceRequest.diaChiCuThe = serviceApplication!.diaChiCuThe;
     previewServiceRequest.hinhAnhBanKhoiLuongs = anhKhoiLuong;
-    previewServiceRequest.bangKhoiLuong = massList;
-    previewServiceRequest.idTaiKhoanNhanDon = serviceApplication!.idTaiKhoanNhanDon;
-    previewServiceRequest.hinhAnhBanVes  = drawingImages;
-    if(donDichVuFiles.isNotEmpty){
+    previewServiceRequest.bangKhoiLuongCongViec = workList;
+    previewServiceRequest.idTaiKhoanNhanDon =
+        serviceApplication!.idTaiKhoanNhanDon;
+    previewServiceRequest.hinhAnhBanVes = drawingImages;
+    if (donDichVuFiles.isNotEmpty) {
       previewServiceRequest.files = donDichVuFiles;
     }
     Get.toNamed(AppRoutes.V1_G1_REVIEW, arguments: previewServiceRequest);
@@ -101,41 +110,45 @@ class V1G1CreateWorkController extends GetxController{
   ///
   /// Thay đổi đơn vị
   ///
-  void onChangedUnit(String unit){
+  void onChangedUnit(String unit) {
     this.unit = unit;
     update();
   }
 
-
   ///
   /// Thêm khối lượng công việc
   ///
-  void onClickAddMass(){
-    if(nameTitleController.text.toString().isEmpty){
+  void onClickAddMass() {
+    if (nameTitleController.text.toString().isEmpty) {
       return Alert.error(message: "Tên công việc không được để trống");
-    }else if(specificationController.text.toString().isEmpty){
-      return Alert.error(message:"Quy cách không được để trống");
-    }else if(unit == null || unit!.isEmpty){
+    } else if (specificationController.text.toString().isEmpty) {
+      return Alert.error(message: "Quy cách không được để trống");
+    } else if (unit == null || unit!.isEmpty) {
       return Alert.error(message: 'Đơn vị không được để trống');
-    }else if(massController.text.toString().isEmpty){
+    } else if (massController.text.toString().isEmpty) {
       return Alert.error(message: "Khối lượng không được để trống");
-    }else{
-      final VatTuResponse supplies = VatTuResponse(
-        khoiLuong: massController.text.toString(),
+    } else {
+      final ChiTietCongViecResponse supplies = ChiTietCongViecResponse(
+        soLuong: massController.text.toString(),
         donVi: unit,
         quyCach: specificationController.text.toString(),
-        tenVatTu: nameTitleController.text.toString(),
+        tenCongViec: nameTitleController.text.toString(),
       );
-      massList.add(supplies);
+      workList.add(supplies);
+      nameTitleController.text = '';
+      specificationController.text = '';
+      massController.text = '';
+      unit = null;
       update();
     }
   }
 
+//onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
   ///
   /// Xoá vật liệu
   ///
-  void deleteSupplies(VatTuResponse supplies){
-    massList.removeWhere((element) => element.hashCode == supplies.hashCode);
+  void deleteSupplies(ChiTietCongViecResponse supplies) {
+    workList.removeWhere((element) => element.hashCode == supplies.hashCode);
     update();
   }
 
@@ -144,7 +157,8 @@ class V1G1CreateWorkController extends GetxController{
   ///
   Future pickFiles() async {
     try {
-      final FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+      final FilePickerResult? result =
+          await FilePicker.platform.pickFiles(allowMultiple: false);
       if (result == null) return;
       EasyLoading.show(status: 'Loading...');
 
@@ -210,11 +224,11 @@ class V1G1CreateWorkController extends GetxController{
       Alert.error(message: e.toString());
     }
   }
-  
+
   ///
   /// Xoá hình ảnh
   ///
-  void onDeleteImage({required String file, required List<String> files}){
+  void onDeleteImage({required String file, required List<String> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
     //Alert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
@@ -232,5 +246,4 @@ class V1G1CreateWorkController extends GetxController{
     massController.dispose();
     unitController.dispose();
   }
-
 }

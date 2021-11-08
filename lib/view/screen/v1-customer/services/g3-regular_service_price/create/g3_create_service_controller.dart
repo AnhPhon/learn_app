@@ -170,11 +170,11 @@ class V1G3CreateServiceController extends GetxController {
   ///
   String getGender() {
     if (GENDER.Nam == gender) {
-      return "Nam";
+      return "1";
     } else if (GENDER.Nu == gender) {
-      return "Nữ";
+      return "0";
     }
-    return 'Không yêu cầu';
+    return '2';
   }
 
   @override
