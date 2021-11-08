@@ -143,7 +143,7 @@ class V1G1CreateWorkController extends GetxController {
     }
   }
 
-//onDelete: (String file, List<String> files)=> controller.onDeleteImage(file: file,files: files,)
+
   ///
   /// Xoá vật liệu
   ///
