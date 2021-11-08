@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 
 import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
-import 'package:template/utils/color_resources.dart';
 
 class V4ReportTimekeepingControllter extends GetxController {
   GetIt sl = GetIt.instance;
   ChamCongProvider chamCongProvider = GetIt.I.get<ChamCongProvider>();
+  BaoCaoNhanVienProvider baoCaoNhanVienProvider =
+      GetIt.I.get<BaoCaoNhanVienProvider>();
 
   final reportTimekeeping = TextEditingController(
       text: DateConverter.formatDateTimeHHmm(DateTime.now()));
@@ -73,6 +76,7 @@ class V4ReportTimekeepingControllter extends GetxController {
   ///
   Future<void> report() async {
     if (validate()) {
+      EasyLoading.show(status: "Loading....");
       if (idChamCong.isNotEmpty) {
         final DateTime reportTime =
             DateConverter.convertStringToDatetimeddMMyyyy(
@@ -86,14 +90,28 @@ class V4ReportTimekeepingControllter extends GetxController {
             thoiGianKetThuc: reportTime.toString(),
             noiDungBaoCao: reportContent.text,
           ),
-          onSuccess: (value) {
-            print(reportTime.toString());
+          onSuccess: (value) async {
+            baoCaoNhanVienProvider.add(
+              data: BaoCaoNhanVienRequest(
+                idNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
+                idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().userId,
+                loai: "2",
+                noiDung: reportContent.text,
+              ),
+              onSuccess: (value) {
+                update();
+              },
+              onError: (error) {
+                print(
+                    "TermsAndPolicyController getTermsAndPolicy onError $error");
+              },
+            );
             sl.get<SharedPreferenceHelper>().saveIsReport(isReport: true);
             Get.back(result: true);
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
-            update();
           },
         );
       } else {
@@ -108,13 +126,29 @@ class V4ReportTimekeepingControllter extends GetxController {
             thoiGianKetThuc: reportTime.toString(),
             noiDungBaoCao: reportContent.text,
           ),
-          onSuccess: (value) {
+          onSuccess: (value) async {
+            baoCaoNhanVienProvider.add(
+              data: BaoCaoNhanVienRequest(
+                idNhanVien: await sl.get<SharedPreferenceHelper>().duAnNhanVien,
+                idDuAnNhanVien: await sl.get<SharedPreferenceHelper>().userId,
+                loai: "2",
+                noiDung: reportContent.text,
+              ),
+              onSuccess: (value) {
+                update();
+              },
+              onError: (error) {
+                print(
+                    "TermsAndPolicyController getTermsAndPolicy onError $error");
+              },
+            );
             sl.get<SharedPreferenceHelper>().saveIsReport(isReport: true);
+            EasyLoading.dismiss();
             Get.back(result: true);
+            update();
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
-            update();
           },
         );
       }
