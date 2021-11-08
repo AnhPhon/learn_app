@@ -15,5 +15,8 @@ class V2PaymentOrderController extends GetxController {
   ///
   void onCheckoutClick() {
     // Get.toNamed("${AppRoutes.V2_PAYMENT_METHOD}?isBuy=false");
+
+    Get.toNamed(
+        '${AppRoutes.ORDER_INFORMATION}?soTien=${tuyenDungRequest.soTien!}&tienCoc=${tuyenDungRequest.tienCoc}').then((value) => null)
   }
 }
