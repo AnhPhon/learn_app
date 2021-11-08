@@ -28,6 +28,15 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    // Em cập nhật lại rồi nha. Khách Hàng:
+    // 0111111111
+    // KhachHang1
+    // Thợ Thầu
+    // 0222222222
+    // ThoThau1
+    // Đại Lý:
+    // 0333333333
+    // DaiLy123
     phoneController.text = '0222222222';
     passwordController.text = 'ThoThau1';
     super.onInit();

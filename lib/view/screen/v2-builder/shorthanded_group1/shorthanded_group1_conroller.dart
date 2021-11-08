@@ -118,6 +118,7 @@ class V2ShorthandedGroup1Controller extends GetxController {
   /// Dinh dang ngay thang nam
   ///
   String getDateOutput(String dateString) {
+    if (dateString.isEmpty || dateString == 'null') return '';
     return DateConverter.isoStringToddMMYYYY(dateString.toString());
   }
 

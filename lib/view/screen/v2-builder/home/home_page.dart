@@ -171,7 +171,9 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget ketQuaBaoGiaWidget() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_RESULT);
+      },
       child: Container(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
         decoration: const BoxDecoration(

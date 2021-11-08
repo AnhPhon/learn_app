@@ -65,6 +65,7 @@ class V2QuotationG56Controller extends GetxController {
             Get.back();
           },
           onError: (error) {
+            EasyLoading.dismiss();
             print('V2QuotationG56Controller onDoneClick onError $error');
             Alert.error(message: 'Báo giá thất bại');
           },

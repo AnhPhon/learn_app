@@ -65,6 +65,7 @@ class V2QuotationG1Controller extends GetxController {
   /// Dinh dang ngay thang nam
   ///
   String getDateOutput(String dateString) {
+    if (dateString.isEmpty || dateString == 'null') return '';
     return DateConverter.isoStringToddMMYYYY(dateString.toString());
   }
 
@@ -220,6 +221,7 @@ class V2QuotationG1Controller extends GetxController {
             Get.back();
           },
           onError: (error) {
+            EasyLoading.dismiss();
             print('V2QuotationG1Controller onDoneClick onError $error');
             Alert.error(message: 'Báo giá thất bại');
           },
