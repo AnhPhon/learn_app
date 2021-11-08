@@ -133,7 +133,6 @@ class V2DetailWorkInProgressController extends GetxController {
                     bangKhoiLuongCongViecs.add({
                       "tencongviec": data.tieuDe.toString(),
                       "quycach": vatTu.quyCach!,
-                      "mass": vatTu.donGia!,
                       "unit": vatTu.donVi!,
                     });
                   }
