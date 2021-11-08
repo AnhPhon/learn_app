@@ -173,6 +173,7 @@ import 'package:template/view/screen/v2-builder/project/project_dang_ky_trien_kh
 
 import 'package:template/view/screen/v2-builder/project/project_detail_trien_khai/project_detail_trien_khai_page.dart';
 import 'package:template/view/screen/v2-builder/recharge/recharge_page.dart';
+import 'package:template/view/screen/v2-builder/shorthanded-result/shorthanded_result_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded/shorthanded_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/quotation_g1/quotation_g1_page.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group1/shorthanded_group1_page.dart';
@@ -784,6 +785,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.V2_SHORTHANDED,
       page: () => V2ShorthandedPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V2_SHORTHANDED_RESULT,
+      page: () => V2ShorthandedResultPage(),
     ),
     GetPage(
       name: AppRoutes.V2_SHORTHANDED_GROUP1,
