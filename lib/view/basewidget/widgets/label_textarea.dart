@@ -23,7 +23,13 @@ class LabelTextarea extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label, style: Dimensions.textTitleStyleCard()),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             if (isRequire == true)
               const Text(
                 "*",

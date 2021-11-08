@@ -12,7 +12,7 @@ class V1Request1Controller extends GetxController {
   TextEditingController? fromDate;
   TextEditingController? toDate;
 
-  List<String>? currencies;
+  List<List<String>>? currencies;
   String? firstSelect;
 
   // radio
@@ -23,8 +23,21 @@ class V1Request1Controller extends GetxController {
   void onInit() {
     super.onInit();
 
-    firstSelect = "Công trình 1";
-    currencies = ["Công trình 1", "Công trình 2", "Công trình 3"];
+    firstSelect = "1";
+    currencies = [
+      [
+        "1",
+        "Công trình 1",
+      ],
+      [
+        "2",
+        "Công trình 2",
+      ],
+      [
+        "3",
+        "Công trình 3",
+      ]
+    ];
 
     tieuDeBaoGiaController = TextEditingController();
     loaiCongTrinh = TextEditingController(text: firstSelect);
@@ -33,20 +46,6 @@ class V1Request1Controller extends GetxController {
     toDate = TextEditingController();
 
     selectIndex = "TP.HCM";
-    // provinceData = [
-    //   SelectProvinceCustomModel(
-    //     value: "TP.HCM",
-    //     onChanged: (val)=> onChange,
-    //   ),
-    //   SelectProvinceCustomModel(
-    //     value: "Hà Nội",
-    //     onChanged: onChange,
-    //   ),
-    //   SelectProvinceCustomModel(
-    //     value: "Đà Nẵng",
-    //     onChanged: onChange,
-    //   ),
-    // ];
   }
 
   ///

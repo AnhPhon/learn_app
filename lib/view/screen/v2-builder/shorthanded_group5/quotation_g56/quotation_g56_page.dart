@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -9,6 +10,7 @@ import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/content_widget.dart';
 import 'package:template/view/basewidget/component/input_widget.dart';
 import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/cupertino_supreme/select_box_supreme.dart';
 import 'package:template/view/screen/v2-builder/shorthanded_group5/quotation_g56/quotation_g56_controller.dart';
 
 class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
@@ -32,43 +34,53 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                   ),
 
                   //job title
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Tiêu đề công việc ",
-                    content: "Dịch vụ nấu nướng (đám cưới hỏi, giỗ,…)",
+                    content: controller.donDichVuResponse.tieuDe.toString(),
                   ),
 
                   //Specification
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thông số kỹ thuật: ",
-                    content: "Thông số 1\nThông số 2",
+                    content: controller.donDichVuResponse.idThongSoKyThuats!
+                        .map((e) => e.tieuDe.toString())
+                        .join('\n'),
                   ),
 
                   //haulage distance
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Cự ly vận chuyển tương đối : ",
-                    content: "20Km",
+                    content:
+                        controller.donDichVuResponse.cuLyVanChuyen.toString(),
                   ),
 
                   //quotation by ?
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: Text(
-                          "Báo giá theo",
-                          style: Dimensions.fontSizeStyle16w600(),
+                      Expanded(
+                        flex: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: Dimensions.PADDING_SIZE_DEFAULT,
+                          ),
+                          child: Text(
+                            "Báo giá theo",
+                            style: Dimensions.fontSizeStyle16w600(),
+                          ),
                         ),
                       ),
-                      DropDownButton1<String>(
-                        hint: " ",
-                        value: "Giờ",
-                        onChanged: (val) {},
-                        data: const ["Giờ", "Ca", "Chuyến", "Lần"],
-                        isColorFieldWhite: true,
-                        width: .5,
+                      Expanded(
+                        flex: 5,
+                        child: SelectBoxSupreme<String?>(
+                          obligatory: true,
+                          // label: "Thông tin báo giá:",
+                          items: const ["Giờ", "Ca", "Chuyến", "Lần"],
+                          onChanged: (val) {
+                            controller.danhSachBaoGiaDonDichVuRequest.baoGiaTheo = val.toString();
+                          },
+                          hint: "Chọn thông tin báo giá",
+                        ),
                       ),
                     ],
                   ),
@@ -79,27 +91,40 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                   ),
                   //input content
                   InputWidget(
+                    padding: const EdgeInsets.all(
+                      Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                     hintText:
                         "Nhập nội dung tương ứng với yêu cầu của khách hàng, nêu rõ một số chi tiết cần thiết để nêu rõ với khách hàng",
                     textEditingController: controller.contentController,
                     width: 1,
                     maxLine: 5,
                     isColorFieldWhite: true,
+                    onChanged: (val){
+                      controller.danhSachBaoGiaDonDichVuRequest.ghiChu = val.toString();
+                    },
                   ),
 
                   //input quotation
                   InputWidget(
+                    padding: const EdgeInsets.all(
+                      Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
                     label: "Nhập báo giá gửi khách hàng",
                     obligatory: true,
                     textEditingController: controller.quotationController,
                     width: 1,
                     isColorFieldWhite: true,
+                    textInputType: TextInputType.number,
+                    onChanged: (val){
+                      controller.danhSachBaoGiaDonDichVuRequest.tongTien = val.toString();
+                    },
                   ),
 
                   //order value
-                  const RowText(
+                  RowText(
                     text1: "Giá trị đơn hàng",
-                    text2: "500.00 vnđ",
+                    text2: "${CurrencyConverter.currencyConverterVND(int.parse(controller.getPriceValue()) * 1.0)} VNĐ",
                     colorRed: true,
                   ),
                   const SizedBox(
@@ -112,7 +137,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                       horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     child: BtnCustom(
-                      onTap: () {},
+                      onTap: controller.onDoneClick,
                       color: ColorResources.PRIMARY,
                       text: "Gửi báo giá và chờ nhận kết quả",
                       width: DeviceUtils.getScaledWidth(context, 1),

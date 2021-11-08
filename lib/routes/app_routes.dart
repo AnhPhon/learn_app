@@ -206,6 +206,8 @@ class AppRoutes {
       '/v2_project_detail_trien_khai';
   static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
       '/v2_project_dang_ky_trien_khai';
+  static const String V2_WORK_CREATE = "/v2_work_create";
+  static const String V2_WORK_PREVIEW = "/v2_work_preview";
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
@@ -331,6 +333,7 @@ class AppRoutes {
   //builder
   static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
   static const String V2_WORK_DONE = '/v2_work_done';
+  static const String V2_REGISTER_DONE = '/v2_work_done';
   static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
   static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
   static const String V2_DETAIL_WORK_IN_PROGRESS =

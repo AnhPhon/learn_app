@@ -4,12 +4,12 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 
-class LabelDropdown extends StatelessWidget {
+class LabelDropdown<T> extends StatelessWidget {
   final String label;
   final String labelText;
   final bool isRequire;
   final String currentSelectvalue;
-  final List<String> currencies;
+  final List<List<String>> currencies;
   final TextEditingController controller;
   final Function(String?) onChanged;
 
@@ -29,7 +29,13 @@ class LabelDropdown extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label, style: Dimensions.textTitleStyleCard()),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             if (isRequire == true)
               const Text(
                 "*",
@@ -41,13 +47,18 @@ class LabelDropdown extends StatelessWidget {
               )
           ],
         ),
-        SizedBox(
-            height:
-                DeviceUtils.getScaledHeight(context, Dimensions.SCALE_DEFAULT)),
-        FormField<String>(
-          builder: (FormFieldState<String> state) {
-            return InputDecorator(
-              decoration: InputDecoration(
+        const SizedBox(
+          height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: ColorResources.WHITE,
+          ),
+          height: 60,
+          child: FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
                   labelStyle: Dimensions.textNormalStyleCard(),
                   errorStyle: const TextStyle(
                     color: Colors.redAccent,
@@ -55,23 +66,27 @@ class LabelDropdown extends StatelessWidget {
                   ),
                   hintText: labelText,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-              isEmpty: currentSelectvalue == '',
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: currentSelectvalue,
-                  isDense: true,
-                  onChanged: onChanged,
-                  items: currencies.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                 ),
-              ),
-            );
-          },
+                isEmpty: currentSelectvalue == '',
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: currentSelectvalue,
+                    isDense: true,
+                    onChanged: onChanged,
+                    items: currencies.map((List<String> value) {
+                      return DropdownMenuItem<String>(
+                        value: value[0],
+                        child: Text(value[1]),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
+          ),
         )
       ],
     );

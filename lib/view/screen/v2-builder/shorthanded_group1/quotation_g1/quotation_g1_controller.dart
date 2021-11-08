@@ -90,19 +90,19 @@ class V2QuotationG1Controller extends GetxController {
       filter: '&idDonDichVu=${idDonDichVu.toString()}',
       onSuccess: (data) {
         chiTietCongViecResponse = data;
-        if (chiTietCongViecResponse != null && chiTietCongViecResponse!.isNotEmpty) {
+        if (chiTietCongViecResponse != null &&
+            chiTietCongViecResponse!.isNotEmpty) {
           for (var i = 0; i < chiTietCongViecResponse!.length; i++) {
             unitPriceControllers.add(TextEditingController());
             unitPriceControllers[i].addListener(() => calculator());
           }
         }
         print(
-            'V2ShorthandedGroup1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
+            'V2QuotationG1Controller getListChiTietCongViec onSuccess ${chiTietCongViecResponse}');
         update();
       },
       onError: (error) {
-        print(
-            'V2ShorthandedGroup1Controller getListChiTietCongViec onError $error');
+        print('V2QuotationG1Controller getListChiTietCongViec onError $error');
       },
     );
   }
@@ -246,7 +246,8 @@ class V2QuotationG1Controller extends GetxController {
       }
     }
 
-    danhSachBaoGiaDonDichVuRequest.idTaiKhoanBaoGia = await sl.get<SharedPreferenceHelper>().userId;
+    danhSachBaoGiaDonDichVuRequest.idTaiKhoanBaoGia =
+        await sl.get<SharedPreferenceHelper>().userId;
     danhSachBaoGiaDonDichVuRequest.tongTien = orderValue.toString();
     danhSachBaoGiaDonDichVuRequest.giaVatTus = [];
     for (var i = 0; i < unitPriceControllers.length; i++) {
@@ -254,7 +255,8 @@ class V2QuotationG1Controller extends GetxController {
         'idChiTietCongViec': chiTietCongViecResponse![i].id,
         'donGia': int.parse(unitPriceControllers[i].text),
       }));
-      print('Gia vat tu $i ${danhSachBaoGiaDonDichVuRequest.giaVatTus![i].toJson()}');
+      print(
+          'Gia vat tu $i ${danhSachBaoGiaDonDichVuRequest.giaVatTus![i].toJson()}');
     }
 
     return true;
