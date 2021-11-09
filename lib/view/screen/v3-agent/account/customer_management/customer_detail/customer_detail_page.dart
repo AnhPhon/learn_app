@@ -155,7 +155,7 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                             ),
                             child: ItemListWidget(
                               title: (controller.currentIndex == 0)
-                                  ? controller.donDichVuList[index].moTa
+                                  ? controller.donDichVuList[index].tieuDe
                                       .toString()
                                   : controller.lienHeRiengList[index].noiDung
                                       .toString(),

@@ -24,7 +24,7 @@ class ItemListWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? boxShadow;
   final bool? textOverImage;
-  final String? StringTextOverImage;
+  final String? stringTextOverImage;
 
   const ItemListWidget({
     Key? key,
@@ -46,7 +46,7 @@ class ItemListWidget extends StatelessWidget {
     this.iconSubTitle,
     this.boxShadow,
     this.textOverImage = false,
-    this.StringTextOverImage,
+    this.stringTextOverImage,
   }) : super(key: key);
 
   @override
@@ -83,7 +83,7 @@ class ItemListWidget extends StatelessWidget {
                         _image(),
                         Center(
                           child: TextWhiteBorder(
-                            text: StringTextOverImage ?? "",
+                            text: stringTextOverImage ?? "",
                           ),
                         ),
                       ],

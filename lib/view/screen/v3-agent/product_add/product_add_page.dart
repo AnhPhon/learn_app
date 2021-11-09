@@ -146,6 +146,21 @@ class V3ProductAddPage extends GetView<V3ProductAddController> {
                     ),
                   ),
 
+                  //tinh trang san pham
+                  DropDownMapButton(
+                    label: "Tình trạng sản phẩm",
+                    labelBold: true,
+                    hint: "Tình trạng",
+                    value: controller.sanPhamRequest.tinhTrangSanPham,
+                    onChanged: controller.onchangedTinhTrangSanPham,
+                    data: TINH_TRANG_SAN_PHAM as Map<String, String>,
+                    width: double.infinity,
+                    fillColor: ColorResources.WHITE,
+                    padding: const EdgeInsets.only(
+                      top: Dimensions.PADDING_SIZE_DEFAULT,
+                    ),
+                  ),
+
                   //shipping method
                   DropDownMapButton(
                     label: "Hình thức vận chuyển",

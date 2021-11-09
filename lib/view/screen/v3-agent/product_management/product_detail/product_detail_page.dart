@@ -218,9 +218,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
                   text1: "Tình trạng",
                   text2: controller.nhapKhoHangDaiLyList.isEmpty
                       ? "Chưa có tình trạng SP"
-                      : TINH_TRANG_SAN_PHAM[controller
-                              .nhapKhoHangDaiLyList[0].tinhTrangSanPham]
-                          .toString(),
+                      : controller.sanPhamResponse.tinhTrangSanPham.toString(),
                   notFontSize: true,
                   notFontWeight: true,
                   colorRed: true,

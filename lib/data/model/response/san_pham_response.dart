@@ -16,6 +16,7 @@ class SanPhamResponse {
   String? donVi;
   String? maSanPham;
   String? kieuVanChuyen;
+  String? tinhTrangSanPham;
   BangGiaPhiVanChuyenResponse? idBangGiaPhiVanChuyen;
 
   String? createdAt;
@@ -35,6 +36,7 @@ class SanPhamResponse {
       this.donVi,
       this.maSanPham,
       this.kieuVanChuyen,
+      this.tinhTrangSanPham,
       this.idBangGiaPhiVanChuyen,
       this.createdAt,
       this.updatedAt});
@@ -74,6 +76,7 @@ class SanPhamResponse {
     donVi = json['donVi'].toString();
     maSanPham = json['maSanPham'].toString();
     kieuVanChuyen = json['kieuVanChuyen'].toString();
+    tinhTrangSanPham = json['tinhTrangSanPham'].toString();
 
     // mapping idBangGiaPhiVanChuyen
     if (json['idBangGiaPhiVanChuyen'] != null &&
@@ -131,6 +134,9 @@ class SanPhamResponse {
 
     // check null kieuVanChuyen
     if (kieuVanChuyen != null) data['kieuVanChuyen'] = kieuVanChuyen;
+
+    // check null tinhTrangSanPham
+    if (tinhTrangSanPham != null) data['tinhTrangSanPham'] = tinhTrangSanPham;
 
     // check null idBangGiaPhiVanChuyen
     if (idBangGiaPhiVanChuyen != null)

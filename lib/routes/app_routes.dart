@@ -176,6 +176,8 @@ class AppRoutes {
   static const String V1_SERVICE_REVIEW_G4 = '/v1_service_review_g4';
   static const String V1_SERVICE_REVIEW_G5 = '/v1_service_review_g5';
   static const String V1_SERVICE_REVIEW_G6 = '/v1_service_review_g6';
+  static const String V1_WORK_IN_PROGRESS = '/v1_work_in_progress';
+  static const String V1_WORK_DONE = '/v1_work_done';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';

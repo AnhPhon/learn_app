@@ -109,18 +109,20 @@ class V1FormManagementController extends GetxController {
   /// changed tab
   ///
   void onChangeTab(int index) {
-    //set index
-    currentIndex = index;
+    if (currentIndex != index) {
+      //set index
+      currentIndex = index;
 
-    //loading
-    isLoading = true;
+      //loading
+      isLoading = true;
 
-    //resetNoData
-    refreshController.resetNoData();
+      //resetNoData
+      refreshController.resetNoData();
 
-    //getDonDichVu
-    getDonDichVu();
-    update();
+      //getDonDichVu
+      getDonDichVu();
+      update();
+    }
   }
 
   ///

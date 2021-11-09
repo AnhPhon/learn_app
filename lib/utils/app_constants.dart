@@ -123,7 +123,7 @@ const String NHOM_DICH_VU_8 = '61853b8ce10f2b16dcdff808';
 const String TUYEN_DUNG_TRANG_THAI_TIN_CHUA_DUYET = '6162b79bd3d3e9825095fb20';
 
 //trang thai don hang moi tao
-const String TRANG_THAI_DON_HANG_MOI_TAO = '616a39faea30f845b562876d';
+const String TRANG_THAI_DON_HANG_MOI_TAO = '618a2968d89699350ec68704';
 
 //trang thai don hang hoan thanh
 const String TRANG_THAI_DON_HANG_HOAN_THANH = '6169a7843391622ae92038ef';
@@ -138,4 +138,12 @@ const dynamic TINH_TRANG_SAN_PHAM = {
 const Map<String, String> KIEU_VAN_CHUYEN = {
   "0": "Không giao đc qua các đơn vị giao hàng (tự vận chuyển)",
   "1": "Giao đc qua các đơn vị giao hàng",
+};
+
+
+//kiểu vận chuyển
+const Map<String, String> TINH_TRANG_THANH_TOAN_PHAN_HOI = {
+  "1": "Đồng ý thanh toán 100%",
+  "2": "Đồng ý thanh toán theo thỏa thuận",
+  "3": "Chưa đồng ý thanh toán",
 };

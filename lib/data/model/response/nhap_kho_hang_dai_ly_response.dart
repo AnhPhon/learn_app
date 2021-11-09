@@ -8,7 +8,6 @@ class NhapKhoHangDaiLyResponse {
   TaiKhoanResponse? idTaiKhoan;
   SanPhamResponse? idSanPham;
   String? soLuong;
-  String? tinhTrangSanPham;
   String? loai;
 
   String? createdAt;
@@ -20,7 +19,6 @@ class NhapKhoHangDaiLyResponse {
       this.idTaiKhoan,
       this.idSanPham,
       this.soLuong,
-      this.tinhTrangSanPham,
       this.loai,
       this.createdAt,
       this.updatedAt});
@@ -57,7 +55,6 @@ class NhapKhoHangDaiLyResponse {
       idSanPham = null;
     }
     soLuong = json['soLuong'].toString();
-    tinhTrangSanPham = json['tinhTrangSanPham'].toString();
     loai = json['loai'].toString();
 
     createdAt = json['created_at'].toString();
@@ -83,9 +80,6 @@ class NhapKhoHangDaiLyResponse {
 
     // check null soLuong
     if (soLuong != null) data['soLuong'] = soLuong;
-
-    // check null tinhTrangSanPham
-    if (tinhTrangSanPham != null) data['tinhTrangSanPham'] = tinhTrangSanPham;
 
     // check null loai
     if (loai != null) data['loai'] = loai;

@@ -15,6 +15,8 @@ import 'package:template/view/screen/v1-customer/account/account_page.dart';
 import 'package:template/view/screen/v1-customer/account/help/help_page.dart';
 import 'package:template/view/screen/v1-customer/account/introduce/introduce_page.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_page.dart';
+import 'package:template/view/screen/v1-customer/account/job_management/work_done/work_done_page.dart';
+import 'package:template/view/screen/v1-customer/account/job_management/work_in_progress/work_in_progress_page.dart';
 import 'package:template/view/screen/v1-customer/account/mail/mail_page.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/my_order_page.dart';
 import 'package:template/view/screen/v1-customer/account/my_order/order_detail/order_detail_page.dart';
@@ -849,6 +851,14 @@ class AppPages {
       name: AppRoutes.V1_DASHBOARD,
       page: () => V1DashboardPage(),
       binding: V1DashboardBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_WORK_IN_PROGRESS,
+      page: () => V1WorkInProgressPage(),
+    ),
+    GetPage(
+      name: AppRoutes.V1_WORK_DONE,
+      page: () => V1WorkDonePage(),
     ),
 
     // builder

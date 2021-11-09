@@ -115,6 +115,14 @@ class V3ProductAddController extends GetxController {
   }
 
   ///
+  ///onchanged tinh trang san pham
+  ///
+  void onchangedTinhTrangSanPham(String? value) {
+    sanPhamRequest.tinhTrangSanPham = value;
+    update();
+  }
+
+  ///
   ///onchanged ProductCategory
   ///
   void onchangedProductCategory(DanhMucSanPhamResponse? value) {
@@ -179,6 +187,8 @@ class V3ProductAddController extends GetxController {
       Alert.error(message: 'Chi tiết sản phẩm không được để trống');
     } else if (danhMucSanPhamResponse == null) {
       Alert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
+    } else if (sanPhamRequest.tinhTrangSanPham == null) {
+      Alert.error(message: 'Bạn chưa chọn tình trạng sản phẩm');
     } else if (unit.text.isEmpty) {
       Alert.error(message: 'Số lượng không được để trống');
     } else {

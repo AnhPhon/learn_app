@@ -12,6 +12,7 @@ class SanPhamRequest {
   String? maSanPham;
   String? donVi;
   String? kieuVanChuyen;
+  String? tinhTrangSanPham;
   String? idBangGiaPhiVanChuyen;
 
   SanPhamRequest(
@@ -28,6 +29,7 @@ class SanPhamRequest {
       this.maSanPham,
       this.donVi,
       this.kieuVanChuyen,
+      this.tinhTrangSanPham,
       this.idBangGiaPhiVanChuyen});
 
   ///
@@ -49,6 +51,7 @@ class SanPhamRequest {
     maSanPham = json['maSanPham'].toString();
     donVi = json['donVi'].toString();
     kieuVanChuyen = json['kieuVanChuyen'].toString();
+    tinhTrangSanPham = json['tinhTrangSanPham'].toString();
     idBangGiaPhiVanChuyen = json['idBangGiaPhiVanChuyen'].toString();
   }
 
@@ -95,6 +98,9 @@ class SanPhamRequest {
 
     // check null kieuVanChuyen
     if (kieuVanChuyen != null) data['kieuVanChuyen'] = kieuVanChuyen;
+
+    // check null tinhTrangSanPham
+    if (tinhTrangSanPham != null) data['tinhTrangSanPham'] = tinhTrangSanPham;
 
     // check null idBangGiaPhiVanChuyen
     if (idBangGiaPhiVanChuyen != null)

@@ -224,9 +224,7 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
                   text1: "Tình trạng",
                   text2: controller.nhapKhoHangDaiLyList.isEmpty
                       ? "Chưa có tình trạng SP"
-                      : TINH_TRANG_SAN_PHAM[controller
-                              .nhapKhoHangDaiLyList[0].tinhTrangSanPham]
-                          .toString(),
+                      : controller.sanPhamResponse.tinhTrangSanPham.toString(),
                   notFontSize: true,
                   notFontWeight: true,
                   colorRed: true,
@@ -445,20 +443,27 @@ class V1ProductDetailPage extends GetView<V1ProductDetailController> {
           // button add to cart
           Expanded(
             flex: 9,
-            child: BtnCustom(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    controller.quantityProduct = 1;
-                    return _modalBottomSheet(context);
-                  },
-                );
-              },
-              color: ColorResources.PRIMARY,
-              text: "Thêm vào giỏ hàng",
-              width: double.infinity,
-            ),
+            child: (controller.stock == 0)
+                ? BtnCustom(
+                    onTap: () {},
+                    color: ColorResources.GREY,
+                    text: "Hết hàng",
+                    width: DeviceUtils.getScaledWidth(context, .9),
+                  )
+                : BtnCustom(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          controller.quantityProduct = 1;
+                          return _modalBottomSheet(context);
+                        },
+                      );
+                    },
+                    color: ColorResources.PRIMARY,
+                    text: "Thêm vào giỏ hàng",
+                    width: double.infinity,
+                  ),
           ),
         ],
       ),
