@@ -254,7 +254,7 @@ class CreateWorkPage extends GetView<CreateWorkController>{
       allowMultiline: false,
       controller: controller.addressController,
       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-      holdplacer: "123 Hoàng Thị Loan",
+      holdplacer: "Địa chỉ cụ thể",
       hidden: false,
       label: "Địa chỉ cụ thể (số nhà, tên đường)",
       obligatory: true,
