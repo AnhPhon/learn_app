@@ -78,6 +78,25 @@ class DanhSachBaoGiaDonDichVuRepository {
   }
 
   ///
+  /// Get paginate danh-sach-bao-gia-don-dich-vus "page": 1, "limit": 10, filter
+  ///
+  Future<ApiResponse> ketQuaBaoGiaPaginate(int page, int limit, String filter) async {
+    try {
+      String uri = '/danh-sach-bao-gia-don-dich-vus/ket-qua-bao-gia/paginate?page=$page&limit=$limit'.toString();
+
+      // add condition filter
+      if (filter != '') {
+        uri = '/danh-sach-bao-gia-don-dich-vus/ket-qua-bao-gia/paginate?page=$page&limit=$limit$filter';
+      }
+
+      final response = await dioClient!.get(uri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  ///
   /// Find danh-sach-bao-gia-don-dich-vu by id
   ///
   Future<ApiResponse> find(String id) async {

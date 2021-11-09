@@ -19,6 +19,7 @@ import 'package:template/provider/thong_bao_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 
 class V2HomeController extends GetxController {
   // provider
@@ -401,6 +402,37 @@ class V2HomeController extends GetxController {
   }
 
   ///
+  ///go to shorthanded page item
+  ///
+  void onShortHandedPageClickItem(DonDichVuResponse donDichVuResponse) {
+    if (donDichVuResponse.idNhomDichVu == null) return;
+    if (donDichVuResponse.idNhomDichVu!.id.toString() == NHOM_DICH_VU_1) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP1,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    } else if (donDichVuResponse.idNhomDichVu!.id.toString() ==
+        NHOM_DICH_VU_2) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP2,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    } else if (donDichVuResponse.idNhomDichVu!.id.toString() ==
+        NHOM_DICH_VU_3) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP3,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    } else if (donDichVuResponse.idNhomDichVu!.id.toString() ==
+        NHOM_DICH_VU_4) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP4,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    } else if (donDichVuResponse.idNhomDichVu!.id.toString() ==
+        NHOM_DICH_VU_5) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP5,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    } else if (donDichVuResponse.idNhomDichVu!.id.toString() ==
+        NHOM_DICH_VU_6) {
+      Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP6,
+          arguments: {'id': donDichVuResponse.id, 'title': 'Công việc đang cần người'});
+    }
+  }
+
+  ///
   ///go to product page
   ///
   void onProductPageClick() {
@@ -501,5 +533,5 @@ class V2HomeController extends GetxController {
     refreshController!.loadComplete();
   }
 
-  // private
+// private
 }

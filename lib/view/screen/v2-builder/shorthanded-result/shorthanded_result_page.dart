@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -111,21 +112,33 @@ class V2ShorthandedResultPage extends GetView<V2ShorthandedResultController> {
       ),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'].length as int,
+      itemCount: controller.titleTabBar[controller.currentIndex.value]['danhSachBaoGiaDonDichVuResponse'].length as int,
       itemBuilder: (BuildContext ctx, int index) {
-        return ItemListWidget(
-          urlImage: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].hinhAnhDaiDien.toString(),
-          onTap: () => controller.onProjectDetailClick(controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index]),
-          title: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].ten.toString(),
-          icon1: const Icon(Icons.location_on),
-          rowText1: controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].idQuanHuyen != null ? controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].idQuanHuyen!.ten.toString() : '',
-          colorRowText1: ColorResources.GREY,
-          icon2: const Icon(Icons.calendar_today),
-          rowText2: DateConverter.isoStringToddMMYYYY(controller.titleTabBar[controller.currentIndex.value]['duAnKhachHangResponse'][index].ngayBatDau!.toString()),
-          colorRowText2: ColorResources.GREY,
-          isSpaceBetween: true,
-        );
+        return itemDanhSachBaoGia(controller, index, controller.titleTabBar[controller.currentIndex.value]['danhSachBaoGiaDonDichVuResponse']![index] as DanhSachBaoGiaDonDichVuResponse);
       },
     );
+  }
+
+  ItemListWidget itemDanhSachBaoGia(V2ShorthandedResultController controller, int index, DanhSachBaoGiaDonDichVuResponse danhSachBaoGiaDonDichVu) {
+    return ItemListWidget(
+        urlImage: danhSachBaoGiaDonDichVu.idDonDichVu!.hinhAnhChiTiet
+            .toString(),
+        onTap: () => controller.onDetailClick(
+            danhSachBaoGiaDonDichVu),
+        title: danhSachBaoGiaDonDichVu.idDonDichVu!.tieuDe
+            .toString(),
+        icon1: const Icon(Icons.location_on),
+        rowText1: danhSachBaoGiaDonDichVu.idDonDichVu!.diaDiemLamViec !=
+                null
+            ? danhSachBaoGiaDonDichVu.idDonDichVu!
+                .diaDiemLamViec
+                .toString()
+            : '',
+        colorRowText1: ColorResources.GREY,
+        // icon2: const Icon(Icons.calendar_today),
+        rowText2: controller.currentIndex.value == 0 ? danhSachBaoGiaDonDichVu.idDonDichVu!
+        .idTrangThaiThanhToan!.tieuDe
+        .toString() : '',
+      );
   }
 }

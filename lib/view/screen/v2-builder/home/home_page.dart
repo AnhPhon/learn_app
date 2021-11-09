@@ -274,6 +274,7 @@ class V2HomePage extends GetView<V2HomeController> {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext ctx, index) {
             return TaskNeedWorker(
+              onTap: () => controller.onShortHandedPageClickItem(controller.donDichVuList[index]),
               tenTask: controller.donDichVuList[index].tieuDe!,
               maTask:
                   "DH${controller.donDichVuList[index].id!.substring(0, 6)}",

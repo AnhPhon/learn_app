@@ -123,19 +123,30 @@ class DonDichVuResponse {
     id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idTaiKhoan
-    if (json['idTaiKhoan'] != null &&
-        json['idTaiKhoan'].toString().length != 24) {
-      idTaiKhoan =
-          TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>);
-    } else {
-      idTaiKhoan = null;
-    }
+    // if (json['idTaiKhoan'] != null &&
+    //     json['idTaiKhoan'].toString().length != 24) {
+    //   idTaiKhoan =
+    //       TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>);
+    // } else {
+    //   idTaiKhoan = null;
+    // }
 
     // mapping idTaiKhoanNhanDon
     if (json['idTaiKhoanNhanDon'] != null &&
         json['idTaiKhoanNhanDon'].toString().length != 24) {
       idTaiKhoanNhanDon = TaiKhoanResponse.fromJson(
           json['idTaiKhoanNhanDon'] as Map<String, dynamic>);
+    } else {
+      idTaiKhoanNhanDon = null;
+    }
+
+
+
+    // mapping idTaiKhoanNhanDon
+    if (json['idTaiKhoan'] != null &&
+        json['idTaiKhoan'].toString().length != 24) {
+      idTaiKhoan = TaiKhoanResponse.fromJson(
+          json['idTaiKhoan'] as Map<String, dynamic>);
     } else {
       idTaiKhoan = null;
     }
