@@ -6,6 +6,7 @@ class LienHeRiengResponse {
   String? giaTriGiaoDich;
   String? noiDung;
   TaiKhoanResponse? idTaiKhoan;
+  TaiKhoanResponse? idTaiKhoanLienHe;
 
   String? createdAt;
   String? updatedAt;
@@ -16,6 +17,7 @@ class LienHeRiengResponse {
       this.giaTriGiaoDich,
       this.noiDung,
       this.idTaiKhoan,
+      this.idTaiKhoanLienHe,
       this.createdAt,
       this.updatedAt});
   
@@ -33,6 +35,13 @@ class LienHeRiengResponse {
       idTaiKhoan = TaiKhoanResponse.fromJson(json['idTaiKhoan'] as Map<String, dynamic>); 
     } else {                                                                           
       idTaiKhoan = null;                                                               
+    } 
+
+    // mapping idTaiKhoanLienHe                                                              
+    if (json['idTaiKhoanLienHe'] != null && json['idTaiKhoanLienHe'].toString().length!=24) {                                                  
+      idTaiKhoanLienHe = TaiKhoanResponse.fromJson(json['idTaiKhoanLienHe'] as Map<String, dynamic>); 
+    } else {                                                                           
+      idTaiKhoanLienHe = null;                                                               
     }                                                                                  
 
     createdAt = json['created_at'].toString();
@@ -58,6 +67,9 @@ class LienHeRiengResponse {
 
     // check null idTaiKhoan
     if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null idTaiKhoanLienHe
+    if (idTaiKhoanLienHe != null) data['idTaiKhoanLienHe'] = idTaiKhoanLienHe; 
 
 
     return data;

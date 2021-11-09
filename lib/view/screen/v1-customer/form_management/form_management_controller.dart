@@ -69,7 +69,7 @@ class V1FormManagementController extends GetxController {
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}&sortBy=created_at:desc",
+          "&idTaiKhoan=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}&sortBy=created_at:desc",
       onSuccess: (data) {
         print(data.length);
         if (data.isEmpty) {

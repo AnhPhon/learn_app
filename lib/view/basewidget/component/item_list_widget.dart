@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
+import 'package:template/view/basewidget/text/text_white_border.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 class ItemListWidget extends StatelessWidget {
@@ -22,6 +23,8 @@ class ItemListWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? boxShadow;
+  final bool? textOverImage;
+  final String? StringTextOverImage;
 
   const ItemListWidget({
     Key? key,
@@ -42,6 +45,8 @@ class ItemListWidget extends StatelessWidget {
     this.colorSubTitle,
     this.iconSubTitle,
     this.boxShadow,
+    this.textOverImage = false,
+    this.StringTextOverImage,
   }) : super(key: key);
 
   @override
@@ -72,15 +77,18 @@ class ItemListWidget extends StatelessWidget {
           children: [
             Expanded(
               flex: 4,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                  ),
-                  child: FadeInImageCustom(
-                    urlImage: urlImage,
-                    height: double.infinity,
-                    width: double.infinity,
-                  )),
+              child: (textOverImage == true)
+                  ? Stack(
+                      children: [
+                        _image(),
+                        Center(
+                          child: TextWhiteBorder(
+                            text: StringTextOverImage ?? "",
+                          ),
+                        ),
+                      ],
+                    )
+                  : _image(),
             ),
             const SizedBox(
               width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
@@ -208,6 +216,22 @@ class ItemListWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  ///
+  ///image
+  ///
+  Widget _image() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+      ),
+      child: FadeInImageCustom(
+        urlImage: urlImage,
+        height: double.infinity,
+        width: double.infinity,
       ),
     );
   }

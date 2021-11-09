@@ -32,11 +32,15 @@ const String THO_THAU = '6168fb3062f385255f293b0b';
 const String NHAN_VIEN = '616e71de3535150e7a4d4755';
 
 // Trạng thái đơn dich vụ
-const String DA_PHAN_HOI = '6170c66db3b6a47374f4e678';
+const String DA_PHAN_HOI = '6170c66db3b6a47374f4e678'; //đã báo giá
 const String CHOT_GIA = '6170c682b3b6a47374f4e679';
 const String THAT_BAI = '617286fdf5c09a07f815e826';
 const String CHUA_PHAN_HOI = '616ce813cbb2cf21dad90cdf';
 const String TRUNG_THAU = '6170c6b6b3b6a47374f4e67a';
+const String DA_DUYET = '6170c4bbb3b6a47374f4e677';
+const String CHUA_NGHIEM_THU = '618a1a10b7ce952de195dd01';
+const String DA_NGHIEM_THU = '618a1a54b7ce952de195dd7f';
+const String DA_QUYET_TOAN = '618a1a71b7ce952de195ddc2';
 
 // LINK
 const String URL_TO_LINK_PDF = '';

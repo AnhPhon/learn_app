@@ -4,13 +4,15 @@ class LienHeRiengRequest {
   String? giaTriGiaoDich;
   String? noiDung;
   String? idTaiKhoan;
+  String? idTaiKhoanLienHe;
 
   LienHeRiengRequest({
       this.id,
       this.ngayGiaoDich,
       this.giaTriGiaoDich,
       this.noiDung,
-      this.idTaiKhoan});
+      this.idTaiKhoan,
+      this.idTaiKhoanLienHe});
   
   ///
   /// From JSON
@@ -21,6 +23,7 @@ class LienHeRiengRequest {
     giaTriGiaoDich = json['giaTriGiaoDich'].toString();
     noiDung = json['noiDung'].toString();
     idTaiKhoan = json['idTaiKhoan'].toString();
+    idTaiKhoanLienHe = json['idTaiKhoanLienHe'].toString();
   }
 
   ///
@@ -42,6 +45,9 @@ class LienHeRiengRequest {
 
     // check null idTaiKhoan
     if (idTaiKhoan != null) data['idTaiKhoan'] = idTaiKhoan; 
+
+    // check null idTaiKhoanLienHe
+    if (idTaiKhoanLienHe != null) data['idTaiKhoanLienHe'] = idTaiKhoanLienHe; 
 
 
     return data;

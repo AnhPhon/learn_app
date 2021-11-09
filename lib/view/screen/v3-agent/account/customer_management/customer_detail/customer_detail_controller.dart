@@ -86,7 +86,7 @@ class V3CustomerDetailController extends GetxController {
       page: 1,
       limit: 100,
       filter:
-          "&idTaiKhoanNhanDon=${taiKhoanResponse.id}&idNhomDichVu=$NHOM_DICH_VU_8&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
+          "&idTaiKhoanNhanDon=$userId&idTaiKhoan=${taiKhoanResponse.id}&idNhomDichVu=$NHOM_DICH_VU_8&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
       onSuccess: (data) {
         //check is not empty
         if (data.isNotEmpty) {
@@ -116,7 +116,7 @@ class V3CustomerDetailController extends GetxController {
     lienHeRiengProvider.paginate(
       page: 1,
       limit: 100,
-      filter: "&idTaiKhoan=$userId",
+      filter: "&idTaiKhoan=$userId&idTaiKhoanLienHe=${taiKhoanResponse.id}&sortBy=created_at:desc",
       onSuccess: (data) {
         if (data.isNotEmpty) {
           lienHeRiengList = data;
@@ -163,6 +163,7 @@ class V3CustomerDetailController extends GetxController {
     } else {
       //set data
       lienHeRiengRequest.idTaiKhoan = userId;
+      lienHeRiengRequest.idTaiKhoanLienHe = taiKhoanResponse.id;
       lienHeRiengRequest.giaTriGiaoDich =
           totalController.text.replaceAll(",", "");
       lienHeRiengRequest.ngayGiaoDich =
