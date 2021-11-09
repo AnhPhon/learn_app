@@ -430,9 +430,9 @@ class CreateWorkController extends GetxController {
         "Tinh: ${serviceApplication.idTinhTp} Huyen: ${serviceApplication.idQuanHuyen} xa: ${serviceApplication.idPhuongXa}");
 
     serviceApplication.idNhomDichVu = dichvu!.id;
-    serviceApplication.idTaiKhoanNhanDon = idUser;
+    // serviceApplication.idTaiKhoanNhanDon = idUser;
     serviceApplication.idTaiKhoan =
-        idUser; //await sl.get<SharedPreferenceHelper>().userId;
+        idUser; 
     serviceApplication.tieuDe = loaiCongViec!.tenCongViec;
     serviceApplication.diaChiCuThe = addressController.text.toString();
     return serviceApplication;
