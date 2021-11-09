@@ -103,22 +103,22 @@ class DonDichVuRequest {
   ///
   DonDichVuRequest.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
-    idTaiKhoan = json['idTaiKhoan'].toString();
-    idNhomDichVu = json['idNhomDichVu'].toString();
-    tieuDe = json['tieuDe'].toString();
-    moTa = json['moTa'].toString();
-    ngayBatDau = json['ngayBatDau'].toString();
-    ngayKetThuc = json['ngayKetThuc'].toString();
-    hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>).map((e) => e.toString()).toList();
-    hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>).map((e) => e.toString()).toList();
-    idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
-    idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
-    idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
-    idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
+    if(json['idTaiKhoan'] != null)idTaiKhoan = json['idTaiKhoan'].toString();
+    if(json['idNhomDichVu'] != null)idNhomDichVu = json['idNhomDichVu'].toString();
+    if(json['tieuDe'] != null) tieuDe = json['tieuDe'].toString();
+    if(json['moTa'] != null)moTa = json['moTa'].toString();
+    if(json['ngayBatDau'] != null)ngayBatDau = json['ngayBatDau'].toString();
+    if(json['ngayKetThuc'] != null)ngayKetThuc = json['ngayKetThuc'].toString();
+    if(json['hinhAnhBanKhoiLuongs'] != null) hinhAnhBanKhoiLuongs = (json['hinhAnhBanKhoiLuongs'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['hinhAnhBanVes'] != null) hinhAnhBanVes = (json['hinhAnhBanVes'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['hinhAnhChiTiets'] != null) hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['hinhAnhBaoGias'] != null) hinhAnhBaoGias = (json['hinhAnhBaoGias'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['hinhAnhThucTes'] != null) hinhAnhThucTes = (json['hinhAnhThucTes'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['hinhAnhBaoHanhs'] != null) hinhAnhBaoHanhs = (json['hinhAnhBaoHanhs'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['idTrangThaiDonHang'] != null) idTrangThaiDonHang = json['idTrangThaiDonHang'].toString();
+    if(json['idTrangThaiDonDichVu'] != null) idTrangThaiDonDichVu = json['idTrangThaiDonDichVu'].toString();
+    if(json['idHinhThucThanhToan'] != null) idHinhThucThanhToan = json['idHinhThucThanhToan'].toString();
+    if(json['idTrangThaiThanhToan'] != null) idTrangThaiThanhToan = json['idTrangThaiThanhToan'].toString();
     if (json['thoiGianLamViec'] != null) {
       thoiGianLamViec = (json['thoiGianLamViec'] as List<dynamic>)
           .map((e) =>
@@ -126,35 +126,37 @@ class DonDichVuRequest {
           .toList();
     }
 
-    idTinhTp = json['idTinhTp'].toString();
-    idQuanHuyen = json['idQuanHuyen'].toString();
-    idPhuongXa = json['idPhuongXa'].toString();
-    giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
-    moTaChiTiet = json['moTaChiTiet'].toString();
-    files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
-    soLuongYeuCau = json['soLuongYeuCau'].toString();
-    soNgay = json['soNgay'].toString();
-    diaDiemLamViec = json['diaDiemLamViec'].toString();
-    idBangGiaDonHang = json['idBangGiaDonHang'].toString();
-    gioiTinh = json['gioiTinh'].toString();
-    idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
+    if(json['idTinhTp'] != null) idTinhTp = json['idTinhTp'].toString();
+    if(json['idQuanHuyen'] != null) idQuanHuyen = json['idQuanHuyen'].toString();
+    if(json['idPhuongXa'] != null) idPhuongXa = json['idPhuongXa'].toString();
+    if(json['giaTriKhachDeXuat'] != null) giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+    if(json['moTaChiTiet'] != null) moTaChiTiet = json['moTaChiTiet'].toString();
+    if(json['files'] != null) files = (json['files'] as List<dynamic>).map((e) => e.toString()).toList();
+    if(json['soLuongYeuCau'] != null) soLuongYeuCau = json['soLuongYeuCau'].toString();
+    if(json['soNgay'] != null) soNgay = json['soNgay'].toString();
+    if(json['diaDiemLamViec'] != null) diaDiemLamViec = json['diaDiemLamViec'].toString();
+    if(json['idBangGiaDonHang'] != null)  idBangGiaDonHang = json['idBangGiaDonHang'].toString();
+    if(json['gioiTinh'] != null) gioiTinh = json['gioiTinh'].toString();
+    if (json['idThongSoKyThuats'] != null) {
+      idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
         .map((e) => e as String)
         .toList();
-    diaDiemBocHang = json['diaDiemBocHang'].toString();
-    diaDiemTraHang = json['diaDiemTraHang'].toString();
-    cuLyVanChuyen = json['cuLyVanChuyen'].toString();
-    beRongDiemNhan = json['beRongDiemNhan'].toString();
-    beRongDiemTra = json['beRongDiemTra'].toString();
-    beRongMatDuong = json['beRongMatDuong'].toString();
-    phiDichVu = json['phiDichVu'].toString();
-    khuyenMai = json['khuyenMai'].toString();
-    soTien = json['soTien'].toString();
-    tongDon = json['tongDon'].toString();
-    taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
-    tienCoc = json['tienCoc'].toString();
-    diaChiCuThe = json['diaChiCuThe'].toString();
-    idLoaiCongViec = json['idLoaiCongViec'].toString();
-    idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
+    }
+    if(json['diaDiemBocHang'] != null) diaDiemBocHang = json['diaDiemBocHang'].toString();
+    if(json['diaDiemTraHang'] != null) diaDiemTraHang = json['diaDiemTraHang'].toString();
+    if(json['cuLyVanChuyen'] != null) cuLyVanChuyen = json['cuLyVanChuyen'].toString();
+    if(json['beRongDiemNhan'] != null) beRongDiemNhan = json['beRongDiemNhan'].toString();
+    if(json['beRongDiemTra'] != null) beRongDiemTra = json['beRongDiemTra'].toString();
+    if(json['beRongMatDuong'] != null) beRongMatDuong = json['beRongMatDuong'].toString();
+    if(json['phiDichVu'] != null) phiDichVu = json['phiDichVu'].toString();
+    if(json['khuyenMai'] != null) khuyenMai = json['khuyenMai'].toString();
+    if(json['soTien'] != null) soTien = json['soTien'].toString();
+    if(json['tongDon'] != null) tongDon = json['tongDon'].toString();
+    if(json['taiKhoanNhanDon'] != null) taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
+    if(json['tienCoc'] != null) tienCoc = json['tienCoc'].toString();
+    if(json['diaChiCuThe'] != null) diaChiCuThe = json['diaChiCuThe'].toString();
+    if(json['idLoaiCongViec'] != null) idLoaiCongViec = json['idLoaiCongViec'].toString();
+    if(json['idTaiKhoanNhanDon'] != null) idTaiKhoanNhanDon = json['idTaiKhoanNhanDon'].toString();
   }
 
   ///

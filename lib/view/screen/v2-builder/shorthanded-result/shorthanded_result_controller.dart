@@ -84,7 +84,12 @@ class V2ShorthandedResultController extends GetxController with SingleGetTickerP
       } else if(project.idDonDichVu!.idTrangThaiThanhToan!.id.toString() == DA_THANH_TOAN){
         Get.toNamed(AppRoutes.V2_SHORTHANDED_COMPLETE, arguments: {'idDonDichVu': project.idDonDichVu, 'title': ''});
       } else if(project.idDonDichVu!.idTrangThaiThanhToan!.id == CHUA_THANH_TOAN){
-        Get.toNamed(AppRoutes.V2_SHORTHANDED_PAYMENT, arguments: {'idProject': project.id.toString(), 'title': ''});
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_PAYMENT, arguments: {'danhSachBaoGiaDonDichVu': project, 'title': ''})!.then((value){
+          print('Result $value');
+          if(value != null && value['reload'] == true){
+            onRefresh();
+          }
+        });
       }
 
     } else {

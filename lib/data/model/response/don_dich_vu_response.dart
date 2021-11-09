@@ -121,6 +121,7 @@ class DonDichVuResponse {
   ///
   DonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    id = (json['_id'] == null) ? null : json['_id'].toString();
 
     // mapping idTaiKhoan
     // if (json['idTaiKhoan'] != null &&
