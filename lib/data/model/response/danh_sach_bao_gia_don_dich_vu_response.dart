@@ -60,8 +60,8 @@ class DanhSachBaoGiaDonDichVuResponse {
     if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<dynamic>;
     }
-    giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList();
-    giaCongViecs = (json['giaCongViecs'] as List<dynamic>).map((e) => GiaCongViecs.fromMap(e as Map<String, dynamic>)).toList();
+    if(json['giaVatTus'] != null) giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList();
+    if(json['giaCongViecs'] != null) giaCongViecs = (json['giaCongViecs'] as List<dynamic>).map((e) => GiaCongViecs.fromMap(e as Map<String, dynamic>)).toList();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();

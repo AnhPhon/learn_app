@@ -17,6 +17,7 @@ class TrangThaiThanhToanResponse {
   ///
   TrangThaiThanhToanResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    id = (json['_id'] == null) ? null : json['_id'].toString();
     tieuDe = json['tieuDe'].toString();
 
     createdAt = json['created_at'].toString();

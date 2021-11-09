@@ -24,7 +24,7 @@ class GiaCongViecs {
   factory GiaCongViecs.fromMap(Map<String, dynamic> map) {
     return GiaCongViecs(
       id: map['id'] != null ? map['id'] as String : null,
-      idChiTietCongViec: map['idChiTietCongViec'] != null ? ChiTietCongViecResponse.fromJson(map['idChiTietCongViec'] as Map<String, dynamic>) : null,
+      idChiTietCongViec: map['idChiTietCongViec'] != null && map['idChiTietCongViec'].toString().length != 24 ? ChiTietCongViecResponse.fromJson(map['idChiTietCongViec'] as Map<String, dynamic>) : null,
       donGia: map['donGia'] != null ? (map['donGia'] as int).toString(): null,
     );
   }
