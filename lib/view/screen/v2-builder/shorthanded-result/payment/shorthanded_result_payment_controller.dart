@@ -92,6 +92,7 @@ class V2ShorthandedPaymentController extends GetxController
       'id': danhSachBaoGiaDonDichVu.idDonDichVu!.id.toString(),
     });
     donDichVuRequest.idTrangThaiThanhToan = '61604f4cc8e6fa122227e29f';
+    donDichVuRequest.idTrangThaiDonDichVu = '6170c6b6b3b6a47374f4e67a';
 
     double tienCoc = 0.05 *
         int.parse((danhSachBaoGiaDonDichVu.tongTien != null &&
