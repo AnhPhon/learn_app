@@ -88,6 +88,7 @@ class V2ShorthandedResultController extends GetxController with SingleGetTickerP
           print('Result $value');
           if(value != null && value['reload'] == true){
             onRefresh();
+
           }
         });
       }
