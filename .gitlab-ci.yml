@@ -1,0 +1,11 @@
+image: cirrusci/flutter:2.5.0
+
+stages:
+    - build
+
+release_build:
+    stage: build
+    tags:
+      - shared
+    script:
+        - flutter build apk
