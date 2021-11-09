@@ -82,15 +82,11 @@ class V3BeforeRechargeController extends GetxController {
     } else {
       EasyLoading.dismiss();
       Get.toNamed(
-              "${AppRoutes.PAYMENT_RECHARGE}?soTien=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}&tienCoc=0")!
+              "${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=${amountOfMoneyController.text.replaceAll(RegExp(','), '')}")!
           .then(
         (value) {
-          if (value != null && value['type'] == 1) {
-            Get.offAllNamed(
-              AppRoutes.V1_WALLET,
-              predicate: ModalRoute.withName(AppRoutes.V1_WALLET),
-            );
-            Get.back();
+          if (value != null && value['status'] == true) {
+            Get.back(result: true);
           }
         },
       );

@@ -16,7 +16,6 @@ class V1ServiceReviewG2Controller extends GetxController {
     super.onInit();
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
-      print(donDichVuResponse.toJson());
     }
     thoiGianLamViec();
   }

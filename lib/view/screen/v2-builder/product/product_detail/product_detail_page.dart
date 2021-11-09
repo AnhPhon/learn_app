@@ -135,21 +135,14 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
-            Text(price,
-                style: const TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                    color: ColorResources.RED,
-                    fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
             Text(
-              discount,
-              style: TextStyle(
-                color: Theme.of(context).hintColor,
-                decoration: TextDecoration.lineThrough,
+              price,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                color: ColorResources.RED,
+                fontWeight: FontWeight.w600,
               ),
-            )
+            ),
           ],
         ),
       ),

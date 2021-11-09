@@ -120,9 +120,10 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
       child: Column(
         children: [
           rowText(
-            text1: "ID",
-            text2: controller.donHangResponse.id.toString(),
-          ),
+              text1: "ID",
+              text2: controller.donHangResponse.maDonHang
+                  .toString()
+                  .replaceFirst("D", "Đ")),
           Dimensions().paddingDivider(context),
           rowText(
             text1: "Ngày đặt hàng",

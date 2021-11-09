@@ -14,6 +14,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/validate.dart';
 
 class V3PersonalInfoController extends GetxController {
   //file image
@@ -170,6 +171,9 @@ class V3PersonalInfoController extends GetxController {
       Alert.error(message: 'Vui lòng nhập họ và tên');
     } else if (phoneController.text.isEmpty) {
       Alert.error(message: 'Vui lòng nhập số điện thoại');
+    } else if (emailController.text.isNotEmpty &&
+        Validate.email(emailController.text) == false) {
+      Alert.error(message: "Email không hợp lệ");
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');

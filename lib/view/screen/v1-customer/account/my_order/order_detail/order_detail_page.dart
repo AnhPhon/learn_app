@@ -121,7 +121,9 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
         children: [
           rowText(
             text1: "ID",
-            text2: controller.donHangResponse.id.toString(),
+            text2: controller.donHangResponse.maDonHang
+                .toString()
+                .replaceFirst("D", "Đ"),
           ),
           Dimensions().paddingDivider(context),
           rowText(

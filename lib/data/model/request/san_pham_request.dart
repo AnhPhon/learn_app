@@ -47,7 +47,7 @@ class SanPhamRequest {
     quyCach = json['quyCach'].toString();
     gia = json['gia'].toString();
     maSanPham = json['maSanPham'].toString();
-    maSanPham = json['donVi'].toString();
+    donVi = json['donVi'].toString();
     kieuVanChuyen = json['kieuVanChuyen'].toString();
     idBangGiaPhiVanChuyen = json['idBangGiaPhiVanChuyen'].toString();
   }

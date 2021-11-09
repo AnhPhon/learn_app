@@ -30,6 +30,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/validate.dart';
 
 class V3StoreInfomationController extends GetxController {
   //image
@@ -843,6 +844,10 @@ class V3StoreInfomationController extends GetxController {
       return;
     } else if (nhomCuaHangResponse == null) {
       Alert.error(message: 'Trường nhóm không được để trống');
+      return;
+    } else if (emailController.text.isNotEmpty &&
+        Validate.email(emailController.text) == false) {
+      Alert.error(message: "Email không hợp lệ");
       return;
     } else if (matHangDacTrungResponse.isEmpty) {
       Alert.error(message: 'Trường mặt hàng đặc trưng không được để trống');

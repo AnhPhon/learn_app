@@ -75,7 +75,6 @@ class V3CustomerManagementController extends GetxController {
       onSuccess: (data) {
         //check is not empty
         if (data.isNotEmpty) {
-          print("object");
           //for loop
           for (final item in data) {
             final id = item.idTaiKhoanNhanDon!.id;

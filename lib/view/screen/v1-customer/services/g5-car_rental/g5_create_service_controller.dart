@@ -221,17 +221,6 @@ class V1G5CreateServiceController extends GetxController {
     if (amountController.text.toString().isNotEmpty) {
       dichVuRequest.soLuongYeuCau = amountController.text.toString();
     }
-    dichVuRequest.diaDiemBocHang = estimatedPickUpLocation.text.toString();
-    dichVuRequest.diaDiemTraHang = estimatedDeliveryLocation.text.toString();
-    dichVuRequest.cuLyVanChuyen = distanceController.text.toString();
-    dichVuRequest.moTaChiTiet = workDescController.text.toString();
-    // trạng thái đơn
-    dichVuRequest.idTrangThaiThanhToan = CHUA_THANH_TOAN;
-    dichVuRequest.idTrangThaiDonDichVu = CHUA_PHAN_HOI;
-
-    if (amountController.text.toString().isNotEmpty) {
-      dichVuRequest.soLuongYeuCau = amountController.text.toString();
-    }
     return dichVuRequest;
   }
 

@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
+import 'package:template/data/model/request/lien_he_rieng_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
+import 'package:template/data/model/response/lien_he_rieng_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
-import 'package:template/data/model/response/vat_tu_response.dart';
+import 'package:template/di_container.dart';
 import 'package:template/helper/date_converter.dart';
-import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/provider/vat_tu_provider.dart';
+import 'package:template/provider/lien_he_rieng_provider.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
 import 'package:template/utils/app_constants.dart';
 
@@ -25,10 +26,10 @@ class V3CustomerDetailController extends GetxController {
   DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
   List<DonDichVuResponse> donDichVuList = [];
 
-  //ChiTietVatTu
-  // ChiTietVatTuProvider chiTietVatTuProvider =
-  //     GetIt.I.get<ChiTietVatTuProvider>();
-  // List<ChiTietVatTuResponse> chiTietVatTuList = [];
+  //LienHeRieng
+  LienHeRiengProvider lienHeRiengProvider = GetIt.I.get<LienHeRiengProvider>();
+  List<LienHeRiengResponse> lienHeRiengList = [];
+  LienHeRiengRequest lienHeRiengRequest = LienHeRiengRequest();
 
   //tab
   List titleTabBar = [
@@ -45,9 +46,13 @@ class V3CustomerDetailController extends GetxController {
 
   //loading
   bool isLoading = true;
+  bool isLoadingLienHe = false;
 
   //visible
   bool visible = false;
+
+  //userId
+  String userId = '';
 
   //title appbar
   String title = "Quản lý khách hàng";
@@ -57,10 +62,20 @@ class V3CustomerDetailController extends GetxController {
     super.onInit();
     if (Get.arguments != null) {
       taiKhoanResponse = Get.arguments as TaiKhoanResponse;
-      getDonDichVu();
+      getUserId().then((value) {
+        getLienHeRieng();
+        getDonDichVu();
+      });
     } else {
       isLoading = false;
     }
+  }
+
+  ///
+  ///get user id
+  ///
+  Future<void> getUserId() async {
+    userId = (await sl.get<SharedPreferenceHelper>().userId)!;
   }
 
   ///
@@ -83,27 +98,6 @@ class V3CustomerDetailController extends GetxController {
               update();
             }
           }
-          // for (final item in data) {
-          //   chiTietVatTuProvider.paginate(
-          //     page: 1,
-          //     limit: 100,
-          //     filter: "&idDonDichVu=${item.id}&sortBy=created_at:desc",
-          //     onSuccess: (value) {
-          //       chiTietVatTuList.addAll(value);
-          //       if (item.id == data.last.id) {
-          //         chiTietVatTuList
-          //             .map((e) => totalQuaApp +=
-          //                 int.parse(e.idVatTu!.donGia.toString()))
-          //             .toList();
-          //         isLoading = false;
-          //         update();
-          //       }
-          //     },
-          //     onError: (error) {
-          //       print("V3CustomerDetailController getVatTu onError $error");
-          //     },
-          //   );
-          // }
         } else {
           isLoading = false;
           update();
@@ -111,6 +105,30 @@ class V3CustomerDetailController extends GetxController {
       },
       onError: (error) {
         print("V3CustomerDetailController getDonDichVu onError $error");
+      },
+    );
+  }
+
+  ///
+  ///get lien he rieng
+  ///
+  void getLienHeRieng() {
+    lienHeRiengProvider.paginate(
+      page: 1,
+      limit: 100,
+      filter: "&idTaiKhoan=$userId",
+      onSuccess: (data) {
+        if (data.isNotEmpty) {
+          lienHeRiengList = data;
+          for (final item in data) {
+            totalLienHe += int.parse(item.giaTriGiaoDich.toString());
+          }
+          isLoadingLienHe = false;
+          update();
+        }
+      },
+      onError: (error) {
+        print("V3CustomerDetailController getLienHeRieng onError $error");
       },
     );
   }
@@ -143,9 +161,27 @@ class V3CustomerDetailController extends GetxController {
     } else if (contentController.text.isEmpty) {
       Alert.error(message: "Nội dung không được để trống");
     } else {
-      visibleOnChanged();
       //set data
-      DateConverter.convertStringToDate(dateController.text);
+      lienHeRiengRequest.idTaiKhoan = userId;
+      lienHeRiengRequest.giaTriGiaoDich =
+          totalController.text.replaceAll(",", "");
+      lienHeRiengRequest.ngayGiaoDich =
+          DateConverter.convertStringToDate(dateController.text).toString();
+      lienHeRiengRequest.noiDung = contentController.text;
+
+      //add
+      lienHeRiengProvider.add(
+        data: lienHeRiengRequest,
+        onSuccess: (data) {
+          isLoadingLienHe = true;
+          visibleOnChanged();
+          update();
+          getLienHeRieng();
+        },
+        onError: (error) {
+          print("V3CustomerDetailController getLienHeRieng onError $error");
+        },
+      );
     }
   }
 }

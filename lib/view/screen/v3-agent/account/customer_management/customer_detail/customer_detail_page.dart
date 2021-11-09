@@ -129,6 +129,11 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
   Widget _orderList(BuildContext context) {
     return GetBuilder<V3CustomerDetailController>(
       builder: (controller) {
+        if (controller.isLoadingLienHe) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return (controller.visible && controller.currentIndex == 1)
             ? const SizedBox.shrink()
             : Expanded(
@@ -138,7 +143,9 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.donDichVuList.length,
+                        itemCount: (controller.currentIndex == 0)
+                            ? controller.donDichVuList.length
+                            : controller.lienHeRiengList.length,
                         itemBuilder: (BuildContext ctx, int index) {
                           return Padding(
                             padding: const EdgeInsets.only(
@@ -147,25 +154,26 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                               right: Dimensions.PADDING_SIZE_LARGE,
                             ),
                             child: ItemListWidget(
-                              title: controller.donDichVuList[index].moTa
-                                  .toString(),
+                              title: (controller.currentIndex == 0)
+                                  ? controller.donDichVuList[index].moTa
+                                      .toString()
+                                  : controller.lienHeRiengList[index].noiDung
+                                      .toString(),
                               iconSubTitle: const Icon(
                                 Icons.location_on,
                                 size: Dimensions.ICON_SIZE_SMALL,
                               ),
-                              rowText1: controller
-                                          .donDichVuList[index].tongDon !=
-                                      null
-                                  ? "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuList[index].tongDon.toString()))} vnđ"
-                                  : "",
+                              rowText1:
+                                  "${PriceConverter.convertPrice(context, double.parse((controller.currentIndex == 0) ? controller.donDichVuList[index].tongDon.toString() : controller.lienHeRiengList[index].giaTriGiaoDich.toString()))} vnđ",
                               colorRowText1: ColorResources.RED,
-                              rowText2:
-                                  controller.donDichVuList[index].createdAt !=
-                                          null
-                                      ? DateConverter.formatDateTime(controller
-                                          .donDichVuList[index].createdAt
-                                          .toString())
-                                      : "",
+                              rowText2: DateConverter.formatDateTime(
+                                (controller.currentIndex == 0)
+                                    ? controller.donDichVuList[index].createdAt
+                                        .toString()
+                                    : controller
+                                        .lienHeRiengList[index].ngayGiaoDich
+                                        .toString(),
+                              ),
                               onTap: () {},
                               isSpaceBetween: true,
                               urlImage: controller.taiKhoanResponse.hinhDaiDien
@@ -176,8 +184,16 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                         },
                       ),
 
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
+
                       //create form
                       createForm(),
+
+                      const SizedBox(
+                        height: Dimensions.MARGIN_SIZE_SMALL,
+                      ),
                     ],
                   ),
                 ),
@@ -269,6 +285,8 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                 obligatory: true,
                 textEditingController: controller.totalController,
                 fillColor: Colors.transparent,
+                textInputType: TextInputType.number,
+                thousandsSeparator: true,
                 width: .9,
                 padding: const EdgeInsets.only(
                   top: Dimensions.PADDING_SIZE_DEFAULT,
@@ -278,7 +296,7 @@ class V3CustomerDetailPage extends GetView<V3CustomerDetailController> {
                 label: "Nội dung",
                 labelBold: true,
                 obligatory: true,
-                textEditingController: controller.dateController,
+                textEditingController: controller.contentController,
                 fillColor: Colors.transparent,
                 width: .9,
                 maxLine: 5,
