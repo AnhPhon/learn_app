@@ -97,7 +97,7 @@ class TaiKhoanResponse {
   /// From JSON
   ///
   TaiKhoanResponse.fromJson(Map<String, dynamic> json) {
-    print('Pare $json');
+    // print('Pare $json');
     id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idLoaiTaiKhoan

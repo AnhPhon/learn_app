@@ -21,7 +21,6 @@ class V2ShorthandedResultPage extends GetView<V2ShorthandedResultController> {
           return Scaffold(
             appBar: AppBarWidget(
               title: controller.title,
-              isNotBack: true,
             ),
             body: Column(
               children: [
