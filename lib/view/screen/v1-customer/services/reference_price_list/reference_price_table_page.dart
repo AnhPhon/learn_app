@@ -28,6 +28,9 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
       ),
       body: GetBuilder(
         builder: (ReferencePriceTableController controller) {
+          if(controller.isLoading){
+            return const Center(child: CircularProgressIndicator(),);
+          }
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
@@ -56,9 +59,9 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
                     ),
                   ),
 
-                  imageWidget(context),
+                  imageWidget(context, controller: controller),
                   // File
-                  file(),
+                  file(controller: controller),
                   // Ghi chú
                   note(),
                   //Button
@@ -72,7 +75,7 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
     );
   }
 
-  Widget file(){
+  Widget file({required ReferencePriceTableController controller}){
     return Padding(
       padding: const EdgeInsets.only(
         left:Dimensions.PADDING_SIZE_DEFAULT,
@@ -100,18 +103,21 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
               children: [
                 GestureDetector(
                   onTap: ()async{
-                    CommonHelper.openLink(url: URL_TO_LINK_PDF);
+                    CommonHelper.openLink(url: controller.chiTietGiaThamKhao!.filePdf!);
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                    child: Text("File.pdf",),
+                    child: Text("Bảng giá tham khảo.pdf",),
                   ),
                 ),
                 GestureDetector(
                   onTap: ()async{
-                    CommonHelper.openLink(url: URL_TO_LINK_EXELS);
+                    CommonHelper.openLink(url: controller.chiTietGiaThamKhao!.fileExcel!);
                   },
-                  child: const Text("File.xls")
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                    child: Text("Bảng giá tham khảo.xls"),
+                  )
                 )
               ],
             ),
@@ -122,13 +128,21 @@ class V1ReferencePriceTablePage extends GetView<ReferencePriceTableController>{
   }
 
 
-  Widget imageWidget(BuildContext context){
-    String imageNetwork = '';
+  Widget imageWidget(BuildContext context, {required ReferencePriceTableController controller}){
     return Padding(
       padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
       child: PinchZoomImage(
-        image: imageNetwork.isEmpty ?  Image.asset(Images.login_background,fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5))
-       : Image.network('',fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5),),
+        image: controller.chiTietGiaThamKhao == null ?  
+        Image.asset(Images.placeholder,fit: BoxFit.cover,width: DeviceUtils.getScaledWidth(context,1),height: DeviceUtils.getScaledHeight(context,0.5))
+       : FadeInImage.assetNetwork(
+            placeholder: Images.placeholder, 
+            image: controller.chiTietGiaThamKhao!.image!,
+            fit: BoxFit.cover,
+            width: DeviceUtils.getScaledWidth(context,1),
+            height: DeviceUtils.getScaledHeight(context,0.5
+          ),
+          imageErrorBuilder: (context, error, stackTrace) => Image.asset(Images.placeholder),
+        )
       ),
     );
     
