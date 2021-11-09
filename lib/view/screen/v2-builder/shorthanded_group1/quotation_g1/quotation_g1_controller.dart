@@ -251,14 +251,14 @@ class V2QuotationG1Controller extends GetxController {
     danhSachBaoGiaDonDichVuRequest.idTaiKhoanBaoGia =
         await sl.get<SharedPreferenceHelper>().userId;
     danhSachBaoGiaDonDichVuRequest.tongTien = orderValue.toString();
-    danhSachBaoGiaDonDichVuRequest.giaVatTus = [];
+    danhSachBaoGiaDonDichVuRequest.giaCongViecs = [];
     for (var i = 0; i < unitPriceControllers.length; i++) {
-      danhSachBaoGiaDonDichVuRequest.giaVatTus!.add(GiaVatTuRequest.fromJson({
+      danhSachBaoGiaDonDichVuRequest.giaCongViecs!.add(GiaCongViecRequest.fromJson({
         'idChiTietCongViec': chiTietCongViecResponse![i].id,
         'donGia': int.parse(unitPriceControllers[i].text),
       }));
       print(
-          'Gia vat tu $i ${danhSachBaoGiaDonDichVuRequest.giaVatTus![i].toJson()}');
+          'Gia vat tu $i ${danhSachBaoGiaDonDichVuRequest.giaCongViecs![i].toJson()}');
     }
 
     return true;
