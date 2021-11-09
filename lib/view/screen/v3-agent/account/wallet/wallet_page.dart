@@ -1,46 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/my_clipper.dart';
-import 'package:template/view/screen/v2-builder/account/wallet/wallet_controller.dart';
+import 'package:template/view/screen/v3-agent/account/wallet/wallet_controller.dart';
 
-class V2WalletPage extends GetView<V2WalletController> {
+class V3WalletPage extends GetView<V3WalletController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V2WalletController>(
-        init: V2WalletController(),
+    return GetBuilder<V3WalletController>(
+        init: V3WalletController(),
         builder: (controller) {
-          return Stack(
-            children: [
-              ClipPath(
-                clipper: MyClipper(),
-                child: SizedBox(
-                  height: DeviceUtils.getScaledHeight(context, .3),
-                  width: double.infinity,
-                  child: AppBarWidget(title: controller.title),
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              leading: GestureDetector(
+                onTap: () => controller.onBtnBackClick(),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: ColorResources.WHITE,
                 ),
               ),
-              Column(
-                children: [
-                  //wallet status
-                  _walletStatus(context),
-
-                  const SizedBox(
-                    height: Dimensions.MARGIN_SIZE_EXTRA_LARGE +
-                        Dimensions.MARGIN_SIZE_EXTRA_LARGE,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: Stack(
+              children: [
+                ClipPath(
+                  clipper: MyClipper(),
+                  child: SizedBox(
+                    height: DeviceUtils.getScaledHeight(context, .3),
+                    width: double.infinity,
+                    child: AppBarWidget(title: controller.title),
                   ),
+                ),
+                Column(
+                  children: [
+                    //wallet status
+                    _walletStatus(context, controller: controller),
 
-                  //title
-                  _title(),
+                    const SizedBox(
+                      height: Dimensions.MARGIN_SIZE_EXTRA_LARGE * 2,
+                    ),
 
-                  //history
-                  _history(context, controller),
-                ],
-              ),
-            ],
+                    //title
+                    _title(),
+
+                    if (controller.lichSuViTienResponse.isEmpty)
+                      const Divider(
+                        height: 0,
+                        color: ColorResources.BLACK,
+                      ),
+
+                    //history
+                    _history(context, controller: controller),
+                  ],
+                ),
+              ],
+            ),
           );
         });
   }
@@ -48,7 +75,8 @@ class V2WalletPage extends GetView<V2WalletController> {
   ///
   ///wallet status
   ///
-  Widget _walletStatus(BuildContext context) {
+  Widget _walletStatus(BuildContext context,
+      {required V3WalletController controller}) {
     return Container(
       alignment: Alignment.bottomCenter,
       height: DeviceUtils.getScaledHeight(context, .31),
@@ -56,7 +84,7 @@ class V2WalletPage extends GetView<V2WalletController> {
         margin: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_DEFAULT),
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        height: DeviceUtils.getScaledHeight(context, .12),
+        height: DeviceUtils.getScaledHeight(context, .14),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(
@@ -70,22 +98,58 @@ class V2WalletPage extends GetView<V2WalletController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Tài khoản FSS",
-                  style: Dimensions.fontSizeStyle14w600(),
-                ),
+                //status wallet
                 Row(
                   children: [
-                    if (controller.isShow)
-                      Text(
-                        "7.000.000 vnđ",
-                        style: Dimensions.fontSizeStyle18w600(),
-                      )
-                    else
-                      Text(
-                        "Xem số dư",
-                        style: Dimensions.fontSizeStyle18w600(),
-                      ),
+                    Text(
+                      "Tài khoản FSS",
+                      style: Dimensions.fontSizeStyle14w600(),
+                    ),
+
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //color status
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, .025),
+                      height: DeviceUtils.getScaledHeight(context, .013),
+                      decoration: BoxDecoration(
+                          color: controller.viTienResponse.trangThai == "1"
+                              ? ColorResources.GREEN
+                              : ColorResources.RED,
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_LARGE - 5)),
+                    ),
+                    const SizedBox(
+                      width: Dimensions.MARGIN_SIZE_SMALL,
+                    ),
+
+                    //status
+                    Text(
+                      controller.viTienResponse.trangThai == "1"
+                          ? "Đang hoạt động"
+                          : "Tài khoản tạm khoá",
+                      style: TextStyle(
+                          color: (controller.viTienResponse.trangThai == "1")
+                              ? ColorResources.GREEN
+                              : ColorResources.RED),
+                    ),
+                  ],
+                ),
+
+                //balance
+                Row(
+                  children: [
+                    Text(
+                      (controller.isShow)
+                          ? "${PriceConverter.convertPrice(
+                              context,
+                              double.parse(controller.viTienResponse.tongTien!),
+                            )} vnđ"
+                          : "Xem số dư",
+                      style: Dimensions.fontSizeStyle18w600(),
+                    ),
                     const SizedBox(
                       width: Dimensions.MARGIN_SIZE_DEFAULT,
                     ),
@@ -106,7 +170,7 @@ class V2WalletPage extends GetView<V2WalletController> {
               ],
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => controller.onRecharge(),
               child: Column(
                 children: [
                   const Icon(
@@ -135,16 +199,16 @@ class V2WalletPage extends GetView<V2WalletController> {
       width: double.infinity,
       padding:
           const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_LARGE),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: ColorResources.WHITE,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            offset: Offset(0, -2),
+            color: Colors.grey.withOpacity(.5),
+            blurRadius: 2,
+            offset: const Offset(0, -2),
           ),
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
           topRight: Radius.circular(Dimensions.BORDER_RADIUS_LARGE),
         ),
@@ -152,7 +216,7 @@ class V2WalletPage extends GetView<V2WalletController> {
       child: Text(
         "Lịch sử giao dịch",
         textAlign: TextAlign.center,
-        style: Dimensions.fontSizeStyle18w600().copyWith(
+        style: Dimensions.fontSizeStyle22w600().copyWith(
           color: ColorResources.RED,
         ),
       ),
@@ -162,12 +226,14 @@ class V2WalletPage extends GetView<V2WalletController> {
   ///
   ///item history
   ///
-  Widget _itemHistory(BuildContext context,
-      {required String id,
-      required String price,
-      required String content,
-      required String time,
-      required int status}) {
+  Widget _itemHistory(
+    BuildContext context, {
+    required String id,
+    required String price,
+    required String content,
+    required String time,
+    required String status,
+  }) {
     return Padding(
       padding:
           const EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
@@ -236,9 +302,11 @@ class V2WalletPage extends GetView<V2WalletController> {
                         width: DeviceUtils.getScaledWidth(context, .025),
                         height: DeviceUtils.getScaledHeight(context, .013),
                         decoration: BoxDecoration(
-                            color: status == 0
-                                ? ColorResources.RED
-                                : ColorResources.GREEN,
+                            color: status == "1"
+                                ? ColorResources.YELLOW
+                                : status == "2"
+                                    ? ColorResources.GREEN
+                                    : ColorResources.RED,
                             borderRadius: BorderRadius.circular(
                                 Dimensions.BORDER_RADIUS_LARGE - 5)),
                       ),
@@ -248,7 +316,11 @@ class V2WalletPage extends GetView<V2WalletController> {
 
                       //status
                       Text(
-                        status == 0 ? "Thất bại" : "Thành công",
+                        status == "1"
+                            ? "Đang đợi"
+                            : status == "2"
+                                ? "Thành công"
+                                : "Thất bại",
                       ),
                       const Spacer(),
                     ],
@@ -265,111 +337,119 @@ class V2WalletPage extends GetView<V2WalletController> {
   ///
   ///history
   ///
-  Widget _history(BuildContext context, V2WalletController controller) {
+  Widget _history(BuildContext context,
+      {required V3WalletController controller}) {
     return Expanded(
       child: Container(
         decoration: const BoxDecoration(
           color: ColorResources.WHITE,
         ),
-        child: //show history
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.historyList.length,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return Column(
+        //show history
+        child: (controller.lichSuViTienResponse.isEmpty)
+            ? Center(
+                child: Text("Chưa có lịch sử giao dịch".toUpperCase(),
+                    style: Dimensions.fontSizeStyle18w600()),
+              )
+            : SmartRefresher(
+                controller: controller.refreshController,
+                enablePullUp: true,
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                footer: const ClassicFooter(
+                  loadingText: "Đang tải...",
+                  noDataText: "Không có dữ liệu",
+                  canLoadingText: "Kéo lên để tải thêm dữ liệu",
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      const Divider(
-                        thickness: 2,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        ),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            controller.historyList[index].dateTime
-                                .toUpperCase(),
-                            style: Dimensions.fontSizeStyle18w600().copyWith(
-                              color: ColorResources.GREY,
+                      ...List.generate(controller.lichSuViTien.keys.length,
+                          (index) {
+                        return Column(
+                          children: [
+                            const Divider(
+                              thickness: 2,
                             ),
-                          ),
-                        ),
-                      ),
 
-                      const Divider(
-                        thickness: 2,
-                      ),
-
-                      //show item history
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount:
-                            controller.historyList[index].itemHistory.length,
-                        itemBuilder: (BuildContext ctx, int i) {
-                          return Column(
-                            children: [
-                              _itemHistory(
-                                context,
-                                id: controller
-                                    .historyList[index].itemHistory[i].id,
-                                price: controller
-                                    .historyList[index].itemHistory[i].price,
-                                content: controller
-                                    .historyList[index].itemHistory[i].content,
-                                time: controller
-                                    .historyList[index].itemHistory[i].time,
-                                status: controller
-                                    .historyList[index].itemHistory[i].status,
+                            //MM-yyyy
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                               ),
-                              if (i ==
-                                  controller.historyList[index].itemHistory
-                                          .length -
-                                      1)
-                                const SizedBox.shrink()
-                              else
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                      left:
-                                          Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                                  child: Divider(
-                                    thickness: 2,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Tháng ${controller.lichSuViTien[controller.lichSuViTien.keys.toList()[index]]!.keys.toList()[index]} ${controller.lichSuViTien.keys.toList()[index]}"
+                                      .toUpperCase(),
+                                  style:
+                                      Dimensions.fontSizeStyle18w600().copyWith(
+                                    color: ColorResources.GREY,
                                   ),
                                 ),
-                            ],
-                          );
-                        },
-                      ),
+                              ),
+                            ),
+
+                            const Divider(
+                              thickness: 2,
+                            ),
+
+                            //show item history
+
+                            ...List.generate(
+                                controller
+                                    .lichSuViTien[controller.lichSuViTien.keys
+                                            .toList()[index]]![
+                                        controller
+                                            .lichSuViTien[controller
+                                                .lichSuViTien.keys
+                                                .toList()[index]]!
+                                            .keys
+                                            .toList()[index]]!
+                                    .length, (i) {
+                              final lichSuViTien = controller.lichSuViTien[
+                                  controller.lichSuViTien.keys
+                                      .toList()[index]]![controller
+                                  .lichSuViTien[controller.lichSuViTien.keys
+                                      .toList()[index]]!
+                                  .keys
+                                  .toList()[index]]!;
+                              final giaoDich =
+                                  "${lichSuViTien[i].loaiGiaoDich! == '1' ? '+' : '-'}${"${PriceConverter.convertPrice(context, double.parse(lichSuViTien[i].soTien!))} vnđ"}";
+                              return Column(
+                                children: [
+                                  _itemHistory(
+                                    context,
+                                    id: lichSuViTien[i].id!,
+                                    price: giaoDich,
+                                    content: lichSuViTien[i].noiDung!,
+                                    time: DateConverter.formatDateTimeFull(
+                                        dateTime: lichSuViTien[i].createdAt!),
+                                    status: lichSuViTien[i].trangThai!,
+                                  ),
+                                  if (i == lichSuViTien.length - 1)
+                                    const SizedBox.shrink()
+                                  else
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        left:
+                                            Dimensions.PADDING_SIZE_EXTRA_LARGE,
+                                      ),
+                                      child: Divider(
+                                        thickness: 2,
+                                      ),
+                                    ),
+                                ],
+                              );
+                            }),
+                          ],
+                        );
+                      }),
                     ],
-                  );
-                }),
+                  ),
+                ),
+              ),
       ),
     );
   }
-}
-
-class History {
-  String dateTime;
-  List<ItemHistory> itemHistory;
-  History({
-    required this.dateTime,
-    required this.itemHistory,
-  });
-}
-
-class ItemHistory {
-  String id;
-  String price;
-  String content;
-  String time;
-  int status;
-  ItemHistory(
-      {required this.id,
-      required this.price,
-      required this.content,
-      required this.time,
-      required this.status});
 }

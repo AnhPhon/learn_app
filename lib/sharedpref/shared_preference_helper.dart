@@ -442,4 +442,6 @@ class SharedPreferenceHelper {
   Future<bool> removeIsReport() async {
     return _sharedPreference.remove(Preferences.idReport);
   }
+
+
 }

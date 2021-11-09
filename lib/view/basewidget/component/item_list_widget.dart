@@ -15,12 +15,14 @@ class ItemListWidget extends StatelessWidget {
   final Color? colorRowText1;
   final Color? colorRowText2;
   final Color? colorSubTitle;
+  final Icon? iconSubTitle;
   final Icon? icon1;
   final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
+  final List<BoxShadow>? boxShadow;
 
   const ItemListWidget({
     Key? key,
@@ -39,6 +41,8 @@ class ItemListWidget extends StatelessWidget {
     this.padding,
     this.margin,
     this.colorSubTitle,
+    this.iconSubTitle,
+    this.boxShadow,
   }) : super(key: key);
 
   @override
@@ -46,19 +50,26 @@ class ItemListWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: margin ?? const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-        ),
-        padding: padding ?? const EdgeInsets.symmetric(
-          vertical: 0,
-        ),
-        height: DeviceUtils.getScaledHeight(context, .13),
+        margin: margin ??
+            const EdgeInsets.symmetric(
+              vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+            ),
+        padding: padding ??
+            const EdgeInsets.symmetric(
+              vertical: 0,
+            ),
+        height: DeviceUtils.getScaledHeight(context, .14),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+          borderRadius:
+              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 2)),
-          ],
+          boxShadow: boxShadow ??
+              [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2)),
+              ],
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,19 +112,26 @@ class ItemListWidget extends StatelessWidget {
                           ),
                         ),
                         if (subTitle != null)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Text(
-                              subTitle.toString(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                color: colorSubTitle ?? ColorResources.GREY,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (iconSubTitle != null) iconSubTitle!,
+                              if (iconSubTitle != null && subTitle != null)
+                                const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
+                              Flexible(
+                                child: Text(
+                                  subTitle.toString(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    color: colorSubTitle ?? ColorResources.GREY,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                       ],
                     ),
@@ -127,6 +145,7 @@ class ItemListWidget extends StatelessWidget {
                         if (icon1 != null || rowText1 != null)
                           Expanded(
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 if (icon1 != null) icon1!,
                                 if (icon1 != null && rowText1 != null)
@@ -152,6 +171,7 @@ class ItemListWidget extends StatelessWidget {
                         if (icon2 != null || rowText2 != null)
                           Expanded(
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: (isSpaceBetween == true)
                                   ? MainAxisAlignment.end
                                   : MainAxisAlignment.start,

@@ -91,7 +91,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
                             weight: "controller.vatTuList[index].",
                             unit: controller.vatTuList[index].donVi.toString(),
                             price:
-                                controller.vatTuList[index].donGia.toString(),
+                                ''//controller.vatTuList[index].donGia.toString(),
                           );
                         },
                       ),

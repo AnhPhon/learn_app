@@ -12,6 +12,7 @@ class ReferencePriceTableController extends GetxController{
 
   final ChiTietGiaThamKhaoProvider chiTietGiaThamKhaoProvider = GetIt.I.get<ChiTietGiaThamKhaoProvider>();
 
+
   DonDichVuRequest? request;
   String id = '0';
   String title = '';
@@ -32,6 +33,14 @@ class ReferencePriceTableController extends GetxController{
     getChiTietGiaThamKhao();
   }
 
+
+
+  ///
+  /// Get image
+  ///
+  void getImage(){
+    
+  }
 
   ///
   /// Get chi tiet gia tham khao

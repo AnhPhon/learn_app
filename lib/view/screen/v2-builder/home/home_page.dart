@@ -171,7 +171,9 @@ class V2HomePage extends GetView<V2HomeController> {
   ///
   Widget ketQuaBaoGiaWidget() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed(AppRoutes.V2_SHORTHANDED_RESULT);
+      },
       child: Container(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
         decoration: const BoxDecoration(
@@ -277,7 +279,9 @@ class V2HomePage extends GetView<V2HomeController> {
                   "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
               trangThai:
                   controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe!,
-              imageURL: controller.donDichVuList[index].hinhAnhChiTiet,
+              imageURL: controller.donDichVuList[index].hinhAnhChiTiets!.isEmpty
+                  ? ""
+                  : controller.donDichVuList[index].hinhAnhChiTiets![0],
             );
           },
         ),

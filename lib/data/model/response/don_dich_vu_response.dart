@@ -285,6 +285,11 @@ class DonDichVuResponse {
     }
     loai = json['loai'].toString();
     giaTriKhachDeXuat = json['giaTriKhachDeXuat'].toString();
+    if (json['hinhAnhChiTiets'] != null) {
+      hinhAnhChiTiets = (json['hinhAnhChiTiets'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList();
+    }
     hinhAnhChiTiet = json['hinhAnhChiTiet'].toString();
     moTaChiTiet = json['moTaChiTiet'].toString();
     soLuongYeuCau = json['soLuongYeuCau'].toString();
@@ -302,7 +307,7 @@ class DonDichVuResponse {
     gioiTinh = json['gioiTinh'].toString();
 
     // mapping idThongSoKyThuats
-    if (json['idThongSoKyThuats'] != null &&
+    if (json['idThongSoKyThuats'] != null && (json['idThongSoKyThuats'] as List<dynamic>).isNotEmpty &&
         json['idThongSoKyThuats'].toString().length != 24) {
       idThongSoKyThuats = (json['idThongSoKyThuats'] as List<dynamic>)
           .map((e) => ThongSoKyThuatResponse.fromJson((e.toString().length != 24
@@ -324,6 +329,7 @@ class DonDichVuResponse {
     tongDon = json['tongDon'].toString();
     taiKhoanNhanDon = json['taiKhoanNhanDon'].toString();
     tienCoc = json['tienCoc'].toString();
+    file = json['file'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -433,6 +439,12 @@ class DonDichVuResponse {
       data['giaTriKhachDeXuat'] = giaTriKhachDeXuat;
     }
 
+    // check null hinhAnhChiTiets
+    if (hinhAnhChiTiets != null) {
+      data['hinhAnhChiTiets'] =
+          hinhAnhChiTiets!.map((e) => e.toString()).toList();
+    }
+
     // check null hinhAnhChiTiet
     if (hinhAnhChiTiet != null) data['hinhAnhChiTiet'] = hinhAnhChiTiet;
 
@@ -444,6 +456,8 @@ class DonDichVuResponse {
 
     // check null soNgay
     if (soNgay != null) data['soNgay'] = soNgay;
+    // check null soNgay
+    if (file != null) data['file'] = file;
 
     // check null diaDiemLamViec
     if (diaDiemLamViec != null) data['diaDiemLamViec'] = diaDiemLamViec;

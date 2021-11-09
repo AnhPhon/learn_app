@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -8,11 +9,12 @@ import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/attach_button.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal.dart';
+import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v1-customer/form_management/service_review/service_review_g1/service_review_g1_controller.dart';
-import 'package:template/view/screen/v1-customer/services/components/material_card.dart';
+import 'package:template/view/screen/v1-customer/services/components/order_content_string_value.dart';
 
 class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   @override
@@ -78,11 +80,76 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   }
 
   ///
+  ///
+  ///
+  Widget item({required ChiTietCongViecResponse mass}) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+        right: Dimensions.PADDING_SIZE_DEFAULT,
+        top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+      ),
+      child: BoxShadowWidget(
+        child: Container(
+          padding: const EdgeInsets.all(
+            Dimensions.PADDING_SIZE_EXTRA_SMALL,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OrderContentStringValue(
+                title: "Tên công việc: ",
+                value: mass.tenCongViec.toString(),
+                boldTitle: true,
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+              ),
+              OrderContentStringValue(
+                title: "Quy cách: ",
+                value: mass.quyCach.toString(),
+                boldTitle: true,
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+              ),
+              OrderContentStringValue(
+                title: "Khối lượng: ",
+                value: mass.soLuong.toString(),
+                boldTitle: true,
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+              ),
+              OrderContentStringValue(
+                title: "Đơn vị: ",
+                value: mass.donVi.toString(),
+                boldTitle: true,
+                padding: const EdgeInsets.only(
+                  left: Dimensions.PADDING_SIZE_SMALL,
+                  right: Dimensions.PADDING_SIZE_SMALL,
+                  top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///
   /// Danh sách vật liệu được thêm
   ///
   Widget materialList(BuildContext context,
       {required V1ServiceReviewG1Controller controller}) {
-    return controller.vatTuList.isEmpty
+    return controller.chiTietCongViecList.isEmpty
         ? Container()
         : Column(
             children: [
@@ -91,10 +158,17 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
                 obligatory: false,
                 topPadding: 0,
               ),
-              ...controller.vatTuList
+              ...controller.chiTietCongViecList
                   .map((e) => SizedBox(
                       width: DeviceUtils.getScaledWidth(context, 1),
-                      child: MaterialCard(mass: e)))
+                      child: Column(
+                        children: [
+                          item(mass: e),
+                          const SizedBox(
+                            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                          ),
+                        ],
+                      )))
                   .toList()
             ],
           );
@@ -102,7 +176,8 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
 
   Widget attchFile(BuildContext context,
       {required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.file == null || controller.donDichVuResponse.file == "null"
+    return controller.donDichVuResponse.files == null ||
+            controller.donDichVuResponse.files!.isEmpty
         ? const SizedBox.shrink()
         : Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE),
@@ -110,7 +185,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
               title: "File báo giá khối lượng",
               color: ColorResources.WHITE,
               onPressed: () => controller.downloadFile(
-                url: controller.donDichVuResponse.file.toString(),
+                url: controller.donDichVuResponse.files!.first.toString(),
               ),
               horizontal: Dimensions.PADDING_SIZE_DEFAULT,
             ),
@@ -121,7 +196,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///imageMaterial
   ///
   Widget imageMaterial({required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanKhoiLuongs!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanKhoiLuongs == null
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +226,7 @@ class V1ServiceReviewG1Page extends GetView<V1ServiceReviewG1Controller> {
   ///drawing
   ///
   Widget drawing({required V1ServiceReviewG1Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanVes == null
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/di_container.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -122,7 +125,16 @@ class HomeWidget extends StatelessWidget {
                           ? GestureDetector(
                               onTap: () {
                                 if (notificationURL == null) {
-                                  Get.toNamed(AppRoutes.V1_NOTIFICATION);
+                                  sl.get<SharedPreferenceHelper>().typeAccount.then((value){
+                                    print(value);
+                                    if(value == KHACH_HANG){
+                                      Get.toNamed(AppRoutes.V1_NOTIFICATION);
+                                    }else if(value == THO_THAU){
+                                      Get.toNamed(AppRoutes.V2_NOTIFICATION);
+                                    }else if(value == DAI_LY){
+                                      Get.toNamed(AppRoutes.V3_NOTIFICATION);
+                                    }
+                                  });
                                 } else {
                                   Get.toNamed(notificationURL!);
                                 }

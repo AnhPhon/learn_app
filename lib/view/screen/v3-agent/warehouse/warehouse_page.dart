@@ -51,7 +51,6 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                       textEditingController: controller.searchController,
                       textInputAction: TextInputAction.search,
                       onSubmitted: (value) => controller.btnSearch(context),
-                      // onChanged: (value) => controller.onChangeSearch(value.toString()),
                       width: double.infinity,
                       isBorder: false,
                       fillColor: ColorResources.WHITE,
@@ -127,130 +126,138 @@ class V3WarehousePage extends GetView<V3WarehouseController> {
                 shrinkWrap: true,
                 itemCount: controller.nhapKhoHangDaiLyList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: Dimensions.MARGIN_SIZE_SMALL,
-                      horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
-                    ),
-                    padding: const EdgeInsets.all(
-                      Dimensions.PADDING_SIZE_SMALL,
-                    ),
-                    decoration: BoxDecoration(
-                      color: ColorResources.WHITE,
-                      borderRadius: BorderRadius.circular(
-                        Dimensions.BORDER_RADIUS_DEFAULT,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          blurRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                  Dimensions.BORDER_RADIUS_SMALL,
-                                ),
-                                child: FadeInImageCustom(
-                                  urlImage: controller
-                                      .nhapKhoHangDaiLyList[index]
-                                      .idSanPham!
-                                      .hinhAnhDaiDien
-                                      .toString(),
-                                  height: .15,
-                                  width: double.infinity,
-                                ),
+                  return (controller.nhapKhoHangDaiLyList[index].idSanPham ==
+                          null)
+                      ? const SizedBox.shrink()
+                      : Container(
+                          margin: const EdgeInsets.symmetric(
+                            vertical: Dimensions.MARGIN_SIZE_SMALL,
+                            horizontal: Dimensions.MARGIN_SIZE_DEFAULT,
+                          ),
+                          padding: const EdgeInsets.all(
+                            Dimensions.PADDING_SIZE_SMALL,
+                          ),
+                          decoration: BoxDecoration(
+                            color: ColorResources.WHITE,
+                            borderRadius: BorderRadius.circular(
+                              Dimensions.BORDER_RADIUS_DEFAULT,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                blurRadius: 2,
                               ),
-                            ),
-                            const SizedBox(
-                              width: Dimensions.MARGIN_SIZE_SMALL,
-                            ),
-                            Expanded(
-                              flex: 7,
-                              child: SizedBox(
-                                height:
-                                    DeviceUtils.getScaledHeight(context, .08),
-                                child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${controller.nhapKhoHangDaiLyList[index].idSanPham!.maSanPham} - ${controller.nhapKhoHangDaiLyList[index].idSanPham!.ten}",
-                                      maxLines: 2,
-                                      style: Dimensions.fontSizeStyle16w600(),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        Dimensions.BORDER_RADIUS_SMALL,
+                                      ),
+                                      child: FadeInImageCustom(
+                                        urlImage: controller
+                                            .nhapKhoHangDaiLyList[index]
+                                            .idSanPham!
+                                            .hinhAnhDaiDien
+                                            .toString(),
+                                        height: .15,
+                                        width: double.infinity,
+                                      ),
                                     ),
-                                    const SizedBox(
-                                      height:
-                                          Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                                    ),
-                                    IntrinsicHeight(
-                                      child: Row(
+                                  ),
+                                  const SizedBox(
+                                    width: Dimensions.MARGIN_SIZE_SMALL,
+                                  ),
+                                  Expanded(
+                                    flex: 7,
+                                    child: SizedBox(
+                                      height: DeviceUtils.getScaledHeight(
+                                          context, .08),
+                                      child: Column(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text((controller
-                                                      .nhapKhoHangDaiLyList[
-                                                          index]
-                                                      .soLuong ==
-                                                  "0")
-                                              ? "Hết hàng"
-                                              : "${controller.nhapKhoHangDaiLyList[index].soLuong} sản phẩm"),
-                                          VerticalDivider(
-                                            color: ColorResources.BLACK
-                                                .withOpacity(.7),
-                                          ),
                                           Text(
-                                            "${PriceConverter.convertPrice(
-                                              context,
-                                              double.parse(
-                                                controller
-                                                    .nhapKhoHangDaiLyList[index]
-                                                    .idSanPham!
-                                                    .gia
-                                                    .toString(),
-                                              ),
-                                            )} đ",
+                                            "${controller.nhapKhoHangDaiLyList[index].idSanPham!.maSanPham} - ${controller.nhapKhoHangDaiLyList[index].idSanPham!.ten}",
+                                            maxLines: 2,
+                                            style: Dimensions
+                                                .fontSizeStyle16w600(),
+                                          ),
+                                          const SizedBox(
+                                            height: Dimensions
+                                                .MARGIN_SIZE_EXTRA_SMALL,
+                                          ),
+                                          IntrinsicHeight(
+                                            child: Row(
+                                              children: [
+                                                Text((controller
+                                                            .nhapKhoHangDaiLyList[
+                                                                index]
+                                                            .soLuong ==
+                                                        "0")
+                                                    ? "Hết hàng"
+                                                    : "${controller.nhapKhoHangDaiLyList[index].soLuong} sản phẩm"),
+                                                VerticalDivider(
+                                                  color: ColorResources.BLACK
+                                                      .withOpacity(.7),
+                                                ),
+                                                Text(
+                                                  "${PriceConverter.convertPrice(
+                                                    context,
+                                                    double.parse(
+                                                      controller
+                                                          .nhapKhoHangDaiLyList[
+                                                              index]
+                                                          .idSanPham!
+                                                          .gia
+                                                          .toString(),
+                                                    ),
+                                                  )} đ",
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
 
-                        Divider(
-                          height: 20,
-                          color: ColorResources.BLACK.withOpacity(.7),
-                        ),
+                              Divider(
+                                height: 20,
+                                color: ColorResources.BLACK.withOpacity(.7),
+                              ),
 
-                        //product code
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Nhập kho: ${DateConverter.formatDateTime(
-                                controller.nhapKhoHangDaiLyList[index].createdAt
-                                    .toString(),
-                              )}",
-                            ),
-                            Text(
-                              "Quy cách: ${controller.nhapKhoHangDaiLyList[index].idSanPham!.quyCach}",
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
+                              //product code
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Nhập kho: ${DateConverter.formatDateTime(
+                                      controller
+                                          .nhapKhoHangDaiLyList[index].createdAt
+                                          .toString(),
+                                    )}",
+                                  ),
+                                  Text(
+                                    "Quy cách: ${controller.nhapKhoHangDaiLyList[index].idSanPham!.quyCach}",
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
                 },
               ),
             );

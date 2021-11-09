@@ -17,11 +17,15 @@ class V2ProfilePage extends GetView<V2ProfileController> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Đăng ký và cam kết thuế
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
+                  //tax register
                   _items(
-                    icon: const Icon(Icons.collections_bookmark),
+                    icon: const Icon(Icons.gavel),
                     text: "Đăng ký và cam kết thuế",
-                    onTap: controller.onRegisterAndCommitPageClick,
+                    onTap: () => controller.onTaxRegisterPageClick(),
                   ),
 
                   //contract
@@ -45,12 +49,11 @@ class V2ProfilePage extends GetView<V2ProfileController> {
                     onTap: () => controller.onOtherInsurancePageClick(),
                   ),
 
-                  // Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc
+                  //safety paper
                   _items(
-                    icon: const Icon(Icons.collections_bookmark),
-                    text:
-                        "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
-                    onTap: () {},
+                    icon: const Icon(Icons.bookmark_added),
+                    text: "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
+                    onTap: () => controller.onSafetyPaperPageClick(),
                   ),
 
                   //tax

@@ -28,6 +28,15 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    // Em cập nhật lại rồi nha. Khách Hàng:
+    // 0111111111
+    // KhachHang1
+    // Thợ Thầu
+    // 0222222222
+    // ThoThau1
+    // Đại Lý:
+    // 0333333333
+    // DaiLy123
     phoneController.text = '0222222222';
     passwordController.text = 'ThoThau1';
     super.onInit();
@@ -105,14 +114,12 @@ class LoginController extends GetxController {
             sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
             sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
-            // sl.get<SharedPreferenceHelper>().savePassword(password)
-            // sl.get<SharedPreferenceHelper>().saveUsername(username)
+            sl.get<SharedPreferenceHelper>()
+                  .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
+              
             // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
             if (isRemember) {
               sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);
-              sl
-                  .get<SharedPreferenceHelper>()
-                  .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
               sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
             }
 
@@ -140,8 +147,7 @@ class LoginController extends GetxController {
               EasyLoading.dismiss();
               Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
             }
-          },
-          onError: (error) {
+          },onError: (error) {
             Alert.error(
                 message:
                     "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
