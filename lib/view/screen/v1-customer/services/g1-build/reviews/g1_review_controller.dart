@@ -93,6 +93,7 @@ class V1G1ReviewController extends GetxController{
       congViecRequest.donVi = item.donVi;
       congViecRequest.tenCongViec = item.tenCongViec;
       congViecRequest.quyCach = item.quyCach;
+      congViecRequest.soLuong = item.soLuong;
       congViecRequest.idDonDichVu = idDon;
       chiTietCongViecProvider.add(data: congViecRequest, onSuccess: (data){
           print("Thêm công việc thành công $data");

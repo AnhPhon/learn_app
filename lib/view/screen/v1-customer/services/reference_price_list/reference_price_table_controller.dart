@@ -1,18 +1,25 @@
 
 
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
+import 'package:template/data/model/response/chi_tiet_gia_tham_khao_model.dart';
+import 'package:template/provider/chi_tiet_gia_tham_khao_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
 class ReferencePriceTableController extends GetxController{
 
+  final ChiTietGiaThamKhaoProvider chiTietGiaThamKhaoProvider = GetIt.I.get<ChiTietGiaThamKhaoProvider>();
 
 
   DonDichVuRequest? request;
   String id = '0';
   String title = '';
   String appBarTitle = 'Tạo đơn công việc';
+  bool isLoading = true;
+  ChiTietGiaThamKhaoResponse? chiTietGiaThamKhao;
+
     @override
   void onInit() {
     
@@ -23,6 +30,7 @@ class ReferencePriceTableController extends GetxController{
       title = Get.parameters['title'].toString();
       appBarTitle = Get.parameters['appbar'].toString();
     }
+    getChiTietGiaThamKhao();
   }
 
 
@@ -32,6 +40,21 @@ class ReferencePriceTableController extends GetxController{
   ///
   void getImage(){
     
+  }
+
+  ///
+  /// Get chi tiet gia tham khao
+  ///
+  void getChiTietGiaThamKhao(){
+    chiTietGiaThamKhaoProvider.all(onSuccess: (data){
+      if(data.isNotEmpty){
+        chiTietGiaThamKhao = data.first;
+      }
+      isLoading= false;
+      update();
+    }, onError: (onError){
+      print("ReferencePriceTableController getChiTietGiaThamKhao $onError");
+    });
   }
 
   ///
