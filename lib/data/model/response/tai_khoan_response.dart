@@ -97,6 +97,7 @@ class TaiKhoanResponse {
   /// From JSON
   ///
   TaiKhoanResponse.fromJson(Map<String, dynamic> json) {
+    // print('Pare $json');
     id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idLoaiTaiKhoan
@@ -198,9 +199,11 @@ class TaiKhoanResponse {
         ? null
         : json['lamNgayChuNhat'].toString();
     diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
-    hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
-        .map((e) => e as String)
-        .toList();
+
+    if (json['hinhAnhCuaHangs'] != null)
+      hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
 
     createdAt = json['created_at'].toString();

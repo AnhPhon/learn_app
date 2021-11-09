@@ -4,13 +4,14 @@ import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/gai_vat_tu.dart';
 import 'package:template/data/model/response/gia_cong_viec.dart';
+import 'package:template/data/model/response/tai_khoan_response.dart';
 
 import 'don_dich_vu_response.dart';
 
 class DanhSachBaoGiaDonDichVuResponse {
   String? id;
   DonDichVuResponse? idDonDichVu;
-  String? taiKhoanBaoGia;
+  TaiKhoanResponse? idTaiKhoanBaoGia;
   String? tongTien;
   List<GiaVatTus>? giaVatTus;
   List<GiaCongViecs>? giaCongViecs;
@@ -27,7 +28,7 @@ class DanhSachBaoGiaDonDichVuResponse {
   DanhSachBaoGiaDonDichVuResponse(
       {this.id,
       this.idDonDichVu,
-      this.taiKhoanBaoGia,
+      this.idTaiKhoanBaoGia,
       this.giaBao,
       this.ghiChu,
       this.file,
@@ -41,6 +42,7 @@ class DanhSachBaoGiaDonDichVuResponse {
   ///
   DanhSachBaoGiaDonDichVuResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
+    id = (json['_id'] == null) ? null : json['_id'].toString();
     tongTien = (json['tongTien'] == null) ? null : json['tongTien'].toString();
 
     // mapping idDonDichVu
@@ -51,7 +53,15 @@ class DanhSachBaoGiaDonDichVuResponse {
     } else {
       idDonDichVu = null;
     }
-    taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
+
+
+    if (json['idTaiKhoanBaoGia'] != null &&
+        json['idTaiKhoanBaoGia'].toString().length != 24) {
+      idTaiKhoanBaoGia = TaiKhoanResponse.fromJson(
+          json['idTaiKhoanBaoGia'] as Map<String, dynamic>);
+    }
+    // taiKhoanBaoGia = json['taiKhoanBaoGia'].toString();
+
     giaBao = json['giaBao'].toString();
     ghiChu = json['ghiChu'].toString();
     file = json['file'].toString();
@@ -60,8 +70,8 @@ class DanhSachBaoGiaDonDichVuResponse {
     if (json['hinhAnhBaoGias'] != null) {
       hinhAnhBaoGias = json['hinhAnhBaoGias'] as List<dynamic>;
     }
-    giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList();
-    giaCongViecs = (json['giaCongViecs'] as List<dynamic>).map((e) => GiaCongViecs.fromMap(e as Map<String, dynamic>)).toList();
+    if(json['giaVatTus'] != null) giaVatTus = (json['giaVatTus'] as List<dynamic>).map((e) => GiaVatTus.fromMap(e as Map<String, dynamic>)).toList();
+    if(json['giaCongViecs'] != null) giaCongViecs = (json['giaCongViecs'] as List<dynamic>).map((e) => GiaCongViecs.fromMap(e as Map<String, dynamic>)).toList();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -79,7 +89,7 @@ class DanhSachBaoGiaDonDichVuResponse {
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
     // check null taiKhoanBaoGia
-    if (taiKhoanBaoGia != null) data['taiKhoanBaoGia'] = taiKhoanBaoGia;
+    if (idTaiKhoanBaoGia != null) data['idTaiKhoanBaoGia'] = idTaiKhoanBaoGia;
 
     // check null trangThaiBaoGia
     if (trangThaiBaoGia != null) data['trangThaiBaoGia'] = trangThaiBaoGia;

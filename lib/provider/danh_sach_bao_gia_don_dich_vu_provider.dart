@@ -106,12 +106,12 @@ class DanhSachBaoGiaDonDichVuProvider {
     required int limit,
     required String filter,
     required Function(
-            List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVus)
-        onSuccess,
+        List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVus)
+    onSuccess,
     required Function(dynamic error) onError,
   }) async {
     final ApiResponse apiResponse =
-        await repository!.paginate(page, limit, filter);
+    await repository!.paginate(page, limit, filter);
     if (apiResponse.response.statusCode! >= 200 &&
         apiResponse.response.statusCode! <= 300) {
       // call back data success
@@ -120,7 +120,36 @@ class DanhSachBaoGiaDonDichVuProvider {
           : [];
       onSuccess(results
           .map((e) => DanhSachBaoGiaDonDichVuResponse.fromJson(
-              e as Map<String, dynamic>))
+          e as Map<String, dynamic>))
+          .toList());
+    } else {
+      onError(apiResponse.error);
+    }
+  }
+
+  ///
+  /// Get paginate danhSachBaoGiaDonDichVus "page": 1, "limit": 10
+  ///
+  Future<void> ketQuaBaoGiaPaginate({
+    required int page,
+    required int limit,
+    required String filter,
+    required Function(
+        List<DanhSachBaoGiaDonDichVuResponse> danhSachBaoGiaDonDichVus)
+    onSuccess,
+    required Function(dynamic error) onError,
+  }) async {
+    final ApiResponse apiResponse =
+    await repository!.ketQuaBaoGiaPaginate(page, limit, filter);
+    if (apiResponse.response.statusCode! >= 200 &&
+        apiResponse.response.statusCode! <= 300) {
+      // call back data success
+      final results = apiResponse.response.data.toString() != '[]'
+          ? apiResponse.response.data['results'] as List<dynamic>
+          : [];
+      onSuccess(results
+          .map((e) => DanhSachBaoGiaDonDichVuResponse.fromJson(
+          e as Map<String, dynamic>))
           .toList());
     } else {
       onError(apiResponse.error);

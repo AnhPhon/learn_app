@@ -219,6 +219,8 @@ class AppRoutes {
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_PAYMENT = '/v2_shorthanded_payment';
+  static const String V2_SHORTHANDED_COMPLETE = '/v2_shorthanded_complete';
   static const String V2_SHORTHANDED_RESULT = '/v2_shorthanded_result';
   static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
   static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
