@@ -128,10 +128,7 @@ class V3QuoteCheckController extends GetxController {
             int index = vatTuIds.indexOf(id);
             vatTuProvider.update(
               data: VatTuRequest(
-                  id: id,
-                  donGia:
-                      (infoCard[index].last["controller"] as TextEditingValue)
-                          .text),
+                  id: id,),
               onSuccess: (data) {
                 EasyLoading.showSuccess("Xác nhận báo giá thành công");
                 Get.back();

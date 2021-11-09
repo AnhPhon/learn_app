@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/request/thong_bao_request.dart';
+import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -11,6 +13,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 class V1NotificationController extends GetxController {
   final ThongBaoProvider thongBaoProvider = GetIt.I.get<ThongBaoProvider>();
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
+
 
   List<ThongBaoResponse> notifications = [];
   int pageMax = 1;
@@ -114,14 +117,16 @@ class V1NotificationController extends GetxController {
         });
   }
 
+
   void onClickItem(ThongBaoResponse notification) {
+    updateNotification(notification);
     if(notification.idDonDichVu != null){
       donDichVuProvider.find(
         id: notification.idDonDichVu!.id!,
         onSuccess: (data) {
           // print("Data: $data");
           final String id = data.idNhomDichVu!.nhomDichVu!;
-          // print("Nhóm dịch vụ : $id");
+          print("Nhóm dịch vụ : $id");
           if (id.contains('1')) {
             // phản hồi nhóm 1
             Get.toNamed(AppRoutes.V1_BUILD_ORDER_FEEDBACK, arguments: data);
@@ -135,6 +140,9 @@ class V1NotificationController extends GetxController {
           } else if (id.contains('6')) {
             // Đây là nhóm 6 dịch vụ xe đào,cầu nặng, máy khác
             Get.toNamed(AppRoutes.V1_GROUP_ORDER_FEEDBACK6, arguments: data);
+          } else if (id.contains('7')) {
+            // NHóm 7
+            Get.toNamed(AppRoutes.V1_CANDICATE,);
           } else {
             // Xem thông báo chi tiết admin
             Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
@@ -148,6 +156,21 @@ class V1NotificationController extends GetxController {
       Get.toNamed(AppRoutes.V1_DETAIL_NOTIFICATION, parameters: {'id':notification.id!});
     }
     
+  }
+
+  ///
+  /// Update status notificaiton
+  ///
+  void updateNotification(ThongBaoResponse response){
+    // 0 chua xem
+    if(response.status!.contains('0')){
+      final ThongBaoRequest thongBaoRequest = ThongBaoRequest();
+      thongBaoRequest.id = response.id;
+      thongBaoRequest.status = '1';
+      thongBaoProvider.update(data: thongBaoRequest, onSuccess: (data){
+        refreshNotification();
+      }, onError: (onError)=> print("Lỗi thay đổi trạng thái thông báo"));
+    }
   }
 
   @override

@@ -17,6 +17,12 @@ class AppRoutes {
   static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
+  static const String V2_NOTIFICATION = "/v2_notification";
+  static const String V3_NOTIFICATION = "/v3_notification";
+  static const String V2_DETAIL_NOTIFICATION = "/v2_detail_notification";
+  static const String V3_DETAIL_NOTIFICATION = "/v3_detail_notification";
+  static const String V2_FAIL = "/v2_fail";
+  
 
   // Phản hồi dịch vụ thường xuyên click từ thông báo
   static const String V1_ORDER_FEEDBACK_CONTRACTORS =
@@ -211,6 +217,7 @@ class AppRoutes {
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_RESULT = '/v2_shorthanded_result';
   static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
   static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
   static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
