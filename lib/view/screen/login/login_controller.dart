@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:template/data/datasource/remote/dio/dio_client.dart';
 import 'package:template/data/model/request/account_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
@@ -59,6 +60,7 @@ class LoginController extends GetxController {
   ///
   void onBtnForgotPasswordTap() {
     Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+    resetForm();
   }
 
   ///
@@ -88,10 +90,10 @@ class LoginController extends GetxController {
   bool onValidateLogin() {
     //validate infomation username password
     if (phoneController.text == '' || passwordController.text == '') {
-      Alert.info(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
-    } else if (!Validate.phone(phoneController.text.toString())) {
-      Alert.info(message: "Số điện thoại không hợp lệ");
+    } else if(!Validate.phone(phoneController.text.toString())){
+      Alert.error(message: "Số điện thoại không hợp lệ");
       return false;
     }
     return true;
@@ -117,36 +119,38 @@ class LoginController extends GetxController {
             sl.get<SharedPreferenceHelper>()
                   .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
               
-            // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
-            if (isRemember) {
-              sl.get<SharedPreferenceHelper>().saveIsLogin(id: true);
-              sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
-            }
+              // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
+              sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
+              if(isRemember){
+                sl.get<SharedPreferenceHelper>().saveIsLogin(id:true);
+                sl.get<SharedPreferenceHelper>().saveRememberAccount(isRemember);
+              }
 
-            // Kiểm tra loại tài khoản người dùng
-            if (account.idLoaiTaiKhoan != null) {
-              if (account.idLoaiTaiKhoan == KHACH_HANG) {
-                EasyLoading.dismiss();
-                Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
-                return;
-              } else if (account.idLoaiTaiKhoan == THO_THAU) {
-                EasyLoading.dismiss();
-                Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
-                return;
-              } else if (account.idLoaiTaiKhoan == DAI_LY) {
-                EasyLoading.dismiss();
-                Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
-                return;
-              } else {
-                //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
+              // Kiểm tra loại tài khoản người dùng
+              if(account.idLoaiTaiKhoan != null){
+                if (account.idLoaiTaiKhoan == KHACH_HANG) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
+                  return;
+                } else if (account.idLoaiTaiKhoan == THO_THAU) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+                  return;   
+                } else if (account.idLoaiTaiKhoan == DAI_LY) {
+                  EasyLoading.dismiss();
+                  Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+                  return;
+                }
+                else{
+                  //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
+                  EasyLoading.dismiss();
+                  Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+                }
+              }else{
+                // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
                 EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
-            } else {
-              // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
-              EasyLoading.dismiss();
-              Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
-            }
           },onError: (error) {
             Alert.error(
                 message:
@@ -156,5 +160,20 @@ class LoginController extends GetxController {
             update();
           });
     }
+  }
+
+  ///
+  /// Reset form
+  ///
+  void resetForm(){
+    phoneController.text = '' ;
+    passwordController.text = '';
+  }
+
+  @override
+  void onClose() {
+    phoneController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

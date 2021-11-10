@@ -28,6 +28,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/sharedpref/constants/preferences.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -70,11 +71,15 @@ class RegisterController extends GetxController {
 
 
   //Data default
-  final genders = [
-    "Nam", "Nữ","Khác"
-  ];
+  final genders = {
+    GENDER.Nam: "Nam", 
+    GENDER.Nu:"Nữ",
+    GENDER.Khac:"Khác"
+  };
   final juridicals = [
-    'Doanh nghiệp','Tổ chức','Cá nhân'
+    'Doanh nghiệp',
+    'Tổ chức',
+    'Cá nhân'
   ];
 
   // Flag
@@ -94,7 +99,7 @@ class RegisterController extends GetxController {
 
   // Variable
   LoaiTaiKhoanResponse? loaiTaiKhoan;
-  String? gender;
+  GENDER? gender;
   String? juridical;
   TinhTpResponse? province;
   QuanHuyenResponse? district;
@@ -142,7 +147,7 @@ class RegisterController extends GetxController {
   ///
   /// on change gender
   ///
-  void onChangedGender(String gender){
+  void onChangedGender(GENDER gender){
     this.gender = gender;
     update();
   }
@@ -291,50 +296,50 @@ class RegisterController extends GetxController {
   ///
   bool onCheckValidate(){
     if(loaiTaiKhoan == null){
-      Alert.info(message: "Vui lòng chọn loại tài khoản");
+      Alert.error(message: "Vui lòng chọn loại tài khoản");
       return false;
     }else if(juridical == null){
-      Alert.info(message: "Vui lòng chọn loại pháp lý");
+      Alert.error(message: "Vui lòng chọn loại pháp lý");
       return false;
     }else if(enterpriseNameController.text.toString().isEmpty){
-      Alert.info(message: "Tên doanh nghiệp/đội trưởng/cá nhân không được để trống");
+      Alert.error(message: "Tên doanh nghiệp/đội trưởng/cá nhân không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.info(message: "Họ và tên không được để trống");
+      Alert.error(message: "Họ và tên không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.info(message: "Họ và tên không được để trống");
+      Alert.error(message: "Họ và tên không được để trống");
       return false;
     }else if(fullNameController.text.toString().isEmpty){
-      Alert.info(message: "Họ và tên không được để trống");
+      Alert.error(message: "Họ và tên không được để trống");
       return false;
     }else if(birthDateController.text.toString().isEmpty){
-      Alert.info(message: "Ngày sinh không được để trống");
+      Alert.error(message: "Ngày sinh không được để trống");
       return false;
     }else if(gender == null){
-      Alert.info(message: "Vui lòng chọn giới tính");
+      Alert.error(message: "Vui lòng chọn giới tính");
       return false;
     }else if(cmndController.text.toString().isEmpty){
-      Alert.info(message: "Số CMND/Căn cước không được để trống");
+      Alert.error(message: "Số CMND/Căn cước không được để trống");
       return false;
     }else if(cmndController.text.toString().length != 12 && cmndController.text.toString().length != 9){
-      Alert.info(message: "Số CMND/Căn cước không hợp lệ");
+      Alert.error(message: "Số CMND/Căn cước không hợp lệ");
       return false;
     }else if(dateRangeController.text.toString().isEmpty){
-      Alert.info(message: "Ngày cấp không được để trống");
+      Alert.error(message: "Ngày cấp không được để trống");
       return false;
     }else if(placeIssueController.text.toString().isEmpty){
-      Alert.info(message: "Nơi cấp không được để trống");
+      Alert.error(message: "Nơi cấp không được để trống");
       return false;
     }else if(phoneNumberController.text.toString().isEmpty){
-      Alert.info(message: "Số điện thoại không được để trống");
+      Alert.error(message: "Số điện thoại không được để trống");
       return false;
     }else if(!Validate.phone(phoneNumberController.text.toString())){
-      Alert.info(message: "Số điện thoại không Hợp lệ");
+      Alert.error(message: "Số điện thoại không Hợp lệ");
       return false;
     }else if(emailController.text.toString().isNotEmpty){
       if(!Validate.email(emailController.text.toString())){
-        Alert.info(message: "Email không hợp lệ");
+        Alert.error(message: "Email không hợp lệ");
         return false;
       }
     }
@@ -342,60 +347,60 @@ class RegisterController extends GetxController {
       Alert.error(message: "Mật khẩu không được để trống");
       return false;
     }else if(Validate.charactersLength(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất 8 ký tự');
+      Alert.error(message: 'Mật khẩu ít nhất 8 ký tự');
       return false;
     }else if(Validate.oneLowerCase(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
       return false;
     }else if(Validate.oneUpperCase(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
       return false;
     }else if(Validate.leastOneDigit(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 số');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 số');
       return false;
     }else if(passwordController.text.toString() != repeatPasswordController.text.toString()){
-      Alert.info(message: "Mật khẩu không trung khớp");
+      Alert.error(message: "Mật khẩu không trung khớp");
       return false;
     }else if(province == null){
-      Alert.info(message: "Vui lòng chọn tỉnh thành phố");
+      Alert.error(message: "Vui lòng chọn tỉnh thành phố");
       return false;
     }else if(district == null){
-      Alert.info(message: "Vui lòng chọn quận huyện");
+      Alert.error(message: "Vui lòng chọn quận huyện");
       return false;
     }else if(ward == null){
-      Alert.info(message: "Vui lòng chọn phường xã");
+      Alert.error(message: "Vui lòng chọn phường xã");
       return false;
     }else if(multipSelecteProvince.isEmpty){
-      Alert.info(message: "Vui lòng chọn khu vực tham gia");
+      Alert.error(message: "Vui lòng chọn khu vực tham gia");
       return false;
     }else if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('thợ thầu')){
       if(amountController.text.toString().isEmpty){
-        Alert.info(message: "Số lượng người không được để trống");
+        Alert.error(message: "Số lượng người không được để trống");
         return false;
       }else if(jobExpertsController.text.toString().isEmpty){
-        Alert.info(message: "Chuyên làm việc gì không được để trống");
+        Alert.error(message: "Chuyên làm việc gì không được để trống");
         return false;
       }else if(experienceController.text.toString().isEmpty){
-        Alert.info(message: "Năng lực/Kinh nghiệm không được để trống");
+        Alert.error(message: "Năng lực/Kinh nghiệm không được để trống");
         return false;
       }else if(readyWorkController.text.toString().isEmpty){
-        Alert.info(message: "Bạn sẵn sàng làm việc ở những tỉnh nào không được để trống");
+        Alert.error(message: "Bạn sẵn sàng làm việc ở những tỉnh nào không được để trống");
         return false;
       }
     }
     if(avatarFile == null){
-      Alert.info(message: "Vui lòng chọn ảnh đại diện");
+      Alert.error(message: "Vui lòng chọn ảnh đại diện");
       return false;
     }else if(frontCMND == null){
-      Alert.info(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt trước");
+      Alert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt trước");
       return false;
     }else if(backSideCMND == null){
-      Alert.info(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt sau");
+      Alert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt sau");
       return false;
     }
     // if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('nhân viên') || loaiTaiKhoan!.id == NHAN_VIEN){
     //   if(faceFile == null){
-    //     Alert.info(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
+    //     Alert.error(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
     //     return false;
     //   }
     // }
@@ -403,6 +408,17 @@ class RegisterController extends GetxController {
     return true;
   }
 
+///
+  /// Get giới tính
+  ///
+  String getGender() {
+    if (GENDER.Nam == gender) {
+      return "1";
+    } else if (GENDER.Nu == gender) {
+      return "0";
+    }
+    return '2';
+  }
 
   ///
   /// on button register tap
@@ -416,7 +432,7 @@ class RegisterController extends GetxController {
       auth.mST = taxCodeController.text.toString();
       auth.hoTen = fullNameController.text.toString();
       auth.ngaySinh = DateConverter.formatYYYYMMDD(birthDateController.text.toString());
-      auth.gioiTinh = gender;
+      auth.gioiTinh = getGender();
       auth.cMND = cmndController.text.toString();
       auth.ngayCap = DateConverter.formatYYYYMMDD(dateRangeController.text.toString());
       auth.noiCap = placeIssueController.text.toString();
@@ -459,7 +475,7 @@ class RegisterController extends GetxController {
         "phone":account.soDienThoai
       }, onSuccess: (String registerToken){
         EasyLoading.dismiss();
-        Alert.info(message: "Mã xác thực gửi số điện thoại của bạn. Vui lòng xác thực hoàn tất đăng ký");
+        Alert.error(message: "Mã xác thực gửi số điện thoại của bạn. Vui lòng xác thực hoàn tất đăng ký");
 
         account.registerToken = registerToken;
         // Go to verify page
@@ -511,7 +527,7 @@ class RegisterController extends GetxController {
                   // sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
                   // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
                   walletRequest(user: user);
-                  Alert.info(message: "Đăng ký Tài khoản thành công");
+                  Alert.success(message: "Đăng ký Tài khoản thành công");
                   Get.back();
                   EasyLoading.dismiss();
                   
@@ -523,7 +539,7 @@ class RegisterController extends GetxController {
 
             }else{
               EasyLoading.dismiss();
-              Alert.info(message: "Đăng ký tài khoản thất bại");
+              Alert.error(message: "Đăng ký tài khoản thất bại");
             }
         });
 

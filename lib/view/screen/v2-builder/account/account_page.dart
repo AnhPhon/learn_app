@@ -146,6 +146,27 @@ class V2AccountPage extends GetView<V2AccountController> {
                           onTap: () => controller.onMailClick(),
                         ),
 
+                        // switch customer
+                        _items(
+                          icon: const Icon(Icons.person),
+                          text: "Khách hàng",
+                          onTap: () => controller.onSwitchCustomer(),
+                        ),
+
+                        // switch agent
+                        _items(
+                          icon: const Icon(Icons.shopping_basket),
+                          text: "Đại lý",
+                          onTap: () => controller.onSwitchAgent(),
+                        ),
+
+                        // image update
+                        // _items(
+                        //   icon: const Icon(Icons.image),
+                        //   text: "Cập nhật hình ảnh",
+                        //   onTap: () {},
+                        // ),
+
                         const SizedBox(
                           height: Dimensions.SIZE_BOX_BOTTOM_NAV,
                         ),

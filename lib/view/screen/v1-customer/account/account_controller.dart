@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template/data/model/request/tai_khoan_request.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/view/screen/v1-customer/account/account_rating_dialog.dart';
 
 class V1AccountController extends GetxController {
   TaiKhoanProvider taiKhoanProvider = TaiKhoanProvider();
   TaiKhoanResponse taiKhoanResponse = TaiKhoanResponse();
+  final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
 
   String title = "Tài khoản";
 
@@ -123,6 +128,40 @@ class V1AccountController extends GetxController {
   ///
   void onMyOrderClick() {
     Get.toNamed(AppRoutes.V1_MY_ORDER);
+  }
+
+  ///
+  ///Switch role build
+  ///
+  void onSwitchBuild() {
+    sl.get<SharedPreferenceHelper>().userId.then((value){
+      final TaiKhoanRequest taiKhoanRequest = TaiKhoanRequest();
+        taiKhoanRequest.id = value;
+        taiKhoanRequest.idLoaiTaiKhoan = THO_THAU;
+        taiKhoanProvider.update(data: taiKhoanRequest, onSuccess: (onSuccess){
+          sl.get<SharedPreferenceHelper>().saveTypeAccount(THO_THAU);
+          Get.offAndToNamed(AppRoutes.V2_DASHBOARD);
+        }, onError: (onError){
+           Alert.error(message:"Chuyển vai trò thất bại");
+        });
+    });
+  }
+
+  ///
+  ///Switch role agent
+  ///
+  void onSwitchAgent() {
+    sl.get<SharedPreferenceHelper>().userId.then((value){
+      final TaiKhoanRequest taiKhoanRequest = TaiKhoanRequest();
+        taiKhoanRequest.id = value;
+        taiKhoanRequest.idLoaiTaiKhoan = DAI_LY;
+        taiKhoanProvider.update(data: taiKhoanRequest, onSuccess: (onSuccess){
+          sl.get<SharedPreferenceHelper>().saveTypeAccount(DAI_LY);
+          Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
+        }, onError: (onError){
+           Alert.error(message:"Chuyển vai trò thất bại");
+        });
+    });
   }
 
   ///

@@ -32,7 +32,7 @@ class LoginPage extends GetView<LoginController> {
               // Card
               Positioned(
                 width: DeviceUtils.getScaledWidth(context, 0.9),
-                height: 393,
+                height: 453,
                 top: DeviceUtils.getScaledWidth(context, 0.4),
                 left: DeviceUtils.getScaledWidth(context, 0.05),
                 child: Container(
@@ -63,16 +63,18 @@ class LoginPage extends GetView<LoginController> {
 
                       // register arial
                       _registerWidget(context),
+                      //Đang nhập với
+                      _switchRole(context),
                     ],
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 30,
-                top: DeviceUtils.getScaledWidth(context, 1.4),
-                left: DeviceUtils.getScaledWidth(context, 0.15),
-                child: _onBtnLoginEmployee(context),
-              )
+              // Positioned(
+              //   bottom: 30,
+              //   top: DeviceUtils.getScaledWidth(context, 1.4),
+              //   left: DeviceUtils.getScaledWidth(context, 0.15),
+              //   child: _onBtnLoginEmployee(context),
+              // )
             ]),
           );
         });
@@ -383,7 +385,7 @@ class LoginPage extends GetView<LoginController> {
         height: 25,
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
@@ -401,6 +403,52 @@ class LoginPage extends GetView<LoginController> {
             // ignore: prefer_const_literals_to_create_immutables
             const Text(
               "Đăng ký",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff0f90f3),
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+                decoration: TextDecoration.underline,
+                fontFamily: "Nunito Sans",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// _on Btn Login Tap
+  ///
+  Widget _switchRole(BuildContext context) {
+    return GestureDetector(
+      // onBtnRegisterTap
+      onTap: () => controller.onBtnLoginEmployee(),
+      child: Container(
+        margin: const EdgeInsets.only(top: Dimensions.MARGIN_SIZE_LARGE),
+        width: DeviceUtils.getScaledWidth(context, 0.7),
+        height: 25,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Text(
+              "Đăng nhập tài khoản với ?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff2a3547),
+                fontSize: Dimensions.FONT_SIZE_LARGE,
+              ),
+            ),
+
+            const SizedBox(width: 4),
+
+            // ignore: prefer_const_literals_to_create_immutables
+            const Text(
+              "Nhân viên",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff0f90f3),

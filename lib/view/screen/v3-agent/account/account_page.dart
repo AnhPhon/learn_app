@@ -131,6 +131,27 @@ class V3AccountPage extends GetView<V3AccountController> {
                           onTap: () => controller.onMailClick(),
                         ),
 
+                        // switch customer
+                        _items(
+                          icon: const Icon(Icons.person),
+                          text: "Khách hàng",
+                          onTap: () => controller.onSwitchCustomer(),
+                        ),
+
+                        // switch build
+                        _items(
+                          icon: const Icon(Icons.business_center),
+                          text: "Thợ thầu",
+                          onTap: () => controller.onSwitchBuild(),
+                        ),
+
+                        // image update
+                        // _items(
+                        //   icon: const Icon(Icons.image),
+                        //   text: "Cập nhật hình ảnh",
+                        //   onTap: () {},
+                        // ),
+
                         const SizedBox(
                           height: Dimensions.SIZE_BOX_BOTTOM_NAV,
                         ),
@@ -160,7 +181,7 @@ class V3AccountPage extends GetView<V3AccountController> {
               width: DeviceUtils.getScaledSize(context, .2),
               child: ClipOval(
                 child: FadeInImageCustom(
-                  urlImage: controller.taiKhoanResponse.hinhDaiDien.toString(),
+                  urlImage: controller.taiKhoanResponse!.hinhDaiDien.toString(),
                   height: double.infinity,
                   width: double.infinity,
                 ),
@@ -169,7 +190,7 @@ class V3AccountPage extends GetView<V3AccountController> {
 
             //full name
             Text(
-              controller.taiKhoanResponse.hoTen.toString(),
+              controller.taiKhoanResponse!.hoTen.toString(),
               style: Dimensions.fontSizeStyle16w600(),
             ),
 
@@ -178,9 +199,9 @@ class V3AccountPage extends GetView<V3AccountController> {
             ),
 
             //email
-            if (controller.taiKhoanResponse.email != "null")
+            if (controller.taiKhoanResponse!.email != "null")
               Text(
-                controller.taiKhoanResponse.email.toString(),
+                controller.taiKhoanResponse!.email.toString(),
                 style: Dimensions.fontSizeStyle16w600(),
               ),
 

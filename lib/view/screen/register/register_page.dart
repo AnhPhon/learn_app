@@ -7,6 +7,7 @@ import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -100,8 +101,8 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
 
                     // Giới tính
-                    DropDownButton<String>(
-                      data: controller.genders,
+                    DropDownButton<GENDER>(
+                      data: controller.genders.entries.map((e) => e.key).toList(),
                       obligatory: true,
                       onChanged: (value) =>
                           controller.onChangedGender(value!),

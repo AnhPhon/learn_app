@@ -65,22 +65,22 @@ class UpdatePasswordController extends GetxController {
   ///
   bool validate() {
     if(passwordController.text.toString().isEmpty){
-      Alert.info(message: 'Vui lòng nhập mật khẩu mới');
+      Alert.error(message: 'Vui lòng nhập mật khẩu mới');
       return false;
     }else if(Validate.charactersLength(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất 8 ký tự');
+      Alert.error(message: 'Mật khẩu ít nhất 8 ký tự');
       return false;
     }else if(Validate.oneLowerCase(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
       return false;
     }else if(Validate.oneUpperCase(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
       return false;
     }else if(Validate.leastOneDigit(passwordController.text.toString()) == false){
-      Alert.info(message: 'Mật khẩu ít nhất phải có 1 số');
+      Alert.error(message: 'Mật khẩu ít nhất phải có 1 số');
       return false;
     }else if(passwordController.text.toString() != repeatPasswordController.text.toString()){
-      Alert.info(message: 'Mật khẩu không trùng khớp');
+      Alert.error(message: 'Mật khẩu không trùng khớp');
       return false;
     }
     return true;
