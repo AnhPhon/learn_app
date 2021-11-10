@@ -9,6 +9,7 @@ import 'du_an_nhan_vien_response.dart';
 class ThongBaoResponse {
   String? id;
   String? doiTuong;
+  String? status;
   DonDichVuResponse? idDonDichVu;
   PhanHoiDonDichVuResponse? idPhanHoiDonDichVu;
   DuAnKhachHangResponse? idDuAnKhachHang;
@@ -26,6 +27,7 @@ class ThongBaoResponse {
   ThongBaoResponse({
       this.id,
       this.doiTuong,
+      this.status,
       this.idDonDichVu,
       this.idDuAnKhachHang,
       this.idTinTuc,
@@ -45,6 +47,7 @@ class ThongBaoResponse {
   ThongBaoResponse.fromJson(Map<String, dynamic> json) {
     id = (json['id'] == null) ? null : json['id'].toString();
     doiTuong = json['doiTuong'].toString();
+    status = json['status'].toString();
 
     // mapping idDonDichVu                                                              
     if (json['idDonDichVu'] != null && json['idDonDichVu'].toString().length!=24) {                                                  
@@ -106,6 +109,8 @@ class ThongBaoResponse {
 
     // check null doiTuong
     if (doiTuong != null) data['doiTuong'] = doiTuong; 
+    //Check thông báo
+    if (status != null) data['status'] = status; 
 
     // check null idDonDichVu
     if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 

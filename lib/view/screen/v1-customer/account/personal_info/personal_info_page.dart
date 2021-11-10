@@ -58,7 +58,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   InputWidget(
                     label: "Tên doanh nghiệp/đội trưởng/cá nhân",
                     labelBold: true,
-                    textEditingController: controller.nameCompanyController!,
+                    textEditingController: controller.nameCompanyController,
                     suffixIcon: const Icon(
                       Icons.edit,
                       size: Dimensions.ICON_SIZE_DEFAULT,
@@ -76,7 +76,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   InputWidget(
                     label: "Họ và tên",
                     labelBold: true,
-                    textEditingController: controller.fullNameController!,
+                    textEditingController: controller.fullNameController,
                     suffixIcon: const Icon(
                       Icons.edit,
                       size: Dimensions.ICON_SIZE_DEFAULT,
@@ -107,7 +107,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                         InputWidget(
                           label: "Ngày sinh",
                           labelBold: true,
-                          textEditingController: controller.bornController!,
+                          textEditingController: controller.bornController,
                           suffixIcon: const Icon(
                             Icons.calendar_today,
                             size: Dimensions.ICON_SIZE_DEFAULT,
@@ -120,6 +120,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                           allowEdit: false,
                           isBorder: false,
                           obligatory: true,
+                          isddMMyyyy: true,
                           textInputAction: TextInputAction.next,
                         ),
 
@@ -127,6 +128,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                         DropDownMapButton<String>(
                           hint: "Giới tính",
                           label: "Giới tính",
+                          obligatory: true,
                           labelBold: true,
                           value: controller.sex,
                           onChanged: controller.onChangedSex,
@@ -148,7 +150,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                       InputWidget(
                         label: "Số CMND/Căn cước",
                         labelBold: true,
-                        textEditingController: controller.cMNDController!,
+                        textEditingController: controller.cMNDController,
                         width: .45,
                         fillColor: ColorResources.WHITE,
                         isShadow: true,
@@ -164,7 +166,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                       InputWidget(
                         label: "Ngày cấp",
                         labelBold: true,
-                        textEditingController: controller.ngayCapController!,
+                        textEditingController: controller.ngayCapController,
                         width: .38,
                         fillColor: ColorResources.WHITE,
                         isShadow: true,
@@ -182,7 +184,7 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                   InputWidget(
                     label: "Số điện thoại",
                     labelBold: true,
-                    textEditingController: controller.phoneController!,
+                    textEditingController: controller.phoneController,
                     suffixIcon: const Icon(
                       Icons.edit,
                       size: Dimensions.ICON_SIZE_DEFAULT,
@@ -197,13 +199,14 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),
                     textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.number,
                   ),
 
                   //company name
                   InputWidget(
                     label: "Email",
                     labelBold: true,
-                    textEditingController: controller.emailController!,
+                    textEditingController: controller.emailController,
                     suffixIcon: const Icon(
                       Icons.edit,
                       size: Dimensions.ICON_SIZE_DEFAULT,
@@ -213,7 +216,6 @@ class V1PersonalInfoPage extends GetView<V1PersonalInfoController> {
                     fillColor: ColorResources.WHITE,
                     isShadow: true,
                     isBorder: false,
-                    obligatory: true,
                     padding: const EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_DEFAULT,
                     ),

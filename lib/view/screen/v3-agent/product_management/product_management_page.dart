@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_controller.dart';
 
 class V3ProductManagementPage extends GetView<V3ProductManagementController> {
@@ -106,30 +105,29 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  //image
                                   Expanded(
                                     flex: 2,
-                                    child: FadeInImage.assetNetwork(
-                                      placeholder: Images.placeholder,
-                                      image: controller
-                                          .sanPhamResponse[index].hinhAnhDaiDien
-                                          .toString(),
-                                      height: DeviceUtils.getScaledHeight(
-                                          context, .08),
-                                      width: double.infinity,
-                                      fit: BoxFit.fill,
-                                      imageErrorBuilder: (c, o, s) =>
-                                          Image.asset(
-                                        Images.placeholder,
-                                        height: DeviceUtils.getScaledHeight(
-                                            context, .08),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        Dimensions.BORDER_RADIUS_SMALL,
+                                      ),
+                                      child: FadeInImageCustom(
+                                        urlImage: controller
+                                            .sanPhamResponse[index]
+                                            .hinhAnhDaiDien
+                                            .toString(),
+                                        height: .15,
                                         width: double.infinity,
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
+
                                   const SizedBox(
                                     width: Dimensions.MARGIN_SIZE_SMALL,
                                   ),
+
+                                  //info
                                   Expanded(
                                     flex: 7,
                                     child: Column(
@@ -138,6 +136,7 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        //name
                                         Text(
                                           controller.sanPhamResponse[index].ten
                                               .toString(),
@@ -145,20 +144,30 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                           style:
                                               Dimensions.fontSizeStyle16w600(),
                                         ),
+
                                         const SizedBox(
                                           height: Dimensions
                                               .MARGIN_SIZE_EXTRA_SMALL,
                                         ),
+
+                                        //unit & price
                                         IntrinsicHeight(
                                           child: Row(
                                             children: [
-                                              Text(controller
-                                                  .sanPhamResponse[index].donVi
-                                                  .toString()),
+                                              //unit
+                                              Text(
+                                                controller
+                                                    .sanPhamResponse[index]
+                                                    .donVi
+                                                    .toString(),
+                                              ),
+
                                               VerticalDivider(
                                                 color: ColorResources.BLACK
                                                     .withOpacity(.7),
                                               ),
+
+                                              //price
                                               Text(
                                                 "${PriceConverter.convertPrice(
                                                   context,
@@ -189,9 +198,12 @@ class V3ProductManagementPage extends GetView<V3ProductManagementController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(controller
-                                      .sanPhamResponse[index].maSanPham
-                                      .toString()),
+                                  //code
+                                  Text(
+                                    controller.sanPhamResponse[index].maSanPham
+                                        .toString(),
+                                  ),
+                                  //quy cach
                                   Text(
                                       "Quy cách: ${controller.sanPhamResponse[index].quyCach}"),
                                 ],

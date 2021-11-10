@@ -13,7 +13,7 @@ class InputWidget extends StatelessWidget {
   final String? label;
   final double width;
   final double? height;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? padding, contentPadding;
   final EdgeInsetsGeometry? margin;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
@@ -64,6 +64,7 @@ class InputWidget extends StatelessWidget {
     this.suffixIconTap,
     this.onSubmitted,
     this.height,
+    this.contentPadding,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -139,8 +140,8 @@ class InputWidget extends StatelessWidget {
                                 DateConverter.estimatedDateOnly(value!)
                             : textEditingController.text =
                                 DateConverter.formatDate(value!);
-                        textEditingController.text =
-                            DateConverter.estimatedDateOnly(value);
+                        // textEditingController.text =
+                        // DateConverter.estimatedDateOnly(value);
                       });
                     }
                   : (isTime == true)
@@ -176,14 +177,17 @@ class InputWidget extends StatelessWidget {
                 decoration: InputDecoration(
                   isDense: true,
                   prefixIcon: prefixIcon,
-                  suffixIcon: GestureDetector(
-                    onTap: suffixIconTap ?? () {},
-                    child: suffixIcon ?? const SizedBox.shrink(),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_DEFAULT,
-                  ),
+                  suffixIcon: (suffixIcon != null)
+                      ? GestureDetector(
+                          onTap: suffixIconTap ?? () {},
+                          child: suffixIcon ?? const SizedBox.shrink(),
+                        )
+                      : null,
+                  contentPadding: contentPadding ??
+                      EdgeInsets.symmetric(
+                        horizontal: DeviceUtils.getScaledSize(context, 0.025),
+                        vertical: DeviceUtils.getScaledSize(context, 0.03),
+                      ),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                           Dimensions.BORDER_RADIUS_EXTRA_SMALL),

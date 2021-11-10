@@ -34,7 +34,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin chung",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
                   _thongTinChung(context, controller),
@@ -47,7 +46,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin shipping",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _shipping(context, controller),
@@ -60,7 +58,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Thông tin sản phẩm",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _productInfo(context, controller),
@@ -73,7 +70,6 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
                   const Label(
                     label: "Chi tiết thanh toán",
                     obligatory: false,
-                    paddingTitle: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     topPadding: 0,
                   ),
                   _paymentDetail(context, controller),
@@ -124,14 +120,15 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
       child: Column(
         children: [
           rowText(
-            text1: "ID",
-            text2: controller.donHangResponse.id.toString(),
-          ),
+              text1: "ID",
+              text2: controller.donHangResponse.maDonHang
+                  .toString()
+                  .replaceFirst("D", "Đ")),
           Dimensions().paddingDivider(context),
           rowText(
             text1: "Ngày đặt hàng",
-            text2: DateConverter.formatDateTime(
-              controller.donHangResponse.createdAt.toString(),
+            text2: DateConverter.formatDateTimeFull(
+              dateTime: controller.donHangResponse.createdAt.toString(),
             ),
           ),
           Dimensions().paddingDivider(context),
@@ -261,97 +258,102 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
             shrinkWrap: true,
             itemCount: controller.chiTietDonHangList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //image
-                      Expanded(
-                        flex: 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            Dimensions.BORDER_RADIUS_DEFAULT,
-                          ),
-                          child: FadeInImage.assetNetwork(
-                            placeholder: Images.placeholder,
-                            image: controller.chiTietDonHangList[index]
-                                .idSanPham!.hinhAnhDaiDien
-                                .toString(),
-                            height: DeviceUtils.getScaledSize(context, .18),
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            imageErrorBuilder: (c, o, s) => Image.asset(
-                              Images.placeholder,
-                              height: DeviceUtils.getScaledSize(context, .18),
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(
-                        width: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-
-                      //infomation product
-                      Expanded(
-                        flex: 8,
-                        child: Column(
+              return (controller.chiTietDonHangList[index].idSanPham == null)
+                  ? const SizedBox.shrink()
+                  : Column(
+                      children: [
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //name
-                            Text(
-                              controller
-                                  .chiTietDonHangList[index].idSanPham!.ten
-                                  .toString(),
-                              maxLines: 2,
-                              style: titilliumSemiBold.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE,
+                            //image
+                            Expanded(
+                              flex: 3,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  Dimensions.BORDER_RADIUS_DEFAULT,
+                                ),
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: Images.placeholder,
+                                  image: controller.chiTietDonHangList[index]
+                                      .idSanPham!.hinhAnhDaiDien
+                                      .toString(),
+                                  height:
+                                      DeviceUtils.getScaledSize(context, .18),
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  imageErrorBuilder: (c, o, s) => Image.asset(
+                                    Images.placeholder,
+                                    height:
+                                        DeviceUtils.getScaledSize(context, .18),
+                                    width: double.infinity,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
                             ),
 
-                            //quality & price
-                            Row(
-                              children: [
-                                //price
-                                Expanded(
-                                  flex: 5,
-                                  child: Text(
-                                    "${PriceConverter.convertPrice(context, double.parse(controller.chiTietDonHangList[index].idSanPham!.gia.toString()))} vnđ",
-                                    style: titilliumSemiBold.copyWith(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-
-                                //quality
-                                Expanded(
-                                  flex: 4,
-                                  child: Text(
-                                    "x${controller.chiTietDonHangList[index].soLuong}",
-                                    style: titilliumSemiBold.copyWith(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            const SizedBox(
+                              width: Dimensions.MARGIN_SIZE_SMALL,
                             ),
+
+                            //infomation product
+                            Expanded(
+                              flex: 8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //name
+                                  Text(
+                                    controller.chiTietDonHangList[index]
+                                        .idSanPham!.ten
+                                        .toString(),
+                                    maxLines: 2,
+                                    style: titilliumSemiBold.copyWith(
+                                      fontSize: Dimensions.FONT_SIZE_LARGE,
+                                    ),
+                                  ),
+
+                                  //quality & price
+                                  Row(
+                                    children: [
+                                      //price
+                                      Expanded(
+                                        flex: 5,
+                                        child: Text(
+                                          "${PriceConverter.convertPrice(context, double.parse(controller.chiTietDonHangList[index].idSanPham!.gia.toString()))} vnđ",
+                                          style: titilliumSemiBold.copyWith(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+
+                                      //quality
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          "x${controller.chiTietDonHangList[index].soLuong}",
+                                          style: titilliumSemiBold.copyWith(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
 
-                  //divider
-                  if (index == controller.chiTietDonHangList.length - 1)
-                    const SizedBox.shrink()
-                  else
-                    Dimensions().paddingDivider(context),
-                ],
-              );
+                        //divider
+                        if (index == controller.chiTietDonHangList.length - 1)
+                          const SizedBox.shrink()
+                        else
+                          Dimensions().paddingDivider(context),
+                      ],
+                    );
             }));
   }
 
@@ -398,6 +400,17 @@ class V3OrderDetailPage extends GetView<V3OrderDetailController> {
             text1: "Phí dịch vụ",
             text2:
                 "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.phiDichVu.toString()))} vnđ",
+          ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
+          //Khuyến mãi
+          rowText(
+            text1: "Khuyến mãi",
+            text2:
+                "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.khuyenMai.toString()))} vnđ",
           ),
 
           const SizedBox(

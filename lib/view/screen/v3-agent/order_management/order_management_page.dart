@@ -6,7 +6,6 @@ import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
@@ -95,12 +94,15 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                           status: controller
                               .donHangResponse[index].idTrangThaiDonHang!.tieuDe
                               .toString(),
-                          imgUrl:
-                              "controller.donHangResponse[index].hinhAnhHoaDon",
-                          idOrder:
-                              controller.donHangResponse[index].id.toString(),
-                          dateTime: DateConverter.formatDateTime(
-                            controller.donHangResponse[index].createdAt
+                          imgUrl: controller.donHangResponse[index]
+                              .idTaiKhoanMuaHang!.hinhDaiDien
+                              .toString(),
+                          idOrder: controller.donHangResponse[index].maDonHang
+                              .toString()
+                              .replaceFirst("D", "Đ"),
+                          dateTime: DateConverter.formatDateTimeFull(
+                            dateTime: controller
+                                .donHangResponse[index].createdAt
                                 .toString(),
                           ),
                           paymentStatus: controller.donHangResponse[index]
@@ -162,6 +164,10 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
             fillColor: controller.statusBackgroundColor[status],
             colorText: controller.statusColor[status],
             height: .06,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: DeviceUtils.getScaledSize(context, 0.025),
+              vertical: DeviceUtils.getScaledSize(context, 0.025),
+            ),
           ),
 
           const SizedBox(

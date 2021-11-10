@@ -7,6 +7,7 @@ import 'package:template/data/model/response/loai_tai_khoan_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -100,8 +101,8 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
 
                     // Giới tính
-                    DropDownButton<String>(
-                      data: controller.genders,
+                    DropDownButton<GENDER>(
+                      data: controller.genders.entries.map((e) => e.key).toList(),
                       obligatory: true,
                       onChanged: (value) =>
                           controller.onChangedGender(value!),
@@ -206,26 +207,15 @@ class RegisterPage extends GetView<RegisterController> {
                       obligatory: true,
                       typeInput: TextInputType.emailAddress,
                       width: DeviceUtils.getScaledWidth(context, 1),
-                    ),
+                    ), 
 
-                    // Khu vực tham gia chọn nhiều
-                    // DropDownButton<LoaiTaiKhoanResponse>(
-                    //   data: controller.loaiTaiKhoans,
-                    //   obligatory: true,
-                    //   onChanged: (value) =>
-                    //       controller.onLoaiTaikhoanChange(value!),
-                    //   value: controller.loaiTaiKhoan,
-                    //   width: DeviceUtils.getScaledSize(context, 1),
-                    //   label: "Khu vực tham gia chọn nhiều ",
-                    //   hint: "Khu vực tham gia",
-                    //   padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT,right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_DEFAULT),
-                    // ),
                     const Label(label: "Khu vực tham gia chọn nhiều", obligatory: true),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                       ),
                       child: MultiSelectDialogField(
+                        searchable: true,
                         listType: MultiSelectListType.LIST,
                         buttonIcon: const Icon(Icons.arrow_drop_down),
                         items: controller.multipSelecteProvince,

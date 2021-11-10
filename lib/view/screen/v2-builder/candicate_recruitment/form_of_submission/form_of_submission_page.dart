@@ -13,6 +13,11 @@ class V2FormOfSubmitssionPage extends GetView<V2FormOfSubmitssionController> {
     return GetBuilder(
       init: V2FormOfSubmitssionController(),
       builder: (V2FormOfSubmitssionController controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Scaffold(
           appBar: const AppBarWidget(title: "Tin tuyển dụng"),
           body: Column(
@@ -58,9 +63,7 @@ class V2FormOfSubmitssionPage extends GetView<V2FormOfSubmitssionController> {
               LongButton(
                 title: "Nộp file CV",
                 color: ColorResources.PRIMARYCOLOR,
-                onPressed: () {
-                  controller.onClickCvButton();
-                },
+                onPressed: () => controller.onClickCvButton(),
                 horizontal: Dimensions.PADDING_SIZE_DEFAULT,
               ),
 
@@ -71,7 +74,6 @@ class V2FormOfSubmitssionPage extends GetView<V2FormOfSubmitssionController> {
                 style: TextStyle(
                     color: ColorResources.RED,
                     fontSize: Dimensions.FONT_SIZE_LARGE),
-                topPadding: Dimensions.PADDING_SIZE_SMALL,
               ),
             ],
           ),

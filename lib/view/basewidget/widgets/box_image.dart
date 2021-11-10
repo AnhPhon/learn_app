@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
@@ -18,9 +15,9 @@ class BoxImage extends StatelessWidget {
   }) : super(key: key);
   final bool? isAddImage;
   final Function()? onPress;
-  final List<File>? images;
+  final List<String>? images;
   final List<String>? imagesUrl;
-  final Function(File file, List<File> files)? onDelete;
+  final Function(String file, List<String> files)? onDelete;
   @override
   Widget build(BuildContext context) {
     return Column(

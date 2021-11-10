@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -57,14 +56,20 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       bottomSheet: OrderBottomSheet(
         itemValue: _controller
-            .tongTien, //double.parse(_controller.donDichVu!.tongDon!, (e)=> 1000000000),
+            .tongTien, 
         children: 
-        // controller.donDichVu!.idTrangThaiDonDichVu!.id!  == DA_PHAN_HOI ? 
-        // [
-        //   const Flexible(
-        //     child: Text("Bạn đã phản hồi đơn dich vụ. Chúng tôi xem và phản hồi bạn sơm nhất có thể. Cám ơn bạn", )
-        //   )
-        // ] :
+        controller.donDichVu!.idTrangThaiDonDichVu!.id!  == THAT_BAI ? 
+        [
+          const Flexible(
+            child: Text(
+              "Bạn đã không đồng ý giá đơn dich vụ. Rất vui hợp tác với bạn lần sau !",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorResources.RED
+              ),
+            )
+          )
+        ] :
         _controller.donDichVu!.idTrangThaiThanhToan!.id == DA_THANH_TOAN ? 
         [
           const Flexible(
@@ -79,7 +84,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         [
           SmallButton(
             title: "Huỷ ", color: ColorResources.GREY, onPressed: () {
-              _controller.onFeebacked();
+              _controller.showDialog();
             }
           ),
           SmallButton(
@@ -126,7 +131,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
-    return controller.donDichVu!.hinhAnhBanKhoiLuongs!.isEmpty ?  const SizedBox() :
+    return controller.donDichVu!.hinhAnhBaoGias == null ? const SizedBox.shrink() :  controller.donDichVu!.hinhAnhBaoGias!.isEmpty ?  const SizedBox() :
     Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_SMALL,
@@ -140,7 +145,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
             fontWeight: FontWeight.bold,
             fontSize: Dimensions.FONT_SIZE_LARGE
           ),),
-          BoxImage(imagesUrl: controller.donDichVu!.hinhAnhBanKhoiLuongs),
+          BoxImage(images: controller.donDichVu!.hinhAnhBaoGias),
         ],
       ),
     );
@@ -175,7 +180,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: controller.workMass.isEmpty  ? []: [
+        children: controller.donPhanHoi!.giaCongViecs!.isEmpty  ? []: [
           const Text(
             "Đơn giá phản hồi theo khách hàng cung cấp",
             overflow: TextOverflow.ellipsis,
@@ -186,7 +191,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
           Column(
             children: [
               ...List.generate(
-                  controller.workMass.length,
+                  controller.donPhanHoi!.giaCongViecs!.length,
                   (index) => Padding(
                         padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT),
@@ -208,28 +213,29 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
                                   children: [
                                     TextHighlight(
                                       title: "Tên công việc:",
-                                      content:
-                                          controller.workMass[index].tenVatTu!,
+                                      content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                          controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.tenCongViec ?? '',
                                     ),
                                     TextHighlight(
                                         title: "Quy cách:",
-                                        content:
-                                            controller.workMass[index].quyCach!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.quyCach ?? ''),
                                     TextHighlight(
                                         title: "Khối lượng:",
-                                        content:
-                                            controller.workMass[index].donGia!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                            controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.soLuong ?? ''),
                                     TextHighlight(
                                         title: "Đơn vị:",
-                                        content:
-                                            controller.workMass[index].donVi!,
-                                        fontSize: Dimensions.FONT_SIZE_LARGE),
-                                    // TextHighlight(title:"Đơn giá:" ,content: '${CurrencyConverter.currencyConverterVND(double.parse(controller.workMass[index].donGia!))} VNĐ' , style: const TextStyle(
-                                    //   color: ColorResources.RED,
-                                    //   fontSize: Dimensions.FONT_SIZE_LARGE
-                                    // ),),
+                                        content:controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec == null ? '':
+                                           controller.donPhanHoi!.giaCongViecs![index].idChiTietCongViec!.donVi ?? ''),
+                                    TextHighlight(
+                                      title:"Đơn giá:" ,
+                                      content: controller.donPhanHoi == null ? '':
+                                      '${controller.donPhanHoi!.giaCongViecs![index].donGia ?? ''}VNĐ' , 
+                                      style: const TextStyle(
+                                      color: ColorResources.RED,
+                                      fontSize: Dimensions.FONT_SIZE_LARGE
+                                    ),),
                                   ],
                                 ),
                               ),

@@ -31,11 +31,13 @@ class V1ServiceReviewG5Page extends GetView<V1ServiceReviewG5Controller> {
                   //tieu de cong viec
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        vertical: Dimensions.PADDING_SIZE_SMALL),
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
                     child: TextHighlight(
-                        title: "Công việc: ",
-                        content: controller.donDichVuResponse.tieuDe!),
+                      title: "Công việc: ",
+                      content: controller.donDichVuResponse.tieuDe.toString(),
+                    ),
                   ),
 
                   //thong so ky thuat
@@ -150,9 +152,11 @@ class V1ServiceReviewG5Page extends GetView<V1ServiceReviewG5Controller> {
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Ngày làm việc: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayBatDau.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayBatDau == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayBatDau.toString(),
+                    ),
             ),
           ),
           Padding(

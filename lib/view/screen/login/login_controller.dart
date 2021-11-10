@@ -9,8 +9,6 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-// import 'package:template/provider/auth_provider.dart';
-// import 'package:template/provider/user_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -20,7 +18,8 @@ import 'package:template/utils/validate.dart';
 class LoginController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
   final TaiKhoanProvider accountProvider = GetIt.I.get<TaiKhoanProvider>();
-  final LoaiTaiKhoanProvider typeAccountProvider = GetIt.I.get<LoaiTaiKhoanProvider>();
+  final LoaiTaiKhoanProvider typeAccountProvider =
+      GetIt.I.get<LoaiTaiKhoanProvider>();
 
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
@@ -30,6 +29,17 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    // Em cập nhật lại rồi nha. Khách Hàng:
+    // 0111111111
+    // KhachHang1
+    // Thợ Thầu
+    // 0222222222
+    // ThoThau1
+    // Đại Lý:
+    // 0333333333
+    // DaiLy123
+    phoneController.text = '0111111111';
+    passwordController.text = 'KhachHang1';
     super.onInit();
   }
 
@@ -74,11 +84,10 @@ class LoginController extends GetxController {
     onLogin();
   }
 
-
   ///
   /// Validate login
   ///
-  bool onValidateLogin(){
+  bool onValidateLogin() {
     //validate infomation username password
     if (phoneController.text == '' || passwordController.text == '') {
       Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
@@ -93,20 +102,22 @@ class LoginController extends GetxController {
   ///
   /// Login
   ///
-  void onLogin(){
-    if(onValidateLogin()){
+  void onLogin() {
+    if (onValidateLogin()) {
       EasyLoading.show(status: "Đăng nhập");
       final AccountRequest accountRequest = AccountRequest();
       accountRequest.soDienThoai = phoneController.text.toString();
       accountRequest.matKhau = passwordController.text.toString();
       authProvider.loginAccount(
-        request: accountRequest,
-        onSuccess: (account) {
+          request: accountRequest,
+          onSuccess: (account) {
+            // save info token and info user
+            sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
+            sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
+            sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
 
-              // save info token and info user
-              sl.get<SharedPreferenceHelper>().saveUserId(account.id!);
-              sl.get<SharedPreferenceHelper>().saveJwtToken(account.access!);
-              sl.get<SharedPreferenceHelper>().saveRefreshToken(account.refresh!);
+            sl.get<SharedPreferenceHelper>()
+                  .saveTypeAccount(account.idLoaiTaiKhoan!.toString());
               
               // Nếu người dùng remember thì lần sau tự động đăng nhập vào luôn
               sl.get<SharedPreferenceHelper>().saveTypeAccount(account.idLoaiTaiKhoan!.toString());
@@ -140,14 +151,14 @@ class LoginController extends GetxController {
                 EasyLoading.dismiss();
                 Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
-        },
-        onError: (error) {
-          Alert.error(message: "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
-          EasyLoading.dismiss();
-          print("Lỗi đăng nhập onError $error");
-          update();
-        }
-      );
+          },onError: (error) {
+            Alert.error(
+                message:
+                    "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
+            EasyLoading.dismiss();
+            print("Lỗi đăng nhập onError $error");
+            update();
+          });
     }
   }
 

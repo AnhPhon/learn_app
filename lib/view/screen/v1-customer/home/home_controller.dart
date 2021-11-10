@@ -248,13 +248,6 @@ class V1HomeController extends GetxController {
   }
 
   ///
-  /// go to Product detail Page
-  ///
-  void onMoreProductDetail(String s) {
-    Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL);
-  }
-
-  ///
   /// xem thêm category sản phẩm
   ///
   void onMoreCategoryProduct({required int index}) {
@@ -280,7 +273,15 @@ class V1HomeController extends GetxController {
   ///
   void goToNewPageClick(String idNews) {
     sl.get<SharedPreferenceHelper>().saveTinTuc(id: idNews);
-    Get.toNamed("${AppRoutes.V1_NEWS_DETAIL}?id=$idNews");
+    tinTucProvider.find(
+      id: idNews,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_NEWS_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///
@@ -288,7 +289,15 @@ class V1HomeController extends GetxController {
   ///
   void goToSanPhamPageClick(String idHangMucSanPham) {
     sl.get<SharedPreferenceHelper>().saveSanPham(id: idHangMucSanPham);
-    onMoreProductList();
+    sanPhamProvider.find(
+      id: idHangMucSanPham,
+      onSuccess: (data) {
+        Get.toNamed(AppRoutes.V1_PRODUCT_DETAIL, arguments: data);
+      },
+      onError: (error) {
+        print("V1HomeController goToNewsPageClick $error");
+      },
+    );
   }
 
   ///

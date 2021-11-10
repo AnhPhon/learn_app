@@ -51,7 +51,6 @@ class TaiKhoanResponse {
   String? refresh;
   String? resetPasswordToken;
 
-
   TaiKhoanResponse(
       {this.id,
       this.idLoaiTaiKhoan,
@@ -98,6 +97,7 @@ class TaiKhoanResponse {
   /// From JSON
   ///
   TaiKhoanResponse.fromJson(Map<String, dynamic> json) {
+    // print('Pare $json');
     id = (json['id'] == null) ? null : json['id'].toString();
 
     // mapping idLoaiTaiKhoan
@@ -108,9 +108,11 @@ class TaiKhoanResponse {
     // } else {
     //   idLoaiTaiKhoan = null;
     // }
-    if(json['idLoaiTaiKhoan'] != null && json['idLoaiTaiKhoan'].toString().length!=24 ){
-      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(json['idLoaiTaiKhoan'] as Map<String, dynamic>);
-    }else{
+    if (json['idLoaiTaiKhoan'] != null &&
+        json['idLoaiTaiKhoan'].toString().length != 24) {
+      idLoaiTaiKhoan = LoaiTaiKhoanResponse.fromJson(
+          json['idLoaiTaiKhoan'] as Map<String, dynamic>);
+    } else {
       print(json['idLoaiTaiKhoan'].toString());
       idLoaiTaiKhoan = json['idLoaiTaiKhoan'].toString();
     }
@@ -190,12 +192,18 @@ class TaiKhoanResponse {
 
     diaChiKhoHang = json['diaChiKhoHang'].toString();
     thoiGianLamViec = json['thoiGianLamViec'].toString();
-    lamChieuThuBay = json['lamChieuThuBay'].toString();
-    lamNgayChuNhat = json['lamNgayChuNhat'].toString();
+    lamChieuThuBay = (json['lamChieuThuBay'] == null)
+        ? null
+        : json['lamChieuThuBay'].toString();
+    lamNgayChuNhat = (json['lamNgayChuNhat'] == null)
+        ? null
+        : json['lamNgayChuNhat'].toString();
     diaDiemCuaHangChinh = json['diaDiemCuaHangChinh'].toString();
-    hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
-        .map((e) => e as String)
-        .toList();
+
+    if (json['hinhAnhCuaHangs'] != null)
+      hinhAnhCuaHangs = (json['hinhAnhCuaHangs'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList();
     diaDiemCuThe = json['diaDiemCuThe'].toString();
 
     createdAt = json['created_at'].toString();
@@ -203,7 +211,6 @@ class TaiKhoanResponse {
     access = json['access'].toString();
     refresh = json['refresh'].toString();
     hinhAnhKhuonMat = json['hinhAnhKhuonMat'].toString();
-
   }
 
   ///

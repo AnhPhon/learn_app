@@ -25,7 +25,6 @@ class V1TaxController extends GetxController {
 
   //ImageUpdate
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
-  List<String> imageUrlList = [];
 
   //DangKyThue
   DangKyThueProvider dangKyThueProvider = GetIt.I.get<DangKyThueProvider>();
@@ -34,6 +33,9 @@ class V1TaxController extends GetxController {
 
   //CircularProgressIndicator
   bool isLoading = true;
+
+  //is update
+  bool isUpdate = false;
 
   //user id
   String userId = "";
@@ -65,7 +67,7 @@ class V1TaxController extends GetxController {
     dangKyThueProvider.paginate(
       page: 1,
       limit: 5,
-      filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
+      filter: "&idTaiKhoan=$userId&loai=1&sortBy=created_at:desc",
       onSuccess: (value) {
         //check is not empty
         if (value.isNotEmpty) {
@@ -74,6 +76,7 @@ class V1TaxController extends GetxController {
           //if tax already exits => set data to taxController
           if (dangKyThueResponse != null) {
             taxController.text = dangKyThueResponse!.file!;
+            dangKyThueRequest.hinhAnhs = dangKyThueResponse!.hinhAnhs;
           }
         }
 
@@ -89,18 +92,17 @@ class V1TaxController extends GetxController {
   ///
   ///pick image
   ///
-  Future pickImage() async {
+  Future pickImages() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      //add file image to list
-      taxImageList.add(imageTemporary);
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      EasyLoading.show(status: 'Loading...');
 
+      final List<File> files = images.map((e) => File(e.path)).toList();
+
+      print('Count images select ${files.length}');
       //convert file to url
-      uploadImage(imageFile: imageTemporary);
-      update();
+      uploadImage(imageFile: files);
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
@@ -109,14 +111,18 @@ class V1TaxController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File imageFile}) {
-    imageUpdateProvider.add(
-      file: imageFile,
+  void uploadImage({required List<File> imageFile}) {
+    imageUpdateProvider.addImages(
+      files: imageFile,
       onSuccess: (value) {
-        //add url to list
-        imageUrlList.add(value.data.toString());
+        EasyLoading.dismiss();
+        if (value.files != null && value.files!.isNotEmpty) {
+          dangKyThueRequest.hinhAnhs = value.files;
+        }
+        update();
       },
       onError: (error) {
+        EasyLoading.dismiss();
         print("V1TaxController uploadImage onError $error");
       },
     );
@@ -125,7 +131,7 @@ class V1TaxController extends GetxController {
   ///
   ///on click btn done
   ///
-  void onBtnDoneClick(BuildContext context) {
+  void onBtnDoneClick() {
     //validate
     if (taxController.text.isNotEmpty) {
       //show loading
@@ -135,7 +141,6 @@ class V1TaxController extends GetxController {
       dangKyThueRequest.idTaiKhoan = userId;
       dangKyThueRequest.trangThai = "0";
       dangKyThueRequest.file = taxController.text;
-      dangKyThueRequest.hinhAnhs = imageUrlList;
       dangKyThueRequest.loai = "1";
       // dangKyThueRequest.
 
@@ -145,7 +150,7 @@ class V1TaxController extends GetxController {
         onSuccess: (value) {
           //dismiss loading
           EasyLoading.dismiss();
-          Get.offNamed(AppRoutes.V1_PROFILE);
+          Get.back();
 
           //show dialog
           Alert.success(message: 'Đăng ký thuế thành công');
@@ -158,6 +163,40 @@ class V1TaxController extends GetxController {
       // show errors
       EasyLoading.dismiss();
       Alert.error(message: 'Vui lòng điền mã số thuế');
+    }
+  }
+
+  ///
+  ///on btn update
+  ///
+  void onBtnUpdate() {
+    //show loading
+    EasyLoading.show(status: 'loading...');
+    if (isUpdate == true) {
+      //set data
+      dangKyThueRequest.id = dangKyThueResponse!.id;
+      dangKyThueRequest.idTaiKhoan = userId;
+      dangKyThueRequest.file = taxController.text;
+
+      //update
+      dangKyThueProvider.update(
+        data: dangKyThueRequest,
+        onSuccess: (data) {
+          EasyLoading.dismiss();
+          Get.back();
+          Alert.success(message: "Chỉnh sửa thông tin thuế thành công");
+        },
+        onError: (error) {
+          EasyLoading.dismiss();
+          print("V1TaxController onBtnUpdate onError $error");
+        },
+      );
+    } else {
+      isUpdate = true;
+      EasyLoading.dismiss();
+      Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+      update();
+      return;
     }
   }
 }

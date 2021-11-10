@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
@@ -11,7 +12,10 @@ import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/product_widget.dart';
-import 'package:template/view/screen/v1-customer/product/product_detail/product_specification.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
+import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v2-builder/product/product_detail/product_detail_controller.dart';
 
 class V2ProductDetailPage extends GetView<V2ProductDetailController> {
@@ -20,7 +24,7 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
     return GetBuilder<V2ProductDetailController>(
         init: V2ProductDetailController(),
         builder: (controller) {
-          if (controller.isLoading) {
+          if (controller.isLoading || controller.isLoadingStock) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -30,7 +34,7 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
             body: Scrollbar(
               child: SmartRefresher(
                 controller: controller.refreshController,
-                enablePullUp: true,
+                enablePullUp: controller.sanPhamList.isNotEmpty,
                 onRefresh: controller.onRefresh,
                 onLoading: controller.onLoading,
                 footer: const ClassicFooter(
@@ -90,10 +94,11 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
       child: CarouselSlider.builder(
         itemCount: controller.sanPhamResponse.hinhAnhSanPhams!.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-          return FadeInImage.assetNetwork(
-            placeholder: Images.logo,
-            image: controller.sanPhamResponse.hinhAnhSanPhams![itemIndex],
-            fit: BoxFit.fill,
+          return FadeInImageCustom(
+            urlImage: (controller.sanPhamResponse.hinhAnhSanPhams!.isNotEmpty)
+                ? controller.sanPhamResponse.hinhAnhSanPhams![itemIndex]
+                : "image",
+            height: double.infinity,
             width: double.infinity,
           );
         },
@@ -130,21 +135,14 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
-            Text(price,
-                style: const TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                    color: ColorResources.RED,
-                    fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
             Text(
-              discount,
-              style: TextStyle(
-                color: Theme.of(context).hintColor,
-                decoration: TextDecoration.lineThrough,
+              price,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                color: ColorResources.RED,
+                fontWeight: FontWeight.w600,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -159,41 +157,94 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
     return Container(
       height: controller.isLoadingMore
           ? null
-          : DeviceUtils.getScaledHeight(context, .263),
+          : DeviceUtils.getScaledHeight(context, .5),
       color: ColorResources.WHITE,
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_SMALL,
-              top: Dimensions.PADDING_SIZE_DEFAULT,
-              bottom: Dimensions.PADDING_SIZE_SMALL,
-            ),
-            child: Text(
-              "Thông tin sản phẩm",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: Dimensions.FONT_SIZE_LARGE),
-            ),
+          //label
+          const Label(
+            label: "Thông tin sản phẩm",
+            obligatory: false,
+            paddingTitle: 0,
+            topPadding: Dimensions.PADDING_SIZE_DEFAULT,
           ),
-          const Divider(color: Colors.grey),
-          const SizedBox(
-            height: Dimensions.MARGIN_SIZE_DEFAULT,
+
+          //divider
+          Dimensions().paddingDivider(context),
+
+          //product detail
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: Column(
+              children: [
+                RowText(
+                  text1: "Mã sản phẩm",
+                  text2: controller.sanPhamResponse.maSanPham.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Thương hiệu",
+                  text2: controller.sanPhamResponse.thuongHieu.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Danh mục",
+                  text2: controller.sanPhamResponse.idDanhMucSanPham!.ten
+                      .toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Quy cách",
+                  text2: controller.sanPhamResponse.quyCach.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Tình trạng",
+                  text2: controller.nhapKhoHangDaiLyList.isEmpty
+                      ? "Chưa có tình trạng SP"
+                      : controller.sanPhamResponse.tinhTrangSanPham.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Số lượng tồn",
+                  text2: controller.stock == 0
+                      ? "Hết hàng"
+                      : controller.stock.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+              ],
+            ),
           ),
 
           //infomation product
           if (controller.isLoadingMore)
-            V1ProductSpecification(
-              productSpecification: controller.sanPhamResponse.moTa.toString(),
+            Specification(
+              specification: controller.sanPhamResponse.moTa.toString(),
             )
           else
             Flexible(
-              child: V1ProductSpecification(
-                productSpecification:
-                    controller.sanPhamResponse.moTa.toString(),
+              child: Specification(
+                specification: controller.sanPhamResponse.moTa.toString(),
               ),
             ),
 
@@ -242,48 +293,51 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //title
-          const Padding(
-            padding: EdgeInsets.only(
-              left: Dimensions.PADDING_SIZE_SMALL,
-              top: Dimensions.PADDING_SIZE_DEFAULT,
-              bottom: Dimensions.PADDING_SIZE_SMALL,
-            ),
-            child: Text(
-              "Xem thêm",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: Dimensions.FONT_SIZE_LARGE),
-            ),
+          //label
+          const Label(
+            label: "Xem thêm",
+            obligatory: false,
+            horizontalPadding: 0,
+            paddingTitle: 0,
+            topPadding: Dimensions.PADDING_SIZE_DEFAULT,
           ),
 
           //divider
-          const Divider(color: Colors.grey),
+          Dimensions().paddingDivider(context),
 
           //product list
           if (controller.sanPhamList.isEmpty)
-            const SizedBox.shrink()
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: Text("Chưa có sản phẩm tương tự"),
+              ),
+            )
           else
             GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: .7,
-                  crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
-                  crossAxisCount: 2,
-                ),
-                itemCount: controller.sanPhamList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () => controller.onGetProduct(index: index),
-                      child: ProductWidget(
-                        imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
-                            .toString(),
-                        name: controller.sanPhamList[index].ten.toString(),
-                        price:
-                            "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
-                      ));
-                }),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: .7,
+                crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
+                crossAxisCount: 2,
+              ),
+              itemCount: controller.sanPhamList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => controller.onGetProduct(index: index),
+                  child: ProductWidget(
+                    imgUrl:
+                        controller.sanPhamList[index].hinhAnhDaiDien.toString(),
+                    name: controller.sanPhamList[index].ten.toString(),
+                    price:
+                        "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );
@@ -323,8 +377,8 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                   top: 0,
                   right: Dimensions.PADDING_SIZE_LARGE,
                   child: Container(
-                    height: DeviceUtils.getScaledHeight(context, .019),
-                    width: DeviceUtils.getScaledWidth(context, .038),
+                    height: DeviceUtils.getScaledHeight(context, .025),
+                    width: DeviceUtils.getScaledWidth(context, .04),
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
@@ -335,8 +389,9 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                           ? controller.chiTietDonHangList.length.toString()
                           : "0",
                       style: const TextStyle(
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                          color: ColorResources.WHITE),
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                        color: ColorResources.WHITE,
+                      ),
                     ),
                   ),
                 ),
@@ -354,10 +409,11 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
   Widget _bottomCart(
       BuildContext context, V2ProductDetailController controller) {
     return Container(
-      height: DeviceUtils.getScaledHeight(context, .08),
+      height: DeviceUtils.getScaledHeight(context, .1),
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_SMALL,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        horizontal: Dimensions.PADDING_SIZE_SMALL,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+      ),
       decoration: BoxDecoration(
         color: ColorResources.WHITE,
         borderRadius: const BorderRadius.only(
@@ -366,7 +422,10 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
         ),
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.shade300, blurRadius: 15, spreadRadius: 1)
+            color: Colors.grey.shade300,
+            blurRadius: 15,
+            spreadRadius: 1,
+          ),
         ],
       ),
       child: Row(
@@ -376,20 +435,29 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
 
           // button add to cart
           Expanded(
-              flex: 9,
-              child: BtnCustom(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        controller.quantityProduct = 1;
-                        return _modalBottomSheet(context);
-                      },
-                    );
-                  },
-                  color: ColorResources.PRIMARY,
-                  text: "Thêm vào giỏ hàng",
-                  width: double.infinity))
+            flex: 9,
+            child: (controller.stock == 0)
+                ? BtnCustom(
+                    onTap: () {},
+                    color: ColorResources.GREY,
+                    text: "Hết hàng",
+                    width: DeviceUtils.getScaledWidth(context, .9),
+                  )
+                : BtnCustom(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          controller.quantityProduct = 1;
+                          return _modalBottomSheet(context);
+                        },
+                      );
+                    },
+                    color: ColorResources.PRIMARY,
+                    text: "Thêm vào giỏ hàng",
+                    width: double.infinity,
+                  ),
+          ),
         ],
       ),
     );
@@ -427,19 +495,23 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
     return GetBuilder<V2ProductDetailController>(
       builder: (controller) {
         return Container(
-          height: DeviceUtils.getScaledSize(context, 0.8),
-          padding: const EdgeInsets.all(20),
+          height: DeviceUtils.getScaledSize(context, .7),
+          padding: const EdgeInsets.all(
+            Dimensions.PADDING_SIZE_DEFAULT,
+          ),
           child: Column(
             children: [
               Row(
                 children: [
                   Expanded(
-                      flex: 9,
-                      child: Center(
-                          child: Text(
+                    flex: 9,
+                    child: Center(
+                      child: Text(
                         "Chọn số lượng",
                         style: Dimensions.fontSizeStyle18w600(),
-                      ))),
+                      ),
+                    ),
+                  ),
 
                   ///
                   /// close
@@ -467,9 +539,12 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                   ),
                 ],
               ),
+
               const Divider(
                 color: Colors.grey,
               ),
+
+              //image
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -477,32 +552,29 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                   Expanded(
                     flex: 2,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          Dimensions.BORDER_RADIUS_DEFAULT,
-                        ),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: Images.placeholder,
-                          height: DeviceUtils.getScaledSize(context, .2),
-                          width: DeviceUtils.getScaledSize(context, .2),
-                          image: controller.sanPhamResponse.hinhAnhDaiDien
-                              .toString(),
-                          fit: BoxFit.cover,
-                          imageErrorBuilder: (c, o, s) => Image.asset(
-                            Images.placeholder,
-                            height: DeviceUtils.getScaledSize(context, .2),
-                            width: DeviceUtils.getScaledSize(context, .2),
-                            fit: BoxFit.fill,
-                          ),
-                        )),
+                      borderRadius: BorderRadius.circular(
+                        Dimensions.BORDER_RADIUS_DEFAULT,
+                      ),
+                      child: FadeInImageCustom(
+                        urlImage: controller.sanPhamResponse.hinhAnhDaiDien
+                            .toString(),
+                        height: .2,
+                        width: .2,
+                      ),
+                    ),
                   ),
+
                   const SizedBox(
                     width: Dimensions.MARGIN_SIZE_DEFAULT,
                   ),
+
+                  //infomation
                   Expanded(
                       flex: 7,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          //name
                           Text(
                             controller.sanPhamResponse.ten.toString(),
                             maxLines: 2,
@@ -510,6 +582,8 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                             ),
                           ),
+
+                          //price
                           Text(
                             "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamResponse.gia.toString()))} vnđ",
                             style:
@@ -523,23 +597,33 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                           //button quanlity
                           Row(
                             children: [
-                              _iconQuality(context, onTap: () {
-                                controller.decrementQuality();
-                              },
-                                  icon: Icon(Icons.remove,
-                                      color: controller.quantityProduct == 1
-                                          ? Colors.grey
-                                          : ColorResources.PRIMARY),
+                              _iconQuality(
+                                context,
+                                onTap: () {
+                                  controller.decrementQuality();
+                                },
+                                icon: Icon(
+                                  Icons.remove,
                                   color: controller.quantityProduct == 1
                                       ? Colors.grey
-                                      : null),
+                                      : ColorResources.PRIMARY,
+                                ),
+                                color: controller.quantityProduct == 1
+                                    ? Colors.grey
+                                    : null,
+                              ),
                               _iconQuality(context,
                                   text: controller.quantityProduct.toString()),
-                              _iconQuality(context, onTap: () {
-                                controller.incrementQuality();
-                              },
-                                  icon: const Icon(Icons.add_outlined,
-                                      color: Colors.grey)),
+                              _iconQuality(
+                                context,
+                                onTap: () {
+                                  controller.incrementQuality();
+                                },
+                                icon: const Icon(
+                                  Icons.add_outlined,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -560,9 +644,6 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                 color: ColorResources.PRIMARY,
                 text: "Thêm vào giỏ hàng",
                 width: DeviceUtils.getScaledWidth(context, .9),
-              ),
-              const SizedBox(
-                height: Dimensions.MARGIN_SIZE_DEFAULT,
               ),
             ],
           ),

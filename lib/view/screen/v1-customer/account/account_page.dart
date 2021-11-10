@@ -5,8 +5,8 @@ import 'package:share/share.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/large_size_app_bar.dart';
+import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v1-customer/account/account_controller.dart';
 
 class V1AccountPage extends GetView<V1AccountController> {
@@ -58,7 +58,7 @@ class V1AccountPage extends GetView<V1AccountController> {
                         ),
 
                         // avatar
-                        _avatar(context, controller: controller),
+                        _avatar(context),
 
                         // profile
                         _items(
@@ -169,45 +169,49 @@ class V1AccountPage extends GetView<V1AccountController> {
   ///
   ///avatar
   ///
-  Widget _avatar(BuildContext context,
-      {required V1AccountController controller}) {
-    return Column(
-      children: [
-        //image
-        Container(
-          margin: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
-          height: DeviceUtils.getScaledSize(context, .2),
-          width: DeviceUtils.getScaledSize(context, .2),
-          child: ClipOval(
-            child: FadeInImage.assetNetwork(
-                placeholder: Images.placeholder,
-                image: controller.taiKhoanResponse.hinhDaiDien.toString(),
-                fit: BoxFit.cover,
-                imageErrorBuilder: (c, o, s) => const CircleAvatar(
-                    backgroundImage: AssetImage(Images.placeholder))),
-          ),
-        ),
+  Widget _avatar(BuildContext context) {
+    return GetBuilder<V1AccountController>(
+      builder: (controller) {
+        return Column(
+          children: [
+            //image
+            Container(
+              margin:
+                  const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
+              height: DeviceUtils.getScaledSize(context, .2),
+              width: DeviceUtils.getScaledSize(context, .2),
+              child: ClipOval(
+                child: FadeInImageCustom(
+                  urlImage: controller.taiKhoanResponse.hinhDaiDien.toString(),
+                  height: double.infinity,
+                  width: double.infinity,
+                ),
+              ),
+            ),
 
-        //full name
-        Text(
-          controller.taiKhoanResponse.hoTen.toString(),
-          style: Dimensions.fontSizeStyle16w600(),
-        ),
+            //full name
+            Text(
+              controller.taiKhoanResponse.hoTen.toString(),
+              style: Dimensions.fontSizeStyle16w600(),
+            ),
 
-        SizedBox(
-          height: DeviceUtils.getScaledHeight(context, .01),
-        ),
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .01),
+            ),
 
-        //email
-        Text(
-          controller.taiKhoanResponse.email.toString(),
-          style: Dimensions.fontSizeStyle16w600(),
-        ),
+            //email
+            if (controller.taiKhoanResponse.email != "null")
+              Text(
+                controller.taiKhoanResponse.email.toString(),
+                style: Dimensions.fontSizeStyle16w600(),
+              ),
 
-        SizedBox(
-          height: DeviceUtils.getScaledHeight(context, .01),
-        ),
-      ],
+            SizedBox(
+              height: DeviceUtils.getScaledHeight(context, .01),
+            ),
+          ],
+        );
+      },
     );
   }
 

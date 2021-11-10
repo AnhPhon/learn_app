@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -89,7 +88,6 @@ class V3OrderManagementController extends GetxController
   Future<void> getAllOrder({bool? isRefresh = true}) async {
     //get user id
     userId = (await sl.get<SharedPreferenceHelper>().userId)!;
-    print(userId);
 
     //isRefresh
     if (isRefresh!) {
@@ -106,7 +104,6 @@ class V3OrderManagementController extends GetxController
       limit: limitMax,
       filter: "&idTaiKhoan=$userId&sortBy=created_at:desc",
       onSuccess: (orderAll) {
-        print(orderAll.length);
         //check is empty
         if (orderAll.isEmpty) {
           refreshController![tabController!.index].loadNoData();
@@ -188,6 +185,8 @@ class V3OrderManagementController extends GetxController
     tabController!.addListener(() {
       //check call fisrt times
       if (tabController!.indexIsChanging) {
+        //reset no data
+        refreshController![tabController!.index].resetNoData();
         isLoadingOrder = true;
         update();
 

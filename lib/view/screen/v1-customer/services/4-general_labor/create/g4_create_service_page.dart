@@ -23,7 +23,15 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Tạo đơn dịch vụ"),
+      appBar: AppBarWidget(
+        title: "Tạo đơn dịch vụ",
+        leading: IconButton(onPressed: (){
+          _controller.onBack();
+        }, icon: const Icon(
+          Icons.arrow_back_ios,
+          color: ColorResources.WHITE,
+        )),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -107,7 +115,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
           allowEdit: true,
           controller: controller.startTime,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "12-11-2021",
+          holdplacer: "Vui lòng chọn ngày bắt đầu",
           label: "Ngày bắt đầu",
           obligatory: true,
           typeInput: TextInputType.text,
@@ -119,7 +127,7 @@ class V1G4CreateServicePage extends GetView<V1G4CreateServiceController> {
           allowEdit: true,
           controller: controller.endTime,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "22-11-2021",
+          holdplacer: "Vui lòng chọn ngày kết thúc",
           label: "Ngày kết thúc",
           obligatory: true,
           typeInput: TextInputType.text,

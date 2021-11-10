@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
@@ -46,6 +48,7 @@ class V3HomePage extends GetView<V3HomeController> {
 
                   // news widget
                   _newsWidget(),
+                  const SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
 
                   // product widget
                   _productWidget()
@@ -184,7 +187,8 @@ class V3HomePage extends GetView<V3HomeController> {
               child: ItemListWidget(
                 onTap: () {
                   // call detail
-                  controller.onNewsDetailClick(index: index);
+                  controller.onClickHotNewsDetail(
+                      controller.tinTucList[index].id.toString());
                 },
                 title: controller.tinTucList[index].tieuDe!,
                 icon1: const Icon(Icons.remove_red_eye),

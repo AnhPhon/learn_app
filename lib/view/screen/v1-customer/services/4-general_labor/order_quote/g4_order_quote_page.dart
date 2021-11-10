@@ -14,11 +14,21 @@ import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/screen/v1-customer/services/4-general_labor/order_quote/g4_order_quote_controller.dart';
 
 class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
+  final V1G4OrderQuoteController _controller = Get.find<V1G4OrderQuoteController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Báo giá đơn hàng"),
+      appBar: AppBarWidget(
+        title: "Báo giá đơn hàng",
+        leading: IconButton(onPressed: (){
+          _controller.onBack();
+        }, icon: const Icon(
+            Icons.arrow_back_ios,
+            color: ColorResources.WHITE,
+          )
+        ),
+      ),
       body: GetBuilder(
         builder: (V1G4OrderQuoteController controller) {
           if(controller.isLoading){
@@ -77,7 +87,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowMultiline: false,
           controller: controller.timeNumberController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "10",
+          holdplacer: "Nhập số lượng thời gian yêu cầu",
           hidden: false,
           label: "Số lượng thời gian",
           obligatory: true,
@@ -90,7 +100,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowMultiline: false,
           controller: controller.personNumberController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "10",
+          holdplacer: "Nhập số lượng người yêu cầu",
           hidden: false,
           label: "Số lượng người",
           obligatory: true,
@@ -103,7 +113,7 @@ class V1G4OrderQuotePage extends GetView<V1G4OrderQuoteController> {
           allowMultiline: true,
           controller: controller.descController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "mô tả công việc",
+          holdplacer: "Nhập nội dung mô tả công việc",
           hidden: false,
           label: "Mô tả lại dịch vụ yêu cầu của quý khách để chúng tôi nắm rõ và phục vụ tốt hơn (tránh trường hợp nhầm lẫn",
           obligatory: true,

@@ -3,15 +3,13 @@ class VatTuRequest {
   String? tenVatTu;
   String? quyCach;
   String? donVi;
-  String? donGia;
-  String? idDonDichVu;
 
   VatTuRequest({
       this.id,
       this.tenVatTu,
       this.quyCach,
       this.donVi,
-      this.donGia});
+      });
   
   ///
   /// From JSON
@@ -21,8 +19,6 @@ class VatTuRequest {
     tenVatTu = json['tenVatTu'].toString();
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
-    donGia = json['donGia'].toString();
-    idDonDichVu = json['idDonDichVu'].toString();
   }
 
   ///
@@ -42,10 +38,7 @@ class VatTuRequest {
     // check null donVi
     if (donVi != null) data['donVi'] = donVi; 
 
-    // check null donGia
-    if (donGia != null) data['donGia'] = donGia; 
-    // check null idDonDichVu
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu; 
+
 
 
     return data;

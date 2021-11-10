@@ -7,10 +7,8 @@ import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
 import 'package:template/view/basewidget/component/row_text.dart';
-import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/checkbox_custom.dart';
 import 'package:template/view/basewidget/widgets/group_title.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
@@ -25,24 +23,26 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
       builder: (controller) {
         return Scaffold(
           appBar: const AppBarWidget(title: "Xem đơn công việc"),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Tiêu đề nhóm công việc
-              const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Tiêu đề nhóm công việc
+                const GroupTitle(title: "Dịch vụ thường xuyên đã có giá"),
 
-              //tieu de cong viec
-              tieuDeCongViec(controller: controller),
+                //tieu de cong viec
+                tieuDeCongViec(controller: controller),
 
-              //gioi tinh check box
-              gioiTinh(),
+                //gioi tinh check box
+                gioiTinh(),
 
-              //thoigian lam viec
-              thoiGianLamViec(controller: controller),
+                //thoigian lam viec
+                thoiGianLamViec(controller: controller),
 
-              //content
-              content(context, controller: controller),
-            ],
+                //content
+                content(context, controller: controller),
+              ],
+            ),
           ),
           bottomNavigationBar: Container(
             height: DeviceUtils.getScaledHeight(context, .1),
@@ -62,12 +62,14 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
             ),
             child: RowText(
               text1: "Tổng tiền",
-              text2: "${PriceConverter.convertPrice(
-                context,
-                double.parse(
-                  controller.donDichVuResponse.tongDon.toString(),
-                ),
-              )} vnđ",
+              text2: controller.donDichVuResponse.tongDon == null
+                  ? ""
+                  : "${PriceConverter.convertPrice(
+                      context,
+                      double.parse(
+                        controller.donDichVuResponse.tongDon.toString(),
+                      ),
+                    )} vnđ",
               colorRed: true,
             ),
           ),
@@ -192,9 +194,11 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
             ),
             child: TextHighlight(
               title: "Ngày bắt đầu: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayBatDau.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayBatDau == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayBatDau.toString(),
+                    ),
             ),
           ),
           Padding(
@@ -203,9 +207,11 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
             ),
             child: TextHighlight(
               title: "Ngày kết thúc: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayKetThuc.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayKetThuc == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayKetThuc.toString(),
+                    ),
             ),
           ),
           Padding(
@@ -214,8 +220,10 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
             ),
             child: TextHighlight(
               title: "Loại dịch vụ: ",
-              content: controller.donDichVuResponse.idLoaiCongViec!.tenCongViec
-                  .toString(),
+              content: controller.donDichVuResponse.idLoaiCongViec == null
+                  ? ""
+                  : controller.donDichVuResponse.idLoaiCongViec!.tenCongViec
+                      .toString(),
             ),
           ),
           Padding(
@@ -224,8 +232,9 @@ class V1ServiceReviewG4Page extends GetView<V1ServiceReviewG4Controller> {
             ),
             child: TextHighlight(
               title: "Đơn giá: ",
-              content:
-                  "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuResponse.soTien.toString()))} vnđ",
+              content: controller.donDichVuResponse.soTien == null
+                  ? ""
+                  : "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuResponse.soTien.toString()))} vnđ",
             ),
           ),
           Padding(

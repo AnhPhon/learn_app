@@ -25,60 +25,63 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 ),
 
                 //job title
-                const ContentWidget(
+                ContentWidget(
                   label: "Tiêu đề công việc ",
-                  content: "Bảo vệ công ty (bảo vệ chuyên nghiệp)",
+                  content: controller.donDichVuResponse.tieuDe.toString(),
                 ),
 
                 //sex
-                const ContentWidget(
+                ContentWidget(
                   label: "Giới tính: ",
-                  content: "Nam",
+                  content: controller.donDichVuResponse.gioiTinh.toString(),
                 ),
 
                 //The amount of people
-                const ContentWidget(
+                ContentWidget(
                   label: "Số lượng người yêu cầu: ",
-                  content: "50 người",
+                  content: controller.donDichVuResponse.soLuongYeuCau.toString(),
                 ),
 
                 //working time in day
-                const ContentWidget(
+                ContentWidget(
                   label: "Thời gian làm trong ngày ",
-                  content:
-                      "Sáng: Từ  ??h?? đến ??h??\nChiều: Từ ??h?? đến ??h??\nTối: Từ ??h?? đến ??h??",
+                  content: controller.donDichVuResponse.idThoiGianLamViecs!
+                      .map((e) => e.toString())
+                      .join('\n'),
                 ),
 
                 //start
-                const ContentWidget(
+                ContentWidget(
                   label: "Ngày bắt đầu: ",
-                  content: "12/09/2021",
+                  content: controller.getDateOutput(controller
+                      .donDichVuResponse.ngayBatDau
+                      .toString()),
                 ),
 
                 //end
-                const ContentWidget(
+                ContentWidget(
                   label: "Ngày kết thúc: ",
-                  content: "12/09/2021",
+                  content: controller.getDateOutput(controller
+                      .donDichVuResponse.ngayKetThuc
+                      .toString()),
                 ),
 
                 //value of customer idea
-                const ContentWidget(
+                ContentWidget(
                   label: "Giá trị khách hàng đề xuất (nếu có) ",
-                  content:
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                  content: controller.donDichVuResponse.giaTriKhachDeXuat.toString(),
                 ),
 
                 //working address
-                const ContentWidget(
+                ContentWidget(
                   label: "Địa điểm làm việc: ",
-                  content: "Quận Hải Châu",
+                  content: controller.donDichVuResponse.diaDiemLamViec.toString(),
                 ),
 
                 //job description
-                const ContentWidget(
+                ContentWidget(
                   label: "Mô tả, yêu cầu công việc ",
-                  content:
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                  content: controller.donDichVuResponse.moTaChiTiet.toString(),
                 ),
 
                 const SizedBox(

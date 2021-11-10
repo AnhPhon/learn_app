@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -11,8 +8,8 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/constants/enum_helper.dart';
-import 'package:template/utils/snack_bar.dart';
-import 'package:template/view/basewidget/snackbar/snack_bar_widget.dart';
+import 'package:template/utils/alert.dart';
+
 
 class V1G4CreateServiceController extends GetxController{
  
@@ -111,24 +108,36 @@ class V1G4CreateServiceController extends GetxController{
   ///
   void onClickContinueButton(){
     if(tommorow == false && afternoon == false && tonight == false){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian làm việc không được để trống");
+      Alert.error( message: "Thời gian làm việc không được để trống");
       return;
     }else if(startTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian bắt đầu không được để trống");
+      Alert.error( message: "Thời gian bắt đầu không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: DateConverter.estimatedDateOnly(DateTime.now())) > 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      Alert.error( message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return;
     }else if(endTime.text.toString().isEmpty){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Thời gian kết thúc không được để trống");
+      Alert.error( message: "Thời gian kết thúc không được để trống");
       return;
     }else if(DateConverter.differenceDate(startDate: startTime.text.toString(), endDate: endTime.text.toString()) <= 0){
-      SnackBarUtils.showSnackBar(title: "Vui lòng kiểm tra lại!", message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      Alert.error( message: "Ngày kết thúc phải lơn hơn ngày bắt đầu");
       return;
     }else{
        //Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE);
-       Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE, arguments: request());
+       Get.toNamed(AppRoutes.V1_G4_ORDER_QUOTE, arguments: request())!.then((value){
+         if(value != null){
+           serviceApplication = (value as DonDichVuRequest);
+           workTitleController.text = value.tieuDe ?? '';
+         }
+       });
     }
+  }
+
+  ///
+  /// on Back
+  ///
+  void onBack(){
+    Get.back(result: serviceApplication);
   }
 
   ///
@@ -160,19 +169,19 @@ class V1G4CreateServiceController extends GetxController{
   ///
   String getGender(){
     if(GENDER.Nam == gender){
-      return "Nam";
+      return "1";
     }else if(GENDER.Nu == gender){
-      return "Nữ";
+      return "0";
     }
-    return 'Không yêu cầu';
+    return '2';
   }
 
   @override
   void onClose() {
-    onClose();
     workTitleController.dispose();
     startTime.dispose();
     endTime.dispose();
+    super.onClose();
   }
 }
 

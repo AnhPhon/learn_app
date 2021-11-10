@@ -29,18 +29,18 @@ class V1JobDetailController extends GetxController {
     super.onInit();
     donDichVuResponse = Get.arguments as DonDichVuResponse;
     // lấy hình ảnh bảng vẽ
-    for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
+    for (final banVe in donDichVuResponse.hinhAnhBanVes!) {
       if (banVe.trim().isNotEmpty) {
         hinhAnhBanVe.add(banVe);
       }
     }
-    getVatTu();
+    getListChiTietVatTu();
   }
 
   ///
   ///vatTu
   ///
-  void getVatTu() {
+  void getListChiTietVatTu() {
     vatTuProvider.paginate(
       page: 1,
       limit: 100,
@@ -51,7 +51,7 @@ class V1JobDetailController extends GetxController {
         update();
       },
       onError: (error) {
-        print("V1JobDetailController getVatTu onError $error");
+        print("V1JobDetailController getListChiTietVatTu onError $error");
       },
     );
   }

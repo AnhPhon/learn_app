@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/view/basewidget/text/text_white_border.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 class ItemListWidget extends StatelessWidget {
@@ -15,10 +15,16 @@ class ItemListWidget extends StatelessWidget {
   final Color? colorRowText1;
   final Color? colorRowText2;
   final Color? colorSubTitle;
+  final Icon? iconSubTitle;
   final Icon? icon1;
   final Icon? icon2;
   final bool? isSpaceBetween;
   final bool? isStart;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final List<BoxShadow>? boxShadow;
+  final bool? textOverImage;
+  final String? stringTextOverImage;
 
   const ItemListWidget({
     Key? key,
@@ -34,7 +40,13 @@ class ItemListWidget extends StatelessWidget {
     this.icon2,
     required this.urlImage,
     this.subTitle,
+    this.padding,
+    this.margin,
     this.colorSubTitle,
+    this.iconSubTitle,
+    this.boxShadow,
+    this.textOverImage = false,
+    this.stringTextOverImage,
   }) : super(key: key);
 
   @override
@@ -42,35 +54,41 @@ class ItemListWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-        ),
+        margin: margin ??
+            const EdgeInsets.symmetric(
+              vertical: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+            ),
+        padding: padding ?? EdgeInsets.zero,
         height: DeviceUtils.getScaledHeight(context, .15),
         decoration: BoxDecoration(
           borderRadius:
               BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
           color: ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 2,
-                color: ColorResources.BLACK.withOpacity(.2),
-                offset: const Offset(0, 2)),
-          ],
+          boxShadow: boxShadow ??
+              [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2)),
+              ],
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 4,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                  ),
-                  child: FadeInImageCustom(
-                    urlImage: urlImage,
-                    height: double.infinity,
-                    width: double.infinity,
-                  )),
+              child: (textOverImage == true)
+                  ? Stack(
+                      children: [
+                        _image(),
+                        Center(
+                          child: TextWhiteBorder(
+                            text: stringTextOverImage ?? "",
+                          ),
+                        ),
+                      ],
+                    )
+                  : _image(),
             ),
             const SizedBox(
               width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
@@ -98,19 +116,30 @@ class ItemListWidget extends StatelessWidget {
                           ),
                         ),
                         if (subTitle != null)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                            ),
-                            child: Text(
-                              subTitle.toString(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Dimensions.FONT_SIZE_DEFAULT,
-                                color: colorSubTitle ?? ColorResources.GREY,
+                          const SizedBox(
+                            height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                          ),
+                        if (subTitle != null)
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (iconSubTitle != null) iconSubTitle!,
+                              if (iconSubTitle != null && subTitle != null)
+                                const SizedBox(
+                                  width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+                                ),
+                              Flexible(
+                                child: Text(
+                                  subTitle.toString(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                                    color: colorSubTitle ?? ColorResources.GREY,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                       ],
                     ),
@@ -124,6 +153,7 @@ class ItemListWidget extends StatelessWidget {
                         if (icon1 != null || rowText1 != null)
                           Expanded(
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 if (icon1 != null) icon1!,
                                 if (icon1 != null && rowText1 != null)
@@ -149,6 +179,7 @@ class ItemListWidget extends StatelessWidget {
                         if (icon2 != null || rowText2 != null)
                           Expanded(
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: (isSpaceBetween == true)
                                   ? MainAxisAlignment.end
                                   : MainAxisAlignment.start,
@@ -185,6 +216,22 @@ class ItemListWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  ///
+  ///image
+  ///
+  Widget _image() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        Dimensions.BORDER_RADIUS_EXTRA_SMALL,
+      ),
+      child: FadeInImageCustom(
+        urlImage: urlImage,
+        height: double.infinity,
+        width: double.infinity,
       ),
     );
   }

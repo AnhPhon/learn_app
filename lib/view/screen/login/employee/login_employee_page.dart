@@ -55,13 +55,11 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
                       // input password
                       _passwordEnterWidget(context),
 
-
-                       // remember password
+                      // remember password
                       _rememberAndForgotPasswordWidget(context),
 
                       // login button
                       _onBtnLoginTap(context),
-
                     ],
                   ),
                 ),
@@ -157,7 +155,7 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
                 textInputAction: TextInputAction.done,
                 textAlignVertical: TextAlignVertical.center,
                 controller: controller.emailController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.emailAddress,
                 cursorColor: ColorResources.PRIMARY,
                 decoration: const InputDecoration(
                   isDense: true,
@@ -249,7 +247,6 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
     );
   }
 
-
   ///
   /// _on Btn Login Tap
   ///
@@ -292,7 +289,6 @@ class LoginEmployeePage extends GetView<LoginEmployeeController> {
       ),
     );
   }
-
 
   ///
   /// _on Btn Login

@@ -68,6 +68,7 @@ class V1AccountController extends GetxController {
     Get.toNamed(AppRoutes.V1_PERSONAL_INFORMATION)!.then((value) {
       if (value == true) {
         isLoading = true;
+        update();
         getAccounInfomation();
       }
     });

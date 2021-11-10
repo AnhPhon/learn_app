@@ -28,6 +28,7 @@ import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/constants/enum_helper.dart';
 import 'package:template/sharedpref/constants/preferences.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
@@ -70,9 +71,11 @@ class RegisterController extends GetxController {
 
 
   //Data default
-  final genders = [
-    "Nam", "Nữ","Khác"
-  ];
+  final genders = {
+    GENDER.Nam: "Nam", 
+    GENDER.Nu:"Nữ",
+    GENDER.Khac:"Khác"
+  };
   final juridicals = [
     'Doanh nghiệp',
     'Tổ chức',
@@ -96,7 +99,7 @@ class RegisterController extends GetxController {
 
   // Variable
   LoaiTaiKhoanResponse? loaiTaiKhoan;
-  String? gender;
+  GENDER? gender;
   String? juridical;
   TinhTpResponse? province;
   QuanHuyenResponse? district;
@@ -144,7 +147,7 @@ class RegisterController extends GetxController {
   ///
   /// on change gender
   ///
-  void onChangedGender(String gender){
+  void onChangedGender(GENDER gender){
     this.gender = gender;
     update();
   }
@@ -405,6 +408,17 @@ class RegisterController extends GetxController {
     return true;
   }
 
+///
+  /// Get giới tính
+  ///
+  String getGender() {
+    if (GENDER.Nam == gender) {
+      return "1";
+    } else if (GENDER.Nu == gender) {
+      return "0";
+    }
+    return '2';
+  }
 
   ///
   /// on button register tap
@@ -418,7 +432,7 @@ class RegisterController extends GetxController {
       auth.mST = taxCodeController.text.toString();
       auth.hoTen = fullNameController.text.toString();
       auth.ngaySinh = DateConverter.formatYYYYMMDD(birthDateController.text.toString());
-      auth.gioiTinh = gender;
+      auth.gioiTinh = getGender();
       auth.cMND = cmndController.text.toString();
       auth.ngayCap = DateConverter.formatYYYYMMDD(dateRangeController.text.toString());
       auth.noiCap = placeIssueController.text.toString();

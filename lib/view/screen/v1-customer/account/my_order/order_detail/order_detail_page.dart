@@ -121,7 +121,9 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
         children: [
           rowText(
             text1: "ID",
-            text2: controller.donHangResponse.id.toString(),
+            text2: controller.donHangResponse.maDonHang
+                .toString()
+                .replaceFirst("D", "Đ"),
           ),
           Dimensions().paddingDivider(context),
           rowText(
@@ -395,6 +397,18 @@ class V1OrderDetailPage extends GetView<V1OrderDetailController> {
             text2:
                 "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.phiDichVu.toString()))} vnđ",
           ),
+
+          const SizedBox(
+            height: Dimensions.MARGIN_SIZE_SMALL,
+          ),
+
+          //Khuyến mãi
+          if (controller.donHangResponse.khuyenMai != null)
+            rowText(
+              text1: "Khuyến mãi",
+              text2:
+                  "${PriceConverter.convertPrice(context, double.parse(controller.donHangResponse.khuyenMai.toString()))} vnđ",
+            ),
 
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_SMALL,

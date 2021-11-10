@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/cong_viec_nhan_vien_response.dart';
 import 'package:template/helper/date_converter.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/view/basewidget/animated_custom_dialog.dart';
-import 'package:template/view/basewidget/my_dialog.dart';
 
 class V4WorkProgressController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -37,6 +36,12 @@ class V4WorkProgressController extends GetxController
   List<CongViecNhanVienResponse> dangLamModelList = [];
   List<CongViecNhanVienResponse> hoanThanhModelList = [];
   List<CongViecNhanVienResponse> chamTreModelList = [];
+
+  //Khai báo Thời gian thực tế hiện tại
+  String ngayThucTe = DateConverter.estimatedDateOnly(DateTime.now());
+
+  //convert datet time do yyyy-MM-dd
+  String tienDoChamTre = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   //khai báo seleceted Index
   int selectedIndex = 0;
@@ -348,6 +353,25 @@ class V4WorkProgressController extends GetxController
   ///
   void onClickToDetailNewWork(String idNewWork) {
     sl.get<SharedPreferenceHelper>().saveIdNewWork(id: idNewWork);
-    Get.toNamed(AppRoutes.V4_DETAIL_WORK);
+    Get.toNamed(AppRoutes.V4_DETAIL_WORK)!.then((value) {
+      // Get Data tiến độ công việc MỚI TẠO
+      getTienDoCongViecMoiTao(isRefresh: true);
+
+      // Get Data tiến độ công việc ĐANG LÀM
+      getTienDoCongViecDangLam(isRefresh: true);
+
+      // Get Data tiến độ công việc HOÀN THÀNH
+      getTienDoCongViecHoanThanh(isRefresh: true);
+
+      // Get Data tiến độ công việc CHẬM TRỄ
+      getTienDoCongViecChamTre(isRefresh: true);
+    });
+  }
+
+  ///
+  ///Back and reset Home Page
+  ///
+  void backHome() {
+    Get.back(result: true);
   }
 }

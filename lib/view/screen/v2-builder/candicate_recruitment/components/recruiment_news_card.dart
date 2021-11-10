@@ -45,7 +45,7 @@ class V2RecruimentNewsCard extends GetView<V2RecruitmentController> {
                                       .toString(),
                                 )),
                             Text(
-                              '${controller.onChangeNameTinhTp(tuyenDungResponse.noiLamViec.toString())}',
+                              tuyenDungResponse.idNoiLamViec!.ten ?? '',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
@@ -107,34 +107,56 @@ class V2RecruimentNewsCard extends GetView<V2RecruitmentController> {
                                               ),
                                             ],
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                  Icons.access_time_rounded,
-                                                  size: Dimensions
-                                                      .ICON_SIZE_DEFAULT,
-                                                  color: ColorResources.BLACK),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: Dimensions
-                                                        .PADDING_SIZE_EXTRA_SMALL),
-                                                child: Text(
-                                                    controller
-                                                        .onCutString(
-                                                            tuyenDungResponse
-                                                                .idHinhThucLamViec!
-                                                                .tieuDe
-                                                                .toString())
-                                                        .toString(),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                      fontSize: Dimensions
-                                                          .FONT_SIZE_DEFAULT,
-                                                    )),
-                                              ),
-                                            ],
-                                          )
+                                          if (tuyenDungResponse.isUngTuyen ==
+                                              true)
+                                            Row(
+                                              children: const [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: Dimensions
+                                                          .PADDING_SIZE_EXTRA_SMALL),
+                                                  child: Text('Đã ứng tuyển',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: Dimensions
+                                                              .FONT_SIZE_DEFAULT,
+                                                          color: ColorResources
+                                                              .RED)),
+                                                ),
+                                              ],
+                                            )
+                                          else
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                    Icons.access_time_rounded,
+                                                    size: Dimensions
+                                                        .ICON_SIZE_DEFAULT,
+                                                    color:
+                                                        ColorResources.BLACK),
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .only(
+                                                      left: Dimensions
+                                                          .PADDING_SIZE_EXTRA_SMALL),
+                                                  child: Text(
+                                                      controller
+                                                          .onCutString(
+                                                              tuyenDungResponse
+                                                                  .idHinhThucLamViec!
+                                                                  .tieuDe
+                                                                  .toString())
+                                                          .toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_DEFAULT,
+                                                      )),
+                                                ),
+                                              ],
+                                            )
                                         ],
                                       ),
                                     ),

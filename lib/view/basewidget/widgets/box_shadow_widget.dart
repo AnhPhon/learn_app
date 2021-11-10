@@ -31,8 +31,8 @@ class BoxShadowWidget extends StatelessWidget {
           padding: padding ?? const EdgeInsets.all(0.0),
           decoration: BoxDecoration(
             boxShadow: boxShadowCustom ?? boxShadow,
-            borderRadius:
-                BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
+            borderRadius: BorderRadius.circular(
+                borderRadius ?? Dimensions.BORDER_RADIUS_EXTRA_SMALL),
             color: ColorResources.WHITE,
           ),
           child: child),

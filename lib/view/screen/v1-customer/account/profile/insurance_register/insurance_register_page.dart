@@ -39,7 +39,7 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
                 _tabBarWidget(context: context, controller: controller),
 
                 const SizedBox(
-                  height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  height: Dimensions.MARGIN_SIZE_SMALL,
                 ),
 
                 if (controller.currentIndex == 0)
@@ -80,17 +80,18 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
                                           .dangKyBaoHiemResponse[index]
                                           .idBaoHiem!
                                           .ten!,
-                                      subTitle:
-                                          "${controller.dangKyBaoHiemResponse[index].phi}vnđ",
+                                      subTitle: (controller
+                                                  .dangKyBaoHiemResponse[index]
+                                                  .phi ==
+                                              "null")
+                                          ? ""
+                                          : "${PriceConverter.convertPrice(context, double.parse(controller.dangKyBaoHiemResponse[index].phi.toString()))}vnđ",
                                       colorSubTitle: ColorResources.RED,
                                       rowText2: (controller
                                                   .dangKyBaoHiemResponse[index]
                                                   .ngayHetHan ==
                                               "null")
-                                          ? controller
-                                              .dangKyBaoHiemResponse[index]
-                                              .ngayHetHan
-                                              .toString()
+                                          ? ""
                                           : "Ngày hết hạn: ${DateConverter.formatDateTime(controller.dangKyBaoHiemResponse[index].ngayHetHan.toString())}",
                                       isSpaceBetween: true,
                                     ),
@@ -131,17 +132,18 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
       width: double.infinity,
       height: DeviceUtils.getScaledHeight(context, .07),
       child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.titleTabBar.length,
-          itemBuilder: (BuildContext context, int index) {
-            return TabBarWidget(
-                onTap: () => controller.onChangeTab(index),
-                index: index,
-                currentIndex: controller.currentIndex,
-                title: controller.titleTabBar[index].toString());
-          }),
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.titleTabBar.length,
+        itemBuilder: (BuildContext context, int index) {
+          return TabBarWidget(
+              onTap: () => controller.onChangeTab(index),
+              index: index,
+              currentIndex: controller.currentIndex,
+              title: controller.titleTabBar[index].toString());
+        },
+      ),
     );
   }
 
@@ -151,10 +153,12 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
   Widget _textTitle(BuildContext context, {required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: Dimensions.PADDING_SIZE_LARGE + 2,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
       ),
       child: Text(
         title,
+        textAlign: TextAlign.center,
         style: Dimensions.fontSizeStyle20w600(),
       ),
     );
@@ -166,29 +170,30 @@ class V1InsuranceRegisterPage extends GetView<V1InsuranceRegisterController> {
   Widget _radFeeList(BuildContext context,
       {required V1InsuranceRegisterController controller}) {
     return ListView.builder(
-        shrinkWrap: true,
-        itemCount: controller.baoHiemResponse!.phis!.length,
-        itemBuilder: (BuildContext ctx, int index) {
-          return RadioListTile(
-            title: Text(
-              "Phí ${PriceConverter.convertPrice(
-                context,
-                double.parse(
-                  controller.baoHiemResponse!.phis![index].toString(),
-                ),
-              )} vnđ. STBH: ${PriceConverter.convertPrice(
-                context,
-                double.parse(
-                  controller.baoHiemResponse!.soTienBaoHiems![index].toString(),
-                ),
-              )} vnđ",
-            ),
-            value: index,
-            activeColor: ColorResources.PRIMARY,
-            groupValue: controller.indexFee,
-            onChanged: controller.setSelectedIndexFee,
-          );
-        });
+      shrinkWrap: true,
+      itemCount: controller.baoHiemResponse!.phis!.length,
+      itemBuilder: (BuildContext ctx, int index) {
+        return RadioListTile(
+          title: Text(
+            "Phí ${PriceConverter.convertPrice(
+              context,
+              double.parse(
+                controller.baoHiemResponse!.phis![index].toString(),
+              ),
+            )} vnđ. STBH: ${PriceConverter.convertPrice(
+              context,
+              double.parse(
+                controller.baoHiemResponse!.soTienBaoHiems![index].toString(),
+              ),
+            )} vnđ",
+          ),
+          value: index,
+          activeColor: ColorResources.PRIMARY,
+          groupValue: controller.indexFee,
+          onChanged: controller.setSelectedIndexFee,
+        );
+      },
+    );
   }
 
   ///

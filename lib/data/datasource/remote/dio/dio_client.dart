@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
@@ -12,23 +13,24 @@ class DioClient {
   String? token;
   LoggingInterceptor? loggingInterceptor;
 
-  DioClient(){
+  DioClient() {
     _init();
   }
 
   Future<void> _init() async {
-    token = sl.get<SharedPreferenceHelper>().jwtToken.toString();
-    dio = Dio();
-    dio!
-      ..options.baseUrl = app_constants.BASE_URL
-      ..options.connectTimeout = 60 * 1000
-      ..options.receiveTimeout = 60 * 1000
-      ..httpClientAdapter
-      ..options.headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      };
-    dio!.interceptors.add(sl.get<LoggingInterceptor>());
+    sl.get<SharedPreferenceHelper>().jwtToken.then((token) {
+      dio = Dio();
+      dio!
+        ..options.baseUrl = app_constants.BASE_URL
+        ..options.connectTimeout = 60 * 1000
+        ..options.receiveTimeout = 60 * 1000
+        ..httpClientAdapter
+        ..options.headers = {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        };
+      dio!.interceptors.add(sl.get<LoggingInterceptor>());
+    });
   }
 
   Future<Response> get(
@@ -145,7 +147,99 @@ class DioClient {
       final String fileName = file.path.split('/').last;
       final FormData formData = FormData.fromMap({
         "image": await MultipartFile.fromFile(file.path, filename: fileName),
-      }); 
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadFile(
+    String uri, {
+    required PlatformFile file,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final String fileName = file.path!.split('/').last;
+      final FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(file.path.toString(),
+            filename: fileName),
+      });
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadImages(
+    String uri, {
+    required List<File> files,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final arrayFiles = [];
+      for (var i = 0; i < files.length; i++) {
+        arrayFiles.add(await MultipartFile.fromFile(files[i].path.toString()));
+      }
+
+      final FormData formData = FormData.fromMap({'files': arrayFiles});
+
+      final response = await dio!.post(
+        uri,
+        data: formData,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      );
+
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException('Unable to process the data');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadFiles(
+    String uri, {
+    required List<PlatformFile> files,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    try {
+      final arrayFiles = [];
+      for (var i = 0; i < files.length; i++) {
+        arrayFiles.add(await MultipartFile.fromFile(files[i].path.toString()));
+      }
+
+      final FormData formData = FormData.fromMap({'files': arrayFiles});
 
       final response = await dio!.post(
         uri,

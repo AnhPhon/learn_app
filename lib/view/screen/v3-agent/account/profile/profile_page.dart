@@ -4,24 +4,28 @@ import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/screen/v2-builder/account/profile/profile_controller.dart';
+import 'package:template/view/screen/v3-agent/account/profile/profile_controller.dart';
 
-class V2ProfilePage extends GetView<V2ProfileController> {
+class V3ProfilePage extends GetView<V3ProfileController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<V2ProfileController>(
-        init: V2ProfileController(),
+    return GetBuilder<V3ProfileController>(
+        init: V3ProfileController(),
         builder: (controller) {
           return Scaffold(
             appBar: AppBarWidget(title: controller.title),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Đăng ký và cam kết thuế
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+
+                  //tax register
                   _items(
-                    icon: const Icon(Icons.collections_bookmark),
+                    icon: const Icon(Icons.gavel),
                     text: "Đăng ký và cam kết thuế",
-                    onTap: controller.onRegisterAndCommitPageClick,
+                    onTap: () => controller.onTaxRegisterPageClick(),
                   ),
 
                   //contract
@@ -43,14 +47,6 @@ class V2ProfilePage extends GetView<V2ProfileController> {
                     icon: const Icon(Icons.account_balance_wallet_outlined),
                     text: "Bảo hiểm khác",
                     onTap: () => controller.onOtherInsurancePageClick(),
-                  ),
-
-                  // Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc
-                  _items(
-                    icon: const Icon(Icons.collections_bookmark),
-                    text:
-                        "Giấy chứng nhận khám sức khoẻ đạt đủ điều kiện làm việc",
-                    onTap: () {},
                   ),
 
                   //tax

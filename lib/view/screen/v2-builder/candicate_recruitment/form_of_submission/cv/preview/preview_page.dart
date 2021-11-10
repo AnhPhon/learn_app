@@ -74,8 +74,7 @@ class V2PreviewPage extends GetView<V2PreviewController> {
                       .toString()),
               child: BoxShadowWidget(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                child: Text(
-                    controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
+                child: Text(controller.tenFile.toString(),
                     style: const TextStyle(
                       fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                     )),

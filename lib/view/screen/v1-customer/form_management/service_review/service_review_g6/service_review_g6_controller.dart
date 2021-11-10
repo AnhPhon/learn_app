@@ -4,7 +4,7 @@ import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/thong_so_ky_thuat_response.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 
-class V1ServiceReviewG6Controller extends GetxController{
+class V1ServiceReviewG6Controller extends GetxController {
   //donDichVu
   DonDichVuResponse donDichVuResponse = DonDichVuResponse();
   List<String> hinhAnhBanVe = [];
@@ -30,15 +30,9 @@ class V1ServiceReviewG6Controller extends GetxController{
     super.onInit();
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
+      thoiGianLamViec();
+      getThongSoKyThuat();
     }
-        // lấy hình ảnh bảng vẽ
-    for (final banVe in donDichVuResponse.hinhAnhBanVe!.split(",")) {
-      if (banVe.trim().isNotEmpty) {
-        hinhAnhBanVe.add(banVe);
-      }
-    }
-    thoiGianLamViec();
-    getThongSoKyThuat();
   }
 
   ///

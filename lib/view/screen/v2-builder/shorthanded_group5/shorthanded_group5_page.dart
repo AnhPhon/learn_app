@@ -26,71 +26,101 @@ class V2ShorthandedGroup5Page extends GetView<V2ShorthandedGroup5Controller> {
                   ),
 
                   //job title
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Tiêu đề công việc",
-                    content: "Dịch vụ nấu nướng (đám cưới hỏi, giỗ,…)",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.tieuDe.toString(),
                   ),
 
                   //Specification
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thông số kỹ thuật: ",
-                    content: "Thông số 1\nThông số 2",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.idThongSoKyThuats!
+                            .map((e) => e.tieuDe.toString())
+                            .join('\n'),
                   ),
 
                   //The amount of people
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Số lượng người yêu cầu: ",
-                    content: "50 người",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.soLuongYeuCau
+                            .toString(),
                   ),
 
                   //working time in day
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Thời gian làm trong ngày ",
-                    content:
-                        "Sáng: Từ  ??h?? đến ??h??\nChiều: Từ ??h?? đến ??h??\nTối: Từ ??h?? đến ??h??",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.idThoiGianLamViecs!
+                            .map((e) => e.toString())
+                            .join('\n'),
                   ),
 
                   //start
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Ngày làm việc: ",
-                    content: "12/09/2021",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.soNgay.toString(),
                   ),
 
                   //Place of receipt
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Địa điểm bốc hàng dự kiến ",
-                    content: "120 QUách Thị Trang, TP Đà Nẵng",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.diaDiemBocHang
+                            .toString(),
                   ),
 
                   //shipping adress
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Địa điểm trả hàng dự kiến ",
-                    content: "120 QUách Thị Trang, TP Đà Nẵng",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.diaDiemTraHang
+                            .toString(),
                   ),
 
                   //haulage distance
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Cự ly vận chuyển tương đối: ",
-                    content: "xxx",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.cuLyVanChuyen
+                            .toString(),
                   ),
 
                   //road bed width
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Bề rộng mặt đường nhận hàng: ",
-                    content: "xxx",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.beRongDiemNhan
+                            .toString(),
                   ),
 
                   //road bed width
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Bề rộng mặt đường trả hàng: ",
-                    content: "xxx",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.beRongDiemTra
+                            .toString(),
                   ),
 
                   //job description
-                  const ContentWidget(
+                  ContentWidget(
                     label: "Mô tả, yêu cầu công việc ",
-                    content:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                    content: controller.donDichVuResponse == null
+                        ? ''
+                        : controller.donDichVuResponse!.moTaChiTiet.toString(),
                   ),
 
                   const SizedBox(

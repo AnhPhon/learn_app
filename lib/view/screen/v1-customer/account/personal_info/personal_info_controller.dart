@@ -14,6 +14,7 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/alert.dart';
+import 'package:template/utils/validate.dart';
 
 class V1PersonalInfoController extends GetxController {
   //file image
@@ -23,13 +24,13 @@ class V1PersonalInfoController extends GetxController {
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
 
   //textEditingController
-  TextEditingController? nameCompanyController;
-  TextEditingController? fullNameController;
-  TextEditingController? bornController;
-  TextEditingController? cMNDController;
-  TextEditingController? ngayCapController;
-  TextEditingController? phoneController;
-  TextEditingController? emailController;
+  TextEditingController nameCompanyController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController bornController = TextEditingController();
+  TextEditingController cMNDController = TextEditingController();
+  TextEditingController ngayCapController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   //TaiKhoan
   TaiKhoanProvider taiKhoanProvider = TaiKhoanProvider();
@@ -58,13 +59,13 @@ class V1PersonalInfoController extends GetxController {
 
   @override
   void onClose() {
-    nameCompanyController!.dispose();
-    fullNameController!.dispose();
-    bornController!.dispose();
-    cMNDController!.dispose();
-    ngayCapController!.dispose();
-    phoneController!.dispose();
-    emailController!.dispose();
+    nameCompanyController.dispose();
+    fullNameController.dispose();
+    bornController.dispose();
+    cMNDController.dispose();
+    ngayCapController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
     super.onClose();
   }
 
@@ -83,7 +84,10 @@ class V1PersonalInfoController extends GetxController {
           taiKhoanResponse = value;
 
           //set controller.text
-          nameCompanyController = TextEditingController(text: value.tenPhapLy);
+          if (value.tenPhapLy != "null") {
+            nameCompanyController =
+                TextEditingController(text: value.tenPhapLy);
+          }
           fullNameController = TextEditingController(text: value.hoTen);
           //convert date to ddYYmmmm
           bornController = TextEditingController(
@@ -99,7 +103,9 @@ class V1PersonalInfoController extends GetxController {
             ),
           );
           phoneController = TextEditingController(text: value.soDienThoai);
-          emailController = TextEditingController(text: value.email);
+          if (value.email != "null") {
+            emailController = TextEditingController(text: value.email);
+          }
 
           isLoading = false;
           update();
@@ -126,9 +132,11 @@ class V1PersonalInfoController extends GetxController {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+      EasyLoading.show(status: 'Loading...');
+
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
-      uploadImage(image: imageTemporary);
+      uploadImage(image: [imageTemporary]);
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
@@ -138,11 +146,12 @@ class V1PersonalInfoController extends GetxController {
   ///
   ///upload image
   ///
-  void uploadImage({required File image}) {
-    imageUpdateProvider.add(
-      file: image,
+  void uploadImage({required List<File> image}) {
+    imageUpdateProvider.addImages(
+      files: image,
       onSuccess: (value) {
-        taiKhoanRequest.hinhDaiDien = value.data;
+        EasyLoading.dismiss();
+        taiKhoanRequest.hinhDaiDien = value.files!.first;
       },
       onError: (error) {
         print("V1PersonalInfoController uploadImage onError $error");
@@ -155,28 +164,31 @@ class V1PersonalInfoController extends GetxController {
   ///
   void updateAccount(BuildContext context) {
     //validate
-    if (nameCompanyController!.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
-    } else if (fullNameController!.text.isEmpty) {
+    if (nameCompanyController.text.isEmpty) {
+      Alert.error(
+          message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
+    } else if (fullNameController.text.isEmpty) {
       Alert.error(message: 'Vui lòng nhập họ và tên');
-    } else if (phoneController!.text.isEmpty) {
+    } else if (phoneController.text.isEmpty) {
       Alert.error(message: 'Vui lòng nhập số điện thoại');
-    } else if (emailController!.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập email');
+    } else if (emailController.text.isNotEmpty &&
+        Validate.email(emailController.text) == false) {
+      Alert.error(message: "Email không hợp lệ");
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
 
       //set data
       taiKhoanRequest.id = idUser;
-      taiKhoanRequest.tenPhapLy = nameCompanyController!.text;
-      taiKhoanRequest.hoTen = fullNameController!.text;
+      taiKhoanRequest.tenPhapLy = nameCompanyController.text;
+      taiKhoanRequest.hoTen = fullNameController.text;
       taiKhoanRequest.gioiTinh = sex ?? taiKhoanResponse.gioiTinh;
       taiKhoanRequest.ngaySinh = DateConverter.convertStringToDate(
-        bornController!.text.toString(),
+        bornController.text.toString(),
       ).toString();
-      taiKhoanRequest.soDienThoai = phoneController!.text;
-      taiKhoanRequest.email = emailController!.text;
+      taiKhoanRequest.soDienThoai = phoneController.text;
+      taiKhoanRequest.email =
+          (emailController.text.isNotEmpty) ? emailController.text : "";
 
       //update
       taiKhoanProvider.update(

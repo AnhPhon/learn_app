@@ -20,7 +20,13 @@ class LabelContent extends StatelessWidget {
           height: Dimensions.PADDING_SIZE_EXTRA_LARGE,
           child: Row(
             children: [
-              Text(title, style: Dimensions.textTitleStyleCard()),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: Dimensions.FONT_SIZE_LARGE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               if (isRequired == true)
                 const Text(
                   "*",

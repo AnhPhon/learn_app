@@ -84,7 +84,7 @@ class V1WalletPage extends GetView<V1WalletController> {
         margin: const EdgeInsets.symmetric(
             horizontal: Dimensions.PADDING_SIZE_DEFAULT),
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        height: DeviceUtils.getScaledHeight(context, .12),
+        height: DeviceUtils.getScaledHeight(context, .14),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(
@@ -122,7 +122,7 @@ class V1WalletPage extends GetView<V1WalletController> {
                               Dimensions.BORDER_RADIUS_LARGE - 5)),
                     ),
                     const SizedBox(
-                      width: Dimensions.MARGIN_SIZE_SMALL,
+                      width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
                     ),
 
                     //status
@@ -172,6 +172,7 @@ class V1WalletPage extends GetView<V1WalletController> {
             GestureDetector(
               onTap: () => controller.onRecharge(),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(
                     Icons.account_balance_wallet_rounded,

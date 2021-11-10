@@ -69,8 +69,9 @@ class V1FormManagementController extends GetxController {
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}",
+          "&idTaiKhoan=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}&sortBy=created_at:desc",
       onSuccess: (data) {
+        print(data.length);
         if (data.isEmpty) {
           refreshController.loadNoData();
         } else {
@@ -81,10 +82,13 @@ class V1FormManagementController extends GetxController {
             if (currentIndex == 0) {
               donDichVuList.removeWhere(
                 (element) =>
-                    element.idTrangThaiDonDichVu!.id == NHOM_3 ||
-                    element.idTrangThaiDonDichVu!.id == NHOM_4,
+                    element.idNhomDichVu!.id == NHOM_DICH_VU_3 ||
+                    element.idNhomDichVu!.id == NHOM_DICH_VU_4,
               );
             }
+
+            donDichVuList.removeWhere(
+                (element) => element.idNhomDichVu!.id == NHOM_DICH_VU_8);
 
             refreshController.refreshCompleted();
           } else {
@@ -105,18 +109,20 @@ class V1FormManagementController extends GetxController {
   /// changed tab
   ///
   void onChangeTab(int index) {
-    //set index
-    currentIndex = index;
+    if (currentIndex != index) {
+      //set index
+      currentIndex = index;
 
-    //loading
-    isLoading = true;
+      //loading
+      isLoading = true;
 
-    //resetNoData
-    refreshController.resetNoData();
+      //resetNoData
+      refreshController.resetNoData();
 
-    //getDonDichVu
-    getDonDichVu();
-    update();
+      //getDonDichVu
+      getDonDichVu();
+      update();
+    }
   }
 
   ///
@@ -144,7 +150,7 @@ class V1FormManagementController extends GetxController {
   void onProductResponseClick({required int index}) {
     print(donDichVuList[index].id);
     print(donDichVuList[index].idNhomDichVu!.id);
-    if (donDichVuList[index].idNhomDichVu!.id == NHOM_1) {
+    if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_1) {
       print("NHOM_1");
       Get.toNamed(
         (currentIndex == 0)
@@ -152,7 +158,7 @@ class V1FormManagementController extends GetxController {
             : AppRoutes.V1_SERVICE_REVIEW_G1,
         arguments: donDichVuList[index],
       );
-    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_2) {
+    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_2) {
       print("NHOM_2");
       Get.toNamed(
         (currentIndex == 0)
@@ -160,21 +166,21 @@ class V1FormManagementController extends GetxController {
             : AppRoutes.V1_SERVICE_REVIEW_G2,
         arguments: donDichVuList[index],
       );
-    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_3 &&
+    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_3 &&
         currentIndex == 1) {
       print("NHOM_3");
       Get.toNamed(
         AppRoutes.V1_SERVICE_REVIEW_G3,
         arguments: donDichVuList[index],
       );
-    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_4 &&
+    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_4 &&
         currentIndex == 1) {
       print("NHOM_4");
       Get.toNamed(
         AppRoutes.V1_SERVICE_REVIEW_G4,
         arguments: donDichVuList[index],
       );
-    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_5) {
+    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_5) {
       print("NHOM_5");
       Get.toNamed(
         (currentIndex == 0)
@@ -182,7 +188,7 @@ class V1FormManagementController extends GetxController {
             : AppRoutes.V1_SERVICE_REVIEW_G5,
         arguments: donDichVuList[index],
       );
-    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_6) {
+    } else if (donDichVuList[index].idNhomDichVu!.id == NHOM_DICH_VU_6) {
       print("NHOM_6");
       Get.toNamed(
         (currentIndex == 0)

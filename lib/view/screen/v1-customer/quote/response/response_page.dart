@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:template/helper/price_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
@@ -52,7 +51,7 @@ class V1ResponsePage extends GetView<V1ResponseController> {
                       children: List.generate(controller.infoCard.keys.length,
                           (index) {
                         final keys = controller.infoCard.keys;
-                        String key = keys.toList()[index];
+                        final String key = keys.toList()[index];
                         return Padding(
                           padding: const EdgeInsets.only(
                             top: Dimensions.PADDING_SIZE_DEFAULT,

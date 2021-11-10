@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
-import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
-import 'package:template/view/basewidget/component/btn_component_border.dart';
-import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/text_highlight.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/view_recruitment_news/view_recruitment_news_controller.dart';
 
@@ -33,8 +29,9 @@ class V2ViewRecruitmentNewsPage
                     children: [
                       content(controller: controller),
                       // Button tiếp tục
-
-                      postButton(context: context, controller: controller)
+                      if (controller.isUngTuyen) Container(),
+                      if (!controller.isUngTuyen)
+                        postButton(context: context, controller: controller)
                     ],
                   ),
                 );

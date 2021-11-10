@@ -21,6 +21,7 @@ class DonHangResponse {
   String? soTien;
   String? tongTien;
   String? hinhAnh;
+  String? maDonHang;
   TrangThaiDonHangResponse? idTrangThaiDonHang;
   TrangThaiThanhToanResponse? idTrangThaiThanhToan;
   HinhThucThanhToanResponse? idHinhThucThanhToan;
@@ -42,6 +43,7 @@ class DonHangResponse {
       this.soTien,
       this.tongTien,
       this.hinhAnh,
+      this.maDonHang,
       this.idTrangThaiDonHang,
       this.idTrangThaiThanhToan,
       this.idHinhThucThanhToan,
@@ -103,6 +105,7 @@ class DonHangResponse {
     soTien = json['soTien'].toString();
     tongTien = json['tongTien'].toString();
     hinhAnh = json['hinhAnh'].toString();
+    maDonHang = json['maDonHang'].toString();
 
     // mapping idTrangThaiDonHang                                                              
     if (json['idTrangThaiDonHang'] != null && json['idTrangThaiDonHang'].toString().length!=24) {                                                  
@@ -173,6 +176,9 @@ class DonHangResponse {
 
     // check null hinhAnh
     if (hinhAnh != null) data['hinhAnh'] = hinhAnh; 
+
+    // check null maDonHang
+    if (maDonHang != null) data['maDonHang'] = maDonHang; 
 
     // check null idTrangThaiDonHang
     if (idTrangThaiDonHang != null)

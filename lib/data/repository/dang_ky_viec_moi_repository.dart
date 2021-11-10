@@ -26,7 +26,8 @@ class DangKyViecMoiRepository {
   ///
   Future<ApiResponse> add(DangKyViecMoiRequest data) async {
     try {
-      final response = await dioClient!.post('/dang-ky-viec-mois', data: data.toJson());
+      final response =
+          await dioClient!.post('/dang-ky-viec-mois', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -38,7 +39,8 @@ class DangKyViecMoiRepository {
   ///
   Future<ApiResponse> update(DangKyViecMoiRequest data) async {
     try {
-      final response = await dioClient!.put('/dang-ky-viec-mois', data: data.toJson());
+      final response =
+          await dioClient!.put('/dang-ky-viec-mois', data: data.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -50,8 +52,7 @@ class DangKyViecMoiRepository {
   ///
   Future<ApiResponse> delete(String id) async {
     try {
-      final response =
-          await dioClient!.delete('/dang-ky-viec-mois/$id');
+      final response = await dioClient!.delete('/dang-ky-viec-mois/$id');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,11 +60,12 @@ class DangKyViecMoiRepository {
   }
 
   ///
-  /// Get paginate dang-ky-viec-mois "page": 1, "limit": 10, filter 
+  /// Get paginate dang-ky-viec-mois "page": 1, "limit": 10, filter
   ///
   Future<ApiResponse> paginate(int page, int limit, String filter) async {
     try {
-      String uri = '/dang-ky-viec-mois/paginate?page=$page&limit=$limit'.toString();
+      String uri =
+          '/dang-ky-viec-mois/paginate?page=$page&limit=$limit'.toString();
 
       // add condition filter
       if (filter != '') {

@@ -22,6 +22,7 @@ class DropDownMapButton<T> extends StatelessWidget {
     this.padding,
     this.margin,
     this.height,
+    this.contentPadding,
   }) : super(key: key);
 
   final String? hint;
@@ -34,7 +35,7 @@ class DropDownMapButton<T> extends StatelessWidget {
   final Map<T, String> data;
   final T? value;
   final bool? labelBold, obligatory, isBorder, isShadow, isColorFieldWhite;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? padding, contentPadding;
   final EdgeInsetsGeometry? margin;
   @override
   Widget build(BuildContext context) {
@@ -104,9 +105,12 @@ class DropDownMapButton<T> extends StatelessWidget {
                           borderSide: (isBorder == true)
                               ? const BorderSide(color: ColorResources.PRIMARY)
                               : BorderSide.none),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: DeviceUtils.getScaledSize(context, 0.025),
-                          vertical: DeviceUtils.getScaledSize(context, 0.038)),
+                      contentPadding: contentPadding ??
+                          EdgeInsets.symmetric(
+                              horizontal:
+                                  DeviceUtils.getScaledSize(context, 0.025),
+                              vertical:
+                                  DeviceUtils.getScaledSize(context, 0.03)),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0)),
                       focusedBorder: OutlineInputBorder(
@@ -122,6 +126,7 @@ class DropDownMapButton<T> extends StatelessWidget {
                           style: TextStyle(color: colorText),
                           value: value,
                           isDense: true,
+                          isExpanded: true,
                           onChanged: onChanged,
                           items: data.entries
                               .map((item) => DropdownMenuItem<T>(

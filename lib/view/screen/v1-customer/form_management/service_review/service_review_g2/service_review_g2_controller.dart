@@ -6,9 +6,6 @@ class V1ServiceReviewG2Controller extends GetxController {
   //DonDichVu
   DonDichVuResponse donDichVuResponse = DonDichVuResponse();
 
-  //hinhAnhChiTiet
-  List<String> hinhAnhChiTiet = [];
-
   // Chọn thời gian làm việc
   bool tommorow = false;
   bool afternoon = false;
@@ -19,12 +16,6 @@ class V1ServiceReviewG2Controller extends GetxController {
     super.onInit();
     if (Get.arguments != null) {
       donDichVuResponse = Get.arguments as DonDichVuResponse;
-    }
-    // lấy hình ảnh bảng vẽ
-    for (final hinhAnh in donDichVuResponse.hinhAnhChiTiet!.split(",")) {
-      if (hinhAnh.trim().isNotEmpty) {
-        hinhAnhChiTiet.add(hinhAnh);
-      }
     }
     thoiGianLamViec();
   }

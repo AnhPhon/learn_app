@@ -33,11 +33,13 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
                   //tieu de cong viec
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        vertical: Dimensions.PADDING_SIZE_SMALL),
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
                     child: TextHighlight(
-                        title: "Tiêu đề công việc: ",
-                        content: controller.donDichVuResponse.tieuDe!),
+                      title: "Tiêu đề công việc: ",
+                      content: controller.donDichVuResponse.tieuDe.toString(),
+                    ),
                   ),
 
                   //thong so ky thuat
@@ -46,8 +48,9 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
                   //so luong yeu cau
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-                        vertical: Dimensions.PADDING_SIZE_SMALL),
+                      horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      vertical: Dimensions.PADDING_SIZE_SMALL,
+                    ),
                     child: TextHighlight(
                       title: "Số lượng yêu cầu: ",
                       content:
@@ -155,25 +158,29 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Ngày làm việc: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayBatDau.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayBatDau == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayBatDau.toString(),
+                    ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Ngày kết thúc dự kiến: ",
-              content: DateConverter.formatDateTime(
-                controller.donDichVuResponse.ngayKetThuc.toString(),
-              ),
+              content: controller.donDichVuResponse.ngayKetThuc == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayKetThuc.toString(),
+                    ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Bề rộng mặt đường làm việc: ",
-              content: "${controller.donDichVuResponse.beRongDiemNhan}m",
+              content: "${controller.donDichVuResponse.beRongMatDuong} m",
             ),
           ),
           Padding(
@@ -192,7 +199,8 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
   ///hinhAnhBanVe
   ///
   Widget hinhAnhBanVe({required V1ServiceReviewG6Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanVe!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanVes == null ||
+            controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +214,7 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_DEFAULT),
                 child: ImageListHorizontal(
-                  imageList: controller.hinhAnhBanVe,
+                  imageList: controller.donDichVuResponse.hinhAnhBanVes!,
                   padding: EdgeInsets.zero,
                 ),
               ),

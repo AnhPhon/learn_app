@@ -20,7 +20,14 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Báo giá đơn hàng"),
+      appBar: AppBarWidget(title: "Báo giá đơn hàng",
+      leading: IconButton(onPressed: (){
+        _controller.onBack();
+      }, icon: const Icon(
+          Icons.arrow_back_ios,
+          color: ColorResources.WHITE,
+        )),
+      ),
       body: GetBuilder(
         builder: (V1G3OrderQuoteController controller) {
           return SingleChildScrollView(
@@ -85,7 +92,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           allowMultiline: false,
           controller: controller.personNumberController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "10",
+          holdplacer: "Nhập số lượng người yêu cầu",
           hidden: false,
           label: "Số lượng người",
           textInputAction: TextInputAction.next,
@@ -99,7 +106,7 @@ class V1G3OrderQuotePage extends GetView<V1G3OrderQuoteController> {
           allowMultiline: true,
           controller: controller.descController,
           fontSize: Dimensions.FONT_SIZE_LARGE,
-          holdplacer: "mô tả công việc",
+          holdplacer: "Nhập mô tả công việc",
           hidden: false,
           label: "Mô tả lại dịch vụ yêu cầu của quý khách để chúng tôi nắm rõ và phục vụ tốt hơn (tránh trường hợp nhầm lẫn)",
           obligatory: true,

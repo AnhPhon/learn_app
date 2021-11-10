@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/helper/price_converter.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/product_widget.dart';
+import 'package:template/view/basewidget/component/row_text.dart';
+import 'package:template/view/basewidget/format/format_html.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_detail/product_detail_controller.dart';
-import 'package:template/view/screen/v3-agent/product_management/product_detail/product_specification.dart';
 
 class V3ProductDetailPage extends GetView<V3ProductDetailController> {
   @override
@@ -30,7 +31,7 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
             body: Scrollbar(
               child: SmartRefresher(
                 controller: controller.refreshController,
-                enablePullUp: true,
+                enablePullUp: controller.sanPhamList.isNotEmpty,
                 onRefresh: controller.onRefresh,
                 onLoading: controller.onLoading,
                 footer: const ClassicFooter(
@@ -157,17 +158,15 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
     return Container(
       height: controller.isLoadingMore
           ? null
-          : DeviceUtils.getScaledHeight(context, .263),
+          : DeviceUtils.getScaledHeight(context, .5),
       color: ColorResources.WHITE,
-      padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //label
           const Label(
             label: "Thông tin sản phẩm",
             obligatory: false,
-            horizontalPadding: 0,
             paddingTitle: 0,
             topPadding: Dimensions.PADDING_SIZE_DEFAULT,
           ),
@@ -175,16 +174,78 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
           //divider
           Dimensions().paddingDivider(context),
 
+          //product detail
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: Column(
+              children: [
+                RowText(
+                  text1: "Mã sản phẩm",
+                  text2: controller.sanPhamResponse.maSanPham.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Thương hiệu",
+                  text2: controller.sanPhamResponse.thuongHieu.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Danh mục",
+                  text2: controller.sanPhamResponse.idDanhMucSanPham!.ten
+                      .toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Quy cách",
+                  text2: controller.sanPhamResponse.quyCach.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Tình trạng",
+                  text2: controller.nhapKhoHangDaiLyList.isEmpty
+                      ? "Chưa có tình trạng SP"
+                      : controller.sanPhamResponse.tinhTrangSanPham.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+                Dimensions().paddingDivider(context, height: 0),
+                RowText(
+                  text1: "Số lượng tồn",
+                  text2: controller.stock == 0
+                      ? "Hết hàng"
+                      : controller.stock.toString(),
+                  notFontSize: true,
+                  notFontWeight: true,
+                  colorRed: true,
+                ),
+              ],
+            ),
+          ),
+
           //infomation product
           if (controller.isLoadingMore)
-            V3ProductSpecification(
-              productSpecification: controller.sanPhamResponse.moTa.toString(),
+            Specification(
+              specification: controller.sanPhamResponse.moTa.toString(),
             )
           else
             Flexible(
-              child: V3ProductSpecification(
-                productSpecification:
-                    controller.sanPhamResponse.moTa.toString(),
+              child: Specification(
+                specification: controller.sanPhamResponse.moTa.toString(),
               ),
             ),
 
@@ -247,28 +308,37 @@ class V3ProductDetailPage extends GetView<V3ProductDetailController> {
 
           //product list
           if (controller.sanPhamList.isEmpty)
-            const SizedBox.shrink()
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: Text("Chưa có sản phẩm tương tự"),
+              ),
+            )
           else
             GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: .7,
-                  crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
-                  crossAxisCount: 2,
-                ),
-                itemCount: controller.sanPhamList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                      onTap: () => controller.onGetProduct(index: index),
-                      child: ProductWidget(
-                        imgUrl: controller.sanPhamList[index].hinhAnhDaiDien
-                            .toString(),
-                        name: controller.sanPhamList[index].ten.toString(),
-                        price:
-                            "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
-                      ));
-                }),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: .7,
+                crossAxisSpacing: Dimensions.PADDING_SIZE_LARGE,
+                crossAxisCount: 2,
+              ),
+              itemCount: controller.sanPhamList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => controller.onGetProduct(index: index),
+                  child: ProductWidget(
+                    imgUrl:
+                        controller.sanPhamList[index].hinhAnhDaiDien.toString(),
+                    name: controller.sanPhamList[index].ten.toString(),
+                    price:
+                        "${PriceConverter.convertPrice(context, double.parse(controller.sanPhamList[index].gia.toString()))} vnđ",
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );

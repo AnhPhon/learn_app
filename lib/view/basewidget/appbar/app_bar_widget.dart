@@ -80,7 +80,7 @@ class _CustomAppBarState extends State<AppBarWidget> {
                       return widget.leading ??
                           IconButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Get.back();
                               },
                               icon: const Icon(
                                 Icons.arrow_back_ios,

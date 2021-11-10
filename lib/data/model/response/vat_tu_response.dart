@@ -5,8 +5,6 @@ class VatTuResponse {
   String? tenVatTu;
   String? quyCach;
   String? donVi;
-  String? donGia;
-  String? idDonDichVu;
 
   String? createdAt;
   String? updatedAt;
@@ -16,7 +14,6 @@ class VatTuResponse {
       this.tenVatTu,
       this.quyCach,
       this.donVi,
-      this.donGia,
       this.createdAt,
       this.updatedAt});
 
@@ -28,17 +25,6 @@ class VatTuResponse {
     tenVatTu = json['tenVatTu'].toString();
     quyCach = json['quyCach'].toString();
     donVi = json['donVi'].toString();
-    donGia = json['donGia'].toString();
-    // mapping idDonDichVu
-    // if (json['idDonDichVu'] != null &&
-    //     json['idDonDichVu'].toString().length != 24) {
-    //   idDonDichVu = DonDichVuResponse.fromJson(
-    //       json['idDonDichVu'] as Map<String, dynamic>);
-    // } else {
-    //   idDonDichVu = null;
-    // }
-
-    idDonDichVu = json['idDonDichVu'].toString();
 
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
@@ -61,11 +47,7 @@ class VatTuResponse {
     // check null donVi
     if (donVi != null) data['donVi'] = donVi;
 
-    // check null donGia
-    if (donGia != null) data['donGia'] = donGia;
 
-    // check null donGia
-    if (idDonDichVu != null) data['idDonDichVu'] = idDonDichVu;
 
     return data;
   }

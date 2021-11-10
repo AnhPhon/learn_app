@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/helper/date_converter.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
@@ -19,29 +20,42 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
         builder: (controller) {
           return Scaffold(
             appBar: const AppBarWidget(title: "Xem đơn công việc"),
-            body: Column(
-              children: [
-                // Tiêu đề nhóm công việc
-                const GroupTitle(
-                    title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Tiêu đề nhóm công việc
+                  const GroupTitle(
+                      title: "Dịch vụ thường xuyên khảo sát chờ báo giá"),
 
-                //tieu de cong viec
-                tieuDeCongViec(controller: controller),
+                  //tieu de cong viec
+                  tieuDeCongViec(controller: controller),
 
-                //thoigian lam viec
-                thoiGianLamViec(controller: controller),
+                  //thoigian lam viec
+                  thoiGianLamViec(controller: controller),
 
-                //moTa yeu cau
-                moTaYeuCau(controller: controller),
+                  //moTa yeu cau
+                  moTaYeuCau(controller: controller),
 
-                //hinh anh bang khoi luong cong viec
-                imageMaterial(controller: controller),
+                  //hinh anh hien trang
+                  hinhAnhHienTrang(controller: controller),
 
-                //hinh anh san pham mau, mo ta khoi luong cong viec
+                  //hinh anh san pham mau
+                  hinhAnhSanPhamMau(controller: controller),
 
-                //file
-                attchFile(context, controller: controller),
-              ],
+                  //mo ta khoi luong cong viec
+                  moTaCongViec(controller: controller),
+
+                  //hinh anh bang khoi luong cong viec
+                  imageMaterial(controller: controller),
+
+                  //file
+                  attchFile(context, controller: controller),
+
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_LARGE,
+                  ),
+                ],
+              ),
             ),
           );
         });
@@ -56,9 +70,13 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
         top: Dimensions.PADDING_SIZE_SMALL,
         left: Dimensions.PADDING_SIZE_DEFAULT,
       ),
-      child: TextHighlight(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: TextHighlight(
           title: "Tiêu đề công việc: ",
-          content: controller.donDichVuResponse.tieuDe!),
+          content: controller.donDichVuResponse.tieuDe.toString(),
+        ),
+      ),
     );
   }
 
@@ -68,8 +86,9 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   Widget workContent({required V1ServiceReviewG2Controller controller}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-          vertical: Dimensions.PADDING_SIZE_SMALL),
+        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        vertical: Dimensions.PADDING_SIZE_SMALL,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,8 +97,9 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
           Padding(
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
-                title: "Tiêu đề công việc: ",
-                content: controller.donDichVuResponse.tieuDe!),
+              title: "Tiêu đề công việc: ",
+              content: controller.donDichVuResponse.tieuDe.toString(),
+            ),
           ),
         ],
       ),
@@ -92,7 +112,10 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   Widget thoiGianLamViec({required V1ServiceReviewG2Controller controller}) {
     return Column(
       children: [
-        const Label(label: "Thời gian làm trong ngày", obligatory: true),
+        const Label(
+          label: "Thời gian làm trong ngày",
+          obligatory: false,
+        ),
         Padding(
           padding:
               const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE * 2),
@@ -124,7 +147,8 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///hinhAnhHienTrang
   ///
   Widget hinhAnhHienTrang({required V1ServiceReviewG2Controller controller}) {
-    return controller.hinhAnhChiTiet.isEmpty
+    return controller.donDichVuResponse.hinhAnhThucTes == null ||
+            controller.donDichVuResponse.hinhAnhThucTes!.isEmpty
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +171,35 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
                   horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                 ),
                 child: ImageListHorizontal(
-                  imageList: controller.hinhAnhChiTiet,
+                  imageList: controller.donDichVuResponse.hinhAnhThucTes!,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+          );
+  }
+
+  ///
+  ///hinhAnhSanPhamMau
+  ///
+  Widget hinhAnhSanPhamMau({required V1ServiceReviewG2Controller controller}) {
+    return controller.donDichVuResponse.hinhAnhBanVes == null ||
+            controller.donDichVuResponse.hinhAnhBanVes!.isEmpty
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Label(
+                label: "Hình ảnh sản phẩm mẫu",
+                obligatory: false,
+                paddingTitle: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                ),
+                child: ImageListHorizontal(
+                  imageList: controller.donDichVuResponse.hinhAnhBanVes!,
                   padding: EdgeInsets.zero,
                 ),
               ),
@@ -160,10 +212,73 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///
   Widget moTaYeuCau({required V1ServiceReviewG2Controller controller}) {
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-      child: TextHighlight(
-        title: "Mô tả yêu cầu công việc: ",
-        content: controller.donDichVuResponse.moTa!,
+      padding: const EdgeInsets.only(
+        top: Dimensions.PADDING_SIZE_SMALL,
+        left: Dimensions.PADDING_SIZE_DEFAULT,
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextHighlight(
+              title: "Thời gian bắt đầu dự kiến: ",
+              content: controller.donDichVuResponse.ngayBatDau == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayBatDau.toString(),
+                    ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
+            TextHighlight(
+              title: "Thời gian kết thúc dự kiến: ",
+              content: controller.donDichVuResponse.ngayKetThuc == null
+                  ? ""
+                  : DateConverter.formatDateTime(
+                      controller.donDichVuResponse.ngayKetThuc.toString(),
+                    ),
+            ),
+            const SizedBox(
+              height: Dimensions.MARGIN_SIZE_SMALL,
+            ),
+            TextHighlight(
+              title: "Mô tả yêu cầu công việc: ",
+              content: controller.donDichVuResponse.moTa!,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  ///mo ta khoi luong cong viec
+  ///
+  Widget moTaCongViec({required V1ServiceReviewG2Controller controller}) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: Dimensions.PADDING_SIZE_SMALL,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Label(
+            label: "Mô tả khối lượng công việc: ",
+            obligatory: false,
+            topPadding: 0,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+            ),
+            child: Text(
+              controller.donDichVuResponse.moTaChiTiet.toString(),
+              style: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -172,15 +287,16 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///hinh anh bang khoi luong cong viec
   ///
   Widget imageMaterial({required V1ServiceReviewG2Controller controller}) {
-    return controller.donDichVuResponse.hinhAnhBanKhoiLuongs!.isEmpty
+    return controller.donDichVuResponse.hinhAnhBanKhoiLuongs == null
         ? Container()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Label(
-                  label: "Hình ảnh bảng khối lượng",
-                  obligatory: false,
-                  paddingTitle: 0),
+                label: "Hình ảnh bảng khối lượng",
+                obligatory: false,
+                paddingTitle: 0,
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.PADDING_SIZE_DEFAULT,
@@ -205,18 +321,28 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///
   Widget attchFile(BuildContext context,
       {required V1ServiceReviewG2Controller controller}) {
-    return controller.donDichVuResponse.file != null
-        ? Padding(
-            padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_LARGE),
-            child: AttachButton(
-              title: "File báo giá khổi lượng",
-              color: ColorResources.WHITE,
-              onPressed: () => controller.downloadFile(
-                url: controller.donDichVuResponse.file.toString(),
+    return controller.donDichVuResponse.files == null ||
+            controller.donDichVuResponse.files!.isEmpty
+        ? const SizedBox.shrink()
+        : Column(
+            children: [
+              const Label(
+                label: "File đính kèm",
+                obligatory: false,
+                paddingTitle: 0,
               ),
-              horizontal: Dimensions.PADDING_SIZE_DEFAULT,
-            ),
-          )
-        : Container();
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
+              ),
+              AttachButton(
+                title: "File báo giá khổi lượng",
+                color: ColorResources.WHITE,
+                onPressed: () => controller.downloadFile(
+                  url: controller.donDichVuResponse.files!.first.toString(),
+                ),
+                horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+              ),
+            ],
+          );
   }
 }

@@ -1,139 +1,198 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/request/loai_bao_cao_nhan_vien.dart';
+import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
+import 'package:template/helper/date_converter.dart';
+import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/color_resources.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/alert.dart';
 
-import 'package:template/utils/dimensions.dart';
+class V4ReportController extends GetxController
+    with SingleGetTickerProviderMixin {
+  GetIt sl = GetIt.instance;
+  BaoCaoNhanVienResponse baoCaoNhanVienResponse = BaoCaoNhanVienResponse();
 
-class V4ReportController extends GetxController {
+  BaoCaoNhanVienProvider baoCaoNhanVienProvider =
+      GetIt.I.get<BaoCaoNhanVienProvider>();
+
+  //Khai báo model báo cáo
+  List<BaoCaoNhanVienResponse> baoCaoNhanVienModelList = [];
+
+  // Khai báo Danh sách lọc
+  List<BaoCaoNhanVienModel> baoCaoNhanVienModel = [
+    BaoCaoNhanVienModel(id: "0", tieuDe: "Tất cả"),
+    BaoCaoNhanVienModel(id: "1", tieuDe: "Báo cáo yêu cầu"),
+    BaoCaoNhanVienModel(id: "2", tieuDe: "Báo cáo tuần"),
+  ];
+
+  BaoCaoNhanVienModel? nhanVienModel;
+
+  // khai báo isUser
+  String idUser = '';
   //khai báo isLoading
   bool isLoading = true;
-//khai báo thời gian bắt đầu báo cáo
+
+  // refresh controller for load more refresh
+  RefreshController refreshController = RefreshController(initialRefresh: true);
+
+  // page for for load more refresh
+  int pageMax = 1;
+  int limitMax = 5;
+
+  String? filterindex;
+  //khai báo thời gian bắt đầu báo cáo
   TimeOfDay timeStartReport = const TimeOfDay(hour: 16, minute: 0);
 
   //khai báo thời gian hết báo cáo
   TimeOfDay timeEndReport = const TimeOfDay(hour: 7, minute: 0);
 
-  //set model để thiết kế UI danh sách báo cáo
-  List<Map<String, dynamic>>? uiReport;
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    uiReport = [
-      {
-        "title": "Báo cáo công việc theo yêu cầu",
-        "subtitle": "Phòng A trục A",
-        "description": "Phòng D,E,F của công trình A",
-        "address": "Ngũ Hành Sơn",
-        "daysReport": "06/10/2021",
-      },
-      {
-        "title": "Báo cáo công việc theo yêu cầu",
-        "subtitle": "Phòng B trục B",
-        "description": "Phòng D,E,F của công trình B",
-        "address": "Ngũ Hành Sơn",
-        "daysReport": "06/10/2021",
-      },
-      {
-        "title": "Báo cáo công việc theo yêu cầu",
-        "subtitle": "Phòng C trục C",
-        "description": "Phòng D,E,F của công trình B",
-        "address": "Ngũ Hành Sơn",
-        "daysReport": "06/10/2021",
-      },
-      {
-        "title": "Báo cáo công việc theo yêu cầu",
-        "subtitle": "Phòng C trục C",
-        "description": "Phòng D,E,F của công trình B",
-        "address": "Ngũ Hành Sơn",
-        "daysReport": "06/10/2021",
-      },
-    ];
+    getIdUser();
+    getReport(isRefresh: true, value: "1");
   }
 
   ///
-  ///Click to daily report
+  /// đóng TextEditingController
   ///
-  void onClickToDailyReport() {
-    Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT);
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    refreshController.dispose();
+    super.onClose();
   }
 
+  ///
+  /// get id user
+  ///
+  void getIdUser() {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      idUser = id!;
+    });
+  }
+
+  ///
+  /// lấy danh sách báo báo theo loai
+  ///
+  void getReport({required bool isRefresh, required String value}) {
+    sl.get<SharedPreferenceHelper>().userId.then((id) {
+      //isRefresh
+      if (isRefresh) {
+        pageMax = 1;
+        baoCaoNhanVienModelList.clear();
+      } else {
+        //is load more
+        pageMax++;
+      }
+      String filter = "";
+      if (value == "0") {
+        filter = '&sortBy=created_at:desc';
+      } else {
+        filter = '&loai=$value&idNhanVien=$id&sortBy=created_at:desc';
+      }
+      baoCaoNhanVienProvider.paginate(
+          page: pageMax,
+          limit: limitMax,
+          filter: filter,
+          onSuccess: (value) {
+            //check isEmpty
+            if (value.isEmpty) {
+              refreshController.loadNoData();
+            } else {
+              //is Refresh
+              if (isRefresh) {
+                baoCaoNhanVienModelList = value;
+                refreshController.refreshCompleted();
+              } else {
+                //is load more
+                baoCaoNhanVienModelList =
+                    baoCaoNhanVienModelList.toList() + value;
+                refreshController.loadComplete();
+              }
+            }
+            isLoading = false;
+            update();
+          },
+          onError: (error) {
+            print("V4ReportController getReport onError $error");
+          });
+    });
+  }
+
+  // ///
+  // ///Click to onchanged filter
+  // ///
+  // void onChanged ({required  BaoCaoNhanVienModel newValue}) {
+  //   nhanVienModel = newValue;
+  //   getReport(isRefresh: true, value: "1");
+  //   update();
+  //
+  // }
+  ///
+  /// Set reload List
+  ///
+  Future<void> onRefresh() async {
+    refreshController.resetNoData();
+    getReport(isRefresh: true, value: "1");
+  }
+
+  ///
+  /// Set load more List
+  ///
+  Future<void> onLoading() async {
+    getReport(isRefresh: false, value: "1");
+  }
+
+  // ///
+  // ///Click to daily report
+  // ///
+  // void onClickToDailyReport(BuildContext context) {
+  //   Get.toNamed(AppRoutes.V4_ADD_DAILY_REPORT)!.then((value) {
+  //     if (value == true) {
+  //       Alert.success(
+  //           message:
+  //           'Thành công');
+  //       update();
+  //     }
+  //   });
+  // }
   ///
   ///Click to report on request
   ///
-  void onClickToReportOnRequest() {
-    Get.toNamed(AppRoutes.V4_ADD_REPORT_ON_REQUEST);
+  void onClickToReportOnRequest(BuildContext context) {
+    Get.toNamed(AppRoutes.V4_ADD_REPORT_ON_REQUEST)!.then((value) {
+      if (value == true) {
+        Alert.success(message: 'Thành công');
+        update();
+        getReport(isRefresh: true, value: "1");
+      }
+    });
   }
 
   ///
-  /// Từ 16h - 7h sáng hôm say sẽ mở báo cáo ngày. Còn lại sẽ hiện Dialog thông báo hết hiệu lực để báo.
+  ///format date time
   ///
-  void managerReportTimer() {
-    // ignore: prefer_final_locals
-    double _timeStartReport = timeStartReport.hour.toDouble() +
-        (timeStartReport.minute.toDouble() / 60);
-    // ignore: prefer_final_locals
-    double _timeEndReport =
-        timeEndReport.hour.toDouble() + (timeEndReport.minute.toDouble() / 60);
-
-    // ignore: prefer_final_locals
-    double _timeNow = TimeOfDay.now().hour.toDouble() +
-        (TimeOfDay.now().minute.toDouble() / 60);
-
-    // Từ 16h hôm nay cho đến 7h sáng hôm sau thì mới cho báo cáo hằng ngày
-    if (_timeStartReport <= _timeNow) {
-      //đi tới báo cáo hằng ngày
-      return onClickToDailyReport();
-    } else if (_timeNow <= _timeEndReport) {
-      //đi tới trang báo cáo hằng ngày
-      return onClickToDailyReport();
-    } else {
-      //show dialog thông báo hết time báo cáo
-      Get.defaultDialog(
-        titlePadding: const EdgeInsets.symmetric(
-          vertical: Dimensions.PADDING_SIZE_LARGE,
-          horizontal: Dimensions.PADDING_SIZE_LARGE,
-        ),
-        radius: Dimensions.BORDER_RADIUS_DEFAULT,
-        title: "Đã qua thời gian báo cáo có hiệu lực!",
-        middleText: "Vui lòng quay lại và thực hiện báo cáo cho ngày hôm nay!",
-        cancel:
-            // Button back
-            _btnBack(),
-      );
-    }
+  String formatDateTime({required String dateTime}) {
+    return DateConverter.isoStringToLocalFullDateOnly(
+            dateTime.replaceAll("T", " ").substring(0, dateTime.length - 1))
+        .toString();
   }
 
   ///
-  ///Button quay lại khi hiển thị Dialog thông báo hết thời gian báo cáo
+  ///go to  detail report page
   ///
-  Widget _btnBack() {
-    return GestureDetector(
-      onTap: () {
-        Get.back();
-      },
-      child: Container(
-        height: Dimensions.PADDING_SIZE_LARGE * 2,
-        width: Dimensions.PADDING_SIZE_LARGE * 6,
-        decoration: BoxDecoration(
-          color: ColorResources.PRIMARY,
-          borderRadius: BorderRadius.circular(
-            Dimensions.BORDER_RADIUS_DEFAULT,
-          ),
-        ),
-        child: const Center(
-          child: Text(
-            "Quay lại",
-            style: TextStyle(
-              fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-              color: ColorResources.WHITE,
-            ),
-          ),
-        ),
-      ),
-    );
+  void onClickDetailReport(BaoCaoNhanVienResponse report) {
+    Get.toNamed(AppRoutes.V4_DETAIL_REPORT, arguments: report)!.then((value) {
+      if (value == true) {
+        update();
+        getReport(isRefresh: true, value: "1");
+      }
+    });
   }
 }

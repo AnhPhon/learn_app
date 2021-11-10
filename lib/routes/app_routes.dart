@@ -17,6 +17,12 @@ class AppRoutes {
   static const String V1_USAGE_PROCEDURE = "/v1_usage_procedure";
   static const String V1_BENEFITS = "/v1_benefits";
   static const String V1_NOTIFICATION = "/v1_notification";
+  static const String V2_NOTIFICATION = "/v2_notification";
+  static const String V3_NOTIFICATION = "/v3_notification";
+  static const String V2_DETAIL_NOTIFICATION = "/v2_detail_notification";
+  static const String V3_DETAIL_NOTIFICATION = "/v3_detail_notification";
+  static const String V2_FAIL = "/v2_fail";
+  
 
   // Phản hồi dịch vụ thường xuyên click từ thông báo
   static const String V1_ORDER_FEEDBACK_CONTRACTORS =
@@ -157,6 +163,7 @@ class AppRoutes {
   static const String V1_QUOTE_CHECK = '/v1_quote_check';
   static const String V1_QUOTE_DONE = '/v1_quote_done';
   static const String V1_QUOTE_RESPONSE = '/v1_quote_response';
+  static const String V1_QUOTE_NO_RESPONSE = '/v1_quote_no_response';
   static const String V1_QUOTE_LIST = '/V1_QUOTE_LIST';
   static const String V1_MY_ORDER = '/v1_my_order';
   static const String V1_BEFORE_RECHARGE = '/v1_before_recharge';
@@ -169,6 +176,8 @@ class AppRoutes {
   static const String V1_SERVICE_REVIEW_G4 = '/v1_service_review_g4';
   static const String V1_SERVICE_REVIEW_G5 = '/v1_service_review_g5';
   static const String V1_SERVICE_REVIEW_G6 = '/v1_service_review_g6';
+  static const String V1_WORK_IN_PROGRESS = '/v1_work_in_progress';
+  static const String V1_WORK_DONE = '/v1_work_done';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -205,9 +214,14 @@ class AppRoutes {
       '/v2_project_detail_trien_khai';
   static const String V2_PROJECT_DANG_KY_TRIEN_KHAI =
       '/v2_project_dang_ky_trien_khai';
+  static const String V2_WORK_CREATE = "/v2_work_create";
+  static const String V2_WORK_PREVIEW = "/v2_work_preview";
 
   //builder
   static const String V2_SHORTHANDED = '/v2_shorthanded';
+  static const String V2_SHORTHANDED_PAYMENT = '/v2_shorthanded_payment';
+  static const String V2_SHORTHANDED_COMPLETE = '/v2_shorthanded_complete';
+  static const String V2_SHORTHANDED_RESULT = '/v2_shorthanded_result';
   static const String V2_SHORTHANDED_GROUP1 = '/v2_shorthanded_group1';
   static const String V2_SHORTHANDED_GROUP2 = '/v2_shorthanded_group2';
   static const String V2_SHORTHANDED_GROUP3 = '/v2_shorthanded_group3';
@@ -221,6 +235,15 @@ class AppRoutes {
   static const String V2_WINNING_BID = '/v2_winning_bid';
   static const String V2_PAYMENT_ORDER = '/v2_payment_order';
   static const String V2_FINISH_UPDATE = '/v2_finish_update';
+  static const String V2_PERSONAL_INFORMATION = '/v2_personal_information';
+  static const String V2_MAIL = '/v2_mail';
+  static const String V2_REVENUE = '/v2_revenue';
+  static const String V2_SAFETY = '/v2_safety';
+  static const String V2_PRODUCT_UPDATE = '/v2_product_update';
+  static const String V2_SERVICE_UPDATE = '/v2_service_update';
+  static const String V2_TAX_REGISTER = '/v2_tax_register';
+  static const String V2_SAFETY_PAPER = '/v2_safety_paper';
+  static const String V2_BEFORE_RECHARGE = '/v2_before_recharge';
 
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
@@ -255,6 +278,13 @@ class AppRoutes {
       '/v3_project_dang_ky_trien_khai';
   static const String V3_ORDER_DETAIL = '/v3_order_detail';
   static const String V3_PRODUCT_DETAIL = '/v3_product_detail';
+  static const String V3_BEFORE_RECHARGE = '/v3_before_recharge';
+  static const String V3_PERSONAL_INFORMATION = '/v3_personal_information';
+  static const String V3_MAIL = '/v3_mail';
+  static const String V3_CUSTOMER_MANAGEMENT = '/v3_customer_management';
+  static const String V3_TAX_REGISTER = '/v3_tax_register';
+  static const String V3_CUSTOMER_DETAIL = '/v3_customer_detail';
+  static const String V3_REVIEW_PRODUCT = '/v3_review_product';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';
@@ -269,6 +299,7 @@ class AppRoutes {
 
   static const String V4_NOTIFICATION = '/v4_notification';
   static const String V4_DETAIL_NOTIFICATION = '/v4_detail_notification';
+  static const String V4_DETAIL_REPORT = '/v4_detail_report';
 
   //builder
 
@@ -287,6 +318,7 @@ class AppRoutes {
   static const String V3_REVENUE = '/v3_revenue';
   static const String V3_STORE_INFOMATION = '/v3_store_infomaion';
   static const String V3_PRODUCT_ADD = '/v3_product_add';
+  static const String V3_TO_RECEIVE = '/v3_to_receive';
 
   // Builder
   static const String V2_CANDIDATE_RECRUITMENT = '/v2_candidate_recruitment';
@@ -328,6 +360,7 @@ class AppRoutes {
   //builder
   static const String V2_WORKFLOW_MANAGEMENT = '/v2_workflow_management';
   static const String V2_WORK_DONE = '/v2_work_done';
+  static const String V2_REGISTER_DONE = '/v2_work_done';
   static const String V2_WORK_IN_PROGRESS = '/v2_work_in_progress';
   static const String V2_DETAIL_WORK_DONE = '/v2_detail_work_done';
   static const String V2_DETAIL_WORK_IN_PROGRESS =

@@ -87,8 +87,9 @@ class V1MyOrderPage extends GetView<V1MyOrderController> {
                         status: controller
                             .donHangResponse[index].idTrangThaiDonHang!.tieuDe
                             .toString(),
-                        idOrder:
-                            controller.donHangResponse[index].id.toString(),
+                        idOrder: controller.donHangResponse[index].maDonHang
+                            .toString()
+                            .replaceFirst("D", "Đ"),
                         dateTime: DateConverter.formatDateTime(
                           controller.donHangResponse[index].createdAt
                               .toString(),

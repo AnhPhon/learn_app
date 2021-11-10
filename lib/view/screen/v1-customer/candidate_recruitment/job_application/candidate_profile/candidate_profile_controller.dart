@@ -209,6 +209,8 @@ class V1CandidateProfileController extends GetxController {
           } else {
             isView = false;
           }
+          print('bbbb ${value.length}');
+          print('bbbb ${isView}');
           //check ví tiền
           getBalance(userId: idTaiKhoan);
         },
@@ -287,6 +289,7 @@ class V1CandidateProfileController extends GetxController {
                     lichSuViTienRequest.loaiGiaoDich = "2";
                     lichSuViTienRequest.trangThai = "2";
                     lichSuViTienRequest.soTien = tongTienThanhToan.toString();
+                    lichSuViTienRequest.type = "0";
                     //insert db lịch sử ví tiền
                     lichSuViTienRepository
                         .add(lichSuViTienRequest)
@@ -295,6 +298,7 @@ class V1CandidateProfileController extends GetxController {
                         EasyLoading.dismiss();
                         Get.back();
                         isView = true;
+                        Alert.success(message: 'Thanh toán thành công');
                         update();
                       } else {
                         Alert.error(message: 'Vui lòng thực hiện lại');
