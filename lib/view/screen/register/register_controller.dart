@@ -74,7 +74,9 @@ class RegisterController extends GetxController {
     "Nam", "Nữ","Khác"
   ];
   final juridicals = [
-    'Doanh nghiệp','Tổ chức','Cá nhân'
+    'Doanh nghiệp',
+    'Tổ chức',
+    'Cá nhân'
   ];
 
   // Flag

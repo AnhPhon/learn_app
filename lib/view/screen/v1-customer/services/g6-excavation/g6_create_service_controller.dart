@@ -62,7 +62,6 @@ class V1G6CreateServiceController extends GetxController{
     serviceApplication = Get.arguments as DonDichVuRequest;
     workTitleController.text = serviceApplication!.tieuDe ?? '';
     appBarTitle = Get.parameters['title'].toString();
-    print("fasfasdfasfsdfsfsfsa${appBarTitle}");
     getWorkTime();
     getAllThongSo();
     super.onInit();
