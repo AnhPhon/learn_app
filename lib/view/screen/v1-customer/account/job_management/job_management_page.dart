@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
+import 'package:template/utils/custom_themes.dart';
 import 'package:template/utils/device_utils.dart';
 import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
+import 'package:template/view/basewidget/component/item_list_widget.dart';
+import 'package:template/view/basewidget/component/tab_bar_widget.dart';
 import 'package:template/view/screen/v1-customer/account/job_management/job_management_controller.dart';
 
 class V1JobManagementPage extends GetView<V1JobManagementController> {
-  ///
-  /// build
-  ///
   @override
   Widget build(BuildContext context) {
     return GetBuilder<V1JobManagementController>(
       init: V1JobManagementController(),
       builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Scaffold(
           backgroundColor: const Color(0xFFF6F6F7),
           appBar: AppBarWidget(title: controller.title),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                //tab
-                tabBarWidget(context: context, controller: controller),
+          body: Column(
+            children: [
+              const SizedBox(
+                height: Dimensions.MARGIN_SIZE_DEFAULT,
+              ),
 
-                //item list
-                ...List.generate(5, (index) => _itemList(context)),
-              ],
-            ),
+              //tab
+              _tabBarWidget(context: context, controller: controller),
+
+              //item list
+              _itemList(context),
+            ],
           ),
         );
       },
@@ -36,157 +44,172 @@ class V1JobManagementPage extends GetView<V1JobManagementController> {
   }
 
   ///
-  /// selected tab
-  ///
-  Widget onSelectedTab(
-      BuildContext context, V1JobManagementController controller,
-      {required String title, required int index, required bool isRight}) {
-    return GestureDetector(
-      onTap: () {
-        controller.onChangeTab(index);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble() / 2,
-        decoration: BoxDecoration(
-          borderRadius: isRight == false
-              ? const BorderRadius.only(
-                  topLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                  bottomLeft: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                )
-              : const BorderRadius.only(
-                  topRight: Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                  bottomRight:
-                      Radius.circular(Dimensions.BORDER_RADIUS_DEFAULT),
-                ),
-          color: controller.currentIndex == index
-              ? ColorResources.PRIMARY
-              : ColorResources.WHITE,
-          border: controller.currentIndex == index
-              ? null
-              : Border.all(color: ColorResources.PRIMARY),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: controller.currentIndex == index
-                ? ColorResources.WHITE
-                : ColorResources.BLACK,
-          ),
-        ),
-      ),
-    );
-  }
-
-  ///
   /// tab
   ///
-  Widget tabBarWidget(
+  Widget _tabBarWidget(
       {required BuildContext context,
       required V1JobManagementController controller}) {
     return Container(
       alignment: Alignment.center,
-      width: DeviceUtils.getScaledWidth(context, 1),
-      height: DeviceUtils.getScaledHeight(context, .1),
-      child: Container(
-        alignment: Alignment.center,
-        width: DeviceUtils.getScaledWidth(context, .9).roundToDouble(),
-        height: DeviceUtils.getScaledHeight(context, .07),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            onSelectedTab(context, controller,
-                title: controller.titleTabBar['DPH']!,
-                index: 0,
-                isRight: false),
-            onSelectedTab(context, controller,
-                title: controller.titleTabBar['CPH']!, index: 1, isRight: true),
-          ],
-        ),
+      width: double.infinity,
+      height: DeviceUtils.getScaledHeight(context, .07),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.titleTabBar.length,
+        itemBuilder: (BuildContext context, int index) {
+          return TabBarWidget(
+            onTap: () => controller.onChangeTab(index),
+            index: index,
+            currentIndex: controller.currentIndex,
+            title: controller.titleTabBar[index].toString(),
+          );
+        },
       ),
     );
   }
 
   ///
-  /// item list
+  ///list item
   ///
   Widget _itemList(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        controller.onProductResponseClick();
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: Dimensions.MARGIN_SIZE_SMALL,
-            vertical: Dimensions.MARGIN_SIZE_SMALL),
-        height: DeviceUtils.getScaledHeight(context, .118),
-        decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL),
-          color: ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, 2)),
-          ],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  Dimensions.BORDER_RADIUS_EXTRA_SMALL,
-                ),
-                child: Image.asset(
-                  Images.newsTemplate,
-                  fit: BoxFit.fill,
-                  height: DeviceUtils.getScaledHeight(context, 0.118),
-                  width: Dimensions.PADDING_SIZE_SMALL,
-                ),
-              ),
+    return GetBuilder<V1JobManagementController>(
+      builder: (controller) {
+        return Expanded(
+          child: SmartRefresher(
+            enablePullUp: (controller.currentIndex == 0)
+                ? controller.viecDangLam.isNotEmpty
+                : controller.viecDaLam.isNotEmpty,
+            enablePullDown: (controller.currentIndex == 0)
+                ? controller.viecDangLam.isNotEmpty
+                : controller.viecDaLam.isNotEmpty,
+            onRefresh: controller.onRefresh,
+            onLoading: controller.onLoading,
+            controller: controller.refreshController,
+            footer: const ClassicFooter(
+              loadingText: "Đang tải...",
+              noDataText: "Không có dữ liệu",
+              canLoadingText: "Kéo lên để tải thêm dữ liệu",
             ),
-            const SizedBox(
-              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
-            Expanded(
-              flex: 8,
+            child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      child: Text(
-                        "Thợ ốp lát: Công trình khách hàng 5 sao",
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
-                      ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_DEFAULT,
+                  ),
+                  if (controller.currentIndex == 0)
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.viecDangLam.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            left: Dimensions.PADDING_SIZE_LARGE,
+                            right: Dimensions.PADDING_SIZE_LARGE,
+                          ),
+                          child: ItemListWidget(
+                            textOverImage: true,
+                            stringTextOverImage: controller
+                                .viecDangLam[index].idTinhTp
+                                .toString(),
+                            title:
+                                controller.viecDangLam[index].tieuDe.toString(),
+                            rowText1: controller.viecDangLam[index].idQuanHuyen
+                                .toString(),
+                            icon1: const Icon(
+                              Icons.location_on,
+                              size: Dimensions.ICON_SIZE_SMALL,
+                            ),
+                            rowText2: (controller
+                                        .viecDangLam[index].ngayKetThuc ==
+                                    "null")
+                                ? null
+                                : controller.getDeadline(
+                                    controller.viecDangLam[index].ngayKetThuc
+                                        .toString(),
+                                  ),
+                            icon2: (controller.viecDangLam[index].ngayKetThuc ==
+                                    null)
+                                ? null
+                                : const Icon(
+                                    Icons.access_time_outlined,
+                                    size: Dimensions.ICON_SIZE_SMALL,
+                                  ),
+                            onTap: () => controller.onWorkPageClick(
+                                donDichVuResponse:
+                                    controller.viecDangLam[index]),
+                            isSpaceBetween: true,
+                            urlImage: "",
+                            boxShadow: boxShadowALitle,
+                          ),
+                        );
+                      },
+                    )
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.viecDaLam.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            top: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                            left: Dimensions.PADDING_SIZE_LARGE,
+                            right: Dimensions.PADDING_SIZE_LARGE,
+                          ),
+                          child: ItemListWidget(
+                            textOverImage: true,
+                            stringTextOverImage:
+                                controller.viecDaLam[index].idTinhTp.toString(),
+                            title:
+                                controller.viecDaLam[index].tieuDe.toString(),
+                            rowText1: controller.viecDaLam[index].idQuanHuyen
+                                .toString(),
+                            icon1: const Icon(
+                              Icons.location_on,
+                              size: Dimensions.ICON_SIZE_SMALL,
+                            ),
+                            rowText2: (controller.viecDaLam[index]
+                                        .idTrangThaiDonDichVu ==
+                                    null)
+                                ? null
+                                : controller.viecDaLam[index]
+                                    .idTrangThaiDonDichVu!.tieuDe
+                                    .toString(),
+                            colorRowText2: (controller.viecDaLam[index]
+                                        .idTrangThaiDonDichVu ==
+                                    null)
+                                ? null
+                                : controller.viecDaLam[index]
+                                            .idTrangThaiDonDichVu!.id ==
+                                        CHUA_NGHIEM_THU
+                                    ? ColorResources.RED
+                                    : controller.viecDaLam[index]
+                                                .idTrangThaiDonDichVu!.id ==
+                                            DA_NGHIEM_THU
+                                        ? ColorResources.PRIMARY
+                                        : ColorResources.GREEN,
+                            onTap: () => controller.onWorkPageClick(
+                                donDichVuResponse: controller.viecDaLam[index]),
+                            isSpaceBetween: true,
+                            urlImage: "",
+                            boxShadow: boxShadowALitle,
+                          ),
+                        );
+                      },
                     ),
+                  const SizedBox(
+                    height: Dimensions.MARGIN_SIZE_SMALL,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "7:00 20/09/2021",
-                        style: TextStyle(fontSize: Dimensions.FONT_SIZE_SMALL),
-                      ),
-                      SizedBox(
-                        width: Dimensions.MARGIN_SIZE_SMALL,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

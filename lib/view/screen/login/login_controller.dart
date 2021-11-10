@@ -37,8 +37,8 @@ class LoginController extends GetxController {
     // Đại Lý:
     // 0333333333
     // DaiLy123
-    phoneController.text = '0222222222';
-    passwordController.text = 'ThoThau1';
+    phoneController.text = '0111111111';
+    passwordController.text = 'KhachHang1';
     super.onInit();
   }
 

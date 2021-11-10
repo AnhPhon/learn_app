@@ -180,7 +180,7 @@ class V1ServiceReviewG6Page extends GetView<V1ServiceReviewG6Controller> {
             padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
             child: TextHighlight(
               title: "Bề rộng mặt đường làm việc: ",
-              content: "${controller.donDichVuResponse.beRongDiemNhan}m",
+              content: "${controller.donDichVuResponse.beRongMatDuong} m",
             ),
           ),
           Padding(

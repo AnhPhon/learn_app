@@ -4,7 +4,6 @@ class NhapKhoHangDaiLyRequest {
   String? idTaiKhoan;
   String? idSanPham;
   String? soLuong;
-  String? tinhTrangSanPham;
   String? loai;
 
   NhapKhoHangDaiLyRequest(
@@ -13,7 +12,6 @@ class NhapKhoHangDaiLyRequest {
       this.idTaiKhoan,
       this.idSanPham,
       this.soLuong,
-      this.tinhTrangSanPham,
       this.loai,
       });
 
@@ -26,7 +24,6 @@ class NhapKhoHangDaiLyRequest {
     idTaiKhoan = json['idTaiKhoan'].toString();
     idSanPham = json['idSanPham'].toString();
     soLuong = json['soLuong'].toString();
-    tinhTrangSanPham = json['tinhTrangSanPham'].toString();
     loai = json['loai'].toString();
   }
 
@@ -49,9 +46,6 @@ class NhapKhoHangDaiLyRequest {
 
     // check null soLuong
     if (soLuong != null) data['soLuong'] = soLuong;
-
-    // check null tinhTrangSanPham
-    if (tinhTrangSanPham != null) data['tinhTrangSanPham'] = tinhTrangSanPham;
 
     // check null loai
     if (loai != null) data['loai'] = loai;

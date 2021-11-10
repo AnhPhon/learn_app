@@ -69,7 +69,7 @@ class V1FormManagementController extends GetxController {
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoanNhanDon=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}&sortBy=created_at:desc",
+          "&idTaiKhoan=$userId&idTrangThaiDonDichVu=${(currentIndex == 0) ? DA_PHAN_HOI : CHUA_PHAN_HOI}&sortBy=created_at:desc",
       onSuccess: (data) {
         print(data.length);
         if (data.isEmpty) {
@@ -109,18 +109,20 @@ class V1FormManagementController extends GetxController {
   /// changed tab
   ///
   void onChangeTab(int index) {
-    //set index
-    currentIndex = index;
+    if (currentIndex != index) {
+      //set index
+      currentIndex = index;
 
-    //loading
-    isLoading = true;
+      //loading
+      isLoading = true;
 
-    //resetNoData
-    refreshController.resetNoData();
+      //resetNoData
+      refreshController.resetNoData();
 
-    //getDonDichVu
-    getDonDichVu();
-    update();
+      //getDonDichVu
+      getDonDichVu();
+      update();
+    }
   }
 
   ///

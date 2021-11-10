@@ -321,8 +321,10 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
   ///
   Widget attchFile(BuildContext context,
       {required V1ServiceReviewG2Controller controller}) {
-    return controller.donDichVuResponse.file != null
-        ? Column(
+    return controller.donDichVuResponse.files == null ||
+            controller.donDichVuResponse.files!.isEmpty
+        ? const SizedBox.shrink()
+        : Column(
             children: [
               const Label(
                 label: "File đính kèm",
@@ -336,12 +338,11 @@ class V1ServiceReviewG2Page extends GetView<V1ServiceReviewG2Controller> {
                 title: "File báo giá khổi lượng",
                 color: ColorResources.WHITE,
                 onPressed: () => controller.downloadFile(
-                  url: controller.donDichVuResponse.file.toString(),
+                  url: controller.donDichVuResponse.files!.first.toString(),
                 ),
                 horizontal: Dimensions.PADDING_SIZE_DEFAULT,
               ),
             ],
-          )
-        : Container();
+          );
   }
 }

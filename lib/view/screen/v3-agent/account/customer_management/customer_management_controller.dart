@@ -71,18 +71,17 @@ class V3CustomerManagementController extends GetxController {
       page: pageMax,
       limit: limitMax,
       filter:
-          "&idTaiKhoan=$userId&idNhomDichVu=$NHOM_DICH_VU_8&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
+          "&idTaiKhoanNhanDon=$userId&idNhomDichVu=$NHOM_DICH_VU_8&idTrangThaiDonDichVu=$TRUNG_THAU&sortBy=created_at:desc",
       onSuccess: (data) {
         //check is not empty
         if (data.isNotEmpty) {
-          print("object");
           //for loop
           for (final item in data) {
-            final id = item.idTaiKhoanNhanDon!.id;
+            final id = item.idTaiKhoan!.id;
 
             //if id tai khoan have not
             if (taiKhoan.containsKey(id) == false) {
-              taiKhoan[id!] = item.idTaiKhoanNhanDon!;
+              taiKhoan[id!] = item.idTaiKhoan!;
             }
 
             //done for

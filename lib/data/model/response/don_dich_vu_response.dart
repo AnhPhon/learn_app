@@ -53,6 +53,7 @@ class DonDichVuResponse {
   String? cuLyVanChuyen;
   String? beRongDiemNhan;
   String? beRongDiemTra;
+  String? beRongMatDuong;
   String? hinhAnhBaoGia;
   String? phiDichVu;
   String? khuyenMai;
@@ -104,6 +105,7 @@ class DonDichVuResponse {
       this.cuLyVanChuyen,
       this.beRongDiemNhan,
       this.beRongDiemTra,
+      this.beRongMatDuong,
       this.hinhAnhBaoGia,
       this.phiDichVu,
       this.khuyenMai,
@@ -334,6 +336,7 @@ class DonDichVuResponse {
     cuLyVanChuyen = json['cuLyVanChuyen'].toString();
     beRongDiemNhan = json['beRongDiemNhan'].toString();
     beRongDiemTra = json['beRongDiemTra'].toString();
+    beRongMatDuong = json['beRongMatDuong'].toString();
     hinhAnhBaoGia = json['hinhAnhBaoGia'].toString();
     phiDichVu = json['phiDichVu'].toString();
     khuyenMai = json['khuyenMai'].toString();
@@ -499,6 +502,9 @@ class DonDichVuResponse {
 
     // check null beRongDiemTra
     if (beRongDiemTra != null) data['beRongDiemTra'] = beRongDiemTra;
+
+    // check null beRongMatDuong
+    if (beRongMatDuong != null) data['beRongMatDuong'] = beRongMatDuong;
 
     // check null hinhAnhBaoGia
     if (hinhAnhBaoGia != null) data['hinhAnhBaoGia'] = hinhAnhBaoGia;

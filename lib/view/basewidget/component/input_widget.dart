@@ -182,7 +182,7 @@ class InputWidget extends StatelessWidget {
                           onTap: suffixIconTap ?? () {},
                           child: suffixIcon ?? const SizedBox.shrink(),
                         )
-                      : const SizedBox.shrink(),
+                      : null,
                   contentPadding: contentPadding ??
                       EdgeInsets.symmetric(
                         horizontal: DeviceUtils.getScaledSize(context, 0.025),

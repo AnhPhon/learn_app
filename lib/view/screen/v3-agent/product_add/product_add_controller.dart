@@ -115,6 +115,14 @@ class V3ProductAddController extends GetxController {
   }
 
   ///
+  ///onchanged tinh trang san pham
+  ///
+  void onchangedTinhTrangSanPham(String? value) {
+    sanPhamRequest.tinhTrangSanPham = value;
+    update();
+  }
+
+  ///
   ///onchanged ProductCategory
   ///
   void onchangedProductCategory(DanhMucSanPhamResponse? value) {
@@ -173,14 +181,14 @@ class V3ProductAddController extends GetxController {
       Alert.error(message: 'Thương hiệu sản phẩm không được để trống');
     } else if (price.text.isEmpty) {
       Alert.error(message: 'Giá sản phẩm không được để trống');
-    } else if (code.text.isEmpty) {
-      Alert.error(message: 'Mã sản phẩm không được để trống');
     } else if (quyCach.text.isEmpty) {
       Alert.error(message: 'Quy cách không được để trống');
     } else if (detail.text.isEmpty) {
       Alert.error(message: 'Chi tiết sản phẩm không được để trống');
     } else if (danhMucSanPhamResponse == null) {
       Alert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
+    } else if (sanPhamRequest.tinhTrangSanPham == null) {
+      Alert.error(message: 'Bạn chưa chọn tình trạng sản phẩm');
     } else if (unit.text.isEmpty) {
       Alert.error(message: 'Số lượng không được để trống');
     } else {
@@ -190,7 +198,6 @@ class V3ProductAddController extends GetxController {
       sanPhamRequest.ten = name.text;
       sanPhamRequest.thuongHieu = branch.text;
       sanPhamRequest.gia = price.text.replaceAll(",", "");
-      sanPhamRequest.maSanPham = code.text;
       sanPhamRequest.quyCach = quyCach.text;
       sanPhamRequest.moTa = detail.text;
       sanPhamRequest.idDanhMucSanPham = danhMucSanPhamResponse!.id;
@@ -201,23 +208,11 @@ class V3ProductAddController extends GetxController {
       sanPhamProvider.add(
         data: sanPhamRequest,
         onSuccess: (sanPham) {
-          //set data
-          nhapKhoHangDaiLyRequest.idSanPham = sanPham.id;
-
-          //nhapKho
-          nhapKhoHangDaiLyProvider.add(
-            data: nhapKhoHangDaiLyRequest,
-            onSuccess: (nhapKhoHangDaiLyAdd) {
-              if (isUpdateAndAdd == false) {
-                Get.offNamed(AppRoutes.V3_STORE);
-              }
-              Alert.success(message: 'Thêm sản phẩm thành công');
-            },
-            onError: (error) {
-              print(
-                  "V3ProductAddController nhapKhoHangDaiLyAdd onError $error");
-            },
-          );
+          if (isUpdateAndAdd == false) {
+            Get.toNamed(AppRoutes.V3_REVIEW_PRODUCT, arguments: sanPham);
+            Alert.success(message: 'Thêm sản phẩm thành công');
+          }
+          Alert.success(message: 'Thêm sản phẩm thành công');
         },
         onError: (error) {
           print("V3ProductAddController sanPhamAdd onError $error");
@@ -235,7 +230,6 @@ class V3ProductAddController extends GetxController {
     name.clear();
     branch.clear();
     price.clear();
-    code.clear();
     quyCach.clear();
     detail.clear();
     unit.clear();

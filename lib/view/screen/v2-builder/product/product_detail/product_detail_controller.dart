@@ -384,8 +384,8 @@ class V2ProductDetailController extends GetxController {
       }
     } else {
       //set data
-      donHangRequest.idTrangThaiDonHang = "616a39faea30f845b562876d";
-      donHangRequest.idTrangThaiThanhToan = "61615180e87a9124404abe82";
+      donHangRequest.idTrangThaiDonHang = TRANG_THAI_DON_HANG_MOI_TAO;
+      donHangRequest.idTrangThaiThanhToan = THANH_TOAN_CHUYEN_KHOAN;
       donHangRequest.diaChi = taiKhoanResponse.diaChi;
       donHangRequest.idPhuongXa = taiKhoanResponse.idPhuongXa!.id;
       donHangRequest.idQuanHuyen = taiKhoanResponse.idQuanHuyen!.id;

@@ -101,8 +101,7 @@ class V3AccountController extends GetxController {
   ///go to customer management page
   ///
   void onCustomerManagementPageClick() {
-    Get.toNamed(AppRoutes.V3_CUSTOMER_DETAIL);
-    // Get.toNamed(AppRoutes.V3_CUSTOMER_MANAGEMENT);
+    Get.toNamed(AppRoutes.V3_CUSTOMER_MANAGEMENT);
   }
 
   ///

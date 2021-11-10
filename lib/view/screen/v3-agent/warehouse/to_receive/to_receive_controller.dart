@@ -117,13 +117,7 @@ class V3ToReceiveController extends GetxController {
     update();
   }
 
-  ///
-  ///onchanged tinh trang san pham
-  ///
-  void onchangedTinhTrangSanPham(String? value) {
-    nhapKhoHangDaiLyRequest.tinhTrangSanPham = value;
-    update();
-  }
+
 
   ///
   ///on update click

@@ -116,39 +116,46 @@ class V1FormManagementPage extends GetView<V1FormManagementController> {
             child: CircularProgressIndicator(),
           );
         }
-        return SmartRefresher(
-          controller: controller.refreshController,
-          enablePullUp: true,
-          onRefresh: controller.onRefresh,
-          onLoading: controller.onLoading,
-          footer: const ClassicFooter(
-            loadingText: "Đang tải...",
-            noDataText: "Không có dữ liệu",
-            canLoadingText: "Kéo lên để tải thêm dữ liệu",
-          ),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.donDichVuList.length,
-            itemBuilder: (BuildContext ctx, int index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+        return (controller.donDichVuList.isEmpty)
+            ? const Center(
+                child: Text("Chưa có đơn tạo"),
+              )
+            : SmartRefresher(
+                controller: controller.refreshController,
+                enablePullDown: controller.donDichVuList.isNotEmpty,
+                enablePullUp: controller.donDichVuList.isNotEmpty,
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                footer: const ClassicFooter(
+                  loadingText: "Đang tải...",
+                  noDataText: "Không có dữ liệu",
+                  canLoadingText: "Kéo lên để tải thêm dữ liệu",
                 ),
-                child: ItemListWidget(
-                  title: controller.donDichVuList[index].tieuDe.toString(),
-                  onTap: () => controller.onProductResponseClick(index: index),
-                  urlImage:
-                      controller.donDichVuList[index].hinhAnhBaoGia.toString(),
-                  rowText2: DateConverter.formatDateTimeFull(
-                    dateTime:
-                        controller.donDichVuList[index].createdAt.toString(),
-                  ),
-                  isSpaceBetween: true,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.donDichVuList.length,
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_DEFAULT,
+                      ),
+                      child: ItemListWidget(
+                        title:
+                            controller.donDichVuList[index].tieuDe.toString(),
+                        onTap: () =>
+                            controller.onProductResponseClick(index: index),
+                        urlImage: controller.donDichVuList[index].hinhAnhBaoGia
+                            .toString(),
+                        rowText2: DateConverter.formatDateTimeFull(
+                          dateTime: controller.donDichVuList[index].createdAt
+                              .toString(),
+                        ),
+                        isSpaceBetween: true,
+                      ),
+                    );
+                  },
                 ),
               );
-            },
-          ),
-        );
       },
     );
   }

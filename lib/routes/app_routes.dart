@@ -176,6 +176,8 @@ class AppRoutes {
   static const String V1_SERVICE_REVIEW_G4 = '/v1_service_review_g4';
   static const String V1_SERVICE_REVIEW_G5 = '/v1_service_review_g5';
   static const String V1_SERVICE_REVIEW_G6 = '/v1_service_review_g6';
+  static const String V1_WORK_IN_PROGRESS = '/v1_work_in_progress';
+  static const String V1_WORK_DONE = '/v1_work_done';
 
   // dashboard
   static const String V1_DASHBOARD = '/v1_dashboard';
@@ -241,6 +243,7 @@ class AppRoutes {
   static const String V2_SERVICE_UPDATE = '/v2_service_update';
   static const String V2_TAX_REGISTER = '/v2_tax_register';
   static const String V2_SAFETY_PAPER = '/v2_safety_paper';
+  static const String V2_BEFORE_RECHARGE = '/v2_before_recharge';
 
   // agent
   static const String V3_QUOTE_LIST = '/v3_quote_list';
@@ -281,6 +284,7 @@ class AppRoutes {
   static const String V3_CUSTOMER_MANAGEMENT = '/v3_customer_management';
   static const String V3_TAX_REGISTER = '/v3_tax_register';
   static const String V3_CUSTOMER_DETAIL = '/v3_customer_detail';
+  static const String V3_REVIEW_PRODUCT = '/v3_review_product';
 
   //employeee
   static const String V4_WORKPROGRESS = '/v4_workprogress';

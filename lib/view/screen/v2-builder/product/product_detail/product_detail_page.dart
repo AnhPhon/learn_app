@@ -135,21 +135,14 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
             const SizedBox(
               height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
             ),
-            Text(price,
-                style: const TextStyle(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
-                    color: ColorResources.RED,
-                    fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-            ),
             Text(
-              discount,
-              style: TextStyle(
-                color: Theme.of(context).hintColor,
-                decoration: TextDecoration.lineThrough,
+              price,
+              style: const TextStyle(
+                fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
+                color: ColorResources.RED,
+                fontWeight: FontWeight.w600,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -224,9 +217,7 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
                   text1: "Tình trạng",
                   text2: controller.nhapKhoHangDaiLyList.isEmpty
                       ? "Chưa có tình trạng SP"
-                      : TINH_TRANG_SAN_PHAM[controller
-                              .nhapKhoHangDaiLyList[0].tinhTrangSanPham]
-                          .toString(),
+                      : controller.sanPhamResponse.tinhTrangSanPham.toString(),
                   notFontSize: true,
                   notFontWeight: true,
                   colorRed: true,
@@ -445,20 +436,27 @@ class V2ProductDetailPage extends GetView<V2ProductDetailController> {
           // button add to cart
           Expanded(
             flex: 9,
-            child: BtnCustom(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    controller.quantityProduct = 1;
-                    return _modalBottomSheet(context);
-                  },
-                );
-              },
-              color: ColorResources.PRIMARY,
-              text: "Thêm vào giỏ hàng",
-              width: double.infinity,
-            ),
+            child: (controller.stock == 0)
+                ? BtnCustom(
+                    onTap: () {},
+                    color: ColorResources.GREY,
+                    text: "Hết hàng",
+                    width: DeviceUtils.getScaledWidth(context, .9),
+                  )
+                : BtnCustom(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          controller.quantityProduct = 1;
+                          return _modalBottomSheet(context);
+                        },
+                      );
+                    },
+                    color: ColorResources.PRIMARY,
+                    text: "Thêm vào giỏ hàng",
+                    width: double.infinity,
+                  ),
           ),
         ],
       ),

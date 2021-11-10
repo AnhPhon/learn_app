@@ -111,6 +111,7 @@ class V2BeforeRechargePage extends GetView<V2BeforeRechargeController> {
             width: .85,
             thousandsSeparator: true,
             textInputType: TextInputType.number,
+            fillColor: ColorResources.WHITE,
             onChanged: (val) {
               controller.onChanged(context, val);
             },

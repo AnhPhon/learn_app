@@ -97,8 +97,9 @@ class V3OrderManagementPage extends GetView<V3OrderManagementController> {
                           imgUrl: controller.donHangResponse[index]
                               .idTaiKhoanMuaHang!.hinhDaiDien
                               .toString(),
-                          idOrder:
-                              controller.donHangResponse[index].id.toString(),
+                          idOrder: controller.donHangResponse[index].maDonHang
+                              .toString()
+                              .replaceFirst("D", "Đ"),
                           dateTime: DateConverter.formatDateTimeFull(
                             dateTime: controller
                                 .donHangResponse[index].createdAt

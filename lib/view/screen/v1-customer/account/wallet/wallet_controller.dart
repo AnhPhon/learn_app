@@ -172,7 +172,15 @@ class V1WalletController extends GetxController {
   ///
   void onRecharge() {
     Get.toNamed(
-        "${AppRoutes.V1_BEFORE_RECHARGE}?balance=${viTienResponse.tongTien}");
+            "${AppRoutes.V1_BEFORE_RECHARGE}?balance=${viTienResponse.tongTien}")!
+        .then(
+      (value) {
+        if (value == true) {
+          isLoading = true;
+          getWalletHistory(isRefresh: true);
+        }
+      },
+    );
   }
 
   ///
