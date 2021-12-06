@@ -9,12 +9,12 @@ import 'package:template/data/repository/lich_su_vi_tien_repository.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 
 import 'patment_dialog_accept.dart';
 
@@ -193,12 +193,12 @@ class PaymentAccountController extends GetxController {
                           }
                         });
                       } else {
-                        Alert.error(message: 'Vui lòng thực hiện lại');
+                        IZIAlert.error(message: 'Vui lòng thực hiện lại');
                       }
                     });
                   }
                   // else {
-                  //   Alert.error(message: 'Vui lòng thực hiện lại');
+                  //   IZIAlert.error(message: 'Vui lòng thực hiện lại');
                   // }
                 });
               }
@@ -219,7 +219,7 @@ class PaymentAccountController extends GetxController {
   ///
   void onRechargeClick() {
     String urlPage = '${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=$tongTienThanhToan';
-    if(Validate.checkValueIsNullEmpty(noiDung) == false){
+    if(Validate.nullOrEmpty(noiDung) == false){
       urlPage += '&noiDung=$noiDung';
     }
     Get.toNamed(urlPage)!

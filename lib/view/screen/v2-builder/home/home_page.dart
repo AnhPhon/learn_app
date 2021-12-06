@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/helper/date_converter.dart';
-import 'package:template/helper/price_converter.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/helper/izi_date.dart';
+import 'package:template/helper/izi_price.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/button/button_category.dart';
 import 'package:template/view/basewidget/card/product_card.dart';
 import 'package:template/view/basewidget/component/item_list_widget.dart';
@@ -181,14 +181,7 @@ class V2HomePage extends GetView<V2HomeController> {
         });
       },
       child: Container(
-// <<<<<<< HEAD
-//         padding: const EdgeInsets.symmetric(
-//           vertical: Dimensions.PADDING_SIZE_SMALL,
-//           horizontal: Dimensions.PADDING_SIZE_LARGE,
-//         ),
-// =======
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-// >>>>>>> develop
         decoration: const BoxDecoration(
           color: Color(0xff2196F3),
           borderRadius: BorderRadius.all(Radius.circular(Dimensions.BORDER_RADIUS_EXTRA_SMALL)),
@@ -265,33 +258,6 @@ class V2HomePage extends GetView<V2HomeController> {
   /// need people widget
   ///
   Widget _needPeopleWidget() {
-// <<<<<<< HEAD
-//     final int length = controller.donDichVuList.length > 2 ? 2 : controller.donDichVuList.length;
-//     return FieldWidget(
-//       onTap: () => controller.onShortHandedPageClick(),
-//       title: "CÔNG VIỆC ĐANG CẦN NGƯỜI",
-//       widget: Column(
-//         children: List.generate(
-//           length,
-//           (index) => ItemListWidget(
-//             // padding: const EdgeInsets.symmetric(
-//             //   vertical: Dimensions.PADDING_SIZE_SMALL,
-//             //   horizontal: Dimensions.PADDING_SIZE_LARGE,
-//             // ),
-//             // scaleHeight: 1.1,
-//             textOverImage: true,
-//             stringTextOverImage: controller.donDichVuList[index].idTinhTp!.ten,
-//             title: controller.donDichVuList[index].tieuDe.toString(),
-//             rowText1: "DH${controller.donDichVuList[index].id!.substring(0, 6)}",
-//             rowText2: controller.donDichVuList[index].idTrangThaiDonDichVu!.tieuDe,
-//             icon2: const Icon(
-//               Icons.person_search,
-//             ),
-//             onTap: () => controller.onShortHandedPageClickItem(controller.donDichVuList[index]),
-//             isSpaceBetween: true,
-//             urlImage: controller.donDichVuList[index].idNhomDichVu!.hinhAnhDaiDien,
-//           ),
-// =======
     const double _fontSize = Dimensions.FONT_SIZE_LARGE;
     final int length = controller.donDichVuList.length > 2 ? 2 : controller.donDichVuList.length;
     return Column(

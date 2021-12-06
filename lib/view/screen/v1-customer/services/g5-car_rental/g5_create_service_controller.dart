@@ -8,14 +8,14 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_vi_response.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
 import 'package:template/data/model/response/thong_so_ky_thuat_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_vi_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1G5CreateServiceController extends GetxController {
@@ -169,30 +169,30 @@ class V1G5CreateServiceController extends GetxController {
       return;
     } else {
       if (thongSo.isEmpty) {
-        Alert.error(message: "Bản phải chọn thông số kỹ thuật");
+        IZIAlert.error(message: "Bản phải chọn thông số kỹ thuật");
       } else if (tommorow == false && afternoon == false && tonight == false) {
-        Alert.error(message: "Thời gian làm việc không được để trống");
+        IZIAlert.error(message: "Thời gian làm việc không được để trống");
       } else if (amountController.text.toString().isEmpty) {
-        Alert.error(message: "Số lượng yêu cầu không được để trống");
+        IZIAlert.error(message: "Số lượng yêu cầu không được để trống");
       } else if (int.parse(amountController.text.toString()) <= 0) {
-        Alert.error(message: "Số lượng không hợp lệ");
+        IZIAlert.error(message: "Số lượng không hợp lệ");
       } else if (unit == null) {
-        Alert.error(message: "Vui lòng chọn đơn vị");
+        IZIAlert.error(message: "Vui lòng chọn đơn vị");
       } else if (startWorkController.text.toString().isEmpty) {
-        Alert.error(message: "Ngày làm việc không được để trống");
+        IZIAlert.error(message: "Ngày làm việc không được để trống");
       } else if (DateConverter.differenceDate(
               startDate: startWorkController.text.toString(),
               endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
           0) {
-        Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+        IZIAlert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       } else if (estimatedPickUpLocation.text.toString().isEmpty) {
-        Alert.error(message: "Địa điểm bốc hàng dự kiến không được để trống");
+        IZIAlert.error(message: "Địa điểm bốc hàng dự kiến không được để trống");
       } else if (estimatedDeliveryLocation.text.toString().isEmpty) {
-        Alert.error(message: "Địa điểm trả hàng dự kiến không được để trống");
+        IZIAlert.error(message: "Địa điểm trả hàng dự kiến không được để trống");
       } else if (distanceController.text.toString().isEmpty) {
-        Alert.error(message: "Cự ly vận chuyển tương đối không được để trống");
+        IZIAlert.error(message: "Cự ly vận chuyển tương đối không được để trống");
       } else if (workDescController.text.toString().isEmpty) {
-        Alert.error(message: "Mô tả yêu cầu cụ thể không được để trống");
+        IZIAlert.error(message: "Mô tả yêu cầu cụ thể không được để trống");
       } else {
         isClicked = true;
         EasyLoading.show(status: "Loading ...");
@@ -200,7 +200,7 @@ class V1G5CreateServiceController extends GetxController {
             data: request(),
             onSuccess: (data) {
               EasyLoading.dismiss();
-              Alert.success(
+              IZIAlert.success(
                   message:
                       "Tạo đơn dịch vụ thành công. Chúng tối sẽ phản hội lại cho bạn sơm nhất");
               Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY,

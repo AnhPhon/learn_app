@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 class Label extends StatelessWidget {
   const Label({

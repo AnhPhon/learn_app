@@ -14,7 +14,7 @@ import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2ProjectDangKyTrienKhaiController extends GetxController {
   String title = "";
@@ -139,13 +139,13 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
   ///
   void moViewDangKyViecMoi() {
     if (danhSachThoThauBaoGiaRequest.idLoaiCongViecs == null || danhSachThoThauBaoGiaRequest.idLoaiCongViecs!.isEmpty) {
-      Alert.error(message: 'Hãy chọn ít nhất 1 công việc');
+      IZIAlert.error(message: 'Hãy chọn ít nhất 1 công việc');
     } else if (danhSachThoThauBaoGiaRequest.idNhomDichVu == null || danhSachThoThauBaoGiaRequest.idNhomDichVu!.isEmpty) {
-      Alert.error(message: 'Hãy chọn ít nhất 1 nhóm');
+      IZIAlert.error(message: 'Hãy chọn ít nhất 1 nhóm');
     } else if (danhSachThoThauBaoGiaRequest.thoiGianBatDauLam == null || danhSachThoThauBaoGiaRequest.thoiGianBatDauLam!.isEmpty) {
-      Alert.error(message: 'Hãy chọn ngày bắt đầu làm');
+      IZIAlert.error(message: 'Hãy chọn ngày bắt đầu làm');
     } else if (danhSachThoThauBaoGiaRequest.soLuongNguoi == null || danhSachThoThauBaoGiaRequest.soLuongNguoi! <= 0) {
-      Alert.error(message: 'Số lượng người làm không hợp lệ');
+      IZIAlert.error(message: 'Số lượng người làm không hợp lệ');
     } else {
       // Goi yeu cau dang ky du an
       guiYeuCauDangKy();
@@ -164,7 +164,7 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Future.delayed(Duration.zero, () {
-            Alert.success(message: 'Đã gửi yêu cầu thành công');
+            IZIAlert.success(message: 'Đã gửi yêu cầu thành công');
           });
 
           Future.delayed(Duration.zero, () {
@@ -222,10 +222,10 @@ class V2ProjectDangKyTrienKhaiController extends GetxController {
     final dateDiff = _dateTimeEnd.difference(_dateTimeStart).inDays;
     final dateDiffNow = _dateTimeStart.difference(_dateTime).inDays;
     if(dateDiff < 0) {
-      Alert.error(message: 'Ngày bắt đầu không được lớn hơn ngày kết thúc');
+      IZIAlert.error(message: 'Ngày bắt đầu không được lớn hơn ngày kết thúc');
       danhSachThoThauBaoGiaRequest.thoiGianBatDauLam = null;
     } else if(dateDiffNow < 0) {
-      Alert.error(message: 'Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại');
+      IZIAlert.error(message: 'Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại');
       danhSachThoThauBaoGiaRequest.thoiGianBatDauLam = null;
     } else {
       danhSachThoThauBaoGiaRequest.thoiGianBatDauLam = dateTimeStart;

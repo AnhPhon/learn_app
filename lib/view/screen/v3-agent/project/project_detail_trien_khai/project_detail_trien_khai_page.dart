@@ -2,13 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/screen/v3-agent/project/project_detail_trien_khai/project_detail_trien_khai_controller.dart';
 
@@ -105,13 +105,13 @@ class V3ProjectDetailTrienKhaiPage extends GetView<V3ProjectDetailTrienKhaiContr
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (Validate.checkValueIsNullEmpty(controller.getDDiaDiemCuTheFull()) == false)
+          if (Validate.nullOrEmpty(controller.getDDiaDiemCuTheFull()) == false)
             Text(
               "Địa điểm:",
               textAlign: TextAlign.left,
               style: Dimensions.fontSizeStyle18w600(),
             ),
-          if (Validate.checkValueIsNullEmpty(controller.getDDiaDiemCuTheFull()) == false)
+          if (Validate.nullOrEmpty(controller.getDDiaDiemCuTheFull()) == false)
             Text(
               controller.getDDiaDiemCuTheFull(),
               textAlign: TextAlign.left,
@@ -142,7 +142,7 @@ class V3ProjectDetailTrienKhaiPage extends GetView<V3ProjectDetailTrienKhaiContr
             textAlign: TextAlign.left,
             style: Dimensions.fontSizeStyle18w600(),
           ),
-          if (Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse) == false && Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
+          if (Validate.nullOrEmpty(controller.duAnKhachHangResponse) == false && Validate.nullOrEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
             Html(
               data: CommonHelper().htmlUnescape(controller.duAnKhachHangResponse!.gioiThieu.toString()),
               style: {

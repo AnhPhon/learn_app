@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/thong_bao_provider.dart';
 
 class V2DetailNotificationController extends GetxController {

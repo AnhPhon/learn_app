@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 typedef OnChangedCallback<T> = Function(T? value);
 
@@ -161,7 +161,7 @@ class _SelectBoxSupremeState<T> extends State<SelectBoxSupreme<T?>> {
 
   void showPicker() {
     if (widget.items == null || widget.items!.isEmpty) {
-      Alert.info(message: 'Danh sách rỗng');
+      IZIAlert.info(message: 'Danh sách rỗng');
     } else {
       showModalBottomSheet(
         context: context,

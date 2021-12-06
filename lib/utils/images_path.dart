@@ -1,4 +1,4 @@
-class Images {
+class ImagesPath {
   static const String logo_image = 'assets/images/logo.png';
   static const String logo_fss = 'assets/images/logo.jpg';
   static const String logo_app = 'assets/images/logo_app.png';
@@ -45,26 +45,21 @@ class Images {
 
   static const String product_store = 'assets/images/alarm_store.png';
   static const String infomation_store = 'assets/images/infomation_store.png';
-  static const String sale_performance =
-      'assets/images/sales_performance_store.png';
+  static const String sale_performance = 'assets/images/sales_performance_store.png';
   static const String product_management = 'assets/images/search_store.png';
-  static const String bill_management =
-      'assets/images/service_management_store.png';
+  static const String bill_management = 'assets/images/service_management_store.png';
   static const String warehouse_store = 'assets/images/warehouse.png';
 
   // v4-employee
   static const String V4NewsExample = 'assets/images/news1.png';
-  static const String V4AvatarHome =
-      'https://cdn-icons-png.flaticon.com/512/147/147144.png';
+  static const String V4AvatarHome = 'https://cdn-icons-png.flaticon.com/512/147/147144.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String toolbar_background = 'assets/images/appbar.png';
   static const String logo = 'assets/images/logo_primary.png';
 
-  static const String location_example =
-      'https://statics.vinpearl.com/du-lich-Da-Nang-mua-nao-dep-hinh-anh1.jpg';
+  static const String location_example = 'https://statics.vinpearl.com/du-lich-Da-Nang-mua-nao-dep-hinh-anh1.jpg';
   // product card
-  static const String example =
-      'https://media3.scdn.vn/img3/2019/8_15/7n83gB.jpg';
+  static const String example = 'https://media3.scdn.vn/img3/2019/8_15/7n83gB.jpg';
 
   static const String building = 'assets/images/place_holder_building.png';
   static const String insurance = 'assets/images/insurance.jpg';

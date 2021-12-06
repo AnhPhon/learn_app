@@ -4,7 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
 import 'package:template/data/model/response/danh_sach_ung_tuyen_response.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class ShowListCandicateController extends GetxController {
   final DanhSachUngTuyenProvider danhSachUngProvider =

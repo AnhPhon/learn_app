@@ -34,7 +34,7 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/bang_bang_cap_provider.dart';
 import 'package:template/provider/chuc_vu_provider.dart';
 import 'package:template/provider/chuyen_mon_provider.dart';
@@ -57,7 +57,7 @@ import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:template/view/screen/v2-builder/work_register/preview/work_preview_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -1688,31 +1688,31 @@ class V2WorkCreateController extends GetxController {
   ///
   bool bangCapValidate() {
     if (trinhDoHocVanResponseIndex == null) {
-      Alert.error(message: "Trình độ học vấn không được để trống!");
+      IZIAlert.error(message: "Trình độ học vấn không được để trống!");
 
       return false;
     }
 
     if (chuyenMonIndex == null) {
-      Alert.error(message: "Chuyên môn không được để trống!");
+      IZIAlert.error(message: "Chuyên môn không được để trống!");
 
       return false;
     }
 
     if (loaiTotNghiepIndex == null) {
-      Alert.error(message: "Loại tốt nghiệp không được để trống!");
+      IZIAlert.error(message: "Loại tốt nghiệp không được để trống!");
 
       return false;
     }
 
     if (namTotNghiepController.text.isEmpty) {
-      Alert.error(message: "Năm tốt nghiệp không được để trống!");
+      IZIAlert.error(message: "Năm tốt nghiệp không được để trống!");
 
       return false;
     }
 
     if (donViDaotaoController.text.isEmpty) {
-      Alert.error(message: "Đơn vị đào tạo không được để trống!");
+      IZIAlert.error(message: "Đơn vị đào tạo không được để trống!");
 
       return false;
     }
@@ -1742,14 +1742,14 @@ class V2WorkCreateController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -1776,14 +1776,14 @@ class V2WorkCreateController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -1809,14 +1809,14 @@ class V2WorkCreateController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -1905,7 +1905,7 @@ class V2WorkCreateController extends GetxController {
         update();
       }
     } else {
-      Alert.error(
+      IZIAlert.error(
           message: "Ngày kết thúc không được phép sớm hơn ngày bắt đầu!");
       update();
     }
@@ -2022,11 +2022,11 @@ class V2WorkCreateController extends GetxController {
   ///
   bool ngoaiNguValidate() {
     if (ngoaiNguController.text.isEmpty) {
-      Alert.error(message: "Loại ngoại ngữ không được để trống!");
+      IZIAlert.error(message: "Loại ngoại ngữ không được để trống!");
       return false;
     }
     if (trinhDoController.text.isEmpty) {
-      Alert.error(message: "Trình độ ngoại ngữ không được để trống!");
+      IZIAlert.error(message: "Trình độ ngoại ngữ không được để trống!");
       return false;
     }
     return true;
@@ -2135,7 +2135,7 @@ class V2WorkCreateController extends GetxController {
       EasyLoading.dismiss();
       update();
     } else {
-      Alert.error(message: "Bạn chỉ được thêm một bằng tin học!");
+      IZIAlert.error(message: "Bạn chỉ được thêm một bằng tin học!");
     }
   }
 
@@ -2231,43 +2231,43 @@ class V2WorkCreateController extends GetxController {
   ///
   bool keKhaiValidate() {
     if (startTimeController.text.isEmpty) {
-      Alert.error(message: "Ngày bắt đầu không được để trống!");
+      IZIAlert.error(message: "Ngày bắt đầu không được để trống!");
 
       return false;
     }
 
     if (endTimeController.text.isEmpty) {
-      Alert.error(message: "Ngày kết thuc không được để trống!");
+      IZIAlert.error(message: "Ngày kết thuc không được để trống!");
 
       return false;
     }
 
     if (donViController.text.isEmpty) {
-      Alert.error(message: "Đơn vị không được để trống!");
+      IZIAlert.error(message: "Đơn vị không được để trống!");
 
       return false;
     }
 
     if (chucVuController.text.isEmpty) {
-      Alert.error(message: "Chức vụ không được để trống!");
+      IZIAlert.error(message: "Chức vụ không được để trống!");
 
       return false;
     }
 
     if (mucLuongController.text.isEmpty) {
-      Alert.error(message: "Mức lương không được để trống!");
+      IZIAlert.error(message: "Mức lương không được để trống!");
 
       return false;
     }
 
     if (congViecPhuTrachController.text.isEmpty) {
-      Alert.error(message: "Công việc phụ trách không được để trống!");
+      IZIAlert.error(message: "Công việc phụ trách không được để trống!");
 
       return false;
     }
 
     if (ketQuaController.text.isEmpty) {
-      Alert.error(message: "Kết quả/thành tích đạt được không được để trống!");
+      IZIAlert.error(message: "Kết quả/thành tích đạt được không được để trống!");
 
       return false;
     }
@@ -2517,92 +2517,92 @@ class V2WorkCreateController extends GetxController {
   ///
   bool validateGoto() {
     if (titleController.text.isEmpty) {
-      Alert.error(message: "Tiêu đề đăng ký không được để trống!");
+      IZIAlert.error(message: "Tiêu đề đăng ký không được để trống!");
       return false;
     }
 
     if (tinhTp == null) {
-      Alert.error(message: "Vui lòng chọn Tỉnh/Tp!");
+      IZIAlert.error(message: "Vui lòng chọn Tỉnh/Tp!");
       return false;
     }
 
     if (quanHuyenResponse == null) {
-      Alert.error(message: "Vui lòng chọn Quận/Huyện!");
+      IZIAlert.error(message: "Vui lòng chọn Quận/Huyện!");
       return false;
     }
 
     if (phuongXaResponse == null &&
         quanHuyenResponse!.ten.toString().toLowerCase() != "hoàng sa") {
-      Alert.error(message: "Vui lòng chọn Phường/Xã!");
+      IZIAlert.error(message: "Vui lòng chọn Phường/Xã!");
       return false;
     }
     if (addressController.text.isEmpty) {
-      Alert.error(message: "Chỗ ở hiện tại không được để trống!");
+      IZIAlert.error(message: "Chỗ ở hiện tại không được để trống!");
       return false;
     }
     if (honNhanString == null) {
-      Alert.error(message: "Hôn nhân không được để trống!");
+      IZIAlert.error(message: "Hôn nhân không được để trống!");
       return false;
     }
 
     if (hinhThucLamViecIndex == null) {
-      Alert.error(message: "Hình thức làm việc không được để trống!");
+      IZIAlert.error(message: "Hình thức làm việc không được để trống!");
       return false;
     }
 
     if (mucTieuNgheNghiepController.text.isEmpty) {
-      Alert.error(message: "Mục tiêu nghề nghiệp không được để trống!");
+      IZIAlert.error(message: "Mục tiêu nghề nghiệp không được để trống!");
       return false;
     }
 
     if (bangBangCapDisplayResponse.isEmpty) {
-      Alert.error(message: "Bằng cấp không được để trống!");
+      IZIAlert.error(message: "Bằng cấp không được để trống!");
       return false;
     }
 
     if (chucVuHienTaiIndex == null) {
-      Alert.error(message: "Chức vụ hiện tại không được để trống!");
+      IZIAlert.error(message: "Chức vụ hiện tại không được để trống!");
       return false;
     }
 
     if (chucVuMongMuonIndex == null) {
-      Alert.error(message: "Chức vụ mong muốn không được để trống!");
+      IZIAlert.error(message: "Chức vụ mong muốn không được để trống!");
       return false;
     }
 
     if (soNamKinhNghiemIndex == null) {
-      Alert.error(message: "Năm kinh nghiệm không được để trống!");
+      IZIAlert.error(message: "Năm kinh nghiệm không được để trống!");
       return false;
     }
     if (mucLuongDuKienIndex == null) {
-      Alert.error(message: "Mức lương đề xuất không được để trống!");
+      IZIAlert.error(message: "Mức lương đề xuất không được để trống!");
       return false;
     }
 
     if (noiLamViecListString.isEmpty) {
-      Alert.error(message: "Vui lòng chọn nơi làm việc không được để trống!");
+      IZIAlert.error(message: "Vui lòng chọn nơi làm việc không được để trống!");
       return false;
     }
 
     if (chuyenNganhChinhSelected.isEmpty) {
-      Alert.error(
+      IZIAlert.error(
           message: "Vui lòng chọn ngành nghề mong muốn không được để trống!");
       return false;
     }
 
     if (keKhaiKinhNghiemResponseList.isEmpty) {
-      Alert.error(message: "Kê khai kinh nghiệm không được để trống!");
+      IZIAlert.error(message: "Kê khai kinh nghiệm không được để trống!");
       return false;
     }
 
     if (kyNangVaSoTruongLamViecController.text.isEmpty) {
-      Alert.error(
+      IZIAlert.error(
           message: "Kỹ năng và sở trường làm việc không được để trống!");
       return false;
     }
 
     if (ngoaiNguResponseList.isEmpty) {
-      Alert.error(message: "Ngoại ngữ không được để trống!");
+      IZIAlert.error(message: "Ngoại ngữ không được để trống!");
       return false;
     }
 

@@ -95,7 +95,7 @@ import 'package:template/data/repository/vat_tu_repository.dart';
 import 'package:template/data/repository/vi_tien_repository.dart';
 import 'package:template/data/repository/xuat_nhap_kho_repository.dart';
 import 'package:template/data/repository/yeu_cau_bao_hanh_repository.dart';
-import 'package:template/helper/network_info.dart';
+import 'package:template/helper/izi_network.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/bang_bang_cap_provider.dart';
 import 'package:template/provider/bang_gia_chi_tiet_tham_khao_provider.dart.dart';
@@ -184,7 +184,6 @@ import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/provider/tu_van_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
 import 'package:template/provider/xuat_nhap_kho_provider.dart';
@@ -213,8 +212,7 @@ Future<void> init() async {
   // External
   sl.registerSingleton<ValueGlobalNotifier>(ValueGlobalNotifier());
   final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerSingleton<SharedPreferenceHelper>(
-      SharedPreferenceHelper(sharedPreferences));
+  sl.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper(sharedPreferences));
   sl.registerSingleton<LoggingInterceptor>(LoggingInterceptor());
   sl.registerLazySingleton(() => Connectivity());
 
@@ -273,7 +271,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GiayChungNhanSucKhoeRepository());
   sl.registerLazySingleton(() => HinhThucLamViecRepository());
   sl.registerLazySingleton(() => HinhThucThanhToanRepository());
-  sl.registerLazySingleton(() => ImageUpdateRepository());
   sl.registerLazySingleton(() => KeKhaiKinhNghiemRepository());
   sl.registerLazySingleton(() => KhoHangDaiLyRepository());
   sl.registerLazySingleton(() => LichSuGiaoDichRepository());
@@ -374,7 +371,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GiayChungNhanSucKhoeProvider());
   sl.registerLazySingleton(() => HinhThucLamViecProvider());
   sl.registerLazySingleton(() => HinhThucThanhToanProvider());
-  sl.registerLazySingleton(() => ImageUpdateProvider());
   sl.registerLazySingleton(() => KeKhaiKinhNghiemProvider());
   sl.registerLazySingleton(() => KhoHangDaiLyProvider());
   sl.registerLazySingleton(() => LichSuGiaoDichProvider());

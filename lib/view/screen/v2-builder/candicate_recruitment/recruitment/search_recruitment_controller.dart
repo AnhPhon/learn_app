@@ -17,7 +17,7 @@ import 'package:template/provider/so_nam_kinh_nghiem_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:tiengviet/tiengviet.dart';
 
@@ -527,7 +527,7 @@ class V2SearchRecruitmentController extends GetxController {
     } else if (text == '') {
       onSearch(isRefresh: true);
     } else {
-      //Alert.error(message: 'Từ khoá không hợp lệ');
+      //IZIAlert.error(message: 'Từ khoá không hợp lệ');
       // Từ khó tìm không có
     }
     update();
@@ -556,7 +556,7 @@ class V2SearchRecruitmentController extends GetxController {
     } else if (text == '') {
       onSearch(isRefresh: true);
     } else {
-      //Alert.error(message: 'Từ khoá không hợp lệ');
+      //IZIAlert.error(message: 'Từ khoá không hợp lệ');
       // Từ khó tìm không có
     }
     update();

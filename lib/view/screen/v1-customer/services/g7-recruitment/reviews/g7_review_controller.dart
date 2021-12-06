@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:template/data/model/request/tuyen_dung_request.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class V1G7ReviewController extends GetxController {
   // Tiêu đề

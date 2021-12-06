@@ -7,8 +7,8 @@ import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/provider/bang_gia_don_hang_provider.dart';
 import 'package:template/provider/loai_cong_viec_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V1G3OrderQuoteController extends GetxController {
   final BangGiaDonHangProvider bangGiaDonHangProvider =
@@ -146,16 +146,16 @@ class V1G3OrderQuoteController extends GetxController {
   ///
   bool validate() {
     if (work == null) {
-      Alert.error(message: "Vui lòng chọn loại dịch vụ");
+      IZIAlert.error(message: "Vui lòng chọn loại dịch vụ");
       return false;
     } else if (subServices == null) {
-      Alert.error(message: "Vui lòng chọn loại dịch vụ yêu cầu");
+      IZIAlert.error(message: "Vui lòng chọn loại dịch vụ yêu cầu");
       return false;
     } else if (personNumberController.text.toString().isEmpty) {
-      Alert.error(message: "Số lượng yêu cầu không được để trống");
+      IZIAlert.error(message: "Số lượng yêu cầu không được để trống");
       return false;
     } else if (descController.text.toString().isEmpty) {
-      Alert.error(message: "Nội dung miêu tả không được để trống");
+      IZIAlert.error(message: "Nội dung miêu tả không được để trống");
       return false;
     }
     return true;

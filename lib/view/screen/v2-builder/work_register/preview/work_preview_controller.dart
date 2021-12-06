@@ -11,15 +11,15 @@ import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/repository/dang_ky_viec_moi_repository.dart';
 import 'package:template/data/repository/danh_sach_ung_tuyen_repository.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/provider/dia_diem_dang_ky_lam_viec_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart' as constant;
 
 class V2WorkPreviewController extends GetxController {
@@ -495,7 +495,7 @@ class V2WorkPreviewController extends GetxController {
             filter: "&idTaiKhoanUngTuyen=$userId&idTuyenDung=$idTuyenDung",
             onSuccess: (models) {
               if (models.isNotEmpty) {
-                Alert.error(
+                IZIAlert.error(
                     message: 'Bạn đã ứng tuyển tin tuyển dụng này rồi!');
                 Get.back();
                 Get.back(result: true);
@@ -508,7 +508,7 @@ class V2WorkPreviewController extends GetxController {
                       daXem: "0"),
                   onSuccess: (model) {
                     EasyLoading.dismiss();
-                    Alert.success(message: 'Nộp hồ sơ ứng tuyển thành công!');
+                    IZIAlert.success(message: 'Nộp hồ sơ ứng tuyển thành công!');
                     Get.back();
                     Get.back(result: true);
                     update();

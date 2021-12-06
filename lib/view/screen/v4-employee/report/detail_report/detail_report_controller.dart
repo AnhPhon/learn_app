@@ -9,7 +9,7 @@ import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4DetailReportController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -127,11 +127,11 @@ class V4DetailReportController extends GetxController {
   ///
   bool validate() {
     if (contentDetailReport.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung báo cáo hợp lệ!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung báo cáo hợp lệ!');
       return false;
     }
     if (duAnNhanVien == null) {
-      Alert.error(message: 'Vui lòng chọn dự án hợp lệ!');
+      IZIAlert.error(message: 'Vui lòng chọn dự án hợp lệ!');
       return false;
     }
     return true;
@@ -151,7 +151,7 @@ class V4DetailReportController extends GetxController {
           noiDung: contentDetailReport.text,
         ),
         onSuccess: (value) {
-          Alert.success(message: 'Cập nhật thành công');
+          IZIAlert.success(message: 'Cập nhật thành công');
           EasyLoading.dismiss();
           Get.back(result: true);
           update();

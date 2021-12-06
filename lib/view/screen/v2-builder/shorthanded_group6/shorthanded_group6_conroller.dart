@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2ShorthandedGroup6Controller extends GetxController {
   String title = "Dịch vụ đang cần báo giá";
@@ -46,7 +46,7 @@ class V2ShorthandedGroup6Controller extends GetxController {
       id: idDonDichVu.toString(),
       onSuccess: (data) {
         donDichVuResponse = data;
-        if(Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DON_DICH_VU_DA_BAO_GIA){
+        if(Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DON_DICH_VU_DA_BAO_GIA){
           coTheBaoGia = false;
         }
         update();
@@ -65,7 +65,7 @@ class V2ShorthandedGroup6Controller extends GetxController {
       page: 1,
       filter: '&idDonDichVu=$idDonDichVu&idTaiKhoanBaoGia=$idTaiKhoanBaoGia',
       onSuccess: (data) {
-        if( data.isEmpty && (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true || (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_DA_BAO_GIA))){
+        if( data.isEmpty && (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true || (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_DA_BAO_GIA))){
           coTheBaoGia = true;
           update();
         } else {

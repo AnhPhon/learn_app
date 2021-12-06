@@ -16,9 +16,9 @@ import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/snack_bar.dart';
 
@@ -480,7 +480,7 @@ class ProductDetailController extends GetxController {
               getDonHang();
 
               //show snackbar
-              Alert.success(message: 'Thêm sản phẩm vào giỏ hàng thành công');
+              IZIAlert.success(message: 'Thêm sản phẩm vào giỏ hàng thành công');
             },
             onError: (error) {
               print("ProductDetailController chiTietDonHangAdd onError $error");

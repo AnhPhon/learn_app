@@ -7,14 +7,14 @@ import 'package:template/data/model/response/don_vi_cung_cap_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/kho_hang_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_vi_cung_cap_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/provider/kho_hang_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/provider/xuat_nhap_kho_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4ExportImportControleer extends GetxController {
   GetIt sl = GetIt.instance;
@@ -222,29 +222,29 @@ class V4ExportImportControleer extends GetxController {
   ///
   bool validate() {
     if (timeExportImport.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng chọn thời gian!');
+      IZIAlert.error(message: 'Vui lòng chọn thời gian!');
       return false;
     }
     if (duAnNhanVien == null) {
-      Alert.error(message: 'Vui lòng chọn tên dự án!');
+      IZIAlert.error(message: 'Vui lòng chọn tên dự án!');
       return false;
     }
     if (khoHang == null) {
-      Alert.error(message: 'Vui lòng chọn kho hàng!');
+      IZIAlert.error(message: 'Vui lòng chọn kho hàng!');
       return false;
     }
     if (donViCungCap == null) {
-      Alert.error(message: 'Vui lòng chọn đơn vị cung cấp!');
+      IZIAlert.error(message: 'Vui lòng chọn đơn vị cung cấp!');
       return false;
     }
     if (vatTu == null) {
-      Alert.error(message: 'Vui lòng chọn vật tư/thiết bị!');
+      IZIAlert.error(message: 'Vui lòng chọn vật tư/thiết bị!');
       return false;
     }
 
     //validation số lượng
     if (double.parse(countController.text.toString()) <= 0) {
-      Alert.error(message: "Số lượng phải lớn hơn 0!");
+      IZIAlert.error(message: "Số lượng phải lớn hơn 0!");
       return false;
     }
 

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:template/helper/common_helper.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Specification extends StatelessWidget {

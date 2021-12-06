@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 // ignore: must_be_immutable
 class LabelInput extends StatelessWidget {

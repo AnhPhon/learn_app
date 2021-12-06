@@ -8,16 +8,16 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/cai_dat_chung_provider.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
@@ -331,7 +331,7 @@ class V1ResponseController extends GetxController {
       ),
       confirm: ElevatedButton(
           onPressed: () {
-            Alert.error(message: "Đã hủy đơn hàng");
+            IZIAlert.error(message: "Đã hủy đơn hàng");
             donDichVuProvider.update(
               data: DonDichVuRequest(
                 id: idDonDichVu!.id,

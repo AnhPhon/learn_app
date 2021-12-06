@@ -14,12 +14,12 @@ import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
-import 'package:template/helper/date_converter.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_date.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/attach_button.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
@@ -1739,7 +1739,7 @@ class V2WorkCreatePage extends GetView<V2WorkCreateController> {
           MultiSelectDialogField<LoaiCongViecResponse?>(
             onSelectionChanged: (value) {
               if (value.length > 5) {
-                Alert.error(
+                IZIAlert.error(
                     message:
                         "Vui lòng không được chọn quá 5 ngành nghề ứng tuyển!");
               } else {}

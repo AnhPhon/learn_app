@@ -9,11 +9,11 @@ import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/chi_tiet_don_hang_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class CartController extends GetxController {
   //donHang
@@ -319,7 +319,7 @@ class CartController extends GetxController {
                 // final V2HomeController v2HomeController = Get.find();
                 // v2HomeController.getDonHang();
               }
-              Alert.info(
+              IZIAlert.info(
                   message:
                       "Vui lòng đợi xét duyệt nạp tiền và thanh toán lại sau!");
               Get.back();
@@ -354,7 +354,7 @@ class CartController extends GetxController {
     //is change focus
     if (isUpdate != null &&
         isUpdate == true &&
-        Validate.checkValueIsNullEmpty(quanlityControllerList[index].text) ==
+        Validate.nullOrEmpty(quanlityControllerList[index].text) ==
             false) {
       getTotal(isReloadTotal: true);
       updateChiTietDonHang(
@@ -362,7 +362,7 @@ class CartController extends GetxController {
     }
 
     //is request
-    if (quanlity != null && Validate.checkValueIsNullEmpty(quanlity) == false) {
+    if (quanlity != null && Validate.nullOrEmpty(quanlity) == false) {
       getTotal(isReloadTotal: true);
       updateChiTietDonHang(index: index, quality: quanlity);
     }

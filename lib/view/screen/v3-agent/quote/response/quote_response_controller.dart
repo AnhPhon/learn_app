@@ -11,15 +11,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/body/yeu_cau_bao_gia_model.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/helper/date_converter.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_date.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V3QuoteResponseController extends GetxController {
@@ -246,7 +246,7 @@ class V3QuoteResponseController extends GetxController {
       if (timeOfDay.hour > toSelectedTime.hour ||
           (timeOfDay.hour == toSelectedTime.hour &&
               timeOfDay.minute > toSelectedTime.minute)) {
-        Alert.error(
+        IZIAlert.error(
             message: "Thời gian 'đến' không được nhỏ hơn thời gian 'từ'");
       } else {
         fromSelectedTime = timeOfDay;
@@ -271,7 +271,7 @@ class V3QuoteResponseController extends GetxController {
       if (timeOfDay.hour < fromSelectedTime.hour ||
           (timeOfDay.hour == fromSelectedTime.hour &&
               timeOfDay.minute < fromSelectedTime.minute)) {
-        Alert.error(
+        IZIAlert.error(
             message: "Thời gian 'đến' không được nhỏ hơn thời gian 'từ'");
       } else {
         toSelectedTime = timeOfDay;
@@ -348,14 +348,14 @@ class V3QuoteResponseController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -398,7 +398,7 @@ class V3QuoteResponseController extends GetxController {
         ),
       );
     } else {
-      Alert.error(message: "Thời gian hiệu lực\nphải lớn hơn ngày bắt đầu");
+      IZIAlert.error(message: "Thời gian hiệu lực\nphải lớn hơn ngày bắt đầu");
     }
   }
 }

@@ -8,7 +8,7 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
 import 'package:template/provider/thong_tin_dang_ky_hop_dong_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2ContractController extends GetxController {
   //DangKyHopDongSBS
@@ -69,7 +69,7 @@ class V2ContractController extends GetxController {
             //check is not empty
             if (value.isNotEmpty) {
               dangKyHopDongSBSResponse = value.first;
-              Alert.success(message: "Bạn đã đăng ký hợp đồng với FSS");
+              IZIAlert.success(message: "Bạn đã đăng ký hợp đồng với FSS");
             }
 
             isLoading = false;
@@ -119,7 +119,7 @@ class V2ContractController extends GetxController {
           onSuccess: (value) {
             //get back and show dialog
             Get.back(result: true);
-            Alert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
+            IZIAlert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
           },
           onError: (error) {
             print("V2ContractController onBtnAceptClick onError $error");
@@ -138,7 +138,7 @@ class V2ContractController extends GetxController {
           onSuccess: (value) {
             //get back and show dialog
             Get.back(result: true);
-            Alert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
+            IZIAlert.success(message: 'Đăng ký hợp đông nguyên tắc thành công');
           },
           onError: (error) {
             print("V2ContractController onBtnAceptClick onError $error");
@@ -147,7 +147,7 @@ class V2ContractController extends GetxController {
       }
     } else {
       // show errors
-      Alert.error(message: 'Vui lòng chọn đồng ý với tất cả nội dung');
+      IZIAlert.error(message: 'Vui lòng chọn đồng ý với tất cả nội dung');
     }
   }
 }

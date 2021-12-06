@@ -5,8 +5,8 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
@@ -105,17 +105,17 @@ class V1FormalPaymentController extends GetxController {
                                     AppRoutes.V1_DASHBOARD)),
                             Get.back(),
                             Get.back(),
-                            Alert.success(message: 'Tạo đơn thành công'),
+                            IZIAlert.success(message: 'Tạo đơn thành công'),
                           }
                         else
-                          Alert.error(message: 'Vui lòng thực hiện lại')
+                          IZIAlert.error(message: 'Vui lòng thực hiện lại')
                       })
                 }
               //chưa thanh toán
               else if (value != null && value['type'] == 2)
                 {
                   // Code này chưa thành toán thì đơn tạo thất bại luôn
-                  Alert.error(message: 'Tạo đơn thất bại'),
+                  IZIAlert.error(message: 'Tạo đơn thất bại'),
                   Get.offAllNamed(AppRoutes.V1_DASHBOARD,
                       predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
                   Get.back(),
@@ -135,11 +135,11 @@ class V1FormalPaymentController extends GetxController {
                   //           Get.offAllNamed(AppRoutes.V1_DASHBOARD, predicate: ModalRoute.withName(AppRoutes.V1_DASHBOARD)),
                   //           Get.back(),
                   //           Get.back(),
-                  //           Alert.error(
+                  //           IZIAlert.error(
                   //               message: 'Tạo đơn thành công'),
                   //         }
                   //       else
-                  //         {Alert.error(message: 'Vui lòng thực hiện lại')}
+                  //         {IZIAlert.error(message: 'Vui lòng thực hiện lại')}
                   //     })
                 }
             });

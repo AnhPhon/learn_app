@@ -10,8 +10,8 @@ import 'package:template/data/repository/tuyen_dung_repository.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 
@@ -105,7 +105,7 @@ class V1OrderInformationController extends GetxController {
             '${AppRoutes.PAYMENT_ACCOUNT}?tongTien=${tongTien.toStringAsFixed(0)}&url=${AppRoutes.V1_DASHBOARD}')!
         .then((value) {
       if (value == true) {
-        Alert.success(message: 'Đăng tin tuyển dụng thành công');
+        IZIAlert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái đã thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61604f4cc8e6fa122227e29f";
         tuyenDungRequest!.loaiTin = "2";
@@ -118,10 +118,10 @@ class V1OrderInformationController extends GetxController {
                   Get.back()
                 }
               else
-                Alert.error(message: 'Vui lòng thực hiện lại')
+                IZIAlert.error(message: 'Vui lòng thực hiện lại')
             });
       } else {
-        Alert.success(message: 'Đăng tin tuyển dụng thành công');
+        IZIAlert.success(message: 'Đăng tin tuyển dụng thành công');
         //set trạng thái chưa thanh toán
         tuyenDungRequest!.idTrangThaiThanhToan = "61615180e87a9124404abe82";
         tuyenDungRequest!.loaiTin = "2";
@@ -134,7 +134,7 @@ class V1OrderInformationController extends GetxController {
                   Get.back()
                 }
               else
-                {Alert.error(message: 'Vui lòng thực hiện lại')}
+                {IZIAlert.error(message: 'Vui lòng thực hiện lại')}
             });
       }
     });

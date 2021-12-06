@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/utils/images_path.dart';
 
 class AppBarWithTabBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

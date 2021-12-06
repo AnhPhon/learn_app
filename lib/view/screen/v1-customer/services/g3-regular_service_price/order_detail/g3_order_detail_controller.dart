@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class V1G3OrderDetailController extends GetxController{
   DonDichVuProvider dichVuProvider = GetIt.I.get<DonDichVuProvider>();

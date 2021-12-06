@@ -14,9 +14,9 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/screen/payment/payment_account/patment_dialog_accept.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 

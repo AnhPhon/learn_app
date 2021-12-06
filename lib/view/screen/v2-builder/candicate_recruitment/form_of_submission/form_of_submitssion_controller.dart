@@ -2,9 +2,9 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import '../../../../../di_container.dart';
 
 class V2FormOfSubmitssionController extends GetxController {
@@ -53,7 +53,7 @@ class V2FormOfSubmitssionController extends GetxController {
               filter: "&idTaiKhoanUngTuyen=$userId&idTuyenDung=$idTuyenDung",
               onSuccess: (models) {
                 if (models.isNotEmpty) {
-                  Alert.error(
+                  IZIAlert.error(
                       message: 'Bạn đã ứng tuyển tin tuyển dụng này rồi!');
                 } else {
                   Get.toNamed(
@@ -67,13 +67,13 @@ class V2FormOfSubmitssionController extends GetxController {
               },
             );
           } else {
-            Alert.error(
+            IZIAlert.error(
                 message:
                     'Bạn phải đăng ký việc mới trước khi thực hiện ứng tuyển');
           }
         },
         onError: (error) {
-          Alert.error(
+          IZIAlert.error(
               message:
                   'Bạn phải đăng ký việc mới trước khi thực hiện ứng tuyển');
           print("TermsAndPolicyController checkRegister onError $error");
@@ -93,7 +93,7 @@ class V2FormOfSubmitssionController extends GetxController {
         filter: "&idTaiKhoanUngTuyen=$values&idTuyenDung=$idTuyenDung",
         onSuccess: (models) {
           if (models.isNotEmpty) {
-            Alert.error(message: 'Bạn đã ứng tuyển tin tuyển dụng này rồi!');
+            IZIAlert.error(message: 'Bạn đã ứng tuyển tin tuyển dụng này rồi!');
           } else {
             Get.toNamed('${AppRoutes.V2_CV}?idTuyenDung=$idTuyenDung')!
                 .then((value) => {

@@ -12,7 +12,7 @@ import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/danh_sach_luu_tin_tuyen_dung_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/cadidate_recruitment_dialog_accept.dart';
@@ -131,7 +131,7 @@ class V2PreviewController extends GetxController {
                                     // Lưu tin tuyển dụng
                                     onBtnLuuTinTuyenDung(),
 
-                                    Alert.success(
+                                    IZIAlert.success(
                                         message:
                                             'Nộp hồ sơ ứng tuyển thành công'),
                                     Get.back(),
@@ -140,13 +140,13 @@ class V2PreviewController extends GetxController {
                                 else
                                   {
                                     EasyLoading.dismiss(),
-                                    Alert.error(message: 'Vui lòng thử lại')
+                                    IZIAlert.error(message: 'Vui lòng thử lại')
                                   }
                               });
                     } else {
                       EasyLoading.dismiss();
                       Get.back();
-                      Alert.info(
+                      IZIAlert.info(
                           message: 'Bạn đã ứng tuyển tin tuyển dụng này rồi');
                     }
                   },
@@ -177,7 +177,7 @@ class V2PreviewController extends GetxController {
         onSuccess: (value) {
           EasyLoading.dismiss();
           if (value.isNotEmpty) {
-            Alert.info(message: 'Bạn đã lưu tin tuyển dụng này');
+            IZIAlert.info(message: 'Bạn đã lưu tin tuyển dụng này');
           } else {
             //set value request lưu tuyển dụng
             danhSachLuuTinTuyenDungRequest.idTaiKhoan = userId;
@@ -188,9 +188,9 @@ class V2PreviewController extends GetxController {
                 .add(danhSachLuuTinTuyenDungRequest)
                 .then((value) => {
                       if (value.response.data != null)
-                        {Alert.success(message: 'Lưu tin thành công')}
+                        {IZIAlert.success(message: 'Lưu tin thành công')}
                       else
-                        {Alert.error(message: 'Vui lòng thử lại')}
+                        {IZIAlert.error(message: 'Vui lòng thử lại')}
                     });
           }
         },

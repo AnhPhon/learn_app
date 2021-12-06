@@ -14,7 +14,7 @@ import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/value_global_notifier.dart';
 

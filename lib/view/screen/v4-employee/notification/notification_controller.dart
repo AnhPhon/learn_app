@@ -6,7 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/data/model/response/thong_bao_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/thong_bao_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V4NotificationController extends GetxController

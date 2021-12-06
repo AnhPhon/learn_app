@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/content_widget.dart';
@@ -21,7 +21,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
               child: Column(
             children: [
               //title
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idNhomDichVu) == false && Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idNhomDichVu!.tenDichVu) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.idNhomDichVu) == false && Validate.nullOrEmpty(controller.donDichVuResponse.idNhomDichVu!.tenDichVu) == false)
                 ContentWidget(
                   label: controller.donDichVuResponse.idNhomDichVu!.tenDichVu!.toString(),
                   center: true,
@@ -31,7 +31,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //job title
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.tieuDe) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.tieuDe) == false)
                 ContentWidget(
                   label: "Tiêu đề công việc ",
                   content: controller.donDichVuResponse.tieuDe.toString(),
@@ -40,7 +40,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //sex
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.gioiTinh) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.gioiTinh) == false)
                 ContentWidget(
                   label: "Giới tính: ",
                   content: controller.donDichVuResponse.gioiTinh.toString() == "1" ? "Nam" : "Nữ",
@@ -49,7 +49,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //working time in day
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idThoiGianLamViecs) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.idThoiGianLamViecs) == false)
                 ContentWidget(
                   label: "Thời gian làm trong ngày ",
                   content: controller.donDichVuResponse.idThoiGianLamViecs!.map((e) => e.toString()).join('\n'),
@@ -58,7 +58,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //start
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.ngayBatDau) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.ngayBatDau) == false)
                 ContentWidget(
                   label: "Ngày bắt đầu: ",
                   content: controller.getDateOutput(controller.donDichVuResponse.ngayBatDau.toString()),
@@ -67,7 +67,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //end
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.ngayKetThuc) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.ngayKetThuc) == false)
                 ContentWidget(
                   label: "Ngày kết thúc: ",
                   content: controller.getDateOutput(controller.donDichVuResponse.ngayKetThuc.toString()),
@@ -76,16 +76,16 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //working address
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idTinhTp) == false || Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idQuanHuyen) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.idTinhTp) == false || Validate.nullOrEmpty(controller.donDichVuResponse.idQuanHuyen) == false)
                 ContentWidget(
                   label: "Địa điểm làm việc: ",
-                  content: ((Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idQuanHuyen) == false ? '${controller.donDichVuResponse.idQuanHuyen}, ' : '') + (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idTinhTp) == false ? controller.donDichVuResponse.idTinhTp.toString() : '')).toString(),
+                  content: ((Validate.nullOrEmpty(controller.donDichVuResponse.idQuanHuyen) == false ? '${controller.donDichVuResponse.idQuanHuyen}, ' : '') + (Validate.nullOrEmpty(controller.donDichVuResponse.idTinhTp) == false ? controller.donDichVuResponse.idTinhTp.toString() : '')).toString(),
                 )
               else
                 const SizedBox(),
 
               //job title
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
                 Column(
                   children: [
                     const ContentWidget(
@@ -97,21 +97,21 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                     ),
 
                     //  TODO: LOai cong viec ben trong bang gia gia don hang
-                    if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false && Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idBangGiaDonHang!.idLoaiCongViec) == false)
+                    if (Validate.nullOrEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false && Validate.nullOrEmpty(controller.donDichVuResponse.idBangGiaDonHang!.idLoaiCongViec) == false)
                       ContentWidget(
                         label: "Loại dịch vụ:",
                         content: controller.donDichVuResponse.idBangGiaDonHang!.idLoaiCongViec!.toString(),
                       )
                     else
                       const SizedBox(),
-                    if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
+                    if (Validate.nullOrEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
                       ContentWidget(
                         label: "Chi tiết dịch vụ: ",
                         content: controller.donDichVuResponse.idBangGiaDonHang!.tieuDe.toString(),
                       )
                     else
                       const SizedBox(),
-                    if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
+                    if (Validate.nullOrEmpty(controller.donDichVuResponse.idBangGiaDonHang) == false)
                       ContentWidget(
                         label: "Giá tiền dịch vụ:",
                         content: "${PriceConverter.convertPrice(context, double.parse(controller.donDichVuResponse.idBangGiaDonHang!.giaTien.toString()))} VND",
@@ -124,7 +124,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //The amount of people
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.soLuongYeuCau) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.soLuongYeuCau) == false)
                 ContentWidget(
                   label: "Số lượng:",
                   content: controller.donDichVuResponse.soLuongYeuCau.toString(),
@@ -133,7 +133,7 @@ class V2ShorthandedGroup3Page extends GetView<V2ShorthandedGroup3Controller> {
                 const SizedBox(),
 
               //job description
-              if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.moTa) == false)
+              if (Validate.nullOrEmpty(controller.donDichVuResponse.moTa) == false)
                 ContentWidget(
                   label: "Mô tả dịch vụ yêu cầu của khách hàng:",
                   content: controller.donDichVuResponse.moTa.toString(),

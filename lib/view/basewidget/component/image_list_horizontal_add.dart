@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
 class ImageListHorizontalAdd<T> extends StatelessWidget {

@@ -17,11 +17,11 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 class SearchDropDownButton<T> extends StatelessWidget {
@@ -117,7 +117,7 @@ class SearchDropDownButton<T> extends StatelessWidget {
             // hint: hint,
             dropdownBuilder: (context, selectedItem) {
               return Text(
-                Validate.checkValueIsNullEmpty(value) == false
+                Validate.nullOrEmpty(value) == false
                     ? selectedItem
                         .toString()
                         .replaceAll('Phường', '')
@@ -234,112 +234,112 @@ class SearchDropDownButton<T> extends StatelessWidget {
       final value = data.first;
       if (value.runtimeType == LoaiCongViecResponse) {
         final index = (data as List<LoaiCongViecResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == NhomDichVuResponse) {
         final index = (data as List<NhomDichVuResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == TinhTpResponse) {
         final index = (data as List<TinhTpResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == QuanHuyenResponse) {
         final index = (data as List<QuanHuyenResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == PhuongXaResponse) {
         final index = (data as List<PhuongXaResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == LoaiCongTrinhResponse) {
         final index = (data as List<LoaiCongTrinhResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == DanhMucSanPhamResponse) {
         final index = (data as List<DanhMucSanPhamResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == BangGiaDonHangResponse) {
         final index = (data as List<BangGiaDonHangResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == HinhThucLamViecResponse) {
         final index = (data as List<HinhThucLamViecResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == TrinhDoHocVanResponse) {
         final index = (data as List<TrinhDoHocVanResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == ChuyenNganhChinhResponse) {
         final index = (data as List<ChuyenNganhChinhResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == SoNamKinhNghiemResponse) {
         final index = (data as List<SoNamKinhNghiemResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == MucLuongDuKienResponse) {
         final index = (data as List<MucLuongDuKienResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == ThoiGianLamViecResponse) {
         final index = (data as List<ThoiGianLamViecResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == VatTuResponse) {
         final index = (data as List<VatTuResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }
         return data;
       } else if (value.runtimeType == NhomCuaHangResponse) {
         final index = (data as List<NhomCuaHangResponse>).indexWhere(
-            (element) => Validate.checkValueIsNullEmpty(element.id));
+            (element) => Validate.nullOrEmpty(element.id));
         if (index != -1) {
           data.insert(0, data.removeAt(index));
         }

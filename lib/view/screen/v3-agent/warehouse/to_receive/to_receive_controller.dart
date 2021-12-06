@@ -9,7 +9,7 @@ import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V3ToReceiveController extends GetxController {
   //TextEditingController
@@ -124,11 +124,11 @@ class V3ToReceiveController extends GetxController {
   void onUpdateClick() {
     //validate
     if (sanPhamResponse == null) {
-      Alert.error(message: "Vui lòng chọn sản phẩm");
+      IZIAlert.error(message: "Vui lòng chọn sản phẩm");
     } else if (khoHangDaiLyResponse == null) {
-      Alert.error(message: "Vui lòng chọn kho hàng");
+      IZIAlert.error(message: "Vui lòng chọn kho hàng");
     } else if (stockController.text.isEmpty) {
-      Alert.error(message: "Trường số lượng không được để trống");
+      IZIAlert.error(message: "Trường số lượng không được để trống");
     } else {
       //set data
       nhapKhoHangDaiLyRequest.idKhoHangDaiLy = khoHangDaiLyResponse!.id;
@@ -142,7 +142,7 @@ class V3ToReceiveController extends GetxController {
         data: nhapKhoHangDaiLyRequest,
         onSuccess: (data) {
           Get.back(result: true);
-          Alert.success(message: "Nhập kho sản phẩm thành công");
+          IZIAlert.success(message: "Nhập kho sản phẩm thành công");
         },
         onError: (error) {
           print("V3ToReceiveController onUpdateClick onError $error");

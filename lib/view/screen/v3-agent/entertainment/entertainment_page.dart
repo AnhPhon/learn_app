@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/utils/images_path.dart';
 import 'package:template/view/basewidget/drawer/drawer_widget.dart';
 
 import 'entertainment_controller.dart';

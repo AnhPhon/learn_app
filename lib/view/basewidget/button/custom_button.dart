@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;

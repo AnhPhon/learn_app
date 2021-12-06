@@ -13,9 +13,9 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import '../../../../di_container.dart';
 
@@ -416,19 +416,19 @@ class CreateWorkController extends GetxController {
   ///
   Future<void> onClickContinue() async {
     if (dichvu == null) {
-      Alert.error(message: "Vui lòng chọn dịch vụ");
+      IZIAlert.error(message: "Vui lòng chọn dịch vụ");
       return;
     } else if (hcmProvince == null &&
         otherProvince == null &&
         haNoiProvince == null &&
         daNangProvince == null) {
-      Alert.error(message: "Vui lòng chọn tỉnh");
+      IZIAlert.error(message: "Vui lòng chọn tỉnh");
       return;
     } else if (hcmHuyen == null &&
         khacHuyen == null &&
         haNoiHuyen == null &&
         daNangHuyen == null) {
-      Alert.error(message: "Vui lòng chọn quận huyện");
+      IZIAlert.error(message: "Vui lòng chọn quận huyện");
       return;
     }
     if (dnWards.isNotEmpty ||
@@ -439,15 +439,15 @@ class CreateWorkController extends GetxController {
           khacPhuong == null &&
           haNoiPhuong == null &&
           daNangPhuong == null) {
-        Alert.error(message: "Vui lòng phường xã");
+        IZIAlert.error(message: "Vui lòng phường xã");
         return;
       }
     }
     if (loaiCongViec == null) {
-      Alert.error(message: "Vui lòng chọn công việc");
+      IZIAlert.error(message: "Vui lòng chọn công việc");
       return;
     } else if (addressController.text.toString().isEmpty) {
-      Alert.error(message: "Vui lòng điền địa chỉ cụ thể");
+      IZIAlert.error(message: "Vui lòng điền địa chỉ cụ thể");
       return;
     } else {
       if (dichvu!.nhomDichVu! == '1') {

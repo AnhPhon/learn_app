@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/component/app_bar_with_tabbar.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/screen/v3-agent/product_management/product_management_controller.dart';

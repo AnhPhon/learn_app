@@ -6,7 +6,7 @@ import 'package:template/data/model/response/vi_tien_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/lich_su_vi_tien_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class WalletController extends GetxController {

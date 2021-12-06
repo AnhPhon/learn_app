@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/string_cut.dart';
+import 'package:template/helper/izi_string.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/dropdown_button.dart';
 import 'package:template/view/basewidget/button/search_drop_down_button.dart';
@@ -206,13 +206,13 @@ class V2AfterQuotationG2Page extends GetView<V2AfterQuotationG2Controller> {
       ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: Validate.checkValueIsNullEmpty(controller.chiTietCongViecRequest) == false ? controller.chiTietCongViecRequest.length : 0,
+      itemCount: Validate.nullOrEmpty(controller.chiTietCongViecRequest) == false ? controller.chiTietCongViecRequest.length : 0,
       itemBuilder: (BuildContext ctx, int index) {
         return Container(
           margin: const EdgeInsets.only(
             top: Dimensions.PADDING_SIZE_DEFAULT,
           ),
-          child: Validate.checkValueIsNullEmpty(controller.chiTietCongViecRequest[index].tenCongViec) == false ? BoxShadowWidget(
+          child: Validate.nullOrEmpty(controller.chiTietCongViecRequest[index].tenCongViec) == false ? BoxShadowWidget(
             child: Column(
               children: [
                 const SizedBox(
@@ -321,7 +321,7 @@ class V2AfterQuotationG2Page extends GetView<V2AfterQuotationG2Controller> {
     return Column(
       children: [
         //show file
-        if (Validate.checkValueIsNullEmpty(controller.getFileNameBaoGia()) == false) fileWidget() else const SizedBox(),
+        if (Validate.nullOrEmpty(controller.getFileNameBaoGia()) == false) fileWidget() else const SizedBox(),
 
         //working address
         // const SizedBox(

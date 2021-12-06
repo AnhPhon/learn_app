@@ -15,7 +15,7 @@ import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
@@ -25,11 +25,11 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/constants/preferences.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class RegisterController extends GetxController {
   // Provider
@@ -344,117 +344,117 @@ class RegisterController extends GetxController {
   ///
   bool onCheckValidate() {
     if (loaiTaiKhoan == null) {
-      Alert.error(message: "Vui lòng chọn loại tài khoản");
+      IZIAlert.error(message: "Vui lòng chọn loại tài khoản");
       return false;
     } else if (juridical == null) {
-      Alert.error(message: "Vui lòng chọn loại pháp lý");
+      IZIAlert.error(message: "Vui lòng chọn loại pháp lý");
       return false;
     } else if (enterpriseNameController.text.toString().isEmpty) {
-      Alert.error(
+      IZIAlert.error(
           message: "Tên doanh nghiệp/đội trưởng/cá nhân không được để trống");
       return false;
     } else if (fullNameController.text.toString().isEmpty) {
-      Alert.error(message: "Họ và tên không được để trống");
+      IZIAlert.error(message: "Họ và tên không được để trống");
       return false;
     } else if (fullNameController.text.toString().isEmpty) {
-      Alert.error(message: "Họ và tên không được để trống");
+      IZIAlert.error(message: "Họ và tên không được để trống");
       return false;
     } else if (fullNameController.text.toString().isEmpty) {
-      Alert.error(message: "Họ và tên không được để trống");
+      IZIAlert.error(message: "Họ và tên không được để trống");
       return false;
     } else if (birthDateController.text.toString().isEmpty) {
-      Alert.error(message: "Ngày sinh không được để trống");
+      IZIAlert.error(message: "Ngày sinh không được để trống");
       return false;
     } else if (gender == null) {
-      Alert.error(message: "Vui lòng chọn giới tính");
+      IZIAlert.error(message: "Vui lòng chọn giới tính");
       return false;
     } else if (cmndController.text.toString().isEmpty) {
-      Alert.error(message: "Số CMND/Căn cước không được để trống");
+      IZIAlert.error(message: "Số CMND/Căn cước không được để trống");
       return false;
     } else if (cmndController.text.toString().length != 12 &&
         cmndController.text.toString().length != 9) {
-      Alert.error(message: "Số CMND/Căn cước không hợp lệ");
+      IZIAlert.error(message: "Số CMND/Căn cước không hợp lệ");
       return false;
     } else if (dateRangeController.text.toString().isEmpty) {
-      Alert.error(message: "Ngày cấp không được để trống");
+      IZIAlert.error(message: "Ngày cấp không được để trống");
       return false;
     } else if (placeIssueController.text.toString().isEmpty) {
-      Alert.error(message: "Nơi cấp không được để trống");
+      IZIAlert.error(message: "Nơi cấp không được để trống");
       return false;
     } else if (phoneNumberController.text.toString().isEmpty) {
-      Alert.error(message: "Số điện thoại không được để trống");
+      IZIAlert.error(message: "Số điện thoại không được để trống");
       return false;
     } else if (!Validate.phone(phoneNumberController.text.toString())) {
-      Alert.error(message: "Số điện thoại không Hợp lệ");
+      IZIAlert.error(message: "Số điện thoại không Hợp lệ");
       return false;
     } else if (emailController.text.toString().isNotEmpty) {
       if (!Validate.email(emailController.text.toString())) {
-        Alert.error(message: "Email không hợp lệ");
+        IZIAlert.error(message: "Email không hợp lệ");
         return false;
       }
     }
     if (passwordController.text.toString().isEmpty) {
-      Alert.error(message: "Mật khẩu không được để trống");
+      IZIAlert.error(message: "Mật khẩu không được để trống");
       return false;
     } else if (Validate.charactersLength(passwordController.text.toString()) ==
         false) {
-      Alert.error(message: 'Mật khẩu ít nhất 8 ký tự');
+      IZIAlert.error(message: 'Mật khẩu ít nhất 8 ký tự');
       return false;
     } else if (Validate.oneLowerCase(passwordController.text.toString()) ==
         false) {
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
       return false;
     } else if (Validate.oneUpperCase(passwordController.text.toString()) ==
         false) {
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
       return false;
     } else if (Validate.leastOneDigit(passwordController.text.toString()) ==
         false) {
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 số');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 số');
       return false;
     } else if (passwordController.text.toString() !=
         repeatPasswordController.text.toString()) {
-      Alert.error(message: "Mật khẩu không trùng khớp");
+      IZIAlert.error(message: "Mật khẩu không trùng khớp");
       return false;
     } else if (province == null) {
-      Alert.error(message: "Vui lòng chọn tỉnh thành phố");
+      IZIAlert.error(message: "Vui lòng chọn tỉnh thành phố");
       return false;
     } else if (district == null) {
-      Alert.error(message: "Vui lòng chọn quận huyện");
+      IZIAlert.error(message: "Vui lòng chọn quận huyện");
       return false;
     } else if (ward == null) {
-      Alert.error(message: "Vui lòng chọn phường xã");
+      IZIAlert.error(message: "Vui lòng chọn phường xã");
       return false;
     } else if (multipSelecteProvince.isEmpty) {
-      Alert.error(message: "Vui lòng chọn khu vực tham gia");
+      IZIAlert.error(message: "Vui lòng chọn khu vực tham gia");
       return false;
     } else if (loaiTaiKhoan!.tieuDe!.toLowerCase().contains('thợ thầu')) {
       if (experienceController.text.toString().isEmpty) {
-        Alert.error(message: "Năng lực/Kinh nghiệm không được để trống");
+        IZIAlert.error(message: "Năng lực/Kinh nghiệm không được để trống");
         return false;
       } else if (readyWorkController.text.toString().isEmpty) {
-        Alert.error(
+        IZIAlert.error(
             message:
                 "Bạn sẵn sàng làm việc ở những tỉnh nào không được để trống");
         return false;
       }
     }
     if (avatarFile == null) {
-      Alert.error(message: "Vui lòng chọn ảnh đại diện");
+      IZIAlert.error(message: "Vui lòng chọn ảnh đại diện");
       return false;
     } else if (frontCMND == null) {
-      Alert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt trước");
+      IZIAlert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt trước");
       return false;
     } else if (backSideCMND == null) {
-      Alert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt sau");
+      IZIAlert.error(message: "Vui lòng chọn ảnh chứng minh nhân dân mặt sau");
       return false;
     } else if (faceFile == null) {
-      Alert.error(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
+      IZIAlert.error(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
       return false;
     }
     // if(loaiTaiKhoan!.tieuDe!.toLowerCase().contains('nhân viên') || loaiTaiKhoan!.id == NHAN_VIEN){
     //   if(faceFile == null){
-    //     Alert.error(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
+    //     IZIAlert.error(message: "Vui lòng chụp ảnh khuôn mặt của bạn");
     //     return false;
     //   }
     // }
@@ -541,7 +541,7 @@ class RegisterController extends GetxController {
         phone: {"phone": account.soDienThoai},
         onSuccess: (String registerToken) {
           EasyLoading.dismiss();
-          Alert.success(
+          IZIAlert.success(
               message:
                   "Mã xác thực gửi số điện thoại của bạn. Vui lòng xác thực hoàn tất đăng ký");
 
@@ -612,23 +612,23 @@ class RegisterController extends GetxController {
                     // sl.get<SharedPreferenceHelper>().saveUserId(user.id!);
                     // sl.get<SharedPreferenceHelper>().saveIsFirst(id: true);
                     walletRequest(user: user);
-                    Alert.success(message: "Đăng ký Tài khoản thành công");
+                    IZIAlert.success(message: "Đăng ký Tài khoản thành công");
                     Get.back();
                     EasyLoading.dismiss();
                   },
                   onError: (onError) {
                     EasyLoading.dismiss();
-                    Alert.error(message: "Đăng ký tài khoản thất bại");
+                    IZIAlert.error(message: "Đăng ký tài khoản thất bại");
                     print(" Lỗi đăng ký tài khoản $onError");
                   });
             } else {
               EasyLoading.dismiss();
-              Alert.error(message: "Đăng ký tài khoản thất bại");
+              IZIAlert.error(message: "Đăng ký tài khoản thất bại");
             }
           });
         },
         onError: (onError) {
-          Alert.error(
+          IZIAlert.error(
               message:
                   "Đã xảy ra lỗi khi đăng ký tài khoản vui lòng thử lại sau");
           EasyLoading.dismiss();

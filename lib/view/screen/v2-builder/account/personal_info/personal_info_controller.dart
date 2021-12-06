@@ -9,12 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/tai_khoan_request.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_alert.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2PersonalInfoController extends GetxController {
   //file image
@@ -165,13 +165,13 @@ class V2PersonalInfoController extends GetxController {
   void updateAccount(BuildContext context) {
     //validate
     if (nameCompanyController.text.isEmpty) {
-      Alert.error(
+      IZIAlert.error(
           message: 'Vui lòng nhập tên doanh nghiệp/ đội trưởng/ cá nhân');
     } else if (fullNameController.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập họ và tên');
+      IZIAlert.error(message: 'Vui lòng nhập họ và tên');
     } else if (emailController.text.isNotEmpty &&
         Validate.email(emailController.text) == false) {
-      Alert.error(message: "Email không hợp lệ");
+      IZIAlert.error(message: "Email không hợp lệ");
     } else {
       //show loading
       EasyLoading.show(status: 'loading...');
@@ -195,7 +195,7 @@ class V2PersonalInfoController extends GetxController {
           Get.back(result: true);
 
           //show dialog
-          Alert.success(message: 'Cập nhật thông tin thành công');
+          IZIAlert.success(message: 'Cập nhật thông tin thành công');
         },
         onError: (error) {
           EasyLoading.dismiss();

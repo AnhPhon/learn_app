@@ -9,10 +9,10 @@ import 'package:template/data/model/body/auth_model.dart';
 import 'package:template/data/model/request/verify_otp_request.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/constants/preferences.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class OTPVerifierController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -63,7 +63,7 @@ class OTPVerifierController extends GetxController {
             if(status){
               Get.offAndToNamed(AppRoutes.UPDATE_PASSWORD, arguments: request);
             }else{
-              Alert.error(message: "Lỗi xác thực otp vui lòng thử lại");
+              IZIAlert.error(message: "Lỗi xác thực otp vui lòng thử lại");
             }
           }, onError: (onError){
             print("Lỗi xác thực otp $onError");

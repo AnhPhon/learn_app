@@ -6,10 +6,10 @@ import 'package:template/data/model/request/thu_chi_nhan_vien_request.dart';
 import 'package:template/data/model/response/thu_chi_nhan_vien_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4RevenueExpenditureController extends GetxController
     with CurrencyConverter {
@@ -55,19 +55,19 @@ class V4RevenueExpenditureController extends GetxController
   ///
   bool validateThu() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng chọn thời gian thêm thu!');
+      IZIAlert.error(message: 'Vui lòng chọn thời gian thêm thu!');
       return false;
     }
     if (contentRevenueController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung thu chính!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung thu chính!');
       return false;
     }
     if (moneyController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng số tiền thêm thu!');
+      IZIAlert.error(message: 'Vui lòng số tiền thêm thu!');
       return false;
     }
     if (detailContentRevenueController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung thu chi tiết!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung thu chi tiết!');
       return false;
     }
     return true;
@@ -109,19 +109,19 @@ class V4RevenueExpenditureController extends GetxController
   ///
   bool validateChi() {
     if (timeRevenueExpenditure.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng chọn thời gian thêm chi!');
+      IZIAlert.error(message: 'Vui lòng chọn thời gian thêm chi!');
       return false;
     }
     if (contentExpenditureController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung chi chính!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung chi chính!');
       return false;
     }
     if (moneyController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng số tiền thêm chi!');
+      IZIAlert.error(message: 'Vui lòng số tiền thêm chi!');
       return false;
     }
     if (detailContentExpenditureController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung chi chi tiết!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung chi chi tiết!');
       return false;
     }
     return true;

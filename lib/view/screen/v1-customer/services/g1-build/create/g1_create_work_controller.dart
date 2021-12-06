@@ -11,11 +11,11 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
 import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/data/model/response/don_vi_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_vi_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1G1CreateWorkController extends GetxController {
@@ -66,16 +66,16 @@ class V1G1CreateWorkController extends GetxController {
   ///
   void onClickContinueButton() {
     if (descController.text.toString().isEmpty) {
-      Alert.error(message: "Mô tả công việc không được để trống");
+      IZIAlert.error(message: "Mô tả công việc không được để trống");
       return;
     } else if (startTimeController.text.toString().isEmpty) {
-      Alert.error(message: "Thời gian bắt đầu không được để trống");
+      IZIAlert.error(message: "Thời gian bắt đầu không được để trống");
       return;
     } else if (DateConverter.differenceDate(
             startDate: startTimeController.text.toString(),
             endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
         0) {
-      Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+      IZIAlert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       return;
     }
 
@@ -89,7 +89,7 @@ class V1G1CreateWorkController extends GetxController {
               .parse(startTimeController.text)
               .toString()
               .substring(0, 10)))) {
-        Alert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
+        IZIAlert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
         return;
       }
     }
@@ -152,13 +152,13 @@ class V1G1CreateWorkController extends GetxController {
   ///
   void onClickAddMass() {
     if (nameTitleController.text.toString().isEmpty) {
-      return Alert.error(message: "Tên công việc không được để trống");
+      return IZIAlert.error(message: "Tên công việc không được để trống");
     } else if (specificationController.text.toString().isEmpty) {
-      return Alert.error(message: "Quy cách không được để trống");
+      return IZIAlert.error(message: "Quy cách không được để trống");
     } else if (unit == null) {
-      return Alert.error(message: 'Đơn vị không được để trống');
+      return IZIAlert.error(message: 'Đơn vị không được để trống');
     } else if (massController.text.toString().isEmpty) {
-      return Alert.error(message: "Khối lượng không được để trống");
+      return IZIAlert.error(message: "Khối lượng không được để trống");
     } else {
       final ChiTietCongViecResponse supplies = ChiTietCongViecResponse(
         soLuong: massController.text.toString(),
@@ -171,7 +171,7 @@ class V1G1CreateWorkController extends GetxController {
       specificationController.text = '';
       massController.text = '';
       unit = null;
-      Alert.success(
+      IZIAlert.success(
           message:
               "Thêm khối lượng công việc thành công. Bạn có thêm khối lượng công việc khác");
 
@@ -212,14 +212,14 @@ class V1G1CreateWorkController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -248,14 +248,14 @@ class V1G1CreateWorkController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -264,7 +264,7 @@ class V1G1CreateWorkController extends GetxController {
   ///
   void onDeleteImage({required String file, required List<String> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    //Alert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
+    //IZIAlert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 

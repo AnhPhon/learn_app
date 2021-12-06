@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/content_widget.dart';
@@ -34,7 +34,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                   ),
 
                   //job title
-                  if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idThongSoKyThuats) == false)
+                  if (Validate.nullOrEmpty(controller.donDichVuResponse.idThongSoKyThuats) == false)
                     ContentWidget(
                       label: "Tiêu đề công việc ",
                       content: controller.donDichVuResponse.tieuDe.toString(),
@@ -43,7 +43,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                     const SizedBox(),
 
                   //Specification
-                  if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.idThongSoKyThuats) == false)
+                  if (Validate.nullOrEmpty(controller.donDichVuResponse.idThongSoKyThuats) == false)
                     ContentWidget(
                       label: "Thông số kỹ thuật: ",
                       content: controller.donDichVuResponse.idThongSoKyThuats!.map((e) => e.tieuDe.toString()).join('\n'),
@@ -52,7 +52,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                     const SizedBox(),
 
                   //haulage distance
-                  if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.cuLyVanChuyen) == false)
+                  if (Validate.nullOrEmpty(controller.donDichVuResponse.cuLyVanChuyen) == false)
                     ContentWidget(
                       label: "Cự ly vận chuyển tương đối : ",
                       content: '${controller.donDichVuResponse.cuLyVanChuyen} m',
@@ -61,7 +61,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                     const SizedBox(),
 
                   //The amount of people
-                  if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.soLuongYeuCau) == false)
+                  if (Validate.nullOrEmpty(controller.donDichVuResponse.soLuongYeuCau) == false)
                     ContentWidget(
                       label: "Số lượng yêu cầu:",
                       content: controller.donDichVuResponse.soLuongYeuCau.toString(),
@@ -70,7 +70,7 @@ class V2QuotationG56Page extends GetView<V2QuotationG56Controller> {
                     const SizedBox(),
 
                   //The amount of people
-                  if (Validate.checkValueIsNullEmpty(controller.donDichVuResponse.donVi) == false)
+                  if (Validate.nullOrEmpty(controller.donDichVuResponse.donVi) == false)
                     ContentWidget(
                       label: "Báo giá theo:",
                       content: controller.donDichVuResponse.donVi.toString(),

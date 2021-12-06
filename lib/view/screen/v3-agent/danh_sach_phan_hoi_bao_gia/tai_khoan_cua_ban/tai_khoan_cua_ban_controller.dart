@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3TaiKhoanCuaBanController extends GetxController

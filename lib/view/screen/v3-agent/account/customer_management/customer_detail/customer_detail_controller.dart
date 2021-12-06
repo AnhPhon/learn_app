@@ -6,11 +6,11 @@ import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/data/model/response/lien_he_rieng_response.dart';
 import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/lien_he_rieng_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V3CustomerDetailController extends GetxController {
@@ -163,11 +163,11 @@ class V3CustomerDetailController extends GetxController {
   void onBtnUpdate() {
     //validate
     if (dateController.text.isEmpty) {
-      Alert.error(message: "Ngày giao dịch không được để trống");
+      IZIAlert.error(message: "Ngày giao dịch không được để trống");
     } else if (totalController.text.isEmpty) {
-      Alert.error(message: "Giá trị giao dịch không được để trống");
+      IZIAlert.error(message: "Giá trị giao dịch không được để trống");
     } else if (contentController.text.isEmpty) {
-      Alert.error(message: "Nội dung không được để trống");
+      IZIAlert.error(message: "Nội dung không được để trống");
     } else {
       //set data
       lienHeRiengRequest.idTaiKhoan = userId;

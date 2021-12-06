@@ -4,10 +4,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:template/utils/color_resources.dart';
 
-mixin Alert {
-  static void error(
-      {required String message,
-      Color? backgroundColor}) {
+mixin IZIAlert {
+  static void error({required String message, Color? backgroundColor}) {
     showToast(
       message.toString(),
       context: Get.context,
@@ -23,9 +21,7 @@ mixin Alert {
     );
   }
 
-  static void success(
-      {required String message,
-      Color? backgroundColor}) {
+  static void success({required String message, Color? backgroundColor}) {
     showToast(
       message.toString(),
       context: Get.context,
@@ -41,9 +37,7 @@ mixin Alert {
     );
   }
 
-  static void info(
-      {required String message,
-      Color? backgroundColor}) {
+  static void info({required String message, Color? backgroundColor}) {
     showToast(
       message.toString(),
       context: Get.context,

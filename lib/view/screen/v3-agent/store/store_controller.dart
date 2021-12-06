@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/data/model/response/category_store_model.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/utils/images_path.dart';
 
 class V3StoreController extends GetxController {
   //title

@@ -9,9 +9,9 @@ import 'package:template/data/model/response/cai_dat_chung_response.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/cai_dat_chung_provider.dart';
 import 'package:template/provider/lien_he_cong_ty_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/view/screen/account_rating_dialog.dart';
 
 import '../../../di_container.dart';
@@ -76,20 +76,20 @@ class DrawerController extends GetxController {
               sl.get<SharedPreferenceHelper>().removeResetPasswordToken();
 
               EasyLoading.dismiss();
-              Alert.success(message: "Đăng xuất tài khoản thành công!");
+              IZIAlert.success(message: "Đăng xuất tài khoản thành công!");
 
               Get.offAllNamed(AppRoutes.LOGIN,
                   predicate: ModalRoute.withName(AppRoutes.LOGIN));
             } else {
               EasyLoading.dismiss();
-              Alert.error(
+              IZIAlert.error(
                   message:
                       "Không thể đăng xuất tài khoản vui lòng thử lại sau !");
             }
           },
           onError: (onError) {
             EasyLoading.dismiss();
-            Alert.error(
+            IZIAlert.error(
                 message: "Không thể đăng xuất tài khoản vui lòng thử lại!");
             print("Lỗi đăng xuất tài khoản $onError");
           });

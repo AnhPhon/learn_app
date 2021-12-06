@@ -6,9 +6,9 @@ import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/search_drop_down_button.dart';
 import 'package:template/view/basewidget/component/item_list_widget.dart';
@@ -52,7 +52,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                           itemBuilder: (BuildContext ctx, int index) {
                             return ItemListWidget(
                               textOverImage: true,
-                              stringTextOverImage: Validate.checkValueIsNullEmpty(controller.donDichVuResponse![index].idTinhTp) == true ? '' : controller.donDichVuResponse![index].idTinhTp.toString(),
+                              stringTextOverImage: Validate.nullOrEmpty(controller.donDichVuResponse![index].idTinhTp) == true ? '' : controller.donDichVuResponse![index].idTinhTp.toString(),
                               margin: const EdgeInsets.only(
                                 top: Dimensions.PADDING_SIZE_SMALL,
                                 bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -61,10 +61,10 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                               onTap: () => controller.onShorthandedGroup(index),
                               title: controller.donDichVuResponse![index].tieuDe.toString(),
                               icon1: const Icon(Icons.location_on),
-                              rowText1: Validate.checkValueIsNullEmpty(controller.donDichVuResponse![index].idQuanHuyen) == true ? '' : controller.donDichVuResponse![index].idQuanHuyen.toString(),
+                              rowText1: Validate.nullOrEmpty(controller.donDichVuResponse![index].idQuanHuyen) == true ? '' : controller.donDichVuResponse![index].idQuanHuyen.toString(),
                               rowText2: 'Đã duyệt',
                               // rowText2: controller.donDichVuResponse![index].idTrangThaiDonDichVu == null ? '' : controller.donDichVuResponse![index].idTrangThaiDonDichVu!.tieuDe.toString(),
-                              urlImage: (Validate.checkValueIsNullEmpty(controller.donDichVuResponse![index]) == false && Validate.checkValueIsNullEmpty(controller.donDichVuResponse![index].idNhomDichVu) == false) ? controller.donDichVuResponse![index].idNhomDichVu!.hinhAnhDaiDien.toString() : '',
+                              urlImage: (Validate.nullOrEmpty(controller.donDichVuResponse![index]) == false && Validate.nullOrEmpty(controller.donDichVuResponse![index].idNhomDichVu) == false) ? controller.donDichVuResponse![index].idNhomDichVu!.hinhAnhDaiDien.toString() : '',
                             );
                           },
                         ),
@@ -98,7 +98,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
           isColorFieldWhite: true,
           data: controller.loaiCongViecResponse ?? [],
           obligatory: true,
-          isEnable: !Validate.checkValueIsNullEmpty(controller.currentNhomDichVuResponse!.id),
+          isEnable: !Validate.nullOrEmpty(controller.currentNhomDichVuResponse!.id),
           onChanged: (value) => controller.selectedCongViecPhuHop(value),
           value: controller.currentLoaiCongViecResponse,
           width: DeviceUtils.getScaledSize(context, 1),
@@ -127,7 +127,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                 onChanged: (value) => controller.selectedQuanHuyen(value),
                 value: controller.currentQuanHuyenResponse,
                 width: DeviceUtils.getScaledSize(context, 1),
-                isEnable: !Validate.checkValueIsNullEmpty(controller.currentTinhTpResponse.id),
+                isEnable: !Validate.nullOrEmpty(controller.currentTinhTpResponse.id),
                 hint: 'Chọn Quận/Huyện phù hợp',
                 padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT, right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
               ),
@@ -144,7 +144,7 @@ class V2ShorthandedPage extends GetView<V2ShorthandedController> {
                 onChanged: (value) => controller.selectedPhuongXa(value),
                 value: controller.currentPhuongXaResponse,
                 width: DeviceUtils.getScaledSize(context, 1),
-                isEnable: !(Validate.checkValueIsNullEmpty(controller.currentTinhTpResponse.id) || Validate.checkValueIsNullEmpty(controller.currentQuanHuyenResponse.id)),
+                isEnable: !(Validate.nullOrEmpty(controller.currentTinhTpResponse.id) || Validate.nullOrEmpty(controller.currentQuanHuyenResponse.id)),
                 hint: 'Chọn Phường/Xã phù hợp',
                 padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT, right: Dimensions.PADDING_SIZE_DEFAULT, top: Dimensions.PADDING_SIZE_SMALL),
               ),

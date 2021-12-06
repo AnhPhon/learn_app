@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/provider/cai_dat_chung_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1PaymentMethodController extends GetxController {

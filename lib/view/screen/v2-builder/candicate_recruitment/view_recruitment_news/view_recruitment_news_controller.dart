@@ -7,9 +7,9 @@ import 'package:template/data/model/request/tuyen_dung_request.dart';
 import 'package:template/data/repository/danh_sach_luu_tin_tuyen_dung_repository.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/danh_sach_luu_tin_tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2ViewRecruitmentNewsController extends GetxController {
   //Provider
@@ -195,7 +195,7 @@ class V2ViewRecruitmentNewsController extends GetxController {
         onSuccess: (value) {
           EasyLoading.dismiss();
           if (value.isNotEmpty) {
-            Alert.info(message: 'Bạn đã lưu tin tuyển dụng này');
+            IZIAlert.info(message: 'Bạn đã lưu tin tuyển dụng này');
           } else {
             //set value request lưu tuyển dụng
             danhSachLuuTinTuyenDungRequest.idTaiKhoan = userId;
@@ -206,9 +206,9 @@ class V2ViewRecruitmentNewsController extends GetxController {
                 .add(danhSachLuuTinTuyenDungRequest)
                 .then((value) => {
                       if (value.response.data != null)
-                        {Alert.success(message: 'Lưu tin thành công')}
+                        {IZIAlert.success(message: 'Lưu tin thành công')}
                       else
-                        {Alert.error(message: 'Vui lòng thử lại')}
+                        {IZIAlert.error(message: 'Vui lòng thử lại')}
                     });
           }
         },

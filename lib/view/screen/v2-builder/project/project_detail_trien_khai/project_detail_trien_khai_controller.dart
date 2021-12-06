@@ -4,10 +4,10 @@ import 'package:template/data/model/response/du_an_khach_hang_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/danh_sach_tho_thau_bao_gia_provider.dart';
 import 'package:template/provider/du_an_khach_hang_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2ProjectDetailTrienKhaiController extends GetxController {
   String title = "Đang tải";
@@ -101,18 +101,18 @@ class V2ProjectDetailTrienKhaiController extends GetxController {
   ///
   String getDDiaDiemCuTheFull() {
     String s = '';
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.diaDiem) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.diaDiem) == false) {
       s += duAnKhachHangResponse!.diaDiem.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idPhuongXa) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idPhuongXa) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idPhuongXa.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idQuanHuyen) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idQuanHuyen) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idQuanHuyen.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idTinhTp) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idTinhTp) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idTinhTp.toString();
     }

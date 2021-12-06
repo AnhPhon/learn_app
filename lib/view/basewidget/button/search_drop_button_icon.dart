@@ -17,11 +17,11 @@ import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 class SearchDropDownButtonIcon<T> extends StatelessWidget {
@@ -86,7 +86,7 @@ class SearchDropDownButtonIcon<T> extends StatelessWidget {
         // hint: hint,
         dropdownBuilder: (context, selectedItem) {
           return Text(
-            Validate.checkValueIsNullEmpty(value) == false
+            Validate.nullOrEmpty(value) == false
                 ? selectedItem
                     .toString()
                     .replaceAll('Phường', '')

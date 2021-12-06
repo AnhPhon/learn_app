@@ -14,7 +14,7 @@ import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/thong_tin_thue_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2TaxRegisterController extends GetxController {
   //TextEditingController
@@ -220,7 +220,7 @@ class V2TaxRegisterController extends GetxController {
             Get.back();
 
             //show dialog
-            Alert.success(message: 'Đăng ký thuế thành công');
+            IZIAlert.success(message: 'Đăng ký thuế thành công');
           },
           onError: (error) {
             print("V2TaxController onBtnDoneClick onError $error");
@@ -229,7 +229,7 @@ class V2TaxRegisterController extends GetxController {
       } else {
         // show errors
         EasyLoading.dismiss();
-        Alert.error(message: 'Vui lòng điền mã số thuế');
+        IZIAlert.error(message: 'Vui lòng điền mã số thuế');
       }
     } else {
       if (hinhAnhs[1].isNotEmpty) {
@@ -248,7 +248,7 @@ class V2TaxRegisterController extends GetxController {
             Get.back();
 
             //show dialog
-            Alert.success(message: 'Cam kết thuế thành công');
+            IZIAlert.success(message: 'Cam kết thuế thành công');
           },
           onError: (error) {
             print("V2TaxController onBtnDoneClick onError $error");
@@ -274,7 +274,7 @@ class V2TaxRegisterController extends GetxController {
       } else {
         isUpdateCamKet = true;
         EasyLoading.dismiss();
-        Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+        IZIAlert.info(message: "Cho phép chỉnh sửa thông tin thuế");
         update();
         return;
       }
@@ -289,7 +289,7 @@ class V2TaxRegisterController extends GetxController {
       } else {
         isUpdateDangKy = true;
         EasyLoading.dismiss();
-        Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+        IZIAlert.info(message: "Cho phép chỉnh sửa thông tin thuế");
         update();
         return;
       }
@@ -306,7 +306,7 @@ class V2TaxRegisterController extends GetxController {
       onSuccess: (data) {
         EasyLoading.dismiss();
         Get.back();
-        Alert.success(message: "Chỉnh sửa thông tin thuế thành công");
+        IZIAlert.success(message: "Chỉnh sửa thông tin thuế thành công");
       },
       onError: (error) {
         EasyLoading.dismiss();

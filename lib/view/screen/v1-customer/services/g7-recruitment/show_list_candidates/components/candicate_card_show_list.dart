@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:template/data/model/response/dang_ky_viec_moi_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
+import 'package:template/helper/device_utils.dart';
 
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 
@@ -118,7 +118,7 @@ class CandidateCardShowList extends StatelessWidget {
                         _titleIcon(
                             context: context,
                             icon: Icons.place,
-                            content: Validate.checkValueIsNullEmpty(dangKyViecMoiResponse!.idPhuongXa) || Validate.checkValueIsNullEmpty(dangKyViecMoiResponse!.idQuanHuyen) || Validate.checkValueIsNullEmpty(dangKyViecMoiResponse!.idTinhTp)
+                            content: Validate.nullOrEmpty(dangKyViecMoiResponse!.idPhuongXa) || Validate.nullOrEmpty(dangKyViecMoiResponse!.idQuanHuyen) || Validate.nullOrEmpty(dangKyViecMoiResponse!.idTinhTp)
                                 ? ''
                                 : '${dangKyViecMoiResponse!.idPhuongXa!.ten}, ${dangKyViecMoiResponse!.idQuanHuyen!.ten}, ${dangKyViecMoiResponse!.idTinhTp!.ten}'),
                         _titleIcon(

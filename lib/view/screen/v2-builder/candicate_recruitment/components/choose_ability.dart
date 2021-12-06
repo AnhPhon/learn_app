@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 TableRow chooseAbility(BuildContext context,
     {required String title, required List<Object> ability}) {

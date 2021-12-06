@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/string_cut.dart';
+import 'package:template/helper/izi_string.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/widgets/label_and_content.dart';
 import 'package:template/view/screen/v2-builder/shorthanded-result/payment/shorthanded_result_payment_controller.dart';
@@ -67,7 +67,7 @@ class V2ShorthandedPaymentPage extends GetView<V2ShorthandedPaymentController> {
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
           return FadeInImage.assetNetwork(
             placeholder: Images.placeholder,
-            image: Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu) == false && Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu!.hinhAnhDaiDien) == false ? controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu!.hinhAnhDaiDien.toString() : '',
+            image: Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu) == false && Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu!.hinhAnhDaiDien) == false ? controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idNhomDichVu!.hinhAnhDaiDien.toString() : '',
             width: double.infinity,
             height: DeviceUtils.getScaledHeight(context, .3),
             fit: BoxFit.fill,
@@ -122,7 +122,7 @@ class V2ShorthandedPaymentPage extends GetView<V2ShorthandedPaymentController> {
               ),
 
               Text(
-                (Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idTinhTp) == false) ? ' ${controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idTinhTp!.ten}' : 'Không có',
+                (Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idTinhTp) == false) ? ' ${controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idTinhTp!.ten}' : 'Không có',
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18w600(),
               ),
@@ -137,7 +137,7 @@ class V2ShorthandedPaymentPage extends GetView<V2ShorthandedPaymentController> {
               ),
 
               Text(
-                (Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idQuanHuyen) == false) ? ' ${controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idQuanHuyen}' : 'Không có',
+                (Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idQuanHuyen) == false) ? ' ${controller.danhSachBaoGiaDonDichVu.idDonDichVu!.idQuanHuyen}' : 'Không có',
                 textAlign: TextAlign.left,
                 style: Dimensions.fontSizeStyle18w600(),
               ),
@@ -159,7 +159,7 @@ class V2ShorthandedPaymentPage extends GetView<V2ShorthandedPaymentController> {
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),
-          if (Validate.checkValueIsNullEmpty(controller.danhSachBaoGiaDonDichVu.file) == false) fileWidget(),
+          if (Validate.nullOrEmpty(controller.danhSachBaoGiaDonDichVu.file) == false) fileWidget(),
           const SizedBox(
             height: Dimensions.MARGIN_SIZE_LARGE,
           ),

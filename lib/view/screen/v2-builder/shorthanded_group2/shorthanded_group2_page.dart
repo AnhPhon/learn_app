@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
-import 'package:template/helper/string_cut.dart';
+import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_string.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/component/content_widget.dart';
@@ -23,10 +23,10 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
             child: Column(
               children: [
                 //title
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                             controller.donDichVuResponse.idNhomDichVu) ==
                         false &&
-                    Validate.checkValueIsNullEmpty(controller
+                    Validate.nullOrEmpty(controller
                             .donDichVuResponse.idNhomDichVu!.tenDichVu) ==
                         false)
                   ContentWidget(
@@ -40,7 +40,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //job title
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.tieuDe) ==
                     false)
                   ContentWidget(
@@ -51,7 +51,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //working time in day
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.idThoiGianLamViecs) ==
                     false)
                   ContentWidget(
@@ -65,7 +65,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //start
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.ngayBatDau) ==
                     false)
                   ContentWidget(
@@ -77,7 +77,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //end
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.ngayKetThuc) ==
                     false)
                   ContentWidget(
@@ -89,20 +89,20 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //working address
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                             controller.donDichVuResponse.idTinhTp) ==
                         false ||
-                    Validate.checkValueIsNullEmpty(
+                    Validate.nullOrEmpty(
                             controller.donDichVuResponse.idQuanHuyen) ==
                         false)
                   ContentWidget(
                     label: "Địa điểm làm việc: ",
-                    content: ((Validate.checkValueIsNullEmpty(controller
+                    content: ((Validate.nullOrEmpty(controller
                                         .donDichVuResponse.idQuanHuyen) ==
                                     false
                                 ? '${controller.donDichVuResponse.idQuanHuyen}, '
                                 : '') +
-                            (Validate.checkValueIsNullEmpty(controller
+                            (Validate.nullOrEmpty(controller
                                         .donDichVuResponse.idTinhTp) ==
                                     false
                                 ? controller.donDichVuResponse.idTinhTp
@@ -114,7 +114,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //job description
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.moTa) ==
                     false)
                   ContentWidget(
@@ -129,7 +129,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                 ),
 
                 //image
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.hinhAnhThucTes) ==
                     false)
                   ImageListHorizontal(
@@ -149,7 +149,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                 ),
 
                 //image
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.hinhAnhBanVes) ==
                     false)
                   ImageListHorizontal(
@@ -169,7 +169,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                 ),
 
                 //image
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.hinhAnhChiTiets) ==
                     false)
                   ImageListHorizontal(
@@ -186,13 +186,13 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                   const SizedBox(),
 
                 //job value description
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.moTaChiTiet) ==
                     false)
                   ContentWidget(
                     label:
                         "Mô tả khối lượng công việc thực hiện (sơ bộ tham khảo) ",
-                    content: Validate.checkValueIsNullEmpty(
+                    content: Validate.nullOrEmpty(
                                 controller.donDichVuResponse.moTaChiTiet) ==
                             true
                         ? ''
@@ -206,7 +206,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
                 ),
 
                 //image
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.hinhAnhBanKhoiLuongs) ==
                     false)
                   ImageListHorizontal(
@@ -226,7 +226,7 @@ class V2ShorthandedGroup2Page extends GetView<V2ShorthandedGroup2Controller> {
 
                 //file
                 //table label
-                if (Validate.checkValueIsNullEmpty(
+                if (Validate.nullOrEmpty(
                         controller.donDichVuResponse.files) ==
                     false)
                   Column(

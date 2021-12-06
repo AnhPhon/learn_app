@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:template/data/model/response/bao_hiem_response.dart';
 import 'package:template/provider/bao_hiem_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class V2AccidentInsuranceController extends GetxController {
   // baoHiem

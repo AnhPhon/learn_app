@@ -5,13 +5,13 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/chi_tiet_vat_tu_request.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/request/preview_service_request.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 
@@ -53,10 +53,10 @@ class V1PreviewVatTuController extends GetxController{
       addMass(idDon: data.id!);
       Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY, predicate: ModalRoute.withName(AppRoutes.V1_SUCCESSFULLY));
       EasyLoading.dismiss();
-      Alert.success(message: "Báo giá thành công. Chúng tôi sẽ phản hồi lại sớm nhất");
+      IZIAlert.success(message: "Báo giá thành công. Chúng tôi sẽ phản hồi lại sớm nhất");
     }, onError: (error){
       EasyLoading.dismiss();
-      Alert.error(message: error.toString());
+      IZIAlert.error(message: error.toString());
       print("V1PreviewVatTuController onSave $error");
     });
   }

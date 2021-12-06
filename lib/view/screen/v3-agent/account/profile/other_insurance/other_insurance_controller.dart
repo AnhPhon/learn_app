@@ -7,9 +7,9 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/bao_hiem_provider.dart';
 import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
 import 'package:template/provider/tu_van_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V3OtherInsuranceController extends GetxController {
   //DangKyBaoHiem
@@ -112,12 +112,12 @@ class V3OtherInsuranceController extends GetxController {
           Get.back();
 
           //show dialog
-          Alert.success(message: 'Đăng ký mua bảo hiểm thành công');
+          IZIAlert.success(message: 'Đăng ký mua bảo hiểm thành công');
         }
       }
     } else {
       // show errors
-      Alert.error(message: 'Vui lòng chọn bảo hiểm muốn mua');
+      IZIAlert.error(message: 'Vui lòng chọn bảo hiểm muốn mua');
     }
   }
 
@@ -136,7 +136,7 @@ class V3OtherInsuranceController extends GetxController {
         Get.back();
 
         //show dialog
-        Alert.success(message: 'Đăng ký tư vấn thành công');
+        IZIAlert.success(message: 'Đăng ký tư vấn thành công');
       },
       onError: (error) {
         print("V3OtherInsuranceController dangKyTuVanBtn onError $error");

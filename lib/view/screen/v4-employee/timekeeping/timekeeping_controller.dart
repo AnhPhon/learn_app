@@ -12,14 +12,14 @@ import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4TimekeepingController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -260,25 +260,25 @@ class V4TimekeepingController extends GetxController {
   ///
   bool validate() {
     if (duAnNhanVien == null) {
-      Alert.error(message: 'Vui lòng chọn địa điểm làm việc/văn phòng!');
+      IZIAlert.error(message: 'Vui lòng chọn địa điểm làm việc/văn phòng!');
       return false;
     }
     if (addressController.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập địa chỉ!');
+      IZIAlert.error(message: 'Vui lòng nhập địa chỉ!');
       return false;
     }
 
     if (tinh == null) {
-      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
+      IZIAlert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
       return false;
     }
     if (quanHuyen == null) {
-      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
+      IZIAlert.error(message: 'Vui lòng chọn Quận/Huyện!');
       return false;
     }
     if (phuongXa == null &&
         quanHuyen!.ten.toString().toLowerCase() != "hoàng sa") {
-      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
+      IZIAlert.error(message: 'Vui lòng chọn Phường/Xã!');
       return false;
     }
     return true;

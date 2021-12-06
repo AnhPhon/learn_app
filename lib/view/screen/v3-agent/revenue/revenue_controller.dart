@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/revenue_data_model.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/snack_bar.dart';
 
 class V3RevenueController extends GetxController {
@@ -170,7 +170,7 @@ class V3RevenueController extends GetxController {
                   startDate: startController.text,
                   endDate: endController.text) <
               0) {
-            Alert.error(
+            IZIAlert.error(
                 message: "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
           } else {
             //reset chart

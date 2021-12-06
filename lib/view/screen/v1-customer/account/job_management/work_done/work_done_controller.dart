@@ -16,7 +16,7 @@ import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/yeu_cau_bao_hanh_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1WorkDoneController extends GetxController {
@@ -192,7 +192,7 @@ class V1WorkDoneController extends GetxController {
     } else {
       //validate
       if (customerOpinionController.text.isEmpty) {
-        Alert.error(
+        IZIAlert.error(
             message:
                 'Vui lòng nhập đánh giá/ý kiến, nếu không có ý kiến thì nhập "không"');
       } else {
@@ -214,7 +214,7 @@ class V1WorkDoneController extends GetxController {
                 idTrangThaiDonDichVu: DA_NGHIEM_THU,
               ),
               onSuccess: (success) {
-                Alert.success(message: "Gửi đánh giá/ý kiến thành công");
+                IZIAlert.success(message: "Gửi đánh giá/ý kiến thành công");
               },
               onError: (error) {
                 print("V1WorkDoneController onBtnOpinionSend onError $error");
@@ -277,7 +277,7 @@ class V1WorkDoneController extends GetxController {
     } else {
       //validate
       if (warrantyClaimsContentController.text.isEmpty) {
-        Alert.error(message: "Vui lòng nhập nội dung yêu cầu bảo hành");
+        IZIAlert.error(message: "Vui lòng nhập nội dung yêu cầu bảo hành");
       } else {
         isClickedRequest = true;
         //set data
@@ -295,7 +295,7 @@ class V1WorkDoneController extends GetxController {
             phanHoiDonDichVuProvider.update(
               data: phanHoiDonDichVuRequest,
               onSuccess: (data) {
-                Alert.success(message: "Gửi yêu cầu bảo hành thành công");
+                IZIAlert.success(message: "Gửi yêu cầu bảo hành thành công");
                 getPhanHoiDonDichVu();
               },
               onError: (error) {
@@ -323,7 +323,7 @@ class V1WorkDoneController extends GetxController {
     } else {
       //validate
       if (danhGiaControllerList[index].text.isEmpty) {
-        Alert.error(
+        IZIAlert.error(
             message:
                 'Vui lòng đánh giá công tác bảo hành, nếu không có thì nhập "không"');
       } else {
@@ -337,7 +337,7 @@ class V1WorkDoneController extends GetxController {
         yeuCauBaoHanhProvider.update(
           data: danhGiaBaoHanhRequest,
           onSuccess: (data) {
-            Alert.success(message: "Gửi đánh giá bảo hành thành công");
+            IZIAlert.success(message: "Gửi đánh giá bảo hành thành công");
 
             getPhanHoiDonDichVu();
 

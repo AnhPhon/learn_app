@@ -7,7 +7,7 @@ import 'package:template/provider/dang_ky_hop_dong_s_b_s_provider.dart';
 import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/giay_chung_nhan_suc_khoe_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V2FinishUpdateController extends GetxController {

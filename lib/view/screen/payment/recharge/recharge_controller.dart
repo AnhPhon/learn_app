@@ -14,9 +14,9 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/thong_tin_ngan_hang_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class RechargeController extends GetxController {
   ImageUpdateProvider imageUpdateProvider = GetIt.I.get<ImageUpdateProvider>();
@@ -114,7 +114,7 @@ class RechargeController extends GetxController {
   void onBtnCopyClick({required String content}) {
     Clipboard.setData(ClipboardData(text: content));
 
-    Alert.success(message: 'Copy $content thành công');
+    IZIAlert.success(message: 'Copy $content thành công');
   }
 
   ///
@@ -150,14 +150,14 @@ class RechargeController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -170,7 +170,7 @@ class RechargeController extends GetxController {
     } else {
       //validate
       if (image == null) {
-        Alert.error(message: 'Vui lòng tải hình ảnh hóa đơn giao dịch');
+        IZIAlert.error(message: 'Vui lòng tải hình ảnh hóa đơn giao dịch');
       } else {
         isClicked = true;
         //show loading

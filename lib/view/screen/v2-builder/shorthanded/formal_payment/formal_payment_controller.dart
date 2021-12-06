@@ -5,8 +5,8 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
@@ -87,14 +87,14 @@ class V2_3FormalPaymentController extends GetxController {
         donDichVuRepository.update(dichVuRequest!).then((value) {
           if (value.response.data != null) {
             Get.back(result: true);
-            Alert.success(message: 'Tạo đơn thành công');
+            IZIAlert.success(message: 'Tạo đơn thành công');
           } else {
-            Alert.error(message: 'Vui lòng thực hiện lại');
+            IZIAlert.error(message: 'Vui lòng thực hiện lại');
           }
         });
       } else {
         Get.back();
-        Alert.error(message: 'Thanh toán thất bại');
+        IZIAlert.error(message: 'Thanh toán thất bại');
       }
     });
   }

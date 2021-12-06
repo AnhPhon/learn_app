@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:template/helper/common_helper.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
@@ -138,7 +138,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context, {required V1OrderFeedBackController controller}){
-    return Validate.checkValueIsNullEmpty(controller.donPhanHoi!.hinhAnhBaoGias) ? const SizedBox.shrink() :  
+    return Validate.nullOrEmpty(controller.donPhanHoi!.hinhAnhBaoGias) ? const SizedBox.shrink() :  
     controller.donPhanHoi!.hinhAnhBaoGias!.isEmpty ?  const SizedBox() :
     Padding(
       padding: const EdgeInsets.only(
@@ -186,7 +186,7 @@ class V1OrderFeedBackPage extends GetView<V1OrderFeedBackController> {
         left: Dimensions.PADDING_SIZE_DEFAULT,
         right: Dimensions.PADDING_SIZE_DEFAULT
       ),
-      child: Validate.checkValueIsNullEmpty(controller.donPhanHoi!.file) ? const SizedBox.shrink() :  Column(
+      child: Validate.nullOrEmpty(controller.donPhanHoi!.file) ? const SizedBox.shrink() :  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
           const Text("File báo giá",style: TextStyle(

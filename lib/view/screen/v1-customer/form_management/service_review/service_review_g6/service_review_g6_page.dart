@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/date_converter.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/izi_date.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal.dart';
 import 'package:template/view/basewidget/widgets/checkbox_custom.dart';

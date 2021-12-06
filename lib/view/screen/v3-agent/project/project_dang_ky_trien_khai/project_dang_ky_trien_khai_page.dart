@@ -6,13 +6,13 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:template/data/model/response/mat_hang_dac_trung_response.dart';
 import 'package:template/data/model/response/nhom_cua_hang_response.dart';
-import 'package:template/helper/common_helper.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
@@ -149,7 +149,7 @@ class V3ProjectDangKyTrienKhaiPage extends GetView<V3ProjectDangKyTrienKhaiContr
             textAlign: TextAlign.left,
             style: Dimensions.fontSizeStyle18w600(),
           ),
-          if (Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse) == false && Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
+          if (Validate.nullOrEmpty(controller.duAnKhachHangResponse) == false && Validate.nullOrEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
             Html(
               data: CommonHelper().htmlUnescape(controller.duAnKhachHangResponse!.gioiThieu.toString()),
             )

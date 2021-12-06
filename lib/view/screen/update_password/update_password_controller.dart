@@ -5,10 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/verify_otp_request.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_alert.dart';
+import 'package:template/helper/izi_validate.dart';
 
 import '../../../di_container.dart';
 
@@ -31,7 +31,7 @@ class UpdatePasswordController extends GetxController {
     if(Get.arguments != null){
       verifyOtpRequest = Get.arguments as VerifyOtpRequest;
     }else{
-      Alert.error(message: "Xảy ra lỗi vui lòng thử lại");
+      IZIAlert.error(message: "Xảy ra lỗi vui lòng thử lại");
       Get.offAllNamed(AppRoutes.LOGIN);
     }
   }
@@ -51,7 +51,7 @@ class UpdatePasswordController extends GetxController {
         verifyOtpRequest = null;
         Get.offAllNamed(AppRoutes.LOGIN,
            predicate: ModalRoute.withName(AppRoutes.LOGIN));
-        Alert.success(message: "Thay đổi mật khẩu thành công");
+        IZIAlert.success(message: "Thay đổi mật khẩu thành công");
       }, onError: (onError){
         print("Lỗi thay đổi mật khẩu");
       });
@@ -63,22 +63,22 @@ class UpdatePasswordController extends GetxController {
   ///
   bool validate() {
     if(passwordController.text.toString().isEmpty){
-      Alert.error(message: 'Vui lòng nhập mật khẩu mới');
+      IZIAlert.error(message: 'Vui lòng nhập mật khẩu mới');
       return false;
     }else if(Validate.charactersLength(passwordController.text.toString()) == false){
-      Alert.error(message: 'Mật khẩu ít nhất 8 ký tự');
+      IZIAlert.error(message: 'Mật khẩu ít nhất 8 ký tự');
       return false;
     }else if(Validate.oneLowerCase(passwordController.text.toString()) == false){
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 chữ thường');
       return false;
     }else if(Validate.oneUpperCase(passwordController.text.toString()) == false){
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 chữ hoa');
       return false;
     }else if(Validate.leastOneDigit(passwordController.text.toString()) == false){
-      Alert.error(message: 'Mật khẩu ít nhất phải có 1 số');
+      IZIAlert.error(message: 'Mật khẩu ít nhất phải có 1 số');
       return false;
     }else if(passwordController.text.toString() != repeatPasswordController.text.toString()){
-      Alert.error(message: 'Mật khẩu không trùng khớp');
+      IZIAlert.error(message: 'Mật khẩu không trùng khớp');
       return false;
     }
     return true;

@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/value_global_notifier.dart';
 
 class V2ShorthandedResultController extends GetxController with SingleGetTickerProviderMixin {
@@ -69,7 +69,7 @@ class V2ShorthandedResultController extends GetxController with SingleGetTickerP
   void onChangeTab(int index) {
     currentIndex.value = index;
     tabController!.animateTo(index);
-    // if(Validate.checkValueIsNullEmpty(titleTabBar[index]['danhSachBaoGiaDonDichVuResponse'].value) == true){
+    // if(Validate.nullOrEmpty(titleTabBar[index]['danhSachBaoGiaDonDichVuResponse'].value) == true){
     //   valueGlobalNotifier.changeSmartRefreshNoDataStatus('GetXSmartRefreshPageV2ShorthandedResult_$index', true);
     // } else {
     //   valueGlobalNotifier.changeSmartRefreshNoDataStatus('GetXSmartRefreshPageV2ShorthandedResult_$index', false);
@@ -85,11 +85,11 @@ class V2ShorthandedResultController extends GetxController with SingleGetTickerP
 
       // Bao gia thanh cong
       if (project.idDonDichVu == null) {
-        Alert.error(message: 'Đơn dịch vụ không khả dụng');
+        IZIAlert.error(message: 'Đơn dịch vụ không khả dụng');
       } else if (project.idDonDichVu!.idTrangThaiThanhToanKhac != null && (project.idDonDichVu!.idTrangThaiThanhToanKhac!.id.toString() == DA_THANH_TOAN || project.idDonDichVu!.idTrangThaiThanhToanKhac!.id.toString() == DAT_COT)) {
         Get.toNamed(AppRoutes.V2_SHORTHANDED_COMPLETE, arguments: {'idDonDichVu': project.idDonDichVu, 'title': 'Kết quả báo giá'});
       } else if (project.idDonDichVu!.idTrangThaiThanhToanKhac == null || project.idDonDichVu!.idTrangThaiThanhToanKhac!.id == CHUA_THANH_TOAN || project.idDonDichVu!.idTrangThaiThanhToanKhac!.id.toString() == DAT_COT) {
-        if (Validate.checkValueIsNullEmpty(project.idDonDichVu) == false && Validate.checkValueIsNullEmpty(project.idDonDichVu!.idNhomDichVu) == false) {
+        if (Validate.nullOrEmpty(project.idDonDichVu) == false && Validate.nullOrEmpty(project.idDonDichVu!.idNhomDichVu) == false) {
           if (project.idDonDichVu!.idNhomDichVu!.id.toString() == NHOM_DICH_VU_3) {
             // Nhóm 3
             Get.toNamed(AppRoutes.V2_SHORTHANDED_GROUP3, arguments: {'id': project.idDonDichVu!.id.toString(), 'title': 'Kết quả báo giá'});
@@ -227,16 +227,16 @@ class V2ShorthandedResultController extends GetxController with SingleGetTickerP
   ///
   String getTextTrangThaiThanhToan(DanhSachBaoGiaDonDichVuResponse danhSachBaoGiaDonDichVu) {
     if (currentIndex.value == 0) {
-      if (Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac) == false) {
-        return Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac!.tieuDe.toString()) == false ? danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac!.tieuDe.toString() : 'Chưa thanh toán';
+      if (Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac) == false) {
+        return Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac!.tieuDe.toString()) == false ? danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiThanhToanKhac!.tieuDe.toString() : 'Chưa thanh toán';
       }
       return 'Chưa thanh toán';
     } else if (currentIndex.value == 1) {
-      if (Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu) == false) {
+      if (Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu) == false) {
         if(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu!.id == DON_DICH_VU_TRUNG_THAU) {
           return 'Không trúng thầu';
         } else {
-          return Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu!.tieuDe.toString()) == false ? danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu!.tieuDe.toString() : 'Thất bại';
+          return Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu!.tieuDe.toString()) == false ? danhSachBaoGiaDonDichVu.idDonDichVu!.idTrangThaiDonDichVu!.tieuDe.toString() : 'Thất bại';
         }
       }
       return 'Thất bại';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/utils/device_utils.dart';
+import 'package:template/helper/device_utils.dart';
 
 class UnFocusTextField extends StatelessWidget {
   final Widget widget;

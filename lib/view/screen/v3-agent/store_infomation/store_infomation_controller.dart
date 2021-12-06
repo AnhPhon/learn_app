@@ -28,9 +28,9 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V3StoreInfomationController extends GetxController {
   //image
@@ -751,7 +751,7 @@ class V3StoreInfomationController extends GetxController {
                       onSuccess: (data) {
                         khoHangModelList.removeAt(index);
                         EasyLoading.dismiss();
-                        Alert.success(message: "Xoá kho hàng thành công");
+                        IZIAlert.success(message: "Xoá kho hàng thành công");
                         print("Xoá kho hàng thành công");
                         update();
                       },
@@ -839,42 +839,42 @@ class V3StoreInfomationController extends GetxController {
   void btnUpdate(BuildContext context) {
     //validate
     if (nameController.text.isEmpty) {
-      Alert.error(message: 'Tên không được để trống');
+      IZIAlert.error(message: 'Tên không được để trống');
       return;
     } else if (legalRepresentativeController.text.isEmpty) {
-      Alert.error(message: 'Tên đại diện pháp lý');
+      IZIAlert.error(message: 'Tên đại diện pháp lý');
       return;
     } else
     // if (phoneController.text.isEmpty) {
-    //   Alert.error(message: 'Trường số điện thoại không được để trống');
+    //   IZIAlert.error(message: 'Trường số điện thoại không được để trống');
     //   return;
     // } else
     if (nhomCuaHangResponse == null) {
-      Alert.error(message: 'Nhóm cửa hàng không được để trống');
+      IZIAlert.error(message: 'Nhóm cửa hàng không được để trống');
       return;
     } else if (emailController.text.isNotEmpty && Validate.email(emailController.text) == false) {
-      Alert.error(message: "Email không hợp lệ");
+      IZIAlert.error(message: "Email không hợp lệ");
       return;
     } else if (matHangDacTrungResponse.isEmpty) {
-      Alert.error(message: 'Mặt hàng đặc trưng không được để trống');
+      IZIAlert.error(message: 'Mặt hàng đặc trưng không được để trống');
       return;
     } else if (hcmProvince == null && otherProvince == null && haNoiProvince == null && daNangProvince == null) {
-      Alert.error(message: 'Địa điểm cửa hàng chính không được để trống');
+      IZIAlert.error(message: 'Địa điểm cửa hàng chính không được để trống');
       return;
     } else if (hcmHuyen == null && khacHuyen == null && haNoiHuyen == null && daNangHuyen == null) {
-      Alert.error(message: 'Địa điểm cửa hàng chính không được để trống');
+      IZIAlert.error(message: 'Địa điểm cửa hàng chính không được để trống');
       return;
     } else if (hcmPhuong == null && khacPhuong == null && haNoiPhuong == null && daNangPhuong == null && phuongXasList.isNotEmpty && otherwards.isNotEmpty) {
-      Alert.error(message: 'Địa điểm cửa hàng chính không được để trống');
+      IZIAlert.error(message: 'Địa điểm cửa hàng chính không được để trống');
       return;
     } else if (addressController.text.isEmpty) {
-      Alert.error(message: 'Địa chỉ cụ thể không được để trống');
+      IZIAlert.error(message: 'Địa chỉ cụ thể không được để trống');
       return;
     } else if (startController.text.isEmpty || endController.text.isEmpty) {
-      Alert.error(message: 'Thời gian làm việc trong ngày không được để trống');
+      IZIAlert.error(message: 'Thời gian làm việc trong ngày không được để trống');
       return;
     } else if (double.parse(timeDiff(startController.text, endController.text)) < 0) {
-      Alert.error(message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
+      IZIAlert.error(message: 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
       return;
     } else {
       //set data
@@ -914,7 +914,7 @@ class V3StoreInfomationController extends GetxController {
           //validate warehouse
           if (khoHangModelList[i].tinhTpResponse == null || khoHangModelList[i].quanHuyenResponse == null || (khoHangModelList[i].phuongXaResponse == null && khoHangModelList[i].phuongXaList!.isNotEmpty) || khoHangModelList[i].warehouseAddress!.text.isEmpty || khoHangModelList[i].warehouseName!.text.isEmpty) {
             EasyLoading.dismiss();
-            Alert.error(message: 'Trường địa điểm kho hàng ${i + 1} không được để trống');
+            IZIAlert.error(message: 'Trường địa điểm kho hàng ${i + 1} không được để trống');
             return;
           }
           //set data
@@ -945,7 +945,7 @@ class V3StoreInfomationController extends GetxController {
                   );
                   EasyLoading.dismiss();
                   Get.back();
-                  Alert.success(message: 'Cập nhật thông tin thành công');
+                  IZIAlert.success(message: 'Cập nhật thông tin thành công');
                 }
               },
               onError: (error) {
@@ -971,7 +971,7 @@ class V3StoreInfomationController extends GetxController {
                   );
                   EasyLoading.dismiss();
                   Get.back();
-                  Alert.success(message: 'Cập nhật thông tin thành công');
+                  IZIAlert.success(message: 'Cập nhật thông tin thành công');
                 }
               },
               onError: (error) {
@@ -990,7 +990,7 @@ class V3StoreInfomationController extends GetxController {
           onSuccess: (value) {
             EasyLoading.dismiss();
             Get.back();
-            Alert.success(message: "Cập nhật thông tin thành công");
+            IZIAlert.success(message: "Cập nhật thông tin thành công");
           },
           onError: (error) {
             EasyLoading.dismiss();

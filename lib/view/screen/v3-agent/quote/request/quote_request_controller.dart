@@ -4,15 +4,15 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/chi_tiet_vat_tu_response.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/chi_tiet_vat_tu_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V3QuoteRequestController extends GetxController {
@@ -73,7 +73,7 @@ class V3QuoteRequestController extends GetxController {
   ///
   void loadInfo(DonDichVuResponse donGiaDichVuId) {
     noiDungYeuCau!.clear();
-    filepath = (Validate.checkValueIsNullEmpty(donGiaDichVuId.files) == false)
+    filepath = (Validate.nullOrEmpty(donGiaDichVuId.files) == false)
         ? donGiaDichVuId.files![0].toString()
         : '';
     from =

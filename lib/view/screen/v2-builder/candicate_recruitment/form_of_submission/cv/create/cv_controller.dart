@@ -27,9 +27,9 @@ import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/cadidate_recruitment_dialog_accept.dart';
@@ -185,14 +185,14 @@ class V2CvController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -551,42 +551,42 @@ class V2CvController extends GetxController {
   ///
   bool validate() {
     if (titleController.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập tiêu đề');
+      IZIAlert.error(message: 'Vui lòng nhập tiêu đề');
       return false;
     }
 
     if (tinhTp == null) {
-      Alert.error(message: 'Vui lòng chọn tỉnh thành phố');
+      IZIAlert.error(message: 'Vui lòng chọn tỉnh thành phố');
       return false;
     }
 
     if (quanHuyenResponse == null) {
-      Alert.error(message: 'Vui lòng chọn quận huyện');
+      IZIAlert.error(message: 'Vui lòng chọn quận huyện');
       return false;
     }
 
     if (phuongXaResponse == null) {
-      Alert.error(message: 'Vui lòng chọn phường xã');
+      IZIAlert.error(message: 'Vui lòng chọn phường xã');
       return false;
     }
 
     if (addressController.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập địa chỉ');
+      IZIAlert.error(message: 'Vui lòng nhập địa chỉ');
       return false;
     }
 
     if (hinhThucLamViec == null) {
-      Alert.error(message: 'Vui lòng chọn hình thức việc làm');
+      IZIAlert.error(message: 'Vui lòng chọn hình thức việc làm');
       return false;
     }
 
     if (mucTieuController.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập mục tiêu nghề nghiệp');
+      IZIAlert.error(message: 'Vui lòng nhập mục tiêu nghề nghiệp');
       return false;
     }
 
     if (dangKyViecMoiResponse.fileHoSoXinViec.toString() == 'null') {
-      Alert.error(message: 'Vui lòng tải file hồ sơ xin việc');
+      IZIAlert.error(message: 'Vui lòng tải file hồ sơ xin việc');
       return false;
     }
 
@@ -655,7 +655,7 @@ class V2CvController extends GetxController {
                           idTuyenDung: model.idTuyenDung,
                         ),
                         onSuccess: (models) {
-                          Alert.success(
+                          IZIAlert.success(
                               message: 'Bạn đã nộp hồ sơ thành công!');
                           Get.back(result: true);
                           update();
@@ -710,7 +710,7 @@ class V2CvController extends GetxController {
                           idTuyenDung: model.idTuyenDung,
                         ),
                         onSuccess: (models) {
-                          Alert.success(
+                          IZIAlert.success(
                               message: 'Bạn đã nộp hồ sơ thành công!');
                           Get.back(result: true);
                           update();

@@ -12,7 +12,7 @@ import 'package:template/provider/don_hang_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class ShippingAddressController extends GetxController {
   //TextEditingController
@@ -190,16 +190,16 @@ class ShippingAddressController extends GetxController {
   void updateAddress(BuildContext context) {
     //validate
     if (tinhTpResponse == null) {
-      Alert.error(message: 'Vui lòng chọn tỉnh/thành phố');
+      IZIAlert.error(message: 'Vui lòng chọn tỉnh/thành phố');
       return;
     } else if (quanHuyenResponse == null) {
-      Alert.error(message: 'Vui lòng chọn quận/huyện');
+      IZIAlert.error(message: 'Vui lòng chọn quận/huyện');
       return;
     } else if (phuongXaResponse == null && phuongXaList.isNotEmpty) {
-      Alert.error(message: 'Vui lòng chọn phường/xã');
+      IZIAlert.error(message: 'Vui lòng chọn phường/xã');
       return;
     } else if (addressController.text.isEmpty) {
-      Alert.error(message: 'Vui lòng nhập địa chỉ cụ thể');
+      IZIAlert.error(message: 'Vui lòng nhập địa chỉ cụ thể');
       return;
     } else {
       //loading
@@ -222,7 +222,7 @@ class ShippingAddressController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Get.back(result: true);
-          Alert.success(message: 'Cập nhật địa chỉ thành công');
+          IZIAlert.success(message: 'Cập nhật địa chỉ thành công');
         },
         onError: (error) {
           print("V1ShippingAddressController updateAddress onError $error");

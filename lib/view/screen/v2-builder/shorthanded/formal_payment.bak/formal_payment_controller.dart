@@ -87,13 +87,13 @@
 //         donDichVuRepository.update(dichVuRequest!).then((value) {
 //           if (value.response.data != null) {
 //             Get.back(result: true);
-//             Alert.success(message: 'Tạo đơn thành công');
+//             IZIAlert.success(message: 'Tạo đơn thành công');
 //           } else
-//             Alert.error(message: 'Vui lòng thực hiện lại');
+//             IZIAlert.error(message: 'Vui lòng thực hiện lại');
 //         });
 //       } else {
 //         Get.back();
-//         Alert.error(message: 'Thanh toán thất bại');
+//         IZIAlert.error(message: 'Thanh toán thất bại');
 //       }
 //     });
 //   }

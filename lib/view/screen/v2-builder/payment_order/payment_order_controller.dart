@@ -5,9 +5,9 @@ import 'package:template/data/model/response/cai_dat_chung_response.dart';
 import 'package:template/data/model/response/phi_app_response.dart';
 import 'package:template/provider/cai_dat_chung_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/screen/payment/payment_account/patment_dialog_accept.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
 

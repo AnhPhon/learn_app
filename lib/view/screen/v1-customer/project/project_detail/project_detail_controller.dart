@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/du_an_khach_hang_response.dart';
 import 'package:template/provider/du_an_khach_hang_provider.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V1ProjectDetailController extends GetxController {
   String title = "Chi tiết dự án";
@@ -45,18 +45,18 @@ class V1ProjectDetailController extends GetxController {
 
   String getDDiaDiemCuTheFull() {
     String s = '';
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.diaDiem) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.diaDiem) == false) {
       s += duAnKhachHangResponse!.diaDiem.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idPhuongXa) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idPhuongXa) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idPhuongXa.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idQuanHuyen) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idQuanHuyen) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idQuanHuyen.toString();
     }
-    if (Validate.checkValueIsNullEmpty(duAnKhachHangResponse!.idTinhTp) == false) {
+    if (Validate.nullOrEmpty(duAnKhachHangResponse!.idTinhTp) == false) {
       s += s == '' ? '' : ', ';
       s += duAnKhachHangResponse!.idTinhTp.toString();
     }

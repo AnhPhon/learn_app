@@ -10,9 +10,9 @@ import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_reques
 import 'package:template/di_container.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2AfterQuotationG2Controller extends GetxController {
   File? image;
@@ -100,7 +100,7 @@ class V2AfterQuotationG2Controller extends GetxController {
         },
         onError: (error) {
           print('V2QuotationG2Controller checkForm onError $error');
-          Alert.error(message: error.toString());
+          IZIAlert.error(message: error.toString());
         },
       );
     }
@@ -127,14 +127,14 @@ class V2AfterQuotationG2Controller extends GetxController {
           data: danhSachBaoGiaDonDichVuRequest,
           onSuccess: (data) {
             EasyLoading.dismiss();
-            Alert.success(message: 'Báo giá thành công');
+            IZIAlert.success(message: 'Báo giá thành công');
             Get.back();
             Get.back();
           },
           onError: (error) {
             print('V2QuotationG1Controller onDoneClick onError $error');
             EasyLoading.dismiss();
-            Alert.error(message: 'Báo giá thất bại');
+            IZIAlert.error(message: 'Báo giá thất bại');
           },
         );
       } else {
@@ -142,7 +142,7 @@ class V2AfterQuotationG2Controller extends GetxController {
       }
     } on PlatformException catch (e) {
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 }

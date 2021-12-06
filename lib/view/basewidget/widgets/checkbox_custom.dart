@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 class CheckBoxCustom extends StatelessWidget {
   const CheckBoxCustom({

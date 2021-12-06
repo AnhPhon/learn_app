@@ -5,13 +5,13 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
 import 'package:template/data/model/response/nhom_dich_vu_response.dart';
-import 'package:template/helper/common_helper.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/button/search_drop_down_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
 import 'package:template/view/basewidget/textfield/text_field_date.dart';
@@ -134,7 +134,7 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
             textAlign: TextAlign.left,
             style: Dimensions.fontSizeStyle18w600(),
           ),
-          if (Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse) == false && Validate.checkValueIsNullEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
+          if (Validate.nullOrEmpty(controller.duAnKhachHangResponse) == false && Validate.nullOrEmpty(controller.duAnKhachHangResponse!.gioiThieu) == false)
             Html(
               data: CommonHelper().htmlUnescape(controller.duAnKhachHangResponse!.gioiThieu.toString()),
               style: {
@@ -252,7 +252,7 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
           ),
           SearchDropDownButton<NhomDichVuResponse?>(
             isColorFieldWhite: true,
-            data: Validate.checkValueIsNullEmpty(controller.nhomDichVuResponse) == true ? [] : controller.nhomDichVuResponse!,
+            data: Validate.nullOrEmpty(controller.nhomDichVuResponse) == true ? [] : controller.nhomDichVuResponse!,
             obligatory: true,
             onChanged: (NhomDichVuResponse? val) {
               controller.selectedNhomCongViec(val);
@@ -270,7 +270,7 @@ class V2ProjectDangKyTrienKhaiPage extends GetView<V2ProjectDangKyTrienKhaiContr
           // cong viec phu hop
           SearchDropDownButton<LoaiCongViecResponse?>(
             isColorFieldWhite: true,
-            data: Validate.checkValueIsNullEmpty(controller.loaiCongViecResponse) == true ? [] : controller.loaiCongViecResponse!,
+            data: Validate.nullOrEmpty(controller.loaiCongViecResponse) == true ? [] : controller.loaiCongViecResponse!,
             obligatory: true,
             onChanged: (LoaiCongViecResponse? val) {
               controller.selectedCongViecPhuHop(val);

@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/bang_gia_chi_tiet_tham_khao_response.dart';
 import 'package:template/provider/bang_gia_chi_tiet_tham_khao_provider.dart.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/app_constants.dart';
 
 class ReferencePriceTableController extends GetxController{

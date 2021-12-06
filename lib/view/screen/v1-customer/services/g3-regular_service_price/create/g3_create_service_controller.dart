@@ -4,12 +4,12 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/constants/enum_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V1G3CreateServiceController extends GetxController {
   final DonDichVuProvider donDichVuProvider = GetIt.I.get<DonDichVuProvider>();
@@ -107,17 +107,17 @@ class V1G3CreateServiceController extends GetxController {
 
   bool validation() {
     if (tommorow == false && afternoon == false && tonight == false) {
-      Alert.error(message: "Bạn phải chọn thời gian làm việc");
+      IZIAlert.error(message: "Bạn phải chọn thời gian làm việc");
       return false;
     }
 
     if (startTime.text.toString().isEmpty) {
-      Alert.error(message: "Bạn phải chọn thời gian bắt đầu");
+      IZIAlert.error(message: "Bạn phải chọn thời gian bắt đầu");
       return false;
     }
 
     if (startTime.text.toString().isEmpty) {
-      Alert.error(message: "Bạn phải chọn thời gian bắt đầu");
+      IZIAlert.error(message: "Bạn phải chọn thời gian bắt đầu");
       return false;
     }
 
@@ -125,7 +125,7 @@ class V1G3CreateServiceController extends GetxController {
             startDate: startTime.text.toString(),
             endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
         0) {
-      Alert.error(message: "Ngày bắt đầu lớn hơn ngày hiện tại");
+      IZIAlert.error(message: "Ngày bắt đầu lớn hơn ngày hiện tại");
       return false;
     }
 
@@ -138,7 +138,7 @@ class V1G3CreateServiceController extends GetxController {
               .parse(startTime.text)
               .toString()
               .substring(0, 10)))) {
-        Alert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
+        IZIAlert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
         return false;
       }
     }

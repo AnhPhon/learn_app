@@ -8,11 +8,11 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class LoginController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -91,10 +91,10 @@ class LoginController extends GetxController {
   bool onValidateLogin() {
     //validate infomation username password
     if (phoneController.text == '' || passwordController.text == '') {
-      Alert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
+      IZIAlert.error(message: "Vui lòng điền đầy đủ số điện thoại và mật khẩu");
       return false;
     } else if (!Validate.phone(phoneController.text.toString())) {
-      Alert.error(message: "Số điện thoại không hợp lệ");
+      IZIAlert.error(message: "Số điện thoại không hợp lệ");
       return false;
     }
     return true;
@@ -147,16 +147,16 @@ class LoginController extends GetxController {
               } else {
                 //Nếu id loại tài khoản mà không thuộc nhóm loại tai khoản thì không thể đăng nhập
                 EasyLoading.dismiss();
-                Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+                IZIAlert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
               }
             } else {
               // Nếu loại tải khoản bằng null thì không thể đăng nhập vào
               EasyLoading.dismiss();
-              Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+              IZIAlert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
             }
           },
           onError: (error) {
-            Alert.error(
+            IZIAlert.error(
                 message:
                     "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
             EasyLoading.dismiss();
