@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/cong_viec_nhan_vien_request.dart';
 import 'package:template/data/model/response/cong_viec_nhan_vien_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4DetailWorkController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -113,7 +113,7 @@ class V4DetailWorkController extends GetxController {
             Get.back(result: true);
 
             //show dialog
-            Alert.success(message: "Cập nhật tiến độ công việc thành công!");
+            IZIAlert.success(message: "Cập nhật tiến độ công việc thành công!");
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");
@@ -138,7 +138,7 @@ class V4DetailWorkController extends GetxController {
             Get.back(result: true);
 
             //show dialog
-            Alert.success(message: "Cập nhật tiến độ công việc thành công!");
+            IZIAlert.success(message: "Cập nhật tiến độ công việc thành công!");
           },
           onError: (error) {
             print("TermsAndPolicyController getTermsAndPolicy onError $error");

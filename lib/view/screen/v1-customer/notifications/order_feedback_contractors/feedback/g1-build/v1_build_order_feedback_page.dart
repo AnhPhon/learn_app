@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/currency_covert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/bottomsheet/order_bottom_sheet.dart';
 import 'package:template/view/basewidget/button/small_button.dart';
@@ -154,7 +154,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// List hình ảnh
   ///
   Widget image(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return Validate.checkValueIsNullEmpty(controller.donPhanHoi!.hinhAnhBaoGias) ? const SizedBox.shrink() : Padding(
+    return Validate.nullOrEmpty(controller.donPhanHoi!.hinhAnhBaoGias) ? const SizedBox.shrink() : Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
@@ -176,7 +176,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   /// file
   ///
   Widget file(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return Validate.checkValueIsNullEmpty(controller.donPhanHoi!.file) ? const SizedBox.shrink() :  Padding(
+    return Validate.nullOrEmpty(controller.donPhanHoi!.file) ? const SizedBox.shrink() :  Padding(
       padding: const EdgeInsets.only(
         top: Dimensions.PADDING_SIZE_DEFAULT,
         left: Dimensions.PADDING_SIZE_DEFAULT,
@@ -240,7 +240,7 @@ class V1BuildOrderFeedBackPage extends GetView<V1BuildOrderFeedBackController> {
   ///
 
   Widget materialList(BuildContext context,{required V1BuildOrderFeedBackController controller}){
-    return Validate.checkValueIsNullEmpty(controller.donPhanHoi) ?  const SizedBox.shrink() : controller.donPhanHoi!.giaCongViecs!.isEmpty  ? const SizedBox.shrink() : Padding(
+    return Validate.nullOrEmpty(controller.donPhanHoi) ?  const SizedBox.shrink() : controller.donPhanHoi!.giaCongViecs!.isEmpty  ? const SizedBox.shrink() : Padding(
       padding: const EdgeInsets.only(
         left:Dimensions.PADDING_SIZE_DEFAULT,
         right:Dimensions.PADDING_SIZE_DEFAULT,

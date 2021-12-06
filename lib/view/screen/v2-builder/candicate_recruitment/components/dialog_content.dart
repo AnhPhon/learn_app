@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/recruitment/recruitment_controller.dart';
 

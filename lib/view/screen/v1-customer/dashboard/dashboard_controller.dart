@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V1DashboardController extends GetxController {
   int tabIndex = 0;
@@ -16,7 +16,7 @@ class V1DashboardController extends GetxController {
         now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       print(currentBackPressTime);
-      Alert.info(message: "Bạn muốn thoát ứng dụng");
+      IZIAlert.info(message: "Bạn muốn thoát ứng dụng");
       return Future.value(false);
     }
     return Future.value(true);

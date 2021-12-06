@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
+import 'package:template/helper/device_utils.dart';
 
 class LargeSizeAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;

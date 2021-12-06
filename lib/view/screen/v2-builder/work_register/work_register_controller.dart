@@ -13,7 +13,7 @@ import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/dia_diem_dang_ky_lam_viec_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
@@ -23,9 +23,9 @@ import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/app_constants.dart' as constant;
 
@@ -1339,7 +1339,7 @@ class V2WorkRegisterController extends GetxController {
                         .then((value) {
                       updateDiaDiem(data.id!);
 
-                      Alert.success(message: "Thêm thành công!");
+                      IZIAlert.success(message: "Thêm thành công!");
 
                       if (isNhom7 == true) {
                         Get.toNamed(AppRoutes.V2_WORK_CREATE)!.then((value) {
@@ -1412,7 +1412,7 @@ class V2WorkRegisterController extends GetxController {
                         Future.delayed(const Duration(milliseconds: 500))
                             .then((value) {
                           updateDiaDiem(data.id!);
-                          Alert.success(message: "Cập nhập thành công!");
+                          IZIAlert.success(message: "Cập nhập thành công!");
                           if (isNhom7 == true) {
                             Get.toNamed(AppRoutes.V2_WORK_CREATE)!
                                 .then((value) {
@@ -1461,7 +1461,7 @@ class V2WorkRegisterController extends GetxController {
   void themDiaDiemDangKyLamViec(String viecMoiId) {
     // validate ít nhất phải chọn một nơi làm việc
     if (checkProvince()) {
-      Alert.error(message: "Cần ít nhất một nơi làm việc!");
+      IZIAlert.error(message: "Cần ít nhất một nơi làm việc!");
     } else {
       if (tphcmCheck) {
         diaDiemDangKyLamViecProvider.add(
@@ -1599,18 +1599,18 @@ class V2WorkRegisterController extends GetxController {
   bool _validate() {
     // validate nhom cong viec
     if (idNhomCongViec!.id != null && idNhomCongViec!.id.toString().isEmpty) {
-      Alert.error(message: "Nhóm công việc không được để trống!");
+      IZIAlert.error(message: "Nhóm công việc không được để trống!");
       return false;
     }
 
     if (idCongViec == null) {
-      Alert.error(message: "Loại công việc không được để trống!");
+      IZIAlert.error(message: "Loại công việc không được để trống!");
       return false;
     }
 
     // validate thời gian bắt đầu
     if (timeStartController.text.isEmpty) {
-      Alert.error(message: "Thời gian bắt đầu không được để trống!");
+      IZIAlert.error(message: "Thời gian bắt đầu không được để trống!");
       return false;
     }
 
@@ -1625,34 +1625,34 @@ class V2WorkRegisterController extends GetxController {
           .toString()
           .substring(0, 10));
       if (timeEndRegister.isBefore(timeStartRegister)) {
-        Alert.error(
+        IZIAlert.error(
             message: "Ngày kết thúc không được phép sớm hơn ngày bắt đầu!");
         return false;
       }
     }
 
     if (quanHuyenHCM == null && tphcmCheck == true) {
-      Alert.error(message: "Vui lòng chọn Quận/Huyện của TP Hồ Chí Minh!");
+      IZIAlert.error(message: "Vui lòng chọn Quận/Huyện của TP Hồ Chí Minh!");
       return false;
     }
 
     if (phuongXaHCM == null && tphcmCheck == true) {
-      Alert.error(message: "Vui lòng chọn Phường/Xã của TP Hồ Chí Minh!");
+      IZIAlert.error(message: "Vui lòng chọn Phường/Xã của TP Hồ Chí Minh!");
       return false;
     }
 
     if (quanHuyenHaNoi == null && hanoiCheck == true) {
-      Alert.error(message: "Vui lòng chọn Quận/Huyện của TP Hà Nội!");
+      IZIAlert.error(message: "Vui lòng chọn Quận/Huyện của TP Hà Nội!");
       return false;
     }
 
     if (phuongXaHaNoi == null && hanoiCheck == true) {
-      Alert.error(message: "Vui lòng chọn Phường/Xã của TP Hà Nội!");
+      IZIAlert.error(message: "Vui lòng chọn Phường/Xã của TP Hà Nội!");
       return false;
     }
 
     if (quanHuyenDaNang == null && danangCheck == true) {
-      Alert.error(message: "Vui lòng chọn Quận/Huyện của TP Đà Nẵng!");
+      IZIAlert.error(message: "Vui lòng chọn Quận/Huyện của TP Đà Nẵng!");
       return false;
     }
 
@@ -1660,24 +1660,24 @@ class V2WorkRegisterController extends GetxController {
       if (phuongXaDaNang == null &&
           quanHuyenDaNang!.ten.toString().toLowerCase() != "hoàng sa" &&
           danangCheck == true) {
-        Alert.error(message: "Vui lòng chọn Phường/Xã của TP Đà Nẵng!");
+        IZIAlert.error(message: "Vui lòng chọn Phường/Xã của TP Đà Nẵng!");
         return false;
       }
     }
 
     if (quanHuyenKhac == null && tinhKhacCheck == true) {
-      Alert.error(message: "Vui lòng chọn Quận/Huyện của Tỉnh/Tp khác!");
+      IZIAlert.error(message: "Vui lòng chọn Quận/Huyện của Tỉnh/Tp khác!");
       return false;
     }
 
     if (phuongXaKhac == null && tinhKhacCheck == true) {
-      Alert.error(message: "Vui lòng chọn Phường/Xã của Tỉnh/Tp khác!");
+      IZIAlert.error(message: "Vui lòng chọn Phường/Xã của Tỉnh/Tp khác!");
       return false;
     }
 
     // validate ít nhất phải chọn một nơi làm việc
     if (checkProvince()) {
-      Alert.error(message: "Cần ít nhất một nơi làm việc!");
+      IZIAlert.error(message: "Cần ít nhất một nơi làm việc!");
       return false;
     }
 

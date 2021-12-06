@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class OrderFeedbackInformationController extends GetxController{
     DonDichVuResponse? donDichVu;

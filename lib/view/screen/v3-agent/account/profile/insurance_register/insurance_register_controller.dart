@@ -7,7 +7,7 @@ import 'package:template/data/model/response/dang_ky_bao_hiem_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/bao_hiem_provider.dart';
 import 'package:template/provider/dang_ky_bao_hiem_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 
 class V3InsuranceRegisterController extends GetxController {

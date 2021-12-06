@@ -6,14 +6,14 @@ import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_reques
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2ShorthandedGroup3Controller extends GetxController {
   String title = "Công việc đang cần người";
@@ -57,7 +57,7 @@ class V2ShorthandedGroup3Controller extends GetxController {
       id: idDonDichVu.toString(),
       onSuccess: (data) {
         donDichVuResponse = data;
-        if (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DON_DICH_VU_DA_BAO_GIA) {
+        if (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DON_DICH_VU_DA_BAO_GIA) {
           coTheBaoGia = false;
         }
         update();
@@ -78,7 +78,7 @@ class V2ShorthandedGroup3Controller extends GetxController {
       page: 1,
       filter: '&idDonDichVu=$idDonDichVu&idTaiKhoanBaoGia=$idTaiKhoanBaoGia',
       onSuccess: (data) {
-        if( data.isEmpty && (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true || (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_DA_BAO_GIA))){
+        if( data.isEmpty && (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true || (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_DA_BAO_GIA))){
           coTheBaoGia = true;
           update();
         } else {
@@ -113,18 +113,18 @@ class V2ShorthandedGroup3Controller extends GetxController {
         data: danhSachBaoGiaDonDichVuRequest,
         onSuccess: (data) {
           EasyLoading.dismiss();
-          Alert.success(message: 'Báo giá thành công');
+          IZIAlert.success(message: 'Báo giá thành công');
           Get.back();
         },
         onError: (error) {
           print('V2QuotationG56Controller onDoneClick onError $error');
           EasyLoading.dismiss();
-          Alert.error(message: 'Báo giá thất bại');
+          IZIAlert.error(message: 'Báo giá thất bại');
         },
       );
     } on PlatformException catch (e) {
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
       print('V2QuotationG56Controller onDoneClick onError $e');
     }
   }
@@ -158,7 +158,7 @@ class V2ShorthandedGroup3Controller extends GetxController {
       });
     } on PlatformException catch (e) {
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -167,11 +167,11 @@ class V2ShorthandedGroup3Controller extends GetxController {
   ///
   bool checkShowButtonThanhToan() {
     if (coTheBaoGia == true) return false;
-    if (Validate.checkValueIsNullEmpty(donDichVuResponse.idTaiKhoanNhanDon) == true) return false;
-    if (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true) return false;
-    if (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiThanhToan) == true) return false;
+    if (Validate.nullOrEmpty(donDichVuResponse.idTaiKhoanNhanDon) == true) return false;
+    if (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == true) return false;
+    if (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiThanhToan) == true) return false;
     if (donDichVuResponse.idTaiKhoanNhanDon!.id.toString() != idTaiKhoanBaoGia) return false;
-    if (Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiThanhToanKhac) == false && (donDichVuResponse.idTrangThaiThanhToanKhac!.id.toString() == DA_THANH_TOAN || donDichVuResponse.idTrangThaiThanhToanKhac!.id.toString() == DAT_COT)) return false;
+    if (Validate.nullOrEmpty(donDichVuResponse.idTrangThaiThanhToanKhac) == false && (donDichVuResponse.idTrangThaiThanhToanKhac!.id.toString() == DA_THANH_TOAN || donDichVuResponse.idTrangThaiThanhToanKhac!.id.toString() == DAT_COT)) return false;
     if (donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_DA_BAO_GIA && donDichVuResponse.idTrangThaiDonDichVu!.id.toString() != DON_DICH_VU_CHOT_GIA) return false;
     return true;
   }
@@ -180,7 +180,7 @@ class V2ShorthandedGroup3Controller extends GetxController {
   /// Kiem tra dieu kien hien thi nut nhan viec
   ///
   bool checkShowButtonNhanViec() {
-    if (coTheBaoGia == true && Validate.checkValueIsNullEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && (donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DA_DUYET)) return true;
+    if (coTheBaoGia == true && Validate.nullOrEmpty(donDichVuResponse.idTrangThaiDonDichVu) == false && (donDichVuResponse.idTrangThaiDonDichVu!.id.toString() == DA_DUYET)) return true;
     return false;
   }
 }

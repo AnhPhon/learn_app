@@ -5,11 +5,11 @@ import 'package:template/data/model/response/hon_nhan_model.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
@@ -258,7 +258,7 @@ class V2CvPage extends GetView<V2CvController> {
             'null')
           const Label(label: "File hồ sơ xin việc", obligatory: true),
         // Cập nhật Cv đầy đủ thông tin
-        if (!Validate.checkValueIsNullEmpty(
+        if (!Validate.nullOrEmpty(
             controller.dangKyViecMoiResponse.fileHoSoXinViec.toString()))
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -266,7 +266,7 @@ class V2CvPage extends GetView<V2CvController> {
             child: SizedBox(
               width: DeviceUtils.getScaledWidth(context, 1),
               child: GestureDetector(
-                onTap: Validate.checkValueIsNullEmpty(controller
+                onTap: Validate.nullOrEmpty(controller
                         .dangKyViecMoiResponse.fileHoSoXinViec
                         .toString())
                     ? () => controller.onBtnDownloadCv(
@@ -277,7 +277,7 @@ class V2CvPage extends GetView<V2CvController> {
                   padding:
                       const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
                   child: Text(
-                      Validate.checkValueIsNullEmpty(
+                      Validate.nullOrEmpty(
                               controller.tenFile.toString())
                           ? 'File hồ sơ xin việc'
                           : controller.tenFile.toString(),
@@ -290,7 +290,7 @@ class V2CvPage extends GetView<V2CvController> {
           ),
 
         CustomFileButton(
-            title: Validate.checkValueIsNullEmpty(
+            title: Validate.nullOrEmpty(
                     controller.dangKyViecMoiResponse.fileHoSoXinViec.toString())
                 ? 'Thêm file hồ sơ'
                 : 'Cập nhật tập tin',

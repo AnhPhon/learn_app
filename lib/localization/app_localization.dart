@@ -15,24 +15,19 @@ class AppLocalization {
   }
 
   Future<void> load() async {
-    final String jsonStringValues = await rootBundle
-        .loadString('assets/language/${locale.languageCode}.json');
-    final Map<String, dynamic> mappedJson =
-        json.decode(jsonStringValues) as Map<String, dynamic>;
-    _localizedValues =
-        mappedJson.map((key, value) => MapEntry(key, value.toString()));
+    final String jsonStringValues = await rootBundle.loadString('assets/language/${locale.languageCode}.json');
+    final Map<String, dynamic> mappedJson = json.decode(jsonStringValues) as Map<String, dynamic>;
+    _localizedValues = mappedJson.map((key, value) => MapEntry(key, value.toString()));
   }
 
   String? translate(String key) {
     return _localizedValues[key];
   }
 
-  static const LocalizationsDelegate<AppLocalization> delegate =
-      _DemoLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalization> delegate = _DemoLocalizationsDelegate();
 }
 
-class _DemoLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalization> {
+class _DemoLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   const _DemoLocalizationsDelegate();
 
   @override

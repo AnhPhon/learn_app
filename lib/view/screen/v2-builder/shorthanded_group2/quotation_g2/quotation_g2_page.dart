@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/common_helper.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/string_cut.dart';
+import 'package:template/helper/izi_string.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/search_drop_down_button.dart';
 import 'package:template/view/basewidget/component/btn_component.dart';
@@ -415,7 +415,7 @@ class V2QuotationG2Page extends GetView<V2QuotationG2Controller> {
     return Column(
       children: [
         //show file
-        if (Validate.checkValueIsNullEmpty(controller.getFileNameBaoGia()) == false) fileWidget() else const SizedBox(),
+        if (Validate.nullOrEmpty(controller.getFileNameBaoGia()) == false) fileWidget() else const SizedBox(),
 
         //working address
         const SizedBox(

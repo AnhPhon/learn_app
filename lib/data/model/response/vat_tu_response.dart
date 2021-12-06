@@ -1,4 +1,5 @@
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_string.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class VatTuResponse {
   String? id;
@@ -63,7 +64,7 @@ class VatTuResponse {
 
   ///this method will prevent the override of toString
   bool filterSearchByName(String filter) {
-    final String _s = Validate.removeVietnameseTones(tenVatTu.toString());
+    final String _s = IZIString.toAscii(tenVatTu.toString());
     return _s.contains(filter);
   }
 

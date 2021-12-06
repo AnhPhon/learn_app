@@ -10,14 +10,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/data/model/request/danh_sach_bao_gia_don_dich_vu_request.dart';
 import 'package:template/data/model/response/chi_tiet_cong_viec_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/chi_tiet_cong_viec_provider.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_alert.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2QuotationG1Controller extends GetxController {
   // List<TextEditingController> unitPriceControllers = [];
@@ -127,14 +127,14 @@ class V2QuotationG1Controller extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -162,14 +162,14 @@ class V2QuotationG1Controller extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -207,14 +207,14 @@ class V2QuotationG1Controller extends GetxController {
           data: danhSachBaoGiaDonDichVuRequest,
           onSuccess: (data) {
             EasyLoading.dismiss();
-            Alert.success(message: 'Báo giá thành công');
+            IZIAlert.success(message: 'Báo giá thành công');
             Get.back();
             Get.back();
           },
           onError: (error) {
             EasyLoading.dismiss();
             print('V2QuotationG1Controller onDoneClick onError $error');
-            Alert.error(message: 'Báo giá thất bại');
+            IZIAlert.error(message: 'Báo giá thất bại');
           },
         );
       } else {
@@ -222,7 +222,7 @@ class V2QuotationG1Controller extends GetxController {
       }
     } on PlatformException catch (e) {
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
       print('V2QuotationG1Controller onDoneClick onError $e');
     }
   }
@@ -232,14 +232,14 @@ class V2QuotationG1Controller extends GetxController {
   ///
   Future<bool> checkFormIsVaild() async {
     for (var i = 0; i < unitPriceControllers.length; i++) {
-      if (Validate.checkValueIsNullEmpty(unitPriceControllers[i].text) == true) {
-        Alert.error(message: 'Không được bỏ trống đơn giá');
+      if (Validate.nullOrEmpty(unitPriceControllers[i].text) == true) {
+        IZIAlert.error(message: 'Không được bỏ trống đơn giá');
         return false;
       }
     }
 
     if (orderValue <= 0 ) {
-      Alert.error(message: 'Không được bỏ trống đơn giá');
+      IZIAlert.error(message: 'Không được bỏ trống đơn giá');
       return false;
     }
 

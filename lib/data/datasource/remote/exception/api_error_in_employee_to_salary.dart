@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:template/data/model/response/base/error_response.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 mixin ApiErrorHandlerInEmployee {
   static dynamic getMessage(dynamic error) {
@@ -17,12 +17,10 @@ mixin ApiErrorHandlerInEmployee {
               errorDescription = 'Connection timeout with API server';
               break;
             case DioErrorType.other:
-              errorDescription =
-                  'Connection to API server failed due to internet connection';
+              errorDescription = 'Connection to API server failed due to internet connection';
               break;
             case DioErrorType.receiveTimeout:
-              errorDescription =
-                  'Receive timeout in connection with API server';
+              errorDescription = 'Receive timeout in connection with API server';
               break;
             case DioErrorType.response:
               switch (error.response!.statusCode) {
@@ -39,8 +37,7 @@ mixin ApiErrorHandlerInEmployee {
                   if (errors.message != '') {
                     errorDescription = errors.message;
                   } else {
-                    errorDescription =
-                        'Failed to load data - status code: ${error.response!.statusCode}';
+                    errorDescription = 'Failed to load data - status code: ${error.response!.statusCode}';
                   }
               }
               break;
@@ -59,7 +56,7 @@ mixin ApiErrorHandlerInEmployee {
     }
 
     // show errors
-    Alert.error(
+    IZIAlert.error(
       message: errorDescription.toString(),
     );
 

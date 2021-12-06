@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// Helper class for device related operations.
 ///
-mixin DeviceUtils {
+mixin IZIDevice {
   ///
   /// hides the keyboard if its already open
   ///

@@ -14,7 +14,7 @@ import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -201,7 +201,7 @@ class V3QuoteCheckController extends GetxController {
         danhSachBaoGiaDonDichVuProvider.add(
           data: request,
           onSuccess: (data) {
-            Alert.success(message: "Xác nhận báo giá thành công");
+            IZIAlert.success(message: "Xác nhận báo giá thành công");
             Get.back();
             Get.back();
             Get.back();

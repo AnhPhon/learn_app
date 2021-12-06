@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/price_converter.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_price.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
@@ -138,7 +138,7 @@ class V3ThongTinThanhToanPage extends GetView<V3ThongTinThanhToanController> {
                           if (title.toLowerCase().contains("số tài khoản"))
                             GestureDetector(
                               onTap: () {
-                                Alert.success(message: "Đã copy thành công");
+                                IZIAlert.success(message: "Đã copy thành công");
                                 Clipboard.setData(ClipboardData(text: value));
                               },
                               child: const Icon(

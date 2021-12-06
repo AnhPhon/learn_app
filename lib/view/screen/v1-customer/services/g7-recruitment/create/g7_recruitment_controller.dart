@@ -34,11 +34,11 @@ import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/trinh_do_hoc_van_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V1G7RecruitmentController extends GetxController {
   //Providers
@@ -186,7 +186,7 @@ class V1G7RecruitmentController extends GetxController {
             taiKhoanResponse = value;
 
             //set data công ty
-            // companyController.text = Validate.checkValueIsNullEmpty(taiKhoanResponse.tenPhapLy) ? '' : taiKhoanResponse.tenPhapLy.toString();
+            // companyController.text = Validate.nullOrEmpty(taiKhoanResponse.tenPhapLy) ? '' : taiKhoanResponse.tenPhapLy.toString();
 
             // if (isEdit == false) {
             //   addressController.text = idTinhTp!.diaChiCuThe!;
@@ -639,14 +639,14 @@ class V1G7RecruitmentController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -685,55 +685,55 @@ class V1G7RecruitmentController extends GetxController {
 
     //check validate
     if (titleController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập tiêu đề");
+      return IZIAlert.error(message: "Vui lòng nhập tiêu đề");
     } else if (companyController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập tên công ty");
+      return IZIAlert.error(message: "Vui lòng nhập tên công ty");
       // } else if (workController.text.isEmpty) {
-      //   return Alert.error(message: "Vui lòng nhập địa chỉ công ty");
+      //   return IZIAlert.error(message: "Vui lòng nhập địa chỉ công ty");
       // } else if (tinhTpDiaChi == null) {
-      //   return Alert.error(message: "Vui lòng chọn tỉnh/tp");
+      //   return IZIAlert.error(message: "Vui lòng chọn tỉnh/tp");
       // } else if (quanHuyenResponse == null) {
-      //   return Alert.error(message: "Vui lòng chọn quận/huyện");
+      //   return IZIAlert.error(message: "Vui lòng chọn quận/huyện");
       // } else if (phuongXaResponse == null) {
-      //   return Alert.error(message: "Vui lòng chọn phường/xã");
+      //   return IZIAlert.error(message: "Vui lòng chọn phường/xã");
       // } else if (addressController.text.isEmpty) {
-      //   return Alert.error(message: "Vui lòng nhập địa chỉ công ty");
+      //   return IZIAlert.error(message: "Vui lòng nhập địa chỉ công ty");
     } else if (chooseSex == 0) {
-      return Alert.error(message: "Vui lòng chọn giới tính");
+      return IZIAlert.error(message: "Vui lòng chọn giới tính");
     } else if (amountController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập số lượng ứng tuyển");
+      return IZIAlert.error(message: "Vui lòng nhập số lượng ứng tuyển");
     } else if (hinhThucLamViec == null) {
-      return Alert.error(message: "Vui lòng chọn hình thức làm việc");
+      return IZIAlert.error(message: "Vui lòng chọn hình thức làm việc");
     } else if (trinhDoHocVan == null) {
-      return Alert.error(message: "Vui lòng chọn trình độ học vấn");
+      return IZIAlert.error(message: "Vui lòng chọn trình độ học vấn");
     } else if (chuyenNgangChinh == null) {
-      return Alert.error(message: "Vui lòng chọn chuyên ngành chính");
+      return IZIAlert.error(message: "Vui lòng chọn chuyên ngành chính");
     } else if (soNamKinhNghiem == null) {
-      return Alert.error(message: "Vui lòng chọn số năm kinh nghiệm");
+      return IZIAlert.error(message: "Vui lòng chọn số năm kinh nghiệm");
     } else if (mucLuongDuKien == null) {
-      return Alert.error(message: "Vui lòng chọn mức lương dự kiến");
+      return IZIAlert.error(message: "Vui lòng chọn mức lương dự kiến");
     } else if (noiLamViecs.isEmpty) {
-      return Alert.error(message: "Vui lòng chọn nơi làm việc");
+      return IZIAlert.error(message: "Vui lòng chọn nơi làm việc");
     } else if (thoiGianThucTapController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập thời gian thử việc");
+      return IZIAlert.error(message: "Vui lòng nhập thời gian thử việc");
     } else if (descController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập mô tả công việc");
+      return IZIAlert.error(message: "Vui lòng nhập mô tả công việc");
     } else if (requiredController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập yêu cầu công việc");
+      return IZIAlert.error(message: "Vui lòng nhập yêu cầu công việc");
     } else if (benifitController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập chế đô quyền lợi công việc");
+      return IZIAlert.error(message: "Vui lòng nhập chế đô quyền lợi công việc");
       // } else if (prioritizedController.text.isEmpty) {
-      //   return Alert.error(message: "Vui lòng nhập ưu tiên");
+      //   return IZIAlert.error(message: "Vui lòng nhập ưu tiên");
     } else if (daysBetween(DateTime.now(), selectedDate) < 0) {
-      return Alert.error(message: "Vui lòng chọn hạn nộp");
+      return IZIAlert.error(message: "Vui lòng chọn hạn nộp");
     } else if (nameController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập tên người liên hệ");
+      return IZIAlert.error(message: "Vui lòng nhập tên người liên hệ");
     } else if (phoneController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập số điện thoại");
+      return IZIAlert.error(message: "Vui lòng nhập số điện thoại");
     } else if (contactAddressController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập địa chỉ");
+      return IZIAlert.error(message: "Vui lòng nhập địa chỉ");
     } else if (emailController.text.isEmpty) {
-      return Alert.error(message: "Vui lòng nhập email");
+      return IZIAlert.error(message: "Vui lòng nhập email");
     } else {
       ///gán data tuyển dụng
       final Map<String, dynamic> param = {

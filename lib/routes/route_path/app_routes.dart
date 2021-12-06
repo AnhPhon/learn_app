@@ -2,6 +2,7 @@ class AppRoutes {
   static const String SPLASH = '/';
 
   // auth
+  // TODO: tách thành Home, cart, ... route
   static const String AUTH = '/auth';
   static const String FORGOT_PASSWORD = '/forgot_password';
   static const String OTP_VERIFIER = '/otp_verifier';

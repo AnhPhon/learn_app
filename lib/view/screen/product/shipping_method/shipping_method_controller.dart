@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/don_hang_request.dart';
 import 'package:template/data/model/response/don_hang_response.dart';
 import 'package:template/provider/don_hang_provider.dart';
-import 'package:template/utils/alert.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/helper/izi_alert.dart';
+import 'package:template/utils/images_path.dart';
 
 class ShippingMethodController extends GetxController {
   //donHang
@@ -56,7 +56,7 @@ class ShippingMethodController extends GetxController {
         data: donHangRequest,
         onSuccess: (data) {
           Get.back(result: true);
-          Alert.success(message: "Cập nhật loại vận chuyển thành công");
+          IZIAlert.success(message: "Cập nhật loại vận chuyển thành công");
         },
         onError: (error) {
           print("ShippingMethodController onBtnDoneClick onError $error");

@@ -16,11 +16,11 @@ import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_vi_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class V2QuotationG2Controller extends GetxController {
   String idDonDichVu = "";
@@ -138,7 +138,7 @@ class V2QuotationG2Controller extends GetxController {
       },
       onError: (e) {
         EasyLoading.dismiss();
-        Alert.error(message: e.toString());
+        IZIAlert.error(message: e.toString());
       },
     );
   }
@@ -212,14 +212,14 @@ class V2QuotationG2Controller extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -246,14 +246,14 @@ class V2QuotationG2Controller extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -316,14 +316,14 @@ class V2QuotationG2Controller extends GetxController {
       //     data: danhSachBaoGiaDonDichVuRequest,
       //     onSuccess: (data) {
       //       EasyLoading.dismiss();
-      //       Alert.success(message: 'Báo giá thành công');
+      //       IZIAlert.success(message: 'Báo giá thành công');
       //       Get.back();
       //       Get.back();
       //     },
       //     onError: (error) {
       //       print('V2QuotationG1Controller onDoneClick onError $error');
       //       EasyLoading.dismiss();
-      //       Alert.error(message: 'Báo giá thất bại');
+      //       IZIAlert.error(message: 'Báo giá thất bại');
       //     },
       //   );
       // } else {
@@ -331,7 +331,7 @@ class V2QuotationG2Controller extends GetxController {
       // }
     } on PlatformException catch (e) {
       // EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -345,12 +345,12 @@ class V2QuotationG2Controller extends GetxController {
     print('checkGiaTriDonHangIsEmpty() ${checkGiaTriDonHangIsEmpty()}');
     if ((checkFileIsEmpty() == true && checkFormChiTietCongViecIsEmpty() == true)) {
       EasyLoading.dismiss();
-      Alert.error(message: 'Không được bỏ trống dữ liệu báo giá');
+      IZIAlert.error(message: 'Không được bỏ trống dữ liệu báo giá');
       return false;
     // } else if (orderValue <= 0 || (checkFileIsEmpty() == false && checkFormChiTietCongViecIsEmpty() == true && checkGiaTriDonHangIsEmpty())) {
     } else if (orderValue <= 0) {
       EasyLoading.dismiss();
-      Alert.error(message: 'Không được bỏ trống giá trị đơn hàng');
+      IZIAlert.error(message: 'Không được bỏ trống giá trị đơn hàng');
       return false;
     } else {
       danhSachBaoGiaDonDichVuRequest.thongTinBaoGia = quotationInfoSelected;
@@ -366,7 +366,7 @@ class V2QuotationG2Controller extends GetxController {
       //     },
       //     onError: (error) {
       //       print('V2QuotationG2Controller checkForm onError $error');
-      //       Alert.error(message: error.toString());
+      //       IZIAlert.error(message: error.toString());
       //     },
       //   );
       // }

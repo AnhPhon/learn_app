@@ -6,7 +6,7 @@ import 'package:template/data/model/response/danh_muc_san_pham_response.dart';
 import 'package:template/data/model/response/san_pham_response.dart';
 import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 class ProductController extends GetxController {

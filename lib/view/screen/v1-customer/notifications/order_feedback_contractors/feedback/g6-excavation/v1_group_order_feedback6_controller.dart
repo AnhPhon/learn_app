@@ -8,8 +8,8 @@ import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_respo
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 
@@ -120,7 +120,7 @@ class V1GroupOrderFeedBack6Controller extends GetxController {
           EasyLoading.dismiss();
           Get.back();
           update();
-          Alert.success(message: "Phản hồi thành công");
+          IZIAlert.success(message: "Phản hồi thành công");
         },
         onError: (onError) {
           print("V1GroupOrderFeedBack6Controller onFeebacked: $onError");

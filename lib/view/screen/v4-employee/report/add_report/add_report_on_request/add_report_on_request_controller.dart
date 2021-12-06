@@ -6,11 +6,11 @@ import 'package:ntp/ntp.dart';
 import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4AddReportOnRequestController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -107,11 +107,11 @@ class V4AddReportOnRequestController extends GetxController {
   ///
   bool validate() {
     if (contentReportOnRequest.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung báo cáo hợp lệ!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung báo cáo hợp lệ!');
       return false;
     }
     if (duAnNhanVienAdd == null) {
-      Alert.error(message: 'Vui lòng chọn dự án hợp lệ!');
+      IZIAlert.error(message: 'Vui lòng chọn dự án hợp lệ!');
       return false;
     }
     return true;
@@ -131,7 +131,7 @@ class V4AddReportOnRequestController extends GetxController {
           noiDung: contentReportOnRequest.text,
         ),
         onSuccess: (value) {
-          Alert.success(message: 'Báo cáo thành công');
+          IZIAlert.success(message: 'Báo cáo thành công');
           EasyLoading.dismiss();
           Get.back(result: true);
         },

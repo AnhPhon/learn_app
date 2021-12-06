@@ -12,15 +12,15 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_vi_response.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
 import 'package:template/data/model/response/thong_so_ky_thuat_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/don_vi_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/thong_so_ky_thuat_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1G6CreateServiceController extends GetxController {
@@ -214,14 +214,14 @@ class V1G6CreateServiceController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -235,28 +235,28 @@ class V1G6CreateServiceController extends GetxController {
 
   bool validation() {
     if (thongSo.isEmpty) {
-      Alert.error(message: "Bản phải chọn thông số kỹ thuật");
+      IZIAlert.error(message: "Bản phải chọn thông số kỹ thuật");
       return false;
     }
 
     if (tommorow == false && afternoon == false && tonight == false) {
-      Alert.error(message: "Bạn phải chọn thời gian làm việc");
+      IZIAlert.error(message: "Bạn phải chọn thời gian làm việc");
       return false;
     } else if (amountController.text.toString().isEmpty) {
-      Alert.error(message: "Số lượng yêu cầu không được để trống");
+      IZIAlert.error(message: "Số lượng yêu cầu không được để trống");
       return false;
     }
     if (int.parse(amountController.text.toString()) <= 0) {
-      Alert.error(message: "Số lượng yêu cầu không hợp lệ");
+      IZIAlert.error(message: "Số lượng yêu cầu không hợp lệ");
       return false;
     }
     if (unit == null) {
-      Alert.error(message: "Vui lòng chọn đơn vị");
+      IZIAlert.error(message: "Vui lòng chọn đơn vị");
       return false;
     }
 
     if (startTimeController.text.toString().isEmpty) {
-      Alert.error(message: "Ngày làm việc không được để trống");
+      IZIAlert.error(message: "Ngày làm việc không được để trống");
       return false;
     }
 
@@ -264,7 +264,7 @@ class V1G6CreateServiceController extends GetxController {
             startDate: startTimeController.text.toString(),
             endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
         0) {
-      Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+      IZIAlert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
       return false;
     }
 
@@ -278,13 +278,13 @@ class V1G6CreateServiceController extends GetxController {
               .parse(startTimeController.text)
               .toString()
               .substring(0, 10)))) {
-        Alert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
+        IZIAlert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
         return false;
       }
     }
 
     if (workDescController.text.toString().isEmpty) {
-      Alert.error(message: "Mô tả yêu cầu cụ thể không được để trống");
+      IZIAlert.error(message: "Mô tả yêu cầu cụ thể không được để trống");
       return false;
     }
     return true;
@@ -303,7 +303,7 @@ class V1G6CreateServiceController extends GetxController {
             data: request(),
             onSuccess: (data) {
               EasyLoading.dismiss();
-              Alert.success(
+              IZIAlert.success(
                   message:
                       "Tạo đơn dịch vụ thành công. Chúng tối sẽ phản hội lại cho bạn sơm nhất");
               Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY,

@@ -9,13 +9,13 @@ import 'package:template/data/model/request/bao_cao_nhan_vien_request.dart';
 
 import 'package:template/data/model/request/cham_cong_request.dart';
 import 'package:template/data/model/response/du_an_nhan_vien_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 
 import 'package:template/provider/cham_cong_provider.dart';
 import 'package:template/provider/du_an_nhan_vien_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4ReportTimekeepingControllter extends GetxController {
   GetIt sl = GetIt.instance;
@@ -117,11 +117,11 @@ class V4ReportTimekeepingControllter extends GetxController {
   ///
   bool validate() {
     if (reportContent.text.toString().isEmpty) {
-      Alert.error(message: 'Vui lòng nhập nội dung báo cáo!');
+      IZIAlert.error(message: 'Vui lòng nhập nội dung báo cáo!');
       return false;
     }
     if (duAnNhanVienDaily == null) {
-      Alert.error(message: 'Vui lòng chọn địa điểm làm việc/văn phòng');
+      IZIAlert.error(message: 'Vui lòng chọn địa điểm làm việc/văn phòng');
       return false;
     }
 

@@ -8,12 +8,12 @@ import 'package:template/data/model/request/nhan_vien_request.dart';
 import 'package:template/data/model/response/nhan_vien_response.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 
 import 'package:template/view/screen/v4-employee/account/component/v4_small_button.dart';
 
@@ -215,7 +215,7 @@ class V4AccountController extends GetxController {
   bool onValidateLogin() {
     //validate infomation username password
     if (passwordController.text == '') {
-      Alert.info(message: "Vui lòng điền mật khẩu");
+      IZIAlert.info(message: "Vui lòng điền mật khẩu");
       return false;
     }
     return true;

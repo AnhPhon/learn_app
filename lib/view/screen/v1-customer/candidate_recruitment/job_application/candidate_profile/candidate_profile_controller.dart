@@ -19,9 +19,9 @@ import 'package:template/provider/danh_sach_xem_tuyen_dung_provider.dart';
 import 'package:template/provider/loai_tot_nghiep_provider.dart';
 import 'package:template/provider/trinh_do_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -269,18 +269,18 @@ class V1CandidateProfileController extends GetxController {
                         EasyLoading.dismiss();
                         Get.back();
                         isView = true;
-                        Alert.success(message: 'Thanh toán thành công');
+                        IZIAlert.success(message: 'Thanh toán thành công');
                         update();
                       } else {
-                        Alert.error(message: 'Vui lòng thực hiện lại');
+                        IZIAlert.error(message: 'Vui lòng thực hiện lại');
                       }
                     });
                   } else {
-                    Alert.error(message: 'Vui lòng thực hiện lại');
+                    IZIAlert.error(message: 'Vui lòng thực hiện lại');
                   }
                 });
               } else {
-                Alert.error(message: 'Vui lòng thực hiện lại');
+                IZIAlert.error(message: 'Vui lòng thực hiện lại');
               }
             });
           },
@@ -323,7 +323,7 @@ class V1CandidateProfileController extends GetxController {
         ),
         onPressed: () {
           Get.toNamed('${AppRoutes.PAYMENT_RECHARGE}?soTienToiThieu=$tongTienThanhToan')!.then((value) {
-            Alert.info(message: "Vui lòng đợi admin xét duyệt nạp tiền và thử lại sau");
+            IZIAlert.info(message: "Vui lòng đợi admin xét duyệt nạp tiền và thử lại sau");
             Get.back();
           });
         },

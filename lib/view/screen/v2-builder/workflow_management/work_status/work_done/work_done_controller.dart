@@ -18,9 +18,9 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/yeu_cau_bao_hanh_provider.dart';
 
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V2WorkInDoneController extends GetxController {
@@ -219,7 +219,7 @@ class V2WorkInDoneController extends GetxController {
       return;
     } else {
       if (paymentRequest.text.isEmpty) {
-        Alert.error(message: "Vui lòng nhập số tiền yêu cầu thanh toán");
+        IZIAlert.error(message: "Vui lòng nhập số tiền yêu cầu thanh toán");
       } else {
         isClickedRequest = true;
         phanHoiDonDichVuProvider.update(
@@ -230,7 +230,7 @@ class V2WorkInDoneController extends GetxController {
             yKienThoThauViecDaLam: paymentRequest.text,
           ),
           onSuccess: (data) {
-            Alert.success(message: "Gửi yêu cầu thanh toán thành công");
+            IZIAlert.success(message: "Gửi yêu cầu thanh toán thành công");
             getViecDaLam();
           },
           onError: (error) {
@@ -269,7 +269,7 @@ class V2WorkInDoneController extends GetxController {
       return;
     } else {
       if (noiDungThucHien[index].text.isEmpty) {
-        Alert.error(
+        IZIAlert.error(
             message: "Vui lòng nhập nội dung báo cáo thực hiện bảo hành");
       } else {
         isClickedDone = true;
@@ -286,7 +286,7 @@ class V2WorkInDoneController extends GetxController {
             phanHoiDonDichVuProvider.update(
               data: phanHoiDonDichVuRequest,
               onSuccess: (value) {
-                Alert.success(message: "Báo cáo thực hiện bảo hành thành công");
+                IZIAlert.success(message: "Báo cáo thực hiện bảo hành thành công");
                 getViecDaLam();
               },
               onError: (error) {

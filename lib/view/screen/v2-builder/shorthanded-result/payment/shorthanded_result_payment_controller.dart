@@ -7,12 +7,12 @@ import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/danh_sach_bao_gia_don_dich_vu_response.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/screen/payment/payment_account/patment_dialog_accept.dart';
 
 class V2ShorthandedPaymentController extends GetxController with SingleGetTickerProviderMixin {
@@ -57,20 +57,20 @@ class V2ShorthandedPaymentController extends GetxController with SingleGetTicker
         data: donDichVuRequest,
         onSuccess: (value) {
           EasyLoading.dismiss();
-          Alert.success(message: "Từ chối thành công");
+          IZIAlert.success(message: "Từ chối thành công");
           update();
           Get.back(result: {'reload': true});
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -96,13 +96,13 @@ class V2ShorthandedPaymentController extends GetxController with SingleGetTicker
           data: donDichVuRequest,
           onSuccess: (value) {
             EasyLoading.dismiss();
-            Alert.success(message: "Nhận việc thành công");
+            IZIAlert.success(message: "Nhận việc thành công");
             update();
             Get.back(result: {'reload': true});
           },
           onError: (e) {
             EasyLoading.dismiss();
-            Alert.error(message: e.toString());
+            IZIAlert.error(message: e.toString());
           },
         );
       }
@@ -114,9 +114,9 @@ class V2ShorthandedPaymentController extends GetxController with SingleGetTicker
 
   // Tinh thoi gian lam viec
   String getTimeLamViec() {
-    if (Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.soNgay) == false) {
+    if (Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.soNgay) == false) {
       return danhSachBaoGiaDonDichVu.idDonDichVu!.soNgay.toString();
-    } else if (Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayBatDau) == false && Validate.checkValueIsNullEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayKetThuc) == false) {
+    } else if (Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu) == false && Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayBatDau) == false && Validate.nullOrEmpty(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayKetThuc) == false) {
       final DateTime dateStart = DateTime.parse(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayBatDau.toString());
       final DateTime dateEnd = DateTime.parse(danhSachBaoGiaDonDichVu.idDonDichVu!.ngayKetThuc.toString());
       return ' ${dateEnd.difference(dateStart).inDays + 1} ngày';

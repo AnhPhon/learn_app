@@ -11,10 +11,10 @@ import 'package:template/data/model/response/bao_cao_nhan_vien_response.dart';
 import 'package:template/data/model/response/cham_cong_response.dart';
 import 'package:template/provider/bao_cao_nhan_vien_provider.dart';
 import 'package:template/provider/cham_cong_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 class V4ReportController extends GetxController
     with SingleGetTickerProviderMixin {

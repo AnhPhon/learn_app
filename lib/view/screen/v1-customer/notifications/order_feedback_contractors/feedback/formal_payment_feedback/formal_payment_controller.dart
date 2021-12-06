@@ -9,8 +9,8 @@ import 'package:template/data/repository/don_dich_vu_repository.dart';
 import 'package:template/provider/danh_sach_bao_gia_don_dich_vu_provider.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thong_bao_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1FormalPaymentFeedbackController extends GetxController {
@@ -112,11 +112,11 @@ class V1FormalPaymentFeedbackController extends GetxController {
                                       AppRoutes.V1_DASHBOARD)),
                               Get.back(),
                               Get.back(),
-                              Alert.success(
+                              IZIAlert.success(
                                   message: 'Phản hồi dịch vụ thành công'),
                             }
                           else
-                            Alert.error(message: 'Vui lòng thực hiện lại')
+                            IZIAlert.error(message: 'Vui lòng thực hiện lại')
                         });
 
                   }, 
@@ -143,10 +143,10 @@ class V1FormalPaymentFeedbackController extends GetxController {
                                     AppRoutes.V1_DASHBOARD)),
                             Get.back(),
                             Get.back(),
-                            Alert.success(message: 'Phản hồi dịch vụ thất bại'),
+                            IZIAlert.success(message: 'Phản hồi dịch vụ thất bại'),
                           }
                         else
-                          {Alert.error(message: 'Vui lòng thực hiện lại')}
+                          {IZIAlert.error(message: 'Vui lòng thực hiện lại')}
                       });
                 }
             });

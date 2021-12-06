@@ -15,9 +15,9 @@ import 'package:template/provider/danh_muc_san_pham_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/san_pham_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V3ProductAddController extends GetxController {
@@ -176,23 +176,23 @@ class V3ProductAddController extends GetxController {
   void btnAdd(BuildContext context, {bool? isUpdateAndAdd = false}) {
     //validate
     if (urlImage.isEmpty) {
-      Alert.error(message: 'Hình ảnh sản phẩm không được để trống');
+      IZIAlert.error(message: 'Hình ảnh sản phẩm không được để trống');
     } else if (name.text.isEmpty) {
-      Alert.error(message: 'Tên sản phẩm không được để trống');
+      IZIAlert.error(message: 'Tên sản phẩm không được để trống');
     } else if (branch.text.isEmpty) {
-      Alert.error(message: 'Thương hiệu sản phẩm không được để trống');
+      IZIAlert.error(message: 'Thương hiệu sản phẩm không được để trống');
     } else if (price.text.isEmpty) {
-      Alert.error(message: 'Giá sản phẩm không được để trống');
+      IZIAlert.error(message: 'Giá sản phẩm không được để trống');
     } else if (quyCach.text.isEmpty) {
-      Alert.error(message: 'Quy cách không được để trống');
+      IZIAlert.error(message: 'Quy cách không được để trống');
     } else if (detail.text.isEmpty) {
-      Alert.error(message: 'Chi tiết sản phẩm không được để trống');
+      IZIAlert.error(message: 'Chi tiết sản phẩm không được để trống');
     } else if (danhMucSanPhamResponse == null) {
-      Alert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
+      IZIAlert.error(message: 'Bạn chưa chọn danh mục sản phẩm');
     } else if (unit.text.isEmpty) {
-      Alert.error(message: 'Đơn vị không được để trống');
+      IZIAlert.error(message: 'Đơn vị không được để trống');
     } else if (sanPhamRequest.tinhTrangSanPham == null) {
-      Alert.error(message: 'Bạn chưa chọn tình trạng sản phẩm');
+      IZIAlert.error(message: 'Bạn chưa chọn tình trạng sản phẩm');
     } else {
       //set data
       sanPhamRequest.hinhAnhDaiDien = urlImage[0];
@@ -214,11 +214,11 @@ class V3ProductAddController extends GetxController {
           if (isUpdateAndAdd == false) {
             Get.toNamed("${AppRoutes.V3_REVIEW_PRODUCT}?isUpdateAndAdd=false",
                 arguments: sanPham);
-            Alert.success(message: 'Thêm sản phẩm thành công');
+            IZIAlert.success(message: 'Thêm sản phẩm thành công');
           } else {
             Get.toNamed("${AppRoutes.V3_REVIEW_PRODUCT}?isUpdateAndAdd=true",
                 arguments: sanPham);
-            Alert.success(message: 'Thêm sản phẩm thành công');
+            IZIAlert.success(message: 'Thêm sản phẩm thành công');
 
             //clear data
             name.clear();

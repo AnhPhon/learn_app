@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V1CheckController extends GetxController {

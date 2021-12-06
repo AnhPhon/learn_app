@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:template/data/model/response/hinh_thuc_lam_viec_response.dart';
 import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/ngoai_ngu_response.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
 import 'package:template/view/basewidget/button/drop_down_button.dart';
 import 'package:template/view/screen/v1-customer/candidate_recruitment/candidate/candidate_controller.dart';
 

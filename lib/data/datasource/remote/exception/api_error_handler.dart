@@ -18,12 +18,10 @@ mixin ApiErrorHandler {
               errorDescription = 'Connection timeout with API server';
               break;
             case DioErrorType.other:
-              errorDescription =
-                  'Connection to API server failed due to internet connection';
+              errorDescription = 'Connection to API server failed due to internet connection';
               break;
             case DioErrorType.receiveTimeout:
-              errorDescription =
-                  'Receive timeout in connection with API server';
+              errorDescription = 'Receive timeout in connection with API server';
               break;
             case DioErrorType.response:
               switch (error.response!.statusCode) {
@@ -37,8 +35,7 @@ mixin ApiErrorHandler {
                   if (errors.message != '') {
                     errorDescription = errors.message;
                   } else {
-                    errorDescription =
-                        'Failed to load data - status code: ${error.response!.statusCode}';
+                    errorDescription = 'Failed to load data - status code: ${error.response!.statusCode}';
                   }
               }
               break;
@@ -56,16 +53,17 @@ mixin ApiErrorHandler {
       errorDescription = 'is not a subtype of exception';
     }
 
+    // TODO: Edit alert.error
     // show errors
-    Get.snackbar(
-      "Hey i'm a Errors SnackBar!", // title
-      errorDescription.toString(), // message
-      icon: const Icon(Icons.error_outline),
-      backgroundColor: ColorResources.PINK,
-      shouldIconPulse: true,
-      isDismissible: true,
-      duration: const Duration(seconds: 3),
-    );
+    // Get.snackbar(
+    //   "Hey i'm a Errors SnackBar!", // title
+    //   errorDescription.toString(), // message
+    //   icon: const Icon(Icons.error_outline),
+    //   backgroundColor: ColorResources.PINK,
+    //   shouldIconPulse: true,
+    //   isDismissible: true,
+    //   duration: const Duration(seconds: 3),
+    // );
     return errorDescription;
   }
 }

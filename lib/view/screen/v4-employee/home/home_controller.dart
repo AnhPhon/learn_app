@@ -10,9 +10,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:template/provider/cong_viec_nhan_vien_provider.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/provider/thu_chi_nhan_vien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4HomeController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -324,7 +324,7 @@ class V4HomeController extends GetxController {
   void onClickToTimeKeeping() {
     Get.toNamed(AppRoutes.V4_TIMEKEEPING)!.then((value) {
       if (value == true) {
-        Alert.success(message: "Bạn đã chấm công thành công!");
+        IZIAlert.success(message: "Bạn đã chấm công thành công!");
         onInit();
         update();
       }
@@ -337,7 +337,7 @@ class V4HomeController extends GetxController {
   void onClickToReportTimeKeeping() {
     Get.toNamed(AppRoutes.V4_REPORT_TIMEKEEPING)!.then((value) {
       if (value == true) {
-        Alert.success(message: "Bạn đã Báo cáo thành công!");
+        IZIAlert.success(message: "Bạn đã Báo cáo thành công!");
         onInit();
         update();
       }
@@ -380,7 +380,7 @@ class V4HomeController extends GetxController {
   void onClickToExprot() {
     Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=true")!.then((value) {
       if (value == true) {
-        Alert.success(message: "Xuất kho thành công!");
+        IZIAlert.success(message: "Xuất kho thành công!");
 
         initProgramRun();
         update();
@@ -394,7 +394,7 @@ class V4HomeController extends GetxController {
   void onClickToImport() {
     Get.toNamed("${AppRoutes.V4_EXPORT_IMPROT}?export=flase")!.then((value) {
       if (value == true) {
-        Alert.success(message: "Nhập kho thành công!");
+        IZIAlert.success(message: "Nhập kho thành công!");
 
         initProgramRun();
         update();
@@ -408,7 +408,7 @@ class V4HomeController extends GetxController {
     Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=true")!
         .then((value) {
       if (value == true) {
-        Alert.success(message: "Thêm thu thành công!");
+        IZIAlert.success(message: "Thêm thu thành công!");
 
         //refresh lại home pape
         initProgramRun();
@@ -424,7 +424,7 @@ class V4HomeController extends GetxController {
     Get.toNamed("${AppRoutes.V4_REVENUE_EXPENDITURE}?revenue=false")!
         .then((value) {
       if (value == true) {
-        Alert.success(message: "Thêm chi thành công!");
+        IZIAlert.success(message: "Thêm chi thành công!");
 
         //refresh lại home pape
         initProgramRun();

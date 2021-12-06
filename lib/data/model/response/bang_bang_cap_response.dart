@@ -117,6 +117,17 @@ class BangBangCapResponse {
 
   @override
   String toString() {
-    return id!;
+    // TODO: return all properties
+    return 'id: $id \n anhBangCap: $anhBangCap ';//....
+  }
+
+
+  // get id
+  String getId(){
+    return id.toString();
+  }
+  // get label
+  String getlabel(){
+    return namTotNghiep.toString();
   }
 }

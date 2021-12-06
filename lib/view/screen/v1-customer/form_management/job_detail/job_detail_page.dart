@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/component/image_list_horizontal.dart';
 import 'package:template/view/screen/v1-customer/form_management/job_detail/job_detail_controller.dart';
@@ -286,7 +286,7 @@ class V1JobDetailPage extends GetView<V1JobDetailController> {
   Widget _filePicker(BuildContext context) {
     return GestureDetector(
       onTap: () => controller.downloadFile(
-        url: (Validate.checkValueIsNullEmpty(
+        url: (Validate.nullOrEmpty(
                     controller.donDichVuResponse.files) ==
                 false)
             ? controller.donDichVuResponse.files![0].toString()

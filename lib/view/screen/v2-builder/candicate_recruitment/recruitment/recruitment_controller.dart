@@ -8,7 +8,7 @@ import 'package:template/data/model/response/tuyen_dung_response.dart';
 import 'package:template/provider/dang_ky_viec_moi_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';

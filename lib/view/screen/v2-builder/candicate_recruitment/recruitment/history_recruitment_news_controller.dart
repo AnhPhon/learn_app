@@ -10,10 +10,10 @@ import 'package:template/provider/danh_sach_luu_tin_tuyen_dung_provider.dart';
 import 'package:template/provider/danh_sach_ung_tuyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/tuyen_dung_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:tiengviet/tiengviet.dart';
 
 class V2HistoryRecruitmentNewsController extends GetxController {

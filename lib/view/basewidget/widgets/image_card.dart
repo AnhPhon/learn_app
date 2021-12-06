@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
 
 class ImageCard extends StatelessWidget {
   const ImageCard({

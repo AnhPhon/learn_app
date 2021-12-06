@@ -9,14 +9,14 @@ import 'package:template/data/model/response/nhan_vien_response.dart';
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/nhan_vien_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
 import 'package:template/provider/quan_huyen_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V4InfoController extends GetxController {
   GetIt sl = GetIt.instance;
@@ -329,14 +329,14 @@ class V4InfoController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(
+      IZIAlert.error(
           message: "Vui lòng cho phép ứng dụng truy cập vào thư viện ảnh!");
     }
   }
@@ -364,14 +364,14 @@ class V4InfoController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(
+      IZIAlert.error(
           message: "Vui lòng cho phép ứng dụng truy cập vào thư viện ảnh!");
     }
   }
@@ -399,14 +399,14 @@ class V4InfoController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(
+      IZIAlert.error(
           message: "Vui lòng cho phép ứng dụng truy cập vào thư viện ảnh!");
     }
   }
@@ -418,43 +418,43 @@ class V4InfoController extends GetxController {
     //validate
     if (nameController.text.isEmpty) {
       //show snackbar check họ và tên
-      Alert.error(message: 'Vui lòng nhập họ và tên!');
+      IZIAlert.error(message: 'Vui lòng nhập họ và tên!');
       return false;
     }
     if (birthdayController.text.isEmpty) {
       //show snackbar check ngày sinh
-      Alert.error(message: 'Vui lòng chọn ngày sinh!');
+      IZIAlert.error(message: 'Vui lòng chọn ngày sinh!');
       return false;
     }
     if (sex == null) {
       //show snackbar check giới tính
-      Alert.error(message: 'Vui lòng chọn giới tính!');
+      IZIAlert.error(message: 'Vui lòng chọn giới tính!');
       return false;
     }
     if (phoneNumberController.text.isEmpty) {
       //show snackbar check số điện thoại
-      Alert.error(message: 'Vui lòng nhập số điện thoại!');
+      IZIAlert.error(message: 'Vui lòng nhập số điện thoại!');
       return false;
     }
     if (addressController.text.isEmpty) {
       //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng nhập địa chỉ thường trú hiện tại!');
+      IZIAlert.error(message: 'Vui lòng nhập địa chỉ thường trú hiện tại!');
       return false;
     }
     if (tinhTp == null) {
       //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
+      IZIAlert.error(message: 'Vui lòng chọn Tỉnh/Tp!');
       return false;
     }
     if (quanHuyen == null) {
       //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Quận/Huyện!');
+      IZIAlert.error(message: 'Vui lòng chọn Quận/Huyện!');
       return false;
     }
     if (phuongXa == null &&
         quanHuyen!.ten.toString().toLowerCase() != "hoàng sa") {
       //show snackbar check địa chỉ
-      Alert.error(message: 'Vui lòng chọn Phường/Xã!');
+      IZIAlert.error(message: 'Vui lòng chọn Phường/Xã!');
       return false;
     }
     return true;
@@ -498,7 +498,7 @@ class V4InfoController extends GetxController {
           Get.back(result: true);
 
           //show dialog
-          Alert.success(message: "Cập nhật thông tin thành công!");
+          IZIAlert.success(message: "Cập nhật thông tin thành công!");
         },
         onError: (error) {
           print("TermsAndPolicyController getTermsAndPolicy onError $error");

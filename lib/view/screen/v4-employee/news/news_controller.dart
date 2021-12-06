@@ -6,7 +6,7 @@ import 'package:template/data/model/response/danh_muc_tin_tuc_response.dart';
 import 'package:template/data/model/response/tin_tuc_response.dart';
 import 'package:template/provider/danh_muc_tin_tuc_provider.dart';
 import 'package:template/provider/tin_tuc_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 
 class V4NewsController extends GetxController
     with SingleGetTickerProviderMixin {

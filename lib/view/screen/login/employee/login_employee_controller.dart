@@ -8,11 +8,11 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
 import 'package:template/provider/loai_tai_khoan_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class LoginEmployeeController extends GetxController {
   AuthProvider authProvider = GetIt.I.get<AuthProvider>();
@@ -65,10 +65,10 @@ class LoginEmployeeController extends GetxController {
   bool onValidateLogin() {
     //validate infomation username password
     if (emailController.text == '' || passwordController.text == '') {
-      Alert.error(message: "Vui lòng điền đầy đủ email và mật khẩu");
+      IZIAlert.error(message: "Vui lòng điền đầy đủ email và mật khẩu");
       return false;
     } else if (!Validate.email(emailController.text.toString())) {
-      Alert.error(message: "Địa chỉ email không hợp lệ !");
+      IZIAlert.error(message: "Địa chỉ email không hợp lệ !");
       return false;
     }
     return true;
@@ -103,7 +103,7 @@ class LoginEmployeeController extends GetxController {
             Get.offAndToNamed(AppRoutes.V4_DASHBOARD);
           },
           onError: (error) {
-            Alert.error(
+            IZIAlert.error(
                 message:
                     "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại");
             EasyLoading.dismiss();

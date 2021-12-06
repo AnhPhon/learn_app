@@ -9,5 +9,8 @@ ThemeData darkTheme = ThemeData(
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
     TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
     TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
-  }), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF252525)),
+  }),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: const Color(0xFF252525),
+  ),
 );

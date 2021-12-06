@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/custom_themes.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/screen/v2-builder/shorthanded-result/complete/shorthanded_result_complete_controller.dart';
@@ -37,28 +37,28 @@ class V2ShorthandedCompletePage extends GetView<V2ShorthandedCompleteController>
                     child: ListView(
                       children: [
                         // Label thong tin lien he voi khach hang
-                        if (Validate.checkValueIsNullEmpty(controller.idDonDichVu.diaChiCuThe) == false)
+                        if (Validate.nullOrEmpty(controller.idDonDichVu.diaChiCuThe) == false)
                           rowInfoKhachHang(
                             title: 'Tên KH',
                             content: controller.idDonDichVu.idTaiKhoan!.hoTen.toString(),
                           )
                         else
                           const SizedBox(),
-                        if (Validate.checkValueIsNullEmpty(controller.idDonDichVu.diaChiCuThe) == false)
+                        if (Validate.nullOrEmpty(controller.idDonDichVu.diaChiCuThe) == false)
                           rowInfoKhachHang(
                             title: 'Địa chỉ KH',
                             content: controller.idDonDichVu.idTaiKhoan!.diaChi.toString(),
                           )
                         else
                           const SizedBox(),
-                        if (Validate.checkValueIsNullEmpty(controller.idDonDichVu.diaChiCuThe) == false)
+                        if (Validate.nullOrEmpty(controller.idDonDichVu.diaChiCuThe) == false)
                           rowInfoKhachHang(
                             title: 'Địa chỉ dự án',
                             content: controller.idDonDichVu.diaChiCuThe.toString(),
                           )
                         else
                           const SizedBox(),
-                        if (Validate.checkValueIsNullEmpty(controller.idDonDichVu.diaChiCuThe) == false)
+                        if (Validate.nullOrEmpty(controller.idDonDichVu.diaChiCuThe) == false)
                           rowInfoKhachHang(
                             title: 'Số điện thoại',
                             content: controller.idDonDichVu.idTaiKhoan!.soDienThoai.toString(),

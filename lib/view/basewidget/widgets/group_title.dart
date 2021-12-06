@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:template/utils/dimensions.dart';
+import 'package:template/helper/dimensions.dart';
 
 class GroupTitle extends StatelessWidget {
   const GroupTitle({

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/currency_covert.dart';
-import 'package:template/helper/date_converter.dart';
-import 'package:template/helper/price_converter.dart';
+import 'package:template/helper/izi_date.dart';
+import 'package:template/helper/izi_price.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/view/basewidget/widgets/box_shadow_widget.dart';
 import 'package:template/view/basewidget/widgets/fade_in_image.dart';
 import 'package:template/view/basewidget/widgets/label.dart';
@@ -91,7 +91,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
             ),
           // Nội dung hồ sơ
           // Giới tính
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.gioiTinh.toString()))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.gioiTinh.toString()))
             Padding(
               padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
               child: TextHighlight(
@@ -101,10 +101,10 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
               ),
             ),
           // Địa chỉ
-          // if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idTinhTp.toString()) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idQuanHuyen.toString()) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idPhuongXa.toString()))
+          // if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idTinhTp.toString()) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idQuanHuyen.toString()) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idPhuongXa.toString()))
 
           if (controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.isNotEmpty)
-            if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idTinhTp) && !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idQuanHuyen) && !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idPhuongXa))
+            if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idTinhTp) && !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idQuanHuyen) && !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs!.first.idPhuongXa))
               const Padding(
                 padding: EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
                 child: Text(
@@ -118,9 +118,9 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                 (index) => Padding(
                       padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
                       child: Text(
-                        "+ ${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa!.id == TAT_CA_PHUONG_XA ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa!.ten} "
-                        '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen!.id == TAT_CA_QUAN_HUYEN ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen!.ten} '
-                        "${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp!.ten}",
+                        "+ ${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa!.id == TAT_CA_PHUONG_XA ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idPhuongXa!.ten} "
+                        '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen!.id == TAT_CA_QUAN_HUYEN ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idQuanHuyen!.ten} '
+                        "${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp) ? '' : controller.dangKyViecMoiResponse.idDiaDiemDangKyLamViecs![index].idTinhTp!.ten}",
                       ),
                     )),
 
@@ -144,7 +144,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
               ),
             ),
           // Kinh nghiệm
-          // if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()))
+          // if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem.toString()))
           //   Padding(
           //     padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
           //     child: TextHighlight(
@@ -171,7 +171,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                         '\nĐơn vị đào tạo: ${controller.dangKyViecMoiResponse.idBangBangCaps![index].donViDaoTao ?? ''}'),
                   )),
 
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.noiLamViec) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.noiLamViec) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons))
             const Text(
               "Chức vụ, kinh nghiệm, mức lương,... ",
               style: TextStyle(color: ColorResources.BLACK, fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),
@@ -191,16 +191,16 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
           //     "Chức vụ kinh nghiệm mức lương",
           //     style: TextStyle(color: ColorResources.BLACK, fontSize: Dimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),
           //   ),
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.noiLamViec) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.noiLamViec) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons))
             Padding(
               padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
               child: Text(
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) ? '' : '- Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai}'}'
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) ? '' : '\n- Chức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString()}'} '
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) ? '' : '\n- Mức lương đề xuất: ${controller.dangKyViecMoiResponse.idMucLuongDuKien!.tieuDe}'}'
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) ? '' : '\n- Năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem!.tieuDe!.toString()}'} '
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.noiLamViec) ? '' : '\n- Chọn nơi làm việc: ${controller.dangKyViecMoiResponse.noiLamViec!.map((e) => '\n\t+ $e').toList().toString().replaceAll('[', '').replaceAll(']', '')}'}'
-                '${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons) ? '' : '\n- Chọn ngành nghề muốn ứng tuyển: ${controller.dangKyViecMoiResponse.idNganhNgheMongMuons!.map((e) => '\n\t+ ${e.tenCongViec}').toList().toString().replaceAll('[', '').replaceAll(']', '')}'}',
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuHienTai) ? '' : '- Chức vụ hiện tại: ${controller.dangKyViecMoiResponse.chucVuHienTai}'}'
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucVuMongMuon) ? '' : '\n- Chức vụ mong muốn: ${controller.dangKyViecMoiResponse.chucVuMongMuon.toString()}'} '
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idMucLuongDuKien) ? '' : '\n- Mức lương đề xuất: ${controller.dangKyViecMoiResponse.idMucLuongDuKien!.tieuDe}'}'
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idSoNamKinhNghiem) ? '' : '\n- Năm kinh nghiệm: ${controller.dangKyViecMoiResponse.idSoNamKinhNghiem!.tieuDe!.toString()}'} '
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.noiLamViec) ? '' : '\n- Chọn nơi làm việc: ${controller.dangKyViecMoiResponse.noiLamViec!.map((e) => '\n\t+ $e').toList().toString().replaceAll('[', '').replaceAll(']', '')}'}'
+                '${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.idNganhNgheMongMuons) ? '' : '\n- Chọn ngành nghề muốn ứng tuyển: ${controller.dangKyViecMoiResponse.idNganhNgheMongMuons!.map((e) => '\n\t+ ${e.tenCongViec}').toList().toString().replaceAll('[', '').replaceAll(']', '')}'}',
               ),
             ),
 
@@ -256,13 +256,13 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                 content: '\n- Word : ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.word.toString()}\n- Excel: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.excel.toString()}\n- Internet: ${controller.dangKyViecMoiResponse.idTinHoc == null ? '' : controller.dangKyViecMoiResponse.idTinHoc!.internet.toString()}',
               ),
             ),
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.phanMemHoTro.toString()))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.phanMemHoTro.toString()))
             Padding(
               padding: const EdgeInsets.only(bottom: Dimensions.MARGIN_SIZE_SMALL),
               child: TextHighlight(
                 title: "Phần mềm hỗ trợ công việc từng ngành: ",
                 titleStyle: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, color: ColorResources.BLACK, fontWeight: FontWeight.bold),
-                content: "\n${Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.phanMemHoTro.toString()) ? '' : '-${controller.dangKyViecMoiResponse.phanMemHoTro.toString()}'}",
+                content: "\n${Validate.nullOrEmpty(controller.dangKyViecMoiResponse.phanMemHoTro.toString()) ? '' : '-${controller.dangKyViecMoiResponse.phanMemHoTro.toString()}'}",
               ),
             ),
           // if (controller.dangKyViecMoiResponse.soThichTrinhDo.toString() !=
@@ -271,7 +271,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
           //         'null' &&
           //     controller.dangKyViecMoiResponse.soTichTinhCach.toString() !=
           //         'null')
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soThichTrinhDo) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soThichKyNang) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soTichTinhCach))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soThichTrinhDo) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soThichKyNang) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soTichTinhCach))
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -280,7 +280,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   child: TextHighlight(
                     title: "Sở thích thể hiện trình độ/khả năng tư duy: ",
                     titleStyle: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, color: ColorResources.BLACK, fontWeight: FontWeight.bold),
-                    content: Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soThichTrinhDo) ? '' : controller.dangKyViecMoiResponse.soThichTrinhDo.toString(),
+                    content: Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soThichTrinhDo) ? '' : controller.dangKyViecMoiResponse.soThichTrinhDo.toString(),
                   ),
                 ),
                 Padding(
@@ -288,7 +288,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   child: TextHighlight(
                     title: "Sở thích thể hiện kỹ năng: ",
                     titleStyle: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, color: ColorResources.BLACK, fontWeight: FontWeight.bold),
-                    content: Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soThichKyNang) ? '' : controller.dangKyViecMoiResponse.soThichKyNang.toString(),
+                    content: Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soThichKyNang) ? '' : controller.dangKyViecMoiResponse.soThichKyNang.toString(),
                   ),
                 ),
                 Padding(
@@ -296,7 +296,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   child: TextHighlight(
                     title: "Sở thích thể hiện tính cách: ",
                     titleStyle: const TextStyle(fontSize: Dimensions.FONT_SIZE_LARGE, color: ColorResources.BLACK, fontWeight: FontWeight.bold),
-                    content: Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soTichTinhCach) ? '' : controller.dangKyViecMoiResponse.soTichTinhCach.toString(),
+                    content: Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soTichTinhCach) ? '' : controller.dangKyViecMoiResponse.soTichTinhCach.toString(),
                   ),
                 ),
               ],
@@ -384,7 +384,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   )
                 : const SizedBox.shrink(),
 
-          if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.nguoiThamKhao) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.emailThamKhao) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucDanh) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.congTy) || !Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soDienThoai))
+          if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.nguoiThamKhao) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.emailThamKhao) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucDanh) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.congTy) || !Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soDienThoai))
             Padding(
               padding: const EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
               child: Column(
@@ -395,11 +395,11 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                     obligatory: false,
                     horizontalPadding: 0,
                   ),
-                  if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.nguoiThamKhao)) Text('Cấp trên công ty cũ: ${controller.dangKyViecMoiResponse.nguoiThamKhao!}'),
-                  if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.emailThamKhao)) Text('Email: ${controller.dangKyViecMoiResponse.emailThamKhao!}'),
-                  if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.chucDanh)) Text('Chức danh: ${controller.dangKyViecMoiResponse.chucDanh!}'),
-                  if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.congTy)) Text('Công ty: ${controller.dangKyViecMoiResponse.congTy!}'),
-                  if (!Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.soDienThoai)) Text('Số điện thoại: ${controller.dangKyViecMoiResponse.soDienThoai!}'),
+                  if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.nguoiThamKhao)) Text('Cấp trên công ty cũ: ${controller.dangKyViecMoiResponse.nguoiThamKhao!}'),
+                  if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.emailThamKhao)) Text('Email: ${controller.dangKyViecMoiResponse.emailThamKhao!}'),
+                  if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.chucDanh)) Text('Chức danh: ${controller.dangKyViecMoiResponse.chucDanh!}'),
+                  if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.congTy)) Text('Công ty: ${controller.dangKyViecMoiResponse.congTy!}'),
+                  if (!Validate.nullOrEmpty(controller.dangKyViecMoiResponse.soDienThoai)) Text('Số điện thoại: ${controller.dangKyViecMoiResponse.soDienThoai!}'),
                 ],
               ),
             ),
@@ -431,7 +431,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
   ///
 
   Widget fileCv({required BuildContext context, required V1CandidateProfileController controller}) {
-    return Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec)
+    return Validate.nullOrEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec)
         ? const Text('')
         : BoxShadowWidget(
             child: GestureDetector(
@@ -443,7 +443,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                   children: [
                     SizedBox(
                       width: DeviceUtils.getScaledWidth(context, .75),
-                      child: Text(Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec) ? '' : controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
+                      child: Text(Validate.nullOrEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec) ? '' : controller.dangKyViecMoiResponse.fileHoSoXinViec.toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: const TextStyle(
@@ -451,7 +451,7 @@ class V1CandidateProfilePage extends GetView<V1CandidateProfileController> {
                             fontSize: Dimensions.FONT_SIZE_LARGE,
                           )),
                     ),
-                    if (Validate.checkValueIsNullEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec)) const Icon(Icons.download, color: ColorResources.PRIMARYCOLOR)
+                    if (Validate.nullOrEmpty(controller.dangKyViecMoiResponse.fileHoSoXinViec)) const Icon(Icons.download, color: ColorResources.PRIMARYCOLOR)
                   ],
                 ),
               ),

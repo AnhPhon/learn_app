@@ -12,9 +12,9 @@ import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/provider/phi_app_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/v1-customer/services/g7-recruitment/pricelist/g7_price_dialog_accept.dart';
@@ -213,7 +213,7 @@ class V3QuotePhanHoiBaoGiaController extends GetxController
       ),
       confirm: ElevatedButton(
           onPressed: () {
-            Alert.error(message: "Đã xóa đơn hàng");
+            IZIAlert.error(message: "Đã xóa đơn hàng");
             donDichVuProvider.update(
               data: DonDichVuRequest(
                 id: idDonDichVu.id,

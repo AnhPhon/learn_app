@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class BeforeRechargeController extends GetxController {
   //textEditingController
@@ -78,7 +78,7 @@ class BeforeRechargeController extends GetxController {
     if (amountOfMoneyController.text.isEmpty) {
       EasyLoading.dismiss();
       // show errors
-      Alert.error(message: 'Vui lòng nhập số tiền');
+      IZIAlert.error(message: 'Vui lòng nhập số tiền');
     } else {
       EasyLoading.dismiss();
       Get.toNamed(

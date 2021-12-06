@@ -4,10 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:template/data/model/request/phan_hoi_don_dich_vu_request.dart';
 import 'package:template/data/model/response/don_dich_vu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/phan_hoi_don_dich_vu_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V1WorkInProgressController extends GetxController {
   //TextEditingController
@@ -102,7 +102,7 @@ class V1WorkInProgressController extends GetxController {
     } else {
       //validate
       if (customerOpinionController.text.isEmpty) {
-        Alert.error(
+        IZIAlert.error(
             message: 'Vui lòng nhập đánh giá, nếu không có thì nhập "không"');
       } else {
         isClicked = true;
@@ -116,7 +116,7 @@ class V1WorkInProgressController extends GetxController {
             data: phanHoiDonDichVuRequest,
             onSuccess: (create) {
               Get.back(result: true);
-              Alert.success(message: "Gửi đánh giá công việc thành công");
+              IZIAlert.success(message: "Gửi đánh giá công việc thành công");
             },
             onError: (error) {
               print("V1WorkInProgressController onBtnSendClick onError $error");
@@ -135,7 +135,7 @@ class V1WorkInProgressController extends GetxController {
             data: phanHoiDonDichVuRequest,
             onSuccess: (create) {
               Get.back(result: true);
-              Alert.success(message: "Gửi đánh giá công việc thành công");
+              IZIAlert.success(message: "Gửi đánh giá công việc thành công");
             },
             onError: (error) {
               print("V1WorkInProgressController onBtnSendClick onError $error");

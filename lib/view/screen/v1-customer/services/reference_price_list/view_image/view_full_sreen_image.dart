@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/utils/images_path.dart';
 
 class ViewFullScreenImage extends StatelessWidget {
   const ViewFullScreenImage({

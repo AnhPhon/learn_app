@@ -7,7 +7,7 @@ import 'package:template/data/model/response/nhap_kho_hang_dai_ly_response.dart'
 import 'package:template/di_container.dart';
 import 'package:template/provider/kho_hang_dai_ly_provider.dart';
 import 'package:template/provider/nhap_kho_hang_dai_ly_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:tiengviet/tiengviet.dart';
 

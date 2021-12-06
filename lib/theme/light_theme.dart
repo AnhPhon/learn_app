@@ -11,5 +11,8 @@ ThemeData lightTheme = ThemeData(
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
     TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
     TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
-  }), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
+  }),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: Colors.white,
+  ),
 );

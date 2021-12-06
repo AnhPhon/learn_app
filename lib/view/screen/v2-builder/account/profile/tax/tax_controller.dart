@@ -12,7 +12,7 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/dang_ky_thue_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class V2TaxController extends GetxController {
   //textEditingController
@@ -148,7 +148,7 @@ class V2TaxController extends GetxController {
           Get.back(result: true);
 
           //show dialog
-          Alert.success(message: 'Đăng ký thuế thành công');
+          IZIAlert.success(message: 'Đăng ký thuế thành công');
         },
         onError: (error) {
           print("V2TaxController onBtnDoneClick onError $error");
@@ -157,7 +157,7 @@ class V2TaxController extends GetxController {
     } else {
       // show errors
       EasyLoading.dismiss();
-      Alert.error(message: 'Vui lòng điền mã số thuế');
+      IZIAlert.error(message: 'Vui lòng điền mã số thuế');
     }
   }
 
@@ -179,7 +179,7 @@ class V2TaxController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Get.back(result: true);
-          Alert.success(message: "Chỉnh sửa thông tin thuế thành công");
+          IZIAlert.success(message: "Chỉnh sửa thông tin thuế thành công");
         },
         onError: (error) {
           EasyLoading.dismiss();
@@ -189,7 +189,7 @@ class V2TaxController extends GetxController {
     } else {
       isUpdate = true;
       EasyLoading.dismiss();
-      Alert.info(message: "Cho phép chỉnh sửa thông tin thuế");
+      IZIAlert.info(message: "Cho phép chỉnh sửa thông tin thuế");
       update();
       return;
     }

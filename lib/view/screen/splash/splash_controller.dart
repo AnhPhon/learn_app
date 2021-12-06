@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/auth_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class SplashController extends GetxController
@@ -96,10 +96,10 @@ class SplashController extends GetxController
               sl.get<SharedPreferenceHelper>().removeTypeAccount();
               sl.get<SharedPreferenceHelper>().removeRefreshToken();
 
-              Alert.info(message: "Xin chào, ");
+              IZIAlert.info(message: "Xin chào, ");
               Get.offAllNamed(AppRoutes.LOGIN);
             } else {
-              Alert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
+              IZIAlert.error(message: "Đã xảy ra lỗi vui lòng thử lại!");
             }
           },
           onError: (onError) {

@@ -13,7 +13,7 @@ import 'package:template/provider/danh_sach_tho_thau_bao_gia_provider.dart';
 import 'package:template/provider/du_an_khach_hang_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V3ProjectDangKyTrienKhaiController extends GetxController {
@@ -143,9 +143,9 @@ class V3ProjectDangKyTrienKhaiController extends GetxController {
   ///
   void moViewDangKyViecMoi() {
     if (danhSachThoThauBaoGiaRequest.idNhomCuaHang == null || danhSachThoThauBaoGiaRequest.idNhomCuaHang!.isEmpty) {
-      Alert.error(message: 'Hãy thiết lập nhóm cửa hàng trong cài đặt tài khoản trước');
+      IZIAlert.error(message: 'Hãy thiết lập nhóm cửa hàng trong cài đặt tài khoản trước');
     } else if (danhSachThoThauBaoGiaRequest.idMatHangDacTrungs == null || danhSachThoThauBaoGiaRequest.idMatHangDacTrungs!.isEmpty) {
-      Alert.error(message: 'Hãy chọn ít nhất 1 mặt hàng đặc trưng');
+      IZIAlert.error(message: 'Hãy chọn ít nhất 1 mặt hàng đặc trưng');
     } else {
       // Goi yeu cau dang ky du an
       guiYeuCauDangKy();
@@ -164,7 +164,7 @@ class V3ProjectDangKyTrienKhaiController extends GetxController {
         onSuccess: (data) {
           EasyLoading.dismiss();
           Future.delayed(Duration.zero, () {
-            Alert.success(message: 'Đã gửi yêu cầu thành công');
+            IZIAlert.success(message: 'Đã gửi yêu cầu thành công');
           });
 
           Future.delayed(Duration.zero, () {

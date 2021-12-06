@@ -7,9 +7,9 @@ import 'package:template/data/model/response/tai_khoan_response.dart';
 import 'package:template/di_container.dart';
 import 'package:template/provider/cai_dat_chung_provider.dart';
 import 'package:template/provider/tai_khoan_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 import 'package:template/view/screen/account_rating_dialog.dart';
 
@@ -178,7 +178,7 @@ class V2AccountController extends GetxController {
             Get.offAndToNamed(AppRoutes.V1_DASHBOARD);
           },
           onError: (onError) {
-            Alert.error(message: "Chuyển vai trò thất bại");
+            IZIAlert.error(message: "Chuyển vai trò thất bại");
           });
     });
   }
@@ -198,7 +198,7 @@ class V2AccountController extends GetxController {
             Get.offAndToNamed(AppRoutes.V3_DASHBOARD);
           },
           onError: (onError) {
-            Alert.error(message: "Chuyển vai trò thất bại");
+            IZIAlert.error(message: "Chuyển vai trò thất bại");
           });
     });
   }

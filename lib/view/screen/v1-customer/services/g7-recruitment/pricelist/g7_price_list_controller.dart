@@ -14,9 +14,9 @@ import 'package:template/di_container.dart';
 import 'package:template/provider/bang_gia_dang_tin_provider.dart';
 import 'package:template/provider/bang_gia_loc_ho_so_provider.dart';
 import 'package:template/provider/vi_tien_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
 class V1G7PriceListController extends GetxController {
@@ -207,12 +207,12 @@ class V1G7PriceListController extends GetxController {
                         if (value.response.data != null)
                           {
                             Get.back(result: true),
-                            Alert.success(
+                            IZIAlert.success(
                                 message: 'Đăng tin tuyển dụng thành công'),
                           }
                         else
                           {
-                            Alert.error(message: 'Vui lòng thực hiện lại'),
+                            IZIAlert.error(message: 'Vui lòng thực hiện lại'),
                             //insert và update lại ví tiền
                             viTienRequest.id = viTienResponse.id,
                             viTienRequest.idTaiKhoan =
@@ -258,12 +258,12 @@ class V1G7PriceListController extends GetxController {
                         if (value.response.data != null)
                           {
                             Get.back(result: true),
-                            Alert.success(
+                            IZIAlert.success(
                                 message: 'Đăng tin tuyển dụng thành công'),
                           }
                         else
                           {
-                            Alert.error(message: 'Vui lòng thực hiện lại'),
+                            IZIAlert.error(message: 'Vui lòng thực hiện lại'),
                           }
                       })
                 }

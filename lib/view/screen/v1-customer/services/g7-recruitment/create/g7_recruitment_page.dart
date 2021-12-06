@@ -7,11 +7,11 @@ import 'package:template/data/model/response/muc_luong_du_kien_response.dart';
 import 'package:template/data/model/response/so_nam_kinh_nghiem_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/trinh_do_hoc_van_response.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/device_utils.dart';
-import 'package:template/utils/dimensions.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/helper/device_utils.dart';
+import 'package:template/helper/dimensions.dart';
+import 'package:template/utils/images_path.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 import 'package:template/view/basewidget/button/long_button.dart';
 import 'package:template/view/basewidget/button/radio_button.dart';
@@ -318,7 +318,7 @@ class V1G7RecruitmentPage extends GetView<V1G7RecruitmentController> {
                 GestureDetector(
                   onTap: () {
                     if (controller.chuyenNgangChinh == null) {
-                      Alert.error(message: "Vui lòng chọn chuyên ngành chính");
+                      IZIAlert.error(message: "Vui lòng chọn chuyên ngành chính");
                     }
                   },
                   child: Container(

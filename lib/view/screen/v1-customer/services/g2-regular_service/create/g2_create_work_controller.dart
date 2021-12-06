@@ -10,12 +10,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:template/data/model/request/don_dich_vu_request.dart';
 import 'package:template/data/model/response/thoi_gian_lam_viec_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/don_dich_vu_provider.dart';
 import 'package:template/provider/thoi_gian_lam_viec_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
-import 'package:template/routes/app_routes.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1G2CreateWorkController extends GetxController {
@@ -125,14 +125,14 @@ class V1G2CreateWorkController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -161,14 +161,14 @@ class V1G2CreateWorkController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -210,16 +210,16 @@ class V1G2CreateWorkController extends GetxController {
   ///
   bool validate() {
     if (tommorow == false && afternoon == false && tonight == false) {
-      Alert.error(message: "Bạn phải chọn thời gian làm việc trong ngày");
+      IZIAlert.error(message: "Bạn phải chọn thời gian làm việc trong ngày");
       return false;
     } else if (startTime.text.toString().isEmpty) {
-      Alert.error(message: "Bạn phải chọn thời gian bắt đầu dự kiến");
+      IZIAlert.error(message: "Bạn phải chọn thời gian bắt đầu dự kiến");
       return false;
     } else if (DateConverter.differenceDate(
             startDate: startTime.text.toString(),
             endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
         0) {
-      Alert.error(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
+      IZIAlert.error(message: "Ngày bắt đầu không được bé hơn ngày hiện tại");
       return false;
     } else if (endTime.text.isEmpty && endTime.text.toString() == "null") {
       if (DateTime.parse(DateFormat('dd-MM-yyyy')
@@ -230,15 +230,15 @@ class V1G2CreateWorkController extends GetxController {
               .parse(startTime.text)
               .toString()
               .substring(0, 10)))) {
-        Alert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
+        IZIAlert.error(message: "Ngày kết thúc không được bé hơn ngày bắt đầu");
         return false;
       }
       return true;
     } else if (workDesc.text.toString().isEmpty) {
-      Alert.error(message: "Mô tả công việc không được để trống");
+      IZIAlert.error(message: "Mô tả công việc không được để trống");
       return false;
     } else if (workDesc.text.toString().isEmpty) {
-      Alert.error(message: "Mô tả công việc không được để trống");
+      IZIAlert.error(message: "Mô tả công việc không được để trống");
       return false;
     } else {
       return true;
@@ -259,7 +259,7 @@ class V1G2CreateWorkController extends GetxController {
           data: data,
           onSuccess: (data) {
             EasyLoading.dismiss();
-            Alert.success(
+            IZIAlert.success(
                 message:
                     "Tạo dich đơn thành công. Chúng tôi sẽ phản hồi bạn sơm nhất có thể");
             Get.offAllNamed(AppRoutes.V1_SUCCESSFULLY,

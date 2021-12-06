@@ -1,6 +1,7 @@
 import 'package:template/data/model/response/phuong_xa_response.dart';
 import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class AuthModel {
   String? id;
@@ -88,7 +89,10 @@ class AuthModel {
   /// From JSON
   ///
   AuthModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    // TODO: implement validate parse model json
+    if(!IZIValidate.nullOrEmpty(json['id'])){
+      id = json['id'].toString();
+    }
 
     // mapping idRole
     // if (json['idRole'] != null &&
@@ -170,6 +174,7 @@ class AuthModel {
   ///
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    // TODO: implement validate parse model toJson
     // check null id
     if (id != null) data['id'] = id;
 

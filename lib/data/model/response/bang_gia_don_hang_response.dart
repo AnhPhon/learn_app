@@ -1,5 +1,6 @@
 import 'package:template/data/model/response/loai_cong_viec_response.dart';
-import 'package:template/utils/validate.dart';
+import 'package:template/helper/izi_string.dart';
+import 'package:template/helper/izi_validate.dart';
 
 class BangGiaDonHangResponse {
   String? id;
@@ -63,7 +64,7 @@ class BangGiaDonHangResponse {
 
   ///this method will prevent the override of toString
   bool filterSearchByName(String filter) {
-    final String _s = Validate.removeVietnameseTones(tieuDe.toString());
+    final String _s = IZIString.toAscii(tieuDe.toString());
     return _s.contains(filter);
   }
 

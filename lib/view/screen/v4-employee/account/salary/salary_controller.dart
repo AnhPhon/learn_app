@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template/data/model/response/bang_luong_response.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/bang_luong_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:url_launcher/url_launcher.dart';

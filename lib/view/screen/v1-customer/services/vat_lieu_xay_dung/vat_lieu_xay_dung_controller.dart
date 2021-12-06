@@ -14,7 +14,7 @@ import 'package:template/data/model/response/quan_huyen_response.dart';
 import 'package:template/data/model/response/tinh_tp_response.dart';
 import 'package:template/data/model/response/vat_tu_response.dart';
 import 'package:template/di_container.dart';
-import 'package:template/helper/date_converter.dart';
+import 'package:template/helper/izi_date.dart';
 import 'package:template/provider/loai_cong_trinh_provider.dart';
 import 'package:template/provider/nhom_dich_vu_provider.dart';
 import 'package:template/provider/phuong_xa_provider.dart';
@@ -23,9 +23,9 @@ import 'package:template/provider/tai_khoan_provider.dart';
 import 'package:template/provider/tinh_tp_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/provider/vat_tu_provider.dart';
-import 'package:template/routes/app_routes.dart';
+import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/utils/app_constants.dart';
 
 class V1VatLieuXayDungController extends GetxController {
@@ -393,13 +393,13 @@ class V1VatLieuXayDungController extends GetxController {
   ///
   void onClickAddMass() {
     if (vatTu == null) {
-      return Alert.error(message: "Tên vật tư không được để trống");
+      return IZIAlert.error(message: "Tên vật tư không được để trống");
     } else if (quyCachController.text.isEmpty) {
-      return Alert.error(message: "Quy cách không được để trống");
+      return IZIAlert.error(message: "Quy cách không được để trống");
     } else if (unitController.text.isEmpty) {
-      return Alert.error(message: 'Đơn vị không được để trống');
+      return IZIAlert.error(message: 'Đơn vị không được để trống');
     } else if (massController.text.toString().isEmpty) {
-      return Alert.error(message: "Khối lượng không được để trống");
+      return IZIAlert.error(message: "Khối lượng không được để trống");
     } else {
       // Vât tư
       final VatTuResponse vatTuResponse = vatTu!;
@@ -418,7 +418,7 @@ class V1VatLieuXayDungController extends GetxController {
       quyCachController.text = '';
       vatTu = null;
 
-      Alert.success(message: "Thêm vật tư thành công. Bạn có thêm vật tư khác");
+      IZIAlert.success(message: "Thêm vật tư thành công. Bạn có thêm vật tư khác");
 
       // Cập nhật lại ui
       update();
@@ -438,22 +438,22 @@ class V1VatLieuXayDungController extends GetxController {
   ///
   Future<void> onClickContinue() async {
     if (titleController.text.isEmpty) {
-      Alert.error(message: "Vui lòng nhập tiêu đề báo giá");
+      IZIAlert.error(message: "Vui lòng nhập tiêu đề báo giá");
       return;
     } else if (loaiCongTrinh == null) {
-      Alert.error(message: "Vui lòng chọn loại công trình");
+      IZIAlert.error(message: "Vui lòng chọn loại công trình");
       return;
     } else if (hcmProvince == null &&
         otherProvince == null &&
         haNoiProvince == null &&
         daNangProvince == null) {
-      Alert.error(message: "Vui lòng chọn tỉnh");
+      IZIAlert.error(message: "Vui lòng chọn tỉnh");
       return;
     } else if (hcmHuyen == null &&
         khacHuyen == null &&
         haNoiHuyen == null &&
         daNangHuyen == null) {
-      Alert.error(message: "Vui lòng chọn quận huyện");
+      IZIAlert.error(message: "Vui lòng chọn quận huyện");
       return;
     } 
     if(dnWards.isNotEmpty || hcmWards.isNotEmpty || hnWards.isNotEmpty || otherwards.isNotEmpty){
@@ -461,28 +461,28 @@ class V1VatLieuXayDungController extends GetxController {
           khacPhuong == null &&
           haNoiPhuong == null &&
           daNangPhuong == null) {
-        Alert.error(message: "Vui lòng phường xã");
+        IZIAlert.error(message: "Vui lòng phường xã");
         return;
       }  
     }
     if (addressController.text.toString().isEmpty) {
-      Alert.error(message: "Vui lòng điền địa chỉ cụ thể");
+      IZIAlert.error(message: "Vui lòng điền địa chỉ cụ thể");
       return;
     } else if (startTimeController.text.toString().isEmpty) {
-      Alert.error(message: "Ngày nhận vật tư dự kiến không được để trống");
+      IZIAlert.error(message: "Ngày nhận vật tư dự kiến không được để trống");
     } else if (DateConverter.differenceDate(
             startDate: startTimeController.text.toString(),
             endDate: DateConverter.estimatedDateOnly(DateTime.now())) >
         0) {
-      Alert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
+      IZIAlert.error(message: "Ngày bắt đầu không được nhỏ hơn ngày hiện tại");
     } else if (endTimeController.text.toString().isEmpty) {
-      Alert.error(
+      IZIAlert.error(
           message: "Ngày kết thúc nhận vật tư dự kiến không được để trống");
     } else if (DateConverter.differenceDate(
             startDate: startTimeController.text.toString(),
             endDate: endTimeController.text.toString()) <
         0) {
-      Alert.error(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
+      IZIAlert.error(message: "Ngày kết thúc phải lớn hơn ngày bắt đầu");
     } else {
       Get.toNamed(AppRoutes.V1_PREVIEW_VAT_TU, arguments: request());
     }
@@ -580,14 +580,14 @@ class V1VatLieuXayDungController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -616,14 +616,14 @@ class V1VatLieuXayDungController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -632,7 +632,7 @@ class V1VatLieuXayDungController extends GetxController {
   ///
   void onDeleteImage({required String file, required List<String> files}) {
     files.removeWhere((element) => element.hashCode == file.hashCode);
-    //Alert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
+    //IZIAlert.error(title: "Xoá hình ảnh", message: "Hình ảnh đã được xoá thành công",backgroundColor: ColorResources.PRIMARYCOLOR);
     update();
   }
 

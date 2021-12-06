@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/images.dart';
+import 'package:template/utils/images_path.dart';
 import 'package:template/view/basewidget/appbar/app_bar_widget.dart';
 
 // ignore: must_be_immutable

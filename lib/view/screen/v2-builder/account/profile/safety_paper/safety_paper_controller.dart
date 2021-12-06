@@ -11,7 +11,7 @@ import 'package:template/provider/giay_chung_nhan_suc_khoe_provider.dart';
 import 'package:template/provider/thong_tin_f_s_s_provider.dart';
 import 'package:template/provider/upload_image_provider.dart';
 import 'package:template/sharedpref/shared_preference_helper.dart';
-import 'package:template/utils/alert.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class V2SafetyPaperController extends GetxController {
@@ -89,7 +89,7 @@ class V2SafetyPaperController extends GetxController {
           giayChungNhanSucKhoeResponse = data.first;
           giayChungNhanSucKhoeRequest.file = data.first.file;
           isUpdate = false;
-          Alert.success(message: "Bạn đã cập nhật giấy khám sức khoẻ");
+          IZIAlert.success(message: "Bạn đã cập nhật giấy khám sức khoẻ");
         }
 
         isLoading = false;
@@ -126,14 +126,14 @@ class V2SafetyPaperController extends GetxController {
         },
         onError: (e) {
           EasyLoading.dismiss();
-          Alert.error(message: e.toString());
+          IZIAlert.error(message: e.toString());
         },
       );
       update();
     } on PlatformException catch (e) {
       print("Failed to pick file: $e");
       EasyLoading.dismiss();
-      Alert.error(message: e.toString());
+      IZIAlert.error(message: e.toString());
     }
   }
 
@@ -160,7 +160,7 @@ class V2SafetyPaperController extends GetxController {
       onSuccess: (data) {
         EasyLoading.dismiss();
         Get.back();
-        Alert.success(message: "Cập nhật giấy khám sức khoẻ thành công");
+        IZIAlert.success(message: "Cập nhật giấy khám sức khoẻ thành công");
       },
       onError: (error) {
         print('V2SafetyPaperController onBtnDone $error');
@@ -179,7 +179,7 @@ class V2SafetyPaperController extends GetxController {
         data: giayChungNhanSucKhoeRequest,
         onSuccess: (data) {
           Get.back();
-          Alert.success(message: "Chỉnh sửa giấy khám sức khoẻ thành công");
+          IZIAlert.success(message: "Chỉnh sửa giấy khám sức khoẻ thành công");
         },
         onError: (error) {
           print('V2SafetyPaperController onBtnUpdate $error');
@@ -188,7 +188,7 @@ class V2SafetyPaperController extends GetxController {
     } else {
       giayChungNhanSucKhoeRequest.file = null;
       isUpdate = true;
-      Alert.info(message: "Cho phép chỉnh sửa");
+      IZIAlert.info(message: "Cho phép chỉnh sửa");
       update();
     }
   }
