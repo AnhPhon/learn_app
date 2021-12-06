@@ -4,11 +4,11 @@ import 'package:template/provider/theme_provider.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class ColorResources {
-  static Color getColombiaBlue(BuildContext context) {
-    return Provider.of<ThemeProvider>(context).darkTheme
-        ? const Color(0xFF678cb5)
-        : const Color(0xFF92C6FF);
-  }
+  // static Color getColombiaBlue(BuildContext context) {
+  //   return Provider.of<ThemeProvider>(context).darkTheme
+  //       ? const Color(0xFF678cb5)
+  //       : const Color(0xFF92C6FF);
+  // }
 
 
   // static const Color BLACK = Color(0xff000000);
@@ -52,5 +52,10 @@ class ColorResources {
 
   // static const Color REVENUE_COLOR = Color(0xff12DD94);
   // static const Color EXPENDITURE_COLOR = Color(0xffFFCF53);
+
+  static const Color CIRCLE_COLOR_BG = Color(0xff10A127);
+  static const Color CIRCLE_COLOR_BG2 = Color(0xffC8F9D0);
+  static const Color CIRCLE_COLOR_BG3 = Color(0xff0EB929);
+  static const Color CIRCLE_COLOR_BG4 = Color(0xff297936);
 
 }

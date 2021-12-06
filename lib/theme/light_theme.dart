@@ -5,7 +5,7 @@ ThemeData lightTheme = ThemeData(
   fontFamily: 'Nutito',
   primaryColor: const Color(0xFF2196F3),
   brightness: Brightness.light,
-  scaffoldBackgroundColor: ColorResources.BACKGROUND,
+  // scaffoldBackgroundColor: ColorResources.BACKGROUND,
   hintColor: const Color(0xFF9E9E9E),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),

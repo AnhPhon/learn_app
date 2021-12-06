@@ -18,17 +18,14 @@ class DioClient {
   }
 
   Future<void> _init() async {
-    sl.get<SharedPreferenceHelper>().jwtToken.then((token) {
+    sl.get<SharedPreferenceHelper>().getJwtToken.then((token) {
       dio = Dio();
       dio!
         ..options.baseUrl = app_constants.BASE_URL
         ..options.connectTimeout = 60 * 1000
         ..options.receiveTimeout = 60 * 1000
         ..httpClientAdapter
-        ..options.headers = {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $token'
-        };
+        ..options.headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
       dio!.interceptors.add(sl.get<LoggingInterceptor>());
     });
   }
@@ -135,7 +132,6 @@ class DioClient {
       rethrow;
     }
   }
-
 
   Future<Response> uploadImages(
     String uri, {

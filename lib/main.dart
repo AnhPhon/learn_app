@@ -9,6 +9,7 @@ import 'package:template/app_binding.dart';
 import 'package:template/localization/app_localization.dart';
 import 'package:template/routes/app_pages.dart';
 import 'package:template/routes/route_path/app_routes.dart';
+import 'package:template/routes/route_path/splash_routes.dart';
 import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 import 'package:timeago/timeago.dart' as timeago;
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      initialRoute: AppRoutes.SPLASH,
+      initialRoute: SplashRoutes.SPLASH,
       initialBinding: AppBinding(),
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
