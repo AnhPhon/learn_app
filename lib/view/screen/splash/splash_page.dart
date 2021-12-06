@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/helper/device_utils.dart';
-import 'package:template/helper/dimensions.dart';
-import 'package:template/utils/images_path.dart';
-
-import 'splash_controller.dart';
+import 'package:template/base_widget/background/background_two.dart';
+import 'package:template/base_widget/izi_screen.dart';
+import 'package:template/view/screen/splash/splash_controller.dart';
 
 class SplashPage extends GetView<SplashController> {
-  final SplashController splashController = Get.put(SplashController());
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-        color: ColorResources.WHITE,
-        child: Center(
-            child: SizedBox(
-          width: DeviceUtils.getScaledWidth(context, 0.5),
-          child: Image.asset(
-            Images.logo_app,
-            fit: BoxFit.contain,
-          ),
-        )),
+    return IZIScreen(
+      background: BackgroundTwo(),
+      child: GetBuilder(
+        init: SplashController(),
+        builder: (SplashController controller) {
+          return Center(
+            child: Text("Page"),
+          );
+        },
       ),
     );
   }

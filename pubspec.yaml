@@ -96,6 +96,7 @@ flutter:
     - assets/images/
     - assets/language/
     - assets/icon/
+    - assets/svg/
 
 
   fonts:
