@@ -1,0 +1,325 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/data/model/response/loai_tin_tuyen_dung_model.dart';
+import 'package:template/data/model/response/tinh_tp_response.dart';
+import 'package:template/data/model/response/tuyen_dung_response.dart';
+import 'package:template/provider/dang_ky_viec_moi_provider.dart';
+import 'package:template/provider/tinh_tp_provider.dart';
+import 'package:template/provider/tuyen_dung_provider.dart';
+import 'package:template/routes/app_routes.dart';
+import 'package:template/sharedpref/shared_preference_helper.dart';
+import 'package:template/utils/app_constants.dart';
+import 'package:template/view/screen/v2-builder/candicate_recruitment/components/dialog_content.dart';
+
+import '../../../../../di_container.dart';
+
+class V2RecruitmentController extends GetxController {
+  // refresh controller for load more refresh
+  List<RefreshController>? refreshControllerList;
+
+  //Providers
+  final TuyenDungProvider tuyenDungProvider = GetIt.I.get<TuyenDungProvider>();
+  final TinhTpProvider tinhTpProvider = GetIt.I.get<TinhTpProvider>();
+  final DangKyViecMoiProvider dangKyViecMoiProvider =
+      GetIt.I.get<DangKyViecMoiProvider>();
+
+  //value model
+  List<TuyenDungResponse> tuyenDungListModel = [];
+  List<TinhTpResponse> tinhTpListModel = [];
+
+  final searchController = TextEditingController();
+  bool isSearch = false;
+
+  //currentIndex
+  int currentIndex = 0;
+  // Value slider
+  double salary = 0;
+  String idUser = '';
+
+  //loại tin tuyển dụng
+  List<LoaiTinTuyenDungModel> loaiTinTuyenDung = [
+    LoaiTinTuyenDungModel(id: '1', tieuDe: 'Tin hot'),
+    LoaiTinTuyenDungModel(id: '2', tieuDe: 'Mới nhất'),
+    LoaiTinTuyenDungModel(id: '3', tieuDe: 'Tuyển dụng'),
+  ];
+
+  //page & limit for load more refresh
+  int pageMax = 1;
+  int limitMax = 10;
+
+  //isLoading
+  bool isLoading = true;
+
+  //isShowSearch
+  bool isShowSearch = false;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+    sl.get<SharedPreferenceHelper>().userId.then((value) {
+      idUser = value!;
+    });
+
+    //binding refresh controller
+    refreshControllerList =
+        List.generate(loaiTinTuyenDung.length, (_) => RefreshController());
+
+    //get data tỉnh Tp
+    getDataTinhTp();
+  }
+
+  //onRefresh
+  Future<void> onRefresh() async {
+    //resetNoData
+    refreshControllerList![currentIndex].resetNoData();
+    //get order isRefresh
+    getDataTuyenDung(
+        loaiTin: loaiTinTuyenDung[currentIndex].id.toString(), isRefresh: true);
+  }
+
+  //onLoading
+  Future<void> onLoading() async {
+    //get order isLoading
+    getDataTuyenDung(
+        loaiTin: loaiTinTuyenDung[currentIndex].id.toString(),
+        isRefresh: false);
+  }
+
+  ///
+  /// load data tỉnh tp
+  ///
+  void getDataTinhTp() {
+    tinhTpProvider.all(
+        onSuccess: (value) {
+          //add list
+          tinhTpListModel = value;
+          //getDataTuyenDung
+          getDataTuyenDung(
+              loaiTin: loaiTinTuyenDung.first.id.toString(), isRefresh: true);
+          update();
+        },
+        onError: (error) =>
+            print('V1CandidateController getDataTinhTp $error'));
+  }
+
+  ///
+  ///Thay đổi vị trí tab
+  ///
+  void onChangeTab({required int index}) {
+    isLoading = true;
+    currentIndex = index;
+
+    //resetNoData
+    refreshControllerList![index].resetNoData();
+
+    getDataTuyenDung(
+        loaiTin: loaiTinTuyenDung[currentIndex].id.toString(), isRefresh: true);
+
+    update();
+  }
+
+  ///
+  ///onChangeNameTinhTp
+  ///
+  String? onChangeNameTinhTp(String id) {
+    final tinh =
+        tinhTpListModel.firstWhereOrNull((element) => element.id == id);
+    if (tinh != null) {
+      return tinh.ten;
+    }
+    return null;
+  }
+
+  ///
+  ///getDataSeach
+  ///
+  void getDataTuyenDung({required String loaiTin, required bool isRefresh}) {
+    //isRefresh
+    if (isRefresh) {
+      pageMax = 1;
+      tuyenDungListModel.clear();
+    } else {
+      //isLoading
+      pageMax++;
+    }
+    if (loaiTin.toString() == "3") {
+      tuyenDungProvider.paginate(
+          page: pageMax,
+          limit: limitMax,
+          filter: '&idTrangThaiTuyenDung=$DA_DUYET_TIN&sortBy=updated_at:desc',
+          onSuccess: (value) {
+            //check data empty
+            if (value.isEmpty) {
+              refreshControllerList![currentIndex].loadNoData();
+            } else if (isRefresh) {
+              //check refresh
+              tuyenDungListModel = value;
+              refreshControllerList![currentIndex].refreshCompleted();
+            } else {
+              tuyenDungListModel.addAll(value);
+              refreshControllerList![currentIndex].loadComplete();
+            }
+
+            isLoading = false;
+            update();
+          },
+          onError: (error) =>
+              print('V2RecruitmentController getDataTuyenDung $error'));
+    } else {
+      tuyenDungProvider.paginate(
+          page: pageMax,
+          limit: limitMax,
+          filter:
+              '&idTrangThaiTuyenDung=$DA_DUYET_TIN&loaiTin=$loaiTin&sortBy=updated_at:desc',
+          onSuccess: (value) {
+            //check data empty
+            if (value.isEmpty) {
+              refreshControllerList![currentIndex].loadNoData();
+            } else if (isRefresh) {
+              //check refresh
+              tuyenDungListModel = value;
+              refreshControllerList![currentIndex].refreshCompleted();
+            } else {
+              tuyenDungListModel.addAll(value);
+              refreshControllerList![currentIndex].loadComplete();
+            }
+
+            isLoading = false;
+            update();
+          },
+          onError: (error) =>
+              print('V2RecruitmentController getDataTuyenDung $error'));
+    }
+  }
+
+  ///
+  /// thay đổi lương
+  ///
+  void onChangedSalary(double salary) {
+    this.salary = salary;
+    update();
+  }
+
+  ///
+  /// chuyển sang trang tìm kiếm
+  ///
+  void onChangedSearch() {
+    Get.toNamed(AppRoutes.V2_SEARCH_RECRUITMENT_NEWS);
+  }
+
+  ///
+  ///
+  /// Nhấn vào tin tuyển dụng thì xem thông tin của tin
+  ///
+  void onClickRecruitmentNews({required TuyenDungResponse tuyendung}) {
+    ///set tên chuyên ngành phụ
+    String tenChuyenNganhPhu = '';
+    // Nơi làm việc
+    String tenNoiLamViec = '';
+    // set tên chuyên ngành phụ
+    if (tuyendung.idChuyenNganhPhus!.isNotEmpty) {
+      for (int i = 0; i < tuyendung.idChuyenNganhPhus!.length; i++) {
+        if (i == 0) {
+          tenChuyenNganhPhu =
+              tuyendung.idChuyenNganhPhus![i].tenCongViec.toString();
+        } else {
+          tenChuyenNganhPhu +=
+              ', ${tuyendung.idChuyenNganhPhus![i].tenCongViec.toString()}';
+        }
+      }
+    }
+
+    if (tuyendung.idNoiLamViecs!.isNotEmpty) {
+      if (tuyendung.idNoiLamViecs!.isNotEmpty) {
+        for (int i = 0; i < tuyendung.idNoiLamViecs!.length; i++) {
+          if (i == 0) {
+            tenNoiLamViec = tuyendung.idNoiLamViecs![i].ten.toString();
+          } else {
+            tenNoiLamViec += ', ${tuyendung.idNoiLamViecs![i].ten}';
+          }
+        }
+      }
+    }
+
+    ///gán data tuyển dụng
+    final Map<String, dynamic> param = {
+      "idTuyenDung": tuyendung.id,
+      "TieuDe": tuyendung.tieuDe,
+      "CongTy": tuyendung.congTy,
+      'DiaChiCongTy': tuyendung.diaChi,
+      "GioiTinh": tuyendung.gioiTinh.toString(),
+      "SoLuong": tuyendung.soLuong,
+      "TenHinhThucLamViec": tuyendung.idHinhThucLamViec,
+      "TenTrinhDoHocVan": tuyendung.idTrinhDoHocVan,
+      "TenChuyenNganhChinh": tuyendung.idChuyenNganhChinh,
+      "TenChuyenNganhPhu": tenChuyenNganhPhu,
+      "TenSoNamKinhNghiem": tuyendung.idSoNamKinhNghiem,
+      "TenMucLuongDuKien": tuyendung.idMucLuongDuKien,
+      "TenNoiLamViec": tenNoiLamViec,
+      "TenThoiGianLamViec": tuyendung.idThoiGianLamViec,
+      "ThoiGianThuViec": tuyendung.thoiGianThuViec,
+      "MoTaCongViec": tuyendung.moTaCongViec,
+      "YeuCauCongViec": tuyendung.yeuCauCongViec,
+      "QuyenLoi": tuyendung.quyenLoi,
+      "UuTien": tuyendung.uuTien,
+      "HanNopHoSo": tuyendung.hanNopHoSo,
+      "HoTenLienHe": tuyendung.hoTenLienHe,
+      "SoDienThoaiLienHe": tuyendung.soDienThoaiLienHe,
+      "DiaChiLienHe": tuyendung.diaChiLienHe,
+      "EmailLienHe": tuyendung.emailLienHe,
+    };
+
+    Get.toNamed(AppRoutes.V2_VIEW_RECRUITMENT_NEWS, arguments: param);
+  }
+
+  ///
+  /// Xem tin tuyển dụng
+  ///
+  void onCheckRegisterWork({required TuyenDungResponse tuyendung}) {
+    onClickRecruitmentNews(tuyendung: tuyendung);
+  }
+
+  ///
+  /// Nhấn vào icon lịch sử trên appbar
+  ///
+  void onClickHistory() {
+    Get.toNamed(AppRoutes.V2_HISTORY_RECRUITMENT_NEWS);
+  }
+
+  ///
+  ///  Hiẻn thị bộ lọc
+  ///
+  void showDialog() {
+    Get.defaultDialog(
+        title: "",
+        content: const DialogContent(),
+        cancel: ElevatedButton(
+            onPressed: () {
+              Navigator.of(Get.context!).pop();
+            },
+            child: const Text("Tìm kiếm")));
+  }
+
+  ///
+  ///onCutString
+  ///
+  String? onCutString(String text) {
+    if (text.length > 10) {
+      return '${text.substring(0, 10)}...';
+    }
+    return text;
+  }
+}
+
+extension IterableExtension<T> on Iterable<T> {
+  T? firstWhereOrNull(bool Function(T element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+}
