@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Five SBS</string>
+	<string>FiveSS</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -19,9 +19,28 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Cho phép ứng dụng sử dụng máy ảnh</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Cho phép ứng dụng sử dụng microphone </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cho phép ứng dụng sử dung thư viện ảnh</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -40,26 +59,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Cho phép ứng dụng sử dung thư viện ảnh</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Cho phép ứng dụng sử dụng máy ảnh</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Cho phép ứng dụng sử dụng microphone </string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
-	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>tel</string>
-    </array>
-<dict>
-  <key>YourPurposeKey</key>
-  <string>The example App requires temporary access to the device&apos;s precise location.</string>
-</dict>
 </dict>
 </plist>

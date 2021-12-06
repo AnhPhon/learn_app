@@ -1,101 +1,34 @@
 {
   "project_info": {
-    "project_number": "402268459777",
-    "project_id": "izitapgo",
-    "storage_bucket": "izitapgo.appspot.com"
+    "project_number": "267520955136",
+    "project_id": "p09fivesbs",
+    "storage_bucket": "p09fivesbs.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:402268459777:android:3d13dd642f09c978bf8100",
+        "mobilesdk_app_id": "1:267520955136:android:e0e5fb2b20f221f58d99e5",
         "android_client_info": {
           "package_name": "io.izisoft.p09fivesbs"
         }
       },
       "oauth_client": [
         {
-          "client_id": "402268459777-43odo6i9mt8k4fbgj9icd791tj08rfnm.apps.googleusercontent.com",
+          "client_id": "267520955136-ag6flc8piai4alggtl3flu8rtnul885r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWNnYG34k0LHH_ehRiV56r9lou41ln3vY"
+          "current_key": "AIzaSyA85j66L_QkbHLyQkZVPQ-tqa9NwvXzhUU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "402268459777-43odo6i9mt8k4fbgj9icd791tj08rfnm.apps.googleusercontent.com",
+              "client_id": "267520955136-ag6flc8piai4alggtl3flu8rtnul885r.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "402268459777-en6osp5ccnqmd03p42rvapn5jcs3lh69.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.izisoft.p09fivesbs"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:402268459777:android:21f770db30e38342bf8100",
-        "android_client_info": {
-          "package_name": "io.izisoft.tapgo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "402268459777-1k1fag3hkdvn1hsvloa4u003nqfbc0ug.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.izisoft.tapgo",
-            "certificate_hash": "ed44a29e599d2b09d6a6fbbfcc90898eecd03fd4"
-          }
-        },
-        {
-          "client_id": "402268459777-at8b86iipq29qni3f31rkmhuhlcrmkbe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.izisoft.tapgo",
-            "certificate_hash": "5f7b2062cc7f262a8664b04e4b01299399bdbddf"
-          }
-        },
-        {
-          "client_id": "402268459777-o1umhoc639ue16ijnabtmf5e9qaf34n0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.izisoft.tapgo",
-            "certificate_hash": "bce4ea57f6a09343a98c0cbe8fbce8d523386422"
-          }
-        },
-        {
-          "client_id": "402268459777-43odo6i9mt8k4fbgj9icd791tj08rfnm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBWNnYG34k0LHH_ehRiV56r9lou41ln3vY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "402268459777-43odo6i9mt8k4fbgj9icd791tj08rfnm.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "402268459777-en6osp5ccnqmd03p42rvapn5jcs3lh69.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.izisoft.p09fivesbs"
-              }
             }
           ]
         }

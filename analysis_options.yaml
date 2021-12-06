@@ -319,7 +319,7 @@ linter:
     # Follows dart style. Fully supported by IDEs and no manual effort for a consistent style
     # pedantic: disabled
     # https://dart-lang.github.io/linter/lints/directives_ordering.html
-    - directives_ordering
+    # - directives_ordering
 
     # String.fromEnvironment looks up env variables at compile time. The variable is baked in by the compiler
     # and can't be changed by environment variables.
