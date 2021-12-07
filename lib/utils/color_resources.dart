@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:template/provider/theme_provider.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class ColorResources {
@@ -10,12 +8,15 @@ class ColorResources {
   //       : const Color(0xFF92C6FF);
   // }
 
+  // static const Color BLACKGREY = Color(0xFF27272A);
 
   // static const Color BLACKGREY = Color(0xFF27272A);
   // static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   // static const Color LIGHT_SKY_BLUE_HEIGHT = Color(0xff2196F3);
   // static const Color HARLEQUIN = Color(0xff3FCC01);
   // static const Color CERISE = Color(0xffE2206B);
+  static const Color GREY = Color(0xff8c8c8c);
+  // static const Color RED = Color(0xffF90B0B);
   // static const Color GREY = Color(0xff8c8c8c);
   // static const Color YELLOW = Color(0xFFFFAA47);
   // static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
@@ -27,9 +28,9 @@ class ColorResources {
   // static const Color SELLER_TXT = Color(0xff92C6FF);
   // static const Color CHAT_ICON_COLOR = Color(0xffD4D4D4);
   // static const Color LOW_GREEN = Color(0xffEFF6FE);
-  // static const Color GREEN = Color(0xff23CB60);
+  static const Color GREEN = Color(0xff23CB60);
 
-  // static const Color DEFAULT = Color(0xFF61A63C);
+  static const Color BUTTON_DEFAULT = Color(0xFF61A63C);
   // static const Color PRIMARY = Color(0xFF2196F3);
   // static const Color APPBARCOLOR = Color(0xff2196F3);
   // static const Color PRIMARYCOLOR = Color(0xff2196F3);
@@ -57,10 +58,4 @@ class ColorResources {
   static const Color LIGHT_GREY = Color(0xffB0BAC1);
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color RED = Color(0xffF90B0B);
-
-
-
-
-
-
 }
