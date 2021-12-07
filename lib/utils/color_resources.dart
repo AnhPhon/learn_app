@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:template/provider/theme_provider.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class ColorResources {
@@ -10,15 +8,16 @@ class ColorResources {
   //       : const Color(0xFF92C6FF);
   // }
 
-  static const Color BLACK = Color(0xff000000);
   // static const Color BLACKGREY = Color(0xFF27272A);
-  static const Color WHITE = Color(0xffFFFFFF);
+
+  // static const Color BLACKGREY = Color(0xFF27272A);
   // static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   // static const Color LIGHT_SKY_BLUE_HEIGHT = Color(0xff2196F3);
   // static const Color HARLEQUIN = Color(0xff3FCC01);
   // static const Color CERISE = Color(0xffE2206B);
   static const Color GREY = Color(0xff8c8c8c);
   // static const Color RED = Color(0xffF90B0B);
+  // static const Color GREY = Color(0xff8c8c8c);
   // static const Color YELLOW = Color(0xFFFFAA47);
   // static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
   // static const Color GAINS_BORO = Color(0xffE6E6E6);
@@ -38,8 +37,6 @@ class ColorResources {
   // static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
   // static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
   // static const Color BACKGROUND = Color(0xffF6F6F7);
-  // static const Color LIGHT_BLACK = Color(0xffA2A2A2);
-  // static const Color LIGHT_GREY = Color(0xffB0BAC1);
 
   // static const Color THEME_DEFAULT = Color(0xff2196F3);
   // static const Color PINK = Color(0xffFFCDD2);
@@ -56,4 +53,9 @@ class ColorResources {
   static const Color CIRCLE_COLOR_BG2 = Color(0xffC8F9D0);
   static const Color CIRCLE_COLOR_BG3 = Color(0xff0EB929);
   static const Color CIRCLE_COLOR_BG4 = Color(0xff297936);
+  static const Color LIGHT_BLACK = Color(0xffA2A2A2);
+  static const Color BLACK = Color(0xff000000);
+  static const Color LIGHT_GREY = Color(0xffB0BAC1);
+  static const Color WHITE = Color(0xffFFFFFF);
+  static const Color RED = Color(0xffF90B0B);
 }

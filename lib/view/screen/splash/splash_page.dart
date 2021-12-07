@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/base_widget/background/background_four.dart';
 import 'package:template/base_widget/background/background_two.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_image.dart';
@@ -13,7 +14,7 @@ class SplashPage extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      background: BackgroundTwo(),
+      background: BackgroundFour(),
       child: GetBuilder(
         init: SplashController(),
         builder: (SplashController controller) {

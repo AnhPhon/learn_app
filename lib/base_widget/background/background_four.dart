@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:template/helper/izi_device.dart';
-
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 
-class BackgroundTwo extends StatelessWidget {
-  const BackgroundTwo({
+class BackgroundFour extends StatelessWidget {
+  const BackgroundFour({
     Key? key,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class BackgroundTwo extends StatelessWidget {
               top: 0,
               left: 0,
               child: Image.asset(
-                ImagesPath.splash1,
+                ImagesPath.splash3,
                 fit: BoxFit.contain,
                 width: IZIDevice.getScaledWidth(context, 1),
               ),
