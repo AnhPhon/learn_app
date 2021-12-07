@@ -8,6 +8,7 @@ import 'package:template/sharedpref/shared_preference_helper.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
 
 class DioClient {
+
   GetIt sl = GetIt.instance;
   Dio? dio;
   String? token;
@@ -18,16 +19,17 @@ class DioClient {
   }
 
   Future<void> _init() async {
-    sl.get<SharedPreferenceHelper>().getJwtToken.then((token) {
+    final String jwtToken = sl.get<SharedPreferenceHelper>().getJwtToken;
+    // sl.get<SharedPreferenceHelper>().getJwtToken.then((token) {
       dio = Dio();
       dio!
         ..options.baseUrl = app_constants.BASE_URL
         ..options.connectTimeout = 60 * 1000
         ..options.receiveTimeout = 60 * 1000
         ..httpClientAdapter
-        ..options.headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+        ..options.headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $jwtToken'};
       dio!.interceptors.add(sl.get<LoggingInterceptor>());
-    });
+    // });
   }
 
   Future<Response> get(

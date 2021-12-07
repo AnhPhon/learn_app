@@ -166,14 +166,14 @@ class _IZIInputState extends State<IZIInput> {
               child: RichText(
                 text: TextSpan(
                   text: widget.label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: IZIDimensions.FONT_SIZE_SPAN,
                     fontWeight: FontWeight.w600,
                     color: ColorResources.BLACK,
                   ),
                   children: [
                     if (widget.isRequired)
-                      const TextSpan(
+                      TextSpan(
                         text: '*',
                         style: TextStyle(
                           fontSize: IZIDimensions.FONT_SIZE_SPAN,
@@ -188,7 +188,7 @@ class _IZIInputState extends State<IZIInput> {
               ),
             ),
           Container(
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               top: IZIDimensions.SPACE_SIZE_1X,
             ),
             child: TextFormField(
@@ -282,7 +282,7 @@ class _IZIInputState extends State<IZIInput> {
                     ),
                 fillColor: (widget.allowEdit == false) ? widget.fillColor ?? ColorResources.LIGHT_GREY.withOpacity(0.4) : widget.fillColor ?? ColorResources.WHITE,
                 suffixIcon: widget.type == IZIInputType.PRICE
-                    ? const SizedBox.shrink(
+                    ? SizedBox.shrink(
                         child: Padding(
                           padding: EdgeInsets.only(right: IZIDimensions.SPACE_SIZE_1X),
                           child: Align(
@@ -305,7 +305,7 @@ class _IZIInputState extends State<IZIInput> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: IZIDimensions.SPACE_SIZE_1X),
+            margin: EdgeInsets.only(top: IZIDimensions.SPACE_SIZE_1X),
             alignment: Alignment.topLeft,
             child: Text(
               IZIValidate.nullOrEmpty(_errorText.toString()) ? "" : _errorText.toString(),
