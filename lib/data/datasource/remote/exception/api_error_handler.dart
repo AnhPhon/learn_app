@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:template/data/model/response/base/error_response.dart';
-import 'package:template/utils/color_resources.dart';
 
 mixin ApiErrorHandler {
   static dynamic getMessage(dynamic error) {

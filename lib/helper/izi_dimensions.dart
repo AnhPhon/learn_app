@@ -30,6 +30,8 @@ class IZIDimensions {
   static const double BLUR_RADIUS_1X = 5;
   static const double BLUR_RADIUS_2X = 10;
   static const double BLUR_RADIUS_3X = 15;
+  static const double BLUR_RADIUS_4X = 20;
+  static const double BLUR_RADIUS_5X = 25;
   //spread Radius
   static const double SPREAD_RADIUS_1X = 0.05;
   static const double SPREAD_RADIUS_2X = 0.1;

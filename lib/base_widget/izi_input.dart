@@ -4,10 +4,9 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
-import 'package:template/helper/izi_price.dart';
+
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/thousands_separator_input_formatter_currency.dart';
 
 // Text, number, tiền đều có thể hiện thị defaul = text
 // PrefixIcon
