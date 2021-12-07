@@ -18,7 +18,15 @@ import 'package:template/utils/thousands_separator_input_formatter_currency.dart
 // Sufix label nếu nó là tiền (Nếu là tiền hiện thị thêm icon tiền)
 //
 
-enum IZIInputType { TEXT, PASSWORD, NUMBER, DOUBLE, PRICE, EMAIL }
+enum IZIInputType {
+  TEXT,
+  PASSWORD,
+  NUMBER,
+  DOUBLE,
+  PRICE,
+  EMAIL,
+  PHONE,
+}
 
 class IZIInput extends StatefulWidget {
   IZIInput({
@@ -35,11 +43,9 @@ class IZIInput extends StatefulWidget {
     this.suffixIcon,
     this.paddingTop,
     this.errorText,
-    this.onlyNumber = false,
     this.textInputAction,
     this.onChanged,
     this.isValidate,
-    this.isFormatCurrency = false,
     this.focusNode,
     this.padding,
     this.onSubmitted,
@@ -50,8 +56,10 @@ class IZIInput extends StatefulWidget {
     this.fillColor,
     this.prefixIcon,
     this.validate,
-    this.labelText,
+    this.isLegend = false,
     this.borderSize,
+    this.disbleError = false,
+    this.miniSize = false,
   }) : super(key: key);
   final String? label;
   final String holdplacer;
@@ -65,12 +73,10 @@ class IZIInput extends StatefulWidget {
   final Widget? suffixIcon;
   final double? paddingTop;
   final String? errorText;
-  final bool? onlyNumber;
   final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   final Function(bool value)? isValidate;
   bool? boldHinText;
-  final bool? isFormatCurrency;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? padding;
   final Function(dynamic)? onSubmitted;
@@ -81,19 +87,23 @@ class IZIInput extends StatefulWidget {
   final Color? fillColor;
   final Widget? prefixIcon;
   final String? Function(String)? validate;
-  final String? labelText;
+  final bool? isLegend;
   final double? borderSize;
+  final bool disbleError;
+  final bool miniSize;
 
   @override
   _IZIInputState createState() => _IZIInputState();
 }
 
 class _IZIInputState extends State<IZIInput> {
+  final focusNode = FocusNode();
   final textEditingController = TextEditingController();
   final numberEditingController = MaskedTextController(mask: "000.000.000.000.000.000.000.000.000.000", translator: {'0': RegExp(r'[0-9]')});
   final doubleEditingController = MoneyMaskedTextController(
     precision: 1,
   );
+
   bool isShowedError = false;
   bool isVisible = false;
   String? _errorText = "";
@@ -109,6 +119,8 @@ class _IZIInputState extends State<IZIInput> {
       return TextInputType.text;
     } else if (type == IZIInputType.EMAIL) {
       return TextInputType.emailAddress;
+    } else if (type == IZIInputType.PHONE) {
+      return TextInputType.phone;
     } else if (type == IZIInputType.DOUBLE) {
       return TextInputType.numberWithOptions();
     }
@@ -125,6 +137,8 @@ class _IZIInputState extends State<IZIInput> {
     } else if (type == IZIInputType.TEXT) {
       return textEditingController;
     } else if (type == IZIInputType.EMAIL) {
+      return textEditingController;
+    } else if (type == IZIInputType.PHONE) {
       return textEditingController;
     } else if (type == IZIInputType.DOUBLE) {
       return doubleEditingController;
@@ -148,21 +162,32 @@ class _IZIInputState extends State<IZIInput> {
       return null;
     } else if (type == IZIInputType.EMAIL) {
       return IZIValidate.email;
+    } else if (type == IZIInputType.PHONE) {
+      return IZIValidate.phone;
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!focusNode.hasListeners) {
+      focusNode.addListener(() {
+        setState(() {});
+      });
+    }
     if (!IZIValidate.nullOrEmpty(widget.errorText) && IZIValidate.nullOrEmpty(_errorText)) {
       _errorText = widget.errorText.toString();
     }
-    return SizedBox(
+    return Container(
       width: widget.width ?? IZIDevice.getScaledWidth(context, 1),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.labelText == null && widget.label != null)
+          if (widget.isLegend == false && widget.label != null)
             Container(
+              padding: const EdgeInsets.only(
+                bottom: IZIDimensions.SPACE_SIZE_1X,
+              ),
               alignment: Alignment.centerLeft,
               child: RichText(
                 text: TextSpan(
@@ -189,9 +214,7 @@ class _IZIInputState extends State<IZIInput> {
               ),
             ),
           Container(
-            padding: const EdgeInsets.only(
-              top: IZIDimensions.SPACE_SIZE_1X,
-            ),
+            height: widget.miniSize ? 45 : null,
             child: TextFormField(
               onFieldSubmitted: widget.onSubmitted,
               onChanged: (val) {
@@ -221,12 +244,15 @@ class _IZIInputState extends State<IZIInput> {
               enabled: widget.allowEdit,
               controller: getController(widget.type),
               obscureText: widget.type == IZIInputType.PASSWORD && isVisible,
-              focusNode: widget.focusNode,
+              focusNode: focusNode,
               decoration: InputDecoration(
-                labelText: widget.labelText,
+                contentPadding: widget.miniSize ? const EdgeInsets.all(12) : null,
+                isDense: true,
+                labelText: widget.isLegend == true ? widget.label : null,
+                labelStyle: TextStyle(fontSize: focusNode.hasFocus ? IZIDimensions.FONT_SIZE_H4 : IZIDimensions.FONT_SIZE_SPAN, fontWeight: focusNode.hasFocus ? FontWeight.w600 : FontWeight.normal, color: ColorResources.BLACK),
                 prefixIcon: widget.prefixIcon,
                 border: OutlineInputBorder(
-                  borderSide: widget.isBorder! || widget.labelText != null
+                  borderSide: widget.isBorder! || widget.isLegend!
                       ? widget.borderSide ??
                           BorderSide(
                             width: widget.borderSize ?? 1,
@@ -238,7 +264,7 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: widget.isBorder! || widget.labelText != null
+                  borderSide: widget.isBorder! || widget.isLegend!
                       ? widget.borderSide ??
                           BorderSide(
                             width: widget.borderSize ?? 1,
@@ -250,7 +276,7 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: widget.isBorder! || widget.labelText != null
+                  borderSide: widget.isBorder! || widget.isLegend!
                       ? widget.borderSide ??
                           BorderSide(
                             width: widget.borderSize ?? 1,
@@ -262,7 +288,7 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
                 disabledBorder: OutlineInputBorder(
-                  borderSide: widget.isBorder! || widget.labelText != null
+                  borderSide: widget.isBorder! || widget.isLegend!
                       ? widget.borderSide ??
                           BorderSide(
                             width: widget.borderSize ?? 1,
@@ -274,7 +300,6 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
                 filled: true,
-                isDense: true,
                 hintText: widget.holdplacer,
                 hintStyle: widget.hintStyle ??
                     TextStyle(
@@ -305,18 +330,19 @@ class _IZIInputState extends State<IZIInput> {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: IZIDimensions.SPACE_SIZE_1X),
-            alignment: Alignment.topLeft,
-            child: Text(
-              IZIValidate.nullOrEmpty(_errorText.toString()) ? "" : _errorText.toString(),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: const TextStyle(
-                color: ColorResources.RED,
+          if (!widget.disbleError)
+            Container(
+              margin: const EdgeInsets.only(top: IZIDimensions.SPACE_SIZE_1X),
+              alignment: Alignment.topLeft,
+              child: Text(
+                IZIValidate.nullOrEmpty(_errorText.toString()) ? "" : _errorText.toString(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: const TextStyle(
+                  color: ColorResources.RED,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
