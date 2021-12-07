@@ -19,6 +19,7 @@ class IZIButton extends StatelessWidget {
     this.borderRadius,
     this.disabledColor = false,
   }) : super(key: key);
+
   // OnTap
   // Decoration defaul nền xanh
   // Title defaul căn giữ , maxLine defaul 1 dòng , có thể truyền thêm số dòng, nếu quá dòng là overflow
@@ -40,7 +41,7 @@ class IZIButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ??
-          const EdgeInsets.symmetric(
+          EdgeInsets.symmetric(
             vertical: IZIDimensions.SPACE_SIZE_4X,
             horizontal: IZIDimensions.SPACE_SIZE_4X,
           ),
@@ -66,12 +67,12 @@ class IZIButton extends StatelessWidget {
           ),
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_5X,
         ),
         child: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: IZIDimensions.FONT_SIZE_H5,
             color: ColorResources.WHITE,
             fontWeight: FontWeight.w500,
