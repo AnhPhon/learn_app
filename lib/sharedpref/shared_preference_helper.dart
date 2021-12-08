@@ -12,39 +12,39 @@ class SharedPreferenceHelper {
   SharedPreferenceHelper(this._sharedPreference);
 
   // Login: ----------------------------------------------------------
-  Future<bool> get getLogin async {
+  bool get getLogin {
     return _sharedPreference.getBool(Preferences.isLogin) ?? false;
   }
 
-  Future<bool> setLogin({required bool status}) async {
-    return _sharedPreference.setBool(Preferences.isLogin, status);
+  void setLogin({required bool status}) {
+    _sharedPreference.setBool(Preferences.isLogin, status);
   }
 
   // splash: ----------------------------------------------------------
-  Future<bool> get getSplash async {
+  bool get getSplash {
     return _sharedPreference.getBool(Preferences.isSplash) ?? false;
   }
 
-  Future<bool> setSplash({required bool status}) async {
-    return _sharedPreference.setBool(Preferences.isSplash, status);
+  void setSplash({required bool status}) {
+    _sharedPreference.setBool(Preferences.isSplash, status);
   }
 
   // General Methods: Access token
-  Future<String> get getJwtToken async {
+  String get getJwtToken {
     return _sharedPreference.getString(Preferences.jwtToken) ?? '';
   }
 
-  Future<bool> setJwtToken(String authToken) async {
-    return _sharedPreference.setString(Preferences.jwtToken, authToken);
+  void setJwtToken(String authToken) {
+    _sharedPreference.setString(Preferences.jwtToken, authToken);
   }
 
   // fcm token
-  Future<String> get getFcmToken async {
+  String get getFcmToken {
     return _sharedPreference.getString(Preferences.fcmToken) ?? '';
   }
 
-  Future<bool> setFcmToken(String fcmToken) async {
-    return _sharedPreference.setString(Preferences.fcmToken, fcmToken);
+  void setFcmToken(String fcmToken) {
+    _sharedPreference.setString(Preferences.fcmToken, fcmToken);
   }
 
   // Language:---------------------------------------------------
@@ -52,16 +52,16 @@ class SharedPreferenceHelper {
     return _sharedPreference.getString(Preferences.currentLanguage) ?? 'vi-VN';
   }
 
-  Future<void> setLanguage(String language) {
-    return _sharedPreference.setString(Preferences.currentLanguage, language);
+  void setLanguage(String language) {
+    _sharedPreference.setString(Preferences.currentLanguage, language);
   }
 
   // profile
-  Future<String> get getProfile async {
+  String get getProfile {
     return _sharedPreference.getString(Preferences.profile) ?? '{}';
   }
 
-  Future<void> setProfile(String remember) async {
+  void setProfile(String remember) {
     _sharedPreference.setString(Preferences.profile, remember);
   }
 }
