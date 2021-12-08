@@ -34,14 +34,14 @@ class IZICard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               IZIDimensions.BLUR_RADIUS_3X,
             ),
-            child: IZIImage(
-              urlImage: urlImage,
-              isTypeUrlImage: true,
-            ),
+            // child: IZIImage(
+            //   urlImage: urlImage,
+            //   isTypeUrlImage: true,
+            // ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             vertical: IZIDimensions.SPACE_SIZE_1X,
             horizontal: IZIDimensions.SPACE_SIZE_2X,
           ),

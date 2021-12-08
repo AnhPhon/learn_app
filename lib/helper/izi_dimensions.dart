@@ -12,20 +12,20 @@ mixin IZIDimensions {
   // Font size text and icon
   static double FONT_SIZE_SPAN_SMALL_EXTRA = 10.0 * ONE_UNIT_SIZE * ONE_UNIT_SIZE;
   static double FONT_SIZE_SPAN_SMALL = 12.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_SPAN = 14.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H6 = 16.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H5 = 18.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H4 = 20.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H3 = 22.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H2 = 24.0 * ONE_UNIT_SIZE;
-  static double FONT_SIZE_H1 = 26.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_SPAN = 20.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H6 = 25.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H5 = 30.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H4 = 35.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H3 = 40.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H2 = 45.0 * ONE_UNIT_SIZE;
+  static double FONT_SIZE_H1 = 50.0 * ONE_UNIT_SIZE;
 
   // Padding , Margin
-  static double SPACE_SIZE_1X = 5.0 * ONE_UNIT_SIZE;
-  static double SPACE_SIZE_2X = 10.0 * ONE_UNIT_SIZE;
-  static double SPACE_SIZE_3X = 15.0 * ONE_UNIT_SIZE;
-  static double SPACE_SIZE_4X = 20.0 * ONE_UNIT_SIZE;
-  static double SPACE_SIZE_5X = 25.0 * ONE_UNIT_SIZE;
+  static double SPACE_SIZE_1X = 10.0 * ONE_UNIT_SIZE;
+  static double SPACE_SIZE_2X = 15.0 * ONE_UNIT_SIZE;
+  static double SPACE_SIZE_3X = 20.0 * ONE_UNIT_SIZE;
+  static double SPACE_SIZE_4X = 25.0 * ONE_UNIT_SIZE;
+  static double SPACE_SIZE_5X = 30.0 * ONE_UNIT_SIZE;
 
   // BORDER RADIUS
   static double BORDER_RADIUS_1X = 5.0 * ONE_UNIT_SIZE;

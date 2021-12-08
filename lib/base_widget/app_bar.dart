@@ -27,7 +27,7 @@ class IZIAppBar extends StatelessWidget {
           children: [
             Container(
               height: kToolbarHeight,
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 left: IZIDimensions.SPACE_SIZE_3X,
               ),
               alignment: Alignment.centerLeft,
@@ -45,7 +45,7 @@ class IZIAppBar extends StatelessWidget {
             ),
             Container(
               height: kToolbarHeight,
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 right: IZIDimensions.SPACE_SIZE_3X,
               ),
               alignment: Alignment.centerRight,
@@ -67,7 +67,7 @@ class IZIAppBar extends StatelessWidget {
                   title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: IZIDimensions.FONT_SIZE_H4,
                     color: ColorResources.WHITE,
@@ -87,7 +87,7 @@ class IZIAppBar extends StatelessWidget {
       disbleError: true,
       miniSize: true,
       prefixIcon: const Icon(Icons.search),
-      holdplacer: "Tìm kiếm",
+      placeHolder: "Tìm kiếm",
       onChanged: callbackSearch,
     );
   }

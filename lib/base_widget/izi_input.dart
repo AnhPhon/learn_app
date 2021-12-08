@@ -31,10 +31,10 @@ class IZIInput extends StatefulWidget {
   IZIInput({
     Key? key,
     this.label,
-    required this.holdplacer,
-    required this.allowEdit,
+    this.placeHolder,
+    this.allowEdit = true,
     this.maxLine = 1,
-    required this.isRequired,
+    this.isRequired = false,
     required this.type,
     this.width,
     this.fontSize,
@@ -61,11 +61,11 @@ class IZIInput extends StatefulWidget {
     this.miniSize = false,
   }) : super(key: key);
   final String? label;
-  final String holdplacer;
-  final bool allowEdit;
+  final String? placeHolder;
+  final bool? allowEdit;
   final int? maxLine;
   final IZIInputType type;
-  final bool isRequired;
+  final bool? isRequired;
   final double? width;
   final double? fontSize;
   final double? height;
@@ -197,7 +197,7 @@ class _IZIInputState extends State<IZIInput> {
                     color: ColorResources.BLACK,
                   ),
                   children: [
-                    if (widget.isRequired)
+                    if (widget.isRequired!)
                       TextSpan(
                         text: '*',
                         style: TextStyle(
@@ -299,7 +299,7 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
                 filled: true,
-                hintText: widget.holdplacer,
+                hintText: widget.placeHolder,
                 hintStyle: widget.hintStyle ??
                     TextStyle(
                       color: ColorResources.BLACK.withOpacity(0.5),

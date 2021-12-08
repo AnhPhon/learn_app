@@ -25,7 +25,7 @@ class IZIText extends StatelessWidget {
       textAlign: textAlign ?? TextAlign.left,
       maxLines: maxLine ?? 1,
       overflow: TextOverflow.ellipsis,
-      style: style ?? const TextStyle(
+      style: style ?? TextStyle(
         fontSize: IZIDimensions.FONT_SIZE_SPAN,
         color: ColorResources.BLACK,
         fontWeight: FontWeight.normal

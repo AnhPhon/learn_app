@@ -3,83 +3,134 @@ import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
+enum IZIButtonType {
+  DEFAULT,
+  OUTLINE,
+}
+
 class IZIButton extends StatelessWidget {
   const IZIButton({
     Key? key,
-    required this.title,
-    required this.width,
-    this.color,
-    required this.onPressed,
+    required this.onTap,
+    this.label,
+    this.width,
     this.height,
     this.maxLine,
-    this.colorBorder,
-    this.isButtonActive = true,
+    this.type = IZIButtonType.DEFAULT,
+    this.isEnabled = true,
     this.padding,
-    this.withBorder,
+    this.margin,
     this.borderRadius,
-    this.disabledColor = false,
+    this.icon,
+    this.color = ColorResources.WHITE,
+    this.colorBGDisabled = ColorResources.GREY,
+    this.colorDisible = ColorResources.BLACK,
+    this.colorBG = ColorResources.CIRCLE_COLOR_BG3,
   }) : super(key: key);
 
   // OnTap
   // Decoration defaul nền xanh
   // Title defaul căn giữ , maxLine defaul 1 dòng , có thể truyền thêm số dòng, nếu quá dòng là overflow
   // clickble (có thể có or không defaul true) Nếu true click vào thì mới thực hiện onTap esle thì không
-  final String title;
+  final String? label;
   final Color? color;
-  final Function onPressed;
-  final double width;
+  final Color? colorDisible;
+  final Color? colorBGDisabled;
+  final Color? colorBG;
+  final Function onTap;
+  final double? width;
   final double? height;
   final int? maxLine;
-  final Color? colorBorder;
-  final bool? isButtonActive;
+  final IZIButtonType? type;
+
+  final bool? isEnabled;
   final EdgeInsets? padding;
-  final double? withBorder;
+  final EdgeInsets? margin;
   final double? borderRadius;
-  final bool? disabledColor;
+  final IconData? icon;
+
+  Color getColorBG(IZIButtonType type) {
+    if (type == IZIButtonType.DEFAULT) {
+      if (isEnabled!) {
+        return colorBG!;
+      }
+      return colorBGDisabled!;
+    } else if (type == IZIButtonType.OUTLINE) {
+      if (isEnabled!) {
+        return ColorResources.WHITE;
+      }
+      return ColorResources.WHITE;
+    }
+    return colorBG!;
+  }
+
+  Color getColor(IZIButtonType type) {
+    if (type == IZIButtonType.DEFAULT) {
+      if (isEnabled!) {
+        return color!;
+      }
+      return colorDisible!;
+    } else if (type == IZIButtonType.OUTLINE) {
+      if (isEnabled!) {
+        return colorBG!;
+      }
+      return ColorResources.GREY;
+    }
+    return color!;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ??
-          EdgeInsets.symmetric(
-            vertical: IZIDimensions.SPACE_SIZE_4X,
-            horizontal: IZIDimensions.SPACE_SIZE_4X,
-          ),
-      child: MaterialButton(
-        onPressed: isButtonActive == true ? () => onPressed() : null,
-        color: color ?? ColorResources.BUTTON_DEFAULT,
-        minWidth: IZIDevice.getScaledSize(context, width),
-        height: height ?? IZIDevice.getScaledSize(context, 0.14),
-        splashColor: ColorResources.WHITE.withOpacity(0.8),
-        elevation: 5,
-        visualDensity: VisualDensity.comfortable,
-        disabledColor: disabledColor == true
-            ? isButtonActive == false
-                ? ColorResources.GREY
-                : null
-            : null,
-        disabledElevation: disabledColor == true ? 5 : null,
-        colorBrightness: Brightness.light,
-        animationDuration: const Duration(milliseconds: 5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            borderRadius ?? IZIDimensions.BORDER_RADIUS_2X,
-          ),
+    return GestureDetector(
+      onTap: isEnabled! ? (){
+        onTap();
+      } : null,
+      child: Container(
+        padding: padding ??
+            EdgeInsets.symmetric(
+              vertical: IZIDimensions.SPACE_SIZE_4X,
+              horizontal: IZIDimensions.SPACE_SIZE_4X,
+            ),
+        margin: margin ??
+            EdgeInsets.symmetric(
+              vertical: IZIDimensions.SPACE_SIZE_2X,
+            ),
+        decoration: BoxDecoration(
+          color: getColorBG(type!),
+          border: type == IZIButtonType.DEFAULT
+              ? null
+              : Border.all(
+                  color: isEnabled! ? colorBG! : ColorResources.GREY,
+                  width: IZIDimensions.ONE_UNIT_SIZE * 5,
+                ),
+          borderRadius: BorderRadius.circular(borderRadius ?? IZIDimensions.ONE_UNIT_SIZE * 20),
         ),
+        // height: height ?? IZIDevice.getScaledSize(context, 0.14),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        padding: EdgeInsets.symmetric(
-          horizontal: IZIDimensions.SPACE_SIZE_5X,
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: IZIDimensions.FONT_SIZE_H5,
-            color: ColorResources.WHITE,
-            fontWeight: FontWeight.w500,
-          ),
-          maxLines: maxLine ?? 1,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null)
+              Icon(
+                icon,
+                color: getColor(type!),
+                size: IZIDimensions.FONT_SIZE_H6 * 1.25,
+              )
+            else
+              const SizedBox(),
+            if (label != null)
+              Text(
+                " $label",
+                style: TextStyle(
+                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                  color: getColor(type!),
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: maxLine ?? 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+          ],
         ),
       ),
     );
