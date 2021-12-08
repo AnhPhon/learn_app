@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:template/utils/images_path.dart';
+
+enum IZIImageType { NETWORK, ASSET }
 
 // param
 // url image (asset,network)
@@ -14,7 +15,7 @@ class IZIImage extends StatelessWidget {
   const IZIImage({
     Key? key,
     required this.urlImage,
-    required this.isTypeUrlImage,
+    required this.type,
     this.fit,
     this.height,
     this.width,
@@ -23,11 +24,11 @@ class IZIImage extends StatelessWidget {
   final double? width;
   final double? height;
   final BoxFit? fit;
-  final bool isTypeUrlImage;
+  final IZIImageType type;
 
   @override
   Widget build(BuildContext context) {
-    if (isTypeUrlImage == true) {
+    if (type == IZIImageType.NETWORK) {
       return CachedNetworkImage(
         imageUrl: urlImage,
         imageBuilder: (context, imageProvider) => Container(
@@ -37,14 +38,10 @@ class IZIImage extends StatelessWidget {
             image: DecorationImage(
               image: imageProvider,
               fit: fit ?? BoxFit.cover,
-              colorFilter: const ColorFilter.mode(
-                Colors.red,
-                BlendMode.colorBurn,
-              ),
             ),
           ),
         ),
-        placeholder: (context, url) => const CircularProgressIndicator(),
+        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => Image.asset(
           ImagesPath.placeholder,
           fit: BoxFit.cover,

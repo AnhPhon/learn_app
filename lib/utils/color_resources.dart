@@ -30,7 +30,7 @@ class ColorResources {
   // static const Color LOW_GREEN = Color(0xffEFF6FE);
   static const Color GREEN = Color(0xff23CB60);
 
-  static const Color BUTTON_DEFAULT = Color(0xFF61A63C);
+  static const Color BUTTON_DEFAULT = Color(0xFF0DAC43);
   // static const Color PRIMARY = Color(0xFF2196F3);
   // static const Color APPBARCOLOR = Color(0xff2196F3);
   // static const Color PRIMARYCOLOR = Color(0xff2196F3);
