@@ -46,6 +46,26 @@ class IZIValidate {
   }
 
   ///
+  /// empty
+  ///
+  static String? empty(String text,{int? rangeFrom, int? rangeTo}) {
+    if(text.isEmpty){
+      return "Tên không được để trống";
+    }
+    if(!IZIValidate.nullOrEmpty(rangeFrom)){
+      if(text.length < rangeFrom!){
+        return "Tên ít nhất phải $rangeFrom ký tự";
+      }
+    }
+    if(!IZIValidate.nullOrEmpty(rangeTo)){
+      if(text.length > rangeTo!){
+        return "Tên không được quá $rangeFrom ký tự";
+      }
+    }
+    return null;
+  }
+
+  ///
   /// Check nullOrEmpty
   ///
   static bool nullOrEmpty(dynamic value) {

@@ -27,8 +27,8 @@ class IZISize {
   }
 
   static void update({required double width, required double height}) {
-    print('Real safe maxWidth: ${width}');
-    print('Real safe maxHeight: ${height}');
+    // print('Real safe maxWidth: ${width}');
+    // print('Real safe maxHeight: ${height}');
     _prefsInstance!.setDouble('maxWidth', width);
     _prefsInstance!.setDouble('maxHeight', height);
     _size = Size(width, height);

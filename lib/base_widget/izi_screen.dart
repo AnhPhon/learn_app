@@ -5,11 +5,13 @@ import 'package:template/helper/izi_size.dart';
 class IZIScreen extends StatelessWidget {
   const IZIScreen({
     Key? key,
-    required this.child,
+    required this.body,
     this.background,
+    this.appBar,
   }) : super(key: key);
-  final Widget child;
+  final Widget body;
   final Widget? background;
+  final Widget? appBar;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,26 @@ class IZIScreen extends StatelessWidget {
         children: [
           background ?? const BackgroundOne(),
           SafeArea(
-            child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-              IZISize.update(width: constraints.maxWidth, height: constraints.maxHeight);
+            child: LayoutBuilder(builder: (
+              BuildContext context,
+              BoxConstraints constraints,
+            ) {
+              IZISize.update(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+              );
               return Scaffold(
                 backgroundColor: Colors.transparent,
-                body: child,
+                body: Column(
+                  children: [
+                    appBar ?? const SizedBox(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: body,
+                      ),
+                    ),
+                  ],
+                ),
               );
             }),
           ),
