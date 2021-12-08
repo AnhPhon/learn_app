@@ -41,10 +41,25 @@ class SplashPage extends GetView<SplashController> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      // mainAxisExtent: 10
+                      childAspectRatio: 0.7,
                     ),
                     itemBuilder: (context, index) {
-                      return IZICard();
+                      return IZICard(
+                        title: "Sâm dây để làm mới",
+                        subtitle: "đ100.000",
+                        urlImage: 'https://i.pinimg.com/originals/32/b8/36/32b836c010f35024aa63c8a7d7d97d58.jpg',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("đ50.000"),
+                            Text("đã bán 180"),
+                          ],
+                        ),
+                        titleStyle: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: IZIDimensions.FONT_SIZE_H4,
+                        ),
+                      );
                     },
                     itemCount: 50,
                   )

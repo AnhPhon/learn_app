@@ -37,14 +37,12 @@ class IZIImage extends StatelessWidget {
             image: DecorationImage(
               image: imageProvider,
               fit: fit ?? BoxFit.cover,
-              colorFilter: const ColorFilter.mode(
-                Colors.red,
-                BlendMode.colorBurn,
-              ),
             ),
           ),
         ),
-        placeholder: (context, url) => const CircularProgressIndicator(),
+        placeholder: (context, url) => const Center(
+          child: CircularProgressIndicator(),
+        ),
         errorWidget: (context, url, error) => Image.asset(
           ImagesPath.placeholder,
           fit: BoxFit.cover,
