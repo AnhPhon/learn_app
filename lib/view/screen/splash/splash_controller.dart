@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,8 +20,13 @@ class SplashController extends GetxController {
 
   void checkButton() {
     print("phone");
-    isButtonActive = false;
+    isButtonActive = !isButtonActive;
+
     update();
+    Future.delayed(Duration(seconds: 2), () {
+      isButtonActive = true;
+      update();
+    });
   }
 
   void getImage() async {

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:template/base_widget/background/background_one.dart';
+import 'package:template/helper/izi_size.dart';
 
 class IZIScreen extends StatelessWidget {
   const IZIScreen({
     Key? key,
-    required this.child,
+    required this.body,
     this.background,
+    this.appBar,
   }) : super(key: key);
-  final Widget child;
+  final Widget body;
   final Widget? background;
+  final Widget? appBar;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,10 +22,28 @@ class IZIScreen extends StatelessWidget {
         children: [
           background ?? const BackgroundOne(),
           SafeArea(
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: child,
-            ),
+            child: LayoutBuilder(builder: (
+              BuildContext context,
+              BoxConstraints constraints,
+            ) {
+              IZISize.update(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+              );
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    appBar ?? const SizedBox(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: body,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
         ],
       ),
