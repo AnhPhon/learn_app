@@ -5,10 +5,17 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SplashController extends GetxController {
+  int val = 1;
+  int groupVal = 1;
   File? file;
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void onRadioChanged(int val) {
+    groupVal = val;
+    update();
   }
 
   bool isButtonActive = true;

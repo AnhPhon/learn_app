@@ -13,7 +13,7 @@ class IZIButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     this.label,
-    this.width,
+    // this.width,
     this.height,
     this.maxLine,
     this.type = IZIButtonType.DEFAULT,
@@ -38,7 +38,7 @@ class IZIButton extends StatelessWidget {
   final Color? colorBGDisabled;
   final Color? colorBG;
   final Function onTap;
-  final double? width;
+  // final double? width;
   final double? height;
   final int? maxLine;
   final IZIButtonType? type;
