@@ -61,7 +61,7 @@ class IZICard extends StatelessWidget {
     this.widthBorder,
     this.radiusCard,
     this.colorBorder,
-    this.colorBG,
+    this.colorBG = ColorResources.WHITE,
     this.statusMoney,
     this.statusPayment,
     this.icon,
@@ -137,6 +137,7 @@ class IZICard extends StatelessWidget {
     );
   }
 
+
   Widget getButtonOrder(IZIStatusOrder status) {
     if (status == IZIStatusOrder.XAC_NHAN) {
       return IZIButton(
@@ -189,7 +190,7 @@ class IZICard extends StatelessWidget {
     return Container();
   }
 
-  Widget getStatusMoney(IZIStatusMoney statusPrice) {
+ Widget getStatusMoney(IZIStatusMoney statusPrice) {
     if (statusPrice == IZIStatusMoney.DRAW && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
         text: '-${row1Right.toString()} vnđ',
@@ -212,6 +213,7 @@ class IZICard extends StatelessWidget {
     return const SizedBox();
   }
 
+
   Widget getImageUrlType(IZIImageUrlType type, {BoxFit? fit = BoxFit.cover}) {
     if (type == IZIImageUrlType.ICON && !IZIValidate.nullOrEmpty(icon)) {
       return IZIImage.icon(
@@ -228,20 +230,22 @@ class IZICard extends StatelessWidget {
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_7X),
-      child: IZIImage(
-        urlImage!,
-        fit: fit,
+      child: Container(
+        
+        child: IZIImage(
+          urlImage ?? '',
+          fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
+        ),
       ),
     );
   }
+
 
   Widget getCard(BuildContext context, IZICardType type) {
     if (type == IZICardType.CARD_PAYMENT) {
       return Container(
         margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.all(
-          IZIDimensions.SPACE_SIZE_2X,
-        ),
+        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_2X,),
         decoration: BoxDecoration(
           color: colorBG,
           boxShadow: [
@@ -273,6 +277,7 @@ class IZICard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      if (!IZIValidate.nullOrEmpty(row1Left))
                       Expanded(
                         child: IZIText(
                           style: const TextStyle(
@@ -350,8 +355,9 @@ class IZICard extends StatelessWidget {
                 color: colorBG,
                 shape: BoxShape.circle,
               ),
-              child: getImageUrlType(imageUrlType!),
+              child:  getImageUrlType(imageUrlType!),
             ),
+            if (!IZIValidate.nullOrEmpty(row1Left))
             Flexible(
               child: Container(
                 margin: EdgeInsets.only(
@@ -618,6 +624,7 @@ class IZICard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  if (!IZIValidate.nullOrEmpty(row1Left))
                   Expanded(
                     child: IZIText(
                       text: row1Left.toString(),
@@ -795,6 +802,7 @@ class IZICard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
+                            if (!IZIValidate.nullOrEmpty(row1Left))
                             Flexible(
                               child: IZIText(
                                 maxLine: 2,
@@ -866,6 +874,7 @@ class IZICard extends StatelessWidget {
                   ),
                 ),
                 if (IZIValidate.nullOrEmpty(actions)) const SizedBox() else ...actions!,
+            
               ],
             ),
             Container(
@@ -1394,71 +1403,123 @@ class IZICard extends StatelessWidget {
         ),
       );
     } else if (type == IZICardType.CARD_CAPITAL_CONTRIBUTION) {
-      //TODO: SU DUNG FROSTED GLASS
       return Container(
-        width: widthCard ?? double.infinity,
+        height: heightCard,
+        width: widthCard,
         margin: marginCard ?? const EdgeInsets.all(0),
-        padding: paddingCard ??
-            EdgeInsets.all(
-              IZIDimensions.ONE_UNIT_SIZE * 20,
-            ),
-        decoration: BoxDecoration(
-          color: colorBG ?? ColorResources.CARD_CAPITAL_CONTRIBUTION,
-          borderRadius: BorderRadius.circular(
-            radiusCard ?? IZIDimensions.BLUR_RADIUS_2X,
-          ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+        padding: EdgeInsets.all(
+          IZIDimensions.SPACE_SIZE_3X,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: BoxDecoration(
+          color: colorBG ?? ColorResources.WHITE,
+          borderRadius: !IZIValidate.nullOrEmpty(radiusCard)
+              ? BorderRadius.circular(
+                  radiusCard!,
+                )
+              : BorderRadius.circular(
+                  IZIDimensions.BLUR_RADIUS_3X,
+                ),
+          // Đổ bóng default
+          // border: Border.all(
+          //   width: widthBorder ?? IZIDimensions.ONE_UNIT_SIZE * 4,
+          //   color: colorBorder ?? ColorResources.GREY,
+          // ),
+        ),
+        child: Row(
           children: [
-            if (!IZIValidate.nullOrEmpty(row1Left))
-              Container(
-                padding: EdgeInsets.only(
-                  bottom: IZIDimensions.ONE_UNIT_SIZE * 10,
-                ),
-                child: IZIText(
-                  text: row1Left.toString(),
-                  maxLine: 1,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: ColorResources.BLACK,
-                    fontSize: IZIDimensions.FONT_SIZE_H6,
-                    fontWeight: FontWeight.w600,
+            Container(
+              height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+              width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+              margin: EdgeInsets.only(
+                right: IZIDimensions.SPACE_SIZE_3X,
+              ),
+              child: IZIValidate.nullOrEmpty(
+                imageUrlType,
+              )
+                  ? const SizedBox()
+                  : getImageUrlType(
+                      imageUrlType!,
+                      fit: BoxFit.contain,
+                    ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      if (!IZIValidate.nullOrEmpty(row1Left))
+                      Flexible(
+                        child: IZIText(
+                          text: row1Left!,
+                          maxLine: 2,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: IZIDimensions.FONT_SIZE_H6,
+                          ),
+                        ),
+                      ),
+                      if (!IZIValidate.nullOrEmpty(row1Right))
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              left: IZIDimensions.SPACE_SIZE_1X,
+                            ),
+                            child: IZIText(
+                              text: row1Right!,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: IZIDimensions.FONT_SIZE_H6,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                ),
+                  if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
+                    Row(
+                      children: [
+                        if (!IZIValidate.nullOrEmpty(row2Left))
+                          Flexible(
+                            child: IZIText(
+                              text: row2Left!,
+                              style: TextStyle(
+                                fontSize: IZIDimensions.FONT_SIZE_H6,
+                                color: ColorResources.BLACK.withOpacity(0.6),
+                              ),
+                            ),
+                          ),
+                        if (!IZIValidate.nullOrEmpty(row2Right))
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                left: IZIDimensions.SPACE_SIZE_1X,
+                              ),
+                              child: IZIText(
+                                text: row2Right!,
+                                style: TextStyle(
+                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  color: ColorResources.BLACK.withOpacity(0.6),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                ],
               ),
-            if (!IZIValidate.nullOrEmpty(row2Left))
-              IZIText(
-                text: row2Left.toString(),
-                maxLine: 1,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  color: ColorResources.BLACK,
-                  fontSize: IZIDimensions.FONT_SIZE_H6,
+            ),
+            if (!IZIValidate.nullOrEmpty(groupValue) && !IZIValidate.nullOrEmpty(valRadio))
+              Radio(
+                value: valRadio,
+                groupValue: groupValue,
+                onChanged: onChanged,
+                activeColor: ColorResources.CIRCLE_COLOR_BG3,
+                focusColor: ColorResources.CIRCLE_COLOR_BG3,
+                fillColor: MaterialStateProperty.all(
+                  ColorResources.CIRCLE_COLOR_BG4,
                 ),
-              ),
+              )
           ],
         ),
       );

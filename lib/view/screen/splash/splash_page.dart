@@ -41,192 +41,291 @@ class SplashPage extends GetView<SplashController> {
         builder: (SplashController controller) {
           return Column(
             children: [
-              ListView.builder(
-                itemCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return IZICard(
-                    urlImage: "https://i.pinimg.com/originals/39/0d/32/390d32780732b33abc9de4a6c164c991.jpg",
-                    marginCard: EdgeInsets.all(
-                      IZIDimensions.SPACE_SIZE_3X,
-                    ),
-                    row1Left: "Hot Contest Hot Contest Hot Contest",
-                    row1Right: "Thứ ba, 16/11 Thứ ba, 16/11",
-                    row2Right: "Hot Contest Title Hot Contest TitleHot Contest TitleHot Contest Title Hot Contest TitleHot Contest Title",
-                    row2Left: "Hot Contest Title Hot Contest TitleHot Contest TitleHot Contest Title Hot Contest TitleHot Contest Title",
-                    row3Left: "Lorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest TitleLorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest TitleLorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest Title",
-                    row3Right: "Lorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest TitleLorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest TitleLorem Ipsum is simply dummy text of the printing Hot Contest TitleHot Contest Title",
-                    cardType: IZICardType.CARD_NOTIFICATION,
-                    icon: Icons.more_horiz_outlined,
-                  );
+              IZIOtp(
+                lable: "Xác thực tài khoản",
+                content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+              ),
+              IZIInput(
+                placeHolder: "100",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.INCREMENT,
+                isBorder: true,
+                max: 50,
+                min: 10,
+                onChanged: (val) {
+                  print(val);
                 },
+                width: IZIDimensions.ONE_UNIT_SIZE * 500,
+                disbleError: true,
               ),
-              ListView.builder(
-                itemCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return IZICard(
-                    urlImage: "https://i.pinimg.com/originals/39/0d/32/390d32780732b33abc9de4a6c164c991.jpg",
-                    marginCard: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
-                    row1Left: "Hot Contest ",
-                    row1Right: "Thứ ba, 16/11",
-                    row2Left: "Hot Contest Title",
-                    row3Left: "Lorem Ipsum is simply dummy text of the printing",
-                    cardType: IZICardType.CARD_VORCHER,
-                    groupValue: 1,
-                    valRadio: 1,
-                  );
+              IZIInput(
+                label:"Tiền",
+                placeHolder: "Tiền",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.PRICE,
+                onChanged: (val) {
+                  print(val);
                 },
+                width: IZIDimensions.ONE_UNIT_SIZE * 500,
+                disbleError: true,
               ),
-              ListView.builder(
-                itemCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return IZICard(
-                    urlImage: "https://i.pinimg.com/originals/39/0d/32/390d32780732b33abc9de4a6c164c991.jpg",
-                    marginCard: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
-                    row1Left: "Hot Contest ",
-                    row1Right: "Thứ ba, 16/11",
-                    row2Left: "Hot Contest Title",
-                    row3Left: "Lorem Ipsum is simply dummy text of the printing",
-                    cardType: IZICardType.CARD_VORCHER,
-                    onTap: () {
-                      print("aaaaaaaa");
-                    },
-                  );
-                },
-              ),
-              ListView.builder(
-                itemCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return IZICard(
-                    urlImage: "https://i.pinimg.com/originals/39/0d/32/390d32780732b33abc9de4a6c164c991.jpg",
-                    marginCard: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
-                    row1Left: "Ưu đãi từ Hà Nội Safe Food Ưu đãi từ Hà Nội Safe FoodƯu đãi từ Hà Nội Safe Food",
-                    row1Right: "Thứ ba, 16/11 Thứ ba, 16/11 Thứ ba, 16/11",
-                    row2Left: "Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể",
-                    row3Left: "Lorem Ipsum is simply dummy text of the printing",
-                    cardType: IZICardType.CARD_NEWS,
-                    onTap: () {
-                      print("aaaaaaaa");
-                    },
-                  );
-                },
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: IZIDimensions.ONE_UNIT_SIZE * 5,
-                ),
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 2,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: IZIDimensions.ONE_UNIT_SIZE * 420,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: IZIDimensions.ONE_UNIT_SIZE * 20,
-                      crossAxisSpacing: IZIDimensions.ONE_UNIT_SIZE * 20,
-                    ),
-                    itemBuilder: (context, index) {
-                      return IZICard(
-                        marginCard: EdgeInsets.all(
-                          IZIDimensions.ONE_UNIT_SIZE * 5,
-                        ),
-                        urlImage: "https://allnewplayers.com/wp-content/uploads/2021/08/maxresdefault-1.jpg",
-                        row1Left: 'Sâm Dây Ngọc Linh Tươi/Khô',
-                        row2Left: "100.000",
-                        row3Left: "50.000",
-                        row3Right: "900",
-                      );
-                    }),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: IZIDimensions.ONE_UNIT_SIZE * 5,
-                ),
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 2,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: IZIDimensions.ONE_UNIT_SIZE * 420,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: IZIDimensions.ONE_UNIT_SIZE * 20,
-                      crossAxisSpacing: IZIDimensions.ONE_UNIT_SIZE * 20,
-                    ),
-                    itemBuilder: (context, index) {
-                      return IZICard(
-                        marginCard: EdgeInsets.all(
-                          IZIDimensions.ONE_UNIT_SIZE * 5,
-                        ),
-                        urlImage: "https://allnewplayers.com/wp-content/uploads/2021/08/maxresdefault-1.jpg",
-                        row1Left: 'Sâm Dây Ngọc Linh Tươi/Khô Sâm Dây Ngọc Linh Tươi/KhôSâm Dây Ngọc Linh Tươi/Khô',
-                        row2Left: "100.000100.000100.000",
-                        row3Left: "50.000100.000100.000",
-                        row3Right: "9000",
-                        cardType: IZICardType.CARD_OUTLINE,
-                      );
-                    }),
-              ),
-              IZICard(
-                marginCard: EdgeInsets.all(
-                  IZIDimensions.ONE_UNIT_SIZE * 20,
-                ),
-                row1Right: "Momo",
-                row2Right: 'Ngô Trần Anh Phôn Ngô Trần Anh Phôn Ngô Trần Anh Phôn Ngô Trần Anh Phôn ',
-                row3Right: "0961-225-417 0961 09610961 0961 0961 0961  ",
-                cardType: IZICardType.CARD_TRANSFERS,
-                onChanged1CardTransfer: (val) {
-                  controller.phone = val;
-                  print(controller.phone);
-                },
-              ),
-              IZICard(
-                marginCard: EdgeInsets.all(
-                  IZIDimensions.ONE_UNIT_SIZE * 20,
-                ),
-                row1Left: "Số tiền góp vốn Số tiền góp vốn Số tiền góp vốn ",
-                row2Left: "20.000.000 20.000.000 20.000.000 20.000.000 20.000.000 20.000.000 ",
-                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IZICard(
-                    widthCard: IZIDimensions.ONE_UNIT_SIZE * 250,
-                    marginCard: EdgeInsets.all(
-                      IZIDimensions.ONE_UNIT_SIZE * 10,
-                    ),
-                    row1Left: "Kỳ hạn Kỳ hạn Kỳ hạn Kỳ hạn Kỳ hạn ",
-                    row2Left: "1 tháng 1 tháng 1 tháng 1 tháng 1 tháng 1 tháng 1 tháng ",
-                    cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+              IZIListView(
+                itemCount: 6,
+                physics: AlwaysScrollableScrollPhysics(),
+                action: Text(
+                  "Xem thêm",
+                  style: TextStyle(
+                    fontSize: IZIDimensions.FONT_SIZE_H6,
                   ),
-                  IZICard(
-                    widthCard: IZIDimensions.ONE_UNIT_SIZE * 250,
-                    marginCard: EdgeInsets.all(
-                      IZIDimensions.ONE_UNIT_SIZE * 10,
+                ),
+                label: "Danh mục",
+                scrollDirection: Axis.horizontal,
+                padding: IZIDimensions.ONE_UNIT_SIZE * 10,
+                builder: (index) {
+                  return Container(
+                    padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
+                    child: IZICard(
+                      urlImage: "https://i.pinimg.com/originals/32/b8/36/32b836c010f35024aa63c8a7d7d97d58.jpg",
+                      row1Left: "Đây là cái label label label label",
+                      // icon: Icons.access_alarm,
+                      colorBG: ColorResources.CIRCLE_COLOR_BG3,
+                      cardType: IZICardType.CARD_CIRCLE,
                     ),
-                    row1Left: "Lãi xuất Lãi xuất Lãi xuất Lãi xuất Lãi xuất ",
-                    row2Left: "0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% ",
-                    cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                  );
+                },
+              ),
+
+              IZICard(
+                urlImage: ImagesPath.capital_contribution_week,
+                row1Left: "1 tuần 1 tuần1 tuần1 tuần1 tuần1 tuần1 tuần1 tuần",
+                row2Left: "Lãi suất 12%/năm 1 tuần1 tuần1 tuần1 tuần1 tuần1 tuần1 tuần",
+                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                valRadio: 1,
+                groupValue: controller.groupVal,
+                onChanged: (val) {
+                  controller.onRadioChanged(1);
+                },
+              ),
+              IZICard(
+                urlImage: 'https://i.ytimg.com/vi/XgdHlx0ugRA/maxresdefault.jpg',
+                row1Left: "1 tháng",
+                row2Left: "Lãi suất 22%/năm",
+                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                valRadio: 2,
+                groupValue: controller.groupVal,
+                onChanged: (val) {
+                  controller.onRadioChanged(2);
+                },
+              ),
+              IZICard(
+                // TODO: Thêm right text
+                urlImage: ImagesPath.capital_contribution_year,
+                row1Left: "2 năm",
+                row1Right: "Lãi suất 42%/năm Lãi suất 42%/năm",
+                row2Left: "Lãi suất 42%/năm Lãi suất 42%/năm",
+                row2Right: "Lãi suất 42%/năm",
+                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                // valRadio: 3,
+                // groupValue: controller.groupVal,
+                // onChanged: (val){
+                //   controller.onRadioChanged(3);
+                // },
+              ),
+
+              IZICard(
+                urlImage: "",
+                row1Left: "Nguyễn Huỳnh Test",
+                row2Left: "0123434737433",
+                row3Left: "12-12-2021",
+                statusPayment: IZIStatusPayment.DONE,
+                cardType: IZICardType.CARD_CONTACT,
+                statusMoney: IZIStatusMoney.DRAW,
+                colorBG: ColorResources.GREY,
+                title: "A",
+                actions: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.message,
+                      size: IZIDimensions.ONE_UNIT_SIZE * 50,
+                      color: ColorResources.CIRCLE_COLOR_BG4,
+                    ),
+                  ),
+                  SizedBox(
+                    width: IZIDimensions.ONE_UNIT_SIZE * 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.phone_forwarded,
+                      size: IZIDimensions.ONE_UNIT_SIZE * 50,
+                      color: ColorResources.CIRCLE_COLOR_BG4,
+                    ),
                   ),
                 ],
               ),
               IZICard(
-                marginCard: EdgeInsets.all(
-                  IZIDimensions.ONE_UNIT_SIZE * 20,
-                ),
-                row1Left: "MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng ",
-                row2Left: "22/12/2021 22/12/2021 22/12/2021 22/12/2021 22/12/2021 ",
-                cardType: IZICardType.CARD_WITHDRAWAL,
+                urlImage: "",
+                row1Left: "Nguyễn Huỳnh Test",
+                row2Left: "0123434737433",
+                statusPayment: IZIStatusPayment.DONE,
+                cardType: IZICardType.CARD_CONTACT,
+                statusMoney: IZIStatusMoney.DRAW,
+                colorBG: ColorResources.GREY,
+                title: "A",
+              ),
+              // Container(
+              //   height: IZIDimensions.ONE_UNIT_SIZE * 400,
+              //   width: IZIDimensions.ONE_UNIT_SIZE * 400,
+              //   child: IZIImage.icon(Icons.ac_unit_outlined),
+              // ),
+              IZICard(
+                row1Left: "label",
+                cardType: IZICardType.CARD_CIRCLE,
+                colorBG: ColorResources.CIRCLE_COLOR_BG3,
+              ),
+              IZICard(
+                urlImage: "",
+                row1Left: "434323423FĐGJ3434F",
+                row1Right: "10000000000000000",
+                row2Left: "Thanh toán tháng 12 Thanh toán tháng 12 Thanh toán tháng 12",
+                row3Left: "12-12-2021",
+                statusPayment: IZIStatusPayment.DONE,
+                cardType: IZICardType.CARD_PAYMENT,
+                statusMoney: IZIStatusMoney.DRAW,
+              ),
+
+              IZICard(
+                // TODO: Right text maxline 1 line
+                // TODO: Chuyển border sang boxShadown
+                urlImage: "",
+                row1Left: "434323423FĐGJ3434F",
+                row1Right: "10000000000000000",
+                row2Left: "Thanh toán tháng 12 Thanh toán tháng 12 Thanh toán tháng 12",
+                row3Left: "12-12-2021",
+                statusPayment: IZIStatusPayment.AWAIT,
+                cardType: IZICardType.CARD_PAYMENT,
+                statusMoney: IZIStatusMoney.RECHARGE,
+              ),
+
+              IZICard(
+                urlImage: "",
+                row1Left: "434323423FĐGJ3434F",
+                row1Right: "10000000000000000",
+                row2Left: "Thanh toán tháng 12 Thanh toán tháng 12 Thanh toán tháng 12",
+                row3Left: "12-12-2021",
+                statusPayment: IZIStatusPayment.FAIL,
+                cardType: IZICardType.CARD_PAYMENT,
+                statusMoney: IZIStatusMoney.DRAW,
+              ),
+
+              IZIInput(
+                placeHolder: "Double",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.DOUBLE,
+              ),
+              IZIInput(
+                placeHolder: "Email",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.EMAIL,
+              ),
+              IZIInput(
+                placeHolder: "Number",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.NUMBER,
+              ),
+              IZIInput(
+                placeHolder: "Password",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.PASSWORD,
+              ),
+              IZIInput(
+                placeHolder: "Phone",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.PHONE,
+              ),
+              IZIInput(
+                placeHolder: "Price",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.PRICE,
+              ),
+              IZIInput(
+                placeHolder: "Text",
+                allowEdit: true,
+                isRequired: true,
+                type: IZIInputType.TEXT,
+              ),
+              IZIButton(
+                icon: Icons.ac_unit,
+                label: "Từ chối",
                 onTap: () {
-                  print("Phone check");
+                  IZIDialog.showDialog(lable: "Thông báo", onConfirm: () {}, onCancel: () {}, description: 'Miêu tả');
                 },
+              ),
+              IZIButton(
+                icon: Icons.ac_unit,
+                label: "Đồng ý thanh toán",
+                onTap: () {},
+                type: IZIButtonType.DEFAULT,
+                isEnabled: false,
+              ),
+              IZIButton(
+                icon: Icons.ac_unit,
+                label: "Tài khoản",
+                onTap: () {},
+                type: IZIButtonType.OUTLINE,
+                isEnabled: true,
+              ),
+              IZIButton(
+                icon: Icons.home,
+                label: "Trang chủ",
+                onTap: () {
+                  controller.getImage();
+                },
+                type: IZIButtonType.OUTLINE,
+                isEnabled: controller.isButtonActive,
+                padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_4X),
+                margin: EdgeInsets.all(IZIDimensions.SPACE_SIZE_5X),
+              ),
+              Container(
+                height: IZIDimensions.ONE_UNIT_SIZE * 400,
+                width: IZIDimensions.ONE_UNIT_SIZE * 400,
+                child: IZIImage.file(controller.fileImage),
+              ),
+              Container(
+                height: IZIDimensions.ONE_UNIT_SIZE * 400,
+                width: IZIDimensions.ONE_UNIT_SIZE * 400,
+                color: Colors.black,
+                child: IZIImage(
+                  "https://i.pinimg.com/originals/32/b8/36/32b836c010f35024aa63c8a7d7d97d58.jpg",
+                  height: IZIDimensions.ONE_UNIT_SIZE * 100,
+                  width: IZIDimensions.ONE_UNIT_SIZE * 100,
+                ),
+              ),
+              IZIImage(
+                "",
+                fit: BoxFit.fill,
+                height: IZIDimensions.ONE_UNIT_SIZE * 300,
+                width: IZIDimensions.ONE_UNIT_SIZE * 300,
+              ),
+              IZIImage("https://raw.githubusercontent.com/dnfield/flutter_svg/7d374d7107561cbd906d7c0ca26fef02cc01e7c8/example/assets/flutter_logo.svg"),
+              Container(
+                height: IZIDimensions.ONE_UNIT_SIZE * 500,
+                width: IZIDimensions.ONE_UNIT_SIZE * 500,
+                color: Colors.red,
+                child: IZIImage(
+                  "assets/svg/410.svg",
+                  // height: IZIDimensions.ONE_UNIT_SIZE * 300,
+                  // width: IZIDimensions.ONE_UNIT_SIZE * 300,
+                ),
               ),
             ],
           );

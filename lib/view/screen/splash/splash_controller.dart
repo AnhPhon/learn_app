@@ -12,6 +12,15 @@ class SplashController extends GetxController {
     super.onInit();
   }
 
+  int val = 1;
+  int groupVal = 1;
+
+  void onRadioChanged(int val) {
+    groupVal = val;
+    update();
+  }
+
+
   bool isButtonActive = true;
   @override
   void onClose() {
