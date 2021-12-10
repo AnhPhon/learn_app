@@ -21,10 +21,11 @@ enum IZICardType {
   CARD_CIRCLE,
   CARD_NEWS,
   CARD_TRANSFERS,
-  CARD_CAPITAL_CONTRIBUTION,
+  CARD_CONTRIBUTION,
   CARD_WITHDRAWAL,
   CARD_ORDER,
   CARD_CONTACT,
+  CARD_CAPITAL_CONTRIBUTION,
 }
 
 enum IZIStatusOrder {
@@ -230,12 +231,9 @@ class IZICard extends StatelessWidget {
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_7X),
-      child: Container(
-        
-        child: IZIImage(
-          urlImage ?? '',
-          fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
-        ),
+      child: IZIImage(
+        urlImage ?? '',
+        fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
       ),
     );
   }
@@ -247,7 +245,7 @@ class IZICard extends StatelessWidget {
         margin: marginCard ?? const EdgeInsets.all(0),
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_2X,),
         decoration: BoxDecoration(
-          color: colorBG,
+          color: colorBG ?? ColorResources.WHITE,
           boxShadow: [
             BoxShadow(
               color: ColorResources.BLACK.withAlpha(40),
@@ -278,16 +276,16 @@ class IZICard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if (!IZIValidate.nullOrEmpty(row1Left))
-                      Expanded(
-                        child: IZIText(
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: IZIText(
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLine: 2,
+                            text: row1Left.toString(),
+                            textAlign: TextAlign.start,
                           ),
-                          maxLine: 2,
-                          text: row1Left.toString(),
-                          textAlign: TextAlign.start,
                         ),
-                      ),
                       Expanded(
                         child: getStatusMoney(statusMoney!),
                       ),
