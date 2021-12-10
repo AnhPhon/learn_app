@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
+import 'package:template/utils/color_resources.dart';
 
 import 'package:template/utils/images_path.dart';
 
@@ -15,11 +16,16 @@ import 'package:template/utils/images_path.dart';
 // Nếu không có url => not image (Placehoder image)
 // Nếu network ImageCaccheBuilder
 // Loading khi đang load ảnh
-enum IZIImageType { SVG, IMAGE, NOTIMAGE }
+enum IZIImageType {
+  SVG,
+  IMAGE,
+  NOTIMAGE,
+}
 enum IZIImageUrlType {
   NETWORK,
   ASSET,
   FILE,
+  ICON,
 }
 
 class IZIImage extends StatelessWidget {
@@ -35,12 +41,25 @@ class IZIImage extends StatelessWidget {
   final double? height;
   final BoxFit? fit;
   File? file;
+  IconData? icon;
+  Color? color;
+  double? size;
   IZIImage.file(
     File? this.file, {
     Key? key,
     this.width,
     this.height,
     this.fit = BoxFit.cover,
+  }) : super(key: key);
+
+  IZIImage.icon(
+    IconData this.icon, {
+    Key? key,
+    this.width,
+    this.height,
+    this.fit = BoxFit.cover,
+    this.color = ColorResources.BLACK,
+    this.size,
   }) : super(key: key);
 
   IZIImageType checkImageType(String url) {
@@ -131,7 +150,6 @@ class IZIImage extends StatelessWidget {
       } else if (imageUrlType == IZIImageUrlType.ASSET) {
         return Expanded(
           child: Container(
-            color: Colors.green,
             height: height,
             width: width,
             child: SvgPicture.asset(
@@ -188,7 +206,6 @@ class IZIImage extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: Colors.yellow,
       child: imageTypeWidget(urlImage.toString(), imageType, imageUrlType),
     );
   }

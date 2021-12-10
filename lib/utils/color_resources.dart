@@ -31,6 +31,16 @@ class ColorResources {
   static const Color GREEN = Color(0xff23CB60);
 
   static const Color BUTTON_DEFAULT = Color(0xFF0DAC43);
+  static const Color CARD_CAPITAL_CONTRIBUTION = Color(0xFFb7efc5);
+  static const Color ORDER_XAC_NHAN = Color(0xFFD7FAE0);
+  static const Color LABEL_ORDER_XAC_NHAN = Color(0xFF007D3A);
+  static const Color ORDER_HUY_DON = Color(0xFFFFE4E4);
+  static const Color LABEL_ORDER_HUY_DON = Color(0xFFFF0000);
+  static const Color ORDER_DA_GIAO = Color(0xFFFFEFDD);
+  static const Color LABEL_ORDER_DA_GIAO = Color(0xFFFF6F06);
+  static const Color ORDER_DANG_GIAO = Color(0xFFD9EEFF);
+  static const Color LABEL_ORDER_DANG_GIAO = Color(0xFF2196F3);
+
   // static const Color PRIMARY = Color(0xFF2196F3);
   // static const Color APPBARCOLOR = Color(0xff2196F3);
   // static const Color PRIMARYCOLOR = Color(0xff2196F3);
@@ -39,7 +49,7 @@ class ColorResources {
   // static const Color BACKGROUND = Color(0xffF6F6F7);
 
   // static const Color THEME_DEFAULT = Color(0xff2196F3);
-  // static const Color PINK = Color(0xffFFCDD2);
+  static const Color PINK = Color(0xffFFCDD2);
 
   // static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
   // static const Color UNSELECT_TABBAR = Color(0xff848485);
@@ -47,7 +57,7 @@ class ColorResources {
   // static const Color NOT_ALLOW_EDIT = Color(0xffced4da);
 
   // static const Color REVENUE_COLOR = Color(0xff12DD94);
-  // static const Color EXPENDITURE_COLOR = Color(0xffFFCF53);
+  static const Color YELLOW = Color(0xffFFCF53);
 
   static const Color CIRCLE_COLOR_BG = Color(0xff10A127);
   static const Color CIRCLE_COLOR_BG2 = Color(0xffC8F9D0);

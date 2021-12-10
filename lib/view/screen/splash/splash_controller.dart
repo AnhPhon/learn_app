@@ -42,4 +42,6 @@ class SplashController extends GetxController {
     print(fileImage);
     update();
   }
+
+  String? phone;
 }

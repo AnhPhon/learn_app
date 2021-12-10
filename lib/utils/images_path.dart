@@ -5,4 +5,7 @@ class ImagesPath {
   static const String logo = 'assets/images/logo.png';
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String svg = 'assets/svg/splash1.svg';
+  static const String draw = "assets/svg/ExportMoney.svg";
+  static const String reCharge = "assets/svg/ImportMoney.svg";
+  static const String logoMomo = "assets/images/MoMo_Logo.png";
 }
