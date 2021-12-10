@@ -12,8 +12,11 @@ import 'package:template/base_widget/background/background_one.dart';
 import 'package:template/base_widget/background/background_otp.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
+import 'package:template/base_widget/izi_dialog.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_input.dart';
+import 'package:template/base_widget/izi_list_view.dart';
+import 'package:template/base_widget/izi_otp.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
@@ -24,7 +27,8 @@ import 'package:ticket_material/ticket_material.dart';
 
 class SplashPage extends GetView<SplashController> {
   SplashPage({Key? key}) : super(key: key);
-
+  List<String> data = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "m"];
+  final keyList = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return IZIScreen(

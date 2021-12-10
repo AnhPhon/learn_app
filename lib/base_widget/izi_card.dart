@@ -24,7 +24,16 @@ enum IZICardType {
   CARD_CAPITAL_CONTRIBUTION,
   CARD_WITHDRAWAL,
   CARD_ORDER,
+  CARD_CONTACT,
 }
+
+enum IZIStatusOrder {
+  XAC_NHAN,
+  HUY_DON,
+  DA_GIAO,
+  DANG_GIAO,
+}
+
 enum IZIStatusPayment {
   AWAIT,
   DONE,
@@ -33,12 +42,6 @@ enum IZIStatusPayment {
 enum IZIStatusMoney {
   DRAW,
   RECHARGE,
-}
-enum IZIStatusOrder {
-  XAC_NHAN,
-  HUY_DON,
-  DA_GIAO,
-  DANG_GIAO,
 }
 
 class IZICard extends StatelessWidget {
@@ -73,6 +76,8 @@ class IZICard extends StatelessWidget {
     this.onChanged,
     this.onChanged1CardTransfer,
     this.onChanged2CardTransfer,
+    this.title,
+    this.actions,
   }) : super(key: key);
 
   final String? row1Left;
@@ -96,32 +101,39 @@ class IZICard extends StatelessWidget {
   final IZIImageUrlType? imageUrlType;
   final dynamic valRadio;
   final dynamic groupValue;
+  final String? title;
+  final List<Widget>? actions;
   final Function(dynamic val)? onChanged;
   final Function(String val)? onChanged1CardTransfer;
-
   final Function(String val)? onChanged2CardTransfer;
 
   Widget getStatusPayment(IZIStatusPayment statusPayment) {
     if (statusPayment == IZIStatusPayment.DONE) {
-      return const IZIText(
-        text: "Thành công",
-        style: TextStyle(
+      return IZIText(
+        text: row3Right ?? "Thành công",
+        style: const TextStyle(
           color: ColorResources.CIRCLE_COLOR_BG3,
         ),
+        maxLine: 1,
+        textAlign: TextAlign.end,
       );
     } else if (statusPayment == IZIStatusPayment.FAIL) {
-      return const IZIText(
-        text: "Thất bại",
-        style: TextStyle(
+      return IZIText(
+        text: row3Right ?? "Thất bại",
+        style: const TextStyle(
           color: ColorResources.RED,
         ),
+        maxLine: 1,
+        textAlign: TextAlign.end,
       );
     }
-    return const IZIText(
-      text: "Đang chờ",
-      style: TextStyle(
+    return IZIText(
+      text: row3Right ?? "Đang chờ",
+      style: const TextStyle(
         color: ColorResources.YELLOW,
       ),
+      maxLine: 1,
+      textAlign: TextAlign.end,
     );
   }
 
@@ -184,6 +196,8 @@ class IZICard extends StatelessWidget {
         style: const TextStyle(
           color: ColorResources.RED,
         ),
+        maxLine: 1,
+        textAlign: TextAlign.end,
       );
     } else if (statusPrice == IZIStatusMoney.RECHARGE && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
@@ -191,27 +205,32 @@ class IZICard extends StatelessWidget {
         style: const TextStyle(
           color: ColorResources.CIRCLE_COLOR_BG3,
         ),
+        maxLine: 1,
+        textAlign: TextAlign.end,
       );
     }
     return const SizedBox();
   }
 
-  Widget getImageUrlType(IZIImageUrlType type) {
+  Widget getImageUrlType(IZIImageUrlType type, {BoxFit? fit = BoxFit.cover}) {
     if (type == IZIImageUrlType.ICON && !IZIValidate.nullOrEmpty(icon)) {
       return IZIImage.icon(
         icon ?? Icons.ac_unit_outlined,
         color: ColorResources.WHITE,
         size: IZIDimensions.ONE_UNIT_SIZE * 45,
+        fit: fit,
       );
     } else if (type == IZIImageUrlType.FILE && !IZIValidate.nullOrEmpty(file)) {
       IZIImage.file(
         file,
+        fit: fit,
       );
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_7X),
       child: IZIImage(
         urlImage!,
+        fit: fit,
       ),
     );
   }
@@ -220,13 +239,22 @@ class IZICard extends StatelessWidget {
     if (type == IZICardType.CARD_PAYMENT) {
       return Container(
         margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_2X),
+        padding: EdgeInsets.all(
+          IZIDimensions.SPACE_SIZE_2X,
+        ),
         decoration: BoxDecoration(
-          boxShadow: [BoxShadow(color: ColorResources.BLACK.withAlpha(40), blurRadius: 10, offset: const Offset(0, 2))],
-          border: Border.all(
-            width: 2,
-            color: colorBorder ?? ColorResources.GREY,
-          ),
+          color: colorBG,
+          boxShadow: [
+            BoxShadow(
+              color: ColorResources.BLACK.withAlpha(40),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+          // border: Border.all(
+          //   width: 2,
+          //   color: colorBorder ?? ColorResources.GREY,
+          // ),
           borderRadius: BorderRadius.circular(
             radiusCard ?? IZIDimensions.BORDER_RADIUS_3X,
           ),
@@ -237,36 +265,72 @@ class IZICard extends StatelessWidget {
               margin: EdgeInsets.only(right: IZIDimensions.SPACE_SIZE_1X),
               child: statusMoney == IZIStatusMoney.DRAW ? IZIImage(ImagesPath.draw) : IZIImage(ImagesPath.reCharge),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IZIText(
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      text: row1Left.toString(),
-                    ),
-                    getStatusMoney(statusMoney!),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
-                  child: IZIText(
-                    text: row2Right.toString(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: IZIText(
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLine: 2,
+                          text: row1Left.toString(),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      Expanded(
+                        child: getStatusMoney(statusMoney!),
+                      ),
+                    ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IZIText(
-                      text: row2Left.toString(),
+                  if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
+                    Row(
+                      children: [
+                        if (!IZIValidate.nullOrEmpty(row2Left))
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
+                              child: IZIText(
+                                text: row2Left.toString(),
+                                maxLine: 2,
+                              ),
+                            ),
+                          ),
+                        if (!IZIValidate.nullOrEmpty(row2Right))
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
+                              child: IZIText(
+                                text: row2Right.toString(),
+                                maxLine: 1,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                    getStatusPayment(statusPayment!)
-                  ],
-                ),
-              ],
+                  if (!IZIValidate.nullOrEmpty(row3Left) || !IZIValidate.nullOrEmpty(row3Right))
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (!IZIValidate.nullOrEmpty(row3Left))
+                          Expanded(
+                            child: IZIText(
+                              text: row3Left.toString(),
+                              maxLine: 1,
+                            ),
+                          ),
+                        Expanded(
+                          child: getStatusPayment(statusPayment!),
+                        )
+                      ],
+                    ),
+                ],
+              ),
             )
           ],
         ),
@@ -275,6 +339,7 @@ class IZICard extends StatelessWidget {
       return Container(
         height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
         width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 120,
+        margin: marginCard ?? const EdgeInsets.all(0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -282,7 +347,7 @@ class IZICard extends StatelessWidget {
               height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
               width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
               decoration: BoxDecoration(
-                color: colorBG ?? ColorResources.WHITE,
+                color: colorBG,
                 shape: BoxShape.circle,
               ),
               child: getImageUrlType(imageUrlType!),
@@ -296,7 +361,7 @@ class IZICard extends StatelessWidget {
                   maxLine: 2,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: IZIDimensions.ONE_UNIT_SIZE * 25,
+                    fontSize: IZIDimensions.FONT_SIZE_H6,
                   ),
                   text: row1Left.toString(),
                 ),
@@ -690,6 +755,128 @@ class IZICard extends StatelessWidget {
           leftChild: _buildLeft(),
           rightChild: _buildRight(),
           colorBackground: ColorResources.WHITE,
+        ),
+      );
+    } else if (type == IZICardType.CARD_CONTACT) {
+      return Container(
+        margin: marginCard ?? const EdgeInsets.all(0),
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_3X,
+        ),
+        height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
+        width: widthCard ?? double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                  width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                  decoration: BoxDecoration(
+                    color: colorBG,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IZIText(
+                    text: title ?? '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: ColorResources.RED, fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H4),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      left: IZIDimensions.SPACE_SIZE_1X,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: IZIText(
+                                maxLine: 2,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                                ),
+                                text: row1Left.toString(),
+                              ),
+                            ),
+                            if (!IZIValidate.nullOrEmpty(row1Right))
+                              Flexible(
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: IZIDimensions.SPACE_SIZE_1X,
+                                  ),
+                                  child: IZIText(
+                                    maxLine: 1,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                                    ),
+                                    text: row1Right.toString(),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        if (!IZIValidate.nullOrEmpty(row2Right) || !IZIValidate.nullOrEmpty(row2Left))
+                          Row(
+                            children: [
+                              if (!IZIValidate.nullOrEmpty(row2Left))
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: IZIDimensions.SPACE_SIZE_1X,
+                                    ),
+                                    child: IZIText(
+                                      maxLine: 2,
+                                      style: TextStyle(
+                                        fontSize: IZIDimensions.FONT_SIZE_H6,
+                                        color: ColorResources.BLACK.withOpacity(0.6),
+                                      ),
+                                      text: row2Left.toString(),
+                                    ),
+                                  ),
+                                ),
+                              if (!IZIValidate.nullOrEmpty(row2Right))
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      left: IZIDimensions.SPACE_SIZE_1X,
+                                      top: IZIDimensions.SPACE_SIZE_1X,
+                                    ),
+                                    child: IZIText(
+                                      maxLine: 1,
+                                      style: TextStyle(
+                                        fontSize: IZIDimensions.FONT_SIZE_H6,
+                                        color: ColorResources.BLACK.withOpacity(0.6),
+                                      ),
+                                      text: row2Right.toString(),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (IZIValidate.nullOrEmpty(actions)) const SizedBox() else ...actions!,
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: IZIDimensions.ONE_UNIT_SIZE * 40,
+              ),
+              child: Divider(
+                color: ColorResources.BLACK.withOpacity(0.7),
+              ),
+            )
+          ],
         ),
       );
     } else if (type == IZICardType.CARD_NOTIFICATION) {
@@ -1502,3 +1689,19 @@ class IZICard extends StatelessWidget {
     return getCard(context, cardType!);
   }
 }
+
+// Widget _buildLeft() {
+//   return Container(
+//     child: Center(
+//       child: Text('LEFT PART'),
+//     ),
+//   );
+// }
+
+// Widget _buildRight() {
+//   return Container(
+//     child: Center(
+//       child: Icon(Icons.airplanemode_active),
+//     ),
+//   );
+// }

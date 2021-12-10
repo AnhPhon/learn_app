@@ -36,14 +36,6 @@ class IZIImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
   }) : super(key: key);
-  String? urlImage;
-  final double? width;
-  final double? height;
-  final BoxFit? fit;
-  File? file;
-  IconData? icon;
-  Color? color;
-  double? size;
   IZIImage.file(
     File? this.file, {
     Key? key,
@@ -51,7 +43,6 @@ class IZIImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
   }) : super(key: key);
-
   IZIImage.icon(
     IconData this.icon, {
     Key? key,
@@ -61,9 +52,17 @@ class IZIImage extends StatelessWidget {
     this.color = ColorResources.BLACK,
     this.size,
   }) : super(key: key);
+  String? urlImage;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
+  File? file;
+  IconData? icon;
+  Color? color;
+  double? size;
 
   IZIImageType checkImageType(String url) {
-    if (IZIValidate.nullOrEmpty(url) && IZIValidate.nullOrEmpty(file)) {
+    if (IZIValidate.nullOrEmpty(url) && IZIValidate.nullOrEmpty(file) && IZIValidate.nullOrEmpty(icon)) {
       return IZIImageType.NOTIMAGE;
     }
     if (url.endsWith(".svg")) {
@@ -74,12 +73,17 @@ class IZIImage extends StatelessWidget {
 
   IZIImageUrlType checkImageUrlType(String url) {
     if (IZIValidate.nullOrEmpty(url)) {
+      if (icon != null) {
+        return IZIImageUrlType.ICON;
+      }
       return IZIImageUrlType.FILE;
     }
     if (url.startsWith('http') || url.startsWith('https')) {
       return IZIImageUrlType.NETWORK;
     } else if (url.startsWith('assets/')) {
       return IZIImageUrlType.ASSET;
+    } else if (icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())) {
+      return IZIImageUrlType.ICON;
     }
     return IZIImageUrlType.FILE;
   }
@@ -129,6 +133,16 @@ class IZIImage extends StatelessWidget {
             },
           ),
         );
+      } else if (imageUrlType == IZIImageUrlType.ICON) {
+        return Container(
+          height: height,
+          width: width,
+          child: Icon(
+            icon,
+            color: color,
+            size: size ?? IZIDimensions.ONE_UNIT_SIZE * 45,
+          ),
+        );
       }
     }
 
@@ -148,17 +162,15 @@ class IZIImage extends StatelessWidget {
           ),
         );
       } else if (imageUrlType == IZIImageUrlType.ASSET) {
-        return Expanded(
-          child: Container(
-            height: height,
-            width: width,
-            child: SvgPicture.asset(
-              urlImage,
-              fit: fit!,
-              placeholderBuilder: (BuildContext context) => const SizedBox(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+        return Container(
+          height: height,
+          width: width,
+          child: SvgPicture.asset(
+            urlImage,
+            fit: fit!,
+            placeholderBuilder: (BuildContext context) => const SizedBox(
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
             ),
           ),
@@ -166,7 +178,6 @@ class IZIImage extends StatelessWidget {
       } else if (imageUrlType == IZIImageUrlType.FILE) {
         return Expanded(
           child: Container(
-            color: Colors.green,
             height: height,
             width: width,
             child: SvgPicture.file(
@@ -178,6 +189,15 @@ class IZIImage extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+        );
+      } else if (imageUrlType == IZIImageUrlType.ICON) {
+        return Container(
+          height: height,
+          width: width,
+          child: Icon(
+            icon,
+            color: color,
           ),
         );
       }
@@ -201,12 +221,15 @@ class IZIImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageType = checkImageType(urlImage.toString());
     final imageUrlType = checkImageUrlType(urlImage.toString());
-    print(imageType);
     print(imageUrlType);
     return Container(
       width: width,
       height: height,
-      child: imageTypeWidget(urlImage.toString(), imageType, imageUrlType),
+      child: imageTypeWidget(
+        urlImage.toString(),
+        imageType,
+        imageUrlType,
+      ),
     );
   }
 }

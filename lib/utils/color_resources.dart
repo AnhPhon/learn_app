@@ -18,7 +18,6 @@ class ColorResources {
   static const Color GREY = Color(0xff8c8c8c);
   // static const Color RED = Color(0xffF90B0B);
   // static const Color GREY = Color(0xff8c8c8c);
-  // static const Color YELLOW = Color(0xFFFFAA47);
   // static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
   // static const Color GAINS_BORO = Color(0xffE6E6E6);
   // static const Color TEXT_BG = Color(0xffF3F9FF);
@@ -57,7 +56,6 @@ class ColorResources {
   // static const Color NOT_ALLOW_EDIT = Color(0xffced4da);
 
   // static const Color REVENUE_COLOR = Color(0xff12DD94);
-  static const Color YELLOW = Color(0xffFFCF53);
 
   static const Color CIRCLE_COLOR_BG = Color(0xff10A127);
   static const Color CIRCLE_COLOR_BG2 = Color(0xffC8F9D0);
@@ -68,4 +66,5 @@ class ColorResources {
   static const Color LIGHT_GREY = Color(0xffB0BAC1);
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color RED = Color(0xffF90B0B);
+  static const Color YELLOW = Color(0xFFFFAA47);
 }
