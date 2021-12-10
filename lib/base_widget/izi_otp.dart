@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
@@ -65,15 +66,17 @@ class IZIOtp extends StatelessWidget {
                       IZIDimensions.SPACE_SIZE_1X,
                     ),
                     child: IZIText(
-                      text: content!,
-                      textAlign: TextAlign.center,
-                      maxLine: 4,
-                      style: TextStyle(
-                        color: ColorResources.BLACK,
-                        fontSize: IZIDimensions.FONT_SIZE_H6,
-                      )
-                    ),
+                        text: content!,
+                        textAlign: TextAlign.center,
+                        maxLine: 4,
+                        style: TextStyle(
+                          color: ColorResources.BLACK,
+                          fontSize: IZIDimensions.FONT_SIZE_H6,
+                        )),
                   ),
+                IZIButton(
+                  onTap: () {},
+                )
               ],
             ),
           ),
