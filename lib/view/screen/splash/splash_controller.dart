@@ -5,17 +5,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SplashController extends GetxController {
-  int val = 1;
-  int groupVal = 1;
-  File? file;
+  File? fileImage;
+
   @override
   void onInit() {
     super.onInit();
-  }
-
-  void onRadioChanged(int val) {
-    groupVal = val;
-    update();
   }
 
   bool isButtonActive = true;
@@ -29,29 +23,25 @@ class SplashController extends GetxController {
     isButtonActive = !isButtonActive;
 
     update();
-    Future.delayed(Duration(seconds: 2),(){
+    Future.delayed(Duration(seconds: 2), () {
       isButtonActive = true;
       update();
     });
   }
 
-  Future pickImages() async {
-    try {
-      final images = await ImagePicker().pickImage(source: ImageSource.gallery);
-      print(images);
-      if (images == null){
-        print("Null");
-        return;
-      };
-      file = File(images.path);
-      print("File ${file.toString()}");
-      update();
-    } on PlatformException catch (e) {
-     print(e.message);
-    }
+  void getImage() async {
+    final pickFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    fileImage = File(pickFile!.path);
+    print(fileImage);
+    update();
   }
 
+  void getVideo() async {
+    final pickFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    fileImage = File(pickFile!.path);
+    print(fileImage);
+    update();
+  }
 
-
-  
+  String? phone;
 }

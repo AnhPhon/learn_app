@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 
 import 'package:template/helper/izi_dimensions.dart';
@@ -25,11 +22,7 @@ class IZIText extends StatelessWidget {
       textAlign: textAlign ?? TextAlign.left,
       maxLines: maxLine ?? 1,
       overflow: TextOverflow.ellipsis,
-      style: style ?? TextStyle(
-        fontSize: IZIDimensions.FONT_SIZE_SPAN,
-        color: ColorResources.BLACK,
-        fontWeight: FontWeight.normal
-      ),
+      style: style ?? TextStyle(fontSize: IZIDimensions.FONT_SIZE_SPAN, color: ColorResources.BLACK, fontWeight: FontWeight.normal),
     );
   }
 }

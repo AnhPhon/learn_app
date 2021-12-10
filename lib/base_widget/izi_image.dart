@@ -73,7 +73,7 @@ class IZIImage extends StatelessWidget {
 
   IZIImageUrlType checkImageUrlType(String url) {
     if (IZIValidate.nullOrEmpty(url)) {
-      if(icon != null){
+      if (icon != null) {
         return IZIImageUrlType.ICON;
       }
       return IZIImageUrlType.FILE;
@@ -82,7 +82,7 @@ class IZIImage extends StatelessWidget {
       return IZIImageUrlType.NETWORK;
     } else if (url.startsWith('assets/')) {
       return IZIImageUrlType.ASSET;
-    }else if(icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())){
+    } else if (icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())) {
       return IZIImageUrlType.ICON;
     }
     return IZIImageUrlType.FILE;
@@ -133,7 +133,7 @@ class IZIImage extends StatelessWidget {
             },
           ),
         );
-      }else if (imageUrlType == IZIImageUrlType.ICON) {
+      } else if (imageUrlType == IZIImageUrlType.ICON) {
         return Container(
           height: height,
           width: width,
@@ -191,7 +191,7 @@ class IZIImage extends StatelessWidget {
             ),
           ),
         );
-      }else if (imageUrlType == IZIImageUrlType.ICON) {
+      } else if (imageUrlType == IZIImageUrlType.ICON) {
         return Container(
           height: height,
           width: width,
