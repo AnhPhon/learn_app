@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:template/base_widget/izi_card.dart';
-import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
-import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/images_path.dart';
 
 enum IZIListViewType { LISTVIEW, GRIDVIEW }
 
@@ -44,7 +39,7 @@ class IZIListView extends StatelessWidget {
   final Axis? scrollDirection;
   final ScrollPhysics? physics;
   final Widget Function(int index) builder;
-  final double? height,padding;
+  final double? height, padding;
 
   Widget getListView(IZIListViewType type) {
     if (type == IZIListViewType.GRIDVIEW) {
@@ -69,7 +64,7 @@ class IZIListView extends StatelessWidget {
       scrollDirection: scrollDirection!,
       shrinkWrap: true,
       itemCount: itemCount,
-      physics: physics,//const NeverScrollableScrollPhysics(),
+      physics: physics, //const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {

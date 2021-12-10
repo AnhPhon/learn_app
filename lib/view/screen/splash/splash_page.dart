@@ -192,7 +192,7 @@ class SplashPage extends GetView<SplashController> {
                 ),
                 row1Left: "Số tiền góp vốn Số tiền góp vốn Số tiền góp vốn ",
                 row2Left: "20.000.000 20.000.000 20.000.000 20.000.000 20.000.000 20.000.000 ",
-                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                cardType: IZICardType.CARD_CONTRIBUTION,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,7 +204,7 @@ class SplashPage extends GetView<SplashController> {
                     ),
                     row1Left: "Kỳ hạn Kỳ hạn Kỳ hạn Kỳ hạn Kỳ hạn ",
                     row2Left: "1 tháng 1 tháng 1 tháng 1 tháng 1 tháng 1 tháng 1 tháng ",
-                    cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                    cardType: IZICardType.CARD_CONTRIBUTION,
                   ),
                   IZICard(
                     widthCard: IZIDimensions.ONE_UNIT_SIZE * 250,
@@ -213,7 +213,7 @@ class SplashPage extends GetView<SplashController> {
                     ),
                     row1Left: "Lãi xuất Lãi xuất Lãi xuất Lãi xuất Lãi xuất ",
                     row2Left: "0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% 0.3% ",
-                    cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                    cardType: IZICardType.CARD_CONTRIBUTION,
                   ),
                 ],
               ),
@@ -227,6 +227,46 @@ class SplashPage extends GetView<SplashController> {
                 onTap: () {
                   print("Phone check");
                 },
+              ),
+              IZICard(
+                marginCard: EdgeInsets.all(
+                  IZIDimensions.ONE_UNIT_SIZE * 20,
+                ),
+                row1Left: "MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng MS01 - Số tháng đầu tư 1 tháng ",
+                row2Left: "22/12/2021 22/12/2021 22/12/2021 22/12/2021 22/12/2021 ",
+                cardType: IZICardType.CARD_PAYMENT,
+                onTap: () {
+                  print("Phone check");
+                },
+                statusMoney: IZIStatusMoney.DRAW,
+              ),
+              IZICard(
+                marginCard: EdgeInsets.all(
+                  IZIDimensions.ONE_UNIT_SIZE * 20,
+                ),
+                row1Left: "MS01 OK",
+                row2Left: "22/12/2021 22/12/2021 22/12/2021 22/12/2021 22/12/2021 ",
+                cardType: IZICardType.CARD_CIRCLE,
+                onTap: () {
+                  print("Phone check");
+                },
+                icon: Icons.ac_unit_outlined,
+              ),
+              IZICard(
+                marginCard: EdgeInsets.all(
+                  IZIDimensions.ONE_UNIT_SIZE * 20,
+                ),
+                row1Left: "MS01 OK",
+                row2Left: "22/12/2021 22/12/2021 22/12/2021 22/12/2021 22/12/2021 ",
+                cardType: IZICardType.CARD_CAPITAL_CONTRIBUTION,
+                onTap: () {
+                  print("Phone check");
+                },
+                groupValue: 1,
+                valRadio: 1,
+                imageUrlType: IZIImageUrlType.NETWORK,
+                icon: Icons.ac_unit_outlined,
+                urlImage: "https://allnewplayers.com/wp-content/uploads/2021/08/0a8514fed79c41fc53a925ac9ea69712.jpg",
               ),
             ],
           );
